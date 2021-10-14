@@ -17,19 +17,16 @@ export const walletCreate = async (): Promise<null | MinkeWallet> => {
     await saveAddress(wallet.address);
     await savePrivateKey(wallet.address, wallet.privateKey);
     console.log(wallet, wallet.privateKey, wallet.address);
+    const newWallet: MinkeWallet = {id, address: wallet.address, wallet}
+    const existingWallets = await getAllWallets() || {};
+    existingWallets[id] = newWallet;
+    await saveAllWallets(existingWallets)
+    return newWallet
 
-    await saveAllWallets({[id]: {id, address: wallet.address, wallet}} as AllMinkeWallets)
-    return {
-        id,
-        address: wallet.address,
-        wallet
-    }
-    
 
 }
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
-    console.log('asdasd');
     try {
         const allWallets = await loadObject('minkeAllWallets');
         console.log(allWallets)
