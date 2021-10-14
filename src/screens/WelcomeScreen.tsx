@@ -2,7 +2,8 @@ import React, {useCallback} from 'react';
 import {Dimensions, StatusBar, TouchableOpacity, View, Text, StyleSheet} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../App";
-import {walletCreate} from "../model/wallet";
+import {MinkeWallet, walletCreate} from "../model/wallet";
+import {initWallet, useWalletState} from "../stores/WalletStore";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -35,8 +36,11 @@ const styles = StyleSheet.create({
 
 
 export default function WelcomeScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
+            const walletState = useWalletState();
+            console.log(walletState.promised, walletState.value.wallets, 'asdasdasdasd')
     const onCreateWallet = useCallback(async () => {
-        await walletCreate()
+        const newWallet = await walletCreate();
+        walletState.selectedWallet.set({...newWallet as MinkeWallet})
         navigation.navigate('Backup');
     }, [navigation]);
     return (
