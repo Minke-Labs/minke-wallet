@@ -2,7 +2,7 @@ import {Wallet} from "ethers";
 import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {ACCESSIBLE} from "react-native-keychain";
 import {loadObject, saveObject} from "./keychain";
-import {SecureStoreOptions, setItemAsync, WHEN_UNLOCKED} from "expo-secure-store";
+import {deleteItemAsync, SecureStoreOptions, setItemAsync, WHEN_UNLOCKED} from "expo-secure-store";
 
 export const publicAccessControlOptions: SecureStoreOptions = {
     keychainAccessible: WHEN_UNLOCKED,
@@ -24,6 +24,10 @@ export const walletCreate = async (): Promise<null | MinkeWallet> => {
     return newWallet
 
 
+}
+
+export const purgeWallets = () => {
+  return deleteItemAsync('minkeAllWallets');
 }
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {

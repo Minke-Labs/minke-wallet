@@ -1,9 +1,11 @@
 import React, {useCallback} from 'react';
-import {Dimensions, StatusBar, TouchableOpacity, View, Text, StyleSheet} from "react-native";
+import {Button, Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../App";
 import {MinkeWallet, walletCreate} from "../model/wallet";
-import {initWallet, useWalletState} from "../stores/WalletStore";
+import {useWalletState} from "../stores/WalletStore";
+import Container from "../components/Container";
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -36,8 +38,8 @@ const styles = StyleSheet.create({
 
 
 export default function WelcomeScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
-            const walletState = useWalletState();
-            console.log(walletState.promised, walletState.value.wallets, 'asdasdasdasd')
+    const walletState = useWalletState();
+    console.log(walletState.promised, walletState.value.wallets, 'asdasdasdasd')
     const onCreateWallet = useCallback(async () => {
         const newWallet = await walletCreate();
         walletState.selectedWallet.set({...newWallet as MinkeWallet})
@@ -45,22 +47,21 @@ export default function WelcomeScreen({navigation}: NativeStackScreenProps<RootS
     }, [navigation]);
     return (
 
-        <View style={styles.container}>
-                            {/**/}
-
-                <View style={styles.logo}/>
+        <Container>
+            {/**/}
+            <View style={styles.logo}/>
+            <Text style={{
+                fontSize: 36,
+                fontFamily: 'DMSans_700Bold',
+                textAlign: "center",
+                // fontWeight: "bold"
+            }}>Wave goodbye to your bank 👋</Text>
+            <Text style={{fontSize: 17}}>Easily save, spend and invest with Minke</Text>
+            <TouchableOpacity style={styles.button} onPress={onCreateWallet}>
                 <Text style={{
-                    fontSize: 36,
-                    fontFamily: 'DMSans_700Bold',
-                    textAlign: "center",
-                    // fontWeight: "bold"
-                }}>Wave goodbye to your bank 👋</Text>
-                <Text style={{fontSize: 17}}>Easily save, spend and invest with Minke</Text>
-                <TouchableOpacity style={styles.button} onPress={onCreateWallet}>
-                    <Text style={{
-                        color: '#fff', fontSize: 17, textAlign: "center",
-                    }}>Create Wallet</Text>
-                </TouchableOpacity>
-            </View>
+                    color: '#fff', fontSize: 17, textAlign: "center",
+                }}>Create Wallet</Text>
+            </TouchableOpacity>
+        </Container>
     )
 }

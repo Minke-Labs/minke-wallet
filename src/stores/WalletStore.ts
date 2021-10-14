@@ -1,20 +1,19 @@
 import {createState, useState} from "@hookstate/core";
 import {AllMinkeWallets, getAllWallets, MinkeWallet} from "../model/wallet";
-import {find, isNull} from "lodash";
+import {find} from "lodash";
 
 export const initWallet = getAllWallets().then(wallets => {
 
-        return {
-          selectedWallet: find(wallets) as MinkeWallet,
-            wallets
-        }
-    });
-    // const selectedWallet = isNull(wallets) ? wallets : wallets[0];
-    // walletState.set({
-    //     selectedWallet,
-    //     wallets
-    // })
-
+    return {
+        selectedWallet: find(wallets) as MinkeWallet,
+        wallets
+    }
+});
+// const selectedWallet = isNull(wallets) ? wallets : wallets[0];
+// walletState.set({
+//     selectedWallet,
+//     wallets
+// })
 
 
 const walletState = createState<WalletState>(initWallet)

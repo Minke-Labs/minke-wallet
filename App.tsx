@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {
@@ -19,6 +19,7 @@ import {BackupScreen} from "./src/screens/BackupScreen";
 import {WalletScreen} from "./src/screens/WalletScreen";
 import {initWallet, useWalletState} from "./src/stores/WalletStore";
 import {isNull} from "lodash";
+import {purgeWallets} from "./src/model/wallet";
 
 export type RootStackParamList = {
   Welcome: undefined; // undefined because you aren't passing any params to the home screen
@@ -30,7 +31,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
     const walletState = useWalletState();
-
+ const isMounted = useRef<any>(null);
     let [fontsLoaded] = useFonts({
         DMSans_400Regular,
         DMSans_400Regular_Italic,
@@ -39,16 +40,15 @@ export default function App() {
         DMSans_700Bold,
         DMSans_700Bold_Italic,
     });
-    if (!fontsLoaded)
+    if (!fontsLoaded || walletState.promised)
         return <AppLoading/>;
+purgeWallets().then(d => {
+            console.log(d);
+            isMounted.current = true
+        })
 
 
-     // console.log(walletState.promised)
-
-     if (walletState.promised)
-        return <AppLoading/>;
-
-     const initialScreen = isNull(walletState.value.selectedWallet) ? 'Welcome' : 'Wallet';
+     const initialScreen = walletState.value.selectedWallet ? 'Wallet' : 'Welcome';
      // console.log(walletState.value.selectedWallet, initialScreen)
      // const initialScreen = 'Welcome';
 
