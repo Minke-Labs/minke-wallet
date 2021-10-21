@@ -1,7 +1,12 @@
-import React from "react";
-import {View, Text, StyleSheet, Dimensions} from "react-native";
-import {useWalletState} from "../stores/WalletStore";
+import React, {useCallback} from "react";
+import {Button, Dimensions, StyleSheet, Text, View} from "react-native";
+import {globalWalletState} from "../stores/WalletStore";
 import AppLoading from "expo-app-loading";
+import {useState} from "@hookstate/core";
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {RootStackParamList} from "../../App";
+import {walletDelete} from "../model/wallet";
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -24,18 +29,27 @@ const styles = StyleSheet.create({
         padding: 20,
     }
 });
-export function WalletScreen() {
 
-    const state = useWalletState();
+export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
+
+    const state = useState(globalWalletState);
+    console.log('aaaaaaaaaaa')
     if (state.promised)
         return <AppLoading/>;
+
+    const onDeleteWallet = useCallback(async () => {
+        await walletDelete(state.value.walletId || '')
+        state.set({wallet: null, walletId: null})
+        navigation.navigate('Welcome')
+    }, [navigation]);
 
     console.log(state.promised)
     return (
         <View style={styles.container}>
 
-        <Text>{state.value.selectedWallet?.address}</Text>
-        <Text>aa</Text>
+            <Text>{state.value.wallet?.address}</Text>
+            <Text>aa</Text>
+            <Button title={'Delete'} onPress={onDeleteWallet} />
         </View>
     )
 }

@@ -1,14 +1,15 @@
-import {createState, useState} from "@hookstate/core";
-import {AllMinkeWallets, getAllWallets, MinkeWallet} from "../model/wallet";
+import {createState} from "@hookstate/core";
+import {getAllWallets, getPrivateKey} from "../model/wallet";
 import {find} from "lodash";
+import {Wallet} from "ethers";
 
-export const initWallet = getAllWallets().then(wallets => {
+/*export const initWallet = getAllWallets().then(wallets => {
 
+    const wallet = find(wallets as)
     return {
-        selectedWallet: find(wallets) as MinkeWallet,
-        wallets
+        wallet: find(wallets) as MinkeWallet,
     }
-});
+});*/
 // const selectedWallet = isNull(wallets) ? wallets : wallets[0];
 // walletState.set({
 //     selectedWallet,
@@ -16,13 +17,25 @@ export const initWallet = getAllWallets().then(wallets => {
 // })
 
 
-const walletState = createState<WalletState>(initWallet)
+export const globalWalletState = createState<WalletState>({wallet: null})
 
-export const useWalletState = () => {
-    return useState<WalletState>(walletState);
-}
 
 export interface WalletState {
-    selectedWallet: MinkeWallet | null,
-    wallets: AllMinkeWallets | null
+    wallet: Wallet | null;
+    walletId?: string | null;
+}
+
+export const initializeWallet = async () => {
+    // const state = useState(globalWalletState);
+
+     const wallets = await getAllWallets();
+
+    const wallet = find(wallets, wallet => wallet.primary);
+    if(wallet) {
+        const privateKey = await getPrivateKey(wallet.address);
+       return {id: wallet.id, privateKey}
+    }
+
+    return null
+
 }

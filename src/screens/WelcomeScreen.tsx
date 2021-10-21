@@ -1,10 +1,12 @@
 import React, {useCallback} from 'react';
-import {Button, Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../App";
-import {MinkeWallet, walletCreate} from "../model/wallet";
-import {useWalletState} from "../stores/WalletStore";
+import {walletCreate} from "../model/wallet";
+import {globalWalletState} from "../stores/WalletStore";
 import Container from "../components/Container";
+import {useState} from "@hookstate/core";
+import {Wallet} from "ethers";
 
 const styles = StyleSheet.create({
     container: {
@@ -38,11 +40,14 @@ const styles = StyleSheet.create({
 
 
 export default function WelcomeScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
-    const walletState = useWalletState();
-    console.log(walletState.promised, walletState.value.wallets, 'asdasdasdasd')
+    // console.log(walletState.promised, walletState.value?.wallet, 'asdasdasdasd')
+                const walletState = useState(globalWalletState);
+
     const onCreateWallet = useCallback(async () => {
+
         const newWallet = await walletCreate();
-        walletState.selectedWallet.set({...newWallet as MinkeWallet})
+        console.log('NJEW WALLET', newWallet)
+        walletState.set({wallet: newWallet?.wallet as Wallet, walletId: newWallet?.walletId})
         navigation.navigate('Backup');
     }, [navigation]);
     return (
