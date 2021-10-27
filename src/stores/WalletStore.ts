@@ -1,7 +1,8 @@
-import {createState} from "@hookstate/core";
-import {getAllWallets, getPrivateKey} from "../model/wallet";
+import {createState, useState} from "@hookstate/core";
+import {getAllWallets, getPrivateKey, provider} from "../model/wallet";
 import {find} from "lodash";
-import {Wallet} from "ethers";
+import {BigNumber, BigNumberish, Wallet} from "ethers";
+import {ViewToken} from "react-native";
 
 /*export const initWallet = getAllWallets().then(wallets => {
 
@@ -17,15 +18,15 @@ import {Wallet} from "ethers";
 // })
 
 
-export const globalWalletState = createState<WalletState>({wallet: null})
 
 
 export interface WalletState {
     wallet: Wallet | null;
     walletId?: string | null;
+    balance?: BigNumber;
 }
 
-export const initializeWallet = async () => {
+const initializeWallet = async (): Promise<WalletState> => {
     // const state = useState(globalWalletState);
 
      const wallets = await getAllWallets();
@@ -33,9 +34,20 @@ export const initializeWallet = async () => {
     const wallet = find(wallets, wallet => wallet.primary);
     if(wallet) {
         const privateKey = await getPrivateKey(wallet.address);
-       return {id: wallet.id, privateKey}
+
+        if(privateKey) {
+            const balance = await provider.getBalance(wallet.address);
+            return {wallet: new Wallet(privateKey), walletId: wallet.id, balance}
+        }
     }
 
-    return null
+    return {wallet: null, walletId: null}
 
 }
+
+const globalStateInit = createState(initializeWallet)
+export function globalWalletState() {
+    return globalStateInit;
+
+}
+

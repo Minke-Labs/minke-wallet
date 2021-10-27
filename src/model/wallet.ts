@@ -1,4 +1,4 @@
-import {Wallet} from "ethers";
+import {Wallet, providers} from "ethers";
 import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {loadObject, saveObject} from "./keychain";
 import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from "expo-secure-store";
@@ -115,6 +115,20 @@ export const savePrivateKey = async (
 
     await saveObject(key, val, publicAccessControlOptions);
 };
+
+
+export const provider = new providers.InfuraProvider("ropsten", {
+    projectId: '20d883398faf4226ad3f049ffcd83654',
+    projectSecret: 'dd052da74d0749e2a0574f4eb4b22898'
+});
+
+export const sendTransaction = async (address: string, to: string, amount: string) => {
+    const signer = provider.getSigner(address)
+    signer.sendTransaction({
+        to: ''
+    })
+}
+
 
 export interface MinkeWallet {
     id: string,

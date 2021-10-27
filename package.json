@@ -52,6 +52,7 @@
     "react-native-keychain": "^6.2.0",
     "react-native-level-fs": "^3.0.1",
     "react-native-os": "^1.2.6",
+    "react-native-paper": "^4.9.2",
     "react-native-randombytes": "^3.6.1",
     "react-native-reanimated": "~2.2.0",
     "react-native-screens": "~3.4.0",

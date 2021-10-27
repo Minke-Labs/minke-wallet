@@ -1,11 +1,14 @@
 import React, {useCallback} from "react";
-import {Button, Dimensions, StyleSheet, Text, View} from "react-native";
+import {Dimensions, StyleSheet, View} from "react-native";
+import {Appbar, Button, Card, Text, TextInput} from 'react-native-paper';
 import {globalWalletState} from "../stores/WalletStore";
 import AppLoading from "expo-app-loading";
 import {useState} from "@hookstate/core";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../App";
 import {walletDelete} from "../model/wallet";
+import {BigNumberish, utils} from "ethers";
+import {isNaN} from "lodash";
 
 const styles = StyleSheet.create({
     container: {
@@ -32,24 +35,39 @@ const styles = StyleSheet.create({
 
 export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
 
-    const state = useState(globalWalletState);
-    console.log('aaaaaaaaaaa')
+    const state = useState(globalWalletState());
+    const transferTo = useState({to: '', amount: ''})
     if (state.promised)
         return <AppLoading/>;
 
+
     const onDeleteWallet = useCallback(async () => {
-        await walletDelete(state.value.walletId || '')
+        await walletDelete(state.value?.walletId || '')
         state.set({wallet: null, walletId: null})
         navigation.navigate('Welcome')
     }, [navigation]);
 
-    console.log(state.promised)
-    return (
-        <View style={styles.container}>
+    const onAmountChange = (text: string) => {
+        if (!isNaN(text))
+            transferTo.amount.set(text);
 
-            <Text>{state.value.wallet?.address}</Text>
-            <Text>aa</Text>
-            <Button title={'Delete'} onPress={onDeleteWallet} />
+    }
+    return (
+        <View>
+            <Appbar.Header>
+                <Appbar.Content title="Minke Wallet"/>
+            </Appbar.Header>
+            <Card style={{padding: 20}}>
+
+                <Text>{state.value.wallet?.address}</Text>
+                <Text>aa</Text>
+                <Text>Balance: {utils.formatEther(state.value.balance as BigNumberish)}</Text>
+                <TextInput label={'Transfer To'} value={transferTo.value.to}
+                           onChangeText={address => transferTo.to.set(address)}/>
+                <TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}
+                           onChangeText={onAmountChange}/>
+                <Button onPress={onDeleteWallet}>Delete</Button>
+            </Card>
         </View>
     )
 }
