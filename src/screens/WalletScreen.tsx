@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import {Dimensions, StyleSheet, View} from "react-native";
-import {Appbar, Button, Card, Text, TextInput} from 'react-native-paper';
+import {Appbar, Button, Card, Snackbar, Text, TextInput} from 'react-native-paper';
 import {globalWalletState} from "../stores/WalletStore";
 import AppLoading from "expo-app-loading";
 import {useState} from "@hookstate/core";
@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
 export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
 
     const state = useState(globalWalletState());
+    const snackbarVisible = useState(false)
+
     const transferTo = useState({to: '', amount: ''})
     if (state.promised)
         return <AppLoading/>;
@@ -71,7 +73,10 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
             // nonce: state.value.wallet.non
         })
 
-        const result = await provider.sendTransaction(signedTx as string)
+        const result = await provider.sendTransaction(signedTx as string).then(r => {
+            snackbarVisible.set(true)
+            return r
+        })
         // const result = await sendTransaction(state.value.wallet?.address as string, transferTo.value.to, transferTo.value.amount)
         console.log(result, 'adasdaaaaaaaa')
     }
@@ -84,7 +89,7 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
 
                 <Text>{state.value.wallet?.address}</Text>
                 <Text>aa</Text>
-                <Text>Balance: {formatEther(state.value.balance as BigNumberish)}</Text>
+                <Text>Balance: {state.value.balance ? formatEther(state.value.balance as BigNumberish) : ''}</Text>
                 <TextInput label={'Transfer To'} value={transferTo.value.to}
                            onChangeText={address => transferTo.to.set(address)}/>
                 <TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}
@@ -92,6 +97,7 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
                 <Button onPress={onTransfer}>Transfer</Button>
                 <Button onPress={onDeleteWallet}>Delete</Button>
             </Card>
+            <Snackbar onDismiss={()=>snackbarVisible.set(false)} visible={snackbarVisible.value}>Success</Snackbar>
         </View>
     )
 }
