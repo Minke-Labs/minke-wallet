@@ -1,4 +1,4 @@
-import {Wallet, providers} from "ethers";
+import {Wallet, providers, BigNumberish} from "ethers";
 import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {loadObject, saveObject} from "./keychain";
 import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from "expo-secure-store";
@@ -9,10 +9,10 @@ export const publicAccessControlOptions: SecureStoreOptions = {
     keychainAccessible: WHEN_UNLOCKED,
 };
 
-export const walletCreate = async (): Promise<null | {wallet: Wallet; walletId: string}> => {
+export const walletCreate = async (): Promise<null | {wallet: Wallet; walletId: string, balance: BigNumberish}> => {
     const mnemonic = generateMnemonic();
     const seed = await mnemonicToSeed(mnemonic);
-    const wallet: Wallet = new Wallet(seed);
+    const wallet: Wallet = new Wallet(seed, provider);
     const id = `wallet_${Date.now()}`;
     await saveSeedPhrase(mnemonic, id);
     await savePrivateKey(wallet.address, wallet.privateKey);
@@ -24,7 +24,8 @@ export const walletCreate = async (): Promise<null | {wallet: Wallet; walletId: 
     }
     existingWallets[id] = newWallet;
     await saveAllWallets(existingWallets);
-    return {wallet, walletId: id}
+    const balance = await provider.getBalance(wallet.address);
+    return {wallet, walletId: id, balance}
 }
 
 

@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
 
 export default function WelcomeScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
     // console.log(walletState.promised, walletState.value?.wallet, 'asdasdasdasd')
-                const walletState = useState(globalWalletState);
+    const walletState = useState(globalWalletState());
 
     const onCreateWallet = useCallback(async () => {
 
         const newWallet = await walletCreate();
         console.log('NJEW WALLET', newWallet)
-        walletState.set({wallet: newWallet?.wallet as Wallet, walletId: newWallet?.walletId})
+        walletState.set(newWallet as any)
         navigation.navigate('Backup');
     }, [navigation]);
     return (
