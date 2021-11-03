@@ -3,6 +3,7 @@ import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {loadObject, saveObject} from "./keychain";
 import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from "expo-secure-store";
 import {forEach, isEmpty} from "lodash";
+import {parseEther} from "ethers/lib/utils";
 
 export const publicAccessControlOptions: SecureStoreOptions = {
     keychainAccessible: WHEN_UNLOCKED,
@@ -124,8 +125,9 @@ export const provider = new providers.InfuraProvider("ropsten", {
 
 export const sendTransaction = async (address: string, to: string, amount: string) => {
     const signer = provider.getSigner(address)
-    signer.sendTransaction({
-        to: ''
+    return signer.sendTransaction({
+        to,
+        value: parseEther(amount)
     })
 }
 

@@ -37,7 +37,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
         if(privateKey) {
             const balance = await provider.getBalance(wallet.address);
-            return {wallet: new Wallet(privateKey), walletId: wallet.id, balance}
+            return {wallet: new Wallet(privateKey, provider), walletId: wallet.id, balance}
         }
     }
 
