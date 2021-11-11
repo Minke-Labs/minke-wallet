@@ -6,7 +6,7 @@ import AppLoading from "expo-app-loading";
 import {useState} from "@hookstate/core";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../App";
-import {provider, walletDelete} from "../model/wallet";
+import {estimateGas, provider, walletDelete} from "../model/wallet";
 import {BigNumberish, utils} from "ethers";
 import {isNaN} from "lodash";
 import {formatEther, formatUnits, parseEther} from "ethers/lib/utils";
@@ -56,29 +56,8 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
 
     }
 
-    const onTransfer = async () => {
-        const tx = {
-            to: transferTo.value.to,
-            value: parseEther(transferTo.value.amount),
-        };
-        const gasLimit = await provider.getGasPrice()
-        // console.log(formatUnits(gasLimit, 'wei'))
-        const nonce = await provider.getTransactionCount(state.value.wallet?.address || '',"pending");
-        console.log(nonce);
-        const signedTx = await state.value.wallet?.signTransaction({
-            ...tx,
-            gasPrice: gasLimit,
-            gasLimit: 21000,
-            nonce
-            // nonce: state.value.wallet.non
-        })
-
-        const result = await provider.sendTransaction(signedTx as string).then(r => {
-            snackbarVisible.set(true)
-            return r
-        })
-        // const result = await sendTransaction(state.value.wallet?.address as string, transferTo.value.to, transferTo.value.amount)
-        console.log(result, 'adasdaaaaaaaa')
+    const onTransfer = () => {
+        navigation.navigate('TransactionSelectFunds')
     }
     return (
         <View>
@@ -88,12 +67,11 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
             <Card style={{padding: 20}}>
 
                 <Text>{state.value.wallet?.address}</Text>
-                <Text>aa</Text>
                 <Text>Balance: {state.value.balance ? formatEther(state.value.balance as BigNumberish) : ''}</Text>
-                <TextInput label={'Transfer To'} value={transferTo.value.to}
+        {/*        <TextInput label={'Transfer To'} value={transferTo.value.to}
                            onChangeText={address => transferTo.to.set(address)}/>
                 <TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}
-                           onChangeText={onAmountChange}/>
+                           onChangeText={onAmountChange}/>*/}
                 <Button onPress={onTransfer}>Transfer</Button>
                 <Button onPress={onDeleteWallet}>Delete</Button>
             </Card>

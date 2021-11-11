@@ -34,7 +34,7 @@ const initializeWallet = async (): Promise<WalletState> => {
     const wallet = find(wallets, wallet => wallet.primary);
     if(wallet) {
         const privateKey = await getPrivateKey(wallet.address);
-
+        // console.log('PRIVATE KEY', privateKey)
         if(privateKey) {
             const balance = await provider.getBalance(wallet.address);
             return {wallet: new Wallet(privateKey, provider), walletId: wallet.id, balance}

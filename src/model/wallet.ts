@@ -2,7 +2,7 @@ import {Wallet, providers, BigNumberish} from "ethers";
 import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {loadObject, saveObject} from "./keychain";
 import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from "expo-secure-store";
-import {forEach, isEmpty} from "lodash";
+import {find, forEach, isEmpty} from "lodash";
 import {parseEther} from "ethers/lib/utils";
 
 export const publicAccessControlOptions: SecureStoreOptions = {
@@ -19,7 +19,8 @@ export const walletCreate = async (): Promise<null | {wallet: Wallet; walletId: 
     console.log(wallet, wallet.privateKey, wallet.address);
     const newWallet: MinkeWallet = {id, address: wallet.address, name: '', primary: false}
     const existingWallets = await getAllWallets() || {};
-    if(isEmpty(existingWallets)) {
+    const primaryWallet = find(existingWallets, wallet => wallet.primary)
+    if(isEmpty(existingWallets) || isEmpty(primaryWallet)) {
         newWallet.primary = true;
     }
     existingWallets[id] = newWallet;
@@ -130,6 +131,11 @@ export const sendTransaction = async (address: string, to: string, amount: strin
         to,
         value: parseEther(amount)
     })
+}
+
+export const estimateGas = async () => {
+    const result = await fetch('https://ethgasstation.info/api/ethgasAPI.json?c7f3543e2274a227ad0f60c97ba1a22abd5c950cc27c25a9ecd7d1a766f0');
+    return result.json();
 }
 
 
