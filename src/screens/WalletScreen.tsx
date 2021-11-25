@@ -10,6 +10,7 @@ import {estimateGas, provider, walletDelete} from "../model/wallet";
 import {BigNumberish, utils} from "ethers";
 import {isNaN} from "lodash";
 import {formatEther, formatUnits, parseEther} from "ethers/lib/utils";
+import {formatFixed} from "@ethersproject/bignumber";
 
 const styles = StyleSheet.create({
     container: {
@@ -67,7 +68,8 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
             <Card style={{padding: 20}}>
 
                 <Text>{state.value.wallet?.address}</Text>
-                <Text>Balance: {state.value.balance ? formatEther(state.value.balance as BigNumberish) : ''}</Text>
+                <Text>Balance: {state.value.balance?.eth ? formatEther(state.value.balance.eth as BigNumberish) : ''}</Text>
+                <Text>Balance USD: {state.value.balance?.usd}</Text>
         {/*        <TextInput label={'Transfer To'} value={transferTo.value.to}
                            onChangeText={address => transferTo.to.set(address)}/>
                 <TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}

@@ -1,15 +1,15 @@
-import {Wallet, providers, BigNumberish} from "ethers";
+import {BigNumberish, providers, Wallet} from "ethers";
 import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {loadObject, saveObject} from "./keychain";
 import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from "expo-secure-store";
-import {find, forEach, isEmpty} from "lodash";
+import {find, isEmpty} from "lodash";
 import {parseEther} from "ethers/lib/utils";
 
 export const publicAccessControlOptions: SecureStoreOptions = {
     keychainAccessible: WHEN_UNLOCKED,
 };
 
-export const walletCreate = async (): Promise<null | {wallet: Wallet; walletId: string, balance: BigNumberish}> => {
+export const walletCreate = async (): Promise<null | { wallet: Wallet; walletId: string, balance: BigNumberish }> => {
     const mnemonic = generateMnemonic();
     const seed = await mnemonicToSeed(mnemonic);
     const wallet: Wallet = new Wallet(seed, provider);
@@ -20,7 +20,7 @@ export const walletCreate = async (): Promise<null | {wallet: Wallet; walletId: 
     const newWallet: MinkeWallet = {id, address: wallet.address, name: '', primary: false}
     const existingWallets = await getAllWallets() || {};
     const primaryWallet = find(existingWallets, wallet => wallet.primary)
-    if(isEmpty(existingWallets) || isEmpty(primaryWallet)) {
+    if (isEmpty(existingWallets) || isEmpty(primaryWallet)) {
         newWallet.primary = true;
     }
     existingWallets[id] = newWallet;
@@ -36,7 +36,7 @@ export const purgeWallets = () => {
 
 export const walletDelete = async (id: string): Promise<boolean> => {
     const allWallets = await getAllWallets() || {};
-    if(allWallets[id]) {
+    if (allWallets[id]) {
         delete allWallets[id];
         console.log('aaaaaaaaaaaa', allWallets);
         await saveAllWallets(allWallets || {});
@@ -70,7 +70,7 @@ export const saveSeedPhrase = async (
 ): Promise<void> => {
 
     const key = `${keychain_id}_minkeSeedPhrase`;
-const val = {
+    const val = {
         id: keychain_id,
         seedPhrase
     } as SeedPhraseData;
@@ -81,10 +81,10 @@ const val = {
 export const getSeedPhrase = async (
     keychain_id: string
 ): Promise<string | null> => {
-        const key = `${keychain_id}_minkeSeedPhrase`;
+    const key = `${keychain_id}_minkeSeedPhrase`;
 
     const seedData = await loadObject(key) as SeedPhraseData;
-    if(seedData?.seedPhrase) {
+    if (seedData?.seedPhrase) {
         return seedData.seedPhrase;
     }
     return null
@@ -94,10 +94,10 @@ export const getSeedPhrase = async (
 export const getPrivateKey = async (
     address: string
 ): Promise<string | null> => {
-        const key = `${address}_minkePrivateKey`;
+    const key = `${address}_minkePrivateKey`;
 
     const pkey = await loadObject(key) as PrivateKeyData;
-    if(pkey?.privateKey) {
+    if (pkey?.privateKey) {
         return pkey.privateKey;
     }
     return null
@@ -133,8 +133,13 @@ export const sendTransaction = async (address: string, to: string, amount: strin
     })
 }
 
-export const estimateGas = async () => {
+export const estimateGas = async ():Promise<EstimateGasResponse> => {
     const result = await fetch('https://ethgasstation.info/api/ethgasAPI.json?c7f3543e2274a227ad0f60c97ba1a22abd5c950cc27c25a9ecd7d1a766f0');
+    return result.json();
+}
+
+export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
+    const result = await fetch('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N')
     return result.json();
 }
 
@@ -149,11 +154,38 @@ export interface MinkeWallet {
 export interface AllMinkeWallets {
     [key: string]: MinkeWallet;
 }
+
 export interface PrivateKeyData {
     address: string;
     privateKey: string;
 }
+
 export interface SeedPhraseData {
     id: string;
     seedPhrase: string;
+}
+
+export interface EstimateGasResponse {
+    fast: number,
+    fastest: number,
+    average: number,
+    safeLow: number,
+    speed: number,
+    block_time: number,
+    blockNum: number,
+    safeLowWait: number,
+    avgWait: number,
+    fastWait: number,
+    fastestWait: number
+}
+
+export interface EtherLastPriceResponse {
+    status: string,
+    message: string,
+    result: {
+        ethbtc: string,
+        ethbtc_timestamp: string,
+        ethusd: string,
+        ethusd_timestamp: string
+    }
 }

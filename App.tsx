@@ -21,6 +21,7 @@ import {globalWalletState} from "./src/stores/WalletStore";
 import {TransactionSelectFundsScreen} from "./src/screens/TransactionSelectFundsScreen";
 import {TransactionContactsScreen} from "./src/screens/TransactionContactsScreen";
 import {TransactionTransferScreen} from "./src/screens/TransactionTransferScreen";
+import {ContactCreateScreen} from "./src/screens/ContactCreateScreen";
 
 export type RootStackParamList = {
     Welcome: undefined; // undefined because you aren't passing any params to the home screen
@@ -29,6 +30,7 @@ export type RootStackParamList = {
     TransactionSelectFunds: undefined;
     TransactionContacts: {coin: string};
     TransactionTransfer: {coin: string, address: string};
+    ContactCreate: undefined
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<
@@ -72,6 +74,7 @@ export default function App() {
                     <Stack.Screen options={{headerShown: false}} name="TransactionSelectFunds" component={TransactionSelectFundsScreen}/>
                     <Stack.Screen options={{headerShown: false}} initialParams={{coin: 'eth'}} name="TransactionContacts" component={TransactionContactsScreen}/>
                     <Stack.Screen options={{headerShown: false}} name="TransactionTransfer" component={TransactionTransferScreen}/>
+                    <Stack.Screen options={{headerShown: false}} name="ContactCreate" component={ContactCreateScreen}/>
                 </Stack.Navigator>
 
             </NavigationContainer>
