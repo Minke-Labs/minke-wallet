@@ -21,7 +21,7 @@ export function TransactionTransferScreen({navigation}: NativeStackScreenProps<R
         return <AppLoading/>
     }
     if (gasPrice.error) {
-        return <Text>AAAAAA</Text>
+        return <Text>Could not get Gas Prices</Text>
     }
     const onAmountChange = (text: string) => {
         if (!isNaN(text))
