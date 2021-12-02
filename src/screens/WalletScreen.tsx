@@ -102,7 +102,7 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
 
                 <View style={{padding: 10}}>
                     <Text>Tokens:</Text>
-                    <Text>DAI Balance: {formatUnits(state.value.tokens?.dai.balance || '')}</Text>
+                    <Text>DAI Balance: {state.value.tokens?.dai?.balance ? formatUnits(state.value.tokens?.dai?.balance) : ''}</Text>
                 </View>
                 {/*        <TextInput label={'Transfer To'} value={transferTo.value.to}
                            onChangeText={address => transferTo.to.set(address)}/>

@@ -10,8 +10,8 @@ import { formatFixed } from "@ethersproject/bignumber";
 
 export function TransactionSelectFundsScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
     const wallet = globalWalletState();
-    const onSelectFunds = () => {
-        navigation.navigate('TransactionContacts', {coin: 'eth'})
+    const onSelectFunds = (coin = 'eth') => {
+        navigation.navigate('TransactionContacts', {coin})
     }
     return (
         <View>
@@ -28,7 +28,7 @@ export function TransactionSelectFundsScreen({navigation}: NativeStackScreenProp
                         <Text>Balance USD: {wallet.value.balance?.usd}</Text>
                     </View>
 
-                    <Button mode={'contained'} onPress={onSelectFunds}>Select</Button>
+                    <Button mode={'contained'} onPress={() => onSelectFunds()}>Select</Button>
 
                 </View>
                 <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start"}}>
@@ -37,7 +37,7 @@ export function TransactionSelectFundsScreen({navigation}: NativeStackScreenProp
                         <Text>Balance: {formatUnits(wallet.value.tokens?.dai.balance || '')}</Text>
                     </View>
 
-                    <Button mode={'contained'} onPress={onSelectFunds}>Select</Button>
+                    <Button mode={'contained'} onPress={() => onSelectFunds('dai')}>Select</Button>
 
                 </View>
             </Card>

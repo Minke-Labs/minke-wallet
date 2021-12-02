@@ -58,8 +58,9 @@ export function TransactionTransferScreen({navigation}: NativeStackScreenProps<R
         // const result = await sendTransaction(state.value.wallet?.address as string, transferTo.value.to, transferTo.value.amount)
         console.log(result, 'adasdaaaaaaaa')*/
         if (state.value.wallet) {
-
-            sendTransaction(state.value.wallet, route.params.address, amount.value, selectedGasPrice.value).then(r => {
+            const contractAddress = state.value.tokens?.[route.params.coin].contract.address || '';
+            console.log('CONTRACT address', contractAddress);
+            sendTransaction(state.value.wallet, route.params.address, amount.value, selectedGasPrice.value, contractAddress).then(r => {
                 console.log(r)
                 Alert.alert('Success', 'Transaction successful', [
                     {

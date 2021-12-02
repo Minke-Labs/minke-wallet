@@ -49,16 +49,16 @@ const initializeWallet = async (): Promise<WalletState> => {
         if (privateKey) {
             const eth = await provider.getBalance(wallet.address);
             const tokens: MinkeTokenList = {}
-            Object.entries(supportedTokenList).forEach(([key, tokenAddress]) => {
-                const contract = new Contract(tokenAddress, erc20abi, provider);
-                contract.balanceOf(wallet.address).then((balance: BigNumber) => {
-                    tokens[key] = {
-                        contract,
-                        balance
-                    }
-                })
 
-            })
+            for (const [key, tokenAddress] of Object.entries(supportedTokenList)) {
+                const contract = new Contract(tokenAddress, erc20abi, provider);
+                const balance = await contract.balanceOf(wallet.address)
+                tokens[key] = {
+                    contract,
+                    balance
+                }
+            }
+
             const balance = {
                 eth,
                 // usd: undefined

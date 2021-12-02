@@ -126,26 +126,33 @@ export const provider = new providers.InfuraProvider("ropsten", {
 });
 
 export const sendTransaction = async (wallet: Wallet, to: string, amount: string, gasPrice: string, contractAddress: string = '') => {
+    const nonce = await provider.getTransactionCount(wallet.address, "latest");
 
+    const txDefaults = {
+        to,
+        gasPrice: parseUnits(gasPrice, 'gwei'),
+        gasLimit: 41000,
+        nonce,
+    }
+
+    let tx;
     if (contractAddress) {
-        const signer = provider.getSigner(wallet.address)
+        // const signer = provider.getSigner(wallet.address)
 
 
-        const erc20 = new Contract(contractAddress, erc20abi, signer)
-        return erc20.transfer(to, parseUnits(amount))
+        const erc20 = new Contract(contractAddress, erc20abi, provider)
+        tx = await erc20.populateTransaction.transfer(to, parseUnits(amount));
+        tx.gasPrice = await provider.estimateGas(tx)
+        // tx.gasLimit = 41000
         // erc20.deployTransaction()
+    } else {
+        tx = {
+            value: parseEther(amount),
+        }
     }
 
 
-    const nonce = await provider.getTransactionCount(wallet.address, "latest");
-    const signedTx = await wallet.signTransaction({
-        to,
-        value: parseEther(amount),
-        gasPrice: parseUnits(gasPrice, 'gwei'),
-        gasLimit: 21000,
-        nonce
-        // nonce: state.value.wallet.non
-    })
+    const signedTx = await wallet.signTransaction({...txDefaults,...tx})
     return provider.sendTransaction(signedTx as string)
 
 }
@@ -160,28 +167,28 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 }
 
 export const erc20abi = [
-            // Read-Only Functions
-            "function balanceOf(address owner) view returns (uint256)",
-            "function decimals() view returns (uint8)",
-            "function symbol() view returns (string)",
+    // Read-Only Functions
+    "function balanceOf(address owner) view returns (uint256)",
+    "function decimals() view returns (uint8)",
+    "function symbol() view returns (string)",
 
-            // Authenticated Functions
-            "function transfer(address to, uint amount) returns (bool)",
+    // Authenticated Functions
+    "function transfer(address to, uint amount) returns (bool)",
 
-            // Events
-            "event Transfer(address indexed from, address indexed to, uint amount)"
-        ];
+    // Events
+    "event Transfer(address indexed from, address indexed to, uint amount)"
+];
 
 export const supportedTokenList = {
     'dai': '0x31f42841c2db5173425b5223809cf3a38fede360'
 }
+
 export interface MinkeTokenList {
     [name: string]: {
         contract: Contract,
         balance: BigNumberish
     }
 }
-
 
 
 export interface MinkeWallet {
