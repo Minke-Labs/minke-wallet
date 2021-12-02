@@ -96,7 +96,7 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
                         </Dialog>
                     </Portal>
                 </View>
-                <Text>Balance: {state.value.balance?.eth ? formatEther(state.value.balance.eth as BigNumberish) : ''}</Text>
+                <Text>Balance ETH: {state.value.balance?.eth ? formatEther(state.value.balance.eth as BigNumberish) : ''}</Text>
                 <Text style={{marginBottom: 5}}>Balance USD: {commify(state.value.balance?.usd || '')}</Text>
 
 
