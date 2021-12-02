@@ -9,7 +9,7 @@ import {RootStackParamList} from "../../App";
 import {walletDelete} from "../model/wallet";
 import {BigNumberish} from "ethers";
 import {isNaN} from "lodash";
-import {commify, formatEther} from "ethers/lib/utils";
+import {commify, formatEther, formatUnits} from "ethers/lib/utils";
 import * as Clipboard from 'expo-clipboard';
 import QRCode from "react-native-qrcode-svg";
 
@@ -88,7 +88,7 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
                         <Dialog visible={dialogVisible.value} onDismiss={() => dialogVisible.set(false)}>
                             {/*<Dialog.Title>Aaa</Dialog.Title>*/}
                             <Dialog.Content style={{alignItems: 'center'}}>
-                                <QRCode value={state.value.wallet?.address} />
+                                <QRCode value={state.value.wallet?.address}/>
                             </Dialog.Content>
                             <Dialog.Actions>
                                 {/*<Button onPress={hideDialog}>Done</Button>*/}
@@ -98,6 +98,12 @@ export function WalletScreen({navigation}: NativeStackScreenProps<RootStackParam
                 </View>
                 <Text>Balance: {state.value.balance?.eth ? formatEther(state.value.balance.eth as BigNumberish) : ''}</Text>
                 <Text style={{marginBottom: 5}}>Balance USD: {commify(state.value.balance?.usd || '')}</Text>
+
+
+                <View style={{padding: 10}}>
+                    <Text>Tokens:</Text>
+                    <Text>DAI Balance: {formatUnits(state.value.tokens?.dai.balance || '')}</Text>
+                </View>
                 {/*        <TextInput label={'Transfer To'} value={transferTo.value.to}
                            onChangeText={address => transferTo.to.set(address)}/>
                 <TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}

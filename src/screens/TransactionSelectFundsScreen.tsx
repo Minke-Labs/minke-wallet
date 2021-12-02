@@ -31,6 +31,15 @@ export function TransactionSelectFundsScreen({navigation}: NativeStackScreenProp
                     <Button mode={'contained'} onPress={onSelectFunds}>Select</Button>
 
                 </View>
+                <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start"}}>
+                    <View>
+                        <Text>DAI</Text>
+                        <Text>Balance: {formatUnits(wallet.value.tokens?.dai.balance || '')}</Text>
+                    </View>
+
+                    <Button mode={'contained'} onPress={onSelectFunds}>Select</Button>
+
+                </View>
             </Card>
         </View>
     )

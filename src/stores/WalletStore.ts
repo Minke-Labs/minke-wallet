@@ -1,10 +1,15 @@
-import {createState, useState} from "@hookstate/core";
-import {getAllWallets, getEthLastPrice, getPrivateKey, provider} from "../model/wallet";
+import {createState} from "@hookstate/core";
+import {
+    erc20abi,
+    getAllWallets,
+    getEthLastPrice,
+    getPrivateKey,
+    MinkeTokenList,
+    provider,
+    supportedTokenList,
+} from "../model/wallet";
 import {find} from "lodash";
-import {BigNumber, BigNumberish, FixedNumber, Wallet} from "ethers";
-import {ViewToken} from "react-native";
-import {formatEther, formatUnits, parseUnits} from "ethers/lib/utils";
-import {formatFixed} from "@ethersproject/bignumber";
+import {BigNumber, Contract, Wallet} from "ethers";
 import {convertEthToUsd} from "../helpers/utilities";
 
 /*export const initWallet = getAllWallets().then(wallets => {
@@ -21,10 +26,9 @@ import {convertEthToUsd} from "../helpers/utilities";
 // })
 
 
-
-
 export interface WalletState {
     wallet: Wallet | null;
+    tokens?: MinkeTokenList
     walletId?: string | null;
     balance?: {
         eth?: BigNumber
@@ -38,19 +42,29 @@ const initializeWallet = async (): Promise<WalletState> => {
     const wallets = await getAllWallets();
     const ethPrice = await getEthLastPrice();
     const wallet = find(wallets, wallet => wallet.primary);
-    if(wallet) {
+    if (wallet) {
         const privateKey = await getPrivateKey(wallet.address);
 
         // console.log('PRIVATE KEY', privateKey)
-        if(privateKey) {
+        if (privateKey) {
             const eth = await provider.getBalance(wallet.address);
+            const tokens: MinkeTokenList = {}
+            Object.entries(supportedTokenList).forEach(([key, tokenAddress]) => {
+                const contract = new Contract(tokenAddress, erc20abi, provider);
+                contract.balanceOf(wallet.address).then((balance: BigNumber) => {
+                    tokens[key] = {
+                        contract,
+                        balance
+                    }
+                })
 
+            })
             const balance = {
                 eth,
                 // usd: undefined
                 usd: convertEthToUsd(eth, ethPrice.result.ethusd)
             }
-            return {wallet: new Wallet(privateKey, provider), walletId: wallet.id, balance}
+            return {wallet: new Wallet(privateKey, provider), walletId: wallet.id, balance, tokens}
         }
     }
 
@@ -59,6 +73,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 }
 
 const globalStateInit = createState(initializeWallet)
+
 export function globalWalletState() {
     return globalStateInit;
 

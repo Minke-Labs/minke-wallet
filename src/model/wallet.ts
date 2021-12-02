@@ -1,9 +1,9 @@
-import {BigNumberish, providers, Wallet} from "ethers";
+import {BigNumberish, Contract, providers, Wallet} from "ethers";
 import {generateMnemonic, mnemonicToSeed} from "bip39";
 import {loadObject, saveObject} from "./keychain";
 import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from "expo-secure-store";
 import {find, isEmpty} from "lodash";
-import {parseEther} from "ethers/lib/utils";
+import {parseEther, parseUnits} from "ethers/lib/utils";
 
 export const publicAccessControlOptions: SecureStoreOptions = {
     keychainAccessible: WHEN_UNLOCKED,
@@ -125,15 +125,31 @@ export const provider = new providers.InfuraProvider("ropsten", {
     projectSecret: 'dd052da74d0749e2a0574f4eb4b22898'
 });
 
-export const sendTransaction = async (address: string, to: string, amount: string) => {
-    const signer = provider.getSigner(address)
-    return signer.sendTransaction({
-        to,
-        value: parseEther(amount)
-    })
-}
+export const sendTransaction = async (wallet: Wallet, to: string, amount: string, gasPrice: string, contractAddress: string = '') => {
 
-export const estimateGas = async ():Promise<EstimateGasResponse> => {
+    if (contractAddress) {
+        const signer = provider.getSigner(wallet.address)
+
+
+        const erc20 = new Contract(contractAddress, erc20abi, signer)
+        return erc20.transfer(to, parseUnits(amount))
+        // erc20.deployTransaction()
+    }
+
+
+    const nonce = await provider.getTransactionCount(wallet.address, "latest");
+    const signedTx = await wallet.signTransaction({
+        to,
+        value: parseEther(amount),
+        gasPrice: parseUnits(gasPrice, 'gwei'),
+        gasLimit: 21000,
+        nonce
+        // nonce: state.value.wallet.non
+    })
+    return provider.sendTransaction(signedTx as string)
+
+}
+export const estimateGas = async (): Promise<EstimateGasResponse> => {
     const result = await fetch('https://ethgasstation.info/api/ethgasAPI.json?c7f3543e2274a227ad0f60c97ba1a22abd5c950cc27c25a9ecd7d1a766f0');
     return result.json();
 }
@@ -142,6 +158,30 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
     const result = await fetch('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N')
     return result.json();
 }
+
+export const erc20abi = [
+            // Read-Only Functions
+            "function balanceOf(address owner) view returns (uint256)",
+            "function decimals() view returns (uint8)",
+            "function symbol() view returns (string)",
+
+            // Authenticated Functions
+            "function transfer(address to, uint amount) returns (bool)",
+
+            // Events
+            "event Transfer(address indexed from, address indexed to, uint amount)"
+        ];
+
+export const supportedTokenList = {
+    'dai': '0x31f42841c2db5173425b5223809cf3a38fede360'
+}
+export interface MinkeTokenList {
+    [name: string]: {
+        contract: Contract,
+        balance: BigNumberish
+    }
+}
+
 
 
 export interface MinkeWallet {
