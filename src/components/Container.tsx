@@ -1,7 +1,7 @@
-import {View} from "react-native";
+import { View } from "react-native";
 import React from "react";
 
-export default function Container({children}: any) {
+export default function Container({ children }: any) {
     return (
         <View style={{
             flex: 1,
