@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Image } from "react-native";
+import { Image, Text } from "react-native";
 import { Button } from 'react-native-paper';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../../App";
@@ -26,9 +26,12 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 
 	return (
 		<WelcomeContainer>
-			<Image source={image} style={{ width: 300 }} />
-			<MainText>Wave goodbye to your bank 👋</MainText>
-			<SecondaryText>Easily save, spend and invest with Minke</SecondaryText>
+			<Image source={image} style={styles.headerImage} />
+			<MainText>Wave goodbye to your bank!</MainText>
+			<SecondaryText>
+				Easily save, spend and invest with
+				<Text style={styles.textBold}> Minke </Text>
+			</SecondaryText>
 			<PrimaryButton onPress={onCreateWallet}>
 				Create Wallet
 			</PrimaryButton>
