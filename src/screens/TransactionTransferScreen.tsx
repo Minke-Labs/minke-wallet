@@ -1,136 +1,90 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-import React from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Alert, View } from 'react-native';
-import { Appbar, Button, Card, RadioButton, Text, TextInput } from 'react-native-paper';
-import { CommonActions, useRoute } from '@react-navigation/native';
-import { useState } from '@hookstate/core';
-import { isNaN } from 'lodash';
-import AppLoading from 'expo-app-loading';
-import { estimateGas, sendTransaction } from '../model/wallet';
-import { globalWalletState } from '../stores/WalletStore';
-import { RootRouteProps, RootStackParamList } from '../helpers/param-list-type';
+import {NativeStackScreenProps} from "@react-navigation/native-stack";
+import {Alert, View} from "react-native";
+import {Appbar, Button, Card, RadioButton, Text, TextInput} from "react-native-paper";
+import React from "react";
+import {CommonActions, useRoute} from "@react-navigation/native";
+import {useState} from "@hookstate/core";
+import {estimateGas, sendTransaction} from "../model/wallet";
+import {globalWalletState} from "../stores/WalletStore";
+import {isNaN} from "lodash";
+import AppLoading from "expo-app-loading";
+import {RootRouteProps, RootStackParamList} from "../helpers/param-list-type";
 
-export function TransactionTransferScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
+export function TransactionTransferScreen({navigation}: NativeStackScreenProps<RootStackParamList>) {
 	const route = useRoute<RootRouteProps<'TransactionTransfer'>>();
 	const amount = useState('');
 	const state = globalWalletState();
 	const gasPrice = useState(estimateGas);
 	const selectedGasPrice = useState('0');
 	if (gasPrice.promised) {
-		return <AppLoading />;
+		return <AppLoading/>
 	}
 	if (gasPrice.error) {
-		return <Text>Could not get Gas Prices</Text>;
+		return <Text>Could not get Gas Prices</Text>
 	}
 	const onAmountChange = (text: string) => {
-		if (!isNaN(text)) amount.set(text);
-	};
+		if (!isNaN(text))
+			amount.set(text);
 
-	const backToWallet = () => {
-		navigation.dispatch(CommonActions.reset({ index: 1, routes: [{ name: 'Wallet' }] }));
-	};
-
+	}
 	const onTransfer = async () => {
-		// eslint-disable-next-line spaced-comment
-		/*const tx = {
-            to: route.params.address,
-            value: parseEther(amount.value),
-        };
-        console.log(tx)
-        // const estimateGasLimits = await estimateGas();
-        // console.log(estimateGasLimits);
-        const gasPrice = await provider.getGasPrice()
-        // console.log(formatUnits(gasLimit, 'wei'))
-        const nonce = await provider.getTransactionCount(state.value.wallet?.address || '', "pending");
-        const signedTx = await state.value.wallet?.signTransaction({
-            ...tx,
-            gasPrice: parseUnits(selectedGasPrice.value, 'gwei'),
-            gasLimit: 21000,
-            nonce
-            // nonce: state.value.wallet.non
-        })
-
-        const result = await provider.sendTransaction(signedTx as string).then(r => {
-            Alert.alert('Success', 'Transaction successful', [
-                {
-                    text: 'OK',
-                    onPress: () => navigation.dispatch(CommonActions.reset({index: 1, routes: [{name: 'Wallet'}]}))
-                },
-            ]);
-            return r
-        }).catch(err => console.log(err));
-        // const result = await sendTransaction(state.value.wallet?.address as string,
-					transferTo.value.to, transferTo.value.amount)
-        console.log(result, 'adasdaaaaaaaa')*/
+		
 		if (state.value.wallet) {
-			const contractAddress = state.value.tokens?.[route.params.coin].contract.address || '';
+			const contractAddress = state.value.tokens?.[route.params.coin]?.contract?.address || '';
 			console.log('CONTRACT address', contractAddress);
-			sendTransaction(
-				state.value.wallet,
-				route.params.address,
-				amount.value,
-				selectedGasPrice.value,
-				contractAddress
-			)
-				.then((r) => {
-					console.log(r);
-					Alert.alert('Success', 'Transaction successful', [
-						{
-							text: 'OK',
-							onPress: backToWallet
-						}
-					]);
-				})
-				.catch((err) => console.log(err));
+			sendTransaction(state.value.wallet, route.params.address, amount.value, selectedGasPrice.value, contractAddress).then(r => {
+				console.log(r)
+				Alert.alert('Success', 'Transaction successful', [
+					{
+						text: 'OK',
+						onPress: () => navigation.dispatch(CommonActions.reset({index: 1, routes: [{name: 'Wallet'}]}))
+					},
+				]);
+			}).catch(err => console.log(err));
 		}
-	};
+	}
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={{flex: 1}}>
 			<Appbar.Header>
-				<Appbar.Content title="Transfer" />
+				<Appbar.Content title="Transfer"/>
 			</Appbar.Header>
 
-			<Card style={{ flex: 1, margin: 5 }}>
+			<Card style={{flex: 1, margin: 5}}>
 				<Text>Transfer to address: {route.params.address}</Text>
-				<TextInput
-					keyboardType="number-pad"
-					label="Amount"
-					value={amount.value}
-					onChangeText={onAmountChange}
-				/>
-				<View
-					style={{
-						flex: 0,
-						flexBasis: 200,
-						flexDirection: 'row',
-						alignItems: 'flex-start',
-						justifyContent: 'flex-start'
-					}}
-				>
+				<TextInput keyboardType={'number-pad'} label={'Amount'} value={amount.value}
+									 onChangeText={onAmountChange}/>
+				<View style={{
+					flex: 0,
+					flexBasis: 200,
+					flexDirection: "row",
+					alignItems: "flex-start",
+					justifyContent: "flex-start"
+				}}>
 					<Text>Transaction Waiting times</Text>
-					<RadioButton.Group
-						onValueChange={(newValue) => selectedGasPrice.set(newValue)}
-						value={selectedGasPrice.value}
-					>
-						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+					<RadioButton.Group onValueChange={newValue => selectedGasPrice.set(newValue)}
+														 value={selectedGasPrice.value}>
+						<View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
 							<Text>Fastest wait {gasPrice.value.fastestWait}</Text>
-							<RadioButton value={gasPrice.value.fastest.toString()} />
+							<RadioButton value={gasPrice.value.fastest.toString()}/>
 						</View>
 
-						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+						<View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
 							<Text>Fast wait{gasPrice.value.fastWait}</Text>
-							<RadioButton value={gasPrice.value.fast.toString()} />
+							<RadioButton value={gasPrice.value.fast.toString()}/>
 						</View>
-						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+						<View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
 							<Text>Safe low wait {gasPrice.value.safeLowWait}</Text>
-							<RadioButton value={gasPrice.value.safeLow.toString()} />
+							<RadioButton value={gasPrice.value.safeLow.toString()}/>
 						</View>
+
+
 					</RadioButton.Group>
 				</View>
 
+
 				<Button onPress={onTransfer}>Transfer</Button>
 			</Card>
+
 		</View>
-	);
+	)
 }
