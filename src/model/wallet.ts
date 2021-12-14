@@ -121,8 +121,8 @@ export const savePrivateKey = async (
 
 
 export const provider = new providers.InfuraProvider("ropsten", {
-    projectId: '20d883398faf4226ad3f049ffcd83654',
-    projectSecret: 'dd052da74d0749e2a0574f4eb4b22898'
+    projectId: process.env.INFURA_API_KEY,
+    projectSecret: process.env.INFURA_PROJECT_SECRET
 });
 
 export const sendTransaction = async (wallet: Wallet, to: string, amount: string, gasPrice: string, contractAddress: string = '') => {
