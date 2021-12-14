@@ -28,7 +28,7 @@ export function TransactionTransferScreen({navigation}: NativeStackScreenProps<R
 
 	}
 	const onTransfer = async () => {
-		
+
 		if (state.value.wallet) {
 			const contractAddress = state.value.tokens?.[route.params.coin]?.contract?.address || '';
 			console.log('CONTRACT address', contractAddress);
