@@ -27,7 +27,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
       <View style={styles.backupWordContainer}>
         {seed.value?.split(' ').map((word, index) => {
           return (
-            <Text key={word}>
+            <Text key={word} style={styles.backupWordItem}>
               <View style={styles.backupWordNumberPadding}>
                 <Text style={styles.backupWordNumber}>{index + 1}</Text>
               </View>
@@ -36,6 +36,9 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
           );
         })}
       </View>
+
+
+
     </View>
   );
 }

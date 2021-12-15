@@ -12,6 +12,9 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center'
   },
+  backupWordItem : {
+    flexBasis: '50%'
+  },
   backupWordNumberPadding: {
     backgroundColor: '#fff',
     width: 40,
