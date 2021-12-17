@@ -33,7 +33,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
               <View style={styles.backupWordNumberPadding}>
                 <Text style={styles.backupWordNumber}>{index + 1}</Text>
               </View>
-              <View style={styles.backupWordWordPadding}>
+              <View style={styles.backupWordPadding}>
                 <Text style={styles.backupWord}>{word}</Text>
               </View>
             </Text>

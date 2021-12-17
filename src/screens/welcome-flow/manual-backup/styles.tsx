@@ -21,7 +21,6 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
     marginTop: 40
   },
   backupWordItem : {
@@ -41,9 +40,11 @@ export default StyleSheet.create({
     color: '#006AA6',
     fontWeight: 'bold'
   },
-  backupWordWordPadding: {
+  backupWordPadding: {
     paddingLeft: 12,
-    color: '#213952'
+    color: '#213952',
+    flex: 1,
+    justifyContent: 'center'
   },
   copyPastButton: {
     alignItems: 'center',
