@@ -6,14 +6,27 @@ export default StyleSheet.create({
     padding: 32,
     backgroundColor: '#F2EAE1',
   },
+  headline: {
+    fontWeight: '800',
+    fontSize: 24,
+    color: '#213952',
+    marginBottom: 16
+  },
+  subheading: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#213952'
+  },
   backupWordContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center'
+    justifyContent: 'center',
+    marginTop: 40
   },
   backupWordItem : {
-    flexBasis: '50%'
+    flexBasis: '50%',
+    marginBottom: 16
   },
   backupWordNumberPadding: {
     backgroundColor: '#fff',
@@ -27,5 +40,15 @@ export default StyleSheet.create({
   backupWordNumber: {
     color: '#006AA6',
     fontWeight: 'bold'
+  },
+  backupWordWordPadding: {
+    paddingLeft: 12,
+    color: '#213952'
+  },
+  copyPastButton: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 24,
+    borderRadius: 16
   }
 });
