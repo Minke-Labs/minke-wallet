@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import WelcomeContainer from '../WelcomeContainer';
 import { globalWalletState } from '../../../stores/WalletStore';
 import { useState } from '@hookstate/core';
