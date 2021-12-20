@@ -1,18 +1,16 @@
-import {createState} from "@hookstate/core";
-import {loadObject} from "../model/keychain";
-import {ContactItem, getAllContacts} from "../model/contact";
-
+import { createState } from '@hookstate/core';
+import { loadObject } from '../model/keychain';
+import { ContactItem, getAllContacts } from '../model/contact';
 
 export interface ContactState {
-    contactList?: ContactItem[]
+	contactList?: ContactItem[];
 }
 
 export const initializeContacts = async (): Promise<ContactState> => {
-  return {contactList: await getAllContacts()}
-}
+	return { contactList: await getAllContacts() };
+};
 
-const globalStateInit = createState(initializeContacts)
+const globalStateInit = createState(initializeContacts);
 export function globalContactState() {
-    return globalStateInit;
-
+	return globalStateInit;
 }
