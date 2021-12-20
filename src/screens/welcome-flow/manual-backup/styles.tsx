@@ -47,9 +47,16 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   copyPastButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 24,
     borderRadius: 16
+  },
+  imageCopyPast: {
+    marginRight: 16,
+    width: 16,
+    height: 16
   }
 });

@@ -9,6 +9,7 @@ import { RootStackParamList } from '../../../../App';
 import { getSeedPhrase } from '../../../model/wallet';
 import { Headline, Subheading, List, Icon } from 'react-native-paper';
 import styles from './styles';
+import imageCopyPast from "./icon-copy-and-past.png";
 
 export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
   const walletState = useState(globalWalletState());
@@ -42,11 +43,15 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
       </View>
 
       <TouchableOpacity style={styles.copyPastButton}>
+        <Image
+          source={imageCopyPast}
+          style={styles.imageCopyPast}
+        />
         <Text>
           Copy to clipboard
         </Text>
       </TouchableOpacity>
-
+      
     </View>
   );
 }
