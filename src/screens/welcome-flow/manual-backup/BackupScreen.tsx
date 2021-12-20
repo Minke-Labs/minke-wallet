@@ -1,50 +1,80 @@
 import React, { useCallback } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, useColorScheme } from 'react-native';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Headline, Subheading } from 'react-native-paper';
+import { Headline, Subheading, Snackbar, useTheme } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 import { RootStackParamList } from '../../../helpers/param-list-type';
 import { getSeedPhrase } from '../../../model/wallet';
 import { globalWalletState } from '../../../stores/WalletStore';
 import styles from './styles';
-import imageCopyPast from './icon-copy-and-past.png';
+import WelcomeContainer from '../WelcomeContainer';
 
 export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
+	const snackbarVisible = useState(false);
 	const onFinish = useCallback(() => navigation.navigate('Wallet'), [navigation]);
+	const scheme = useColorScheme();
+	const { colors } = useTheme();
 
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
 	const seed = useState(loadSeed);
 	if (seed.promised) return <AppLoading />;
+
+	const onCopyToClipboard = () => {
+		Clipboard.setString(seed.value || '');
+		snackbarVisible.set(true);
+	};
+
 	return (
-		<View style={styles.container}>
-			<Headline style={styles.headline}>Recovery phrase</Headline>
-			<Subheading style={styles.subheading}>
+		<WelcomeContainer style={styles.container}>
+			<Headline style={[styles.headline, { color: colors.text }]}>Recovery phrase</Headline>
+			<Subheading style={[styles.subheading, { color: colors.placeholder }]}>
 				Write this down on paper or save it in your password manager.
 			</Subheading>
 
 			<View style={styles.backupWordContainer}>
 				{seed.value?.split(' ').map((word, index) => (
 					<Text key={word} style={styles.backupWordItem}>
-						<View style={styles.backupWordNumberPadding}>
-							<Text style={styles.backupWordNumber}>{index + 1}</Text>
+						<View
+							style={[
+								styles.backupWordNumberPadding,
+								{ backgroundColor: scheme === 'dark' ? '' : '#FFF' }
+							]}
+						>
+							<Text
+								style={[styles.backupWordNumber, { color: scheme === 'dark' ? '#FFFFFF' : '#006AA6' }]}
+							>
+								{index + 1}
+							</Text>
 						</View>
 						<View style={styles.backupWordPadding}>
-							<Text>{word}</Text>
+							<Text style={{ color: colors.text }}>{word}</Text>
 						</View>
 					</Text>
 				))}
 			</View>
 
-			<TouchableOpacity style={styles.copyPastButton}>
-				<Image source={imageCopyPast} />
-				<Text>Copy to clipboard</Text>
+			<TouchableOpacity
+				onPress={onCopyToClipboard}
+				style={[
+					styles.copyPasteButton,
+					{ backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF' }
+				]}
+			>
+				<MaterialIcons name="content-copy" size={16} color={colors.text} style={styles.imageCopyPaste} />
+				<Text style={{ color: colors.text }}>Copy to clipboard</Text>
 			</TouchableOpacity>
 
-			<TouchableOpacity style={styles.copyPastButton} onPress={onFinish}>
-				<Text>Done</Text>
+			<TouchableOpacity onPress={onFinish}>
+				<Text style={{ color: colors.text }}>Done</Text>
 			</TouchableOpacity>
-		</View>
+
+			<Snackbar onDismiss={() => snackbarVisible.set(false)} visible={snackbarVisible.value}>
+				Copied!
+			</Snackbar>
+		</WelcomeContainer>
 	);
 }

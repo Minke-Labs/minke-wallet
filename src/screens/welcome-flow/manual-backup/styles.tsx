@@ -34,19 +34,19 @@ export default StyleSheet.create({
 		padding: 12,
 		alignItems: 'center',
 		justifyContent: 'center',
-		borderRadius: 12
+		borderRadius: 12,
+		borderColor: 'rgba(255, 255, 255, .2)',
+		borderWidth: 0.5
 	},
 	backupWordNumber: {
-		color: '#006AA6',
 		fontWeight: 'bold'
 	},
 	backupWordPadding: {
 		paddingLeft: 12,
-		color: '#213952',
 		flex: 1,
 		justifyContent: 'center'
 	},
-	copyPastButton: {
+	copyPasteButton: {
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -54,9 +54,7 @@ export default StyleSheet.create({
 		padding: 24,
 		borderRadius: 16
 	},
-	imageCopyPast: {
-		marginRight: 16,
-		width: 16,
-		height: 16
+	imageCopyPaste: {
+		marginRight: 16
 	}
 });
