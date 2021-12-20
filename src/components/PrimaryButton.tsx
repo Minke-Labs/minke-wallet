@@ -1,33 +1,36 @@
-import React from "react";
+import React from 'react';
 import { Button, useTheme } from 'react-native-paper';
 
 interface Props {
-  children: any;
-  onPress: Function;
-  mode?: string
+	children: any;
+	onPress: Function;
+	mode?: string;
+	icon?: any;
 }
 
-const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = "contained" }: any) => {
-  const { colors } = useTheme();
-  return (
-    <Button
-      theme={{ roundness: 30 }}
-      mode={mode}
-      onPress={onPress}
-      uppercase={false}
-      labelStyle={{
-        fontSize: 16,
-        color: mode == "contained" ? colors.buttonText : colors.linkText
-      }}
-      style={{
-        alignSelf: "stretch",
-        marginHorizontal: 20,
-        padding: 10
-      }}
-    >
-      {children}
-    </Button>
-  )
-}
+const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained', icon }: any) => {
+	const { colors } = useTheme();
+	return (
+		<Button
+			theme={{ roundness: 30 }}
+			mode={mode}
+			onPress={onPress}
+			uppercase={false}
+			labelStyle={{
+				fontSize: 16,
+				color: mode === 'contained' ? colors.buttonText : colors.linkText
+			}}
+			style={{
+				alignSelf: 'stretch',
+				marginHorizontal: 20,
+				padding: 10
+			}}
+			icon={icon}
+			contentStyle={{ flexDirection: 'row-reverse' }}
+		>
+			{children}
+		</Button>
+	);
+};
 
 export default PrimaryButton;

@@ -10,13 +10,13 @@ import {
 	useFonts
 } from '@expo-google-fonts/dm-sans';
 import AppLoading from 'expo-app-loading';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import WelcomeScreen from './src/screens/welcome-flow/welcome/WelcomeScreen';
-import WalletCreatedScreen from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
+import { WalletCreatedScreen } from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
 import { BackupScreen } from './src/screens/welcome-flow/manual-backup/BackupScreen';
 import { WalletScreen } from './src/screens/WalletScreen';
 import { globalWalletState } from './src/stores/WalletStore';
@@ -25,19 +25,7 @@ import { TransactionContactsScreen } from './src/screens/TransactionContactsScre
 import { TransactionTransferScreen } from './src/screens/TransactionTransferScreen';
 import { ContactCreateScreen } from './src/screens/ContactCreateScreen';
 import { darkTheme, lightTheme } from './src/helpers/themes';
-
-export type RootStackParamList = {
-	Welcome: undefined; // undefined because you aren't passing any params to the home screen
-	Backup: undefined;
-	Wallet: undefined;
-	WalletCreated: undefined;
-	TransactionSelectFunds: undefined;
-	TransactionContacts: { coin: string };
-	TransactionTransfer: { coin: string; address: string };
-	ContactCreate: undefined;
-};
-
-export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<RootStackParamList, RouteName>;
+import { RootStackParamList } from './src/helpers/param-list-type';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
