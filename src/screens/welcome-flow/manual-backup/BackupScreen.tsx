@@ -30,6 +30,16 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 	return (
 		<WelcomeContainer style={styles.container}>
+
+			<View style={styles.headerNavegation}>
+				<TouchableOpacity onPress={onFinish}>
+					<MaterialIcons name="arrow-back-ios" size={16} color={colors.primary} style={styles.contentCopy} />
+				</TouchableOpacity>
+				<TouchableOpacity onPress={onFinish}>
+					<Text style={{ color: colors.primary }}>Done</Text>
+				</TouchableOpacity>
+			</View>
+
 			<Headline style={[styles.headline, { color: colors.text }]}>Recovery phrase</Headline>
 			<Subheading style={[styles.subheading, { color: colors.placeholder }]}>
 				Write this down on paper or save it in your password manager.
@@ -64,15 +74,11 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					{ backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF' }
 				]}
 			>
-				<MaterialIcons name="content-copy" size={16} color={colors.text} style={styles.imageCopyPaste} />
+				<MaterialIcons name="content-copy" size={16} color={colors.text} style={styles.contentCopy} />
 				<Text style={{ color: colors.text }}>Copy to clipboard</Text>
 			</TouchableOpacity>
 
-			<TouchableOpacity onPress={onFinish}>
-				<Text style={{ color: colors.text }}>Done</Text>
-			</TouchableOpacity>
-
-			<Snackbar onDismiss={() => snackbarVisible.set(false)} visible={snackbarVisible.value}>
+			<Snackbar onDismiss={() => snackbarVisible.set(false)} visible={snackbarVisible.value} style={styles.snackbar}>
 				Copied!
 			</Snackbar>
 		</WelcomeContainer>

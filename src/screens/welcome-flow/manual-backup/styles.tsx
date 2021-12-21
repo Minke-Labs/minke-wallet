@@ -3,19 +3,22 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 32,
-		backgroundColor: '#F2EAE1'
+		padding: 32
 	},
+  headerNavegation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 16
+  },
 	headline: {
 		fontWeight: '800',
 		fontSize: 24,
-		color: '#213952',
 		marginBottom: 16
 	},
 	subheading: {
 		fontSize: 16,
-		fontWeight: '500',
-		color: '#213952'
+		fontWeight: '500'
 	},
 	backupWordContainer: {
 		flex: 1,
@@ -54,7 +57,10 @@ export default StyleSheet.create({
 		padding: 24,
 		borderRadius: 16
 	},
-	imageCopyPaste: {
-		marginRight: 16
-	}
+	contentCopy: {
+		marginRight: 8
+	},
+  snackbar : {
+    width: '100%'
+  }
 });
