@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { RootStackParamList } from '../../../helpers/param-list-type';
@@ -25,15 +25,17 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 	return (
 		<WelcomeContainer>
 			<Image source={image} style={styles.headerImage} />
-			<MainText>Wave goodbye to your bank!</MainText>
-			<SecondaryText>
-				Easily save, spend and invest with
-				<Text style={styles.textBold}> Minke </Text>
-			</SecondaryText>
-			<PrimaryButton onPress={onCreateWallet}>Create Wallet</PrimaryButton>
-			<PrimaryButton onPress={() => console.log('Import wallet')} mode="text">
-				Import wallet
-			</PrimaryButton>
+			<View style={styles.content}>
+				<MainText>Wave goodbye to your bank!</MainText>
+				<SecondaryText>
+					Easily save, spend and invest with
+					<Text style={styles.textBold}> Minke </Text>
+				</SecondaryText>
+				<PrimaryButton onPress={onCreateWallet}>Create Wallet</PrimaryButton>
+				<PrimaryButton onPress={() => console.log('Import wallet')} mode="text">
+					Import wallet
+				</PrimaryButton>
+			</View>
 		</WelcomeContainer>
 	);
 }

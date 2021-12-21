@@ -4,8 +4,10 @@ import { useTheme } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 17,
-    textAlign: "center"
+    fontSize: 18,
+    lineHeight: 21.78,
+    textAlign: "center",
+    marginBottom: 40
   },
 })
 

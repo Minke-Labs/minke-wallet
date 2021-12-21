@@ -6,7 +6,10 @@ export default StyleSheet.create({
     width: 250,
     marginLeft: -200
   },
-  textBold: {
-    fontWeight: 'bold',
+  content: {
+    padding: 32
   },
+  textBold: {
+    fontWeight: 'bold'
+  }
 });
