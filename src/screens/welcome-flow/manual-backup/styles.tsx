@@ -8,7 +8,7 @@ export default StyleSheet.create({
   headerNavegation: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 16,
+    marginTop: 24,
     marginBottom: 16
   },
 	headline: {
