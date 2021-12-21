@@ -32,7 +32,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		<WelcomeContainer style={styles.container}>
 
 			<View style={styles.headerNavegation}>
-				<TouchableOpacity onPress={onFinish}>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
 					<MaterialIcons name="arrow-back-ios" size={16} color={colors.primary} style={styles.contentCopy} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={onFinish}>
