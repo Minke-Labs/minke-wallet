@@ -22,7 +22,6 @@ const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained',
 			}}
 			style={{
 				alignSelf: 'stretch',
-				marginHorizontal: 20,
 				padding: 10
 			}}
 			icon={icon}

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
@@ -10,6 +10,7 @@ import WelcomeContainer from '../WelcomeContainer';
 import MainText from '../MainText';
 import SecondaryText from '../SecondaryText';
 import PrimaryButton from '../../../components/PrimaryButton';
+import styles from './styles';
 import logo from './wallet-created.png';
 import { getSeedPhrase } from '../../../model/wallet';
 import { globalWalletState } from '../../../stores/WalletStore';
@@ -54,29 +55,33 @@ export function WalletCreatedScreen({ navigation }: NativeStackScreenProps<RootS
 
 	return (
 		<WelcomeContainer>
-			<Image source={logo} style={{ width: 300 }} />
-			<MainText>Wallet created!</MainText>
-			<SecondaryText>Your keys your coin. Backup your wallet incase of loss.</SecondaryText>
-			<PrimaryButton
-				onPress={backupOnKeychain}
-				icon={() => (
-					<Entypo
-						name="icloud"
-						size={24}
-						color="white"
-						style={[
-							{
-								transform: [{ scaleX: -1 }]
-							}
-						]}
-					/>
-				)}
-			>
-				Back up to iCloud Keychain
-			</PrimaryButton>
-			<PrimaryButton onPress={backupManually} mode="text">
-				Back up manually
-			</PrimaryButton>
+			<View style={styles.heroImageContainer}>
+				<Image source={logo} style={styles.heroImage} />
+			</View>
+			<View style={styles.content}>
+				<MainText>Wallet created!</MainText>
+				<SecondaryText>Your keys your coin. Backup your wallet incase of loss.</SecondaryText>
+				<PrimaryButton
+					onPress={backupOnKeychain}
+					icon={() => (
+						<Entypo
+							name="icloud"
+							size={24}
+							color="white"
+							style={[
+								{
+									transform: [{ scaleX: -1 }]
+								}
+							]}
+						/>
+					)}
+				>
+					Back up to iCloud Keychain
+				</PrimaryButton>
+				<PrimaryButton onPress={backupManually} mode="text">
+					Back up manually
+				</PrimaryButton>
+			</View>
 		</WelcomeContainer>
 	);
 }

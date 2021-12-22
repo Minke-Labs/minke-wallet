@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, ImageBackground } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { RootStackParamList } from '../../../helpers/param-list-type';
@@ -11,6 +11,7 @@ import SecondaryText from '../SecondaryText';
 import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles';
 import image from './welcome.png';
+import backgroundTop from './wave-welcome-header.svg';
 
 export default function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const walletState = useState(globalWalletState());

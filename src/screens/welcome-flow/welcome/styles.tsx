@@ -11,5 +11,8 @@ export default StyleSheet.create({
   },
   textBold: {
     fontWeight: 'bold'
+  },
+  backgroundTop: {
+    flex: 1
   }
 });
