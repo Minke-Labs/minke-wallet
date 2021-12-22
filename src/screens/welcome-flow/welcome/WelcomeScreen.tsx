@@ -11,7 +11,8 @@ import SecondaryText from '../SecondaryText';
 import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles';
 import image from './welcome.png';
-import backgroundTop from './wave-welcome-header.svg';
+import backgroundTop from './wave-welcome-header.png';
+import backgroundBottom from './wave-welcome-footer.png';
 
 export default function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const walletState = useState(globalWalletState());
@@ -27,6 +28,10 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 		<WelcomeContainer>
 			<View style={styles.content}>
 				<Image source={image} style={styles.headerImage} />
+				<Image
+					source={backgroundTop}
+					style={styles.backgroundTop}
+				/>
 				<MainText>Wave goodbye to your bank!</MainText>
 				<SecondaryText>
 					Easily save, spend and invest with
@@ -37,6 +42,10 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 					Import wallet
 				</PrimaryButton>
 			</View>
+			<Image
+				source={backgroundBottom}
+				style={styles.backgroundBottom}
+			/>
 		</WelcomeContainer>
 	);
 }
