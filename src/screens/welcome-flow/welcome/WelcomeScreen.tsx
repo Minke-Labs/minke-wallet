@@ -25,8 +25,8 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 
 	return (
 		<WelcomeContainer>
-			<Image source={image} style={styles.headerImage} />
 			<View style={styles.content}>
+				<Image source={image} style={styles.headerImage} />
 				<MainText>Wave goodbye to your bank!</MainText>
 				<SecondaryText>
 					Easily save, spend and invest with

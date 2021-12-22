@@ -4,7 +4,8 @@ export default StyleSheet.create({
   headerImage: {
     resizeMode: 'cover',
     width: 250,
-    marginLeft: -200
+    marginLeft: -40,
+    marginBottom: 32
   },
   content: {
     padding: 32
