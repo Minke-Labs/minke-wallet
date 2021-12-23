@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Image, Text, View, ImageBackground } from 'react-native';
+import { Image, Text, View, ImageBackground, useColorScheme } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { RootStackParamList } from '../../../helpers/param-list-type';
@@ -12,10 +12,14 @@ import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles';
 import image from './welcome.png';
 import backgroundTop from './wave-welcome-header.png';
+import backgroundTopDark from './wave-welcome-header-dark.png';
 import backgroundBottom from './wave-welcome-footer.png';
+import backgroundBottomDark from './wave-welcome-footer-dark.png';
 
 export default function WelcomeScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const walletState = useState(globalWalletState());
+
+	const scheme = useColorScheme();
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
@@ -29,7 +33,7 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 			<View style={styles.content}>
 				<Image source={image} style={styles.headerImage} />
 				<Image
-					source={backgroundTop}
+					source={scheme === 'dark' ? backgroundTopDark : backgroundTop }
 					style={styles.backgroundTop}
 				/>
 				<MainText>Wave goodbye to your bank!</MainText>
@@ -43,7 +47,7 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 				</PrimaryButton>
 			</View>
 			<Image
-				source={backgroundBottom}
+				source={scheme === 'dark' ? backgroundBottomDark : backgroundBottom }
 				style={styles.backgroundBottom}
 			/>
 		</WelcomeContainer>
