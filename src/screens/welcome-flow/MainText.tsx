@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
 	mainText: {
 		fontSize: 36,
 		lineHeight: 43,
-		fontFamily: 'DMSans_700Bold',
+		fontFamily: 'Inter_700Bold',
 		textAlign: 'center',
 		marginBottom: 16
 	}
