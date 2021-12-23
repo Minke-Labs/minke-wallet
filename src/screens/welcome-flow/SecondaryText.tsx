@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		lineHeight: 21.78,
 		textAlign: 'center',
-		fontFamily: 'Inter_400Regular',
+		fontFamily: 'Inter_500Medium',
 		marginBottom: 40
 	}
 });

@@ -4,7 +4,7 @@ export default StyleSheet.create({
 	headerImage: {
 		resizeMode: 'cover',
 		width: 250,
-		marginLeft: -40,
+		marginLeft: -56,
 		marginBottom: 32,
 		zIndex: 10
 	},
@@ -21,7 +21,7 @@ export default StyleSheet.create({
 		zIndex: -1
 	},
 	content: {
-		padding: 32,
+		padding: 48,
 		position: 'relative'
 	},
 	textBold: {
