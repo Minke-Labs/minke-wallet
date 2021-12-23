@@ -33,10 +33,13 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 			<View style={styles.headerNavegation}>
 				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<MaterialIcons name="arrow-back-ios" size={16} color={colors.primary} style={styles.contentCopy} />
+					<MaterialIcons name="arrow-back-ios" size={16} color={scheme === 'dark' ? '#FFF' : colors.primary} style={styles.contentCopy} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={onFinish}>
-					<Text style={{ color: colors.primary }}>Done</Text>
+					<Text style={{ color: scheme === 'dark' ? '#FFF' : colors.primary }}>
+						Done
+					</Text>
+
 				</TouchableOpacity>
 			</View>
 
