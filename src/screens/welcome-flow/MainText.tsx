@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
 	mainText: {
 		fontSize: 36,
 		lineHeight: 43,
-		fontFamily: 'Inter_700Bold',
+		fontFamily: 'Inter_800ExtraBold',
 		textAlign: 'center',
 		marginBottom: 16
 	}

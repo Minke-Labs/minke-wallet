@@ -32,10 +32,7 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 		<WelcomeContainer>
 			<View style={styles.content}>
 				<Image source={image} style={styles.headerImage} />
-				<Image
-					source={scheme === 'dark' ? backgroundTopDark : backgroundTop }
-					style={styles.backgroundTop}
-				/>
+				<Image source={scheme === 'dark' ? backgroundTopDark : backgroundTop} style={styles.backgroundTop} />
 				<MainText>Wave goodbye to your bank!</MainText>
 				<SecondaryText>
 					Easily save, spend and invest with
@@ -47,7 +44,7 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 				</PrimaryButton>
 			</View>
 			<Image
-				source={scheme === 'dark' ? backgroundBottomDark : backgroundBottom }
+				source={scheme === 'dark' ? backgroundBottomDark : backgroundBottom}
 				style={styles.backgroundBottom}
 			/>
 		</WelcomeContainer>

@@ -30,6 +30,7 @@ export const lightTheme = {
 	colors: {
 		...DefaultTheme.colors,
 		background: '#F2EAE1',
+		text: '#05222D',
 		placeholder: '#213952',
 		primary: '#006AA6',
 		buttonText: '#FFFFFF',
