@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Image, Text, View, ImageBackground, useColorScheme } from 'react-native';
+import { Image, Text, View, useColorScheme } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { RootStackParamList } from '../../../helpers/param-list-type';
