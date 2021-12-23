@@ -1,14 +1,12 @@
 import React from 'react';
 
 import {
-	DMSans_400Regular,
-	DMSans_400Regular_Italic,
-	DMSans_500Medium,
-	DMSans_500Medium_Italic,
-	DMSans_700Bold,
-	DMSans_700Bold_Italic,
+	Inter_400Regular,
+	Inter_700Bold,
+	Inter_800ExtraBold,
+	Inter_500Medium,
 	useFonts
-} from '@expo-google-fonts/dm-sans';
+} from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -33,12 +31,10 @@ export default function App() {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
 	const [fontsLoaded] = useFonts({
-		DMSans_400Regular,
-		DMSans_400Regular_Italic,
-		DMSans_500Medium,
-		DMSans_500Medium_Italic,
-		DMSans_700Bold,
-		DMSans_700Bold_Italic
+		Inter_400Regular,
+		Inter_700Bold,
+		Inter_800ExtraBold,
+		Inter_500Medium
 	});
 	if (!fontsLoaded || walletState.promised) return <AppLoading />;
 	const initialScreen = walletState.value?.wallet ? 'Wallet' : 'Welcome';
