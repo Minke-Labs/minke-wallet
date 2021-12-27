@@ -5,12 +5,12 @@ export default StyleSheet.create({
 		flex: 1,
 		padding: 32
 	},
-  headerNavegation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 24,
-    marginBottom: 16
-  },
+	headerNavegation: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginTop: 24,
+		marginBottom: 16
+	},
 	headline: {
 		fontWeight: '800',
 		fontSize: 24,
@@ -60,7 +60,7 @@ export default StyleSheet.create({
 	contentCopy: {
 		marginRight: 8
 	},
-  snackbar : {
-    width: '100%'
-  }
+	snackbar: {
+		width: '100%'
+	}
 });

@@ -30,16 +30,17 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 	return (
 		<WelcomeContainer style={styles.container}>
-
 			<View style={styles.headerNavegation}>
 				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<MaterialIcons name="arrow-back-ios" size={16} color={scheme === 'dark' ? '#FFF' : colors.primary} style={styles.contentCopy} />
+					<MaterialIcons
+						name="arrow-back-ios"
+						size={16}
+						color={scheme === 'dark' ? '#FFF' : colors.primary}
+						style={styles.contentCopy}
+					/>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={onFinish}>
-					<Text style={{ color: scheme === 'dark' ? '#FFF' : colors.primary }}>
-						Done
-					</Text>
-
+					<Text style={{ color: scheme === 'dark' ? '#FFF' : colors.primary }}>Done</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -81,7 +82,11 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 				<Text style={{ color: colors.text }}>Copy to clipboard</Text>
 			</TouchableOpacity>
 
-			<Snackbar onDismiss={() => snackbarVisible.set(false)} visible={snackbarVisible.value} style={styles.snackbar}>
+			<Snackbar
+				onDismiss={() => snackbarVisible.set(false)}
+				visible={snackbarVisible.value}
+				style={styles.snackbar}
+			>
 				Copied!
 			</Snackbar>
 		</WelcomeContainer>
