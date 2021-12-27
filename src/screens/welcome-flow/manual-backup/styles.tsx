@@ -5,7 +5,7 @@ export default StyleSheet.create({
 		flex: 1,
 		paddingLeft: 32,
 		paddingRight: 32,
-		justifyContent: 'space-around'
+		justifyContent: 'space-evenly'
 	},
 	headerNavegation: {
 		flexDirection: 'row',
