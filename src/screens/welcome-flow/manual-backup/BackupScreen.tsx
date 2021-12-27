@@ -44,14 +44,14 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 				</TouchableOpacity>
 			</View>
 
-			<Headline style={[styles.headline, { color: colors.text }]}>Recovery phrase</Headline>
-			<Subheading style={[styles.subheading, { color: colors.placeholder }]}>
-				Write this down on paper or save it in your password manager.
-			</Subheading>
-
 			<View style={styles.backupWordContainer}>
+				<Headline style={[styles.headline, { color: colors.text }]}>Recovery phrase</Headline>
+				<Subheading style={[styles.subheading, { color: colors.placeholder }]}>
+					Write this down on paper or save it in your password manager.
+				</Subheading>
+
 				{seed.value?.split(' ').map((word, index) => (
-					<Text key={word} style={styles.backupWordItem}>
+					<View key={word} style={styles.backupWordItem}>
 						<View
 							style={[
 								styles.backupWordNumberPadding,
@@ -67,28 +67,27 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 						<View style={styles.backupWordPadding}>
 							<Text style={{ color: colors.text }}>{word}</Text>
 						</View>
-					</Text>
+					</View>
 				))}
+				<TouchableOpacity
+					onPress={onCopyToClipboard}
+					style={[
+						styles.copyPasteButton,
+						{ backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF' }
+					]}
+				>
+					<MaterialIcons name="content-copy" size={16} color={colors.text} style={styles.contentCopy} />
+					<Text style={{ color: colors.text }}>Copy to clipboard</Text>
+				</TouchableOpacity>
+
+				<Snackbar
+					onDismiss={() => snackbarVisible.set(false)}
+					visible={snackbarVisible.value}
+					style={styles.snackbar}
+				>
+					Copied!
+				</Snackbar>
 			</View>
-
-			<TouchableOpacity
-				onPress={onCopyToClipboard}
-				style={[
-					styles.copyPasteButton,
-					{ backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF' }
-				]}
-			>
-				<MaterialIcons name="content-copy" size={16} color={colors.text} style={styles.contentCopy} />
-				<Text style={{ color: colors.text }}>Copy to clipboard</Text>
-			</TouchableOpacity>
-
-			<Snackbar
-				onDismiss={() => snackbarVisible.set(false)}
-				visible={snackbarVisible.value}
-				style={styles.snackbar}
-			>
-				Copied!
-			</Snackbar>
 		</WelcomeContainer>
 	);
 }
