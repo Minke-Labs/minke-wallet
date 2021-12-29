@@ -1,9 +1,14 @@
+import { joinSignature } from 'ethers/lib/utils';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#F2EAE1'
+	},
+	row: {
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	},
 	paddingContent: {
 		paddingTop: 24,
@@ -89,5 +94,16 @@ export default StyleSheet.create({
 	},
 	appBarUserName: {
 		fontSize: 24
+	},
+	transactionDayRow: {
+		paddingTop: 24,
+		paddingBottom: 24,
+		borderBottomWidth: 1,
+		borderBottomColor: '#000',
+		marginBottom: 24
+	},
+	transactionDateLabel: {
+		color: 'rgba(78, 94, 111, 1)',
+		fontFamily: 'Inter_800ExtraBold'
 	}
 });

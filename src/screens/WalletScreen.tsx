@@ -58,9 +58,15 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					</View>
 					<Appbar.Content title="" />
 					<View style={styles.appBarIcons}>
-						<Text>Icon 1</Text>
-						<Text>Icon 2</Text>
-						<Text>Icon 3</Text>
+						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+							<Text>Icone 1</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+							<Text>Icone 2</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+							<MaterialIcons name="settings" size={20} style={styles.cardButtonIcon} />
+						</TouchableOpacity>
 					</View>
 				</View>
 			</Appbar.Header>
@@ -167,6 +173,40 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 			</SafeAreaView>
 
 			<View style={styles.paddingContent}>
+				<View style={styles.row}>
+					<Text style={styles.transactionDateLabel}>Today</Text>
+					<Text>Day balance: $0.00</Text>
+				</View>
+
+				<View style={styles.transactionDayRow}>
+					<View style={styles.row}>
+						<View style={styles.row}>
+							<Text>Icon out</Text>
+							<View>
+								<Text>7h30 pm</Text>
+								<Text>To jreys.eth</Text>
+							</View>
+						</View>
+						<View>
+							<Text>0.01 ETH</Text>
+							<Text>-$20.00</Text>
+						</View>
+					</View>
+					<View style={styles.row}>
+						<View style={styles.row}>
+							<Text>Icon in</Text>
+							<View>
+								<Text>10h00 pm</Text>
+								<Text>From jreys.eth</Text>
+							</View>
+						</View>
+						<View>
+							<Text>0.01 ETH</Text>
+							<Text>$20.00</Text>
+						</View>
+					</View>
+				</View>
+
 				<Button style={{ marginBottom: 5 }} mode={'contained'} onPress={onTransfer}>
 					Transfer
 				</Button>
