@@ -51,7 +51,18 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	return (
 		<View style={styles.container}>
 			<Appbar.Header>
-				<Appbar.Content title="Minke Wallet" />
+				<View style={styles.appBarContent}>
+					<View>
+						<Text>Welcome</Text>
+						<Text style={styles.appBarUserName}>Marcos</Text>
+					</View>
+					<Appbar.Content title="" />
+					<View style={styles.appBarIcons}>
+						<Text>Icon 1</Text>
+						<Text>Icon 2</Text>
+						<Text>Icon 3</Text>
+					</View>
+				</View>
 			</Appbar.Header>
 
 			<View style={styles.paddingContent}>

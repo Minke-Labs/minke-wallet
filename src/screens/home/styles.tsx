@@ -77,5 +77,17 @@ export default StyleSheet.create({
 		paddingLeft: 16,
 		paddingRight: 16,
 		marginRight: 16
+	},
+	appBarContent: {
+		paddingLeft: 24,
+		paddingRight: 24,
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
+	appBarIcons: {
+		flexDirection: 'row'
+	},
+	appBarUserName: {
+		fontSize: 24
 	}
 });
