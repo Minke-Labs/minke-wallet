@@ -15,6 +15,8 @@ import QRCode from 'react-native-qrcode-svg';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './home/styles';
 import avatar from './home/avatar-test.png';
+import transationalReceive from './home/transational-receive.png';
+import transationalSent from './home/transational-sent.png';
 
 export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const state = useState(globalWalletState());
@@ -71,187 +73,195 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 				</View>
 			</Appbar.Header>
 
-			<View style={styles.paddingContent}>
-				<Card style={styles.card}>
-					<View style={styles.cardTopContent}>
-						<View>
-							<Text style={styles.cardLabel}>Your total assets</Text>
-							<Text style={styles.cardBalance}>${commify(state.value.balance?.usd || '')}</Text>
-						</View>
-						<View>
-							<Image source={avatar} style={styles.avatar} />
-						</View>
-					</View>
-					<View style={styles.cardBottomContent}>
-						<TouchableOpacity onPress={onTransfer} style={(styles.cardActionButton, styles.cardDivisor)}>
-							<MaterialIcons
-								name="add-circle-outline"
-								size={20}
-								color={colors.primary}
-								style={styles.cardButtonIcon}
-							/>
-							<Text>Add funds</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-							<MaterialIcons
-								name="arrow-circle-up"
-								size={20}
-								color={colors.primary}
-								style={styles.cardButtonIcon}
-							/>
-							<Text>Send</Text>
-						</TouchableOpacity>
-					</View>
-				</Card>
-			</View>
-
 			<SafeAreaView>
-				<ScrollView
-					style={styles.scrollviewHorizontal}
-					horizontal={true}
-					showsVerticalScrollIndicator={false}
-					showsHorizontalScrollIndicator={false}
-				>
-					<View style={styles.scrollviewHorizontalContent}>
-						<Card style={styles.cardScroll}>
-							<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-								<MaterialIcons
-									name="compare-arrows"
-									size={20}
-									color={colors.primary}
-									style={styles.cardButtonIcon}
-								/>
-								<Text>Exchange</Text>
-							</TouchableOpacity>
+				<ScrollView style={styles.homeScroll}>
+					<View style={styles.paddingContent}>
+						<Card style={styles.card}>
+							<View style={styles.cardTopContent}>
+								<View>
+									<Text style={styles.cardLabel}>Your total assets</Text>
+									<Text style={styles.cardBalance}>${commify(state.value.balance?.usd || '')}</Text>
+								</View>
+								<View>
+									<Image source={avatar} style={styles.avatar} />
+								</View>
+							</View>
+							<View style={styles.cardBottomContent}>
+								<TouchableOpacity
+									onPress={onTransfer}
+									style={(styles.cardActionButton, styles.cardDivisor)}
+								>
+									<MaterialIcons
+										name="add-circle-outline"
+										size={20}
+										color={colors.primary}
+										style={styles.cardButtonIcon}
+									/>
+									<Text>Add funds</Text>
+								</TouchableOpacity>
+								<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+									<MaterialIcons
+										name="arrow-circle-up"
+										size={20}
+										color={colors.primary}
+										style={styles.cardButtonIcon}
+									/>
+									<Text>Send</Text>
+								</TouchableOpacity>
+							</View>
 						</Card>
-						<Card style={styles.cardScroll}>
-							<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-								<MaterialIcons
-									name="arrow-circle-down"
-									size={20}
-									color={colors.primary}
-									style={styles.cardButtonIcon}
-								/>
-								<Text>Receive</Text>
-							</TouchableOpacity>
-						</Card>
-						<Card style={styles.cardScroll}>
-							<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-								<MaterialIcons
-									name="content-copy"
-									size={20}
-									color={colors.primary}
-									style={styles.cardButtonIcon}
-								/>
-								<Text>Copy address</Text>
-							</TouchableOpacity>
-						</Card>
-						<Card style={styles.cardScroll}>
-							<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-								<MaterialIcons
-									name="add"
-									size={20}
-									color={colors.primary}
-									style={styles.cardButtonIcon}
-								/>
-								<Text>New wallet</Text>
-							</TouchableOpacity>
-						</Card>
-						<Card style={styles.cardScroll}>
-							<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-								<MaterialIcons
-									name="person-outline"
-									size={20}
-									color={colors.primary}
-									style={styles.cardButtonIcon}
-								/>
-								<Text>Switch accounts</Text>
-							</TouchableOpacity>
-						</Card>
+					</View>
+
+					<SafeAreaView>
+						<ScrollView
+							style={styles.scrollviewHorizontal}
+							horizontal={true}
+							showsVerticalScrollIndicator={false}
+							showsHorizontalScrollIndicator={false}
+						>
+							<View style={styles.scrollviewHorizontalContent}>
+								<Card style={styles.cardScroll}>
+									<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+										<MaterialIcons
+											name="compare-arrows"
+											size={20}
+											color={colors.primary}
+											style={styles.cardButtonIcon}
+										/>
+										<Text>Exchange</Text>
+									</TouchableOpacity>
+								</Card>
+								<Card style={styles.cardScroll}>
+									<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+										<MaterialIcons
+											name="arrow-circle-down"
+											size={20}
+											color={colors.primary}
+											style={styles.cardButtonIcon}
+										/>
+										<Text>Receive</Text>
+									</TouchableOpacity>
+								</Card>
+								<Card style={styles.cardScroll}>
+									<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+										<MaterialIcons
+											name="content-copy"
+											size={20}
+											color={colors.primary}
+											style={styles.cardButtonIcon}
+										/>
+										<Text>Copy address</Text>
+									</TouchableOpacity>
+								</Card>
+								<Card style={styles.cardScroll}>
+									<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+										<MaterialIcons
+											name="add"
+											size={20}
+											color={colors.primary}
+											style={styles.cardButtonIcon}
+										/>
+										<Text>New wallet</Text>
+									</TouchableOpacity>
+								</Card>
+								<Card style={styles.cardScroll}>
+									<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
+										<MaterialIcons
+											name="person-outline"
+											size={20}
+											color={colors.primary}
+											style={styles.cardButtonIcon}
+										/>
+										<Text>Switch accounts</Text>
+									</TouchableOpacity>
+								</Card>
+							</View>
+						</ScrollView>
+					</SafeAreaView>
+
+					<View style={styles.paddingContent}>
+						<View style={styles.row}>
+							<Text style={styles.transactionDateLabel}>Today</Text>
+							<Text style={styles.fontSizeSmall}>Day balance: $0.00</Text>
+						</View>
+
+						<View style={styles.transactionDayRow}>
+							<View style={(styles.row, styles.transactionItem)}>
+								<View style={styles.row}>
+									<Image source={transationalSent} style={styles.transationalIcon} />
+									<View>
+										<Text style={styles.fontSizeSmall}>7h30 pm</Text>
+										<Text style={styles.fontSizeDefault}>To jreys.eth</Text>
+									</View>
+								</View>
+								<View style={styles.alignContentRight}>
+									<Text style={styles.fontSizeSmall}>0.01 ETH</Text>
+									<Text style={styles.fontBold}>-$20.00</Text>
+								</View>
+							</View>
+							<View style={styles.row}>
+								<View style={styles.row}>
+									<Image source={transationalReceive} style={styles.transationalIcon} />
+									<View>
+										<Text style={styles.fontSizeSmall}>10h00 pm</Text>
+										<Text style={styles.fontSizeDefault}>From jreys.eth</Text>
+									</View>
+								</View>
+								<View style={styles.alignContentRight}>
+									<Text style={styles.fontSizeSmall}>0.01 ETH</Text>
+									<Text style={styles.fontBold}>$20.00</Text>
+								</View>
+							</View>
+						</View>
+
+						<Button style={{ marginBottom: 5 }} mode={'contained'} onPress={onTransfer}>
+							Transfer
+						</Button>
+						<Button style={{ marginBottom: 5 }} color={'red'} onPress={onDeleteWallet}>
+							Delete
+						</Button>
+
+						<Text style={{ marginBottom: 5 }}>{state.value.wallet?.address}</Text>
+						<View
+							style={{
+								marginBottom: 5,
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'center'
+							}}
+						>
+							<Button onPress={onCopyToClipboard}>Copy to Clipboard</Button>
+							<Button onPress={onShareAddress}>Share Address</Button>
+							<Portal>
+								<Dialog visible={dialogVisible.value} onDismiss={() => dialogVisible.set(false)}>
+									{/*<Dialog.Title>Aaa</Dialog.Title>*/}
+									<Dialog.Content style={{ alignItems: 'center' }}>
+										<QRCode value={state.value.wallet?.address} />
+									</Dialog.Content>
+									<Dialog.Actions>{/*<Button onPress={hideDialog}>Done</Button>*/}</Dialog.Actions>
+								</Dialog>
+							</Portal>
+						</View>
+
+						<Text>
+							Balance ETH:{' '}
+							{state.value.balance?.eth ? formatEther(state.value.balance.eth as BigNumberish) : ''}
+						</Text>
+
+						<View style={{ padding: 10 }}>
+							<Text>Tokens:</Text>
+							<Text>
+								DAI Balance:{' '}
+								{state.value.tokens?.dai?.balance ? formatUnits(state.value.tokens?.dai?.balance) : ''}
+							</Text>
+						</View>
+						{/*        <TextInput label={'Transfer To'} value={transferTo.value.to}
+																	onChangeText={address => transferTo.to.set(address)}/>
+												<TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}
+																	onChangeText={onAmountChange}/>*/}
 					</View>
 				</ScrollView>
 			</SafeAreaView>
-
-			<View style={styles.paddingContent}>
-				<View style={styles.row}>
-					<Text style={styles.transactionDateLabel}>Today</Text>
-					<Text>Day balance: $0.00</Text>
-				</View>
-
-				<View style={styles.transactionDayRow}>
-					<View style={styles.row}>
-						<View style={styles.row}>
-							<Text>Icon out</Text>
-							<View>
-								<Text>7h30 pm</Text>
-								<Text>To jreys.eth</Text>
-							</View>
-						</View>
-						<View>
-							<Text>0.01 ETH</Text>
-							<Text>-$20.00</Text>
-						</View>
-					</View>
-					<View style={styles.row}>
-						<View style={styles.row}>
-							<Text>Icon in</Text>
-							<View>
-								<Text>10h00 pm</Text>
-								<Text>From jreys.eth</Text>
-							</View>
-						</View>
-						<View>
-							<Text>0.01 ETH</Text>
-							<Text>$20.00</Text>
-						</View>
-					</View>
-				</View>
-
-				<Button style={{ marginBottom: 5 }} mode={'contained'} onPress={onTransfer}>
-					Transfer
-				</Button>
-				<Button style={{ marginBottom: 5 }} color={'red'} onPress={onDeleteWallet}>
-					Delete
-				</Button>
-
-				<Text style={{ marginBottom: 5 }}>{state.value.wallet?.address}</Text>
-				<View
-					style={{
-						marginBottom: 5,
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'center'
-					}}
-				>
-					<Button onPress={onCopyToClipboard}>Copy to Clipboard</Button>
-					<Button onPress={onShareAddress}>Share Address</Button>
-					<Portal>
-						<Dialog visible={dialogVisible.value} onDismiss={() => dialogVisible.set(false)}>
-							{/*<Dialog.Title>Aaa</Dialog.Title>*/}
-							<Dialog.Content style={{ alignItems: 'center' }}>
-								<QRCode value={state.value.wallet?.address} />
-							</Dialog.Content>
-							<Dialog.Actions>{/*<Button onPress={hideDialog}>Done</Button>*/}</Dialog.Actions>
-						</Dialog>
-					</Portal>
-				</View>
-
-				<Text>
-					Balance ETH: {state.value.balance?.eth ? formatEther(state.value.balance.eth as BigNumberish) : ''}
-				</Text>
-
-				<View style={{ padding: 10 }}>
-					<Text>Tokens:</Text>
-					<Text>
-						DAI Balance:{' '}
-						{state.value.tokens?.dai?.balance ? formatUnits(state.value.tokens?.dai?.balance) : ''}
-					</Text>
-				</View>
-				{/*        <TextInput label={'Transfer To'} value={transferTo.value.to}
-																onChangeText={address => transferTo.to.set(address)}/>
-											<TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}
-																onChangeText={onAmountChange}/>*/}
-			</View>
 
 			<Snackbar onDismiss={() => snackbarVisible.set(false)} visible={snackbarVisible.value}>
 				Address Copied

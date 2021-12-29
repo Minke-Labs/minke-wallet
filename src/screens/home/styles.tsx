@@ -6,9 +6,25 @@ export default StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#F2EAE1'
 	},
+	homeScroll: {
+		marginBottom: 80
+	},
 	row: {
 		flexDirection: 'row',
 		justifyContent: 'space-between'
+	},
+	alignContentRight: {
+		alignItems: 'flex-end'
+	},
+	fontSizeDefault: {
+		fontSize: 16
+	},
+	fontSizeSmall: {
+		color: 'rgba(78, 94, 111, 1)',
+		fontSize: 12
+	},
+	fontBold: {
+		fontFamily: 'Inter_800ExtraBold'
 	},
 	paddingContent: {
 		paddingTop: 24,
@@ -102,8 +118,18 @@ export default StyleSheet.create({
 		borderBottomColor: '#000',
 		marginBottom: 24
 	},
+	transactionItem: {
+		marginBottom: 32,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
 	transactionDateLabel: {
 		color: 'rgba(78, 94, 111, 1)',
 		fontFamily: 'Inter_800ExtraBold'
+	},
+	transationalIcon: {
+		width: 32,
+		height: 32,
+		marginRight: 8
 	}
 });
