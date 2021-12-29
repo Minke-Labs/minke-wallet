@@ -49,6 +49,7 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-crypto": "^2.2.0",
+    "react-native-currency-input": "^1.0.1",
     "react-native-device-info": "^8.4.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-get-random-values": "^1.7.0",
