@@ -50,12 +50,11 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 	}, [navigation]);
 	return (
 		<Container>
-			{/**/}
 			<View style={styles.logo} />
 			<Text
 				style={{
 					fontSize: 36,
-					fontFamily: 'DMSans_700Bold',
+					fontFamily: 'Inter_700Bold',
 					textAlign: 'center'
 					// fontWeight: "bold"
 				}}
