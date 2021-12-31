@@ -15,6 +15,10 @@ const AddFundsButton = () => {
 	const showDetailsModal = () => setDetailsVisible(true);
 	const hideDetailsModal = () => setDetailsVisible(false);
 
+	const [customAmountVisible, setCustomAmountVisible] = useState(false);
+	const showCustomAmountModal = () => setCustomAmountVisible(true);
+	const hideCustomAmountModal = () => setCustomAmountVisible(false);
+
 	const [coin, setCoin] = useState<ICoin>(coins.ethereum);
 
 	const [amount, setAmount] = useState<number | undefined>(undefined);
@@ -28,19 +32,31 @@ const AddFundsButton = () => {
 		setCoin(selectedCoin);
 	};
 
-	const clearCoinSelection = () => {
+	const backToCoinSelector = () => {
 		hideDetailsModal();
 		showChooseCoinModal();
+		setAmount(undefined);
+	};
+
+	const backToDetails = () => {
+		hideCustomAmountModal();
+		hideChooseCoinModal();
+		showDetailsModal();
+		setCustomAmount(null);
 	};
 
 	const hideAll = () => {
 		hideChooseCoinModal();
 		hideDetailsModal();
+		hideCustomAmountModal();
+		setCustomAmount(null);
 	};
 
 	const enableCustomAmount = () => {
 		setAmount(undefined);
-		setCustomAmount(0);
+		hideDetailsModal();
+		hideChooseCoinModal();
+		showCustomAmountModal();
 		customAmountRef.current?.focus();
 	};
 
@@ -65,7 +81,7 @@ const AddFundsButton = () => {
 					<CoinSelector onSelect={selectCoin} />
 				</Modal>
 				<Modal visible={detailsVisible} onDismiss={hideDetailsModal} contentContainerStyle={containerStyle}>
-					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={clearCoinSelection} />
+					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={backToCoinSelector} />
 					<Image source={coin.image} />
 					<Text>{coin.name}</Text>
 					<IconButton icon="close" size={20} color="#006AA6" onPress={hideAll} />
@@ -82,11 +98,19 @@ const AddFundsButton = () => {
 						))}
 					</View>
 
-					{customAmount === null ? (
-						<Button onPress={enableCustomAmount}>
-							<Text>Choose another amount</Text>
-						</Button>
-					) : null}
+					<Button onPress={enableCustomAmount}>
+						<Text>Choose another amount</Text>
+					</Button>
+				</Modal>
+
+				<Modal
+					visible={customAmountVisible}
+					onDismiss={hideCustomAmountModal}
+					contentContainerStyle={containerStyle}
+				>
+					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={backToDetails} />
+					<Text>Choose other amount</Text>
+					<IconButton icon="close" size={20} color="#006AA6" onPress={hideAll} />
 
 					<CurrencyInput
 						value={customAmount}
@@ -97,7 +121,8 @@ const AddFundsButton = () => {
 						precision={2}
 						minValue={0}
 						ref={customAmountRef}
-						style={{ display: customAmount === null ? 'none' : 'flex' }}
+						autoFocus
+						placeholder="$00.00"
 					/>
 				</Modal>
 			</Portal>
