@@ -1,4 +1,6 @@
 import { createState } from '@hookstate/core';
+import { find } from 'lodash';
+import { BigNumber, Contract, Wallet } from 'ethers';
 import {
 	erc20abi,
 	getAllWallets,
@@ -8,8 +10,6 @@ import {
 	provider,
 	supportedTokenList
 } from '../model/wallet';
-import { find } from 'lodash';
-import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from '../helpers/utilities';
 
 /*export const initWallet = getAllWallets().then(wallets => {
@@ -40,7 +40,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 	const wallets = await getAllWallets();
 	const ethPrice = await getEthLastPrice();
-	const wallet = find(wallets, (wallet) => wallet.primary);
+	const wallet = find(wallets, (w) => w.primary);
 	if (wallet) {
 		const privateKey = await getPrivateKey(wallet.address);
 

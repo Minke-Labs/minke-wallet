@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
+import { useState } from '@hookstate/core';
+import { RootStackParamList } from '../helpers/param-list-type';
 import { walletCreate } from '../model/wallet';
 import { globalWalletState } from '../stores/WalletStore';
 import Container from '../components/Container';
-import { useState } from '@hookstate/core';
-import { Wallet } from 'ethers';
 
 const styles = StyleSheet.create({
 	container: {

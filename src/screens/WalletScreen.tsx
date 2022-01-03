@@ -1,24 +1,22 @@
 import React, { useCallback } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Appbar, Button, Card, Dialog, Portal, Snackbar } from 'react-native-paper';
-import { globalWalletState } from '../stores/WalletStore';
 import AppLoading from 'expo-app-loading';
 import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
-import { walletDelete } from '../model/wallet';
 import { BigNumberish } from 'ethers';
-import { isNaN } from 'lodash';
 import { commify, formatEther, formatUnits } from 'ethers/lib/utils';
 import * as Clipboard from 'expo-clipboard';
 import QRCode from 'react-native-qrcode-svg';
+import { RootStackParamList } from '../helpers/param-list-type';
+import { walletDelete } from '../model/wallet';
+import { globalWalletState } from '../stores/WalletStore';
 
 export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const state = useState(globalWalletState());
 	const snackbarVisible = useState(false);
 	const dialogVisible = useState(false);
 
-	const transferTo = useState({ to: '', amount: '' });
 	if (state.promised) return <AppLoading />;
 
 	const onDeleteWallet = useCallback(async () => {
@@ -26,10 +24,6 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		state.set({ wallet: null, walletId: null });
 		navigation.navigate('Welcome');
 	}, [navigation]);
-
-	const onAmountChange = (text: string) => {
-		if (!isNaN(text)) transferTo.amount.set(text);
-	};
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(state.value.wallet?.address || '');
@@ -80,10 +74,10 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
                            onChangeText={address => transferTo.to.set(address)}/>
                 <TextInput keyboardType={'number-pad'} label={'Amount'} value={transferTo.amount.value}
                            onChangeText={onAmountChange}/>*/}
-				<Button style={{ marginBottom: 5 }} mode={'contained'} onPress={onTransfer}>
+				<Button style={{ marginBottom: 5 }} mode="contained" onPress={onTransfer}>
 					Transfer
 				</Button>
-				<Button style={{ marginBottom: 5 }} color={'red'} onPress={onDeleteWallet}>
+				<Button style={{ marginBottom: 5 }} color="red" onPress={onDeleteWallet}>
 					Delete
 				</Button>
 			</Card>
