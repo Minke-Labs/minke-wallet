@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, IconButton } from 'react-native-paper';
 import WelcomeScreen from './src/screens/welcome-flow/welcome/WelcomeScreen';
 import { WalletCreatedScreen } from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
 import { BackupScreen } from './src/screens/welcome-flow/manual-backup/BackupScreen';
@@ -22,6 +22,7 @@ import { TransactionSelectFundsScreen } from './src/screens/TransactionSelectFun
 import { TransactionContactsScreen } from './src/screens/TransactionContactsScreen';
 import { TransactionTransferScreen } from './src/screens/TransactionTransferScreen';
 import { ContactCreateScreen } from './src/screens/ContactCreateScreen';
+import ExchangeScreen from './src/screens/exchange/ExchangeScreen';
 import { darkTheme, lightTheme } from './src/helpers/themes';
 import { RootStackParamList } from './src/helpers/param-list-type';
 
@@ -71,6 +72,16 @@ export default function App() {
 						options={{ headerShown: false }}
 						name="ContactCreate"
 						component={ContactCreateScreen}
+					/>
+					<Stack.Screen
+						name="Exchange"
+						component={ExchangeScreen}
+						options={({ navigation }) => ({
+							title: '',
+							headerLeft: () => (
+								<IconButton icon="chevron-left" color="#D0D0D0" onPress={() => navigation.goBack()} />
+							)
+						})}
 					/>
 				</Stack.Navigator>
 			</NavigationContainer>

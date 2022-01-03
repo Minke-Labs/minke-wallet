@@ -34,6 +34,10 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		navigation.navigate('TransactionSelectFunds');
 	};
 
+	const onExchange = () => {
+		navigation.navigate('Exchange');
+	};
+
 	const onShareAddress = () => {
 		dialogVisible.set(true);
 	};
@@ -79,6 +83,9 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 				</Button>
 				<Button style={{ marginBottom: 5 }} color="red" onPress={onDeleteWallet}>
 					Delete
+				</Button>
+				<Button style={{ marginBottom: 5 }} onPress={onExchange}>
+					Exchange
 				</Button>
 			</Card>
 			<Snackbar onDismiss={() => snackbarVisible.set(false)} visible={snackbarVisible.value}>

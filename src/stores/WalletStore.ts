@@ -44,7 +44,6 @@ const initializeWallet = async (): Promise<WalletState> => {
 	if (wallet) {
 		const privateKey = await getPrivateKey(wallet.address);
 
-		// console.log('PRIVATE KEY', privateKey)
 		if (privateKey) {
 			const eth = await provider.getBalance(wallet.address);
 			const tokens: MinkeTokenList = {};
