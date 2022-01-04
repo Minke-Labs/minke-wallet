@@ -99,6 +99,10 @@ export default StyleSheet.create({
 		paddingRight: 16,
 		marginRight: 16
 	},
+	appBar: {
+		backgroundColor: 'transparent',
+		elevation: 0
+	},
 	appBarContent: {
 		paddingLeft: 24,
 		paddingRight: 24,

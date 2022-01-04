@@ -52,7 +52,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 	return (
 		<View style={styles.container}>
-			<Appbar.Header>
+			<Appbar.Header style={styles.appBar}>
 				<View style={styles.appBarContent}>
 					<View>
 						<Text>Welcome</Text>
