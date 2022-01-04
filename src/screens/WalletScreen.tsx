@@ -14,9 +14,12 @@ import * as Clipboard from 'expo-clipboard';
 import QRCode from 'react-native-qrcode-svg';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './home/styles';
+// Images
 import avatar from './home/avatar-test.png';
 import transationalReceive from './home/transational-receive.png';
 import transationalSent from './home/transational-sent.png';
+import waveLower from './home/wave-lower.png';
+import waveBigger from './home/wave-bigger.png';
 
 export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const state = useState(globalWalletState());
@@ -60,14 +63,19 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					</View>
 					<Appbar.Content title="" />
 					<View style={styles.appBarIcons}>
-						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-							<Text>Icone 1</Text>
+						<TouchableOpacity onPress={onTransfer} style={(styles.cardActionButton, styles.appBarIcon)}>
+							<Image source={waveLower} style={styles.appBarIcon} />
+						</TouchableOpacity>
+						<TouchableOpacity onPress={onTransfer} style={(styles.cardActionButton, styles.appBarIcon)}>
+							<Image source={waveBigger} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-							<Text>Icone 2</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={onTransfer} style={styles.cardActionButton}>
-							<MaterialIcons name="settings" size={20} style={styles.cardButtonIcon} />
+							<MaterialIcons
+								name="settings"
+								size={20}
+								color={colors.primary}
+								style={(styles.cardButtonIcon, styles.appBarIcon)}
+							/>
 						</TouchableOpacity>
 					</View>
 				</View>

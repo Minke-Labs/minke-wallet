@@ -112,8 +112,14 @@ export default StyleSheet.create({
 	appBarIcons: {
 		flexDirection: 'row'
 	},
+	appBarIcon: {
+		paddingLeft: 24,
+		justifyContent: 'center'
+	},
 	appBarUserName: {
-		fontSize: 24
+		fontSize: 24,
+		color: '#0A2138',
+		fontFamily: 'Inter_800ExtraBold'
 	},
 	transactionDayRow: {
 		paddingTop: 24,
