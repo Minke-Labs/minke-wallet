@@ -125,7 +125,7 @@ export default StyleSheet.create({
 		paddingTop: 24,
 		paddingBottom: 24,
 		borderBottomWidth: 1,
-		borderBottomColor: '#000',
+		borderBottomColor: '#F2EAE1',
 		marginBottom: 24
 	},
 	transactionItem: {
@@ -141,5 +141,27 @@ export default StyleSheet.create({
 		width: 32,
 		height: 32,
 		marginRight: 8
+	},
+	tabs: {
+		paddingTop: 24,
+		paddingLeft: 24,
+		paddingRight: 24,
+		paddingBottom: 16,
+		backgroundColor: '#fff'
+	},
+	tabActive: {
+		flex: 1,
+		padding: 16,
+		alignItems: 'center',
+		borderTopLeftRadius: 16,
+		borderTopRightRadius: 16,
+		backgroundColor: '#fff'
+	},
+	tabInactive: {
+		flex: 1,
+		padding: 16,
+		alignItems: 'center',
+		borderTopLeftRadius: 16,
+		borderTopRightRadius: 16
 	}
 });

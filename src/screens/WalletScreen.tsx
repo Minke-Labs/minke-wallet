@@ -187,7 +187,16 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 						</ScrollView>
 					</SafeAreaView>
 
-					<View style={styles.paddingContent}>
+					<View style={styles.row}>
+						<TouchableOpacity onPress={onTransfer} style={styles.tabActive}>
+							<Text style={styles.fontBold}>Transactions</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={onTransfer} style={styles.tabInactive}>
+							<Text>Net worth</Text>
+						</TouchableOpacity>
+					</View>
+
+					<View style={styles.tabs}>
 						<View style={styles.row}>
 							<Text style={styles.transactionDateLabel}>Today</Text>
 							<Text style={styles.fontSizeSmall}>Day balance: $0.00</Text>
