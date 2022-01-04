@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View, Image } from 'react-native';
-import { Headline, Portal } from 'react-native-paper';
+import { Headline } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { RootStackParamList } from '../../helpers/param-list-type';
-import { estimateGas, getEthLastPrice } from '../../model/wallet';
+import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '../../model/wallet';
 import { ether, ParaswapToken } from '../../model/token';
+import { globalWalletState } from '../../stores/WalletStore';
 import swap from '../../../assets/swap.png';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
+	const wallet = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const gasPrice = useState(estimateGas);
 	const gweiPrice = useState(0);
@@ -20,6 +23,12 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>(ether);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [searchSource, setSearchSource] = React.useState('from');
+	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
+	const [ownedTokens, setOwnedTokens] = React.useState<Array<string>>();
+
+	const resetFilterTokens = () => {
+		setOwnedTokens(walletTokens?.map(({ symbol }) => symbol.toLowerCase()));
+	};
 
 	useEffect(() => {
 		async function getGweiPrice() {
@@ -27,6 +36,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			gweiPrice.set(+ethPrice.result.ethusd / 1000000000);
 		}
 
+		async function fetchWalletTokens() {
+			const address = '0x375CC1b3574F3e5f0418D006bbADbcE5CFe13564';
+			const result = await getWalletTokens(address);
+			const { products } = result[address.toLowerCase()];
+			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
+			setWalletTokens(tokens);
+			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
+		}
+
+		fetchWalletTokens();
 		getGweiPrice();
 	}, []);
 
@@ -40,11 +59,13 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const showModalFrom = (): void => {
 		setSearchSource('from');
+		resetFilterTokens();
 		showModal();
 	};
 
 	const showModalTo = (): void => {
 		setSearchSource('to');
+		setOwnedTokens([]);
 		showModal();
 	};
 
@@ -54,6 +75,14 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			setFromToken(token);
 		} else {
 			setToToken(token);
+		}
+	};
+
+	const directionSwap = () => {
+		if (fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase())) {
+			const backup = fromToken;
+			setFromToken(toToken);
+			setToToken(backup);
 		}
 	};
 
@@ -69,13 +98,19 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			<Headline>Exchange</Headline>
 			<View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
 				<TokenCard token={fromToken} onPress={showModalFrom} />
-				<Image source={swap} />
+				<TouchableOpacity onPress={directionSwap}>
+					<Image source={swap} />
+				</TouchableOpacity>
 				<TokenCard token={toToken} onPress={showModalTo} />
 			</View>
 			<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
-			<Portal>
-				<SearchTokens visible={searchVisible} onDismiss={hideModal} onTokenSelect={onTokenSelect} />
-			</Portal>
+			<SearchTokens
+				visible={searchVisible}
+				onDismiss={hideModal}
+				onTokenSelect={onTokenSelect}
+				ownedTokens={ownedTokens}
+				selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
+			/>
 		</>
 	);
 };

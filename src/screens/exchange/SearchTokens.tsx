@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, TextInput, IconButton } from 'react-native-paper';
+import { Portal, Modal, TextInput, IconButton } from 'react-native-paper';
 import { FlatList, Image, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
@@ -9,25 +9,51 @@ import { paraswapTokens, ParaswapToken } from '../../model/token';
 const SearchTokens = ({
 	visible,
 	onDismiss,
-	onTokenSelect
+	onTokenSelect,
+	ownedTokens,
+	selected
 }: {
 	visible: boolean;
 	onDismiss: any;
 	onTokenSelect: Function;
+	// eslint-disable-next-line react/require-default-props
+	ownedTokens?: Array<string>;
+	// eslint-disable-next-line react/require-default-props
+	selected?: Array<string | undefined>;
 }) => {
 	const containerStyle = { backgroundColor: 'white', padding: 20 };
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const loadTokens = async () => {
+			setLoading(true);
 			const allTokens = (await paraswapTokens()).tokens;
 			setTokens(allTokens);
 			setFilteredTokens(allTokens);
+			setLoading(false);
 		};
 		loadTokens();
 	}, []);
+
+	useEffect(() => {
+		const filterTokens = async () => {
+			setLoading(true);
+			let filter = tokens;
+			if (ownedTokens && ownedTokens.length > 0) {
+				filter = _.filter(filter, (token) => ownedTokens.includes(token.symbol.toLocaleLowerCase()));
+			}
+
+			if (selected && selected.length > 0) {
+				filter = _.filter(filter, (token) => !selected.includes(token.symbol.toLocaleLowerCase()));
+			}
+			setFilteredTokens(filter);
+			setLoading(false);
+		};
+		filterTokens();
+	}, [ownedTokens, selected]);
 
 	const onSearch = (text: string) => {
 		setSearch(text);
@@ -40,32 +66,34 @@ const SearchTokens = ({
 		}
 	};
 
-	if (!tokens) {
+	if (!tokens || loading) {
 		return <AppLoading />;
 	}
 
 	return (
-		<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
-			<TextInput
-				placeholder="Search token"
-				value={search}
-				onChangeText={(text) => onSearch(text)}
-				left={<TextInput.Icon name="magnify" />}
-			/>
+		<Portal>
+			<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
+				<TextInput
+					placeholder="Search token"
+					value={search}
+					onChangeText={(text) => onSearch(text)}
+					left={<TextInput.Icon name="magnify" />}
+				/>
 
-			<IconButton icon="close" size={20} color="#006AA6" onPress={onDismiss} />
-			<FlatList
-				data={filteredTokens}
-				keyExtractor={(token) => token.symbol}
-				renderItem={({ item }) => (
-					<TouchableOpacity onPress={() => onTokenSelect(item)}>
-						<Image source={{ uri: item.img }} style={{ width: 50, height: 50 }} />
-						<Text>{item.symbol}</Text>
-					</TouchableOpacity>
-				)}
-			/>
-		</Modal>
+				<IconButton icon="close" size={20} color="#006AA6" onPress={onDismiss} />
+				<FlatList
+					data={filteredTokens}
+					keyExtractor={(token) => token.symbol}
+					renderItem={({ item }) => (
+						<TouchableOpacity onPress={() => onTokenSelect(item)}>
+							<Image source={{ uri: item.img }} style={{ width: 50, height: 50 }} />
+							<Text>{item.symbol}</Text>
+						</TouchableOpacity>
+					)}
+				/>
+			</Modal>
+		</Portal>
 	);
 };
 
-export default React.memo(SearchTokens);
+export default SearchTokens;

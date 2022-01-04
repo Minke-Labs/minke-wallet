@@ -4,7 +4,7 @@ import { Card, IconButton } from 'react-native-paper';
 import { ParaswapToken } from '../../model/token';
 
 const TokenCard = ({ token, onPress }: { token: ParaswapToken | undefined; onPress: (() => void) | undefined }) => (
-	<Card onPress={onPress}>
+	<Card onPress={onPress} style={{ width: '40%' }}>
 		<Card.Content>
 			{token ? (
 				<>
