@@ -91,7 +91,8 @@ export default StyleSheet.create({
 		paddingBottom: 8
 	},
 	scrollviewHorizontalContent: {
-		flexDirection: 'row'
+		flexDirection: 'row',
+		paddingRight: 32
 	},
 	cardScroll: {
 		borderRadius: 16,

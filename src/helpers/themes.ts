@@ -20,7 +20,8 @@ export const darkTheme = {
 		placeholder: '#B7B9BB',
 		primary: '#006AA6',
 		buttonText: '#FFFFFF',
-		linkText: '#FFFFFF'
+		linkText: '#FFFFFF',
+		grey800: '#FFFFFF'
 	}
 };
 
@@ -34,6 +35,7 @@ export const lightTheme = {
 		placeholder: '#213952',
 		primary: '#006AA6',
 		buttonText: '#FFFFFF',
-		linkText: '#006AA6'
+		linkText: '#006AA6',
+		grey800: '#4E5E6F'
 	}
 };

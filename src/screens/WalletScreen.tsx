@@ -192,7 +192,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 							<Text style={styles.fontBold}>Transactions</Text>
 						</TouchableOpacity>
 						<TouchableOpacity onPress={onTransfer} style={styles.tabInactive}>
-							<Text>Net worth</Text>
+							<Text style={{ color: colors.grey800 }}>Net worth</Text>
 						</TouchableOpacity>
 					</View>
 
