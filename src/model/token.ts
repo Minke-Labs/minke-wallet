@@ -1,3 +1,5 @@
+import { BigNumber } from 'ethers';
+
 export const paraswapTokens = async (): Promise<TokenResponse> => {
 	const result = await fetch('https://apiv5.paraswap.io/tokens');
 	return result.json();
@@ -38,4 +40,9 @@ export interface PriceRoute {
 		gasCost: string;
 		srcUSD: string;
 	};
+}
+
+export interface Quote {
+	from: { [fromSymbol: string]: BigNumber };
+	to: { [toSymbol: string]: BigNumber };
 }

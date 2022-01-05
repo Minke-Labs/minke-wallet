@@ -6,12 +6,13 @@ import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
+import { toBn } from 'evm-bn';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { RootStackParamList } from '../../helpers/param-list-type';
 import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '../../model/wallet';
-import { ether, ParaswapToken, getExchangePrice } from '../../model/token';
+import { ether, ParaswapToken, Quote, getExchangePrice } from '../../model/token';
 import { globalWalletState } from '../../stores/WalletStore';
 import swap from '../../../assets/swap.png';
 
@@ -29,6 +30,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
 	const [ownedTokens, setOwnedTokens] = React.useState<Array<string>>();
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
+	const [quote, setQuote] = React.useState<Quote | null>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
 
@@ -50,6 +52,74 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		setToToken(token);
 		setToTokenBalance(balanceFrom(token));
 		toAmountRef.current?.focus();
+	};
+
+	const updateFromQuotes = (amount: string) => {
+		// eslint-disable-next-line no-useless-escape
+		const formatedValue = amount.replace(/\,/g, '.');
+		if (quote && formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+			let converted = quote.to[toToken?.symbol || ''].mul(toBn(formatedValue));
+			converted = converted.div(quote.from[fromToken.symbol]);
+			console.log(
+				formatedValue +
+					' from ' +
+					fromToken.symbol +
+					' = ' +
+					utils.formatUnits(converted) +
+					' ' +
+					toToken?.symbol
+			);
+		}
+	};
+
+	const updateToQuotes = (amount: string) => {
+		console.log(amount);
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const goToExchangeResume = () => {
+		navigation.navigate('Wallet');
+	};
+
+	const showModal = () => setSearchVisible(true);
+	const hideModal = () => setSearchVisible(false);
+
+	const showModalFrom = (): void => {
+		setShowOnlyOwnedTokens(true);
+		setSearchSource('from');
+		showModal();
+	};
+
+	const showModalTo = (): void => {
+		setShowOnlyOwnedTokens(false);
+		setSearchSource('to');
+		showModal();
+	};
+
+	const loadPrices = async () => {
+		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol);
+		setQuote({
+			from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
+			to: { [toToken?.symbol || '']: BigNumber.from(result.priceRoute.destAmount) }
+		});
+	};
+
+	const onTokenSelect = (token: ParaswapToken) => {
+		hideModal();
+		setQuote(null);
+		if (searchSource === 'from') {
+			updateFromToken(token);
+		} else {
+			updateToToken(token);
+		}
+	};
+
+	const directionSwap = () => {
+		if (fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase())) {
+			const backup = fromToken;
+			updateFromToken(toToken);
+			updateToToken(backup);
+		}
 	};
 
 	useEffect(() => {
@@ -76,62 +146,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		setToTokenBalance(balanceFrom(toToken));
 	}, [ownedTokens]);
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const goToExchangeResume = () => {
-		navigation.navigate('Wallet');
-	};
-
-	const showModal = () => setSearchVisible(true);
-	const hideModal = () => setSearchVisible(false);
-
-	const showModalFrom = (): void => {
-		setShowOnlyOwnedTokens(true);
-		setSearchSource('from');
-		showModal();
-	};
-
-	const showModalTo = (): void => {
-		setShowOnlyOwnedTokens(false);
-		setSearchSource('to');
-		showModal();
-	};
-
-	const loadPrices = async () => {
-		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol);
-
-		console.log(
-			fromToken?.symbol,
-			utils.formatUnits(BigNumber.from(result.priceRoute.srcAmount), fromToken.decimals)
-		);
-		console.log(
-			toToken?.symbol,
-			utils.formatUnits(BigNumber.from(result.priceRoute.destAmount), toToken?.decimals)
-		);
-		console.log('==================================');
-	};
-
-	const onTokenSelect = (token: ParaswapToken) => {
-		hideModal();
-		if (searchSource === 'from') {
-			updateFromToken(token);
-		} else {
-			updateToToken(token);
-		}
-	};
-
 	useEffect(() => {
 		if (fromToken && toToken) {
 			loadPrices();
 		}
 	}, [fromToken, toToken]);
-
-	const directionSwap = () => {
-		if (fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase())) {
-			const backup = fromToken;
-			updateFromToken(toToken);
-			updateToToken(backup);
-		}
-	};
 
 	if (gasPrice.promised) {
 		return <AppLoading />;
@@ -149,11 +168,19 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					onPress={showModalFrom}
 					balance={fromTokenBalance}
 					innerRef={fromAmountRef}
+					updateQuotes={updateFromQuotes}
 				/>
 				<TouchableOpacity onPress={directionSwap}>
 					<Image source={swap} />
 				</TouchableOpacity>
-				<TokenCard token={toToken} onPress={showModalTo} balance={toTokenBalance} innerRef={toAmountRef} />
+				<TokenCard
+					token={toToken}
+					onPress={showModalTo}
+					balance={toTokenBalance}
+					innerRef={toAmountRef}
+					updateQuotes={updateToQuotes}
+					disableMax
+				/>
 			</View>
 			<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
 			<SearchTokens

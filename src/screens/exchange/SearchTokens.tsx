@@ -57,6 +57,10 @@ const SearchTokens = ({
 		filterTokens();
 	}, [ownedTokens, selected]);
 
+	useEffect(() => {
+		setSearch('');
+	}, [visible]);
+
 	const onSearch = (text: string) => {
 		setSearch(text);
 
