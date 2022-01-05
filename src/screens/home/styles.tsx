@@ -144,12 +144,57 @@ export default StyleSheet.create({
 		marginRight: 8
 	},
 	tabsTransactions: {
+		paddingTop: 24,
+		paddingLeft: 24,
+		paddingRight: 24,
+		paddingBottom: 16,
+		backgroundColor: '#fff',
+		borderTopRightRadius: 24
+	},
+	tabsNetWorth: {
 		display: 'none',
 		paddingTop: 24,
 		paddingLeft: 24,
 		paddingRight: 24,
 		paddingBottom: 16,
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		borderTopLeftRadius: 24
+	},
+	netWorthItem: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginBottom: 32
+	},
+	netWorthIcon: {
+		padding: 16,
+		borderRadius: 16,
+		backgroundColor: '#F5F6F9'
+	},
+	netWorthIconAlert: {
+		padding: 16,
+		borderRadius: 16,
+		backgroundColor: '#F6E7E5'
+	},
+	netWorthItemText: {
+		flex: 1,
+		marginLeft: 16
+	},
+	arrowPadding: {
+		paddingLeft: 4
+	},
+	roundInside: {
+		position: 'relative',
+		marginTop: 22
+	},
+	currentValueCard: {
+		paddingTop: 16,
+		paddingLeft: 24,
+		paddingRight: 24,
+		paddingBottom: 16,
+		backgroundColor: '#F5F6F9',
+		borderRadius: 24,
+		marginBottom: 40
 	},
 	tabActive: {
 		flex: 1,
@@ -158,6 +203,10 @@ export default StyleSheet.create({
 		borderTopLeftRadius: 16,
 		borderTopRightRadius: 16,
 		backgroundColor: '#fff',
+		fontFamily: 'Inter_800ExtraBold'
+	},
+	tabTitleActive: {
+		fontSize: 16,
 		fontFamily: 'Inter_800ExtraBold'
 	},
 	tabInactive: {

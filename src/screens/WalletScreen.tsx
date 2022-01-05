@@ -14,6 +14,7 @@ import * as Clipboard from 'expo-clipboard';
 import QRCode from 'react-native-qrcode-svg';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from './home/styles';
+import { Svg, Path } from 'react-native-svg';
 // Images
 import avatar from './home/avatar-test.png';
 import transationalReceive from './home/transational-receive.png';
@@ -52,6 +53,14 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const onShareAddress = () => {
 		dialogVisible.set(true);
 	};
+
+	const roundTabNetWorthPath = 'M0 15.0.0 15.0 0.5 15.0 0.8 15.9C9.6 15.9 16.9 9.1 18 0.324615L18 16H0V15.9Z';
+	const roundTabTransactionPath =
+		'M47 37.9.2 37.9 45.4 37.9 44.7 37.9C21.7 37.9 2.7 21.3 0 -0.191559V38.0001H47V37.9431Z';
+	const roundTabNetWorth = '18 14';
+	const roundTabTransaction = '36 36';
+	const roundTab = roundTabTransaction;
+	const roundTabPath = roundTabTransactionPath;
 
 	return (
 		<View style={styles.container}>
@@ -189,10 +198,72 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 					<View style={styles.row}>
 						<TouchableOpacity onPress={onTransfer} style={styles.tabActive}>
-							<Text style={styles.fontBold}>Transactions</Text>
+							<Text style={styles.tabTitleActive}>Transactions</Text>
 						</TouchableOpacity>
+						<Svg
+							style={styles.roundInside}
+							width={30}
+							height={30}
+							fill="white"
+							strokeWidth={1}
+							viewBox={`0 0 ${roundTab}`}
+						>
+							<Path d={`${roundTabPath}`} />
+						</Svg>
 						<TouchableOpacity onPress={onTransfer} style={styles.tabInactive}>
 							<Text style={{ color: colors.grey800 }}>Net worth</Text>
+						</TouchableOpacity>
+					</View>
+
+					<View style={styles.tabsNetWorth}>
+						<View style={styles.currentValueCard}>
+							<Text style={styles.cardLabel}>Current value</Text>
+							<Text style={styles.cardBalance}>${commify(state.value.balance?.usd || '')}</Text>
+						</View>
+						<TouchableOpacity style={styles.netWorthItem}>
+							<View style={styles.netWorthIcon}>
+								<MaterialIcons name="account-balance-wallet" size={24} />
+							</View>
+							<View style={styles.netWorthItemText}>
+								<Text style={styles.fontSizeDefault}>Wallet</Text>
+								<Text style={styles.fontSizeSmall}>Available funds in your wallet</Text>
+							</View>
+							<View style={styles.row}>
+								<Text style={(styles.fontSizeDefault, styles.fontBold)}>$0.00</Text>
+								<Text style={(styles.cardLabel, styles.arrowPadding)}>
+									<MaterialIcons name="arrow-forward-ios" size={16} />
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.netWorthItem}>
+							<View style={styles.netWorthIcon}>
+								<MaterialIcons name="move-to-inbox" size={24} />
+							</View>
+							<View style={styles.netWorthItemText}>
+								<Text style={styles.fontSizeDefault}>Deposits</Text>
+								<Text style={styles.fontSizeSmall}>Funds deposited in vaults</Text>
+							</View>
+							<View style={styles.row}>
+								<Text style={styles.fontSizeDefault}>Deposit</Text>
+								<Text style={(styles.cardLabel, styles.arrowPadding)}>
+									<MaterialIcons name="arrow-forward-ios" color={'#5E2522'} size={16} />
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.netWorthItem}>
+							<View style={styles.netWorthIconAlert}>
+								<MaterialIcons name="volunteer-activism" color={'#5E2522'} size={24} />
+							</View>
+							<View style={styles.netWorthItemText}>
+								<Text style={styles.fontSizeDefault}>Debt</Text>
+								<Text style={styles.fontSizeSmall}>Open loans</Text>
+							</View>
+							<View style={styles.row}>
+								<Text style={styles.fontSizeDefault}>Borrow</Text>
+								<Text style={(styles.cardLabel, styles.arrowPadding)}>
+									<MaterialIcons name="arrow-forward-ios" color={'#5E2522'} size={16} />
+								</Text>
+							</View>
 						</TouchableOpacity>
 					</View>
 
