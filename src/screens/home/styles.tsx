@@ -143,7 +143,8 @@ export default StyleSheet.create({
 		height: 32,
 		marginRight: 8
 	},
-	tabs: {
+	tabsTransactions: {
+		display: 'none',
 		paddingTop: 24,
 		paddingLeft: 24,
 		paddingRight: 24,
@@ -156,7 +157,8 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		borderTopLeftRadius: 16,
 		borderTopRightRadius: 16,
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		fontFamily: 'Inter_800ExtraBold'
 	},
 	tabInactive: {
 		flex: 1,
