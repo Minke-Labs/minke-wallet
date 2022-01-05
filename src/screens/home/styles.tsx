@@ -148,16 +148,17 @@ export default StyleSheet.create({
 		paddingRight: 24,
 		paddingBottom: 16,
 		backgroundColor: '#fff',
-		borderTopRightRadius: 24
+		borderTopRightRadius: 24,
+		marginTop: -1
 	},
 	tabsNetWorth: {
-		display: 'none',
 		paddingTop: 24,
 		paddingLeft: 24,
 		paddingRight: 24,
 		paddingBottom: 16,
 		backgroundColor: '#fff',
-		borderTopLeftRadius: 24
+		borderTopLeftRadius: 24,
+		marginTop: -1
 	},
 	netWorthItem: {
 		flexDirection: 'row',
@@ -180,7 +181,8 @@ export default StyleSheet.create({
 		marginLeft: 16
 	},
 	arrowPadding: {
-		paddingLeft: 4
+		paddingLeft: 4,
+		marginTop: 2
 	},
 	roundInside: {
 		position: 'relative',
@@ -193,7 +195,8 @@ export default StyleSheet.create({
 		paddingBottom: 16,
 		backgroundColor: '#F5F6F9',
 		borderRadius: 24,
-		marginBottom: 40
+		marginBottom: 40,
+		marginTop: 16
 	},
 	tabActive: {
 		flex: 1,
@@ -207,6 +210,10 @@ export default StyleSheet.create({
 	tabTitleActive: {
 		fontSize: 16,
 		fontFamily: 'Inter_800ExtraBold'
+	},
+	tabTitleInactive: {
+		fontSize: 16,
+		color: '#4E5E6F'
 	},
 	tabInactive: {
 		flex: 1,
