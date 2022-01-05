@@ -1,4 +1,3 @@
-import { joinSignature } from 'ethers/lib/utils';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({

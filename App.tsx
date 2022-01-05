@@ -51,11 +51,7 @@ export default function App() {
 					/>
 					<Stack.Screen options={{ headerShown: false }} name="Backup" component={BackupScreen} />
 					<Stack.Screen options={{ headerShown: false }} name="Wallet" component={WalletScreen} />
-					<Stack.Screen
-						options={{ headerShown: false }}
-						name="TransactionSelectFunds"
-						component={TransactionSelectFundsScreen}
-					/>
+					<Stack.Screen name="TransactionSelectFunds" component={TransactionSelectFundsScreen} />
 					<Stack.Screen
 						options={{ headerShown: false }}
 						initialParams={{ coin: 'eth' }}

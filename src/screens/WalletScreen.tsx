@@ -8,7 +8,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import { walletDelete } from '../model/wallet';
 import { BigNumberish } from 'ethers';
-import { isNaN } from 'lodash';
 import { commify, formatEther, formatUnits } from 'ethers/lib/utils';
 import * as Clipboard from 'expo-clipboard';
 import QRCode from 'react-native-qrcode-svg';
@@ -28,7 +27,8 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const dialogVisible = useState(false);
 	const { colors } = useTheme();
 
-	const transferTo = useState({ to: '', amount: '' });
+	const [selectedTab, setSelectedTab] = React.useState('transactions');
+
 	if (state.promised) return <AppLoading />;
 
 	const onDeleteWallet = useCallback(async () => {
@@ -36,10 +36,6 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		state.set({ wallet: null, walletId: null });
 		navigation.navigate('Welcome');
 	}, [navigation]);
-
-	const onAmountChange = (text: string) => {
-		if (!isNaN(text)) transferTo.amount.set(text);
-	};
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(state.value.wallet?.address || '');
@@ -59,8 +55,13 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		'M47 37.9.2 37.9 45.4 37.9 44.7 37.9C21.7 37.9 2.7 21.3 0 -0.191559V38.0001H47V37.9431Z';
 	const roundTabNetWorth = '18 14';
 	const roundTabTransaction = '36 36';
-	const roundTab = roundTabTransaction;
-	const roundTabPath = roundTabTransactionPath;
+	let roundTab = roundTabTransaction;
+	let roundTabPath = roundTabTransactionPath;
+
+	if (selectedTab === 'net_worth') {
+		roundTab = roundTabNetWorth;
+		roundTabPath = roundTabNetWorthPath;
+	}
 
 	return (
 		<View style={styles.container}>
@@ -197,8 +198,13 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					</SafeAreaView>
 
 					<View style={styles.row}>
-						<TouchableOpacity onPress={onTransfer} style={styles.tabActive}>
-							<Text style={styles.tabTitleActive}>Transactions</Text>
+						<TouchableOpacity
+							onPress={() => setSelectedTab('transactions')}
+							style={selectedTab === 'transactions' ? styles.tabActive : styles.tabInactive}
+						>
+							<Text style={selectedTab === 'transactions' ? styles.tabTitleActive : {}}>
+								Transactions
+							</Text>
 						</TouchableOpacity>
 						<Svg
 							style={styles.roundInside}
@@ -210,7 +216,10 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 						>
 							<Path d={`${roundTabPath}`} />
 						</Svg>
-						<TouchableOpacity onPress={onTransfer} style={styles.tabInactive}>
+						<TouchableOpacity
+							onPress={() => setSelectedTab('net_worth')}
+							style={selectedTab === 'net_worth' ? styles.tabActive : styles.tabInactive}
+						>
 							<Text style={{ color: colors.grey800 }}>Net worth</Text>
 						</TouchableOpacity>
 					</View>
