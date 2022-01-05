@@ -10,12 +10,14 @@ const SearchTokens = ({
 	visible,
 	onDismiss,
 	onTokenSelect,
-	ownedTokens,
+	ownedTokens = [],
+	showOnlyOwnedTokens,
 	selected
 }: {
 	visible: boolean;
 	onDismiss: any;
 	onTokenSelect: Function;
+	showOnlyOwnedTokens: boolean;
 	// eslint-disable-next-line react/require-default-props
 	ownedTokens?: Array<string>;
 	// eslint-disable-next-line react/require-default-props
@@ -42,7 +44,7 @@ const SearchTokens = ({
 		const filterTokens = async () => {
 			setLoading(true);
 			let filter = tokens;
-			if (ownedTokens && ownedTokens.length > 0) {
+			if (showOnlyOwnedTokens) {
 				filter = _.filter(filter, (token) => ownedTokens.includes(token.symbol.toLocaleLowerCase()));
 			}
 
@@ -59,7 +61,7 @@ const SearchTokens = ({
 		setSearch(text);
 
 		if (text) {
-			const data = _.filter(tokens, (token) => token.symbol.toLowerCase().includes(text.toLowerCase()));
+			const data = _.filter(filteredTokens, (token) => token.symbol.toLowerCase().includes(text.toLowerCase()));
 			setFilteredTokens(data);
 		} else {
 			setFilteredTokens(tokens);
