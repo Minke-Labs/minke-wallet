@@ -5,6 +5,7 @@ declare global {
 		interface ThemeColors {
 			buttonText: string;
 			linkText: string;
+			secondaryText: string;
 		}
 	}
 }
@@ -15,13 +16,14 @@ export const darkTheme = {
 	dark: true,
 	colors: {
 		...DefaultTheme.colors,
-		background: '#0A2138',
+		background: '#0A2036',
 		text: '#FFFFFF',
 		placeholder: '#B7B9BB',
-		primary: '#006AA6',
+		primary: '#FFFFFF',
 		buttonText: '#FFFFFF',
 		linkText: '#FFFFFF',
-		grey800: '#FFFFFF'
+		surface: '#0A2036',
+		secondaryText: '#748190'
 	}
 };
 
@@ -36,6 +38,6 @@ export const lightTheme = {
 		primary: '#006AA6',
 		buttonText: '#FFFFFF',
 		linkText: '#006AA6',
-		grey800: '#4E5E6F'
+		secondaryText: '#4E5E6F'
 	}
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
 
 const styles = StyleSheet.create({
 	mainText: {

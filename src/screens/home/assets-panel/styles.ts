@@ -8,10 +8,12 @@ export default StyleSheet.create({
 		paddingBottom: 16
 	},
 	card: {
-		backgroundColor: 'rgba(255, 255, 255, 0.8)',
 		borderRadius: 24,
 		overflow: 'hidden',
-		marginBottom: 16
+		marginBottom: 16,
+		borderColor: '#FFFFFF',
+		borderStyle: 'solid',
+		borderWidth: 0.1
 	},
 	cardTopContent: {
 		padding: 24,
@@ -20,12 +22,10 @@ export default StyleSheet.create({
 		alignItems: 'center'
 	},
 	cardLabel: {
-		color: 'rgba(78, 94, 111, 1)',
 		fontSize: 14,
 		marginBottom: 8
 	},
 	cardBalance: {
-		color: 'rgba(10, 32, 54, 1)',
 		fontSize: 36
 	},
 	avatar: {
@@ -36,9 +36,7 @@ export default StyleSheet.create({
 		borderWidth: 4
 	},
 	cardBottomContent: {
-		borderTopColor: 'rgba(242, 234, 225, 1)',
 		borderTopWidth: 1,
-		backgroundColor: '#ffffff',
 		paddingLeft: 24,
 		paddingRight: 24,
 		flexDirection: 'row',
@@ -48,7 +46,6 @@ export default StyleSheet.create({
 		width: '50%',
 		flexDirection: 'row',
 		alignItems: 'center',
-		borderRightColor: 'rgba(242, 234, 225, 1)',
 		borderRightWidth: 1
 	}
 });

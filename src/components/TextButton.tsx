@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, StyleProp, TextStyle } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { TouchableOpacity, StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({

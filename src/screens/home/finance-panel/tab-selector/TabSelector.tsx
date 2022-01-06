@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
 import styles from './styles';
 

@@ -20,7 +20,6 @@ export default StyleSheet.create({
 	},
 	appBarUserName: {
 		fontSize: 24,
-		color: '#0A2138',
 		fontFamily: 'Inter_800ExtraBold'
 	}
 });

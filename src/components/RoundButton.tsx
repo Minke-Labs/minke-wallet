@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, StyleProp, TextStyle } from 'react-native';
-import { Card } from 'react-native-paper';
+import { StyleSheet, StyleProp, TextStyle, View, useColorScheme } from 'react-native';
 import TextButton from './TextButton';
 
 const styles = StyleSheet.create({
@@ -21,10 +20,15 @@ const RoundButton = ({
 	icon: string;
 	// eslint-disable-next-line react/require-default-props
 	containerStyle?: StyleProp<TextStyle>;
-}) => (
-	<Card style={styles.container}>
-		<TextButton text={text} icon={icon} containerStyle={containerStyle} />
-	</Card>
-);
+}) => {
+	const scheme = useColorScheme();
+	return (
+		<View
+			style={[styles.container, { backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF' }]}
+		>
+			<TextButton text={text} icon={icon} containerStyle={containerStyle} />
+		</View>
+	);
+};
 
 export default RoundButton;

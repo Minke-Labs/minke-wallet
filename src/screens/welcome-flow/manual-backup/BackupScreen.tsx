@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { Text, View, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Headline, Subheading, Snackbar, useTheme } from 'react-native-paper';
+import { Text, Headline, Subheading, Snackbar, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { RootStackParamList } from '../../../helpers/param-list-type';

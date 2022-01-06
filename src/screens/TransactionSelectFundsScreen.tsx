@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Appbar, Button, Card } from 'react-native-paper';
-import { Text, View } from 'react-native';
+import { Text, Appbar, Button, Card } from 'react-native-paper';
+import { View } from 'react-native';
 import { formatEther, formatUnits } from 'ethers/lib/utils';
 import { BigNumberish } from 'ethers';
 import { globalWalletState } from '../stores/WalletStore';
