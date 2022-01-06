@@ -37,8 +37,8 @@ export default StyleSheet.create({
 		paddingBottom: 16,
 		backgroundColor: '#F5F6F9',
 		borderRadius: 24,
-		marginBottom: 10,
-		marginTop: 4
+		marginBottom: 40,
+		marginTop: 16
 	},
 	cardLabel: {
 		color: 'rgba(78, 94, 111, 1)',

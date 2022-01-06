@@ -17,7 +17,7 @@ const Transactions = () => (
 					<Image source={transationalSent} style={styles.transationalIcon} />
 					<View>
 						<Text style={styles.fontSizeSmall}>7h30 pm</Text>
-						<Text style={styles.fontSizeDefault}>To jreys.eth</Text>
+						<Text style={styles.fontSizeDefault}>To marcost.eth</Text>
 					</View>
 				</View>
 				<View style={styles.alignContentRight}>
@@ -30,7 +30,7 @@ const Transactions = () => (
 					<Image source={transationalReceive} style={styles.transationalIcon} />
 					<View>
 						<Text style={styles.fontSizeSmall}>10h00 pm</Text>
-						<Text style={styles.fontSizeDefault}>From jreys.eth</Text>
+						<Text style={styles.fontSizeDefault}>From minke.eth</Text>
 					</View>
 				</View>
 				<View style={styles.alignContentRight}>
