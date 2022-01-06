@@ -16,7 +16,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import WelcomeScreen from './src/screens/welcome-flow/welcome/WelcomeScreen';
 import { WalletCreatedScreen } from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
 import { BackupScreen } from './src/screens/welcome-flow/manual-backup/BackupScreen';
-import { WalletScreen } from './src/screens/WalletScreen';
+import { WalletScreen } from './src/screens/home/WalletScreen';
 import { globalWalletState } from './src/stores/WalletStore';
 import { TransactionSelectFundsScreen } from './src/screens/TransactionSelectFundsScreen';
 import { TransactionContactsScreen } from './src/screens/TransactionContactsScreen';
