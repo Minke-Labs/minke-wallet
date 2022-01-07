@@ -1,19 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, useTheme, Text } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
+import { getENSAddress } from '@models/wallet';
 import { makeStyles } from './styles';
 
 const Header = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+
+	const [ensName, setEnsName] = React.useState<string | null>('');
+	const state = useState(globalWalletState());
+	const address = state.value.wallet?.address || '';
+
+	useEffect(() => {
+		const fetchENSAddress = async () => {
+			const name = await getENSAddress(address);
+			setEnsName(name);
+		};
+		fetchENSAddress();
+	}, []);
+
+	const accountName = () => {
+		if (ensName) {
+			return ensName;
+		}
+		return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+	};
+
+	if (state.promised) return <AppLoading />;
+
 	return (
 		<Appbar.Header style={styles.appBar}>
 			<View style={styles.appBarContent}>
 				<View>
 					<Text style={styles.welcomeText}>Welcome</Text>
-					<Text style={styles.appBarUserName}>jreyes.eth</Text>
+					<Text style={styles.appBarUserName}>{accountName()}</Text>
 				</View>
 				<Appbar.Content title="" />
 				<View style={styles.appBarIcons}>
