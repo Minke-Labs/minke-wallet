@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, StyleProp, TextStyle, View } from 'react-native';
+import { StyleSheet, StyleProp, TextStyle, View, GestureResponderEvent } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import TextButton from './TextButton';
 
@@ -17,17 +17,19 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 const RoundButton = ({
 	text,
 	icon,
-	containerStyle = {}
+	containerStyle = {},
+	onPress
 }: {
 	text: string;
 	icon: string;
 	containerStyle?: StyleProp<TextStyle>;
+	onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (
 		<View style={styles.container}>
-			<TextButton text={text} icon={icon} containerStyle={containerStyle} />
+			<TextButton text={text} icon={icon} containerStyle={containerStyle} onPress={onPress} />
 		</View>
 	);
 };

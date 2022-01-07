@@ -2,18 +2,18 @@ import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, useTheme, Text } from 'react-native-paper';
-import { SecondaryText } from '../../../components/Overrides';
 import waveLower from './wave-lower.png';
 import waveBigger from './wave-bigger.png';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const Header = () => {
 	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 	return (
 		<Appbar.Header style={styles.appBar}>
 			<View style={styles.appBarContent}>
 				<View>
-					<SecondaryText>Welcome</SecondaryText>
+					<Text style={styles.welcomeText}>Welcome</Text>
 					<Text style={styles.appBarUserName}>jreyes.eth</Text>
 				</View>
 				<Appbar.Content title="" />
