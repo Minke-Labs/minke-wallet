@@ -46,7 +46,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 			<View style={styles.backupWordContainer}>
 				<Headline style={[styles.headline, { color: colors.text }]}>Recovery phrase</Headline>
-				<Subheading style={[styles.subheading, { color: colors.placeholder }]}>
+				<Subheading style={[styles.subheading, { color: colors.secondaryText }]}>
 					Write this down on paper or save it in your password manager.
 				</Subheading>
 

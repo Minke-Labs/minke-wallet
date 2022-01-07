@@ -23,7 +23,7 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
-		console.log('NJEW WALLET', newWallet);
+		console.log('NEW WALLET', newWallet);
 		walletState.set(newWallet as any);
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
