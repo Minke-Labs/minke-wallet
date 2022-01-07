@@ -1,13 +1,16 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
+import { useTheme, Text } from 'react-native-paper';
 import { globalWalletState } from '../../../../stores/WalletStore';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const NetWorth = () => {
 	const state = useState(globalWalletState());
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 	return (
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
@@ -16,7 +19,7 @@ const NetWorth = () => {
 			</View>
 			<TouchableOpacity style={styles.netWorthItem}>
 				<View style={styles.netWorthIcon}>
-					<MaterialIcons name="account-balance-wallet" size={24} />
+					<MaterialIcons name="account-balance-wallet" size={24} color={colors.text} />
 				</View>
 				<View style={styles.netWorthItemText}>
 					<Text style={styles.fontSizeDefault}>Wallet</Text>
@@ -31,7 +34,7 @@ const NetWorth = () => {
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.netWorthItem}>
 				<View style={styles.netWorthIcon}>
-					<MaterialIcons name="move-to-inbox" size={24} />
+					<MaterialIcons name="move-to-inbox" size={24} color={colors.text} />
 				</View>
 				<View style={styles.netWorthItemText}>
 					<Text style={styles.fontSizeDefault}>Deposits</Text>

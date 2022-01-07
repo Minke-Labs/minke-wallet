@@ -4,7 +4,10 @@ import { Card as PaperCard, Text, useTheme } from 'react-native-paper';
 
 export const Card = (props: any) => {
 	const properties = { ...props };
-	properties.style = { ...{ borderColor: '#FFFFFF', borderStyle: 'solid', borderWidth: 0.2 }, ...properties.style };
+	properties.style = {
+		...{ borderColor: 'rgba(255, 255, 255, 0.1)', borderStyle: 'solid', borderWidth: 1 },
+		...properties.style
+	};
 	return <PaperCard {...properties} />;
 };
 

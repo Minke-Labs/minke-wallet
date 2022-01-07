@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const TabSelector = ({ selectedTab, onTabSelect }: { selectedTab: string; onTabSelect: Function }) => {
 	const roundTabNetWorthPath = 'M0 15.0.0 15.0 0.5 15.0 0.8 15.9C9.6 15.9 16.9 9.1 18 0.324615L18 16H0V15.9Z';
@@ -18,9 +18,12 @@ const TabSelector = ({ selectedTab, onTabSelect }: { selectedTab: string; onTabS
 		roundTab = roundTabNetWorth;
 		roundTabPath = roundTabNetWorthPath;
 	}
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 	return (
 		<View style={styles.row}>
 			<TouchableOpacity
+				disabled={selectedTab === 'transactions'}
 				onPress={() => onTabSelect('transactions')}
 				style={selectedTab === 'transactions' ? styles.tabActive : styles.tabInactive}
 			>
@@ -32,13 +35,14 @@ const TabSelector = ({ selectedTab, onTabSelect }: { selectedTab: string; onTabS
 				style={styles.roundInside}
 				width={30}
 				height={30}
-				fill="white"
 				strokeWidth={1}
+				fill={colors.fill}
 				viewBox={`0 0 ${roundTab}`}
 			>
 				<Path d={`${roundTabPath}`} />
 			</Svg>
 			<TouchableOpacity
+				disabled={selectedTab === 'net_worth'}
 				onPress={() => onTabSelect('net_worth')}
 				style={selectedTab === 'net_worth' ? styles.tabActive : styles.tabInactive}
 			>

@@ -6,6 +6,7 @@ declare global {
 			buttonText: string;
 			linkText: string;
 			secondaryText: string;
+			fill: string;
 		}
 	}
 }
@@ -16,14 +17,15 @@ export const darkTheme = {
 	dark: true,
 	colors: {
 		...DefaultTheme.colors,
-		background: '#0A2036',
+		background: '#0A2138',
 		text: '#FFFFFF',
 		placeholder: '#B7B9BB',
 		primary: '#FFFFFF',
 		buttonText: '#FFFFFF',
 		linkText: '#FFFFFF',
-		surface: '#0A2036',
-		secondaryText: '#748190'
+		surface: '#0A2138',
+		secondaryText: '#748190',
+		fill: 'rgba(255, 255, 255, 0.1)'
 	}
 };
 
@@ -38,6 +40,7 @@ export const lightTheme = {
 		primary: '#006AA6',
 		buttonText: '#FFFFFF',
 		linkText: '#006AA6',
-		secondaryText: '#4E5E6F'
+		secondaryText: '#4E5E6F',
+		fill: '#FFFFFF'
 	}
 };

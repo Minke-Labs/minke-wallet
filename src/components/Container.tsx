@@ -6,8 +6,7 @@ import { useTheme } from 'react-native-paper';
 
 const selfStyles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#F2EAE1'
+		flex: 1
 	}
 });
 

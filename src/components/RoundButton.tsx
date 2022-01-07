@@ -1,15 +1,18 @@
 import React from 'react';
-import { StyleSheet, StyleProp, TextStyle, View, useColorScheme } from 'react-native';
+import { StyleSheet, StyleProp, TextStyle, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import TextButton from './TextButton';
 
-const styles = StyleSheet.create({
-	container: {
-		borderRadius: 16,
-		paddingLeft: 16,
-		paddingRight: 16,
-		marginRight: 16
-	}
-});
+export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+	StyleSheet.create({
+		container: {
+			borderRadius: 16,
+			paddingLeft: 16,
+			paddingRight: 16,
+			marginRight: 16,
+			backgroundColor: colors.fill
+		}
+	});
 
 const RoundButton = ({
 	text,
@@ -18,14 +21,12 @@ const RoundButton = ({
 }: {
 	text: string;
 	icon: string;
-	// eslint-disable-next-line react/require-default-props
 	containerStyle?: StyleProp<TextStyle>;
 }) => {
-	const scheme = useColorScheme();
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 	return (
-		<View
-			style={[styles.container, { backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF' }]}
-		>
+		<View style={styles.container}>
 			<TextButton text={text} icon={icon} containerStyle={containerStyle} />
 		</View>
 	);

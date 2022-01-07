@@ -22,7 +22,6 @@ const TextButton = ({
 }: {
 	text: string;
 	icon: string;
-	// eslint-disable-next-line react/require-default-props
 	containerStyle?: StyleProp<TextStyle>;
 }) => {
 	const { colors } = useTheme();

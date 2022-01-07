@@ -52,6 +52,8 @@
 				}
 			}
 		],
-		"react/no-unstable-nested-components": ["error", { "allowAsProps": true }]
+		"react/no-unstable-nested-components": ["error", { "allowAsProps": true }],
+		"implicit-arrow-linebreak": "off",
+		"react/require-default-props": "off"
 	}
 }
