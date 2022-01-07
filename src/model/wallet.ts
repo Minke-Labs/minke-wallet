@@ -170,6 +170,14 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 	return result.json();
 };
 
+export const getWalletTokens = async (wallet: string): Promise<WalletTokensResponse> => {
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const result = await fetch(
+		`https://api.zapper.fi/v1/protocols/tokens/balances?api_key=${apiKey}&addresses[]=${wallet}`
+	);
+	return result.json();
+};
+
 export const supportedTokenList = {
 	dai: '0x31f42841c2db5173425b5223809cf3a38fede360'
 };
@@ -225,4 +233,27 @@ export interface EtherLastPriceResponse {
 		ethusd: string;
 		ethusd_timestamp: string;
 	};
+}
+
+export interface WalletTokensResponse {
+	[key: string]: {
+		products: [
+			{
+				label: string;
+				assets: [WalletToken];
+			}
+		];
+	};
+}
+
+export interface WalletToken {
+	type: string;
+	network: string;
+	address: string;
+	decimals: number;
+	symbol: string;
+	price: number;
+	balance: number;
+	balanceRaw: string;
+	balanceUSD: number;
 }
