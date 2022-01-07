@@ -6,10 +6,11 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingTop: 24,
 			paddingLeft: 24,
 			paddingRight: 24,
-			paddingBottom: 16,
+			paddingBottom: 80,
 			backgroundColor: colors.fill,
 			borderTopLeftRadius: 24,
-			marginTop: -1
+			marginTop: 0,
+			height: '100%'
 		},
 		netWorthItem: {
 			flexDirection: 'row',
