@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string | null) =>
 	StyleSheet.create({
 		tabsNetWorth: {
 			paddingTop: 24,
@@ -24,12 +24,18 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderColor: 'rgba(255, 255, 255, 0.1)',
 			borderStyle: 'solid',
 			borderWidth: 1,
-			backgroundColor: 'rgba(103, 152, 242, 0.1)'
+			backgroundColor: scheme === 'dark' ? undefined : 'rgba(103, 152, 242, 0.1)'
 		},
 		netWorthIconAlert: {
 			padding: 16,
 			borderRadius: 16,
-			backgroundColor: 'rgba(192, 48, 48, 0.1)'
+			backgroundColor: scheme === 'dark' ? undefined : 'rgba(192, 48, 48, 0.1)',
+			borderColor: 'rgba(225, 138, 138, 0.4)',
+			borderStyle: 'solid',
+			borderWidth: 1
+		},
+		netWorthIconColor: {
+			color: scheme === 'dark' ? '#F5D6D6' : '#5E2522'
 		},
 		netWorthItemText: {
 			flex: 1,
@@ -49,19 +55,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			display: 'none'
 		},
 		cardLabel: {
-			color: 'rgba(78, 94, 111, 1)',
 			fontSize: 14,
 			marginBottom: 8
 		},
 		cardBalance: {
-			color: 'rgba(10, 32, 54, 1)',
 			fontSize: 36
 		},
 		fontSizeDefault: {
 			fontSize: 16
 		},
 		fontSizeSmall: {
-			color: 'rgba(78, 94, 111, 1)',
+			color: colors.secondaryText,
 			fontSize: 12
 		},
 		row: {

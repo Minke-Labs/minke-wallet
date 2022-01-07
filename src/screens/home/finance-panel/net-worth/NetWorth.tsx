@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, TouchableOpacity, useColorScheme } from 'react-native';
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { useTheme, Text } from 'react-native-paper';
@@ -10,7 +10,7 @@ import { makeStyles } from './styles';
 const NetWorth = () => {
 	const state = useState(globalWalletState());
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const styles = makeStyles(colors, useColorScheme());
 	return (
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
@@ -34,7 +34,7 @@ const NetWorth = () => {
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.netWorthItem}>
 				<View style={styles.netWorthIcon}>
-					<MaterialIcons name="move-to-inbox" size={24} color={colors.text} />
+					<MaterialCommunityIcons name="safe" size={24} color={colors.text} />
 				</View>
 				<View style={styles.netWorthItemText}>
 					<Text style={styles.fontSizeDefault}>Deposits</Text>
@@ -42,14 +42,14 @@ const NetWorth = () => {
 				</View>
 				<View style={styles.row}>
 					<Text style={styles.fontSizeDefault}>Deposit</Text>
-					<Text style={(styles.cardLabel, styles.arrowPadding)}>
-						<MaterialIcons name="arrow-forward-ios" color="#5E2522" size={16} />
-					</Text>
+					<View style={(styles.cardLabel, styles.arrowPadding)}>
+						<MaterialIcons name="arrow-forward-ios" color={colors.text} size={16} />
+					</View>
 				</View>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.netWorthItem}>
 				<View style={styles.netWorthIconAlert}>
-					<MaterialIcons name="volunteer-activism" color="#5E2522" size={24} />
+					<FontAwesome5 name="hand-holding-usd" style={styles.netWorthIconColor} size={24} />
 				</View>
 				<View style={styles.netWorthItemText}>
 					<Text style={styles.fontSizeDefault}>Debt</Text>
@@ -57,9 +57,9 @@ const NetWorth = () => {
 				</View>
 				<View style={styles.row}>
 					<Text style={styles.fontSizeDefault}>Borrow</Text>
-					<Text style={(styles.cardLabel, styles.arrowPadding)}>
-						<MaterialIcons name="arrow-forward-ios" color="#5E2522" size={16} />
-					</Text>
+					<View style={(styles.cardLabel, styles.arrowPadding)}>
+						<MaterialIcons name="arrow-forward-ios" color={colors.text} size={16} />
+					</View>
 				</View>
 			</TouchableOpacity>
 		</View>
