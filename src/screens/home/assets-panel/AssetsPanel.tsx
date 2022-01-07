@@ -4,8 +4,8 @@ import AppLoading from 'expo-app-loading';
 import { useState } from '@hookstate/core';
 import { commify } from 'ethers/lib/utils';
 import { Text, Card, useTheme } from 'react-native-paper';
-import TextButton from '../../../components/TextButton';
-import { globalWalletState } from '../../../stores/WalletStore';
+import TextButton from '@components/TextButton';
+import { globalWalletState } from '@stores/WalletStore';
 import { makeStyles } from './styles';
 import avatar from './avatar-test.png';
 

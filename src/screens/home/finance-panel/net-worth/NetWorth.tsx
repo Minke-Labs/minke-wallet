@@ -4,7 +4,7 @@ import { MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vecto
 import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { useTheme, Text } from 'react-native-paper';
-import { globalWalletState } from '../../../../stores/WalletStore';
+import { globalWalletState } from '@stores/WalletStore';
 import { makeStyles } from './styles';
 
 const NetWorth = () => {

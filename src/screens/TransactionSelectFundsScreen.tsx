@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
+import { View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, Appbar, Button, Card } from 'react-native-paper';
-import { View } from 'react-native';
+import { RootStackParamList } from '@helpers/param-list-type';
 import { formatEther, formatUnits } from 'ethers/lib/utils';
 import { BigNumberish } from 'ethers';
-import { globalWalletState } from '../stores/WalletStore';
-import { RootStackParamList } from '../helpers/param-list-type';
+import { globalWalletState } from '@stores/WalletStore';
 
 export function TransactionSelectFundsScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const wallet = globalWalletState();

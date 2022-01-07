@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { SafeAreaView, ScrollView, View, StyleSheet } from 'react-native';
+import RoundButton from '@components/RoundButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@helpers/param-list-type';
 import { useState } from '@hookstate/core';
-import { RootStackParamList } from '../../../helpers/param-list-type';
-import { walletDelete } from '../../../model/wallet';
-import { globalWalletState } from '../../../stores/WalletStore';
-import RoundButton from '../../../components/RoundButton';
+import { globalWalletState } from '@stores/WalletStore';
+import { walletDelete } from '@models/wallet';
 
 const styles = StyleSheet.create({
 	scrollviewHorizontal: {
