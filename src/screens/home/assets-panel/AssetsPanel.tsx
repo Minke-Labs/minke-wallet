@@ -6,13 +6,14 @@ import { commify } from 'ethers/lib/utils';
 import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
 import { globalWalletState } from '@stores/WalletStore';
+import makeBlockie from 'ethereum-blockies-base64';
 import { makeStyles } from './styles';
-import avatar from './avatar-test.png';
 
 const AssetsPanel = () => {
 	const state = useState(globalWalletState());
 	const { colors } = useTheme();
 	const styles = makeStyles(colors, useColorScheme());
+
 	if (state.promised) return <AppLoading />;
 
 	const balance = state.value.balance?.usd || '';
@@ -25,7 +26,7 @@ const AssetsPanel = () => {
 						<Text style={styles.cardBalance}>${commify(balance)}</Text>
 					</View>
 					<View>
-						<Image source={avatar} style={styles.avatar} />
+						<Image source={{ uri: makeBlockie(state.value.wallet?.address || '') }} style={styles.avatar} />
 					</View>
 				</View>
 				<View style={styles.cardBottomContent}>
