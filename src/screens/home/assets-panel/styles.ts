@@ -38,8 +38,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string
 		},
 		cardBottomContent: {
 			borderTopWidth: 1,
-			paddingLeft: 24,
-			paddingRight: 24,
 			flexDirection: 'row',
 			justifyContent: 'space-around',
 			borderTopColor: colors.background,
@@ -49,6 +47,9 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string
 			width: '50%',
 			flexDirection: 'row',
 			alignItems: 'center',
-			borderRightWidth: 1
+			borderRightWidth: 1,
+			flexGrow: 1,
+			flexBasis: 0,
+			justifyContent: 'center'
 		}
 	});

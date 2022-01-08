@@ -35,7 +35,11 @@ const AssetsPanel = () => {
 						icon="add-circle-outline"
 						containerStyle={[styles.cardDivisor, { borderRightColor: colors.background }]}
 					/>
-					<TextButton text="Send" icon="arrow-circle-up" />
+					<TextButton
+						text="Send"
+						icon="arrow-circle-up"
+						containerStyle={{ flexGrow: 1, flexBasis: 0, justifyContent: 'center' }}
+					/>
 				</View>
 			</Card>
 		</View>
