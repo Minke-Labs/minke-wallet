@@ -49,7 +49,7 @@ const NetWorth = () => {
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.netWorthItem}>
 				<View style={styles.netWorthIconAlert}>
-					<FontAwesome5 name="hand-holding-usd" style={styles.netWorthIconColor} size={24} />
+					<FontAwesome5 name="hand-holding-usd" style={styles.netWorthIconColor} size={22} />
 				</View>
 				<View style={styles.netWorthItemText}>
 					<Text style={styles.fontSizeDefault}>Debt</Text>

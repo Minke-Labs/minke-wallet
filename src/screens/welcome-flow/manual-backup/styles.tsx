@@ -10,7 +10,7 @@ export default StyleSheet.create({
 	headerNavegation: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginTop: 24
+		marginTop: '4%'
 	},
 	headline: {
 		fontWeight: '800',
