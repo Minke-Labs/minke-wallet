@@ -18,9 +18,7 @@ const SearchTokens = ({
 	onDismiss: any;
 	onTokenSelect: Function;
 	showOnlyOwnedTokens: boolean;
-	// eslint-disable-next-line react/require-default-props
 	ownedTokens?: Array<string>;
-	// eslint-disable-next-line react/require-default-props
 	selected?: Array<string | undefined>;
 }) => {
 	const containerStyle = { backgroundColor: 'white', padding: 20 };
@@ -55,7 +53,7 @@ const SearchTokens = ({
 			setLoading(false);
 		};
 		filterTokens();
-	}, [ownedTokens, selected]);
+	}, [selected]);
 
 	useEffect(() => {
 		setSearch('');

@@ -24,33 +24,36 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>(ether);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
-	const [fromTokenBalance, setFromTokenBalance] = React.useState(0);
-	const [toTokenBalance, setToTokenBalance] = React.useState(0);
+	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
+	const [toTokenBalance, setToTokenBalance] = React.useState('0');
 	const [searchSource, setSearchSource] = React.useState('from');
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
 	const [ownedTokens, setOwnedTokens] = React.useState<Array<string>>();
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
+	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
+	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
 
-	const balanceFrom = (token: ParaswapToken | undefined): number => {
+	const balanceFrom = (token: ParaswapToken | undefined): string => {
 		if (!token) {
-			return 0;
+			return '0';
 		}
 		const walletToken = walletTokens?.find((owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase());
-		return walletToken?.balance || 0;
+		return walletToken?.balance.toString() || '0';
 	};
 
 	const updateFromToken = (token: ParaswapToken) => {
 		setFromToken(token);
 		setFromTokenBalance(balanceFrom(token));
+		setFromConversionAmount(undefined);
 		fromAmountRef.current?.focus();
 	};
 
 	const updateToToken = (token: ParaswapToken) => {
 		setToToken(token);
-		setToTokenBalance(balanceFrom(token));
+		setToConversionAmount(undefined);
 		toAmountRef.current?.focus();
 	};
 
@@ -60,20 +63,23 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		if (quote && formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
 			let converted = quote.to[toToken?.symbol || ''].mul(toBn(formatedValue));
 			converted = converted.div(quote.from[fromToken.symbol]);
-			console.log(
-				formatedValue +
-					' from ' +
-					fromToken.symbol +
-					' = ' +
-					utils.formatUnits(converted) +
-					' ' +
-					toToken?.symbol
-			);
+			setToConversionAmount(utils.formatUnits(converted, toToken?.decimals));
 		}
 	};
 
 	const updateToQuotes = (amount: string) => {
-		console.log(amount);
+		// eslint-disable-next-line no-useless-escape
+		const formatedValue = amount.replace(/\,/g, '.');
+		if (quote && formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+			// 1 ETH ==== > 10 DAI
+			// X ETH ==== > formatedValue DAI
+			// quote.from[fromToken.symbol] ==== > quote.to[toToken?.symbol || '']
+			// X                            ==== > toBn(formatedValue)
+
+			let converted = quote.from[fromToken.symbol].mul(toBn(formatedValue));
+			converted = converted.div(quote.to[toToken?.symbol || '']);
+			setFromConversionAmount(utils.formatUnits(converted, fromToken.decimals));
+		}
 	};
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -116,6 +122,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const directionSwap = () => {
 		if (fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase())) {
+			setQuote(null);
 			const backup = fromToken;
 			updateFromToken(toToken);
 			updateToToken(backup);
@@ -137,8 +144,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
 		}
 
-		fetchWalletTokens();
 		getGweiPrice();
+		fetchWalletTokens();
 	}, []);
 
 	useEffect(() => {
@@ -169,6 +176,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					balance={fromTokenBalance}
 					innerRef={fromAmountRef}
 					updateQuotes={updateFromQuotes}
+					conversionAmount={fromConversionAmount}
 				/>
 				<TouchableOpacity onPress={directionSwap}>
 					<Image source={swap} />
@@ -179,6 +187,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					balance={toTokenBalance}
 					innerRef={toAmountRef}
 					updateQuotes={updateToQuotes}
+					conversionAmount={toConversionAmount}
 					disableMax
 				/>
 			</View>

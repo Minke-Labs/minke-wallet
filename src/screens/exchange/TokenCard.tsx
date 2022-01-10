@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable prefer-regex-literals */
 import React, { useState, useEffect, RefObject } from 'react';
 import { Image, Text, TextInput } from 'react-native';
@@ -11,15 +12,16 @@ const TokenCard = ({
 	balance,
 	innerRef,
 	disableMax = false,
-	updateQuotes
+	updateQuotes,
+	conversionAmount = ''
 }: {
 	token: ParaswapToken | undefined;
 	onPress: (() => void) | undefined;
-	balance: number;
+	balance: string;
 	innerRef: RefObject<TextInput>;
-	// eslint-disable-next-line react/require-default-props
 	disableMax?: boolean;
 	updateQuotes: Function;
+	conversionAmount?: string;
 }) => {
 	const [amount, setAmount] = useState('');
 	const onChangeText = (value: string) => {
@@ -36,11 +38,21 @@ const TokenCard = ({
 
 	useEffect(() => {
 		setAmount('');
+		updateQuotes(amount);
 	}, [token]);
 
 	useEffect(() => {
-		updateQuotes(amount);
+		if (!(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
+			updateQuotes(amount);
+		}
 	}, [amount]);
+
+	useEffect(() => {
+		setAmount(conversionAmount.replace(/\./g, ','));
+	}, [conversionAmount]);
+
+	const isMaxEnabled = !disableMax && token && balance;
+	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
 
 	return (
 		<Card style={{ width: '40%', borderRadius: 16 }}>
@@ -61,7 +73,7 @@ const TokenCard = ({
 					style={{
 						backgroundColor: '#FFFCF5',
 						borderRadius: 41,
-						borderColor: '#006AA6',
+						borderColor: invalidAmount ? 'red' : '#006AA6',
 						borderStyle: 'solid',
 						borderWidth: 1,
 						display: token ? 'flex' : 'none'
@@ -70,8 +82,8 @@ const TokenCard = ({
 					ref={innerRef}
 					onChangeText={(text) => onChangeText(text)}
 				/>
-				{!disableMax && token && balance > 0 ? (
-					<TouchableOpacity onPress={() => setAmount(balance.toString())}>
+				{isMaxEnabled ? (
+					<TouchableOpacity onPress={() => setAmount(balance.replace(/\./g, ','))}>
 						<Text>Max</Text>
 					</TouchableOpacity>
 				) : null}

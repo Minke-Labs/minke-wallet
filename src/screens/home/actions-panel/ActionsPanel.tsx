@@ -27,6 +27,10 @@ const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>
 		navigation.navigate('Welcome');
 	}, [navigation]);
 
+	const onExchange = () => {
+		navigation.navigate('Exchange');
+	};
+
 	return (
 		<SafeAreaView>
 			<ScrollView
@@ -36,7 +40,7 @@ const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>
 				showsHorizontalScrollIndicator={false}
 			>
 				<View style={styles.scrollviewHorizontalContent}>
-					<RoundButton text="Exchange" icon="compare-arrows" />
+					<RoundButton text="Exchange" icon="compare-arrows" onPress={onExchange} />
 					<RoundButton text="Receive" icon="arrow-circle-down" />
 					<RoundButton text="Copy address" icon="content-copy" />
 					<RoundButton text="New wallet" icon="add" />
