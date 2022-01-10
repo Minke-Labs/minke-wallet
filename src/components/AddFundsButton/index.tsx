@@ -77,9 +77,11 @@ const AddFundsButton = () => {
 					onDismiss={hideChooseCoinModal}
 					contentContainerStyle={styles.modalContainerStyle}
 				>
-					<Text>Add funds</Text>
-					<IconButton icon="close" size={20} color="#006AA6" onPress={hideAll} />
-					<Text>Choose which asset you&apos;d like to buy</Text>
+					<View style={styles.modalHeader}>
+						<Text style={styles.modalHeadline}>Add funds</Text>
+						<IconButton icon="close" size={24} color="#006AA6" onPress={hideAll} />
+					</View>
+					<Text style={styles.modalSubHeadline}>Choose which asset you&apos;d like to buy</Text>
 					<CoinSelector onSelect={selectCoin} />
 				</Modal>
 				<Modal

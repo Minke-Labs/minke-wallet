@@ -1,12 +1,21 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { Card, IconButton } from 'react-native-paper';
+import styles from 'src/screens/welcome-flow/welcome/styles';
 import { coins, ICoin } from '../../helpers/coins';
 
 const CoinCard = ({ coin, onSelect }: { coin: ICoin; onSelect: Function }) => {
 	const { name, symbol, image } = coin;
+
+	const selfStyles = StyleSheet.create({
+		card: {
+			borderRadius: 16,
+			marginBottom: 8
+		}
+	});
+
 	return (
-		<Card onPress={() => onSelect(coin)}>
+		<Card onPress={() => onSelect(coin)} style={selfStyles.card}>
 			<Card.Title
 				title={name}
 				subtitle={symbol}
