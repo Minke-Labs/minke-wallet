@@ -1,3 +1,4 @@
+import { joinSignature } from 'ethers/lib/utils';
 import { StyleSheet } from 'react-native';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
@@ -17,9 +18,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24,
 			padding: 24,
-			width: '100%',
-			position: 'absolute',
-			bottom: 0
+			width: '100%'
+			// position: 'absolute',
+			// bottom: 0
+		},
+		safeAreaView: {
+			flex: 1,
+			justifyContent: 'center',
+			alignItems: 'center'
+		},
+		fontBold: {
+			fontFamily: 'Inter_800ExtraBold'
 		},
 		modalHeader: {
 			flexDirection: 'row',
@@ -35,5 +44,36 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginBottom: 24,
 			fontSize: 18,
 			fontFamily: 'Inter_500Medium'
+		},
+		modalAmountContainer: {
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			marginBottom: 24
+		},
+		modalAmountSelectButton: {
+			backgroundColor: colors.fill,
+			alignItems: 'center',
+			padding: 16,
+			paddingRight: 24,
+			paddingLeft: 24,
+			borderRadius: 16
+		},
+		modalCoinDetails: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			marginBottom: 16
+		},
+		modalCoinDetailsCoinName: {
+			fontSize: 24,
+			fontFamily: 'Inter_800ExtraBold',
+			marginLeft: 16
+		},
+		currencyInput: {
+			borderBottomColor: '#000000',
+			borderBottomWidth: 1,
+			paddingBottom: 8,
+			fontSize: 32,
+			marginTop: 16,
+			marginBottom: 24
 		}
 	});

@@ -5,6 +5,7 @@ import { Portal, Modal, Text, Button, IconButton, useTheme } from 'react-native-
 import TextButton from '@components/TextButton';
 import CurrencyInput from 'react-native-currency-input';
 import { ICoin, coins } from '@helpers/coins';
+import RoundButton from '@components/RoundButton';
 import CoinSelector from './CoinSelector';
 import { makeStyles } from './styles';
 
@@ -89,26 +90,40 @@ const AddFundsButton = () => {
 					onDismiss={hideDetailsModal}
 					contentContainerStyle={styles.modalContainerStyle}
 				>
-					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={backToCoinSelector} />
-					<Image source={coin.image} />
-					<Text>{coin.name}</Text>
-					<IconButton icon="close" size={20} color="#006AA6" onPress={hideAll} />
-					<Text>
+					<View style={styles.modalHeader}>
+						<IconButton icon="chevron-left" size={24} color="#006AA6" onPress={backToCoinSelector} />
+						<IconButton icon="close" size={24} color="#006AA6" onPress={hideAll} />
+					</View>
+
+					<View style={styles.modalCoinDetails}>
+						<Image source={coin.image} />
+						<Text style={styles.modalCoinDetailsCoinName}>{coin.name}</Text>
+					</View>
+
+					<Text style={styles.modalSubHeadline}>
 						Buy some
 						{` ${coin.symbol} `}
-						with Apple Pay to start using Minke:
+						with <Text style={styles.fontBold}>Apple Pay</Text> to start using Minke:
 					</Text>
-					<View>
+
+					<View style={styles.modalAmountContainer}>
 						{[100, 200, 300].map((value) => (
-							<TouchableOpacity key={value} onPress={() => setPresetAmount(value)}>
-								<Text style={amount === value ? { color: 'red' } : {}}>${value}</Text>
+							<TouchableOpacity
+								key={value}
+								onPress={() => setPresetAmount(value)}
+								style={styles.modalAmountSelectButton}
+							>
+								<Text style={amount === value ? { color: 'red', fontSize: 24 } : { fontSize: 24 }}>
+									${value}
+								</Text>
 							</TouchableOpacity>
 						))}
 					</View>
-
-					<Button onPress={enableCustomAmount}>
-						<Text>Choose another amount</Text>
-					</Button>
+					{/* Rever esse comportamento do RoundButton -
+					não deveria conter um marginRight com Marquinhos, depois remover esse marginRight: -16 */}
+					<View style={{ marginRight: -16 }}>
+						<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
+					</View>
 				</Modal>
 
 				<Modal
@@ -116,9 +131,12 @@ const AddFundsButton = () => {
 					onDismiss={hideCustomAmountModal}
 					contentContainerStyle={styles.modalContainerStyle}
 				>
-					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={backToDetails} />
-					<Text>Choose other amount</Text>
-					<IconButton icon="close" size={20} color="#006AA6" onPress={hideAll} />
+					<View style={styles.modalHeader}>
+						<IconButton icon="chevron-left" size={24} color="#006AA6" onPress={backToDetails} />
+						<IconButton icon="close" size={24} color="#006AA6" onPress={hideAll} />
+					</View>
+
+					<Text style={styles.modalHeadline}>Choose other amount</Text>
 
 					<CurrencyInput
 						value={customAmount}
@@ -131,7 +149,10 @@ const AddFundsButton = () => {
 						ref={customAmountRef}
 						autoFocus
 						placeholder="$00.00"
+						style={styles.currencyInput}
 					/>
+
+					<RoundButton text="Choose other amount" icon="" />
 				</Modal>
 			</Portal>
 			<TextButton

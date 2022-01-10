@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { Card, IconButton } from 'react-native-paper';
-import styles from 'src/screens/welcome-flow/welcome/styles';
 import { coins, ICoin } from '../../helpers/coins';
 
 const CoinCard = ({ coin, onSelect }: { coin: ICoin; onSelect: Function }) => {

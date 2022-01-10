@@ -10,6 +10,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingLeft: 16,
 			paddingRight: 16,
 			marginRight: 16,
+			alignItems: 'center',
 			backgroundColor: colors.fill
 		}
 	});
