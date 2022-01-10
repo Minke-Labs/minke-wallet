@@ -18,9 +18,9 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24,
 			padding: 24,
-			width: '100%'
-			// position: 'absolute',
-			// bottom: 0
+			width: '100%',
+			position: 'absolute',
+			bottom: 0
 		},
 		safeAreaView: {
 			flex: 1,

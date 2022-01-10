@@ -85,6 +85,7 @@ const AddFundsButton = () => {
 					<Text style={styles.modalSubHeadline}>Choose which asset you&apos;d like to buy</Text>
 					<CoinSelector onSelect={selectCoin} />
 				</Modal>
+
 				<Modal
 					visible={detailsVisible}
 					onDismiss={hideDetailsModal}
