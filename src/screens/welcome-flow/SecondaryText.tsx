@@ -14,5 +14,5 @@ const styles = StyleSheet.create({
 
 export default function SecondaryText({ children }: any) {
 	const { colors } = useTheme();
-	return <Text style={[styles.text, { color: colors.placeholder }]}>{children}</Text>;
+	return <Text style={[styles.text, { color: colors.secondaryText }]}>{children}</Text>;
 }

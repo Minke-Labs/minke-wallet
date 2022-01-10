@@ -1,17 +1,21 @@
-import { View } from 'react-native';
+/* eslint-disable react/style-prop-object */
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { useTheme } from 'react-native-paper';
 
-export default function Container({ children }: any) {
+const selfStyles = StyleSheet.create({
+	container: {
+		flex: 1
+	}
+});
+
+export default function Container({ children, style }: any) {
+	const { colors } = useTheme();
 	return (
-		<View
-			style={{
-				flex: 1,
-				backgroundColor: '#fff',
-				alignItems: 'center',
-				justifyContent: 'space-evenly'
-			}}
-		>
+		<View style={[style || selfStyles.container, { backgroundColor: colors.background }]}>
 			{children}
+			<StatusBar style="auto" />
 		</View>
 	);
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Alert, View } from 'react-native';
+import { RootRouteProps, RootStackParamList } from '@helpers/param-list-type';
 import { Appbar, Button, Card, RadioButton, Text, TextInput } from 'react-native-paper';
+import { globalWalletState } from '@stores/WalletStore';
 import { CommonActions, useRoute } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
 import { isNaN } from 'lodash';
 import AppLoading from 'expo-app-loading';
-import { estimateGas, sendTransaction } from '../model/wallet';
-import { globalWalletState } from '../stores/WalletStore';
-import { RootRouteProps, RootStackParamList } from '../helpers/param-list-type';
+import { estimateGas, sendTransaction } from '@models/wallet';
 
 export function TransactionTransferScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const route = useRoute<RootRouteProps<'TransactionTransfer'>>();
