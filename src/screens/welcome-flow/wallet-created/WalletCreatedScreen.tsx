@@ -3,17 +3,17 @@ import { Image, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
+import PrimaryButton from '@components/PrimaryButton';
 import * as SecureStore from 'expo-secure-store';
 import { Entypo } from '@expo/vector-icons';
-import { RootStackParamList } from '../../../helpers/param-list-type';
+import { globalWalletState } from '@stores/WalletStore';
+import { getSeedPhrase } from '@models/wallet';
+import { RootStackParamList } from '@helpers/param-list-type';
 import WelcomeContainer from '../WelcomeContainer';
 import MainText from '../MainText';
 import SecondaryText from '../SecondaryText';
-import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles';
 import logo from './wallet-created.png';
-import { getSeedPhrase } from '../../../model/wallet';
-import { globalWalletState } from '../../../stores/WalletStore';
 
 export function WalletCreatedScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const backupManually = useCallback(async () => {

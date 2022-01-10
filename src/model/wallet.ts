@@ -25,6 +25,11 @@ export const provider = new providers.InfuraProvider('ropsten', {
 	projectSecret: process.env.INFURA_PROJECT_SECRET
 });
 
+export const getENSAddress = async (address: string) => {
+	const name = await provider.lookupAddress(address);
+	return name;
+};
+
 export const savePrivateKey = async (address: string, privateKey: null | string) => {
 	// const privateAccessControlOptions = await getPrivateAccessControlOptions();
 

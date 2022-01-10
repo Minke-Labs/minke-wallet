@@ -1,6 +1,7 @@
 import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
+import { convertEthToUsd } from '@helpers/utilities';
 import {
 	erc20abi,
 	getAllWallets,
@@ -9,8 +10,7 @@ import {
 	MinkeTokenList,
 	provider,
 	supportedTokenList
-} from '../model/wallet';
-import { convertEthToUsd } from '../helpers/utilities';
+} from '@models/wallet';
 
 /*export const initWallet = getAllWallets().then(wallets => {
 

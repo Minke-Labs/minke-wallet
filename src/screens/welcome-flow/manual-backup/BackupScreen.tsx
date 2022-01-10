@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
-import { Text, View, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Headline, Subheading, Snackbar, useTheme } from 'react-native-paper';
+import { Text, Headline, Subheading, Snackbar, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
-import { RootStackParamList } from '../../../helpers/param-list-type';
-import { getSeedPhrase } from '../../../model/wallet';
-import { globalWalletState } from '../../../stores/WalletStore';
+import { globalWalletState } from '@stores/WalletStore';
+import { RootStackParamList } from '@helpers/param-list-type';
+import { getSeedPhrase } from '@models/wallet';
 import styles from './styles';
 import WelcomeContainer from '../WelcomeContainer';
 
@@ -46,7 +46,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 			<View style={styles.backupWordContainer}>
 				<Headline style={[styles.headline, { color: colors.text }]}>Recovery phrase</Headline>
-				<Subheading style={[styles.subheading, { color: colors.placeholder }]}>
+				<Subheading style={[styles.subheading, { color: colors.secondaryText }]}>
 					Write this down on paper or save it in your password manager.
 				</Subheading>
 

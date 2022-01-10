@@ -2,13 +2,13 @@ import React, { useCallback } from 'react';
 import { Image, Text, View, useColorScheme } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
-import { RootStackParamList } from '../../../helpers/param-list-type';
-import { walletCreate } from '../../../model/wallet';
-import { globalWalletState } from '../../../stores/WalletStore';
+import PrimaryButton from '@components/PrimaryButton';
+import { globalWalletState } from '@stores/WalletStore';
+import { RootStackParamList } from '@helpers/param-list-type';
+import { walletCreate } from '@models/wallet';
 import WelcomeContainer from '../WelcomeContainer';
 import MainText from '../MainText';
 import SecondaryText from '../SecondaryText';
-import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles';
 import image from './welcome.png';
 import backgroundTop from './wave-welcome-header.png';
@@ -23,7 +23,7 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
-		console.log('NJEW WALLET', newWallet);
+		console.log('NEW WALLET', newWallet);
 		walletState.set(newWallet as any);
 		navigation.navigate('WalletCreated');
 	}, [navigation]);

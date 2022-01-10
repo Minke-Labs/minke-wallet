@@ -1,12 +1,12 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View } from 'react-native';
 import React from 'react';
+import { View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Appbar, Button, Text, TextInput } from 'react-native-paper';
+import { RootStackParamList } from '@helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import { isAddress } from 'ethers/lib/utils';
-import { globalContactState } from '../stores/ContactStore';
-import { contactCreate } from '../model/contact';
-import { RootStackParamList } from '../helpers/param-list-type';
+import { globalContactState } from '@stores/ContactStore';
+import { contactCreate } from '@models/contact';
 
 export function ContactCreateScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const state = useState(globalContactState());
