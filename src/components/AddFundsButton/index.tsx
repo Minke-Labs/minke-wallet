@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, createRef } from 'react';
 import { View, Image, TouchableOpacity, TextInput } from 'react-native';
-import { Portal, Modal, Text, Button, IconButton } from 'react-native-paper';
+import { Portal, Modal, Text, Button, IconButton, useTheme } from 'react-native-paper';
+import TextButton from '@components/TextButton';
 import CurrencyInput from 'react-native-currency-input';
+import { ICoin, coins } from '@helpers/coins';
 import CoinSelector from './CoinSelector';
-import { ICoin, coins } from '../../helpers/coins';
+import { makeStyles } from './styles';
 
 const AddFundsButton = () => {
 	const [chooseCoinVisible, setChooseCoinVisible] = useState(false);
@@ -64,8 +66,8 @@ const AddFundsButton = () => {
 		setAmount(value);
 		setCustomAmount(null);
 	};
-
-	const containerStyle = { backgroundColor: 'white', padding: 20 };
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	return (
 		<>
@@ -73,14 +75,18 @@ const AddFundsButton = () => {
 				<Modal
 					visible={chooseCoinVisible}
 					onDismiss={hideChooseCoinModal}
-					contentContainerStyle={containerStyle}
+					contentContainerStyle={styles.modalContainerStyle}
 				>
 					<Text>Add funds</Text>
 					<IconButton icon="close" size={20} color="#006AA6" onPress={hideAll} />
 					<Text>Choose which asset you&apos;d like to buy</Text>
 					<CoinSelector onSelect={selectCoin} />
 				</Modal>
-				<Modal visible={detailsVisible} onDismiss={hideDetailsModal} contentContainerStyle={containerStyle}>
+				<Modal
+					visible={detailsVisible}
+					onDismiss={hideDetailsModal}
+					contentContainerStyle={styles.modalContainerStyle}
+				>
 					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={backToCoinSelector} />
 					<Image source={coin.image} />
 					<Text>{coin.name}</Text>
@@ -106,7 +112,7 @@ const AddFundsButton = () => {
 				<Modal
 					visible={customAmountVisible}
 					onDismiss={hideCustomAmountModal}
-					contentContainerStyle={containerStyle}
+					contentContainerStyle={styles.modalContainerStyle}
 				>
 					<IconButton icon="chevron-left" size={20} color="#006AA6" onPress={backToDetails} />
 					<Text>Choose other amount</Text>
@@ -126,9 +132,12 @@ const AddFundsButton = () => {
 					/>
 				</Modal>
 			</Portal>
-			<Button style={{ marginBottom: 5 }} mode="contained" onPress={showChooseCoinModal}>
-				Add funds
-			</Button>
+			<TextButton
+				text="Add funds"
+				icon="add-circle-outline"
+				containerStyle={styles.cardDivisor}
+				onPress={showChooseCoinModal}
+			/>
 		</>
 	);
 };
