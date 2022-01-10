@@ -23,6 +23,7 @@
 		],
 		"global-require": "off",
 		"import/prefer-default-export": "off",
+		"react/jsx-one-expression-per-line": "off",
 		"no-unused-expressions": ["error", { "allowTaggedTemplates": true }],
 		"import/extensions": [
 			"error",
@@ -51,6 +52,8 @@
 				}
 			}
 		],
-		"react/no-unstable-nested-components": ["error", { "allowAsProps": true }]
+		"react/no-unstable-nested-components": ["error", { "allowAsProps": true }],
+		"implicit-arrow-linebreak": "off",
+		"react/require-default-props": "off"
 	}
 }

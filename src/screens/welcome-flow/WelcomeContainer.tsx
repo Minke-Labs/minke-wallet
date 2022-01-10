@@ -6,11 +6,13 @@ import { useTheme } from 'react-native-paper';
 
 const selfStyles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-evenly'
 	}
 });
 
-export default function Container({ children, style }: any) {
+export default function WelcomeContainer({ children, style }: any) {
 	const { colors } = useTheme();
 	return (
 		<View style={[style || selfStyles.container, { backgroundColor: colors.background }]}>
