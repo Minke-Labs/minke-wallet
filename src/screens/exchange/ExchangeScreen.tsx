@@ -1,12 +1,13 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Text, View, Image, TextInput } from 'react-native';
-import { Headline } from 'react-native-paper';
+import { View, Image, TextInput } from 'react-native';
+import { Headline, Text } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
 import { toBn } from 'evm-bn';
+import PrimaryButton from '@components/PrimaryButton';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
@@ -61,7 +62,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		// eslint-disable-next-line no-useless-escape
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (quote && formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			let converted = quote.to[toToken?.symbol || ''].mul(toBn(formatedValue));
+			const bigNumberAmount = toBn(formatedValue);
+			let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
 			converted = converted.div(quote.from[fromToken.symbol]);
 			setToConversionAmount(utils.formatUnits(converted, toToken?.decimals));
 		}
@@ -102,12 +104,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		showModal();
 	};
 
-	const loadPrices = async () => {
-		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol);
-		setQuote({
-			from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
-			to: { [toToken?.symbol || '']: BigNumber.from(result.priceRoute.destAmount) }
-		});
+	const loadPrices = async (amount?: string) => {
+		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
+		if (result.error) {
+			console.error(result.error);
+		} else {
+			setQuote({
+				from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
+				to: { [toToken?.symbol || '']: BigNumber.from(result.priceRoute.destAmount) }
+			});
+		}
 	};
 
 	const onTokenSelect = (token: ParaswapToken) => {
@@ -166,9 +172,19 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		return <Text>Could not get Gas Prices</Text>;
 	}
 
+	const exchangeSummary = () => {
+		if (fromToken && toToken && quote) {
+			const destQuantity = quote.to[toToken.symbol];
+
+			return `1 ${fromToken.symbol} = ${utils.formatUnits(destQuantity, toToken.decimals)} ${toToken.symbol}`;
+		}
+		return null;
+	};
+
 	return (
 		<>
 			<Headline>Exchange</Headline>
+			<Text>{exchangeSummary()}</Text>
 			<View style={{ flexWrap: 'wrap', flexDirection: 'row', padding: 20 }}>
 				<TokenCard
 					token={fromToken}
@@ -200,6 +216,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				showOnlyOwnedTokens={showOnlyOwnedTokens}
 				selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
 			/>
+			<PrimaryButton onPress={() => console.log('SWAP')}>Swap</PrimaryButton>
 		</>
 	);
 };

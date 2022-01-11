@@ -21,7 +21,7 @@ const SearchTokens = ({
 	ownedTokens?: Array<string>;
 	selected?: Array<string | undefined>;
 }) => {
-	const containerStyle = { backgroundColor: 'white', padding: 20 };
+	const containerStyle = { backgroundColor: 'white', padding: 20, bottom: 0, width: '100%' };
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');

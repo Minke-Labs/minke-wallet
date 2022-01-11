@@ -1,14 +1,19 @@
 import { BigNumber } from 'ethers';
 
+const network = 3; // ropsten
 export const paraswapTokens = async (): Promise<TokenResponse> => {
-	const result = await fetch('https://apiv5.paraswap.io/tokens');
+	const result = await fetch(`https://apiv5.paraswap.io/tokens/${network}`);
 	return result.json();
 };
 
-export const getExchangePrice = async (srcToken: string, destToken: string | undefined): Promise<PriceRoute> => {
-	const amount = '1000000000000000000';
+export const getExchangePrice = async (
+	srcToken: string,
+	destToken: string,
+	amount = '1000000000000000000'
+): Promise<PriceRoute> => {
+	const baseURL = 'https://apiv5.paraswap.io/prices';
 	const result = await fetch(
-		`https://apiv5.paraswap.io/prices?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}`
+		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${network}`
 	);
 	return result.json();
 };
@@ -40,6 +45,7 @@ export interface PriceRoute {
 		gasCost: string;
 		srcUSD: string;
 	};
+	error: string;
 }
 
 export interface Quote {

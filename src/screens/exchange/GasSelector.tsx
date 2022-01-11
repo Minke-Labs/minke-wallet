@@ -22,22 +22,25 @@ const GasSelector = ({ gweiPrice, gasPrice }: { gweiPrice: number; gasPrice: Est
 			gweiPrice={gweiPrice}
 			wait={gasPrice.safeLowWait}
 		/>
+		{false ? (
+			<>
+				<GasOption
+					title="Fast"
+					icon={<EntypoIcon name="flash" color="#006AA6" size={20} />}
+					gweiValue={gasPrice.fast}
+					gweiPrice={gweiPrice}
+					wait={gasPrice.fastWait}
+				/>
 
-		<GasOption
-			title="Fast"
-			icon={<EntypoIcon name="flash" color="#006AA6" size={20} />}
-			gweiValue={gasPrice.fast}
-			gweiPrice={gweiPrice}
-			wait={gasPrice.fastWait}
-		/>
-
-		<GasOption
-			title="Fastest"
-			icon={<EntypoIcon name="flash" color="#006AA6" size={20} />}
-			gweiValue={gasPrice.fastest}
-			gweiPrice={gweiPrice}
-			wait={gasPrice.fastestWait}
-		/>
+				<GasOption
+					title="Fastest"
+					icon={<EntypoIcon name="flash" color="#006AA6" size={20} />}
+					gweiValue={gasPrice.fastest}
+					gweiPrice={gweiPrice}
+					wait={gasPrice.fastestWait}
+				/>
+			</>
+		) : null}
 	</>
 );
 
