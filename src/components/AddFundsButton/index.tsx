@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, createRef } from 'react';
 import { View, Image, TouchableOpacity, TextInput } from 'react-native';
-import { Portal, Modal, Text, Button, IconButton, useTheme } from 'react-native-paper';
+import { Portal, Modal, Text, IconButton, useTheme } from 'react-native-paper';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TextButton from '@components/TextButton';
 import CurrencyInput from 'react-native-currency-input';
 import { ICoin, coins } from '@helpers/coins';
@@ -120,8 +121,10 @@ const AddFundsButton = () => {
 							</TouchableOpacity>
 						))}
 					</View>
-					{/* Rever esse comportamento do RoundButton -
-					não deveria conter um marginRight com Marquinhos, depois remover esse marginRight: -16 */}
+
+					{/* Rever esse comportamento do RoundButton - falar com Marquinhos
+					RoundButton não deveria conter um marginRight fixo, como ajustar isso? */}
+
 					<View style={{ marginRight: -16 }}>
 						<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
 					</View>
@@ -154,8 +157,10 @@ const AddFundsButton = () => {
 					/>
 
 					<RoundButton text="Choose other amount" icon="" />
+					<KeyboardSpacer />
 				</Modal>
 			</Portal>
+
 			<TextButton
 				text="Add funds"
 				icon="add-circle-outline"
