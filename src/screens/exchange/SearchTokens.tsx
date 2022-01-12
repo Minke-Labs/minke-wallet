@@ -27,37 +27,46 @@ const SearchTokens = ({
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
 
+	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
+		let selectedTokens: ParaswapToken[] = [];
+		if (showOnlyOwnedTokens) {
+			const filter = _.filter(allTokens, (token) => ownedTokens.includes(token.symbol.toLocaleLowerCase()));
+			selectedTokens = filter;
+		} else {
+			selectedTokens = allTokens;
+		}
+
+		if (selected && selected.length > 0) {
+			const filter = _.filter(selectedTokens, (token) => !selected.includes(token.symbol.toLocaleLowerCase()));
+			setFilteredTokens(filter);
+		} else {
+			setFilteredTokens(selectedTokens);
+		}
+		setLoading(false);
+	};
+
 	useEffect(() => {
 		const loadTokens = async () => {
 			setLoading(true);
 			const allTokens = (await paraswapTokens()).tokens;
 			setTokens(allTokens);
-			setFilteredTokens(allTokens);
+			removeSelectedTokens(allTokens);
 			setLoading(false);
 		};
 		loadTokens();
 	}, []);
 
 	useEffect(() => {
+		setSearch('');
+	}, [visible]);
+
+	useEffect(() => {
 		const filterTokens = async () => {
 			setLoading(true);
-			let filter = tokens;
-			if (showOnlyOwnedTokens) {
-				filter = _.filter(filter, (token) => ownedTokens.includes(token.symbol.toLocaleLowerCase()));
-			}
-
-			if (selected && selected.length > 0) {
-				filter = _.filter(filter, (token) => !selected.includes(token.symbol.toLocaleLowerCase()));
-			}
-			setFilteredTokens(filter);
-			setLoading(false);
+			removeSelectedTokens(tokens || []);
 		};
 		filterTokens();
 	}, [selected]);
-
-	useEffect(() => {
-		setSearch('');
-	}, [visible]);
 
 	const onSearch = (text: string) => {
 		setSearch(text);

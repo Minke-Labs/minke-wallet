@@ -12,7 +12,8 @@ module.exports = (api) => {
 						'@components': './src/components',
 						'@helpers': './src/helpers',
 						'@stores': './src/stores',
-						'@models': './src/model'
+						'@models': './src/model',
+						'@assets': './assets'
 					}
 				}
 			]

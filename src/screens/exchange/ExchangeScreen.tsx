@@ -1,24 +1,26 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, Image, TextInput } from 'react-native';
+import { View, Image, TextInput, Keyboard } from 'react-native';
 import { Headline, Text } from 'react-native-paper';
-import { useState } from '@hookstate/core';
+import { useState, State } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
 import { toBn } from 'evm-bn';
 import PrimaryButton from '@components/PrimaryButton';
+import { RootStackParamList } from '@helpers/param-list-type';
+import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
+import { ether, ParaswapToken, Quote, getExchangePrice } from '@models/token';
+import { globalWalletState } from '@stores/WalletStore';
+import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
-import { RootStackParamList } from '../../helpers/param-list-type';
-import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '../../model/wallet';
-import { ether, ParaswapToken, Quote, getExchangePrice } from '../../model/token';
-import { globalWalletState } from '../../stores/WalletStore';
 import swap from '../../../assets/swap.png';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
+	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const gasPrice = useState(estimateGas);
 	const gweiPrice = useState(0);
@@ -49,47 +51,62 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		setFromToken(token);
 		setFromTokenBalance(balanceFrom(token));
 		setFromConversionAmount(undefined);
+		exchange.from.set(token);
+		exchange.fromAmount.set(undefined);
 		fromAmountRef.current?.focus();
 	};
 
 	const updateToToken = (token: ParaswapToken) => {
 		setToToken(token);
 		setToConversionAmount(undefined);
+		exchange.to.set(token);
+		exchange.toAmount.set(undefined);
 		toAmountRef.current?.focus();
 	};
 
 	const updateFromQuotes = (amount: string) => {
 		// eslint-disable-next-line no-useless-escape
 		const formatedValue = amount.replace(/\,/g, '.');
-		if (quote && formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			const bigNumberAmount = toBn(formatedValue);
-			let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
-			converted = converted.div(quote.from[fromToken.symbol]);
-			setToConversionAmount(utils.formatUnits(converted, toToken?.decimals));
+		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+			if (quote) {
+				const bigNumberAmount = toBn(formatedValue);
+				let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
+				converted = converted.div(quote.from[fromToken.symbol]);
+				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
+				exchange.toAmount.set(convertedAmount);
+				setToConversionAmount(convertedAmount);
+			}
+			exchange.fromAmount.set(formatedValue);
 		}
 	};
 
 	const updateToQuotes = (amount: string) => {
 		// eslint-disable-next-line no-useless-escape
 		const formatedValue = amount.replace(/\,/g, '.');
-		if (quote && formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
 			// 1 ETH ==== > 10 DAI
 			// X ETH ==== > formatedValue DAI
 			// quote.from[fromToken.symbol] ==== > quote.to[toToken?.symbol || '']
 			// X                            ==== > toBn(formatedValue)
-
-			let converted = quote.from[fromToken.symbol].mul(toBn(formatedValue));
-			converted = converted.div(quote.to[toToken?.symbol || '']);
-			setFromConversionAmount(utils.formatUnits(converted, fromToken.decimals));
+			if (quote) {
+				let converted = quote.from[fromToken.symbol].mul(toBn(formatedValue));
+				converted = converted.div(quote.to[toToken?.symbol || '']);
+				const convertedAmount = utils.formatUnits(converted, fromToken.decimals);
+				exchange.fromAmount.set(convertedAmount);
+				setFromConversionAmount(convertedAmount);
+			}
+			exchange.toAmount.set(formatedValue);
 		}
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const goToExchangeResume = () => {
 		navigation.navigate('Wallet');
 	};
 
-	const showModal = () => setSearchVisible(true);
+	const showModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(true);
+	};
 	const hideModal = () => setSearchVisible(false);
 
 	const showModalFrom = (): void => {
@@ -142,6 +159,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 
 		async function fetchWalletTokens() {
+			// const address = wallet.value.wallet?.address || '';
 			const address = '0xfe6b7a4494b308f8c0025dcc635ac22630ec7330';
 			const result = await getWalletTokens(address);
 			const { products } = result[address.toLowerCase()];
@@ -165,6 +183,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 	}, [fromToken, toToken]);
 
+	useEffect(() => {
+		if (quote) {
+			if (exchange.value.fromAmount && fromConversionAmount) {
+				updateFromQuotes(exchange.value.fromAmount);
+			} else if (exchange.value.toAmount && toConversionAmount) {
+				updateToQuotes(exchange.value.toAmount);
+			}
+		}
+	}, [quote]);
+
 	if (gasPrice.promised) {
 		return <AppLoading />;
 	}
@@ -181,9 +209,21 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		return null;
 	};
 
+	if (fromToken && !exchange.value.from) {
+		exchange.from.set(fromToken);
+	}
+	const canSwap = () =>
+		exchange.value.from &&
+		exchange.value.to &&
+		(exchange.value.fromAmount || exchange.value.toAmount) &&
+		+(exchange.value.fromAmount || 0) > 0 &&
+		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
+
 	return (
 		<>
-			<Headline>Exchange</Headline>
+			<Headline>
+				Exchange - FROM: {exchange.value.fromAmount} To: {exchange.value.toAmount}
+			</Headline>
 			<Text>{exchangeSummary()}</Text>
 			<View style={{ flexWrap: 'wrap', flexDirection: 'row', padding: 20 }}>
 				<TokenCard
@@ -216,7 +256,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				showOnlyOwnedTokens={showOnlyOwnedTokens}
 				selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
 			/>
-			<PrimaryButton onPress={() => console.log('SWAP')}>Swap</PrimaryButton>
+			{canSwap() ? <PrimaryButton onPress={goToExchangeResume}>Swap</PrimaryButton> : null}
 		</>
 	);
 };

@@ -36,7 +36,6 @@
 			}
 		],
 		"indent": "off",
-		"react/jsx-one-expression-per-line": "off",
 		"@typescript-eslint/indent": ["error", "tab"],
 		"no-tabs": ["error", { "allowIndentationTabs": true }],
 		"@typescript-eslint/comma-dangle": ["error", "never"],
@@ -55,6 +54,7 @@
 		],
 		"react/no-unstable-nested-components": ["error", { "allowAsProps": true }],
 		"implicit-arrow-linebreak": "off",
-		"react/require-default-props": "off"
+		"react/require-default-props": "off",
+		"operator-linebreak": ["error", "after"]
 	}
 }
