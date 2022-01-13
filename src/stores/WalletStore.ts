@@ -1,12 +1,12 @@
-import { createState } from '@hookstate/core';
-import { find } from 'lodash';
-import { BigNumber, Contract, Wallet } from 'ethers';
-import { convertEthToUsd } from '@helpers/utilities';
+import {createState, State, useState} from '@hookstate/core';
+import {find} from 'lodash';
+import {BigNumber, Contract, Wallet} from 'ethers';
+import {convertEthToUsd} from '@helpers/utilities';
 import {
 	erc20abi,
 	getAllWallets,
 	getEthLastPrice,
-	getPrivateKey,
+	getPrivateKey, getProvider,
 	MinkeTokenList,
 	provider,
 	supportedTokenList
@@ -26,7 +26,10 @@ import {
 // })
 
 export interface WalletState {
-	wallet: Wallet | null;
+	// wallet: (privateKey: string) => Wallet;
+	privateKey: string;
+	network: string;
+	address: string;
 	tokens?: MinkeTokenList;
 	walletId?: string | null;
 	balance?: {
@@ -46,11 +49,12 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 		// console.log('PRIVATE KEY', privateKey)
 		if (privateKey) {
-			const eth = await provider.getBalance(wallet.address);
+			const walletObj = new Wallet(privateKey, getProvider())
+			const eth = await walletObj.getBalance();
 			const tokens: MinkeTokenList = {};
 
 			for (const [key, tokenAddress] of Object.entries(supportedTokenList)) {
-				const contract = new Contract(tokenAddress, erc20abi, provider);
+				const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
 				const balance = await contract.balanceOf(wallet.address);
 				tokens[key] = {
 					contract,
@@ -63,8 +67,12 @@ const initializeWallet = async (): Promise<WalletState> => {
 				// usd: undefined
 				usd: convertEthToUsd(eth, ethPrice.result.ethusd)
 			};
+
 			return {
-				wallet: new Wallet(privateKey, provider),
+				privateKey,
+				network: 'maticmum',
+				address: wallet.address,
+				// wallet: walletObj,
 				walletId: wallet.id,
 				balance,
 				tokens
@@ -72,11 +80,13 @@ const initializeWallet = async (): Promise<WalletState> => {
 		}
 	}
 
-	return { wallet: null, walletId: null };
+	return {privateKey: '', address: '', walletId: null, network: 'matic'};
 };
 
 const globalStateInit = createState(initializeWallet);
 
+
 export function globalWalletState() {
-	return globalStateInit;
+	return globalStateInit
+
 }
