@@ -10,7 +10,7 @@ export const getExchangePrice = async (
 	srcToken: string,
 	destToken: string,
 	amount = '1000000000000000000'
-): Promise<PriceRoute> => {
+): Promise<ExchangeRoute> => {
 	const baseURL = 'https://apiv5.paraswap.io/prices';
 	const result = await fetch(
 		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${network}`
@@ -37,13 +37,21 @@ export interface TokenResponse {
 	tokens: Array<ParaswapToken>;
 }
 
-export interface PriceRoute {
+interface PriceRoute {
+	swaps: [{ swapExchanges: [{ exchange: string }] }];
+}
+
+export interface ExchangeRoute {
 	priceRoute: {
 		srcAmount: string;
 		destAmount: string;
 		gasCostUSD: string;
 		gasCost: string;
 		srcUSD: string;
+		destUSD: string;
+		srcDecimals: number;
+		destDecimals: number;
+		bestRoute: Array<PriceRoute>;
 	};
 	error: string;
 }

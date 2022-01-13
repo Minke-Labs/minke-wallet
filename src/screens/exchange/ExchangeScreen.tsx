@@ -100,7 +100,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	};
 
 	const goToExchangeResume = () => {
-		navigation.navigate('Wallet');
+		navigation.navigate('ExchangeResume');
 	};
 
 	const showModal = () => {
@@ -124,7 +124,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const loadPrices = async (amount?: string) => {
 		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
 		if (result.error) {
-			console.error(result.error);
+			console.error(result.error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 		} else {
 			setQuote({
 				from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
@@ -212,18 +212,20 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	if (fromToken && !exchange.value.from) {
 		exchange.from.set(fromToken);
 	}
+
 	const canSwap = () =>
+		fromToken &&
+		toToken &&
 		exchange.value.from &&
 		exchange.value.to &&
-		(exchange.value.fromAmount || exchange.value.toAmount) &&
+		exchange.value.fromAmount &&
+		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
 		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
 
 	return (
 		<>
-			<Headline>
-				Exchange - FROM: {exchange.value.fromAmount} To: {exchange.value.toAmount}
-			</Headline>
+			<Headline>Exchange</Headline>
 			<Text>{exchangeSummary()}</Text>
 			<View style={{ flexWrap: 'wrap', flexDirection: 'row', padding: 20 }}>
 				<TokenCard

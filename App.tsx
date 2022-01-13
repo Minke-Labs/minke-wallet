@@ -23,6 +23,7 @@ import { TransactionContactsScreen } from './src/screens/TransactionContactsScre
 import { TransactionTransferScreen } from './src/screens/TransactionTransferScreen';
 import { ContactCreateScreen } from './src/screens/ContactCreateScreen';
 import ExchangeScreen from './src/screens/exchange/ExchangeScreen';
+import ExchangeResumeScreen from './src/screens/exchange/ExchangeResumeScreen';
 import { darkTheme, lightTheme } from './src/helpers/themes';
 import { RootStackParamList } from './src/helpers/param-list-type';
 
@@ -72,6 +73,16 @@ export default function App() {
 					<Stack.Screen
 						name="Exchange"
 						component={ExchangeScreen}
+						options={({ navigation }) => ({
+							title: '',
+							headerLeft: () => (
+								<IconButton icon="chevron-left" color="#D0D0D0" onPress={() => navigation.goBack()} />
+							)
+						})}
+					/>
+					<Stack.Screen
+						name="ExchangeResume"
+						component={ExchangeResumeScreen}
 						options={({ navigation }) => ({
 							title: '',
 							headerLeft: () => (
