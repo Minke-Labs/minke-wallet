@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Container from '@components/Container';
-import { globalExchangeState } from '@stores/ExchangeStore';
-import { Card, Headline, Text } from 'react-native-paper';
 import { Image, View } from 'react-native';
-import { ParaswapToken, ExchangeRoute, getExchangePrice } from '@models/token';
+import { Card, Headline, Text, Portal, Modal, Button, IconButton } from 'react-native-paper';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@helpers/param-list-type';
+import Container from '@components/Container';
+import ProgressButton from '@components/ProgressButton';
+import { globalExchangeState } from '@stores/ExchangeStore';
+import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
+import { smallWalletAddress, provider } from '@models/wallet';
 import { toBn } from 'evm-bn';
 import { BigNumber, utils } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
+import { globalWalletState } from '@stores/WalletStore';
+import * as Linking from 'expo-linking';
 import GasOption from './GasOption';
 
 const TokenDetail = ({
@@ -29,10 +35,25 @@ const TokenDetail = ({
 	</Card>
 );
 
-const ExchangeResumeScreen = () => {
+const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const exchange = globalExchangeState();
+	const wallet = globalWalletState();
 	const { to, from, fromAmount, toAmount } = exchange.value;
 	const [priceQuote, setPriceQuote] = useState<ExchangeRoute>();
+	const [visible, setVisible] = useState(false);
+	const [transactionHash, setTransactionHash] = useState(
+		'0x94f47857de4edbdbc18d5c788856795533b2fe6c21b966166fae143c7688f193'
+	);
+
+	const showModal = () => setVisible(true);
+	const hideModal = () => {
+		exchange.fromAmount.set(undefined);
+		exchange.toAmount.set(undefined);
+		exchange.gas.set(undefined);
+		setVisible(false);
+		navigation.navigate('Wallet');
+	};
+	const containerStyle = { backgroundColor: 'white', padding: 20 };
 
 	useEffect(() => {
 		const loadPrices = async () => {
@@ -40,7 +61,6 @@ const ExchangeResumeScreen = () => {
 			if (result.error) {
 				console.error(result.error);
 			} else {
-				console.log(result);
 				setPriceQuote(result);
 			}
 		};
@@ -70,6 +90,44 @@ const ExchangeResumeScreen = () => {
 		}
 
 		return null;
+	};
+
+	const exchangeName = priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange;
+	const onFinish = async () => {
+		if (priceQuote?.priceRoute) {
+			const { srcToken, srcDecimals, destToken, destDecimals, srcAmount, destAmount } = priceQuote.priceRoute;
+			const result = await createTransaction({
+				srcToken,
+				srcDecimals,
+				destToken,
+				destDecimals,
+				srcAmount,
+				destAmount,
+				priceRoute: priceQuote.priceRoute,
+				userAddress: wallet.value.wallet?.address || ''
+			});
+
+			if (result.error) {
+				console.error(result.error);
+			} else if (wallet.value.wallet && exchange.value.gas) {
+				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;
+				const nonce = await provider.getTransactionCount(wallet.value.wallet.address, 'latest');
+				const txDefaults = {
+					chainId,
+					data,
+					from: src,
+					gasPrice: BigNumber.from(gasPrice),
+					gasLimit: +gas,
+					nonce,
+					to: dest,
+					value: BigNumber.from(value)
+				};
+				const signedTx = await wallet.value.wallet.signTransaction({ ...txDefaults });
+				const { hash } = await provider.sendTransaction(signedTx as string);
+				setTransactionHash(hash);
+				showModal();
+			}
+		}
 	};
 
 	return (
@@ -102,9 +160,9 @@ const ExchangeResumeScreen = () => {
 					<Text>Rate</Text>
 					<Text>{exchangeSummary()}</Text>
 					<Text>{to.symbol} contract</Text>
-					<Text>{to.address}</Text>
+					<Text>{smallWalletAddress(to.address)}</Text>
 					<Text>Swapping via</Text>
-					<Text>{priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange}</Text>
+					<Text>{exchangeName}</Text>
 				</Card.Content>
 			</Card>
 			{exchange.value.gas ? (
@@ -115,6 +173,25 @@ const ExchangeResumeScreen = () => {
 					wait={exchange.value.gas.wait}
 				/>
 			) : null}
+			{priceQuote ? <ProgressButton onFinish={onFinish} /> : null}
+			<Portal>
+				<Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+					<IconButton icon="close" size={24} color="#006AA6" onPress={hideModal} />
+					<Image source={{ uri: exchange.value.from.img }} style={{ width: 50, height: 50 }} />
+					<Image source={{ uri: exchange.value.to.img }} style={{ width: 50, height: 50 }} />
+					<Headline>Processing Transaction</Headline>
+					<Text>
+						Exchanging {exchange.value.from.symbol} for {exchange.value.to.symbol}
+					</Text>
+					<Text>Transaction</Text>
+					<Button
+						mode="text"
+						onPress={() => Linking.openURL(`https://ropsten.etherscan.io/tx/${transactionHash}`)}
+					>
+						{smallWalletAddress(transactionHash)}
+					</Button>
+				</Modal>
+			</Portal>
 		</Container>
 	);
 };

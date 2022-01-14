@@ -11,7 +11,7 @@ const GasSelector = ({ gweiPrice, gasPrice }: { gweiPrice: number; gasPrice: Est
 		<>
 			<GasOption type="normal" gweiValue={gasPrice.average} gweiPrice={gweiPrice} wait={gasPrice.avgWait} />
 
-			<GasOption type="Low" gweiValue={gasPrice.safeLow} gweiPrice={gweiPrice} wait={gasPrice.safeLowWait} />
+			<GasOption type="low" gweiValue={gasPrice.safeLow} gweiPrice={gweiPrice} wait={gasPrice.safeLowWait} />
 			{false ? (
 				<>
 					<GasOption type="fast" gweiValue={gasPrice.fast} gweiPrice={gweiPrice} wait={gasPrice.fastWait} />

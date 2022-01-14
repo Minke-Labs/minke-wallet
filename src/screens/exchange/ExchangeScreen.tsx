@@ -1,12 +1,13 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, Image, TextInput, Keyboard } from 'react-native';
+import { View, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Headline, Text } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
 import { toBn } from 'evm-bn';
+import Container from '@components/Container';
 import PrimaryButton from '@components/PrimaryButton';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
@@ -125,6 +126,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
 		if (result.error) {
 			console.error(result.error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+			Keyboard.dismiss();
 			setQuote(undefined);
 		} else {
 			setQuote({
@@ -225,43 +227,48 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		+(exchange.value.fromAmount || 0) > 0 &&
 		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
 
+	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
-		<>
-			<Headline>Exchange</Headline>
-			<Text>{exchangeSummary()}</Text>
-			<View style={{ flexWrap: 'wrap', flexDirection: 'row', padding: 20 }}>
-				<TokenCard
-					token={fromToken}
-					onPress={showModalFrom}
-					balance={fromTokenBalance}
-					innerRef={fromAmountRef}
-					updateQuotes={updateFromQuotes}
-					conversionAmount={fromConversionAmount}
-				/>
-				<TouchableOpacity onPress={directionSwap}>
-					<Image source={swap} />
-				</TouchableOpacity>
-				<TokenCard
-					token={toToken}
-					onPress={showModalTo}
-					balance={toTokenBalance}
-					innerRef={toAmountRef}
-					updateQuotes={updateToQuotes}
-					conversionAmount={toConversionAmount}
-					disableMax
-				/>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<View style={{ flex: 1 }}>
+				<Container>
+					<Headline>Exchange</Headline>
+					<Text>{exchangeSummary()}</Text>
+					<View style={{ padding: 20 }}>
+						<TokenCard
+							token={fromToken}
+							onPress={showModalFrom}
+							balance={fromTokenBalance}
+							innerRef={fromAmountRef}
+							updateQuotes={updateFromQuotes}
+							conversionAmount={fromConversionAmount}
+						/>
+						<TouchableOpacity onPress={directionSwap}>
+							<Image source={swap} />
+						</TouchableOpacity>
+						<TokenCard
+							token={toToken}
+							onPress={showModalTo}
+							balance={toTokenBalance}
+							innerRef={toAmountRef}
+							updateQuotes={updateToQuotes}
+							conversionAmount={toConversionAmount}
+							disableMax
+						/>
+					</View>
+					<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
+					<SearchTokens
+						visible={searchVisible}
+						onDismiss={hideModal}
+						onTokenSelect={onTokenSelect}
+						ownedTokens={ownedTokens}
+						showOnlyOwnedTokens={showOnlyOwnedTokens}
+						selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
+					/>
+					{canSwap() ? <PrimaryButton onPress={goToExchangeResume}>Exchange</PrimaryButton> : null}
+				</Container>
 			</View>
-			<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
-			<SearchTokens
-				visible={searchVisible}
-				onDismiss={hideModal}
-				onTokenSelect={onTokenSelect}
-				ownedTokens={ownedTokens}
-				showOnlyOwnedTokens={showOnlyOwnedTokens}
-				selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
-			/>
-			{canSwap() ? <PrimaryButton onPress={goToExchangeResume}>Swap</PrimaryButton> : null}
-		</>
+		</TouchableWithoutFeedback>
 	);
 };
 

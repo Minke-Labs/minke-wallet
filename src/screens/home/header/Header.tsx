@@ -6,7 +6,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, useTheme, Text } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
-import { getENSAddress } from '@models/wallet';
+import { getENSAddress, smallWalletAddress } from '@models/wallet';
 import { makeStyles } from './styles';
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
 		if (ensName) {
 			return ensName;
 		}
-		return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+		return smallWalletAddress(address);
 	};
 
 	if (state.promised) return <AppLoading />;

@@ -18,6 +18,34 @@ export const getExchangePrice = async (
 	return result.json();
 };
 
+export const createTransaction = async ({
+	srcToken,
+	destToken,
+	srcAmount,
+	priceRoute,
+	destAmount,
+	userAddress
+}: {
+	srcToken: string;
+	srcDecimals: number;
+	destToken: string;
+	destDecimals: number;
+	srcAmount: string;
+	destAmount: string;
+	priceRoute: PriceRoute;
+	userAddress: string;
+}): Promise<TransactionData> => {
+	const requestOptions = {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ srcToken, destToken, srcAmount, priceRoute, userAddress, destAmount, side: 'SELL' })
+	};
+
+	const baseURL = `https://apiv5.paraswap.io/transactions/${network}`;
+	const result = await fetch(baseURL, requestOptions);
+	return result.json();
+};
+
 export const ether: ParaswapToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
@@ -37,26 +65,41 @@ export interface TokenResponse {
 	tokens: Array<ParaswapToken>;
 }
 
-interface PriceRoute {
+interface BestRoute {
 	swaps: [{ swapExchanges: [{ exchange: string }] }];
 }
 
+export interface PriceRoute {
+	srcToken: string;
+	srcAmount: string;
+	destToken: string;
+	destAmount: string;
+	gasCostUSD: string;
+	gasCost: string;
+	srcUSD: string;
+	destUSD: string;
+	srcDecimals: number;
+	destDecimals: number;
+	bestRoute: Array<BestRoute>;
+}
+
 export interface ExchangeRoute {
-	priceRoute: {
-		srcAmount: string;
-		destAmount: string;
-		gasCostUSD: string;
-		gasCost: string;
-		srcUSD: string;
-		destUSD: string;
-		srcDecimals: number;
-		destDecimals: number;
-		bestRoute: Array<PriceRoute>;
-	};
+	priceRoute: PriceRoute;
 	error: string;
 }
 
 export interface Quote {
 	from: { [fromSymbol: string]: BigNumber };
 	to: { [toSymbol: string]: BigNumber };
+}
+
+export interface TransactionData {
+	chainId: number;
+	data: string;
+	from: string;
+	gas: string;
+	gasPrice: string;
+	to: string;
+	value: string;
+	error: string;
 }

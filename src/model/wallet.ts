@@ -1,4 +1,4 @@
-import { BigNumberish, Contract, providers, Wallet } from 'ethers';
+import { BigNumberish, Contract, providers, Wallet, BigNumber } from 'ethers';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
 import { deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED } from 'expo-secure-store';
 import { find, isEmpty } from 'lodash';
@@ -154,7 +154,7 @@ export const sendTransaction = async (
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseEther(amount)
+			value: parseEther(amount) // @todo: should this be able to process other tokens with other decimals?
 		};
 	}
 
@@ -182,6 +182,9 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 	);
 	return result.json();
 };
+
+export const smallWalletAddress = (address: string): string =>
+	`${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
 
 export const supportedTokenList = {
 	dai: '0x31f42841c2db5173425b5223809cf3a38fede360'
