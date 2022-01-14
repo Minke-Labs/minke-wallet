@@ -6,7 +6,8 @@ import { Image, View } from 'react-native';
 import { ParaswapToken, ExchangeRoute, getExchangePrice } from '@models/token';
 import { toBn } from 'evm-bn';
 import { BigNumber, utils } from 'ethers';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
+import GasOption from './GasOption';
 
 const TokenDetail = ({
 	token,
@@ -90,7 +91,6 @@ const ExchangeResumeScreen = () => {
 					usdAmount={priceQuote?.priceRoute.destUSD}
 				/>
 			</View>
-
 			<Card style={{ marginTop: 20 }}>
 				<Card.Content>
 					<Text>Maximum sold</Text>
@@ -107,6 +107,14 @@ const ExchangeResumeScreen = () => {
 					<Text>{priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange}</Text>
 				</Card.Content>
 			</Card>
+			{exchange.value.gas ? (
+				<GasOption
+					type={exchange.value.gas.type}
+					gweiPrice={exchange.value.gas.gweiPrice}
+					gweiValue={exchange.value.gas.gweiValue}
+					wait={exchange.value.gas.wait}
+				/>
+			) : null}
 		</Container>
 	);
 };

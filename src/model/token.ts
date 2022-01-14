@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 
-const network = 1; // ropsten
+const network = 3; // ropsten
 export const paraswapTokens = async (): Promise<TokenResponse> => {
 	const result = await fetch(`https://apiv5.paraswap.io/tokens/${network}`);
 	return result.json();

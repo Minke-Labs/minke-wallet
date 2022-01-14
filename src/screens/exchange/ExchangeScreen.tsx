@@ -125,6 +125,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
 		if (result.error) {
 			console.error(result.error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+			setQuote(undefined);
 		} else {
 			setQuote({
 				from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
@@ -185,9 +186,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	useEffect(() => {
 		if (quote) {
-			if (exchange.value.fromAmount && fromConversionAmount) {
+			if (exchange.value.fromAmount) {
 				updateFromQuotes(exchange.value.fromAmount);
-			} else if (exchange.value.toAmount && toConversionAmount) {
+			} else if (exchange.value.toAmount) {
 				updateToQuotes(exchange.value.toAmount);
 			}
 		}
@@ -214,6 +215,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	}
 
 	const canSwap = () =>
+		quote &&
 		fromToken &&
 		toToken &&
 		exchange.value.from &&
