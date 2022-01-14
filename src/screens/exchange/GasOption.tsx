@@ -1,17 +1,17 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React from 'react';
-import { Card } from 'react-native-paper';
-import { Text } from 'react-native';
+import React, { useCallback } from 'react';
+import { Card, Text } from 'react-native-paper';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const GasOption = ({
-	title,
-	icon,
+	type,
 	gweiValue,
 	gweiPrice,
 	wait
 }: {
-	title: string;
-	icon: any;
+	type: string;
 	gweiValue: number;
 	gweiPrice: number;
 	wait: number;
@@ -22,11 +22,24 @@ const GasOption = ({
 		}
 		return `${wait} mins`;
 	};
+
+	const Icon = useCallback(() => {
+		switch (type) {
+			case 'low':
+				return <MaterialIcon name="turtle" color="#006AA6" size={20} />;
+			case 'fast':
+				return <EntypoIcon name="flash" color="#006AA6" size={20} />;
+			case 'fastest':
+				return <EntypoIcon name="flash" color="#006AA6" size={20} />;
+			default:
+				return <AntDesignIcon name="clockcircleo" color="#006AA6" size={20} />; // normal
+		}
+	}, []);
 	return (
 		<Card>
 			<Card.Content>
-				{icon}
-				<Text>{title}</Text>
+				<Icon />
+				<Text>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
 				<Text>
 					{gweiValue / 10} gwei ~ {waiting()}
 				</Text>
