@@ -4,6 +4,7 @@ import { View, Image, TouchableOpacity, TextInput, Button } from 'react-native';
 import { Portal, Modal, Text, IconButton, useTheme } from 'react-native-paper';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TextButton from '@components/TextButton';
+import ApplePayButton from '@components/ApplePayButton';
 import CurrencyInput from 'react-native-currency-input';
 import { ICoin, coins } from '@helpers/coins';
 import RoundButton from '@components/RoundButton';
@@ -129,6 +130,7 @@ const AddFundsButton = () => {
 					<View style={{ marginRight: -16 }}>
 						<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
 					</View>
+					<ApplePayButton onPress={null} />
 				</Modal>
 
 				<Modal
@@ -157,23 +159,12 @@ const AddFundsButton = () => {
 						style={styles.currencyInput}
 					/>
 
-					<View>
-						<TouchableOpacity
-							style={{
-								backgroundColor: '#000000',
-								borderRadius: 8,
-								padding: 16
-							}}
-						>
-							<Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 20 }}>
-								Pay with <Text style={{ color: '#FFFFFF', fontSize: 24 }}></Text> Pay
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.hintBellowButton}>
-							<MaterialIcons name="error-outline" size={20} color="#4F4F4F" />
-							<Text style={styles.hintBellowButtonText}>Use a debit card</Text>
-						</TouchableOpacity>
-					</View>
+					<ApplePayButton onPress={null} />
+					<TouchableOpacity style={styles.hintBellowButton}>
+						<MaterialIcons name="error-outline" size={20} color="#4F4F4F" />
+						<Text style={styles.hintBellowButtonText}>Use a debit card</Text>
+					</TouchableOpacity>
+
 					<KeyboardSpacer />
 				</Modal>
 			</Portal>
