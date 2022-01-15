@@ -75,5 +75,18 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			fontSize: 32,
 			marginTop: 16,
 			marginBottom: 24
+		},
+		hintBellowButton: {
+			color: '#4F4F4F',
+			textAlign: 'center',
+			fontSize: 16,
+			padding: 16,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignContent: 'center',
+			alignItems: 'center'
+		},
+		hintBellowButtonText: {
+			marginLeft: 8
 		}
 	});

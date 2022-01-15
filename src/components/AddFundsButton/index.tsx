@@ -7,6 +7,7 @@ import TextButton from '@components/TextButton';
 import CurrencyInput from 'react-native-currency-input';
 import { ICoin, coins } from '@helpers/coins';
 import RoundButton from '@components/RoundButton';
+import { MaterialIcons } from '@expo/vector-icons';
 import CoinSelector from './CoinSelector';
 import { makeStyles } from './styles';
 
@@ -156,17 +157,23 @@ const AddFundsButton = () => {
 						style={styles.currencyInput}
 					/>
 
-					<TouchableOpacity
-						style={{
-							backgroundColor: '#000000',
-							borderRadius: 8,
-							padding: 16
-						}}
-					>
-						<Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 20 }}>
-							Pay with <Text style={{ color: '#FFFFFF', fontSize: 24 }}></Text> Pay
-						</Text>
-					</TouchableOpacity>
+					<View>
+						<TouchableOpacity
+							style={{
+								backgroundColor: '#000000',
+								borderRadius: 8,
+								padding: 16
+							}}
+						>
+							<Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 20 }}>
+								Pay with <Text style={{ color: '#FFFFFF', fontSize: 24 }}></Text> Pay
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.hintBellowButton}>
+							<MaterialIcons name="error-outline" size={20} color="#4F4F4F" />
+							<Text style={styles.hintBellowButtonText}>Use a debit card</Text>
+						</TouchableOpacity>
+					</View>
 					<KeyboardSpacer />
 				</Modal>
 			</Portal>
