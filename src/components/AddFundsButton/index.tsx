@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, createRef } from 'react';
-import { View, Image, TouchableOpacity, TextInput, Button } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { Portal, Modal, Text, IconButton, useTheme } from 'react-native-paper';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TextButton from '@components/TextButton';
@@ -129,7 +129,7 @@ const AddFundsButton = () => {
 					<View style={{ marginRight: -16 }}>
 						<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
 					</View>
-					<ApplePayButton onPress={null} />
+					<ApplePayButton />
 
 					<View style={styles.addDepositContainer}>
 						<View style={styles.addDeposit}>
@@ -169,7 +169,7 @@ const AddFundsButton = () => {
 						style={styles.currencyInput}
 					/>
 
-					<ApplePayButton onPress={null} />
+					<ApplePayButton />
 					<TouchableOpacity style={styles.hintBellowButton}>
 						<MaterialIcons name="error-outline" size={20} color="#4F4F4F" />
 						<Text style={styles.hintBellowButtonText}>Use a debit card</Text>
