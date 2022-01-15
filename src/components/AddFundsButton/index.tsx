@@ -124,13 +124,23 @@ const AddFundsButton = () => {
 						))}
 					</View>
 
-					{/* Rever esse comportamento do RoundButton - falar com Marquinhos
-					RoundButton não deveria conter um marginRight fixo, como ajustar isso? */}
-
+					{/* Rever com Marcos o RoundButton:
+					RoundButton não deveria conter um marginRight fixo, como ajustamos isso? */}
 					<View style={{ marginRight: -16 }}>
 						<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
 					</View>
 					<ApplePayButton onPress={null} />
+
+					<View style={styles.addDepositContainer}>
+						<View style={styles.addDeposit}>
+							<MaterialIcons name="add-circle-outline" size={20} color={colors.primary} />
+						</View>
+						<Text style={styles.addDepositText}>or deposit</Text>
+					</View>
+					<Text style={styles.addDepositInfo}>
+						Send from <Text style={styles.fontBold}>coinbase</Text> or another exchange
+					</Text>
+					<RoundButton text="Copy address" icon="content-copy" />
 				</Modal>
 
 				<Modal

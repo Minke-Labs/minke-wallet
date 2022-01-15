@@ -88,5 +88,26 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		hintBellowButtonText: {
 			marginLeft: 8
+		},
+		addDepositContainer: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			marginTop: 32,
+			marginBottom: 32
+		},
+		addDeposit: {
+			width: 'auto',
+			padding: 8,
+			borderRadius: 50,
+			marginRight: 16,
+			backgroundColor: colors.fill
+		},
+		addDepositText: {
+			fontSize: 24,
+			fontFamily: 'Inter_800ExtraBold'
+		},
+		addDepositInfo: {
+			fontSize: 16,
+			marginBottom: 16
 		}
 	});
