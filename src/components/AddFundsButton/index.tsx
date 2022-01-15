@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, createRef } from 'react';
-import { View, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput, Button } from 'react-native';
 import { Portal, Modal, Text, IconButton, useTheme } from 'react-native-paper';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TextButton from '@components/TextButton';
@@ -156,7 +156,17 @@ const AddFundsButton = () => {
 						style={styles.currencyInput}
 					/>
 
-					<RoundButton text="Choose other amount" icon="" />
+					<TouchableOpacity
+						style={{
+							backgroundColor: '#000000',
+							borderRadius: 8,
+							padding: 16
+						}}
+					>
+						<Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 20 }}>
+							Pay with <Text style={{ color: '#FFFFFF', fontSize: 24 }}></Text> Pay
+						</Text>
+					</TouchableOpacity>
 					<KeyboardSpacer />
 				</Modal>
 			</Portal>
