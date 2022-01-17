@@ -9,7 +9,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderRadius: 16,
 			paddingLeft: 16,
 			paddingRight: 16,
-			marginRight: 16,
+			alignItems: 'center',
 			backgroundColor: colors.fill
 		}
 	});

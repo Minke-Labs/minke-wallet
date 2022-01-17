@@ -7,6 +7,7 @@ import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
 import { globalWalletState } from '@stores/WalletStore';
 import makeBlockie from 'ethereum-blockies-base64';
+import AddFundsButton from '@components/AddFundsButton';
 import { makeStyles } from './styles';
 
 const AssetsPanel = () => {
@@ -30,11 +31,7 @@ const AssetsPanel = () => {
 					</View>
 				</View>
 				<View style={styles.cardBottomContent}>
-					<TextButton
-						text="Add funds"
-						icon="add-circle-outline"
-						containerStyle={[styles.cardDivisor, { borderRightColor: colors.background }]}
-					/>
+					<AddFundsButton />
 					<TextButton
 						text="Send"
 						icon="arrow-circle-up"
