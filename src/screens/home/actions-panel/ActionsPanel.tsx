@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
 	scrollviewHorizontalContent: {
 		flexDirection: 'row',
 		paddingRight: 32
-	}
+	},
+	roundButton: { marginRight: 16 }
 });
 
 const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
@@ -36,12 +37,24 @@ const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>
 				showsHorizontalScrollIndicator={false}
 			>
 				<View style={styles.scrollviewHorizontalContent}>
-					<RoundButton text="Exchange" icon="compare-arrows" />
-					<RoundButton text="Receive" icon="arrow-circle-down" />
-					<RoundButton text="Copy address" icon="content-copy" />
-					<RoundButton text="New wallet" icon="add" />
-					<RoundButton text="Switch accounts" icon="person-outline" />
-					<RoundButton text="Delete wallet" icon="delete-outline" onPress={onDeleteWallet} />
+					<View style={styles.roundButton}>
+						<RoundButton text="Exchange" icon="compare-arrows" />
+					</View>
+					<View style={styles.roundButton}>
+						<RoundButton text="Receive" icon="arrow-circle-down" />
+					</View>
+					<View style={styles.roundButton}>
+						<RoundButton text="Copy address" icon="content-copy" />
+					</View>
+					<View style={styles.roundButton}>
+						<RoundButton text="New wallet" icon="add" />
+					</View>
+					<View style={styles.roundButton}>
+						<RoundButton text="Switch accounts" icon="person-outline" />
+					</View>
+					<View style={styles.roundButton}>
+						<RoundButton text="Delete wallet" icon="delete-outline" onPress={onDeleteWallet} />
+					</View>
 				</View>
 			</ScrollView>
 		</SafeAreaView>

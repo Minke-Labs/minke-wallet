@@ -1,15 +1,17 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { Card, IconButton } from 'react-native-paper';
+import { Card, IconButton, useTheme } from 'react-native-paper';
 import { coins, ICoin } from '../../helpers/coins';
 
 const CoinCard = ({ coin, onSelect }: { coin: ICoin; onSelect: Function }) => {
 	const { name, symbol, image } = coin;
+	const { colors } = useTheme();
 
 	const selfStyles = StyleSheet.create({
 		card: {
 			borderRadius: 16,
-			marginBottom: 8
+			marginBottom: 8,
+			backgroundColor: colors.fill
 		}
 	});
 

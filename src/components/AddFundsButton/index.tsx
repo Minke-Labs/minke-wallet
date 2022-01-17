@@ -1,15 +1,11 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, createRef } from 'react';
-import { View, Image, TouchableOpacity, TextInput } from 'react-native';
-import { Portal, Modal, Text, IconButton, useTheme } from 'react-native-paper';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { TextInput } from 'react-native';
+import { Portal, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
-import ApplePayButton from '@components/ApplePayButton';
-import CurrencyInput from 'react-native-currency-input';
 import { ICoin, coins } from '@helpers/coins';
-import RoundButton from '@components/RoundButton';
-import { MaterialIcons } from '@expo/vector-icons';
-import CoinSelector from './CoinSelector';
+import ChooseQuantityModal from './ChooseQuantityModal';
+import CustomAmountModal from './CustomAmountModal';
+import AddFundsModal from './AddFundsModal';
 import { makeStyles } from './styles';
 
 const AddFundsButton = () => {
@@ -76,107 +72,33 @@ const AddFundsButton = () => {
 	return (
 		<>
 			<Portal>
-				<Modal
+				<AddFundsModal
 					visible={chooseCoinVisible}
 					onDismiss={hideChooseCoinModal}
-					contentContainerStyle={styles.modalContainerStyle}
-				>
-					<View style={styles.modalHeader}>
-						<Text style={styles.modalHeadline}>Add funds</Text>
-						<IconButton icon="close" size={24} color="#006AA6" onPress={hideAll} />
-					</View>
-					<Text style={styles.modalSubHeadline}>Choose which asset you&apos;d like to buy</Text>
-					<CoinSelector onSelect={selectCoin} />
-				</Modal>
+					onCloseAll={hideAll}
+					onCoinSelected={selectCoin}
+				/>
 
-				<Modal
+				<ChooseQuantityModal
 					visible={detailsVisible}
 					onDismiss={hideDetailsModal}
-					contentContainerStyle={styles.modalContainerStyle}
-				>
-					<View style={styles.modalHeader}>
-						<IconButton icon="chevron-left" size={24} color="#006AA6" onPress={backToCoinSelector} />
-						<IconButton icon="close" size={24} color="#006AA6" onPress={hideAll} />
-					</View>
+					onCloseAll={hideAll}
+					onBack={backToCoinSelector}
+					coin={coin}
+					amount={amount}
+					setPresetAmount={setPresetAmount}
+					enableCustomAmount={enableCustomAmount}
+				/>
 
-					<View style={styles.modalCoinDetails}>
-						<Image source={coin.image} />
-						<Text style={styles.modalCoinDetailsCoinName}>{coin.name}</Text>
-					</View>
-
-					<Text style={styles.modalSubHeadline}>
-						Buy some
-						{` ${coin.symbol} `}
-						with <Text style={styles.fontBold}>Apple Pay</Text> to start using Minke:
-					</Text>
-
-					<View style={styles.modalAmountContainer}>
-						{[100, 200, 300].map((value) => (
-							<TouchableOpacity
-								key={value}
-								onPress={() => setPresetAmount(value)}
-								style={styles.modalAmountSelectButton}
-							>
-								<Text style={amount === value ? { color: 'red', fontSize: 24 } : { fontSize: 24 }}>
-									${value}
-								</Text>
-							</TouchableOpacity>
-						))}
-					</View>
-
-					{/* Rever com Marcos o RoundButton:
-					RoundButton não deveria conter um marginRight fixo, como ajustamos isso? */}
-					<View style={{ marginRight: -16 }}>
-						<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
-					</View>
-					<ApplePayButton />
-
-					<View style={styles.addDepositContainer}>
-						<View style={styles.addDeposit}>
-							<MaterialIcons name="add-circle-outline" size={20} color={colors.primary} />
-						</View>
-						<Text style={styles.addDepositText}>or deposit</Text>
-					</View>
-					<Text style={styles.addDepositInfo}>
-						Send from <Text style={styles.fontBold}>coinbase</Text> or another exchange
-					</Text>
-					<RoundButton text="Copy address" icon="content-copy" />
-				</Modal>
-
-				<Modal
+				<CustomAmountModal
 					visible={customAmountVisible}
 					onDismiss={hideCustomAmountModal}
-					contentContainerStyle={styles.modalContainerStyle}
-				>
-					<View style={styles.modalHeader}>
-						<IconButton icon="chevron-left" size={24} color="#006AA6" onPress={backToDetails} />
-						<IconButton icon="close" size={24} color="#006AA6" onPress={hideAll} />
-					</View>
-
-					<Text style={styles.modalHeadline}>Choose other amount</Text>
-
-					<CurrencyInput
-						value={customAmount}
-						onChangeValue={setCustomAmount}
-						prefix="$"
-						delimiter=","
-						separator="."
-						precision={2}
-						minValue={0}
-						ref={customAmountRef}
-						autoFocus
-						placeholder="$00.00"
-						style={styles.currencyInput}
-					/>
-
-					<ApplePayButton />
-					<TouchableOpacity style={styles.hintBellowButton}>
-						<MaterialIcons name="error-outline" size={20} color="#4F4F4F" />
-						<Text style={styles.hintBellowButtonText}>Use a debit card</Text>
-					</TouchableOpacity>
-
-					<KeyboardSpacer />
-				</Modal>
+					onCloseAll={hideAll}
+					onBack={backToDetails}
+					customAmount={customAmount}
+					setCustomAmount={setCustomAmount}
+					customAmountRef={customAmountRef}
+				/>
 			</Portal>
 
 			<TextButton
