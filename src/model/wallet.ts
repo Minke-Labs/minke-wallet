@@ -170,7 +170,7 @@ export const estimateGas = async (): Promise<EstimateGasResponse> => {
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 	const result = await fetch(
-		'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N'
+		'https://api-ropsten.etherscan.io/api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N'
 	);
 	return result.json();
 };
@@ -180,6 +180,15 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 	const result = await fetch(
 		`https://api.zapper.fi/v1/protocols/tokens/balances?api_key=${apiKey}&addresses[]=${wallet}`
 	);
+	return result.json();
+};
+
+export const getTransactions = async (address: string, page = 1, offset = 100): Promise<TransactionResponse> => {
+	const baseUrl = 'https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=';
+	const result = await fetch(
+		`${baseUrl}${address}&page=${page}&offset=${offset}&sort=desc&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
+	);
+
 	return result.json();
 };
 
@@ -264,4 +273,29 @@ export interface WalletToken {
 	balance: number;
 	balanceRaw: string;
 	balanceUSD: number;
+}
+
+export interface Transaction {
+	accessList: string;
+	blockHash: string;
+	blockNumber: string;
+	chainId: string;
+	confirmations: string;
+	data: string;
+	from: string;
+	gasLimit: string;
+	gasPrice: string;
+	hash: string;
+	nonce: string;
+	timeStamp: string;
+	to: string;
+	transactionIndex: string;
+	type: string;
+	value: string;
+}
+
+export interface TransactionResponse {
+	result: [Transaction];
+	status: string;
+	message: string;
 }
