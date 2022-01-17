@@ -31,7 +31,7 @@ const ActionsPanel = ({
 		>
 			<View style={styles.scrollviewHorizontalContent}>
 				<View style={styles.roundButton}>
-					<RoundButton text="Exchange" icon="compare-arrows" />
+					<RoundButton text="Exchange" icon="compare-arrows" onPress={onExchange} />
 				</View>
 				<View style={styles.roundButton}>
 					<RoundButton text="Receive" icon="arrow-circle-down" />
