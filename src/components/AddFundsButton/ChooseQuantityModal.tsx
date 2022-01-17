@@ -7,7 +7,7 @@ import RoundButton from '@components/RoundButton';
 import ApplePayButton from '@components/ApplePayButton';
 import { ICoin } from '@helpers/coins';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
 		modalCoinDetails: {
 			flexDirection: 'row',
@@ -68,6 +68,11 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		addDepositInfo: {
 			fontSize: 16,
 			marginBottom: 16
+		},
+		activeAmountButton: {
+			backgroundColor: colors.background,
+			borderColor: colors.fill,
+			borderWidth: 2
 		}
 	});
 
@@ -111,11 +116,9 @@ const ChooseQuantityModal = ({
 						<TouchableOpacity
 							key={value}
 							onPress={() => setPresetAmount(value)}
-							style={styles.modalAmountSelectButton}
+							style={[styles.modalAmountSelectButton, amount === value ? styles.activeAmountButton : {}]}
 						>
-							<Text style={amount === value ? { color: 'red', fontSize: 24 } : { fontSize: 24 }}>
-								${value}
-							</Text>
+							<Text style={{ fontSize: 24 }}>${value}</Text>
 						</TouchableOpacity>
 					))}
 				</View>
