@@ -3,13 +3,15 @@ import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from '@helpers/utilities';
 import {
+	Coin,
 	erc20abi,
 	getAllWallets,
 	getEthLastPrice,
 	getPrivateKey,
 	MinkeTokenList,
 	provider,
-	supportedTokenList
+	supportedTokenList,
+	Transaction
 } from '@models/wallet';
 
 /*export const initWallet = getAllWallets().then(wallets => {
@@ -33,6 +35,8 @@ export interface WalletState {
 		eth?: BigNumber;
 		usd?: string;
 	};
+	transactions?: Array<Transaction>;
+	allTokens: Array<Coin>;
 }
 
 const initializeWallet = async (): Promise<WalletState> => {
@@ -66,12 +70,14 @@ const initializeWallet = async (): Promise<WalletState> => {
 				wallet: new Wallet(privateKey, provider),
 				walletId: wallet.id,
 				balance,
-				tokens
+				tokens,
+				allTokens: [],
+				transactions: []
 			};
 		}
 	}
 
-	return { wallet: null, walletId: null };
+	return { wallet: null, walletId: null, transactions: [], allTokens: [] };
 };
 
 const globalStateInit = createState(initializeWallet);

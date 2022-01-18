@@ -175,6 +175,12 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 	return result.json();
 };
 
+// The date of data snapshot in dd-mm-yyyy eg. 30-12-2017
+export const getPriceHistory = async (date: string, tokenId = 'ethereum'): Promise<EtherPriceHistoryResponse> => {
+	const result = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}/history?date=${date}`);
+	return result.json();
+};
+
 export const getWalletTokens = async (wallet: string): Promise<WalletTokensResponse> => {
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const result = await fetch(
@@ -183,12 +189,22 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 	return result.json();
 };
 
-export const getTransactions = async (address: string, page = 1, offset = 100): Promise<TransactionResponse> => {
+export const getTransactions = async (address: string, page = 1, offset = 100): Promise<Array<Transaction>> => {
 	const baseUrl = 'https://api-ropsten.etherscan.io/api?module=account&action=txlist&address=';
-	const result = await fetch(
-		`${baseUrl}${address}&page=${page}&offset=${offset}&sort=desc&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
-	);
+	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`;
+	const result = await fetch(`${baseUrl}${suffix}`);
+	const { result: normal }: TransactionResponse = await result.json();
 
+	const erc20BaseUrl = 'https://api-ropsten.etherscan.io/api?module=account&action=tokentx&address=';
+	const erc20result = await fetch(`${erc20BaseUrl}${suffix}`);
+	const { result: erc20 }: TransactionResponse = await erc20result.json();
+
+	const all = [...erc20, ...normal];
+	return all.sort((a, b) => +b.timeStamp - +a.timeStamp);
+};
+
+export const getTokenList = async (): Promise<Array<Coin>> => {
+	const result = await fetch('https://api.coingecko.com/api/v3/coins/list');
 	return result.json();
 };
 
@@ -292,10 +308,42 @@ export interface Transaction {
 	transactionIndex: string;
 	type: string;
 	value: string;
+	contractAddress: string;
+	cumulativeGasUsed: string;
+	gas: string;
+	gasUsed: string;
+	input: string;
+	isError: string;
+	txreceipt_status: string;
+	tokenName: string;
+	tokenSymbol: string;
+	tokenDecimal: string;
 }
 
 export interface TransactionResponse {
 	result: [Transaction];
 	status: string;
 	message: string;
+}
+
+export interface AllTransactionsResponse {
+	normal: Array<TransactionResponse>;
+	erc20: Array<TransactionResponse>;
+}
+
+export interface EtherPriceHistoryResponse {
+	id: string;
+	symbol: string;
+	name: string;
+	market_data: {
+		current_price: {
+			usd: number;
+		};
+	};
+}
+
+export interface Coin {
+	id: string;
+	symbol: string;
+	name: string;
 }
