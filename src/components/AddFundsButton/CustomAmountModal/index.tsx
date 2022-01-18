@@ -1,39 +1,12 @@
 import React, { RefObject } from 'react';
-import { TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { TouchableOpacity, TextInput } from 'react-native';
 import { Text } from 'react-native-paper';
 import CurrencyInput from 'react-native-currency-input';
 import ApplePayButton from '@components/ApplePayButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Modal from '@components/Modal';
-
-const styles = StyleSheet.create({
-	modalHeadline: {
-		fontSize: 24,
-		fontFamily: 'Inter_800ExtraBold'
-	},
-	currencyInput: {
-		borderBottomColor: '#000000',
-		borderBottomWidth: 1,
-		paddingBottom: 8,
-		fontSize: 32,
-		marginTop: 16,
-		marginBottom: 24
-	},
-	hintBellowButton: {
-		color: '#4F4F4F',
-		textAlign: 'center',
-		fontSize: 16,
-		padding: 16,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignContent: 'center',
-		alignItems: 'center'
-	},
-	hintBellowButtonText: {
-		marginLeft: 8
-	}
-});
+import styles from './styles';
 
 const CustomAmountModal = ({
 	visible,
