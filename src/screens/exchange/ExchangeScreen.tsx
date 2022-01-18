@@ -265,7 +265,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 						showOnlyOwnedTokens={showOnlyOwnedTokens}
 						selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
 					/>
-					{canSwap() ? <PrimaryButton onPress={goToExchangeResume}>Exchange</PrimaryButton> : null}
+					<PrimaryButton onPress={goToExchangeResume} disabled={!canSwap()}>
+						Exchange
+					</PrimaryButton>
 				</Container>
 			</View>
 		</TouchableWithoutFeedback>
