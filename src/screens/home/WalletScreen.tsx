@@ -5,7 +5,7 @@ import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { walletDelete } from '@models/wallet';
+import { walletCreate, walletDelete } from '@models/wallet';
 import styles from './styles';
 import Header from './header/Header';
 import AssetsPanel from './assets-panel/AssetsPanel';
@@ -20,6 +20,12 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		navigation.navigate('Welcome');
 	}, [navigation]);
 
+	const onCreateWallet = useCallback(async () => {
+		const newWallet = await walletCreate();
+		state.set(newWallet as any);
+		navigation.navigate('WalletCreated');
+	}, [navigation]);
+
 	const onExchange = () => {
 		navigation.navigate('Exchange');
 	};
@@ -29,7 +35,11 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 			<SafeAreaView>
 				<ScrollView style={styles.homeScroll}>
 					<AssetsPanel />
-					<ActionsPanel onDeleteWallet={onDeleteWallet} onExchange={onExchange} />
+					<ActionsPanel
+						onCreateWallet={onCreateWallet}
+						onDeleteWallet={onDeleteWallet}
+						onExchange={onExchange}
+					/>
 					<FinancePanel />
 				</ScrollView>
 			</SafeAreaView>

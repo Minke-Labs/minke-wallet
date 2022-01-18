@@ -25,7 +25,7 @@ export const provider = new providers.InfuraProvider('ropsten', {
 	projectSecret: process.env.INFURA_PROJECT_SECRET
 });
 
-export const getENSAddress = async (address: string) => {
+export const getENSAddress = async (address: string): Promise<string> => {
 	const name = await provider.lookupAddress(address);
 	return name;
 };

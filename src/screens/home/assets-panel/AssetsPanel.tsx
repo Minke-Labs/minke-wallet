@@ -18,6 +18,7 @@ const AssetsPanel = () => {
 	if (state.promised) return <AppLoading />;
 
 	const balance = state.value.balance?.usd || '';
+	const address = state.value.wallet?.address || '';
 	return (
 		<View style={styles.paddingContent}>
 			<Card style={styles.card}>
@@ -27,7 +28,12 @@ const AssetsPanel = () => {
 						<Text style={styles.cardBalance}>${commify(balance)}</Text>
 					</View>
 					<View>
-						<Image source={{ uri: makeBlockie(state.value.wallet?.address || '') }} style={styles.avatar} />
+						{address ? (
+							<Image
+								source={{ uri: makeBlockie(state.value.wallet?.address || '') }}
+								style={styles.avatar}
+							/>
+						) : null}
 					</View>
 				</View>
 				<View style={styles.cardBottomContent}>
