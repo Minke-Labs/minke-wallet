@@ -80,6 +80,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					onDismiss={() => snackbarVisible.set(false)}
 					visible={snackbarVisible.value}
 					style={styles.snackbar}
+					duration={3000}
 				>
 					Copied!
 				</Snackbar>

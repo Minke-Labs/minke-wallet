@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { Text, Portal, Snackbar, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+import { globalWalletState } from '@stores/WalletStore';
+import * as Clipboard from 'expo-clipboard';
 import Modal from '@components/Modal';
 import RoundButton from '@components/RoundButton';
 import ApplePayButton from '@components/ApplePayButton';
@@ -97,6 +99,13 @@ const ChooseQuantityModal = ({
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
+	const wallet = globalWalletState();
+
+	const onCopyToClipboard = () => {
+		Clipboard.setString(wallet.value.wallet?.address || '');
+		setSnackbarVisible(true);
+	};
 	return (
 		<Modal visible={visible} onDismiss={onDismiss} onCloseAll={onCloseAll} onBack={onBack}>
 			<>
@@ -135,7 +144,12 @@ const ChooseQuantityModal = ({
 				<Text style={styles.addDepositInfo}>
 					Send from <Text style={styles.fontBold}>coinbase</Text> or another exchange
 				</Text>
-				<RoundButton text="Copy address" icon="content-copy" />
+				<RoundButton text="Copy address" icon="content-copy" onPress={onCopyToClipboard} />
+				<Portal>
+					<Snackbar onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible} duration={3000}>
+						<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
+					</Snackbar>
+				</Portal>
 			</>
 		</Modal>
 	);
