@@ -41,6 +41,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingLeft: 24,
 			borderRadius: 16
 		},
+		activeAmountButton: {
+			backgroundColor: colors.linkText
+		},
+		modalAmountSelectButtonText: {
+			fontSize: 24,
+			color: colors.text
+		},
+		activeAmountButtonText: {
+			fontSize: 24,
+			color: colors.background
+		},
 		addDepositContainer: {
 			flexDirection: 'row',
 			alignItems: 'center',
@@ -61,10 +72,5 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		addDepositInfo: {
 			fontSize: 16,
 			marginBottom: 16
-		},
-		activeAmountButton: {
-			backgroundColor: colors.background,
-			borderColor: colors.fill,
-			borderWidth: 2
 		}
 	});

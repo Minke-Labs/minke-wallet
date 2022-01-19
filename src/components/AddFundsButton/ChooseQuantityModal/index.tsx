@@ -59,7 +59,14 @@ const ChooseQuantityModal = ({
 							onPress={() => setPresetAmount(value)}
 							style={[styles.modalAmountSelectButton, amount === value ? styles.activeAmountButton : {}]}
 						>
-							<Text style={{ fontSize: 24 }}>${value}</Text>
+							<Text
+								style={[
+									styles.modalAmountSelectButtonText,
+									amount === value ? styles.activeAmountButtonText : {}
+								]}
+							>
+								${value}
+							</Text>
 						</TouchableOpacity>
 					))}
 				</View>
