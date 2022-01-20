@@ -24,7 +24,7 @@ const Header = () => {
 			setEnsName(name);
 		};
 
-		fetchENSAddress();
+		// fetchENSAddress();
 	}, []);
 
 	const accountName = () => {
