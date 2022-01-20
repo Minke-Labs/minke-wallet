@@ -1,9 +1,11 @@
-import { BigNumberish, Contract, providers, Wallet } from 'ethers';
-import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED } from 'expo-secure-store';
-import { find, isEmpty } from 'lodash';
-import { parseEther, parseUnits } from 'ethers/lib/utils';
-import { loadObject, saveObject } from './keychain';
+import {BigNumberish, Contract, providers, Wallet} from 'ethers';
+import {generateMnemonic, mnemonicToSeed} from 'bip39';
+import {deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED} from 'expo-secure-store';
+import {find, isEmpty} from 'lodash';
+import {parseEther, parseUnits} from 'ethers/lib/utils';
+import {loadObject, saveObject} from './keychain';
+import {WalletState} from "@stores/WalletStore";
+import {convertEthToUsd} from "@helpers/utilities";
 
 export const publicAccessControlOptions: SecureStoreOptions = {
 	keychainAccessible: WHEN_UNLOCKED
@@ -20,15 +22,30 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 	return save;
 };
 
-export const provider = new providers.InfuraProvider('ropsten', {
+export const provider = new providers.InfuraProvider('maticmum', {
 	projectId: process.env.INFURA_API_KEY,
 	projectSecret: process.env.INFURA_PROJECT_SECRET
 });
+
+export const getProvider = (network = 'maticmum') => {
+	return new providers.InfuraProvider(network, {
+		projectId: process.env.INFURA_API_KEY,
+		projectSecret: process.env.INFURA_PROJECT_SECRET
+	});
+}
 
 export const getENSAddress = async (address: string) => {
 	const name = await provider.lookupAddress(address);
 	return name;
 };
+
+export const getWallet = ( privateKey:string, network ='matic'): Wallet => {
+	const provider = new providers.InfuraProvider(network, {
+			projectId: process.env.INFURA_API_KEY,
+			projectSecret: process.env.INFURA_PROJECT_SECRET
+		});
+	return new Wallet(privateKey, provider)
+}
 
 export const savePrivateKey = async (address: string, privateKey: null | string) => {
 	// const privateAccessControlOptions = await getPrivateAccessControlOptions();
@@ -60,7 +77,7 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 	await saveObject('minkeAllWallets', wallets, publicAccessControlOptions);
 };
 
-export const walletCreate = async (): Promise<null | { wallet: Wallet; walletId: string; balance: BigNumberish }> => {
+export const walletCreate = async (): Promise<null | WalletState> => {
 	const mnemonic = generateMnemonic();
 	const seed = await mnemonicToSeed(mnemonic);
 	const wallet: Wallet = new Wallet(seed, provider);
@@ -76,8 +93,13 @@ export const walletCreate = async (): Promise<null | { wallet: Wallet; walletId:
 	}
 	existingWallets[id] = newWallet;
 	await saveAllWallets(existingWallets);
-	const balance = await provider.getBalance(wallet.address);
-	return { wallet, walletId: id, balance };
+	const eth = await wallet.getBalance();
+	const ethPrice = await getEthLastPrice();
+	const balance  = {
+	  eth,
+		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+	}
+	return {privateKey: wallet.privateKey, address: wallet.address, walletId: id, network: 'matic', balance };
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
@@ -128,13 +150,15 @@ export const erc20abi = [
 ];
 
 export const sendTransaction = async (
-	wallet: Wallet,
+	privateKey: string,
 	to: string,
 	amount: string,
 	gasPrice: string,
+	network: string,
 	contractAddress: string = ''
 ) => {
-	const nonce = await provider.getTransactionCount(wallet.address, 'latest');
+	const wallet = new Wallet(privateKey, getProvider(network))
+	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
 		to,
@@ -147,9 +171,9 @@ export const sendTransaction = async (
 	if (contractAddress) {
 		// const signer = provider.getSigner(wallet.address)
 
-		const erc20 = new Contract(contractAddress, erc20abi, provider);
+		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
 		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount));
-		tx.gasPrice = await provider.estimateGas(tx);
+		tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {
@@ -159,7 +183,7 @@ export const sendTransaction = async (
 	}
 
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
-	return provider.sendTransaction(signedTx as string);
+	return wallet.provider.sendTransaction(signedTx as string);
 };
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
 	const result = await fetch(
@@ -175,8 +199,16 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 	return result.json();
 };
 
+export const getWalletTokens = async (wallet: string): Promise<WalletTokensResponse> => {
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const result = await fetch(
+		`https://api.zapper.fi/v1/protocols/tokens/balances?api_key=${apiKey}&addresses[]=${wallet}`
+	);
+	return result.json();
+};
+
 export const supportedTokenList = {
-	dai: '0x31f42841c2db5173425b5223809cf3a38fede360'
+	dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
 };
 
 export interface MinkeTokenList {
@@ -230,4 +262,27 @@ export interface EtherLastPriceResponse {
 		ethusd: string;
 		ethusd_timestamp: string;
 	};
+}
+
+export interface WalletTokensResponse {
+	[key: string]: {
+		products: [
+			{
+				label: string;
+				assets: [WalletToken];
+			}
+		];
+	};
+}
+
+export interface WalletToken {
+	type: string;
+	network: string;
+	address: string;
+	decimals: number;
+	symbol: string;
+	price: number;
+	balance: number;
+	balanceRaw: string;
+	balanceUSD: number;
 }

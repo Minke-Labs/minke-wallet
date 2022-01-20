@@ -26,14 +26,15 @@ export function TransactionTransferScreen({ navigation }: NativeStackScreenProps
 		if (!isNaN(text)) amount.set(text);
 	};
 	const onTransfer = async () => {
-		if (state.value.wallet) {
+		if (state.value.walletId) {
 			const contractAddress = state.value.tokens?.[route.params.coin]?.contract?.address || '';
 			console.log('CONTRACT address', contractAddress);
 			sendTransaction(
-				state.value.wallet,
+				state.value.privateKey,
 				route.params.address,
 				amount.value,
 				selectedGasPrice.value,
+				state.value.network,
 				contractAddress
 			)
 				.then((r) => {

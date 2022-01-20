@@ -37,7 +37,7 @@ export default function App() {
 		Inter_500Medium
 	});
 	if (!fontsLoaded || walletState.promised) return <AppLoading />;
-	const initialScreen = walletState.value?.wallet ? 'Wallet' : 'Welcome';
+	const initialScreen = walletState.walletId ? 'Wallet' : 'Welcome';
 
 	return (
 		<PaperProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
