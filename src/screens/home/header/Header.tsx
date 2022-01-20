@@ -15,11 +15,10 @@ const Header = () => {
 
 	const [ensName, setEnsName] = React.useState<string | null>('');
 	const state = useState(globalWalletState());
-	const address = state.value.address;
+	const { address } = state.value;
 	// const wallet = state.value.wallet?.provider
 	useEffect(() => {
 		const fetchENSAddress = async () => {
-			// const name = await getENSAddress(address);
 			const name = await getENSAddress(address);
 			setEnsName(name);
 		};
@@ -40,7 +39,7 @@ const Header = () => {
 		<Appbar.Header style={styles.appBar}>
 			<View style={styles.appBarContent}>
 				<View>
-					<Text style={styles.welcomeText}>Welcome</Text>
+					<Text style={styles.welcomeText}>Welcome ({state.value.network.name})</Text>
 					<Text style={styles.appBarUserName}>{accountName()}</Text>
 				</View>
 				<Appbar.Content title="" />

@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export interface Network {
 	chainId: number;
 	name: string;
@@ -39,5 +41,15 @@ export const networks: Networks = {
 	}
 };
 
+export const networkSettingsKey = '@minke:network';
 export const defaultNetwork = networks.mumbai;
-export const network = networks.mumbai;
+
+export const network = async (): Promise<Network> => {
+	const id = await AsyncStorage.getItem(networkSettingsKey);
+	const selectedNetwork = networks[id as keyof Networks];
+	if (id && selectedNetwork) {
+		return selectedNetwork;
+	}
+
+	return defaultNetwork;
+};

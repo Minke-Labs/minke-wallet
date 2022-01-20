@@ -5,10 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import {getENSAddress, provider, walletDelete} from '@models/wallet';
-import AppLoading from "expo-app-loading";
-import {deepCopy} from "ethers/lib/utils";
-import {Wallet} from "ethers";
+import { walletDelete } from '@models/wallet';
 
 const styles = StyleSheet.create({
 	scrollviewHorizontal: {
@@ -30,7 +27,6 @@ const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>
 		state.walletId.set(null);
 		navigation.navigate('Welcome');
 	}, [navigation]);
-
 
 	return (
 		<SafeAreaView>

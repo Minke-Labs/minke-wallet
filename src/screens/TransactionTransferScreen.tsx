@@ -34,7 +34,7 @@ export function TransactionTransferScreen({ navigation }: NativeStackScreenProps
 				route.params.address,
 				amount.value,
 				selectedGasPrice.value,
-				state.value.network,
+				state.value.network.id,
 				contractAddress
 			)
 				.then((r) => {

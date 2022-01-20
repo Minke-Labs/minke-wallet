@@ -6,6 +6,7 @@ import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { convertEthToUsd } from '@helpers/utilities';
 import { loadObject, saveObject } from './keychain';
+import { networks, network as selectedNetwork } from './network';
 
 export const publicAccessControlOptions: SecureStoreOptions = {
 	keychainAccessible: WHEN_UNLOCKED
@@ -22,19 +23,18 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 	return save;
 };
 
-export const getProvider = (network = 'maticmum') =>
-	new providers.InfuraProvider(network, {
+export const getProvider = async (network?: string) => {
+	const blockchain = network || (await selectedNetwork()).id;
+	return new providers.InfuraProvider(blockchain, {
 		projectId: process.env.INFURA_API_KEY,
 		projectSecret: process.env.INFURA_PROJECT_SECRET
 	});
-
-export const getENSAddress = async (address: string) => {
-	const name = await getProvider('mainnet').lookupAddress(address);
-	return name;
 };
 
-export const getWallet = (privateKey: string, network = 'matic'): Wallet =>
-	new Wallet(privateKey, getProvider(network));
+export const getENSAddress = async (address: string) => {
+	const name = (await getProvider(networks.mainnet.id)).lookupAddress(address);
+	return name;
+};
 
 export const savePrivateKey = async (address: string, privateKey: null | string) => {
 	// const privateAccessControlOptions = await getPrivateAccessControlOptions();
@@ -74,13 +74,14 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 };
 
 export const walletCreate = async (): Promise<null | WalletState> => {
+	const network = await selectedNetwork();
 	const mnemonic = generateMnemonic();
 	const seed = await mnemonicToSeed(mnemonic);
-	const wallet: Wallet = new Wallet(seed, getProvider());
+	const wallet: Wallet = new Wallet(seed, await getProvider(network.id));
 	const id = `wallet_${Date.now()}`;
 	await saveSeedPhrase(mnemonic, id);
 	await savePrivateKey(wallet.address, wallet.privateKey);
-	console.log(wallet, wallet.privateKey, wallet.address);
+	console.log(wallet, wallet.privateKey, wallet.address, network.id);
 	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false };
 	const existingWallets = (await getAllWallets()) || {};
 	const primaryWallet = find(existingWallets, (w) => w.primary);
@@ -95,7 +96,7 @@ export const walletCreate = async (): Promise<null | WalletState> => {
 		eth,
 		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
 	};
-	return { privateKey: wallet.privateKey, address: wallet.address, walletId: id, network: 'matic', balance };
+	return { privateKey: wallet.privateKey, address: wallet.address, walletId: id, network, balance };
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
@@ -153,7 +154,7 @@ export const sendTransaction = async (
 	network: string,
 	contractAddress: string = ''
 ) => {
-	const wallet = new Wallet(privateKey, getProvider(network));
+	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
