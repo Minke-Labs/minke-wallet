@@ -71,7 +71,7 @@ const ChooseQuantityModal = ({
 					))}
 				</View>
 
-				<RoundButton text="Choose another amount" icon="" onPress={enableCustomAmount} />
+				<RoundButton text="Choose another amount" onPress={enableCustomAmount} />
 				<ApplePayButton />
 
 				<View style={styles.addDepositContainer}>

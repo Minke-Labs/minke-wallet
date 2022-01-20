@@ -22,14 +22,14 @@ const TextButton = ({
 	onPress
 }: {
 	text: string;
-	icon: string;
+	icon?: string;
 	containerStyle?: StyleProp<TextStyle>;
 	onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity style={[containerStyle, styles.cardActionButton]} onPress={onPress}>
-			<MaterialIcons name={icon} size={20} color={colors.primary} style={styles.cardButtonIcon} />
+			{icon ? <MaterialIcons name={icon} size={20} color={colors.primary} style={styles.cardButtonIcon} /> : null}
 			<Text>{text}</Text>
 		</TouchableOpacity>
 	);

@@ -21,7 +21,7 @@ const RoundButton = ({
 	onPress
 }: {
 	text: string;
-	icon: string;
+	icon?: string;
 	containerStyle?: StyleProp<TextStyle>;
 	onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
