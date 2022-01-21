@@ -49,8 +49,8 @@ const GasOption = ({
 						{gweiValue / 10} gwei ~ {waiting()}
 					</Text>
 				</View>
-				<View>
-					<Text style={styles.textBold}>${(gweiValue / 100) * gweiPrice * 200000}</Text>
+				<View style={styles.alignRight}>
+					<Text style={styles.textBold}>${((gweiValue / 100) * gweiPrice * 200000).toFixed(2)}</Text>
 					<Text>Network Fee</Text>
 				</View>
 			</Card.Content>

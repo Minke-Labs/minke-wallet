@@ -5,6 +5,9 @@ export default StyleSheet.create({
 	textBold: {
 		fontFamily: 'Inter_800ExtraBold'
 	},
+	alignRight: {
+		alignItems: 'flex-end'
+	},
 	exchangeSection: {
 		padding: 24
 	},
