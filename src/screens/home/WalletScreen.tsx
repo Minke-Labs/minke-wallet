@@ -8,7 +8,7 @@ import Header from './header/Header';
 import AssetsPanel from './assets-panel/AssetsPanel';
 import ActionsPanel from './actions-panel/ActionsPanel';
 import FinancePanel from './finance-panel/FinancePanel';
-import {ChangeNetwork} from "./change-network/ChangeNetwork";
+import { ChangeNetwork } from './change-network/ChangeNetwork';
 
 export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	return (
@@ -18,7 +18,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 				<ScrollView style={styles.homeScroll}>
 					<AssetsPanel navigation={navigation} />
 					<ActionsPanel navigation={navigation} />
-					<ChangeNetwork/>
+					<ChangeNetwork />
 					<FinancePanel />
 				</ScrollView>
 			</SafeAreaView>

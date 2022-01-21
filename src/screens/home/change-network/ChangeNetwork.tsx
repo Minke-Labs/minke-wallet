@@ -1,8 +1,7 @@
-import React from "react";
-import {useState} from '@hookstate/core';
-import {Button, Menu} from "react-native-paper";
-import {globalWalletState} from "@stores/WalletStore";
-import {providers, Wallet} from "ethers";
+import React from 'react';
+import { useState } from '@hookstate/core';
+import { Button, Menu } from 'react-native-paper';
+import { globalWalletState } from '@stores/WalletStore';
 
 export const ChangeNetwork = () => {
 	const [visible, setVisible] = React.useState(false);
@@ -13,15 +12,12 @@ export const ChangeNetwork = () => {
 
 	const selectNetwork = (network: string) => {
 		state.network.set(network);
-		closeMenu()
-	}
+		closeMenu();
+	};
 	return (
-		<>
-			<Menu visible={visible} onDismiss={closeMenu} anchor={<Button onPress={openMenu}>Change network</Button>}>
-				<Menu.Item onPress={() => selectNetwork('matic')} title="Mainnet"/>
-				<Menu.Item onPress={() => selectNetwork('maticmum')} title="Mumbai"/>
-
-			</Menu>
-		</>
-	)
-}
+		<Menu visible={visible} onDismiss={closeMenu} anchor={<Button onPress={openMenu}>Change network</Button>}>
+			<Menu.Item onPress={() => selectNetwork('matic')} title="Mainnet" />
+			<Menu.Item onPress={() => selectNetwork('maticmum')} title="Mumbai" />
+		</Menu>
+	);
+};

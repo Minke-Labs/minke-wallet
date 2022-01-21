@@ -42,14 +42,5 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string
 			justifyContent: 'space-around',
 			borderTopColor: colors.background,
 			backgroundColor: scheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : '#FFFFFF'
-		},
-		cardDivisor: {
-			width: '50%',
-			flexDirection: 'row',
-			alignItems: 'center',
-			borderRightWidth: 1,
-			flexGrow: 1,
-			flexBasis: 0,
-			justifyContent: 'center'
 		}
 	});
