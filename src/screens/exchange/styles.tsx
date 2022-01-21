@@ -1,4 +1,3 @@
-import { wrap } from 'lodash';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
