@@ -18,6 +18,7 @@ import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import swap from '../../../assets/swap.png';
+import styles from './styles';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
@@ -230,11 +231,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-			<View style={{ flex: 1 }}>
-				<Container>
-					<Headline>Exchange</Headline>
+			<Container>
+				<View style={styles.exchangeSection}>
+					<Headline style={styles.pageTitle}>Exchange</Headline>
 					<Text>{exchangeSummary()}</Text>
-					<View style={{ padding: 20 }}>
+					<View>
 						<TokenCard
 							token={fromToken}
 							onPress={showModalFrom}
@@ -256,7 +257,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							disableMax
 						/>
 					</View>
-					<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
+				</View>
+
+				<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
+
+				<View style={styles.exchangeSection}>
 					<SearchTokens
 						visible={searchVisible}
 						onDismiss={hideModal}
@@ -268,8 +273,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					<PrimaryButton onPress={goToExchangeResume} disabled={!canSwap()}>
 						Exchange
 					</PrimaryButton>
-				</Container>
-			</View>
+				</View>
+			</Container>
 		</TouchableWithoutFeedback>
 	);
 };
