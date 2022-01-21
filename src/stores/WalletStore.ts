@@ -2,7 +2,7 @@ import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from '@helpers/utilities';
-import { defaultNetwork, Network, network } from '@models/network';
+import { defaultNetwork, Network, Networks, networks } from '@models/network';
 import {
 	erc20abi,
 	getAllWallets,
@@ -50,7 +50,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 		// console.log('PRIVATE KEY', privateKey)
 		if (privateKey) {
-			const walletObj = new Wallet(privateKey, await getProvider());
+			const walletObj = new Wallet(privateKey, await getProvider(wallet.network));
 			const eth = await walletObj.getBalance();
 			const tokens: MinkeTokenList = {};
 
@@ -71,7 +71,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 			return {
 				privateKey,
-				network: await network(),
+				network: networks[wallet.network as keyof Networks] || defaultNetwork,
 				address: wallet.address,
 				// wallet: walletObj,
 				walletId: wallet.id,

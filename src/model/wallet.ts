@@ -82,7 +82,7 @@ export const walletCreate = async (): Promise<null | WalletState> => {
 	await saveSeedPhrase(mnemonic, id);
 	await savePrivateKey(wallet.address, wallet.privateKey);
 	console.log(wallet, wallet.privateKey, wallet.address, network.id);
-	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false };
+	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: network.id };
 	const existingWallets = (await getAllWallets()) || {};
 	const primaryWallet = find(existingWallets, (w) => w.primary);
 	if (isEmpty(existingWallets) || isEmpty(primaryWallet)) {
@@ -213,6 +213,7 @@ export interface MinkeWallet {
 	address: string;
 	name: string;
 	primary: boolean;
+	network: string;
 }
 
 export interface AllMinkeWallets {
