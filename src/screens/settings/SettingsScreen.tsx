@@ -1,13 +1,15 @@
 import React, { useCallback } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { Headline, Text, useTheme } from 'react-native-paper';
 import { MaterialIcons, AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Container from '@components/Container';
+import { ChangeNetwork } from './change-network/ChangeNetwork';
 import { makeStyles } from './styles';
 
 const SettingsScreen = () => {
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const scheme = useColorScheme();
+	const styles = makeStyles(colors, scheme);
 
 	const SettingsOption = useCallback(
 		({ label, onPress, icon }) => (
@@ -44,6 +46,7 @@ const SettingsScreen = () => {
 					label="Contact Support"
 					icon={<MaterialIcons name="support" size={32} color={colors.primary} />}
 				/>
+				<ChangeNetwork />
 			</View>
 		</Container>
 	);
