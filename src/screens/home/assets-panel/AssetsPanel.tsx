@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { View, Image, useColorScheme } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useState } from '@hookstate/core';
@@ -7,20 +7,19 @@ import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
 import { globalWalletState } from '@stores/WalletStore';
 import makeBlockie from 'ethereum-blockies-base64';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@helpers/param-list-type';
 import { makeStyles } from './styles';
-import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "@helpers/param-list-type";
 
 const AssetsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const state = useState(globalWalletState());
 	const { colors } = useTheme();
 	const styles = makeStyles(colors, useColorScheme());
 
-
 	if (state.promised) return <AppLoading />;
 
 	const balance = state.value.balance?.usd || '';
-	console.log(state.value.address)
+	console.log(state.value.address);
 	return (
 		<View style={styles.paddingContent}>
 			<Card style={styles.card}>

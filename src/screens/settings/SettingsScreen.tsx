@@ -8,8 +8,7 @@ import { makeStyles } from './styles';
 
 const SettingsScreen = () => {
 	const { colors } = useTheme();
-	const scheme = useColorScheme();
-	const styles = makeStyles(colors, scheme);
+	const styles = makeStyles(colors, useColorScheme());
 
 	const SettingsOption = useCallback(
 		({ label, onPress, icon }) => (
