@@ -1,14 +1,15 @@
-import {createState, State, useState} from '@hookstate/core';
-import {find} from 'lodash';
-import {BigNumber, Contract, Wallet} from 'ethers';
-import {convertEthToUsd} from '@helpers/utilities';
+import { createState } from '@hookstate/core';
+import { find } from 'lodash';
+import { BigNumber, Contract, Wallet } from 'ethers';
+import { convertEthToUsd } from '@helpers/utilities';
+import { defaultNetwork, Network, Networks, networks } from '@models/network';
 import {
 	erc20abi,
 	getAllWallets,
 	getEthLastPrice,
-	getPrivateKey, getProvider,
+	getPrivateKey,
+	getProvider,
 	MinkeTokenList,
-	provider,
 	supportedTokenList
 } from '@models/wallet';
 
@@ -28,7 +29,7 @@ import {
 export interface WalletState {
 	// wallet: (privateKey: string) => Wallet;
 	privateKey: string;
-	network: string;
+	network: Network;
 	address: string;
 	tokens?: MinkeTokenList;
 	walletId?: string | null;
@@ -49,7 +50,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 		// console.log('PRIVATE KEY', privateKey)
 		if (privateKey) {
-			const walletObj = new Wallet(privateKey, getProvider())
+			const walletObj = new Wallet(privateKey, await getProvider(wallet.network || defaultNetwork.id));
 			const eth = await walletObj.getBalance();
 			const tokens: MinkeTokenList = {};
 
@@ -64,13 +65,12 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 			const balance = {
 				eth,
-				// usd: undefined
-				usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+				usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
 			};
 
 			return {
 				privateKey,
-				network: 'maticmum',
+				network: networks[wallet.network as keyof Networks] || defaultNetwork,
 				address: wallet.address,
 				// wallet: walletObj,
 				walletId: wallet.id,
@@ -80,13 +80,11 @@ const initializeWallet = async (): Promise<WalletState> => {
 		}
 	}
 
-	return {privateKey: '', address: '', walletId: null, network: 'matic'};
+	return { privateKey: '', address: '', walletId: null, network: defaultNetwork };
 };
 
 const globalStateInit = createState(initializeWallet);
 
-
 export function globalWalletState() {
-	return globalStateInit
-
+	return globalStateInit;
 }

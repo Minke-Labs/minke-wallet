@@ -7,22 +7,20 @@ import { RootStackParamList } from '@helpers/param-list-type';
 import { formatEther, formatUnits } from 'ethers/lib/utils';
 import { BigNumberish } from 'ethers';
 import { globalWalletState } from '@stores/WalletStore';
-import {ChangeNetwork} from "./home/change-network/ChangeNetwork";
 
 export function TransactionSelectFundsScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const wallet = globalWalletState();
 	const onSelectFunds = (coin = 'eth') => {
 		navigation.navigate('TransactionContacts', { coin });
 	};
-
 	const balance = wallet.value.balance ? formatEther(wallet.value.balance.eth as BigNumberish) : '';
+
 	return (
 		<View>
 			<Appbar.Header>
 				<Appbar.Content title="Select Funds" />
 			</Appbar.Header>
 			<Card style={{ padding: 20 }}>
-
 				<View
 					style={{
 						flexDirection: 'row',
