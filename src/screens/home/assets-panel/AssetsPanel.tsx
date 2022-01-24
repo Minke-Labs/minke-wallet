@@ -5,20 +5,22 @@ import { useState } from '@hookstate/core';
 import { commify } from 'ethers/lib/utils';
 import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
-import { globalWalletState } from '@stores/WalletStore';
 import makeBlockie from 'ethereum-blockies-base64';
 import AddFundsButton from '@components/AddFundsButton';
 import { makeStyles } from './styles';
 
-const AssetsPanel = ({ onSend }: { onSend: (event: GestureResponderEvent) => void }) => {
-	const state = useState(globalWalletState());
+const AssetsPanel = ({
+	onSend,
+	balance,
+	address
+}: {
+	onSend: (event: GestureResponderEvent) => void;
+	balance: string;
+	address: string;
+}) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors, useColorScheme());
 
-	if (state.promised) return <AppLoading />;
-
-	const balance = state.value.balance?.usd || '';
-	const address = state.value.address || '';
 	return (
 		<View style={styles.paddingContent}>
 			<Card style={styles.card}>

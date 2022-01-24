@@ -51,7 +51,7 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
 		const allWallets = await loadObject('minkeAllWallets');
-		console.log(allWallets);
+		console.log('all wallets', allWallets);
 		if (allWallets) {
 			return allWallets as AllMinkeWallets;
 		}
@@ -63,14 +63,17 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 };
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const { etherscanURL } = await selectedNetwork();
-	const result = await fetch(
-		`${etherscanURL}api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
-	);
+	const { etherscanURL, etherscanAPIKey } = await selectedNetwork();
+	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const result = await fetch(`${etherscanURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
+	Object.values(wallets).map((w) => {
+		w.network = w.network || networks.ropsten.id;
+	});
+	console.log('Updating wallets source', wallets);
 	await saveObject('minkeAllWallets', wallets, publicAccessControlOptions);
 };
 
@@ -201,10 +204,6 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 
 export const smallWalletAddress = (address: string): string =>
 	`${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
-
-export const supportedTokenList = {
-	dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
-};
 
 export interface MinkeTokenList {
 	[name: string]: {

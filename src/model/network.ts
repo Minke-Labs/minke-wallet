@@ -6,8 +6,12 @@ export interface Network {
 	id: string;
 	testnet: boolean;
 	etherscanURL: string;
+	etherscanAPIKey?: string;
 	gasURL?: string;
 	zapperNetwork: string;
+	supportedTokenList?: {
+		[key: string]: string;
+	};
 }
 
 export interface Networks {
@@ -24,7 +28,10 @@ export const networks: Networks = {
 		id: 'mainnet',
 		testnet: false,
 		etherscanURL: 'https://api.etherscan.io/',
-		zapperNetwork: 'ethereum'
+		zapperNetwork: 'ethereum',
+		supportedTokenList: {
+			dai: '0x6b175474e89094c44da98b954eedeac495271d0f'
+		}
 	},
 	matic: {
 		chainId: 137,
@@ -32,7 +39,11 @@ export const networks: Networks = {
 		id: 'matic',
 		testnet: false,
 		etherscanURL: 'https://api.polygonscan.com/',
-		zapperNetwork: 'polygon'
+		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
+		zapperNetwork: 'polygon',
+		supportedTokenList: {
+			dai: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
+		}
 	},
 	mumbai: {
 		chainId: 80001,
@@ -40,8 +51,12 @@ export const networks: Networks = {
 		id: 'maticmum',
 		testnet: true,
 		etherscanURL: 'https://api-testnet.polygonscan.com/',
+		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		gasURL: 'https://api.polygonscan.com/',
-		zapperNetwork: 'polygon'
+		zapperNetwork: 'polygon',
+		supportedTokenList: {
+			dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
+		}
 	},
 	ropsten: {
 		chainId: 3,
@@ -49,7 +64,10 @@ export const networks: Networks = {
 		id: 'ropsten',
 		testnet: true,
 		etherscanURL: 'https://api-ropsten.etherscan.io/',
-		zapperNetwork: 'ethereum'
+		zapperNetwork: 'ethereum',
+		supportedTokenList: {
+			dai: '0xad6d458402f60fd3bd25163575031acdce07538d'
+		}
 	}
 };
 

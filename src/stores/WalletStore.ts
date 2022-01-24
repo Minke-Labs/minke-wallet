@@ -2,7 +2,7 @@ import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from '@helpers/utilities';
-import { defaultNetwork, Network, Networks, networks } from '@models/network';
+import { defaultNetwork, Network, network as selectedNetwork } from '@models/network';
 import {
 	erc20abi,
 	getAllWallets,
@@ -10,8 +10,7 @@ import {
 	getPrivateKey,
 	getProvider,
 	MinkeTokenList,
-	MinkeWallet,
-	supportedTokenList
+	MinkeWallet
 } from '@models/wallet';
 
 export interface WalletState {
@@ -29,38 +28,38 @@ export interface WalletState {
 
 export const emptyWallet = { privateKey: '', address: '', walletId: null, network: defaultNetwork };
 
+export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
+	const blockchain = await selectedNetwork();
+	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
+	const eth = await walletObj.getBalance();
+	const tokens: MinkeTokenList = {};
+
+	for (const [key, tokenAddress] of Object.entries(blockchain.supportedTokenList || [])) {
+		const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
+		const balance = await contract.balanceOf(address);
+		tokens[key] = {
+			contract,
+			balance
+		};
+	}
+
+	const ethPrice = await getEthLastPrice();
+	const balance = {
+		eth,
+		usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
+	};
+
+	return { tokens, balance, network: blockchain };
+};
+
 export const walletState = async (wallet: MinkeWallet | undefined) => {
 	if (wallet) {
 		const privateKey = await getPrivateKey(wallet.address);
 
 		if (privateKey) {
-			const walletObj = new Wallet(privateKey, await getProvider(wallet.network || defaultNetwork.id));
-			const eth = await walletObj.getBalance();
-			const tokens: MinkeTokenList = {};
-
-			for (const [key, tokenAddress] of Object.entries(supportedTokenList)) {
-				const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
-				const balance = await contract.balanceOf(wallet.address);
-				tokens[key] = {
-					contract,
-					balance
-				};
-			}
-
-			const ethPrice = await getEthLastPrice();
-			const balance = {
-				eth,
-				usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
-			};
-
 			return {
-				privateKey,
-				network: networks[wallet.network as keyof Networks] || defaultNetwork,
-				address: wallet.address,
-				// wallet: walletObj,
-				walletId: wallet.id,
-				balance,
-				tokens
+				...{ privateKey, address: wallet.address, walletId: wallet.id },
+				...(await fetchTokensAndBalances(privateKey, wallet.address))
 			};
 		}
 	}

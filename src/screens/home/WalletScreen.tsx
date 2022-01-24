@@ -31,12 +31,13 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const onSend = () => navigation.navigate('TransactionSelectFunds');
 	const onSwitchAccounts = () => navigation.navigate('Accounts');
 
+	const { address, balance } = state.value;
 	return (
 		<Container>
 			<Header onSettingsPress={onSettingsPress} />
 			<SafeAreaView>
 				<ScrollView style={styles.homeScroll}>
-					<AssetsPanel onSend={onSend} />
+					<AssetsPanel onSend={onSend} balance={balance?.usd || ''} address={address} />
 					<ActionsPanel
 						onCreateWallet={onCreateWallet}
 						onDeleteWallet={onDeleteWallet}
