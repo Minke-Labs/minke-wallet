@@ -7,6 +7,7 @@ export interface Network {
 	testnet: boolean;
 	etherscanURL: string;
 	gasURL?: string;
+	zapperNetwork: string;
 }
 
 export interface Networks {
@@ -22,14 +23,16 @@ export const networks: Networks = {
 		name: 'Ethereum',
 		id: 'mainnet',
 		testnet: false,
-		etherscanURL: 'https://api.etherscan.io/'
+		etherscanURL: 'https://api.etherscan.io/',
+		zapperNetwork: 'ethereum'
 	},
 	matic: {
 		chainId: 137,
 		name: 'Polygon',
 		id: 'matic',
 		testnet: false,
-		etherscanURL: 'https://api.polygonscan.com/'
+		etherscanURL: 'https://api.polygonscan.com/',
+		zapperNetwork: 'polygon'
 	},
 	mumbai: {
 		chainId: 80001,
@@ -37,14 +40,16 @@ export const networks: Networks = {
 		id: 'maticmum',
 		testnet: true,
 		etherscanURL: 'https://api-testnet.polygonscan.com/',
-		gasURL: 'https://api.polygonscan.com/'
+		gasURL: 'https://api.polygonscan.com/',
+		zapperNetwork: 'polygon'
 	},
 	ropsten: {
 		chainId: 3,
 		name: 'Ropsten',
 		id: 'ropsten',
 		testnet: true,
-		etherscanURL: 'https://api-ropsten.etherscan.io/'
+		etherscanURL: 'https://api-ropsten.etherscan.io/',
+		zapperNetwork: 'ethereum'
 	}
 };
 
