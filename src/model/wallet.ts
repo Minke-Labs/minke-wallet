@@ -5,7 +5,7 @@ import { find, isEmpty } from 'lodash';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { convertEthToUsd } from '@helpers/utilities';
-import { networks, network as selectedNetwork } from './network';
+import { networks, network as selectedNetwork, network } from './network';
 import { loadObject, saveObject } from './keychain';
 
 export const publicAccessControlOptions: SecureStoreOptions = {
@@ -63,8 +63,9 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 };
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
+	const { etherscanURL } = await selectedNetwork();
 	const result = await fetch(
-		'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N'
+		`${etherscanURL}api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
 	);
 	return result.json();
 };
@@ -74,15 +75,15 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 };
 
 export const walletCreate = async (): Promise<null | WalletState> => {
-	const network = await selectedNetwork();
+	const blockchain = await selectedNetwork();
 	const mnemonic = generateMnemonic();
 	const seed = await mnemonicToSeed(mnemonic);
-	const wallet: Wallet = new Wallet(seed, await getProvider(network.id));
+	const wallet: Wallet = new Wallet(seed, await getProvider(blockchain.id));
 	const id = `wallet_${Date.now()}`;
 	await saveSeedPhrase(mnemonic, id);
 	await savePrivateKey(wallet.address, wallet.privateKey);
-	console.log(wallet, wallet.privateKey, wallet.address, network.id);
-	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: network.id };
+	console.log(wallet, wallet.privateKey, wallet.address, blockchain.id);
+	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
 	const existingWallets = (await getAllWallets()) || {};
 	const primaryWallet = find(existingWallets, (w) => w.primary);
 	if (isEmpty(existingWallets) || isEmpty(primaryWallet)) {
@@ -183,8 +184,9 @@ export const sendTransaction = async (
 	return wallet.provider.sendTransaction(signedTx as string);
 };
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
+	const { gasURL } = await selectedNetwork();
 	const result = await fetch(
-		'https://ethgasstation.info/api/ethgasAPI.json?c7f3543e2274a227ad0f60c97ba1a22abd5c950cc27c25a9ecd7d1a766f0'
+		`${gasURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
 	);
 	return result.json();
 };
@@ -231,17 +233,16 @@ export interface SeedPhraseData {
 }
 
 export interface EstimateGasResponse {
-	fast: number;
-	fastest: number;
-	average: number;
-	safeLow: number;
-	speed: number;
-	block_time: number;
-	blockNum: number;
-	safeLowWait: number;
-	avgWait: number;
-	fastWait: number;
-	fastestWait: number;
+	status: string;
+	message: string;
+	result: {
+		LastBlock: string;
+		SafeGasPrice: string;
+		ProposeGasPrice: string;
+		FastGasPrice: string;
+		suggestBaseFee: string;
+		gasUsedRatio: string;
+	};
 }
 
 export interface EtherLastPriceResponse {

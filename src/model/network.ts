@@ -5,6 +5,8 @@ export interface Network {
 	name: string;
 	id: string;
 	testnet: boolean;
+	etherscanURL: string;
+	gasURL: string;
 }
 
 export interface Networks {
@@ -19,25 +21,33 @@ export const networks: Networks = {
 		chainId: 1,
 		name: 'Ethereum',
 		id: 'mainnet',
-		testnet: false
+		testnet: false,
+		etherscanURL: 'https://api.etherscan.io/',
+		gasURL: 'https://api.etherscan.io/'
 	},
 	matic: {
 		chainId: 137,
 		name: 'Polygon',
 		id: 'matic',
-		testnet: false
+		testnet: false,
+		etherscanURL: 'https://api.polygonscan.com/',
+		gasURL: 'https://api.polygonscan.com/'
 	},
 	mumbai: {
 		chainId: 80001,
 		name: 'Polygon Test',
 		id: 'maticmum',
-		testnet: true
+		testnet: true,
+		etherscanURL: 'https://api-testnet.polygonscan.com/',
+		gasURL: 'https://api.polygonscan.com/'
 	},
 	ropsten: {
 		chainId: 3,
 		name: 'Ropsten',
 		id: 'ropsten',
-		testnet: true
+		testnet: true,
+		etherscanURL: 'https://api-ropsten.etherscan.io/',
+		gasURL: 'https://api-ropsten.etherscan.io/'
 	}
 };
 

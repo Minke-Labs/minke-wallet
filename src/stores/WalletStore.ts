@@ -50,7 +50,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 		// console.log('PRIVATE KEY', privateKey)
 		if (privateKey) {
-			const walletObj = new Wallet(privateKey, await getProvider(wallet.network));
+			const walletObj = new Wallet(privateKey, await getProvider(wallet.network || defaultNetwork.id));
 			const eth = await walletObj.getBalance();
 			const tokens: MinkeTokenList = {};
 
@@ -65,8 +65,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 
 			const balance = {
 				eth,
-				// usd: undefined
-				usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+				usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
 			};
 
 			return {
