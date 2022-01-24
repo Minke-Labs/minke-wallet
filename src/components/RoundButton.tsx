@@ -29,7 +29,7 @@ const RoundButton = ({
 	const styles = makeStyles(colors);
 	return (
 		<TouchableOpacity style={styles.container} onPress={onPress}>
-			<TextButton text={text} icon={icon} containerStyle={containerStyle} />
+			<TextButton text={text} icon={icon} containerStyle={containerStyle} onPress={onPress} />
 		</TouchableOpacity>
 	);
 };

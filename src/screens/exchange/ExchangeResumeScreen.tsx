@@ -104,14 +104,14 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				srcAmount,
 				destAmount,
 				priceRoute: priceQuote.priceRoute,
-				userAddress: wallet.value.wallet?.address || ''
+				userAddress: wallet.value.address || ''
 			});
 
 			if (result.error) {
 				console.error(result.error);
-			} else if (wallet.value.wallet && exchange.value.gas) {
+			} else if (wallet.value && exchange.value.gas) {
 				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;
-				const nonce = await provider.getTransactionCount(wallet.value.wallet.address, 'latest');
+				const nonce = await provider.getTransactionCount(wallet.value.address, 'latest');
 				const txDefaults = {
 					chainId,
 					data,
@@ -122,7 +122,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 					to: dest,
 					value: BigNumber.from(value)
 				};
-				const signedTx = await wallet.value.wallet.signTransaction({ ...txDefaults });
+				const signedTx = await wallet.value.signTransaction({ ...txDefaults });
 				const { hash } = await provider.sendTransaction(signedTx as string);
 				setTransactionHash(hash);
 				showModal();

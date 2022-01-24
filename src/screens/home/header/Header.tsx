@@ -16,14 +16,14 @@ const Header = ({ onSettingsPress }: { onSettingsPress: (event: GestureResponder
 	const [ensName, setEnsName] = React.useState<string | null>('');
 	const state = useState(globalWalletState());
 	const { address } = state.value;
-	// const wallet = state.value.wallet?.provider
+
 	useEffect(() => {
 		const fetchENSAddress = async () => {
 			const name = await getENSAddress(address);
 			setEnsName(name);
 		};
 
-		// fetchENSAddress();
+		fetchENSAddress();
 	}, []);
 
 	const accountName = () => {

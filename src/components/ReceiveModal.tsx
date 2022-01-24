@@ -35,7 +35,7 @@ const ReceiveModal = ({
 	const wallet = globalWalletState();
 	const [ensName, setEnsName] = useState<string | null>();
 
-	const address = wallet.value.wallet?.address || '';
+	const address = wallet.value.address || '';
 	const onShare = async () => {
 		await Share.share({ message: address });
 	};

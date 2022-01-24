@@ -26,9 +26,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
 
-	const onExchange = () => {
-		navigation.navigate('Exchange');
-	};
+	const onExchange = () => navigation.navigate('Exchange');
 	const onSettingsPress = () => navigation.navigate('Settings');
 	const onSend = () => navigation.navigate('TransactionSelectFunds');
 	return (
