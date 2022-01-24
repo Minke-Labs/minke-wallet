@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
 import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
+import { globalWalletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete } from '@models/wallet';
 import styles from './styles';
 import Header from './header/Header';
@@ -16,7 +16,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const state = useState(globalWalletState());
 	const onDeleteWallet = useCallback(async () => {
 		await walletDelete(state.value?.walletId || '');
-		state.set({ wallet: null, walletId: null });
+		state.set(emptyWallet);
 		navigation.navigate('Welcome');
 	}, [navigation]);
 
@@ -29,12 +29,14 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const onExchange = () => {
 		navigation.navigate('Exchange');
 	};
+	const onSettingsPress = () => navigation.navigate('Settings');
+	const onSend = () => navigation.navigate('TransactionSelectFunds');
 	return (
 		<Container>
-			<Header />
+			<Header onSettingsPress={onSettingsPress} />
 			<SafeAreaView>
 				<ScrollView style={styles.homeScroll}>
-					<AssetsPanel />
+					<AssetsPanel onSend={onSend} />
 					<ActionsPanel
 						onCreateWallet={onCreateWallet}
 						onDeleteWallet={onDeleteWallet}

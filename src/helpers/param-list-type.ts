@@ -11,6 +11,7 @@ export type RootStackParamList = {
 	ContactCreate: undefined;
 	Exchange: undefined;
 	ExchangeResume: undefined;
+	Settings: undefined;
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<RootStackParamList, RouteName>;

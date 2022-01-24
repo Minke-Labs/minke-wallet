@@ -79,7 +79,8 @@
     "util": "^0.10.4",
     "vm-browserify": "0.0.4",
     "react-native-svg": "12.1.1",
-    "expo-linking": "~2.3.1"
+    "expo-linking": "~2.3.1",
+    "@react-native-async-storage/async-storage": "~1.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

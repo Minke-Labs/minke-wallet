@@ -35,7 +35,7 @@ const ActionsPanel = ({
 	const wallet = globalWalletState();
 
 	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.wallet?.address || '');
+		Clipboard.setString(wallet.value.address || '');
 		setSnackbarVisible(true);
 	};
 
