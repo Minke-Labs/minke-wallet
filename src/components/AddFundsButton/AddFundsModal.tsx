@@ -1,16 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import Modal from '@components/Modal';
+import globalStyles from '@components/global.styles';
 import CoinSelector from './CoinSelector';
-
-const styles = StyleSheet.create({
-	modalSubHeadline: {
-		marginBottom: 24,
-		fontSize: 18,
-		fontFamily: 'Inter_500Medium'
-	}
-});
 
 const AddFundsModal = ({
 	visible,
@@ -25,7 +17,7 @@ const AddFundsModal = ({
 }) => (
 	<Modal visible={visible} onDismiss={onDismiss} headline="Add funds" onCloseAll={onCloseAll}>
 		<>
-			<Text style={styles.modalSubHeadline}>Choose which asset you&apos;d like to buy</Text>
+			<Text style={globalStyles.subHeadline}>Choose which asset you&apos;d like to buy</Text>
 			<CoinSelector onSelect={onCoinSelected} />
 		</>
 	</Modal>

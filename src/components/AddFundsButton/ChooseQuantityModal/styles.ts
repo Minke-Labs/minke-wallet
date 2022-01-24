@@ -20,14 +20,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginTop: 16,
 			marginBottom: 24
 		},
-		modalSubHeadline: {
-			marginBottom: 24,
-			fontSize: 18,
-			fontFamily: 'Inter_500Medium'
-		},
-		fontBold: {
-			fontFamily: 'Inter_800ExtraBold'
-		},
 		modalAmountContainer: {
 			flexDirection: 'row',
 			justifyContent: 'space-between',

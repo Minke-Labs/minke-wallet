@@ -2,10 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
-		},
 		tabActive: {
 			flex: 1,
 			padding: 16,

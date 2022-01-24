@@ -5,14 +5,10 @@ import { getENSAddress } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
 import Modal from '@components/Modal';
+import globalStyles from '@components/global.styles';
 import RoundButton from './RoundButton';
 
 const styles = StyleSheet.create({
-	modalSubHeadline: {
-		marginBottom: 24,
-		fontSize: 18,
-		fontFamily: 'Inter_500Medium'
-	},
 	address: {
 		fontSize: 16,
 		marginBottom: 16
@@ -52,7 +48,7 @@ const ReceiveModal = ({
 		<Portal>
 			<Modal headline="Receive" visible={visible} onCloseAll={onCloseAll} onDismiss={onDismiss}>
 				<>
-					<Text style={styles.modalSubHeadline}>Show your QR code or share your informations</Text>
+					<Text style={globalStyles.subHeadline}>Show your QR code or share your informations</Text>
 					<View
 						style={{
 							borderRadius: 20,
