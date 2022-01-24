@@ -58,11 +58,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 								{ backgroundColor: scheme === 'dark' ? '' : '#FFF' }
 							]}
 						>
-							<Text
-								style={[styles.backupWordNumber, { color: scheme === 'dark' ? '#FFFFFF' : '#006AA6' }]}
-							>
-								{index + 1}
-							</Text>
+							<Text style={[styles.backupWordNumber, { color: colors.primary }]}>{index + 1}</Text>
 						</View>
 						<View style={styles.backupWordPadding}>
 							<Text style={{ color: colors.text }}>{word}</Text>
@@ -84,6 +80,7 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					onDismiss={() => snackbarVisible.set(false)}
 					visible={snackbarVisible.value}
 					style={styles.snackbar}
+					duration={3000}
 				>
 					Copied!
 				</Snackbar>

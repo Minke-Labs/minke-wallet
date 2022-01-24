@@ -9,6 +9,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import makeBlockie from 'ethereum-blockies-base64';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
+import AddFundsButton from '@components/AddFundsButton';
 import { makeStyles } from './styles';
 
 const AssetsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
@@ -19,7 +20,7 @@ const AssetsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>)
 	if (state.promised) return <AppLoading />;
 
 	const balance = state.value.balance?.usd || '';
-	console.log(state.value.address);
+
 	return (
 		<View style={styles.paddingContent}>
 			<Card style={styles.card}>
@@ -33,11 +34,7 @@ const AssetsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>)
 					</View>
 				</View>
 				<View style={styles.cardBottomContent}>
-					<TextButton
-						text="Add funds"
-						icon="add-circle-outline"
-						containerStyle={[styles.cardDivisor, { borderRightColor: colors.background }]}
-					/>
+					<AddFundsButton />
 					<TextButton
 						text="Send"
 						icon="arrow-circle-up"

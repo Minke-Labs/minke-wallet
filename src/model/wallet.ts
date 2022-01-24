@@ -5,8 +5,8 @@ import { find, isEmpty } from 'lodash';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { convertEthToUsd } from '@helpers/utilities';
-import { loadObject, saveObject } from './keychain';
 import { networks, network as selectedNetwork } from './network';
+import { loadObject, saveObject } from './keychain';
 
 export const publicAccessControlOptions: SecureStoreOptions = {
 	keychainAccessible: WHEN_UNLOCKED

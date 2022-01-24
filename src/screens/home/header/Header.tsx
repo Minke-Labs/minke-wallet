@@ -23,7 +23,7 @@ const Header = ({ onSettingsPress }: { onSettingsPress: (event: GestureResponder
 			setEnsName(name);
 		};
 
-		fetchENSAddress();
+		// fetchENSAddress();
 	}, []);
 
 	const accountName = () => {
