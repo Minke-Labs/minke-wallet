@@ -22,11 +22,13 @@ const styles = StyleSheet.create({
 const ActionsPanel = ({
 	onCreateWallet,
 	onDeleteWallet,
-	onExchange
+	onExchange,
+	onSwitchAccounts
 }: {
 	onCreateWallet: (event: GestureResponderEvent) => void;
 	onDeleteWallet: (event: GestureResponderEvent) => void;
 	onExchange: (event: GestureResponderEvent) => void;
+	onSwitchAccounts: (event: GestureResponderEvent) => void;
 }) => {
 	const [receiveVisible, setReceiveVisible] = useState(false);
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -61,7 +63,7 @@ const ActionsPanel = ({
 						<RoundButton text="New wallet" icon="add" onPress={onCreateWallet} />
 					</View>
 					<View style={styles.roundButton}>
-						<RoundButton text="Switch accounts" icon="person-outline" />
+						<RoundButton text="Switch accounts" icon="person-outline" onPress={onSwitchAccounts} />
 					</View>
 					<View style={styles.roundButton}>
 						<RoundButton text="Delete wallet" icon="delete-outline" onPress={onDeleteWallet} />

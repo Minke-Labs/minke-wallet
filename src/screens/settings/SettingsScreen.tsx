@@ -13,6 +13,7 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const styles = makeStyles(colors, useColorScheme());
 
 	const onChangeNetwork = () => navigation.navigate('ChangeNetwork');
+	const onAccounts = () => navigation.navigate('Accounts');
 
 	const SettingsOption = useCallback(
 		({ label, onPress, icon }) => (
@@ -52,6 +53,12 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<SettingsOption
 					label="Contact Support"
 					icon={<MaterialIcons name="support" size={32} color={colors.primary} />}
+				/>
+
+				<SettingsOption
+					label="Accounts"
+					onPress={onAccounts}
+					icon={<MaterialCommunityIcons name="account-switch" size={32} color={colors.primary} />}
 				/>
 			</View>
 		</Container>

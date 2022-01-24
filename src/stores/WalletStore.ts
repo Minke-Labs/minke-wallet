@@ -10,6 +10,7 @@ import {
 	getPrivateKey,
 	getProvider,
 	MinkeTokenList,
+	MinkeWallet,
 	supportedTokenList
 } from '@models/wallet';
 
@@ -28,12 +29,7 @@ export interface WalletState {
 
 export const emptyWallet = { privateKey: '', address: '', walletId: null, network: defaultNetwork };
 
-const initializeWallet = async (): Promise<WalletState> => {
-	// const state = useState(globalWalletState);
-
-	const wallets = await getAllWallets();
-	const ethPrice = await getEthLastPrice();
-	const wallet = find(wallets, (w) => w.primary);
+export const walletState = async (wallet: MinkeWallet | undefined) => {
 	if (wallet) {
 		const privateKey = await getPrivateKey(wallet.address);
 
@@ -51,6 +47,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 				};
 			}
 
+			const ethPrice = await getEthLastPrice();
 			const balance = {
 				eth,
 				usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
@@ -69,6 +66,12 @@ const initializeWallet = async (): Promise<WalletState> => {
 	}
 
 	return emptyWallet;
+};
+
+const initializeWallet = async (): Promise<WalletState> => {
+	const wallets = await getAllWallets();
+	const wallet = find(wallets, (w) => w.primary);
+	return walletState(wallet);
 };
 
 const globalStateInit = createState(initializeWallet);

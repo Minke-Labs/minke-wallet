@@ -26,6 +26,7 @@ import ExchangeScreen from './src/screens/exchange/ExchangeScreen';
 import ExchangeResumeScreen from './src/screens/exchange/ExchangeResumeScreen';
 import SettingsScreen from './src/screens/settings/SettingsScreen';
 import ChangeNetworkScreen from './src/screens/settings/network/ChangeNetworkScreen';
+import AccountsScreen from './src/screens/settings/accounts/AccountsScreen';
 import { darkTheme, lightTheme } from './src/helpers/themes';
 import { RootStackParamList } from './src/helpers/param-list-type';
 
@@ -102,10 +103,19 @@ export default function App() {
 							)
 						})}
 					/>
-
 					<Stack.Screen
 						name="ChangeNetwork"
 						component={ChangeNetworkScreen}
+						options={({ navigation }) => ({
+							title: '',
+							headerLeft: () => (
+								<IconButton icon="chevron-left" color="#D0D0D0" onPress={() => navigation.goBack()} />
+							)
+						})}
+					/>
+					<Stack.Screen
+						name="Accounts"
+						component={AccountsScreen}
 						options={({ navigation }) => ({
 							title: '',
 							headerLeft: () => (

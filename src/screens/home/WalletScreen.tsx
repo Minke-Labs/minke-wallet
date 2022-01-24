@@ -29,6 +29,8 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const onExchange = () => navigation.navigate('Exchange');
 	const onSettingsPress = () => navigation.navigate('Settings');
 	const onSend = () => navigation.navigate('TransactionSelectFunds');
+	const onSwitchAccounts = () => navigation.navigate('Accounts');
+
 	return (
 		<Container>
 			<Header onSettingsPress={onSettingsPress} />
@@ -39,6 +41,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 						onCreateWallet={onCreateWallet}
 						onDeleteWallet={onDeleteWallet}
 						onExchange={onExchange}
+						onSwitchAccounts={onSwitchAccounts}
 					/>
 					<FinancePanel />
 				</ScrollView>

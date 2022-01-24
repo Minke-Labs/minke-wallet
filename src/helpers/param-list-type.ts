@@ -13,6 +13,7 @@ export type RootStackParamList = {
 	ExchangeResume: undefined;
 	Settings: undefined;
 	ChangeNetwork: undefined;
+	Accounts: undefined;
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<RootStackParamList, RouteName>;
