@@ -3,10 +3,10 @@
 import React, { useState, useEffect, RefObject } from 'react';
 import { Image, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ParaswapToken } from '../../model/token';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const TokenCard = ({
 	token,
@@ -55,6 +55,9 @@ const TokenCard = ({
 
 	const isMaxEnabled = !disableMax && token && balance;
 	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
+
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	return (
 		<View>

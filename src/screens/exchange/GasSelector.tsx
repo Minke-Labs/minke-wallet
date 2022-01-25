@@ -1,14 +1,19 @@
 import React from 'react';
 import { View, SafeAreaView, ScrollView } from 'react-native';
 import { State, useState } from '@hookstate/core';
+import { useTheme } from 'react-native-paper';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { EstimateGasResponse } from '../../model/wallet';
 import GasOption from './GasOption';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const GasSelector = ({ gweiPrice, gasPrice }: { gweiPrice: number; gasPrice: EstimateGasResponse }) => {
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	exchange.gas.set({ type: 'normal', gweiValue: gasPrice.average, gweiPrice, wait: gasPrice.avgWait } as Gas);
+
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+
 	return (
 		<SafeAreaView>
 			<ScrollView

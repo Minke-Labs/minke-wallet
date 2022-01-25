@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useCallback } from 'react';
-import { Card, Text } from 'react-native-paper';
+import { Card, Text, useTheme } from 'react-native-paper';
 import { View } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const GasOption = ({
 	type,
@@ -37,6 +37,10 @@ const GasOption = ({
 				return <AntDesignIcon name="clockcircleo" size={20} />; // normal
 		}
 	}, []);
+
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+
 	return (
 		<Card style={styles.gasSelectorCard}>
 			<Card.Content style={styles.gasSelectorCardContent}>

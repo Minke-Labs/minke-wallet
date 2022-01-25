@@ -1,11 +1,10 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Card, Headline, Text, IconButton } from 'react-native-paper';
+import { Card, Headline, Text, useTheme } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppLoading from 'expo-app-loading';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
 import { toBn } from 'evm-bn';
 import Container from '@components/Container';
@@ -19,7 +18,7 @@ import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import swapArrowDown from '../../../assets/swap-arrow-down.png';
-import styles from './styles';
+import { makeStyles } from './styles';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
@@ -41,6 +40,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
+
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	const balanceFrom = (token: ParaswapToken | undefined): string => {
 		if (!token) {
@@ -270,6 +272,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 						</View>
 					</Card>
 				</View>
+
 				<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
 
 				<View style={styles.exchangeSection}>

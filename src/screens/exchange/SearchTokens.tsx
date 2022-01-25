@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Portal, Modal, TextInput, IconButton } from 'react-native-paper';
-import { FlatList, Image, Text } from 'react-native';
+import { Portal, Modal, TextInput, IconButton, useTheme } from 'react-native-paper';
+import { FlatList, Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken } from '../../model/token';
+import { makeStyles } from './styles';
 
 const SearchTokens = ({
 	visible,
@@ -21,11 +22,14 @@ const SearchTokens = ({
 	ownedTokens?: Array<string>;
 	selected?: Array<string | undefined>;
 }) => {
-	const containerStyle = { backgroundColor: 'white', padding: 20, bottom: 0, width: '100%' };
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
+
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+	const containerStyle = { backgroundColor: colors.background, padding: 20, bottom: 0, width: '100%' };
 
 	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
 		let selectedTokens: ParaswapToken[] = [];
@@ -86,21 +90,30 @@ const SearchTokens = ({
 	return (
 		<Portal>
 			<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
+				<View style={styles.header}>
+					<IconButton icon="close" size={20} color="#006AA6" onPress={onDismiss} />
+				</View>
+
 				<TextInput
+					style={styles.searchBar}
 					placeholder="Search token"
+					placeholderTextColor={colors.placeholder}
 					value={search}
 					onChangeText={(text) => onSearch(text)}
 					left={<TextInput.Icon name="magnify" />}
+					underlineColorAndroid="transparent"
 				/>
 
-				<IconButton icon="close" size={20} color="#006AA6" onPress={onDismiss} />
 				<FlatList
 					data={filteredTokens}
 					keyExtractor={(token) => token.symbol}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onTokenSelect(item)}>
-							<Image source={{ uri: item.img }} style={{ width: 50, height: 50 }} />
-							<Text>{item.symbol}</Text>
+						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+							<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
+							<View style={styles.tokenItemNameContainer}>
+								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
+								<Text style={styles.tokenItemName}>DAI</Text>
+							</View>
 						</TouchableOpacity>
 					)}
 				/>
