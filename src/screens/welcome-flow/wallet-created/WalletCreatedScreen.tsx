@@ -34,7 +34,26 @@ export function WalletCreatedScreen({ navigation }: NativeStackScreenProps<RootS
 
 	const backupOnKeychain = async () => {
 		const seedValue = seed.value;
-		const key = `minke_wallet_${walletState.value.walletId || ''}`;
+		let counter = 0;
+		let key = `minke_wallet_${counter}`;
+		let saved = await SecureStore.getItemAsync(key, {
+			keychainService: 'minke',
+			keychainAccessible: SecureStore.WHEN_UNLOCKED
+		});
+
+		while (saved) {
+			if (saved === seedValue) {
+				onFinish();
+				return;
+			}
+			counter += 1;
+			key = `minke_wallet_${counter}`;
+			// eslint-disable-next-line no-await-in-loop
+			saved = await SecureStore.getItemAsync(key, {
+				keychainService: 'minke',
+				keychainAccessible: SecureStore.WHEN_UNLOCKED
+			});
+		}
 
 		if (seedValue) {
 			await SecureStore.setItemAsync(key, seedValue, keyChainOptions);

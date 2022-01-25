@@ -16,6 +16,7 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const onChangeNetwork = () => navigation.navigate('ChangeNetwork');
 	const onAccounts = () => navigation.navigate('Accounts');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
+	const onBackup = () => navigation.navigate('WalletCreated');
 
 	const SettingsOption = useCallback(
 		({ label, onPress, icon }) => (
@@ -40,6 +41,7 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<SettingsOption
 					label="Backup"
 					icon={<AntDesign name="clouduploado" size={32} color={colors.primary} />}
+					onPress={onBackup}
 				/>
 				<SettingsOption
 					label="Network"
