@@ -73,7 +73,6 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 	Object.values(wallets).map((w) => {
 		w.network = w.network || networks.ropsten.id;
 	});
-	console.log('Updating wallets source', wallets);
 	await saveObject('minkeAllWallets', wallets, publicAccessControlOptions);
 };
 

@@ -46,13 +46,13 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const ethPrice = await getEthLastPrice();
 	const balance = {
 		eth,
-		usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
+		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
 	};
 
 	return { tokens, balance, network: blockchain };
 };
 
-export const walletState = async (wallet: MinkeWallet | undefined) => {
+export const walletState = async (wallet: MinkeWallet | undefined): Promise<WalletState> => {
 	if (wallet) {
 		const privateKey = await getPrivateKey(wallet.address);
 
