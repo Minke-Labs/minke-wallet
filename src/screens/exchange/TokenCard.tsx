@@ -3,8 +3,10 @@
 import React, { useState, useEffect, RefObject } from 'react';
 import { Image, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Card, IconButton, Text } from 'react-native-paper';
+import { IconButton, Text } from 'react-native-paper';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ParaswapToken } from '../../model/token';
+import styles from './styles';
 
 const TokenCard = ({
 	token,
@@ -55,43 +57,51 @@ const TokenCard = ({
 	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
 
 	return (
-		<Card style={{ borderRadius: 16 }}>
-			<Card.Content>
-				<View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-					<TouchableOpacity onPress={onPress}>
-						{token ? (
-							<View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-								<Image source={{ uri: token.img }} style={{ width: 50, height: 50 }} />
-								<Text>{token.symbol}</Text>
-								<IconButton icon="chevron-right" color="#D0D0D0" />
+		<View>
+			<View style={styles.tokenCardCoinContent}>
+				<TouchableOpacity onPress={onPress}>
+					{token ? (
+						<View style={styles.tokenCardCoin}>
+							<View style={styles.tokenImageContainer}>
+								<Image source={{ uri: token.img }} style={styles.tokenImage} />
 							</View>
-						) : (
-							<Text>Choose token</Text>
-						)}
-					</TouchableOpacity>
-					<TextInput
-						keyboardType="numeric"
-						style={{
-							backgroundColor: '#FFFCF5',
-							borderRadius: 41,
-							borderColor: invalidAmount ? 'red' : '#D0D0D0',
-							borderStyle: 'solid',
-							borderWidth: 1,
-							display: token ? 'flex' : 'none',
-							flex: 1
-						}}
-						value={amount}
-						ref={innerRef}
-						onChangeText={(text) => onChangeText(text)}
-					/>
-				</View>
-				{isMaxEnabled ? (
-					<TouchableOpacity onPress={() => setAmount(balance.replace(/\./g, ','))}>
+							<Text style={styles.tokenName}>{token.symbol}</Text>
+							<MaterialIcon name="chevron-right" color="#006AA6" size={20} />
+						</View>
+					) : (
+						<Text>Choose token</Text>
+					)}
+				</TouchableOpacity>
+				<TextInput
+					keyboardType="numeric"
+					style={{
+						backgroundColor: '#FFFCF5',
+						borderRadius: 41,
+						borderColor: invalidAmount ? 'red' : '#D0D0D0',
+						borderStyle: 'solid',
+						borderWidth: 1,
+						textAlign: 'right',
+						paddingRight: 16,
+						display: token ? 'flex' : 'none',
+						flex: 1
+					}}
+					value={amount}
+					ref={innerRef}
+					onChangeText={(text) => onChangeText(text)}
+				/>
+			</View>
+			{isMaxEnabled ? (
+				<TouchableOpacity
+					onPress={() => setAmount(balance.replace(/\./g, ','))}
+					style={styles.tokenCardMaxButton}
+				>
+					<View style={styles.tokenCardMaxButtonContent}>
+						<MaterialIcon name="currency-usd" size={20} />
 						<Text>Max</Text>
-					</TouchableOpacity>
-				) : null}
-			</Card.Content>
-		</Card>
+					</View>
+				</TouchableOpacity>
+			) : null}
+		</View>
 	);
 };
 

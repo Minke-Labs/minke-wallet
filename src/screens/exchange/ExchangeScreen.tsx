@@ -1,8 +1,9 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Headline, Text } from 'react-native-paper';
+import { Card, Headline, Text, IconButton } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AppLoading from 'expo-app-loading';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
@@ -17,7 +18,7 @@ import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
-import swap from '../../../assets/swap.png';
+import swapArrowDown from '../../../assets/swap-arrow-down.png';
 import styles from './styles';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
@@ -235,7 +236,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<View style={styles.exchangeSection}>
 					<Headline style={styles.pageTitle}>Exchange</Headline>
 					<Text>{exchangeSummary()}</Text>
-					<View>
+
+					<Card style={styles.tokenCard}>
 						<TokenCard
 							token={fromToken}
 							onPress={showModalFrom}
@@ -244,21 +246,30 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							updateQuotes={updateFromQuotes}
 							conversionAmount={fromConversionAmount}
 						/>
-						<TouchableOpacity onPress={directionSwap}>
-							<Image source={swap} />
-						</TouchableOpacity>
-						<TokenCard
-							token={toToken}
-							onPress={showModalTo}
-							balance={toTokenBalance}
-							innerRef={toAmountRef}
-							updateQuotes={updateToQuotes}
-							conversionAmount={toConversionAmount}
-							disableMax
-						/>
-					</View>
-				</View>
 
+						<View style={styles.tokenCardDivisor}>
+							<View style={styles.tokenCardDivisorBackground}>
+								<Image source={swapArrowDown} style={styles.tokenCardDivisorImage} />
+							</View>
+						</View>
+
+						<View style={styles.row}>
+							<View style={styles.currencyIcon}>
+								<MaterialIcon name="currency-usd" size={20} />
+							</View>
+							<TokenCard
+								token={toToken}
+								onPress={showModalTo}
+								balance={toTokenBalance}
+								innerRef={toAmountRef}
+								updateQuotes={updateToQuotes}
+								conversionAmount={toConversionAmount}
+								disableMax
+							/>
+							<MaterialIcon name="chevron-right" color="#006AA6" size={20} />
+						</View>
+					</Card>
+				</View>
 				<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
 
 				<View style={styles.exchangeSection}>
