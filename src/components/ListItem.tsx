@@ -27,7 +27,7 @@ const ListItem = ({
 	selected: boolean;
 	label: string;
 }) => (
-	<TouchableOpacity onPress={onPress} style={styles.listItem}>
+	<TouchableOpacity onPress={onPress} style={styles.listItem} disabled={selected}>
 		<Text style={styles.itemLabel}>{label}</Text>
 		{selected ? <MaterialIcons name="check" size={20} /> : null}
 	</TouchableOpacity>

@@ -3,6 +3,7 @@ import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { Headline, Text, useTheme } from 'react-native-paper';
+import * as Linking from 'expo-linking';
 import { MaterialIcons, AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import Container from '@components/Container';
 import globalStyle from '@components/global.styles';
@@ -14,6 +15,7 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const onChangeNetwork = () => navigation.navigate('ChangeNetwork');
 	const onAccounts = () => navigation.navigate('Accounts');
+	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 
 	const SettingsOption = useCallback(
 		({ label, onPress, icon }) => (
@@ -40,12 +42,6 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					icon={<AntDesign name="clouduploado" size={32} color={colors.primary} />}
 				/>
 				<SettingsOption
-					label="Currency"
-					icon={
-						<MaterialCommunityIcons name="currency-usd-circle-outline" size={32} color={colors.primary} />
-					}
-				/>
-				<SettingsOption
 					label="Network"
 					icon={<Entypo name="network" size={32} color={colors.primary} />}
 					onPress={onChangeNetwork}
@@ -53,6 +49,7 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<SettingsOption
 					label="Contact Support"
 					icon={<MaterialIcons name="support" size={32} color={colors.primary} />}
+					onPress={onContactSupport}
 				/>
 
 				<SettingsOption
