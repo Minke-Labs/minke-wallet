@@ -16,7 +16,7 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const onChangeNetwork = () => navigation.navigate('ChangeNetwork');
 	const onAccounts = () => navigation.navigate('Accounts');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
-	const onBackup = () => navigation.navigate('WalletCreated');
+	const onBackup = () => navigation.navigate('BackupSettings');
 
 	const SettingsOption = useCallback(
 		({ label, onPress, icon }) => (
@@ -36,29 +36,31 @@ const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	);
 	return (
 		<Container>
-			<Headline style={globalStyle.headline}>Settings</Headline>
-			<View style={styles.settingsOptions}>
-				<SettingsOption
-					label="Backup"
-					icon={<AntDesign name="clouduploado" size={32} color={colors.primary} />}
-					onPress={onBackup}
-				/>
-				<SettingsOption
-					label="Network"
-					icon={<Entypo name="network" size={32} color={colors.primary} />}
-					onPress={onChangeNetwork}
-				/>
-				<SettingsOption
-					label="Contact Support"
-					icon={<MaterialIcons name="support" size={32} color={colors.primary} />}
-					onPress={onContactSupport}
-				/>
+			<View style={globalStyle.padding}>
+				<Headline style={globalStyle.headline}>Settings</Headline>
+				<View style={styles.settingsOptions}>
+					<SettingsOption
+						label="Backup"
+						icon={<AntDesign name="clouduploado" size={32} color={colors.primary} />}
+						onPress={onBackup}
+					/>
+					<SettingsOption
+						label="Network"
+						icon={<Entypo name="network" size={32} color={colors.primary} />}
+						onPress={onChangeNetwork}
+					/>
+					<SettingsOption
+						label="Contact Support"
+						icon={<MaterialIcons name="support" size={32} color={colors.primary} />}
+						onPress={onContactSupport}
+					/>
 
-				<SettingsOption
-					label="Accounts"
-					onPress={onAccounts}
-					icon={<MaterialCommunityIcons name="account-switch" size={32} color={colors.primary} />}
-				/>
+					<SettingsOption
+						label="Accounts"
+						onPress={onAccounts}
+						icon={<MaterialCommunityIcons name="account-switch" size={32} color={colors.primary} />}
+					/>
+				</View>
 			</View>
 		</Container>
 	);

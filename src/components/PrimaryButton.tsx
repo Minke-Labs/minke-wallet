@@ -13,6 +13,7 @@ const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained',
 	const { colors } = useTheme();
 	const color = mode === 'contained' ? colors.buttonText : colors.linkText;
 	const labelColor = disabled ? colors.disabled : color;
+
 	return (
 		<Button
 			theme={{ roundness: 30 }}
@@ -25,7 +26,8 @@ const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained',
 			}}
 			style={{
 				alignSelf: 'stretch',
-				padding: 10
+				padding: 10,
+				backgroundColor: mode === 'contained' ? '#006AA6' : undefined
 			}}
 			icon={icon}
 			contentStyle={{ flexDirection: 'row-reverse' }}

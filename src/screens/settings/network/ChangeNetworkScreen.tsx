@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import { Headline } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
@@ -38,21 +38,23 @@ const ChangeNetworkScreen = ({ navigation }: NativeStackScreenProps<RootStackPar
 
 	return (
 		<Container>
-			<Headline style={globalStyle.headline}>Network</Headline>
-			<SafeAreaView>
-				<FlatList
-					style={styles.list}
-					data={Object.values(networks)}
-					renderItem={({ item }) => (
-						<ListItem
-							label={item.name}
-							onPress={() => selectNetwork(item)}
-							selected={item.id === connectedNetwork?.id}
-						/>
-					)}
-					keyExtractor={(item) => item.id}
-				/>
-			</SafeAreaView>
+			<View style={globalStyle.padding}>
+				<Headline style={globalStyle.headline}>Network</Headline>
+				<SafeAreaView>
+					<FlatList
+						style={styles.list}
+						data={Object.values(networks)}
+						renderItem={({ item }) => (
+							<ListItem
+								label={item.name}
+								onPress={() => selectNetwork(item)}
+								selected={item.id === connectedNetwork?.id}
+							/>
+						)}
+						keyExtractor={(item) => item.id}
+					/>
+				</SafeAreaView>
+			</View>
 		</Container>
 	);
 };

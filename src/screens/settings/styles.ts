@@ -3,12 +3,7 @@ import { StyleSheet } from 'react-native';
 export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string | null) =>
 	StyleSheet.create({
 		settingsOptions: {
-			paddingTop: 24,
-			paddingLeft: 24,
-			paddingRight: 24,
-			paddingBottom: 80,
-			borderTopLeftRadius: 24,
-			marginTop: 0,
+			marginTop: 24,
 			height: '100%'
 		},
 		settingsItem: {

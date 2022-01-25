@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import { useState } from '@hookstate/core';
 import { Headline } from 'react-native-paper';
 import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
@@ -27,21 +27,23 @@ const AccountsScreen = () => {
 
 	return (
 		<Container>
-			<Headline style={globalStyle.headline}>Accounts</Headline>
-			<SafeAreaView>
-				<FlatList
-					style={{ padding: 20 }}
-					data={Object.values(wallets || {})}
-					renderItem={({ item }) => (
-						<ListItem
-							label={item.address}
-							selected={item.address === address}
-							onPress={() => onSelectWallet(item)}
-						/>
-					)}
-					keyExtractor={(item) => item.id}
-				/>
-			</SafeAreaView>
+			<View style={globalStyle.padding}>
+				<Headline style={globalStyle.headline}>Accounts</Headline>
+				<SafeAreaView>
+					<FlatList
+						style={{ paddingTop: 24, paddingBottom: 24 }}
+						data={Object.values(wallets || {})}
+						renderItem={({ item }) => (
+							<ListItem
+								label={item.address}
+								selected={item.address === address}
+								onPress={() => onSelectWallet(item)}
+							/>
+						)}
+						keyExtractor={(item) => item.id}
+					/>
+				</SafeAreaView>
+			</View>
 		</Container>
 	);
 };

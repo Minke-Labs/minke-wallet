@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
@@ -26,11 +26,14 @@ const ListItem = ({
 	onPress: (event: GestureResponderEvent) => void;
 	selected: boolean;
 	label: string;
-}) => (
-	<TouchableOpacity onPress={onPress} style={styles.listItem} disabled={selected}>
-		<Text style={styles.itemLabel}>{label}</Text>
-		{selected ? <MaterialIcons name="check" size={20} /> : null}
-	</TouchableOpacity>
-);
+}) => {
+	const { colors } = useTheme();
+	return (
+		<TouchableOpacity onPress={onPress} style={styles.listItem} disabled={selected}>
+			<Text style={styles.itemLabel}>{label}</Text>
+			{selected ? <MaterialIcons name="check" size={20} color={colors.text} /> : null}
+		</TouchableOpacity>
+	);
+};
 
 export default ListItem;

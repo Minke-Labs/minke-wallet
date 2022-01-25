@@ -1,16 +1,11 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED } from 'expo-secure-store';
 import { find, isEmpty } from 'lodash';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { convertEthToUsd } from '@helpers/utilities';
 import { networks, network as selectedNetwork } from './network';
 import { loadObject, saveObject } from './keychain';
-
-export const publicAccessControlOptions: SecureStoreOptions = {
-	keychainAccessible: WHEN_UNLOCKED
-};
 
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
 	const key = `${keychain_id}_minkeSeedPhrase`;
@@ -19,7 +14,7 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 		seedPhrase
 	} as SeedPhraseData;
 
-	const save = await saveObject(key, val, publicAccessControlOptions);
+	const save = await saveObject(key, val);
 	return save;
 };
 
@@ -45,7 +40,7 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 		privateKey
 	};
 
-	await saveObject(key, val, publicAccessControlOptions);
+	await saveObject(key, val);
 };
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
@@ -73,7 +68,7 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 	Object.values(wallets).map((w) => {
 		w.network = w.network || networks.ropsten.id;
 	});
-	await saveObject('minkeAllWallets', wallets, publicAccessControlOptions);
+	await saveObject('minkeAllWallets', wallets);
 };
 
 export const walletCreate = async (): Promise<null | WalletState> => {

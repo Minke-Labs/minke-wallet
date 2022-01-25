@@ -22,5 +22,9 @@ export default StyleSheet.create({
 	},
 	fontSizeDefault: {
 		fontSize: 16
+	},
+	padding: {
+		paddingLeft: 24,
+		paddingRight: 24
 	}
 });
