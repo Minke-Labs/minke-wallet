@@ -21,7 +21,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		// Token card
 		tokenCard: {
 			borderRadius: 16,
-			padding: 16
+			padding: 16,
+			backgroundColor: colors.fill
 		},
 		tokenCardCoinContent: {
 			flexWrap: 'wrap',
@@ -94,7 +95,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		gasSelectorCard: {
 			borderRadius: 16,
-			marginRight: 16
+			marginRight: 16,
+			backgroundColor: colors.fill
 		},
 		gasSelectorCardContent: {
 			flexDirection: 'row',
