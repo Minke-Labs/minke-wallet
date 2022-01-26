@@ -3,6 +3,7 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39';
 import { find, isEmpty } from 'lodash';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
+import { deleteItemAsync } from 'expo-secure-store';
 import { convertEthToUsd } from '@helpers/utilities';
 import { networks, network as selectedNetwork } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -65,7 +66,7 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	Object.values(wallets).map((w) => {
+	Object.values(wallets).forEach((w) => {
 		w.network = w.network || networks.ropsten.id;
 	});
 	await saveObject('minkeAllWallets', wallets);
