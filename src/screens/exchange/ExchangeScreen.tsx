@@ -271,21 +271,15 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							</View>
 						</View>
 
-						<View style={styles.selectTokenRow}>
-							<View style={styles.currencyIcon}>
-								<MaterialIcon name="currency-usd" size={20} />
-							</View>
-							<TokenCard
-								token={toToken}
-								onPress={showModalTo}
-								balance={toTokenBalance}
-								innerRef={toAmountRef}
-								updateQuotes={updateToQuotes}
-								conversionAmount={toConversionAmount}
-								disableMax
-							/>
-							<MaterialIcon name="chevron-right" color="#006AA6" size={20} />
-						</View>
+						<TokenCard
+							token={toToken}
+							onPress={showModalTo}
+							balance={toTokenBalance}
+							innerRef={toAmountRef}
+							updateQuotes={updateToQuotes}
+							conversionAmount={toConversionAmount}
+							disableMax
+						/>
 					</Card>
 				</View>
 

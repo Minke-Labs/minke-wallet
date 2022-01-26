@@ -70,16 +70,23 @@ const TokenCard = ({
 								<Image source={{ uri: token.img }} style={styles.tokenImage} />
 							</View>
 							<Text style={styles.tokenName}>{token.symbol}</Text>
-							<MaterialIcon name="chevron-right" color="#006AA6" size={20} />
+							<MaterialIcon name="chevron-right" color={colors.primary} size={20} />
 						</View>
 					) : (
-						<Text>Choose token</Text>
+						<View style={styles.selectTokenRow}>
+							<View style={styles.currencyIcon}>
+								<MaterialIcon name="currency-usd" color={colors.primary} size={20} />
+							</View>
+							<Text>Choose token</Text>
+							<MaterialIcon name="chevron-right" color={colors.primary} size={20} />
+						</View>
 					)}
 				</TouchableOpacity>
 				<TextInput
 					keyboardType="numeric"
 					style={{
-						backgroundColor: '#FFFCF5',
+						backgroundColor: colors.background,
+						color: colors.text,
 						borderRadius: 41,
 						borderColor: invalidAmount ? 'red' : '#D0D0D0',
 						borderStyle: 'solid',

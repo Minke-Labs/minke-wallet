@@ -10,13 +10,13 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			alignItems: 'flex-end'
 		},
 		exchangeSection: {
-			paddingTop: 24,
 			paddingLeft: 24,
 			paddingRight: 24
 		},
 		exchangeHeadlineRow: {
 			flexDirection: 'row',
 			alignItems: 'center',
+			paddingTop: 24,
 			marginBottom: 24,
 			justifyContent: 'space-between'
 		},
@@ -26,9 +26,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 
 		// Token card
 		tokenCardWrap: {
-			paddingTop: 16,
-			paddingLeft: 16,
-			paddingRight: 16
+			padding: 16
 		},
 		tokenCard: {
 			borderRadius: 16,
@@ -93,14 +91,14 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		selectTokenRow: {
 			flexDirection: 'row',
 			alignItems: 'center',
-			paddingLeft: 16,
 			paddingRight: 16,
 			paddingBottom: 16
 		},
 		currencyIcon: {
 			padding: 8,
+			marginRight: 8,
 			borderRadius: 500,
-			backgroundColor: '#F3F7FF'
+			backgroundColor: colors.backgroundIcons
 		},
 
 		// Gas Option
@@ -140,13 +138,13 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'flex-end'
 		},
 		searchBar: {
-			backgroundColor: colors.fill,
 			borderTopLeftRadius: 50,
 			borderTopRightRadius: 50,
 			borderRadius: 50,
 			overflow: 'hidden',
 			marginBottom: 24,
-			height: 40
+			height: 40,
+			backgroundColor: colors.fill
 		},
 		tokenItem: {
 			flexDirection: 'row',

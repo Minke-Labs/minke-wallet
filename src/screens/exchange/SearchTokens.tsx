@@ -91,7 +91,7 @@ const SearchTokens = ({
 		<Portal>
 			<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
 				<View style={styles.header}>
-					<IconButton icon="close" size={20} color="#006AA6" onPress={onDismiss} />
+					<IconButton icon="close" size={20} color={colors.primary} onPress={onDismiss} />
 				</View>
 
 				<TextInput
