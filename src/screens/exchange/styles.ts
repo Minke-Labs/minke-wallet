@@ -14,14 +14,24 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingLeft: 24,
 			paddingRight: 24
 		},
+		exchangeHeadlineRow: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			marginBottom: 24,
+			justifyContent: 'space-between'
+		},
 		pageTitle: {
 			fontFamily: 'Inter_800ExtraBold'
 		},
 
 		// Token card
+		tokenCardWrap: {
+			paddingTop: 16,
+			paddingLeft: 16,
+			paddingRight: 16
+		},
 		tokenCard: {
 			borderRadius: 16,
-			padding: 16,
 			backgroundColor: colors.fill
 		},
 		tokenCardCoinContent: {
@@ -73,12 +83,23 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		tokenCardMaxButtonContent: {
 			flexDirection: 'row',
-			alignItems: 'center'
+			alignItems: 'center',
+			marginTop: 8
+		},
+		tokenCardMaxButtonText: {
+			color: colors.primary,
+			paddingLeft: 4
+		},
+		selectTokenRow: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			paddingLeft: 16,
+			paddingRight: 16,
+			paddingBottom: 16
 		},
 		currencyIcon: {
 			padding: 8,
-			borderRadius: 50,
-			marginRight: 16,
+			borderRadius: 500,
 			backgroundColor: '#F3F7FF'
 		},
 
@@ -119,7 +140,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'flex-end'
 		},
 		searchBar: {
-			backgroundColor: colors.background,
+			backgroundColor: colors.fill,
 			borderTopLeftRadius: 50,
 			borderTopRightRadius: 50,
 			borderRadius: 50,
