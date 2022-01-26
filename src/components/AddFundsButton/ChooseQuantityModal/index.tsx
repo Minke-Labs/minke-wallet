@@ -8,6 +8,7 @@ import Modal from '@components/Modal';
 import RoundButton from '@components/RoundButton';
 import ApplePayButton from '@components/ApplePayButton';
 import { ICoin } from '@helpers/coins';
+import globalStyles from '@src/components/global.styles';
 import { makeStyles } from './styles';
 
 const ChooseQuantityModal = ({
@@ -35,7 +36,7 @@ const ChooseQuantityModal = ({
 	const wallet = globalWalletState();
 
 	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.wallet?.address || '');
+		Clipboard.setString(wallet.value.address || '');
 		setSnackbarVisible(true);
 	};
 	return (
@@ -46,10 +47,10 @@ const ChooseQuantityModal = ({
 					<Text style={styles.modalCoinDetailsCoinName}>{coin.name}</Text>
 				</View>
 
-				<Text style={styles.modalSubHeadline}>
+				<Text style={globalStyles.subHeadline}>
 					Buy some
 					{` ${coin.symbol} `}
-					with <Text style={styles.fontBold}>Apple Pay</Text> to start using Minke:
+					with <Text style={globalStyles.fontBold}>Apple Pay</Text> to start using Minke:
 				</Text>
 
 				<View style={styles.modalAmountContainer}>
@@ -81,7 +82,7 @@ const ChooseQuantityModal = ({
 					<Text style={styles.addDepositText}>or deposit</Text>
 				</View>
 				<Text style={styles.addDepositInfo}>
-					Send from <Text style={styles.fontBold}>coinbase</Text> or another exchange
+					Send from <Text style={globalStyles.fontBold}>coinbase</Text> or another exchange
 				</Text>
 				<RoundButton text="Copy address" icon="content-copy" onPress={onCopyToClipboard} />
 				<Portal>

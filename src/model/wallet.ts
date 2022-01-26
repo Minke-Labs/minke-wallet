@@ -1,16 +1,11 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED } from 'expo-secure-store';
 import { find, isEmpty } from 'lodash';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { convertEthToUsd } from '@helpers/utilities';
-import { networks, network as selectedNetwork, network } from './network';
+import { networks, network as selectedNetwork } from './network';
 import { loadObject, saveObject } from './keychain';
-
-export const publicAccessControlOptions: SecureStoreOptions = {
-	keychainAccessible: WHEN_UNLOCKED
-};
 
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
 	const key = `${keychain_id}_minkeSeedPhrase`;
@@ -19,7 +14,7 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 		seedPhrase
 	} as SeedPhraseData;
 
-	const save = await saveObject(key, val, publicAccessControlOptions);
+	const save = await saveObject(key, val);
 	return save;
 };
 
@@ -45,13 +40,13 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 		privateKey
 	};
 
-	await saveObject(key, val, publicAccessControlOptions);
+	await saveObject(key, val);
 };
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
 		const allWallets = await loadObject('minkeAllWallets');
-		console.log(allWallets);
+		console.log('all wallets', allWallets);
 		if (allWallets) {
 			return allWallets as AllMinkeWallets;
 		}
@@ -63,15 +58,17 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 };
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const { etherscanURL } = await selectedNetwork();
-	const result = await fetch(
-		`${etherscanURL}api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
-	);
+	const { etherscanURL, etherscanAPIKey } = await selectedNetwork();
+	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const result = await fetch(`${etherscanURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	await saveObject('minkeAllWallets', wallets, publicAccessControlOptions);
+	Object.values(wallets).map((w) => {
+		w.network = w.network || networks.ropsten.id;
+	});
+	await saveObject('minkeAllWallets', wallets);
 };
 
 export const walletCreate = async (): Promise<null | WalletState> => {
@@ -97,7 +94,7 @@ export const walletCreate = async (): Promise<null | WalletState> => {
 		eth,
 		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
 	};
-	return { privateKey: wallet.privateKey, address: wallet.address, walletId: id, network, balance };
+	return { privateKey: wallet.privateKey, address: wallet.address, walletId: id, network: blockchain, balance };
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
@@ -176,7 +173,7 @@ export const sendTransaction = async (
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseEther(amount)
+			value: parseEther(amount) // @todo: should this be able to process other tokens with other decimals?
 		};
 	}
 
@@ -199,9 +196,8 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 	return result.json();
 };
 
-export const supportedTokenList = {
-	dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
-};
+export const smallWalletAddress = (address: string): string =>
+	`${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
 
 export interface MinkeTokenList {
 	[name: string]: {

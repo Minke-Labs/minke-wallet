@@ -9,7 +9,12 @@ export type RootStackParamList = {
 	TransactionContacts: { coin: string };
 	TransactionTransfer: { coin: string; address: string };
 	ContactCreate: undefined;
+	Exchange: undefined;
+	ExchangeResume: undefined;
 	Settings: undefined;
+	ChangeNetwork: undefined;
+	Accounts: undefined;
+	BackupSettings: undefined;
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<RootStackParamList, RouteName>;

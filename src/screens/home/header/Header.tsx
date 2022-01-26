@@ -6,7 +6,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, useTheme, Text } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
-import { getENSAddress } from '@models/wallet';
+import { getENSAddress, smallWalletAddress } from '@models/wallet';
 import { makeStyles } from './styles';
 
 const Header = ({ onSettingsPress }: { onSettingsPress: (event: GestureResponderEvent) => void }) => {
@@ -16,21 +16,21 @@ const Header = ({ onSettingsPress }: { onSettingsPress: (event: GestureResponder
 	const [ensName, setEnsName] = React.useState<string | null>('');
 	const state = useState(globalWalletState());
 	const { address } = state.value;
-	// const wallet = state.value.wallet?.provider
+
 	useEffect(() => {
 		const fetchENSAddress = async () => {
 			const name = await getENSAddress(address);
 			setEnsName(name);
 		};
 
-		// fetchENSAddress();
+		fetchENSAddress();
 	}, []);
 
 	const accountName = () => {
 		if (ensName) {
 			return ensName;
 		}
-		return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+		return smallWalletAddress(address);
 	};
 
 	if (state.promised) return <AppLoading />;

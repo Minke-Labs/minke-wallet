@@ -2,17 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string | null) =>
 	StyleSheet.create({
-		headline: {
-			fontSize: 24,
-			fontFamily: 'Inter_800ExtraBold'
-		},
 		settingsOptions: {
-			paddingTop: 24,
-			paddingLeft: 24,
-			paddingRight: 24,
-			paddingBottom: 80,
-			borderTopLeftRadius: 24,
-			marginTop: 0,
+			marginTop: 24,
 			height: '100%'
 		},
 		settingsItem: {
@@ -36,10 +27,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string
 		label: {
 			fontSize: 18,
 			fontFamily: 'Inter_700Bold'
-		},
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
 		},
 		rightIcon: {
 			fontSize: 14,

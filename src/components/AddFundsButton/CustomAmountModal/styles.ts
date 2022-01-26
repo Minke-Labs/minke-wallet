@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-	modalHeadline: {
-		fontSize: 24,
-		fontFamily: 'Inter_800ExtraBold'
-	},
 	currencyInput: {
 		borderBottomColor: '#000000',
 		borderBottomWidth: 1,

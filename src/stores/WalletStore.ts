@@ -2,7 +2,7 @@ import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from '@helpers/utilities';
-import { defaultNetwork, Network, Networks, networks } from '@models/network';
+import { defaultNetwork, Network, network as selectedNetwork } from '@models/network';
 import {
 	erc20abi,
 	getAllWallets,
@@ -10,21 +10,8 @@ import {
 	getPrivateKey,
 	getProvider,
 	MinkeTokenList,
-	supportedTokenList
+	MinkeWallet
 } from '@models/wallet';
-
-/*export const initWallet = getAllWallets().then(wallets => {
-
-    const wallet = find(wallets as)
-    return {
-        wallet: find(wallets) as MinkeWallet,
-    }
-});*/
-// const selectedWallet = isNull(wallets) ? wallets : wallets[0];
-// walletState.set({
-//     selectedWallet,
-//     wallets
-// })
 
 export interface WalletState {
 	// wallet: (privateKey: string) => Wallet;
@@ -39,48 +26,51 @@ export interface WalletState {
 	};
 }
 
-const initializeWallet = async (): Promise<WalletState> => {
-	// const state = useState(globalWalletState);
+export const emptyWallet = { privateKey: '', address: '', walletId: null, network: defaultNetwork };
 
-	const wallets = await getAllWallets();
+export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
+	const blockchain = await selectedNetwork();
+	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
+	const eth = await walletObj.getBalance();
+	const tokens: MinkeTokenList = {};
+
+	for (const [key, tokenAddress] of Object.entries(blockchain.supportedTokenList || [])) {
+		const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
+		const balance = await contract.balanceOf(address);
+		tokens[key] = {
+			contract,
+			balance
+		};
+	}
+
 	const ethPrice = await getEthLastPrice();
-	const wallet = find(wallets, (w) => w.primary);
+	const balance = {
+		eth,
+		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+	};
+
+	return { tokens, balance, network: blockchain };
+};
+
+export const walletState = async (wallet: MinkeWallet | undefined): Promise<WalletState> => {
 	if (wallet) {
 		const privateKey = await getPrivateKey(wallet.address);
 
-		// console.log('PRIVATE KEY', privateKey)
 		if (privateKey) {
-			const walletObj = new Wallet(privateKey, await getProvider(wallet.network || defaultNetwork.id));
-			const eth = await walletObj.getBalance();
-			const tokens: MinkeTokenList = {};
-
-			for (const [key, tokenAddress] of Object.entries(supportedTokenList)) {
-				const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
-				const balance = await contract.balanceOf(wallet.address);
-				tokens[key] = {
-					contract,
-					balance
-				};
-			}
-
-			const balance = {
-				eth,
-				usd: convertEthToUsd(eth, (Math.trunc(+ethPrice.result.ethusd * 100) / 100).toString())
-			};
-
 			return {
-				privateKey,
-				network: networks[wallet.network as keyof Networks] || defaultNetwork,
-				address: wallet.address,
-				// wallet: walletObj,
-				walletId: wallet.id,
-				balance,
-				tokens
+				...{ privateKey, address: wallet.address, walletId: wallet.id },
+				...(await fetchTokensAndBalances(privateKey, wallet.address))
 			};
 		}
 	}
 
-	return { privateKey: '', address: '', walletId: null, network: defaultNetwork };
+	return emptyWallet;
+};
+
+const initializeWallet = async (): Promise<WalletState> => {
+	const wallets = await getAllWallets();
+	const wallet = find(wallets, (w) => w.primary);
+	return walletState(wallet);
 };
 
 const globalStateInit = createState(initializeWallet);

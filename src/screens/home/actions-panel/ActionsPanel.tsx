@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
-import { SafeAreaView, ScrollView, View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, View, StyleSheet, GestureResponderEvent } from 'react-native';
+import { Portal, Snackbar, Text } from 'react-native-paper';
+import * as Clipboard from 'expo-clipboard';
 import RoundButton from '@components/RoundButton';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@helpers/param-list-type';
-import { useState } from '@hookstate/core';
+import ReceiveModal from '@components/ReceiveModal';
 import { globalWalletState } from '@stores/WalletStore';
-import { walletDelete } from '@models/wallet';
 
 const styles = StyleSheet.create({
 	scrollviewHorizontal: {
@@ -20,14 +19,27 @@ const styles = StyleSheet.create({
 	roundButton: { marginRight: 16 }
 });
 
-const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
-	const state = useState(globalWalletState());
-	const onDeleteWallet = useCallback(async () => {
-		await walletDelete(state.value?.walletId || '');
-		state.privateKey.set('');
-		state.walletId.set(null);
-		navigation.navigate('Welcome');
-	}, [navigation]);
+const ActionsPanel = ({
+	onCreateWallet,
+	onDeleteWallet,
+	onExchange,
+	onSwitchAccounts
+}: {
+	onCreateWallet: (event: GestureResponderEvent) => void;
+	onDeleteWallet: (event: GestureResponderEvent) => void;
+	onExchange: (event: GestureResponderEvent) => void;
+	onSwitchAccounts: (event: GestureResponderEvent) => void;
+}) => {
+	const [receiveVisible, setReceiveVisible] = useState(false);
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
+	const showReceive = () => setReceiveVisible(true);
+	const hideReceive = () => setReceiveVisible(false);
+	const wallet = globalWalletState();
+
+	const onCopyToClipboard = () => {
+		Clipboard.setString(wallet.value.address || '');
+		setSnackbarVisible(true);
+	};
 
 	return (
 		<SafeAreaView>
@@ -39,24 +51,30 @@ const ActionsPanel = ({ navigation }: NativeStackScreenProps<RootStackParamList>
 			>
 				<View style={styles.scrollviewHorizontalContent}>
 					<View style={styles.roundButton}>
-						<RoundButton text="Exchange" icon="compare-arrows" />
+						<RoundButton text="Exchange" icon="compare-arrows" onPress={onExchange} />
 					</View>
 					<View style={styles.roundButton}>
-						<RoundButton text="Receive" icon="arrow-circle-down" />
+						<RoundButton text="Receive" icon="arrow-circle-down" onPress={showReceive} />
 					</View>
 					<View style={styles.roundButton}>
-						<RoundButton text="Copy address" icon="content-copy" />
+						<RoundButton text="Copy address" icon="content-copy" onPress={onCopyToClipboard} />
 					</View>
 					<View style={styles.roundButton}>
-						<RoundButton text="New wallet" icon="add" />
+						<RoundButton text="New wallet" icon="add" onPress={onCreateWallet} />
 					</View>
 					<View style={styles.roundButton}>
-						<RoundButton text="Switch accounts" icon="person-outline" />
+						<RoundButton text="Switch accounts" icon="person-outline" onPress={onSwitchAccounts} />
 					</View>
 					<View style={styles.roundButton}>
 						<RoundButton text="Delete wallet" icon="delete-outline" onPress={onDeleteWallet} />
 					</View>
 				</View>
+				<ReceiveModal visible={receiveVisible} onDismiss={hideReceive} onCloseAll={hideReceive} />
+				<Portal>
+					<Snackbar onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
+						<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
+					</Snackbar>
+				</Portal>
 			</ScrollView>
 		</SafeAreaView>
 	);

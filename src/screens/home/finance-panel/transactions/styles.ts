@@ -33,21 +33,11 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginTop: 0,
 			height: '100%'
 		},
-		fontSizeSmall: {
-			color: colors.secondaryText,
-			fontSize: 12
-		},
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
-		},
-		fontSizeDefault: {
-			fontSize: 16
+		secondaryText: {
+			fontSize: 12,
+			color: colors.secondaryText
 		},
 		alignContentRight: {
 			alignItems: 'flex-end'
-		},
-		fontBold: {
-			fontFamily: 'Inter_800ExtraBold'
 		}
 	});

@@ -6,6 +6,7 @@ import ApplePayButton from '@components/ApplePayButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Modal from '@components/Modal';
+import globalStyles from '@src/components/global.styles';
 import styles from './styles';
 
 const CustomAmountModal = ({
@@ -27,7 +28,7 @@ const CustomAmountModal = ({
 }) => (
 	<Modal visible={visible} onDismiss={onDismiss} onBack={onBack} onCloseAll={onCloseAll}>
 		<>
-			<Text style={styles.modalHeadline}>Choose other amount</Text>
+			<Text style={globalStyles.headline}>Choose other amount</Text>
 
 			<CurrencyInput
 				value={customAmount}
