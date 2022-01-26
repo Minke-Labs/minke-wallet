@@ -34,7 +34,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const fetchTransactions = async () => {
 		setLoading(true);
 		const result = await getTransactions(state.value.address || '');
-		state.merge({ transactions: result });
+		state.transactions.set(result);
 		setLoading(false);
 		setLastTransationsFetch(new Date().getTime());
 	};
@@ -52,7 +52,11 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	}, []);
 
 	useFocusEffect(() => {
-		if (!loading && lastTransactionsFetch && new Date().getTime() - lastTransactionsFetch > 10000) {
+		if (
+			!loading &&
+			((lastTransactionsFetch && new Date().getTime() - lastTransactionsFetch > 10000) ||
+				state.transactions.value === undefined)
+		) {
 			fetchTransactions();
 		}
 	});
@@ -69,6 +73,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const onSwitchAccounts = () => navigation.navigate('Accounts');
 
 	const { address, balance } = state.value;
+
 	return (
 		<Container>
 			<Header onSettingsPress={onSettingsPress} />

@@ -45,15 +45,6 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const eth = await walletObj.getBalance();
 	const tokens: MinkeTokenList = {};
 
-	for (const [key, tokenAddress] of Object.entries(blockchain.supportedTokenList || [])) {
-		const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
-		const balance = await contract.balanceOf(address);
-		tokens[key] = {
-			contract,
-			balance
-		};
-	}
-
 	const ethPrice = await getEthLastPrice();
 	const balance = {
 		eth,

@@ -21,7 +21,10 @@ const ChangeNetworkScreen = ({ navigation }: NativeStackScreenProps<RootStackPar
 		try {
 			await AsyncStorage.setItem(networkSettingsKey, network.id);
 			setConnectedNetwork(network);
-			state.set({ ...state.value, ...(await fetchTokensAndBalances(privateKey, address)) });
+			const { balance } = await fetchTokensAndBalances(privateKey, address);
+			state.network.set(network);
+			state.balance.set(balance);
+			state.transactions.set(undefined);
 			navigation.navigate('Wallet');
 		} catch (e) {
 			console.error('Error saving settings');
