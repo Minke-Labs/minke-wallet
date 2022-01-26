@@ -3,7 +3,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Card, Headline, Text, useTheme } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Svg, Path } from 'react-native-svg';
 import AppLoading from 'expo-app-loading';
 import { BigNumber, utils } from 'ethers';

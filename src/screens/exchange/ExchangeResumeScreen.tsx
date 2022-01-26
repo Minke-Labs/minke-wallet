@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
-import { Card, Headline, Text, Portal, Modal, Button, IconButton } from 'react-native-paper';
+import { Card, Headline, Text, Portal, Modal, Button, IconButton, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
@@ -14,6 +14,8 @@ import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Linking from 'expo-linking';
 import GasOption from './GasOption';
+import { makeStyles } from './styles';
+import styles from '../welcome-flow/welcome/styles';
 
 const TokenDetail = ({
 	token,
@@ -24,15 +26,13 @@ const TokenDetail = ({
 	amount: string | undefined;
 	usdAmount: string | undefined;
 }) => (
-	<Card style={{ borderRadius: 16 }}>
-		<Card.Content>
-			<Image source={{ uri: token.img }} style={{ width: 50, height: 50 }} />
-			<Text>${usdAmount}</Text>
-			<Text>
-				{amount} {token.symbol}
-			</Text>
-		</Card.Content>
-	</Card>
+	<View>
+		<Image source={{ uri: token.img }} style={{ width: 50, height: 50 }} />
+		<Text>${usdAmount}</Text>
+		<Text>
+			{amount} {token.symbol}
+		</Text>
+	</View>
 );
 
 const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
@@ -54,6 +54,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		navigation.navigate('Wallet');
 	};
 	const containerStyle = { backgroundColor: 'white', padding: 20 };
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	useEffect(() => {
 		const loadPrices = async () => {
@@ -132,22 +134,28 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 	return (
 		<Container>
-			<Headline>Exchange Resume</Headline>
-			<View style={{ padding: 20 }}>
-				<TokenDetail
-					token={from}
-					amount={
-						formatAmount(priceQuote?.priceRoute.srcAmount, priceQuote?.priceRoute.srcDecimals) || fromAmount
-					}
-					usdAmount={priceQuote?.priceRoute.srcUSD}
-				/>
-				<TokenDetail
-					token={to}
-					amount={
-						formatAmount(priceQuote?.priceRoute.destAmount, priceQuote?.priceRoute.destDecimals) || toAmount
-					}
-					usdAmount={priceQuote?.priceRoute.destUSD}
-				/>
+			<View style={styles.exchangeResumeContainer}>
+				<View style={styles.exchangeHeadlineRow}>
+					<Headline style={styles.pageTitle}>Exchange Resume</Headline>
+				</View>
+				<Card style={styles.exchangeResume}>
+					<TokenDetail
+						token={from}
+						amount={
+							formatAmount(priceQuote?.priceRoute.srcAmount, priceQuote?.priceRoute.srcDecimals) ||
+							fromAmount
+						}
+						usdAmount={priceQuote?.priceRoute.srcUSD}
+					/>
+					<TokenDetail
+						token={to}
+						amount={
+							formatAmount(priceQuote?.priceRoute.destAmount, priceQuote?.priceRoute.destDecimals) ||
+							toAmount
+						}
+						usdAmount={priceQuote?.priceRoute.destUSD}
+					/>
+				</Card>
 			</View>
 			<Card style={{ marginTop: 20 }}>
 				<Card.Content>

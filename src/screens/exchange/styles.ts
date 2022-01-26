@@ -169,5 +169,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			color: colors.text,
 			fontFamily: 'Inter_800ExtraBold',
 			fontSize: 16
+		},
+
+		// ExchangeResume
+		exchangeResumeContainer: {
+			padding: 24,
+			paddingTop: 0
+		},
+		exchangeResume: {
+			flexDirection: 'column',
+			padding: 16,
+			borderRadius: 16,
+			backgroundColor: colors.fill
 		}
 	});
