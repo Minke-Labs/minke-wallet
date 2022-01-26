@@ -6,7 +6,8 @@ import {
 	EtherPriceHistoryResponse,
 	smallWalletAddress,
 	getPriceHistory,
-	Coin
+	Coin,
+	getENSAddress
 } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import { BigNumber } from 'ethers';
@@ -38,22 +39,45 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		}
 	});
 
-const Transaction = ({ transaction }: { transaction: ITransaction }) => {
+const Transaction = ({ transaction, ethusd }: { transaction: ITransaction; ethusd?: number }) => {
 	const [ethLastPrice, setEthLastPrice] = useState<EtherPriceHistoryResponse>();
 	const wallet = globalWalletState();
 	const address = (wallet.value.address || '').toLowerCase();
 	const { from, to, timeStamp, isError, value, tokenSymbol = 'ETH', tokenDecimal = '18' } = transaction;
 	const received = to.toLowerCase() === address.toLowerCase();
+	const source = received ? from : to;
 	const timestamp = new Date(+timeStamp * 1000);
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const date = format(timestamp, 'dd-MM-yyyy');
+	const today = format(new Date(), 'dd-MM-yyyy');
+	const [formattedSource, setFormattedSource] = useState(smallWalletAddress(source));
+
+	useEffect(() => {
+		const formatAddress = async () => {
+			const ens = await getENSAddress(source);
+			if (ens) {
+				setFormattedSource(ens);
+			}
+		};
+
+		formatAddress();
+	}, []);
 
 	useEffect(() => {
 		const fetchEthLastPrice = async () => {
 			const { allTokens } = wallet.value;
 			const coin = allTokens.find((token: Coin) => token.symbol.toLowerCase() === tokenSymbol.toLowerCase());
 			if (coin) {
-				setEthLastPrice(await getPriceHistory(format(timestamp, 'dd-MM-yyyy'), coin.id));
+				if (date === today && coin.id === 'ethereum') {
+					if (ethusd) {
+						setEthLastPrice({
+							market_data: { current_price: { usd: ethusd } }
+						} as EtherPriceHistoryResponse);
+					}
+				} else {
+					setEthLastPrice(await getPriceHistory(date, coin.id));
+				}
 			}
 		};
 
@@ -67,21 +91,21 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 				<View>
 					<Text style={styles.fontSizeSmall}>{format(timestamp, 'MM/dd/yyyy hh:mm aa')}</Text>
 					<Text style={globalStyles.fontSizeDefault}>
-						{received ? 'From' : 'To'} {smallWalletAddress(received ? from : to)}
+						{received ? 'From' : 'To'} {formattedSource}
 					</Text>
 				</View>
 			</View>
 			<View style={styles.alignContentRight}>
 				<Text style={styles.fontSizeSmall}>
-					{formatUnits(value, tokenDecimal)} {tokenSymbol}
+					{value ? formatUnits(value, tokenDecimal) : ''} {tokenSymbol}
 				</Text>
-				{ethLastPrice ? (
+				{ethLastPrice && value ? (
 					<Text style={globalStyles.fontBold}>
 						{received ? '' : '-'}$
 						{commify(
 							convertEthToUsd(
 								BigNumber.from(value),
-								(Math.trunc(ethLastPrice.market_data.current_price.usd * 100) / 100).toString()
+								ethLastPrice.market_data.current_price.usd.toString()
 							)
 						)}
 					</Text>

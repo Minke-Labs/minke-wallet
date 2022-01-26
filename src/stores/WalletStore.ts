@@ -4,8 +4,8 @@ import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from '@helpers/utilities';
 import { defaultNetwork, Network, network as selectedNetwork } from '@models/network';
 import {
-	Coin,
 	erc20abi,
+	Coin,
 	getAllWallets,
 	getEthLastPrice,
 	getPrivateKey,
@@ -44,6 +44,15 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
 	const eth = await walletObj.getBalance();
 	const tokens: MinkeTokenList = {};
+
+	for (const [key, tokenAddress] of Object.entries(blockchain.supportedTokenList || [])) {
+		const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
+		const balance = await contract.balanceOf(address);
+		tokens[key] = {
+			contract,
+			balance
+		};
+	}
 
 	const ethPrice = await getEthLastPrice();
 	const balance = {

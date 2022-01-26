@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useColorScheme, View } from 'react-native';
 import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { globalWalletState } from '@stores/WalletStore';
+import { getEthLastPrice } from '@src/model/wallet';
 import AddFundsButton from '@components/AddFundsButton';
 import PrimaryButton from '@src/components/PrimaryButton';
 import Transaction from './Transaction';
@@ -14,14 +15,36 @@ const Transactions = ({ loading }: { loading: boolean }) => {
 	const styles = makeStyles(colors, useColorScheme());
 	const wallet = useState(globalWalletState());
 	const { transactions = [] } = wallet.value;
+	const [ethusd, setEthusd] = React.useState<number>();
+
+	useEffect(() => {
+		const fetchEthLastPrice = async () => {
+			const {
+				result: { ethusd: ethPrice }
+			} = await getEthLastPrice();
+			if (ethPrice) {
+				setEthusd(+ethPrice);
+			}
+		};
+		fetchEthLastPrice();
+	}, []);
 
 	const Table = useCallback(() => {
 		if (transactions.length > 0) {
 			return (
 				<View style={styles.transactionDayRow}>
-					{transactions.map((transaction) => (
-						<Transaction transaction={transaction} key={`${transaction.hash}${transaction.value}`} />
-					))}
+					{transactions.map((transaction) => {
+						if (transaction.value) {
+							return (
+								<Transaction
+									transaction={transaction}
+									key={`${transaction.hash}${transaction.value}`}
+									ethusd={ethusd}
+								/>
+							);
+						}
+						return null;
+					})}
 				</View>
 			);
 		}

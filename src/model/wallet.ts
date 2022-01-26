@@ -28,7 +28,8 @@ export const getProvider = async (network?: string) => {
 };
 
 export const getENSAddress = async (address: string) => {
-	const name = (await getProvider(networks.mainnet.id)).lookupAddress(address);
+	const { testnet } = await selectedNetwork();
+	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).lookupAddress(address);
 	return name;
 };
 
