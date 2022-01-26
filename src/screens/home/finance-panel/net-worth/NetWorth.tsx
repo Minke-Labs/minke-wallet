@@ -5,6 +5,7 @@ import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { useTheme, Text } from 'react-native-paper';
 import { globalWalletState } from '@stores/WalletStore';
+import globalStyles from '@src/components/global.styles';
 import { makeStyles } from './styles';
 
 const NetWorth = () => {
@@ -22,11 +23,13 @@ const NetWorth = () => {
 					<MaterialIcons name="account-balance-wallet" size={24} color={colors.text} />
 				</View>
 				<View style={styles.netWorthItemText}>
-					<Text style={styles.fontSizeDefault}>Wallet</Text>
-					<Text style={styles.fontSizeSmall}>Available funds in your wallet</Text>
+					<Text style={globalStyles.fontSizeDefault}>Wallet</Text>
+					<Text style={styles.secondaryText}>Available funds in your wallet</Text>
 				</View>
-				<View style={styles.row}>
-					<Text style={(styles.fontSizeDefault, styles.fontBold)}>$00.00</Text>
+				<View style={globalStyles.row}>
+					<Text style={(globalStyles.fontSizeDefault, globalStyles.fontBold)}>
+						${commify(state.value.balance?.usd || '')}
+					</Text>
 					<Text style={(styles.cardLabel, styles.arrowPadding)}>
 						<MaterialIcons name="arrow-forward-ios" size={16} />
 					</Text>
@@ -37,11 +40,11 @@ const NetWorth = () => {
 					<MaterialCommunityIcons name="safe" size={24} color={colors.text} />
 				</View>
 				<View style={styles.netWorthItemText}>
-					<Text style={styles.fontSizeDefault}>Deposits</Text>
-					<Text style={styles.fontSizeSmall}>Funds deposited in vaults</Text>
+					<Text style={globalStyles.fontSizeDefault}>Deposits</Text>
+					<Text style={styles.secondaryText}>Funds deposited in vaults</Text>
 				</View>
-				<View style={styles.row}>
-					<Text style={styles.fontSizeDefault}>Deposit</Text>
+				<View style={globalStyles.row}>
+					<Text style={globalStyles.fontSizeDefault}>Deposit</Text>
 					<View style={(styles.cardLabel, styles.arrowPadding)}>
 						<MaterialIcons name="arrow-forward-ios" color={colors.text} size={16} />
 					</View>
@@ -52,11 +55,11 @@ const NetWorth = () => {
 					<FontAwesome5 name="hand-holding-usd" style={styles.netWorthIconColor} size={22} />
 				</View>
 				<View style={styles.netWorthItemText}>
-					<Text style={styles.fontSizeDefault}>Debt</Text>
-					<Text style={styles.fontSizeSmall}>Open loans</Text>
+					<Text style={globalStyles.fontSizeDefault}>Debt</Text>
+					<Text style={styles.secondaryText}>Open loans</Text>
 				</View>
-				<View style={styles.row}>
-					<Text style={styles.fontSizeDefault}>Borrow</Text>
+				<View style={globalStyles.row}>
+					<Text style={globalStyles.fontSizeDefault}>Borrow</Text>
 					<View style={(styles.cardLabel, styles.arrowPadding)}>
 						<MaterialIcons name="arrow-forward-ios" color={colors.text} size={16} />
 					</View>

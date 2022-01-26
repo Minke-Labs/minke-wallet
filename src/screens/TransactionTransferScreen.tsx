@@ -25,15 +25,17 @@ export function TransactionTransferScreen({ navigation }: NativeStackScreenProps
 	const onAmountChange = (text: string) => {
 		if (!isNaN(text)) amount.set(text);
 	};
+
 	const onTransfer = async () => {
-		if (state.value.wallet) {
+		if (state.value.walletId) {
 			const contractAddress = state.value.tokens?.[route.params.coin]?.contract?.address || '';
 			console.log('CONTRACT address', contractAddress);
 			sendTransaction(
-				state.value.wallet,
+				state.value.privateKey,
 				route.params.address,
 				amount.value,
 				selectedGasPrice.value,
+				state.value.network.id,
 				contractAddress
 			)
 				.then((r) => {
@@ -49,6 +51,9 @@ export function TransactionTransferScreen({ navigation }: NativeStackScreenProps
 				.catch((err) => console.log(err));
 		}
 	};
+
+	const { result: gas } = gasPrice.value;
+
 	return (
 		<View style={{ flex: 1 }}>
 			<Appbar.Header>
@@ -78,17 +83,14 @@ export function TransactionTransferScreen({ navigation }: NativeStackScreenProps
 						value={selectedGasPrice.value}
 					>
 						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-							<Text>Fastest wait {gasPrice.value.fastestWait}</Text>
-							<RadioButton value={gasPrice.value.fastest.toString()} />
+							<RadioButton value={gas.FastGasPrice.toString()} />
 						</View>
 
 						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-							<Text>Fast wait{gasPrice.value.fastWait}</Text>
-							<RadioButton value={gasPrice.value.fast.toString()} />
+							<RadioButton value={gas.ProposeGasPrice.toString()} />
 						</View>
 						<View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-							<Text>Safe low wait {gasPrice.value.safeLowWait}</Text>
-							<RadioButton value={gasPrice.value.safeLow.toString()} />
+							<RadioButton value={gas.SafeGasPrice.toString()} />
 						</View>
 					</RadioButton.Group>
 				</View>

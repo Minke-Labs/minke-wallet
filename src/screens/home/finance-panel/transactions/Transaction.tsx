@@ -13,15 +13,12 @@ import { BigNumber } from 'ethers';
 import { convertEthToUsd } from '@helpers/utilities';
 import { formatUnits, commify } from 'ethers/lib/utils';
 import { format } from 'date-fns';
+import globalStyles from '@components/global.styles';
 import transationalReceive from './transational-receive.png';
 import transationalSent from './transational-sent.png';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
-		},
 		transactionItem: {
 			marginBottom: 32,
 			flexDirection: 'row',
@@ -36,21 +33,15 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			color: colors.secondaryText,
 			fontSize: 12
 		},
-		fontSizeDefault: {
-			fontSize: 16
-		},
 		alignContentRight: {
 			alignItems: 'flex-end'
-		},
-		fontBold: {
-			fontFamily: 'Inter_800ExtraBold'
 		}
 	});
 
 const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const [ethLastPrice, setEthLastPrice] = useState<EtherPriceHistoryResponse>();
 	const wallet = globalWalletState();
-	const address = (wallet.value.wallet?.address || '').toLowerCase();
+	const address = (wallet.value.address || '').toLowerCase();
 	const { from, to, timeStamp, isError, value, tokenSymbol = 'ETH', tokenDecimal = '18' } = transaction;
 	const received = to.toLowerCase() === address.toLowerCase();
 	const timestamp = new Date(+timeStamp * 1000);
@@ -70,12 +61,12 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	}, []);
 
 	return (
-		<View style={[styles.row, styles.transactionItem, { opacity: isError === '1' ? 0.3 : 1 }]}>
-			<View style={styles.row}>
+		<View style={[globalStyles.row, styles.transactionItem, { opacity: isError === '1' ? 0.3 : 1 }]}>
+			<View style={globalStyles.row}>
 				<Image source={received ? transationalReceive : transationalSent} style={styles.transationalIcon} />
 				<View>
 					<Text style={styles.fontSizeSmall}>{format(timestamp, 'MM/dd/yyyy hh:mm aa')}</Text>
-					<Text style={styles.fontSizeDefault}>
+					<Text style={globalStyles.fontSizeDefault}>
 						{received ? 'From' : 'To'} {smallWalletAddress(received ? from : to)}
 					</Text>
 				</View>
@@ -85,7 +76,7 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 					{formatUnits(value, tokenDecimal)} {tokenSymbol}
 				</Text>
 				{ethLastPrice ? (
-					<Text style={styles.fontBold}>
+					<Text style={globalStyles.fontBold}>
 						{received ? '' : '-'}$
 						{commify(
 							convertEthToUsd(

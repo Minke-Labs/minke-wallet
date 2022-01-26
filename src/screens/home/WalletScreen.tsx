@@ -4,8 +4,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
 import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
-import { walletDelete, getTransactions, getTokenList } from '@models/wallet';
+import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from './header/Header';
 import AssetsPanel from './assets-panel/AssetsPanel';
@@ -17,27 +17,33 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
+
 	const onDeleteWallet = useCallback(async () => {
 		await walletDelete(state.value?.walletId || '');
-		state.set({ wallet: null, walletId: null, transactions: [], allTokens: [] });
-		navigation.navigate('Welcome');
-	}, [navigation]);
+		const allWallets = (await getAllWallets()) || {};
+		const wallets = Object.values(allWallets);
 
-	const onExchange = () => {
-		navigation.navigate('Exchange');
-	};
+		if (wallets.length > 0) {
+			state.set(await walletState(wallets[0]));
+		} else {
+			state.set(emptyWallet);
+			navigation.navigate('Welcome');
+		}
+	}, [navigation]);
 
 	const fetchTransactions = async () => {
 		setLoading(true);
-		const result = await getTransactions(state.value.wallet?.address || '');
-		state.transactions.set(result);
+		const result = await getTransactions(state.value.address || '');
+		state.merge({ transactions: result });
 		setLoading(false);
 		setLastTransationsFetch(new Date().getTime());
 	};
 
 	const fetchTokenList = async () => {
-		const result = await getTokenList();
-		state.allTokens.set(result);
+		if (state.allTokens.length === 0) {
+			const result = await getTokenList();
+			state.allTokens.set(result);
+		}
 	};
 
 	useEffect(() => {
@@ -46,21 +52,38 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	}, []);
 
 	useFocusEffect(() => {
-		if (lastTransactionsFetch && new Date().getTime() - lastTransactionsFetch > 10000) {
+		if (!loading && lastTransactionsFetch && new Date().getTime() - lastTransactionsFetch > 10000) {
 			fetchTransactions();
 		}
 	});
 
+	const onCreateWallet = useCallback(async () => {
+		const newWallet = await walletCreate();
+		state.set(newWallet as any);
+		navigation.navigate('WalletCreated');
+	}, [navigation]);
+
+	const onExchange = () => navigation.navigate('Exchange');
+	const onSettingsPress = () => navigation.navigate('Settings');
+	const onSend = () => navigation.navigate('TransactionSelectFunds');
+	const onSwitchAccounts = () => navigation.navigate('Accounts');
+
+	const { address, balance } = state.value;
 	return (
 		<Container>
-			<Header />
+			<Header onSettingsPress={onSettingsPress} />
 			<SafeAreaView>
 				<ScrollView
 					style={styles.homeScroll}
 					refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
 				>
-					<AssetsPanel />
-					<ActionsPanel onDeleteWallet={onDeleteWallet} onExchange={onExchange} />
+					<AssetsPanel onSend={onSend} balance={balance?.usd || ''} address={address} />
+					<ActionsPanel
+						onCreateWallet={onCreateWallet}
+						onDeleteWallet={onDeleteWallet}
+						onExchange={onExchange}
+						onSwitchAccounts={onSwitchAccounts}
+					/>
 					<FinancePanel loading={loading} />
 				</ScrollView>
 			</SafeAreaView>

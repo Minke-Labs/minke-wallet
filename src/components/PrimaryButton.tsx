@@ -3,13 +3,17 @@ import { Button, useTheme } from 'react-native-paper';
 
 interface Props {
 	children: any;
-	onPress: Function;
+	onPress?: Function;
 	mode?: string;
 	icon?: any;
+	disabled?: boolean;
 }
 
-const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained', icon }: any) => {
+const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained', icon, disabled = false }: any) => {
 	const { colors } = useTheme();
+	const color = mode === 'contained' ? colors.buttonText : colors.linkText;
+	const labelColor = disabled ? colors.disabled : color;
+
 	return (
 		<Button
 			theme={{ roundness: 30 }}
@@ -18,7 +22,7 @@ const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained',
 			uppercase={false}
 			labelStyle={{
 				fontSize: 16,
-				color: mode === 'contained' ? colors.buttonText : colors.linkText
+				color: labelColor
 			}}
 			style={{
 				alignSelf: 'stretch',
@@ -27,6 +31,7 @@ const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained',
 			}}
 			icon={icon}
 			contentStyle={{ flexDirection: 'row-reverse' }}
+			disabled={disabled}
 		>
 			{children}
 		</Button>

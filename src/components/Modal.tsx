@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Modal as PaperModal, Text, useTheme, IconButton } from 'react-native-paper';
+import globalStyle from '@components/global.styles';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
@@ -19,10 +20,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'space-between',
 			alignItems: 'center',
 			marginBottom: 8
-		},
-		modalHeadline: {
-			fontSize: 24,
-			fontFamily: 'Inter_800ExtraBold'
 		}
 	});
 
@@ -47,7 +44,7 @@ const Modal = ({
 		<PaperModal visible={visible} onDismiss={onDismiss} contentContainerStyle={styles.modalContainerStyle}>
 			<View style={styles.modalHeader}>
 				{onBack ? <IconButton icon="chevron-left" size={24} color={colors.primary} onPress={onBack} /> : null}
-				{headline ? <Text style={styles.modalHeadline}>{headline}</Text> : null}
+				{headline ? <Text style={globalStyle.headline}>{headline}</Text> : null}
 				<IconButton icon="close" size={24} color={colors.primary} onPress={onCloseAll} />
 			</View>
 

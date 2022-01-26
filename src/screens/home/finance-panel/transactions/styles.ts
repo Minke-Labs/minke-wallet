@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string | null) =>
 	StyleSheet.create({
 		transactionDayRow: {
 			paddingTop: 24,
@@ -23,12 +23,33 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginTop: 0,
 			height: '100%'
 		},
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
+		secondaryText: {
+			fontSize: 12,
+			color: colors.secondaryText
 		},
-		fontSizeSmall: {
+		alignContentRight: {
+			alignItems: 'flex-end'
+		},
+		netWorthIcon: {
+			padding: 16,
+			borderRadius: 16,
+			borderColor: 'rgba(255, 255, 255, 0.1)',
+			borderStyle: 'solid',
+			borderWidth: 1,
+			marginTop: 16,
+			marginBottom: 16,
+			backgroundColor: scheme === 'dark' ? undefined : 'rgba(103, 152, 242, 0.1)'
+		},
+		transactionsText: {
+			fontFamily: 'Inter_500Medium',
+			fontSize: 16,
 			color: colors.secondaryText,
-			fontSize: 12
+			marginBottom: 16
+		},
+		startedText: {
+			color: colors.text,
+			fontSize: 16,
+			fontFamily: 'Inter_700Bold',
+			marginBottom: 16
 		}
 	});

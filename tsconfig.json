@@ -4,6 +4,7 @@
 		"strict": true,
 		"baseUrl": "./",
 		"paths": {
+			"@src/*": ["src/*"],
 			"@components/*": ["src/components/*"],
 			"@helpers/*": ["src/helpers/*"],
 			"@stores/*": ["src/stores/*"],

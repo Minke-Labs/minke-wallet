@@ -1,23 +1,24 @@
 import React from 'react';
-import { View, Image, useColorScheme } from 'react-native';
-import AppLoading from 'expo-app-loading';
-import { useState } from '@hookstate/core';
+import { View, Image, GestureResponderEvent, useColorScheme } from 'react-native';
 import { commify } from 'ethers/lib/utils';
 import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
-import { globalWalletState } from '@stores/WalletStore';
 import makeBlockie from 'ethereum-blockies-base64';
 import AddFundsButton from '@components/AddFundsButton';
 import { makeStyles } from './styles';
 
-const AssetsPanel = () => {
-	const state = useState(globalWalletState());
+const AssetsPanel = ({
+	onSend,
+	balance,
+	address
+}: {
+	onSend: (event: GestureResponderEvent) => void;
+	balance: string;
+	address: string;
+}) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors, useColorScheme());
 
-	if (state.promised) return <AppLoading />;
-
-	const balance = state.value.balance?.usd || '';
 	return (
 		<View style={styles.paddingContent}>
 			<Card style={styles.card}>
@@ -27,14 +28,24 @@ const AssetsPanel = () => {
 						<Text style={styles.cardBalance}>${commify(balance)}</Text>
 					</View>
 					<View>
-						<Image source={{ uri: makeBlockie(state.value.wallet?.address || '') }} style={styles.avatar} />
+						{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}
 					</View>
 				</View>
 				<View style={styles.cardBottomContent}>
-					<AddFundsButton />
+					<AddFundsButton
+						button={
+							// eslint-disable-next-line react/jsx-wrap-multilines
+							<TextButton
+								text="Add funds"
+								icon="add-circle-outline"
+								containerStyle={styles.cardDivisor}
+							/>
+						}
+					/>
 					<TextButton
 						text="Send"
 						icon="arrow-circle-up"
+						onPress={onSend}
 						containerStyle={{ flexGrow: 1, flexBasis: 0, justifyContent: 'center' }}
 					/>
 				</View>
