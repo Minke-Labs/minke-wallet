@@ -54,6 +54,20 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			fontFamily: 'Inter_800ExtraBold',
 			paddingLeft: 8
 		},
+		exchangeResumeDivisor: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderRightWidth: 1,
+			borderColor: colors.background,
+			marginTop: 24,
+			marginBottom: 24
+		},
+		exchangeResumeBackground: {
+			borderRadius: 50,
+			padding: 8,
+			backgroundColor: colors.background,
+			position: 'absolute'
+		},
 		tokenCardDivisor: {
 			justifyContent: 'center',
 			alignItems: 'center',
@@ -113,7 +127,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingRight: 32
 		},
 		gasSelectorCard: {
-			flex: 1,
 			borderRadius: 16,
 			marginRight: 16,
 			backgroundColor: colors.fill
@@ -172,14 +185,33 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 
 		// ExchangeResume
-		exchangeResumeContainer: {
+		exchangeContainer: {
+			flex: 1,
 			padding: 24,
+			flexDirection: 'column'
+		},
+		exchangeResumeContainer: {
 			paddingTop: 0
 		},
 		exchangeResume: {
-			flexDirection: 'column',
-			padding: 16,
+			flexDirection: 'row',
 			borderRadius: 16,
+			marginBottom: 24,
 			backgroundColor: colors.fill
+		},
+		summaryCard: {
+			borderRadius: 16,
+			marginBottom: 24,
+			backgroundColor: colors.fill
+		},
+		summaryRow: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'space-between',
+			marginBottom: 16
+		},
+		tokenDetail: {
+			width: '50%',
+			padding: 16
 		}
 	});
