@@ -50,14 +50,14 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'center',
 			alignItems: 'center',
 			borderBottomWidth: 1,
-			borderColor: '#F2EAE1',
+			borderColor: colors.background,
 			marginTop: 24,
 			marginBottom: 24
 		},
 		tokenCardDivisorBackground: {
 			borderRadius: 50,
 			padding: 8,
-			backgroundColor: '#F2EAE1',
+			backgroundColor: colors.background,
 			position: 'absolute'
 		},
 		tokenCardDivisorImage: {
@@ -94,6 +94,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingRight: 32
 		},
 		gasSelectorCard: {
+			flex: 1,
 			borderRadius: 16,
 			marginRight: 16,
 			backgroundColor: colors.fill
@@ -118,7 +119,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'flex-end'
 		},
 		searchBar: {
-			backgroundColor: colors.fill,
+			backgroundColor: colors.background,
 			borderTopLeftRadius: 50,
 			borderTopRightRadius: 50,
 			borderRadius: 50,
