@@ -28,9 +28,13 @@ const ImportWalletButton = ({ button, onImportFinished }: { button: JSX.Element;
 
 	const onImportWallet = async () => {
 		if (text.trim()) {
-			const wallet = await restoreWalletByMnemonic(text.trim());
-			state.set(wallet);
-			onImportFinished();
+			try {
+				const wallet = await restoreWalletByMnemonic(text.trim());
+				state.set(wallet);
+				onImportFinished();
+			} catch (error) {
+				console.error('Invalid seed phrase or primary key');
+			}
 		}
 	};
 

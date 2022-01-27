@@ -6,6 +6,7 @@ import PrimaryButton from '@components/PrimaryButton';
 import { globalWalletState } from '@stores/WalletStore';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { walletCreate } from '@models/wallet';
+import ImportWalletButton from '@src/components/ImportWalletButton';
 import WelcomeContainer from '../WelcomeContainer';
 import MainText from '../MainText';
 import SecondaryText from '../SecondaryText';
@@ -39,9 +40,10 @@ export default function WelcomeScreen({ navigation }: NativeStackScreenProps<Roo
 					<Text style={styles.textBold}> Minke </Text>
 				</SecondaryText>
 				<PrimaryButton onPress={onCreateWallet}>Create Wallet</PrimaryButton>
-				<PrimaryButton onPress={() => console.log('Import wallet')} mode="text">
-					Import wallet
-				</PrimaryButton>
+				<ImportWalletButton
+					onImportFinished={() => navigation.navigate('WalletCreated')}
+					button={<PrimaryButton mode="text">Import wallet</PrimaryButton>}
+				/>
 			</View>
 			<Image
 				source={scheme === 'dark' ? backgroundBottomDark : backgroundBottom}

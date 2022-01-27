@@ -125,7 +125,7 @@ export default function App() {
 									return (
 										<ImportWalletButton
 											// eslint-disable-next-line react/prop-types
-											onImportFinished={() => navigation.navigate('Wallet')}
+											onImportFinished={() => navigation.navigate('WalletCreated')}
 											button={<PrimaryButton mode="text">Import</PrimaryButton>}
 										/>
 									);

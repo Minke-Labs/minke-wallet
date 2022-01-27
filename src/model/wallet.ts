@@ -53,7 +53,7 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 		}
 		return null;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return null;
 	}
 };
@@ -78,7 +78,6 @@ const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Pro
 	if (!mnemonicOrPrivateKey || valid) {
 		const mnemonic = valid ? mnemonicOrPrivateKey : generateMnemonic();
 		const seed = await mnemonicToSeed(mnemonic);
-		console.log(mnemonic);
 		return new Wallet(seed, await getProvider(blockchain.id));
 	}
 
@@ -104,7 +103,6 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletSta
 	}
 
 	await savePrivateKey(wallet.address, wallet.privateKey);
-	console.log(wallet, wallet.privateKey, wallet.address, blockchain.id);
 	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
 	const existingWallets = (await getAllWallets()) || {};
 	const primaryWallet = find(existingWallets, (w) => w.primary);
@@ -162,7 +160,6 @@ export const walletDelete = async (id: string): Promise<boolean> => {
 	const allWallets = (await getAllWallets()) || {};
 	if (allWallets[id]) {
 		delete allWallets[id];
-		console.log('aaaaaaaaaaaa', allWallets);
 		await saveAllWallets(allWallets || {});
 		return true;
 	}
