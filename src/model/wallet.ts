@@ -1,12 +1,12 @@
-import { BigNumberish, Contract, providers, Wallet } from 'ethers';
-import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { find, isEmpty } from 'lodash';
-import { parseEther, parseUnits } from 'ethers/lib/utils';
-import { WalletState } from '@stores/WalletStore';
-import { deleteItemAsync } from 'expo-secure-store';
-import { convertEthToUsd } from '@helpers/utilities';
-import { networks, network as selectedNetwork } from './network';
-import { loadObject, saveObject } from './keychain';
+import {BigNumberish, Contract, providers, Wallet} from 'ethers';
+import {generateMnemonic, mnemonicToSeed} from 'bip39';
+import {find, isEmpty} from 'lodash';
+import {parseEther, parseUnits} from 'ethers/lib/utils';
+import {WalletState} from '@stores/WalletStore';
+import {deleteItemAsync} from 'expo-secure-store';
+import {convertEthToUsd} from '@helpers/utilities';
+import {network as selectedNetwork, networks} from './network';
+import {loadObject, saveObject} from './keychain';
 
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
 	const key = `${keychain_id}_minkeSeedPhrase`;
@@ -73,9 +73,9 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 	await saveObject('minkeAllWallets', wallets);
 };
 
-export const walletCreate = async (): Promise<null | WalletState> => {
+export const walletCreate = async (mnemonic = ''): Promise<WalletState> => {
 	const blockchain = await selectedNetwork();
-	const mnemonic = generateMnemonic();
+	mnemonic = mnemonic?.length > 0 ? mnemonic : generateMnemonic();
 	const seed = await mnemonicToSeed(mnemonic);
 	const wallet: Wallet = new Wallet(seed, await getProvider(blockchain.id));
 	const id = `wallet_${Date.now()}`;
@@ -106,6 +106,34 @@ export const walletCreate = async (): Promise<null | WalletState> => {
 		transactions: []
 	};
 };
+
+export const restoreWalletByMnemonic = async (mnemonic: string): Promise<WalletState> => {
+		const blockchain = await selectedNetwork();
+
+  const seed = await mnemonicToSeed(mnemonic);
+	const existingWallets = (await getAllWallets()) || {};
+	const wallet: Wallet = new Wallet(seed, await getProvider(blockchain.id));
+	const existingWallet = find(existingWallets, (w) => w.address === wallet.address);
+
+	if(!existingWallet || isEmpty(existingWallet)) {
+		return walletCreate(mnemonic);
+	}
+	const eth = await wallet.getBalance();
+	const ethPrice = await getEthLastPrice();
+	const balance = {
+		eth,
+		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+	};
+	return {
+		privateKey: wallet.privateKey,
+		address: wallet.address,
+		walletId: existingWallet.id,
+		network: blockchain,
+		balance
+	};
+
+
+}
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
 
