@@ -1,7 +1,26 @@
 import React, { useState, useCallback } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+const styles = StyleSheet.create({
+	startCounterButton: {
+		backgroundColor: '#006AA6',
+		marginTop: 40,
+		borderRadius: 30,
+		height: 50,
+		overflow: 'hidden'
+	},
+	startCounterButtonTextContainer: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'center',
+		alignItems: 'center'
+	}
+});
 
 const ProgressButton = ({ onFinish }: { onFinish: () => void }) => {
 	const [count, setCount] = useState(0);
@@ -34,7 +53,7 @@ const ProgressButton = ({ onFinish }: { onFinish: () => void }) => {
 			onLongPress={finishCounter}
 			onPressOut={stopCounter}
 			delayLongPress={5000}
-			style={{ backgroundColor: '#006AA6', margin: 20, borderRadius: 30, height: 50, overflow: 'hidden' }}
+			style={styles.startCounterButton}
 		>
 			<View
 				style={{
@@ -43,9 +62,9 @@ const ProgressButton = ({ onFinish }: { onFinish: () => void }) => {
 					backgroundColor: '#004F7B'
 				}}
 			/>
-			<Text style={{ textAlign: 'center', position: 'absolute', width: '100%', height: '100%' }}>
-				Hold to Confirm
-			</Text>
+			<View style={styles.startCounterButtonTextContainer}>
+				<Text style={styles.startCounterButtonText}>Hold to Confirm</Text>
+			</View>
 		</TouchableWithoutFeedback>
 	);
 };
