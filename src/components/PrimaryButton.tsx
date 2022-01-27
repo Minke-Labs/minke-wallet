@@ -3,7 +3,7 @@ import { Button, useTheme } from 'react-native-paper';
 
 interface Props {
 	children: any;
-	onPress: Function;
+	onPress?: Function;
 	mode?: string;
 	icon?: any;
 	disabled?: boolean;

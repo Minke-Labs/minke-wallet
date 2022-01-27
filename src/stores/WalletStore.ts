@@ -5,11 +5,13 @@ import { convertEthToUsd } from '@helpers/utilities';
 import { defaultNetwork, Network, network as selectedNetwork } from '@models/network';
 import {
 	erc20abi,
+	Coin,
 	getAllWallets,
 	getEthLastPrice,
 	getPrivateKey,
 	getProvider,
 	MinkeTokenList,
+	Transaction,
 	MinkeWallet
 } from '@models/wallet';
 
@@ -24,9 +26,18 @@ export interface WalletState {
 		eth?: BigNumber;
 		usd?: string;
 	};
+	transactions?: Array<Transaction>;
+	allTokens: Array<Coin>;
 }
 
-export const emptyWallet = { privateKey: '', address: '', walletId: null, network: defaultNetwork };
+export const emptyWallet = {
+	privateKey: '',
+	address: '',
+	walletId: null,
+	network: defaultNetwork,
+	transactions: [],
+	allTokens: []
+};
 
 export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
 	const blockchain = await selectedNetwork();
@@ -58,7 +69,7 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 
 		if (privateKey) {
 			return {
-				...{ privateKey, address: wallet.address, walletId: wallet.id },
+				...{ privateKey, address: wallet.address, walletId: wallet.id, allTokens: [], transactions: [] },
 				...(await fetchTokensAndBalances(privateKey, wallet.address))
 			};
 		}

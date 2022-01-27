@@ -1,14 +1,12 @@
 import React, { useState, createRef } from 'react';
 import { TextInput } from 'react-native';
-import { Portal, useTheme } from 'react-native-paper';
-import TextButton from '@components/TextButton';
+import { Portal } from 'react-native-paper';
 import { ICoin, coins } from '@helpers/coins';
 import ChooseQuantityModal from './ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal';
 import AddFundsModal from './AddFundsModal';
-import { makeStyles } from './styles';
 
-const AddFundsButton = () => {
+const AddFundsButton = ({ button }: { button: JSX.Element }) => {
 	const [chooseCoinVisible, setChooseCoinVisible] = useState(false);
 	const showChooseCoinModal = () => setChooseCoinVisible(true);
 	const hideChooseCoinModal = () => setChooseCoinVisible(false);
@@ -66,8 +64,13 @@ const AddFundsButton = () => {
 		setAmount(value);
 		setCustomAmount(null);
 	};
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+
+	const childrenWithProps = React.Children.map(button, (child) => {
+		if (React.isValidElement(child)) {
+			return React.cloneElement(child, { onPress: showChooseCoinModal });
+		}
+		return child;
+	});
 
 	return (
 		<>
@@ -101,12 +104,7 @@ const AddFundsButton = () => {
 				/>
 			</Portal>
 
-			<TextButton
-				text="Add funds"
-				icon="add-circle-outline"
-				containerStyle={styles.cardDivisor}
-				onPress={showChooseCoinModal}
-			/>
+			{childrenWithProps}
 		</>
 	);
 };

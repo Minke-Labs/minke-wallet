@@ -7,9 +7,9 @@ import Container from '@components/Container';
 import ProgressButton from '@components/ProgressButton';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
-import { smallWalletAddress, provider } from '@models/wallet';
+import { getProvider, smallWalletAddress } from '@models/wallet';
 import { toBn } from 'evm-bn';
-import { BigNumber, utils } from 'ethers';
+import { Wallet, BigNumber, utils } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Linking from 'expo-linking';
@@ -110,6 +110,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			if (result.error) {
 				console.error(result.error);
 			} else if (wallet.value && exchange.value.gas) {
+				const provider = await getProvider();
 				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;
 				const nonce = await provider.getTransactionCount(wallet.value.address, 'latest');
 				const txDefaults = {
@@ -122,7 +123,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 					to: dest,
 					value: BigNumber.from(value)
 				};
-				const signedTx = await wallet.value.signTransaction({ ...txDefaults });
+				const walletObject = new Wallet(wallet.privateKey.value, provider);
+				const signedTx = await walletObject.signTransaction({ ...txDefaults });
 				const { hash } = await provider.sendTransaction(signedTx as string);
 				setTransactionHash(hash);
 				showModal();

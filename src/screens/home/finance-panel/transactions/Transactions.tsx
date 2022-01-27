@@ -1,49 +1,76 @@
-import React from 'react';
-import { View, Image } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
-import globalStyles from '@src/components/global.styles';
+import React, { useCallback, useEffect } from 'react';
+import { useColorScheme, View } from 'react-native';
+import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
+import { useState } from '@hookstate/core';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { globalWalletState } from '@stores/WalletStore';
+import { getEthLastPrice } from '@src/model/wallet';
+import AddFundsButton from '@components/AddFundsButton';
+import PrimaryButton from '@src/components/PrimaryButton';
+import Transaction from './Transaction';
 import { makeStyles } from './styles';
-import transationalReceive from './transational-receive.png';
-import transationalSent from './transational-sent.png';
 
-const Transactions = () => {
+const Transactions = ({ loading }: { loading: boolean }) => {
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const styles = makeStyles(colors, useColorScheme());
+	const wallet = useState(globalWalletState());
+	const { transactions = [] } = wallet.value;
+	const [ethusd, setEthusd] = React.useState<number>();
+
+	useEffect(() => {
+		const fetchEthLastPrice = async () => {
+			const {
+				result: { ethusd: ethPrice }
+			} = await getEthLastPrice();
+			if (ethPrice) {
+				setEthusd(+ethPrice);
+			}
+		};
+		fetchEthLastPrice();
+	}, []);
+
+	const Table = useCallback(() => {
+		if (transactions.length > 0) {
+			return (
+				<View style={styles.transactionDayRow}>
+					{transactions.map((transaction) => {
+						if (transaction.value) {
+							return (
+								<Transaction
+									transaction={transaction}
+									key={`${transaction.hash}${transaction.value}`}
+									ethusd={ethusd}
+								/>
+							);
+						}
+						return null;
+					})}
+				</View>
+			);
+		}
+		return (
+			<View style={{ alignItems: 'center' }}>
+				<View style={styles.netWorthIcon}>
+					<MaterialIcons name="account-balance-wallet" size={32} color={colors.text} />
+				</View>
+				<Text style={styles.transactionsText}>Your transactions will appear here</Text>
+				<Text style={styles.startedText}>Let&apos;s get started?</Text>
+				<AddFundsButton
+					button={
+						// eslint-disable-next-line react/jsx-wrap-multilines
+						<PrimaryButton>
+							<MaterialCommunityIcons name="plus-circle-outline" size={20} />
+							Add funds to start
+						</PrimaryButton>
+					}
+				/>
+			</View>
+		);
+	}, [transactions]);
+
 	return (
 		<View style={styles.tabsTransactions}>
-			<View style={globalStyles.row}>
-				<Text style={styles.transactionDateLabel}>Today</Text>
-				<Text style={styles.secondaryText}>Day balance: $00.00</Text>
-			</View>
-
-			<View style={styles.transactionDayRow}>
-				<View style={(globalStyles.row, styles.transactionItem)}>
-					<View style={globalStyles.row}>
-						<Image source={transationalSent} style={styles.transationalIcon} />
-						<View>
-							<Text style={styles.secondaryText}>7h30 pm</Text>
-							<Text style={globalStyles.fontSizeDefault}>To marcost.eth</Text>
-						</View>
-					</View>
-					<View style={styles.alignContentRight}>
-						<Text style={styles.secondaryText}>0.01 ETH</Text>
-						<Text style={globalStyles.fontBold}>-$20.00</Text>
-					</View>
-				</View>
-				<View style={globalStyles.row}>
-					<View style={globalStyles.row}>
-						<Image source={transationalReceive} style={styles.transationalIcon} />
-						<View>
-							<Text style={styles.secondaryText}>10h00 pm</Text>
-							<Text style={globalStyles.fontSizeDefault}>From minke.eth</Text>
-						</View>
-					</View>
-					<View style={styles.alignContentRight}>
-						<Text style={styles.secondaryText}>0.01 ETH</Text>
-						<Text style={globalStyles.fontBold}>$20.00</Text>
-					</View>
-				</View>
-			</View>
+			{loading ? <ActivityIndicator animating color={colors.primary} /> : <Table />}
 		</View>
 	);
 };

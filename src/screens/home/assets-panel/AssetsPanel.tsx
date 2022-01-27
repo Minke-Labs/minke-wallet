@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Image, GestureResponderEvent, useColorScheme } from 'react-native';
-import AppLoading from 'expo-app-loading';
-import { useState } from '@hookstate/core';
 import { commify } from 'ethers/lib/utils';
 import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
@@ -34,7 +32,16 @@ const AssetsPanel = ({
 					</View>
 				</View>
 				<View style={styles.cardBottomContent}>
-					<AddFundsButton />
+					<AddFundsButton
+						button={
+							// eslint-disable-next-line react/jsx-wrap-multilines
+							<TextButton
+								text="Add funds"
+								icon="add-circle-outline"
+								containerStyle={styles.cardDivisor}
+							/>
+						}
+					/>
 					<TextButton
 						text="Send"
 						icon="arrow-circle-up"

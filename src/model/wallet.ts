@@ -28,7 +28,8 @@ export const getProvider = async (network?: string) => {
 };
 
 export const getENSAddress = async (address: string) => {
-	const name = (await getProvider(networks.mainnet.id)).lookupAddress(address);
+	const { testnet } = await selectedNetwork();
+	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).lookupAddress(address);
 	return name;
 };
 
@@ -95,7 +96,15 @@ export const walletCreate = async (): Promise<null | WalletState> => {
 		eth,
 		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
 	};
-	return { privateKey: wallet.privateKey, address: wallet.address, walletId: id, network: blockchain, balance };
+	return {
+		privateKey: wallet.privateKey,
+		address: wallet.address,
+		walletId: id,
+		network: blockchain,
+		balance,
+		allTokens: [],
+		transactions: []
+	};
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
@@ -189,11 +198,38 @@ export const estimateGas = async (): Promise<EstimateGasResponse> => {
 	return result.json();
 };
 
+// The date of data snapshot in dd-mm-yyyy eg. 30-12-2017
+export const getPriceHistory = async (date: string, tokenId = 'ethereum'): Promise<EtherPriceHistoryResponse> => {
+	const result = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}/history?date=${date}`);
+	return result.json();
+};
+
 export const getWalletTokens = async (wallet: string): Promise<WalletTokensResponse> => {
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const { zapperNetwork } = await selectedNetwork();
 	const baseURL = 'https://api.zapper.fi/v1/protocols/tokens/balances';
 	const result = await fetch(`${baseURL}?api_key=${apiKey}&addresses[]=${wallet}&network=${zapperNetwork}`);
+	return result.json();
+};
+
+export const getTransactions = async (address: string, page = 1, offset = 100): Promise<Array<Transaction>> => {
+	const { etherscanURL, etherscanAPIKey } = await selectedNetwork();
+	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const baseUrl = `${etherscanURL}api?module=account&action=txlist&address=`;
+	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=${apiKey}`;
+	const result = await fetch(`${baseUrl}${suffix}`);
+	const { result: normal }: TransactionResponse = await result.json();
+
+	const erc20BaseUrl = `${etherscanURL}api?module=account&action=tokentx&address=`;
+	const erc20result = await fetch(`${erc20BaseUrl}${suffix}`);
+	const { result: erc20 }: TransactionResponse = await erc20result.json();
+
+	const all = [...erc20, ...normal];
+	return all.sort((a, b) => +b.timeStamp - +a.timeStamp);
+};
+
+export const getTokenList = async (): Promise<Array<Coin>> => {
+	const result = await fetch('https://api.coingecko.com/api/v3/coins/list');
 	return result.json();
 };
 
@@ -274,4 +310,61 @@ export interface WalletToken {
 	balance: number;
 	balanceRaw: string;
 	balanceUSD: number;
+}
+
+export interface Transaction {
+	accessList: string;
+	blockHash: string;
+	blockNumber: string;
+	chainId: string;
+	confirmations: string;
+	data: string;
+	from: string;
+	gasLimit: string;
+	gasPrice: string;
+	hash: string;
+	nonce: string;
+	timeStamp: string;
+	to: string;
+	transactionIndex: string;
+	type: string;
+	value: string;
+	contractAddress: string;
+	cumulativeGasUsed: string;
+	gas: string;
+	gasUsed: string;
+	input: string;
+	isError: string;
+	txreceipt_status: string;
+	tokenName: string;
+	tokenSymbol: string;
+	tokenDecimal: string;
+}
+
+export interface TransactionResponse {
+	result: [Transaction];
+	status: string;
+	message: string;
+}
+
+export interface AllTransactionsResponse {
+	normal: Array<TransactionResponse>;
+	erc20: Array<TransactionResponse>;
+}
+
+export interface EtherPriceHistoryResponse {
+	id: string;
+	symbol: string;
+	name: string;
+	market_data: {
+		current_price: {
+			usd: number;
+		};
+	};
+}
+
+export interface Coin {
+	id: string;
+	symbol: string;
+	name: string;
 }

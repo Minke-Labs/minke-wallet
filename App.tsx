@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
-import { Provider as PaperProvider, IconButton } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import WelcomeScreen from './src/screens/welcome-flow/welcome/WelcomeScreen';
 import { WalletCreatedScreen } from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
