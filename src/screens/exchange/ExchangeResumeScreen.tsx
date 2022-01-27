@@ -26,8 +26,8 @@ const TokenDetail = ({
 	amount: string | undefined;
 	usdAmount: string | undefined;
 }) => (
-	<View style={{ width: '50%', padding: 16 }}>
-		<Image source={{ uri: token.img }} style={{ width: 40, height: 40 }} />
+	<View style={{ padding: 16 }}>
+		<Image source={{ uri: token.img }} style={{ width: 40, height: 40, marginBottom: 16 }} />
 		<Text style={{ fontWeight: 'bold' }}>${usdAmount}</Text>
 		<Text>
 			{amount} {token.symbol}
@@ -136,6 +136,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		<Container style={styles.exchangeContainer}>
 			<View style={styles.exchangeResumeContainer}>
 				<Headline style={styles.pageTitle}>Exchange Resume</Headline>
+
 				<View style={styles.exchangeResume}>
 					<TokenDetail
 						token={from}
