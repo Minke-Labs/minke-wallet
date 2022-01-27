@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { Headline } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
@@ -14,7 +14,7 @@ import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
 import globalStyles from '@src/components/global.styles';
 import { globalWalletState } from '@src/stores/WalletStore';
-import logo from '@assets/wallet-created.png';
+import BackupImage from '@assets/backup.svg';
 import styles from './styles';
 
 const BackupSettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
@@ -53,7 +53,7 @@ const BackupSettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				<Headline style={globalStyles.headline}>Backup</Headline>
 				<SecondaryText>{wallet}</SecondaryText>
 				<View style={styles.heroImageContainer}>
-					<Image source={logo} style={styles.heroImage} />
+					<BackupImage />
 				</View>
 				{backups.includes(seed.value || '') ? (
 					<>
