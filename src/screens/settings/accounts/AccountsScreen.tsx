@@ -2,28 +2,38 @@ import React, { useEffect } from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { useState } from '@hookstate/core';
 import { Headline } from 'react-native-paper';
-import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
+import { MinkeWallet, getAllWallets, saveAllWallets, AllMinkeWallets } from '@models/wallet';
 import ListItem from '@components/ListItem';
 import Container from '@components/Container';
+import { find } from 'lodash';
 import globalStyle from '@components/global.styles';
 import { walletState, globalWalletState } from '@src/stores/WalletStore';
 
 const AccountsScreen = () => {
 	const state = useState(globalWalletState());
 	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
+	const { address } = state.value;
 
 	useEffect(() => {
 		const fetchWallets = async () => {
 			setWallets(await getAllWallets());
 		};
 		fetchWallets();
-	}, []);
+	}, [address]);
 
-	const onSelectWallet = (wallet: MinkeWallet) => {
+	const onSelectWallet = async (wallet: MinkeWallet) => {
+		const allWallets = wallets || {};
+		const chosen = wallet;
+		const primaryWallet = find(allWallets, (w) => w.primary);
+		if (primaryWallet) {
+			primaryWallet.primary = false;
+			allWallets[primaryWallet.id] = primaryWallet;
+		}
+		chosen.primary = true;
+		allWallets[chosen.id] = chosen;
+		await saveAllWallets(allWallets);
 		state.set(walletState(wallet));
 	};
-
-	const { address } = state.value;
 
 	return (
 		<Container>

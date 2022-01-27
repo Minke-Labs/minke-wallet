@@ -12,7 +12,6 @@ interface Props {
 const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained', icon, disabled = false }: any) => {
 	const { colors } = useTheme();
 	const color = mode === 'contained' ? colors.buttonText : colors.linkText;
-	const labelColor = disabled ? colors.disabled : color;
 
 	return (
 		<Button
@@ -22,7 +21,7 @@ const PrimaryButton: React.FC<Props> = ({ children, onPress, mode = 'contained',
 			uppercase={false}
 			labelStyle={{
 				fontSize: 16,
-				color: labelColor
+				color
 			}}
 			style={{
 				alignSelf: 'stretch',
