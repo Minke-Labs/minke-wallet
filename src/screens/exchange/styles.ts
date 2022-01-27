@@ -199,6 +199,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		exchangeResume: {
 			flexDirection: 'row',
 			borderRadius: 16,
+			marginTop: 24,
 			marginBottom: 24,
 			backgroundColor: colors.fill
 		},
