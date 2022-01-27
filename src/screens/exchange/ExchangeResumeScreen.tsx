@@ -135,10 +135,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	return (
 		<Container style={styles.exchangeContainer}>
 			<View style={styles.exchangeResumeContainer}>
-				<View style={styles.exchangeHeadlineRow}>
-					<Headline style={styles.pageTitle}>Exchange Resume</Headline>
-				</View>
-				<Card>
+				<Headline style={styles.pageTitle}>Exchange Resume</Headline>
+				<Card style={styles.exchangeResumeCard}>
 					<View style={styles.exchangeResume}>
 						<TokenDetail
 							token={from}

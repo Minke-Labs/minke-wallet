@@ -68,6 +68,9 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			backgroundColor: colors.background,
 			position: 'absolute'
 		},
+		exchangeResumeCard: {
+			marginTop: 24
+		},
 		tokenCardDivisor: {
 			justifyContent: 'center',
 			alignItems: 'center',
