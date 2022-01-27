@@ -36,9 +36,11 @@ const BackupSettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const seed = useState(loadSeed);
 	if (seed.promised) return <AppLoading />;
 
+	const toBackup = seed.value || walletState.privateKey.value;
+
 	const backupOnKeychain = async () => {
-		if (seed.value) {
-			const backedUp = await backupSeedOnKeychain(seed.value);
+		if (toBackup) {
+			const backedUp = await backupSeedOnKeychain(toBackup);
 			if (backedUp) {
 				loadBackups();
 			} else {
@@ -55,16 +57,18 @@ const BackupSettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				<View style={styles.heroImageContainer}>
 					<BackupImage />
 				</View>
-				{backups.includes(seed.value || '') ? (
+				{backups.includes(toBackup) ? (
 					<>
 						<MainText>Your Wallet is Backed Up!</MainText>
 						<SecondaryText>
 							If you lose this device you can recover your encrpyted wallet backup from iCloud. Remember
 							to activate the iCloud Keychain backup
 						</SecondaryText>
-						<PrimaryButton onPress={() => navigation.navigate('Backup')} mode="outlined">
-							View Secret Phrase
-						</PrimaryButton>
+						{seed.value ? (
+							<PrimaryButton onPress={() => navigation.navigate('Backup')} mode="outlined">
+								View Secret Phrase
+							</PrimaryButton>
+						) : null}
 					</>
 				) : (
 					<>

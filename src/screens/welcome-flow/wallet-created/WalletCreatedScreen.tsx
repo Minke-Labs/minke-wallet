@@ -27,8 +27,9 @@ export function WalletCreatedScreen({ navigation }: NativeStackScreenProps<RootS
 	if (seed.promised) return <AppLoading />;
 
 	const backupOnKeychain = async () => {
-		if (seed.value) {
-			const backedUp = await backupSeedOnKeychain(seed.value);
+		const toBackup = seed.value || walletState.privateKey.value;
+		if (toBackup) {
+			const backedUp = await backupSeedOnKeychain(toBackup);
 			if (backedUp) {
 				onFinish();
 			} else {

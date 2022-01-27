@@ -14,6 +14,8 @@ import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+import ImportWalletButton from '@src/components/ImportWalletButton';
+import PrimaryButton from '@src/components/PrimaryButton';
 import WelcomeScreen from './src/screens/welcome-flow/welcome/WelcomeScreen';
 import { WalletCreatedScreen } from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
 import { BackupScreen } from './src/screens/welcome-flow/manual-backup/BackupScreen';
@@ -114,7 +116,22 @@ export default function App() {
 					<Stack.Screen
 						name="Accounts"
 						component={AccountsScreen}
-						options={(props) => defaultOptions(props)}
+						options={(props) => ({
+							...defaultOptions(props),
+							...{
+								headerRight: () => {
+									// eslint-disable-next-line react/prop-types
+									const { navigation }: NativeStackScreenProps<RootStackParamList> = props;
+									return (
+										<ImportWalletButton
+											// eslint-disable-next-line react/prop-types
+											onImportFinished={() => navigation.navigate('Wallet')}
+											button={<PrimaryButton mode="text">Import</PrimaryButton>}
+										/>
+									);
+								}
+							}
+						})}
 					/>
 
 					<Stack.Screen
