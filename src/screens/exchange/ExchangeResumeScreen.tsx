@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
-import { Card, Headline, Text, Portal, Modal, Button, IconButton, useTheme } from 'react-native-paper';
+import { Card, Headline, Text, Portal, Button, useTheme } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
 import ProgressButton from '@components/ProgressButton';
+import Modal from '@components/Modal';
 import { Svg, Path } from 'react-native-svg';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
@@ -40,7 +41,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const wallet = globalWalletState();
 	const { to, from, fromAmount, toAmount } = exchange.value;
 	const [priceQuote, setPriceQuote] = useState<ExchangeRoute>();
-	const [visible, setVisible] = useState(false);
+	const [visible, setVisible] = useState(true);
 	const [transactionHash, setTransactionHash] = useState(
 		'0x94f47857de4edbdbc18d5c788856795533b2fe6c21b966166fae143c7688f193'
 	);
@@ -53,7 +54,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		setVisible(false);
 		navigation.navigate('Wallet');
 	};
-	const containerStyle = { backgroundColor: 'white', padding: 20 };
+
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
@@ -178,11 +179,11 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 							usdAmount={priceQuote?.priceRoute.destUSD}
 						/>
 					</View>
-					<View style={styles.ExchangeResumeRateFixedContiner}>
-						<View style={styles.ExchangeResumeRateFixedLabel}>
+					<View style={styles.exchangeResumeRateFixedContiner}>
+						<View style={styles.exchangeResumeRateFixedLabel}>
 							<Text>Rate fixed for: </Text>
 						</View>
-						<View style={styles.ExchangeResumeRateFixed}>
+						<View style={styles.exchangeResumeRateFixed}>
 							<Text>1:95</Text>
 						</View>
 					</View>
@@ -227,21 +228,50 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			) : null}
 			{priceQuote ? <ProgressButton onFinish={onFinish} /> : null}
 			<Portal>
-				<Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-					<IconButton icon="close" size={24} color="#006AA6" onPress={hideModal} />
-					<Image source={{ uri: exchange.value.from.img }} style={{ width: 50, height: 50 }} />
-					<Image source={{ uri: exchange.value.to.img }} style={{ width: 50, height: 50 }} />
-					<Headline>Processing Transaction</Headline>
-					<Text>
-						Exchanging {exchange.value.from.symbol} for {exchange.value.to.symbol}
-					</Text>
-					<Text>Transaction</Text>
-					<Button
-						mode="text"
-						onPress={() => Linking.openURL(`https://ropsten.etherscan.io/tx/${transactionHash}`)}
-					>
-						{smallWalletAddress(transactionHash)}
-					</Button>
+				<Modal visible={visible} onDismiss={hideModal}>
+					<View style={styles.modalRow}>
+						<Image
+							source={{ uri: exchange.value.from.img }}
+							style={{ width: 50, height: 50, marginRight: 56 }}
+						/>
+						<View style={styles.exchangeResumeBackground}>
+							<Svg width="24" height="24" viewBox="0 0 24 24" fill={colors.primary}>
+								<Path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									// eslint-disable-next-line max-len
+									d="M19.6601 13.0178C20.1602 12.5277 20.1602 11.7224 19.6601 11.2322L15.0498 6.71421C14.6554 6.32765 14.649 5.69452 15.0356 5.30007C15.4221 4.90562 16.0552 4.89923 16.4497 5.28579L21.0599 9.80381C22.3602 11.0781 22.3602 13.1719 21.0599 14.4462L16.4497 18.9642C16.0552 19.3508 15.4221 19.3444 15.0356 18.9499C14.649 18.5555 14.6554 17.9224 15.0498 17.5358L19.6601 13.0178Z"
+									fill={colors.primary}
+								/>
+								<Path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									// eslint-disable-next-line max-len
+									d="M22 12.125C22 12.6773 21.5523 13.125 21 13.125L8.5 13.125C7.94771 13.125 7.5 12.6773 7.5 12.125C7.5 11.5727 7.94771 11.125 8.5 11.125L21 11.125C21.5523 11.125 22 11.5727 22 12.125ZM5.875 12.125C5.875 12.6773 5.42728 13.125 4.875 13.125L3.125 13.125C2.57271 13.125 2.125 12.6773 2.125 12.125C2.125 11.5727 2.57271 11.125 3.125 11.125L4.875 11.125C5.42728 11.125 5.875 11.5727 5.875 12.125Z"
+									fill={colors.primary}
+								/>
+							</Svg>
+						</View>
+						<Image source={{ uri: exchange.value.to.img }} style={{ width: 50, height: 50 }} />
+					</View>
+					<View style={styles.modalColumn}>
+						<Headline style={styles.pageTitle}>Processing Transaction</Headline>
+					</View>
+					<View style={styles.modalRow}>
+						<Text>Exchanging </Text>
+						<Text style={styles.textBold}> {exchange.value.from.symbol}</Text>
+						<Text> for </Text>
+						<Text style={styles.textBold}> {exchange.value.to.symbol}</Text>
+					</View>
+					<View style={styles.modalRow}>
+						<Text>Transaction:</Text>
+						<Button
+							mode="text"
+							onPress={() => Linking.openURL(`https://ropsten.etherscan.io/tx/${transactionHash}`)}
+						>
+							{smallWalletAddress(transactionHash)}
+						</Button>
+					</View>
 				</Modal>
 			</Portal>
 		</Container>

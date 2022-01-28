@@ -222,7 +222,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			width: '50%',
 			padding: 16
 		},
-		ExchangeResumeRateFixedContiner: {
+		exchangeResumeRateFixedContiner: {
 			flexDirection: 'row',
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -231,10 +231,10 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderTopWidth: 1,
 			borderTopColor: colors.background
 		},
-		ExchangeResumeRateFixedLabel: {
+		exchangeResumeRateFixedLabel: {
 			marginRight: 8
 		},
-		ExchangeResumeRateFixed: {
+		exchangeResumeRateFixed: {
 			borderWidth: 1,
 			borderRadius: 16,
 			borderColor: colors.background,
@@ -242,5 +242,22 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingBottom: 2,
 			paddingRight: 16,
 			paddingLeft: 16
+		},
+
+		// ExchangeResumeModal
+		modalContent: {
+			backgroundColor: 'red'
+		},
+		modalRow: {
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			marginBottom: 24
+		},
+		modalColumn: {
+			flexDirection: 'column',
+			justifyContent: 'center',
+			alignItems: 'center',
+			marginBottom: 16
 		}
 	});
