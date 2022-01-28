@@ -6,6 +6,7 @@ export interface Network {
 	id: string;
 	testnet: boolean;
 	etherscanURL: string;
+	etherscanAPIURL: string;
 	etherscanAPIKey?: string;
 	gasURL?: string;
 	zapperNetwork: string;
@@ -27,7 +28,8 @@ export const networks: Networks = {
 		name: 'Ethereum',
 		id: 'mainnet',
 		testnet: false,
-		etherscanURL: 'https://api.etherscan.io/',
+		etherscanURL: 'https://etherscan.io/',
+		etherscanAPIURL: 'https://api.etherscan.io/',
 		zapperNetwork: 'ethereum',
 		supportedTokenList: {
 			dai: '0x6b175474e89094c44da98b954eedeac495271d0f'
@@ -38,7 +40,8 @@ export const networks: Networks = {
 		name: 'Polygon',
 		id: 'matic',
 		testnet: false,
-		etherscanURL: 'https://api.polygonscan.com/',
+		etherscanURL: 'https://polygonscan.com/',
+		etherscanAPIURL: 'https://api.polygonscan.com/',
 		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		zapperNetwork: 'polygon',
 		supportedTokenList: {
@@ -50,7 +53,8 @@ export const networks: Networks = {
 		name: 'Polygon Test',
 		id: 'maticmum',
 		testnet: true,
-		etherscanURL: 'https://api-testnet.polygonscan.com/',
+		etherscanURL: 'https://mumbai.polygonscan.com/',
+		etherscanAPIURL: 'https://api-testnet.polygonscan.com/',
 		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		gasURL: 'https://api.polygonscan.com/',
 		zapperNetwork: 'polygon',
@@ -63,7 +67,8 @@ export const networks: Networks = {
 		name: 'Ropsten',
 		id: 'ropsten',
 		testnet: true,
-		etherscanURL: 'https://api-ropsten.etherscan.io/',
+		etherscanURL: 'https://ropsten.etherscan.io/',
+		etherscanAPIURL: 'https://api-ropsten.etherscan.io/',
 		zapperNetwork: 'ethereum',
 		supportedTokenList: {
 			dai: '0xad6d458402f60fd3bd25163575031acdce07538d'

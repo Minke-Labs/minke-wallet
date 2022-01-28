@@ -58,9 +58,9 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 };
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const { etherscanURL, etherscanAPIKey } = await selectedNetwork();
+	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
 	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
-	const result = await fetch(`${etherscanURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
+	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
 };
 
@@ -239,9 +239,9 @@ export const sendTransaction = async (
 	return wallet.provider.sendTransaction(signedTx as string);
 };
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
-	const { gasURL, etherscanURL } = await selectedNetwork();
+	const { gasURL, etherscanAPIURL } = await selectedNetwork();
 	const result = await fetch(
-		`${gasURL || etherscanURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
+		`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
 	);
 	return result.json();
 };
@@ -260,15 +260,15 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 	return result.json();
 };
 
-export const getTransactions = async (address: string, page = 1, offset = 100): Promise<Array<Transaction>> => {
-	const { etherscanURL, etherscanAPIKey } = await selectedNetwork();
+export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {
+	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
 	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
-	const baseUrl = `${etherscanURL}api?module=account&action=txlist&address=`;
+	const baseUrl = `${etherscanAPIURL}api?module=account&action=txlist&address=`;
 	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=${apiKey}`;
 	const result = await fetch(`${baseUrl}${suffix}`);
 	const { result: normal }: TransactionResponse = await result.json();
 
-	const erc20BaseUrl = `${etherscanURL}api?module=account&action=tokentx&address=`;
+	const erc20BaseUrl = `${etherscanAPIURL}api?module=account&action=tokentx&address=`;
 	const erc20result = await fetch(`${erc20BaseUrl}${suffix}`);
 	const { result: erc20 }: TransactionResponse = await erc20result.json();
 

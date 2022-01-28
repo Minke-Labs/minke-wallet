@@ -15,6 +15,7 @@ export type RootStackParamList = {
 	ChangeNetwork: undefined;
 	Accounts: undefined;
 	BackupSettings: undefined;
+	Transactions: undefined;
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> = RouteProp<RootStackParamList, RouteName>;

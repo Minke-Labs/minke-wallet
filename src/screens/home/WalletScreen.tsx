@@ -71,6 +71,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 	const onSettingsPress = () => navigation.navigate('Settings');
 	const onSend = () => navigation.navigate('TransactionSelectFunds');
 	const onSwitchAccounts = () => navigation.navigate('Accounts');
+	const onSeeAllTransactions = () => navigation.navigate('Transactions');
 
 	const { address, balance } = state.value;
 
@@ -89,7 +90,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 						onExchange={onExchange}
 						onSwitchAccounts={onSwitchAccounts}
 					/>
-					<FinancePanel loading={loading} />
+					<FinancePanel loading={loading} onSeeAllTransactions={onSeeAllTransactions} />
 				</ScrollView>
 			</SafeAreaView>
 		</Container>

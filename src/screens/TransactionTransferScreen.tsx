@@ -48,7 +48,7 @@ export function TransactionTransferScreen({ navigation }: NativeStackScreenProps
 						}
 					]);
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => console.error(err));
 		}
 	};
 
