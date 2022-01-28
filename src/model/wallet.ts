@@ -101,11 +101,16 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletSta
 
 	await savePrivateKey(wallet.address, wallet.privateKey);
 	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
+
+	// sets the new wallet as the primary wallet
 	const existingWallets = (await getAllWallets()) || {};
 	const primaryWallet = find(existingWallets, (w) => w.primary);
-	if (isEmpty(existingWallets) || isEmpty(primaryWallet)) {
-		newWallet.primary = true;
+	if (primaryWallet) {
+		primaryWallet.primary = false;
+		existingWallets[primaryWallet.id] = primaryWallet;
 	}
+
+	newWallet.primary = true;
 	existingWallets[id] = newWallet;
 	await saveAllWallets(existingWallets);
 	const eth = await wallet.getBalance();
