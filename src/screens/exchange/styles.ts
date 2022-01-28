@@ -159,7 +159,9 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderRadius: 50,
 			overflow: 'hidden',
 			marginBottom: 24,
-			height: 40,
+			height: 48,
+			borderBottomWidth: 0,
+			borderBottomColor: colors.fill,
 			backgroundColor: colors.fill
 		},
 		tokenItem: {

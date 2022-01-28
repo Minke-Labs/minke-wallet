@@ -91,17 +91,17 @@ const SearchTokens = ({
 		<Portal>
 			<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
 				<View style={styles.header}>
-					<IconButton icon="close" size={20} color={colors.primary} onPress={onDismiss} />
+					<IconButton icon="close" size={20} onPress={onDismiss} />
 				</View>
 
 				<TextInput
 					style={styles.searchBar}
+					underlineColorAndroid="transparent"
 					placeholder="Search token"
 					placeholderTextColor={colors.placeholder}
 					value={search}
 					onChangeText={(text) => onSearch(text)}
 					left={<TextInput.Icon name="magnify" />}
-					underlineColorAndroid="transparent"
 				/>
 
 				<FlatList
