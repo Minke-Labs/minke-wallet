@@ -31,6 +31,7 @@ const ImportWalletButton = ({ button, onImportFinished }: { button: JSX.Element;
 			try {
 				const wallet = await restoreWalletByMnemonic(text.trim());
 				state.set(wallet);
+				hideModal();
 				onImportFinished();
 			} catch (error) {
 				console.error('Invalid seed phrase or primary key');
