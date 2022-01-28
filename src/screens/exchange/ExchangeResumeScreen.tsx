@@ -137,45 +137,55 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			<View style={styles.exchangeResumeContainer}>
 				<Headline style={styles.pageTitle}>Exchange Resume</Headline>
 
-				<View style={styles.exchangeResume}>
-					<TokenDetail
-						token={from}
-						amount={
-							formatAmount(priceQuote?.priceRoute.srcAmount, priceQuote?.priceRoute.srcDecimals) ||
-							fromAmount
-						}
-						usdAmount={priceQuote?.priceRoute.srcUSD}
-					/>
+				<View style={styles.exchangeResumeCard}>
+					<View style={styles.exchangeResume}>
+						<TokenDetail
+							token={from}
+							amount={
+								formatAmount(priceQuote?.priceRoute.srcAmount, priceQuote?.priceRoute.srcDecimals) ||
+								fromAmount
+							}
+							usdAmount={priceQuote?.priceRoute.srcUSD}
+						/>
 
-					<View style={styles.exchangeResumeDivisor}>
-						<View style={styles.exchangeResumeBackground}>
-							<Svg width="24" height="24" viewBox="0 0 24 24" fill={colors.primary}>
-								<Path
-									fill-rule="evenodd"
-									clip-rule="evenodd"
-									// eslint-disable-next-line max-len
-									d="M19.6601 13.0178C20.1602 12.5277 20.1602 11.7224 19.6601 11.2322L15.0498 6.71421C14.6554 6.32765 14.649 5.69452 15.0356 5.30007C15.4221 4.90562 16.0552 4.89923 16.4497 5.28579L21.0599 9.80381C22.3602 11.0781 22.3602 13.1719 21.0599 14.4462L16.4497 18.9642C16.0552 19.3508 15.4221 19.3444 15.0356 18.9499C14.649 18.5555 14.6554 17.9224 15.0498 17.5358L19.6601 13.0178Z"
-									fill={colors.primary}
-								/>
-								<Path
-									fill-rule="evenodd"
-									clip-rule="evenodd"
-									// eslint-disable-next-line max-len
-									d="M22 12.125C22 12.6773 21.5523 13.125 21 13.125L8.5 13.125C7.94771 13.125 7.5 12.6773 7.5 12.125C7.5 11.5727 7.94771 11.125 8.5 11.125L21 11.125C21.5523 11.125 22 11.5727 22 12.125ZM5.875 12.125C5.875 12.6773 5.42728 13.125 4.875 13.125L3.125 13.125C2.57271 13.125 2.125 12.6773 2.125 12.125C2.125 11.5727 2.57271 11.125 3.125 11.125L4.875 11.125C5.42728 11.125 5.875 11.5727 5.875 12.125Z"
-									fill={colors.primary}
-								/>
-							</Svg>
+						<View style={styles.exchangeResumeDivisor}>
+							<View style={styles.exchangeResumeBackground}>
+								<Svg width="24" height="24" viewBox="0 0 24 24" fill={colors.primary}>
+									<Path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										// eslint-disable-next-line max-len
+										d="M19.6601 13.0178C20.1602 12.5277 20.1602 11.7224 19.6601 11.2322L15.0498 6.71421C14.6554 6.32765 14.649 5.69452 15.0356 5.30007C15.4221 4.90562 16.0552 4.89923 16.4497 5.28579L21.0599 9.80381C22.3602 11.0781 22.3602 13.1719 21.0599 14.4462L16.4497 18.9642C16.0552 19.3508 15.4221 19.3444 15.0356 18.9499C14.649 18.5555 14.6554 17.9224 15.0498 17.5358L19.6601 13.0178Z"
+										fill={colors.primary}
+									/>
+									<Path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										// eslint-disable-next-line max-len
+										d="M22 12.125C22 12.6773 21.5523 13.125 21 13.125L8.5 13.125C7.94771 13.125 7.5 12.6773 7.5 12.125C7.5 11.5727 7.94771 11.125 8.5 11.125L21 11.125C21.5523 11.125 22 11.5727 22 12.125ZM5.875 12.125C5.875 12.6773 5.42728 13.125 4.875 13.125L3.125 13.125C2.57271 13.125 2.125 12.6773 2.125 12.125C2.125 11.5727 2.57271 11.125 3.125 11.125L4.875 11.125C5.42728 11.125 5.875 11.5727 5.875 12.125Z"
+										fill={colors.primary}
+									/>
+								</Svg>
+							</View>
+						</View>
+
+						<TokenDetail
+							token={to}
+							amount={
+								formatAmount(priceQuote?.priceRoute.destAmount, priceQuote?.priceRoute.destDecimals) ||
+								toAmount
+							}
+							usdAmount={priceQuote?.priceRoute.destUSD}
+						/>
+					</View>
+					<View style={styles.ExchangeResumeRateFixedContiner}>
+						<View style={styles.ExchangeResumeRateFixedLabel}>
+							<Text>Rate fixed for: </Text>
+						</View>
+						<View style={styles.ExchangeResumeRateFixed}>
+							<Text>1:95</Text>
 						</View>
 					</View>
-
-					<TokenDetail
-						token={to}
-						amount={
-							formatAmount(priceQuote?.priceRoute.destAmount, priceQuote?.priceRoute.destDecimals) ||
-							toAmount
-						}
-						usdAmount={priceQuote?.priceRoute.destUSD}
-					/>
 				</View>
 			</View>
 

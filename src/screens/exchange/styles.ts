@@ -55,23 +55,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			fontFamily: 'Inter_800ExtraBold',
 			paddingLeft: 8
 		},
-		exchangeResumeDivisor: {
-			justifyContent: 'center',
-			alignItems: 'center',
-			borderRightWidth: 1,
-			borderColor: colors.background,
-			marginTop: 24,
-			marginBottom: 24
-		},
-		exchangeResumeBackground: {
-			borderRadius: 50,
-			padding: 8,
-			backgroundColor: colors.background,
-			position: 'absolute'
-		},
-		exchangeResumeCard: {
-			marginTop: 24
-		},
 		tokenCardDivisor: {
 			justifyContent: 'center',
 			alignItems: 'center',
@@ -195,20 +178,38 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			padding: 24,
 			flexDirection: 'column'
 		},
+		exchangeResumeDivisor: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderRightWidth: 1,
+			borderColor: colors.background,
+			marginTop: 24,
+			marginBottom: 24
+		},
+		exchangeResumeBackground: {
+			borderRadius: 50,
+			padding: 8,
+			backgroundColor: colors.background,
+			position: 'absolute'
+		},
 		exchangeResumeContainer: {
 			paddingTop: 0
 		},
+		exchangeResumeCard: {
+			marginBottom: 16,
+			flexDirection: 'column',
+			borderRadius: 16,
+			backgroundColor: colors.fill
+		},
 		exchangeResume: {
 			flexDirection: 'row',
-			borderRadius: 16,
+			justifyContent: 'space-around',
 			marginTop: 24,
-			marginBottom: 24,
-			backgroundColor: colors.fill,
-			justifyContent: 'space-around'
+			marginBottom: 24
 		},
 		summaryCard: {
 			borderRadius: 16,
-			marginBottom: 24,
+			marginBottom: 16,
 			backgroundColor: colors.fill
 		},
 		summaryRow: {
@@ -220,5 +221,26 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		tokenDetail: {
 			width: '50%',
 			padding: 16
+		},
+		ExchangeResumeRateFixedContiner: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'center',
+			paddingTop: 8,
+			paddingBottom: 8,
+			borderTopWidth: 1,
+			borderTopColor: colors.background
+		},
+		ExchangeResumeRateFixedLabel: {
+			marginRight: 8
+		},
+		ExchangeResumeRateFixed: {
+			borderWidth: 1,
+			borderRadius: 16,
+			borderColor: colors.background,
+			paddingTop: 2,
+			paddingBottom: 2,
+			paddingRight: 16,
+			paddingLeft: 16
 		}
 	});
