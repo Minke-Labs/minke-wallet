@@ -25,7 +25,8 @@ export const darkTheme = {
 		linkText: '#FFFFFF',
 		surface: '#0A2138',
 		secondaryText: '#748190',
-		fill: 'rgba(255, 255, 255, 0.1)'
+		fill: 'rgba(255, 255, 255, 0.1)',
+		disabled: 'rgba(255, 255, 255, 0.05)'
 	}
 };
 
@@ -41,6 +42,7 @@ export const lightTheme = {
 		buttonText: '#FFFFFF',
 		linkText: '#006AA6',
 		secondaryText: '#4E5E6F',
-		fill: '#FFFFFF'
+		fill: '#FFFFFF',
+		disabled: '#D0D0D0'
 	}
 };
