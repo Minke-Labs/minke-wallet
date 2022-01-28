@@ -39,18 +39,16 @@ export const searchForMinkeBackups = async (): Promise<string[]> => {
 		// eslint-disable-next-line no-await-in-loop
 		backup = (await loadObject(key, publicAccessControlOptions)) as string | null;
 	}
-
 	return backups;
 };
 
-export const backupSeedOnKeychain = async (seed: string): Promise<boolean> => {
-	const seedValue = seed;
+export const backupSeedOnKeychain = async (seedOrPrivateKey: string): Promise<boolean> => {
 	let counter = 0;
 	let key = `${minkeWalletPrefix}${counter}`;
 	let saved = await loadObject(key, publicAccessControlOptions);
 
 	while (saved) {
-		if (saved === seedValue) {
+		if (saved === seedOrPrivateKey) {
 			return true;
 		}
 		counter += 1;
@@ -59,11 +57,11 @@ export const backupSeedOnKeychain = async (seed: string): Promise<boolean> => {
 		saved = await loadObject(key, publicAccessControlOptions);
 	}
 
-	if (seedValue) {
-		await saveObject(key, seedValue);
+	if (seedOrPrivateKey) {
+		await saveObject(key, seedOrPrivateKey);
 		const savedValue = await loadObject(key, publicAccessControlOptions);
 
-		return seedValue === savedValue;
+		return seedOrPrivateKey === savedValue;
 	}
 
 	return false;

@@ -7,8 +7,5 @@ export default StyleSheet.create({
 	heroImageContainer: {
 		alignItems: 'center',
 		marginBottom: 20
-	},
-	heroImage: {
-		resizeMode: 'cover'
 	}
 });
