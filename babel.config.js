@@ -20,7 +20,8 @@ module.exports = (api) => {
 						'@screens': './src/screens',
 						'@contexts': './src/contexts',
 						'@routes': './src/routes',
-						'@templates': './src/templates'
+						'@templates': './src/templates',
+						'@images': './src/images'
 					}
 				}
 			]

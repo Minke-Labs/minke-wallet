@@ -15,6 +15,7 @@
 			"@contexts": ["src/contexts/index"],
 			"@routes": ["src/routes/index"],
 			"@templates": ["src/templates/index"],
+			"@images": ["src/images/index"]
 		}
 	}
 }
