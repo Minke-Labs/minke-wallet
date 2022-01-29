@@ -12,7 +12,8 @@
 			"@assets/*": ["assets/*"],
 			"@styles": ["src/styles/index.ts"],
 			"@screens/*": ["src/screens/*"],
-			"@contexts": ["src/contexts/index.ts"],
+			"@contexts": ["src/contexts/index"],
+			"@routes": ["src/routes/index"]
 		}
 	}
 }

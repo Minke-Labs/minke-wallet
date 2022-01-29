@@ -16,9 +16,10 @@ module.exports = (api) => {
 						'@stores': './src/stores',
 						'@models': './src/model',
 						'@assets': './assets',
-						'@styles': './src/styles/index.ts',
+						'@styles': './src/styles',
 						'@screens': './src/screens',
-						'@contexts': './src/contexts/index.ts'
+						'@contexts': './src/contexts',
+						'@routes': './src/routes'
 					}
 				}
 			]

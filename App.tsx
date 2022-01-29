@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { ThemeProvider } from '@contexts';
+import Routes from '@routes';
 
 const App = () => (
 	<ThemeProvider>
-		<Text>APP aqui</Text>
+		<Routes />
 	</ThemeProvider>
 );
 
