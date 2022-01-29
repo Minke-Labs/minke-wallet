@@ -13,7 +13,8 @@
 			"@styles": ["src/styles/index"],
 			"@screens": ["src/screens/index"],
 			"@contexts": ["src/contexts/index"],
-			"@routes": ["src/routes/index"]
+			"@routes": ["src/routes/index"],
+			"@templates": ["src/templates/index"],
 		}
 	}
 }

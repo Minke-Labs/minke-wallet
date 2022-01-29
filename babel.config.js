@@ -19,7 +19,8 @@ module.exports = (api) => {
 						'@styles': './src/styles',
 						'@screens': './src/screens',
 						'@contexts': './src/contexts',
-						'@routes': './src/routes'
+						'@routes': './src/routes',
+						'@templates': './src/templates'
 					}
 				}
 			]
