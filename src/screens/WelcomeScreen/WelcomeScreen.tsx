@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, useColorScheme, Text as NText } from 'react-native';
+import { View, Image, useColorScheme } from 'react-native';
 import { WelcomeTemplate } from '@templates';
 import { welcomeImg, waveWelcomeHeaderDarkImg, waveWelcomeHeaderImg } from '@images';
 import { Text } from '@components';
@@ -17,12 +17,12 @@ const WelcomeScreen = () => {
 					style={styles.backgroundTop}
 				/>
 				<View style={styles.textContainer}>
-					<Text fontWeight="extraBold" fontType="h1" width={273} marginBottom={16}>
+					<Text weight="extraBold" type="h1" width={273} marginBottom={16}>
 						Wave goodbye to your bank!
 					</Text>
-					<Text fontColor="placeholder" width={198} marginBottom={16}>
+					<Text color="placeholder" width={198} marginBottom={16}>
 						Easily save, spend and invest with
-						<NText style={styles.textBold}> Minke </NText>
+						<Text weight="extraBold"> Minke </Text>
 					</Text>
 				</View>
 			</View>
