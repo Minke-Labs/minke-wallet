@@ -4,11 +4,11 @@
 		"strict": true,
 		"baseUrl": "./",
 		"paths": {
-			"@src/*": ["src/*"],
-			"@components/*": ["src/components/*"],
-			"@helpers/*": ["src/helpers/*"],
-			"@stores/*": ["src/stores/*"],
-			"@models/*": ["src/model/*"],
+			"@src/*": ["old/src/*"],
+			"@components/*": ["old/src/components/*"],
+			"@helpers/*": ["old/src/helpers/*"],
+			"@stores/*": ["old/src/stores/*"],
+			"@models/*": ["old/src/model/*"],
 			"@assets/*": ["assets/*"]
 		}
 	}
