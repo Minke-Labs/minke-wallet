@@ -15,7 +15,10 @@ module.exports = (api) => {
 						'@helpers': './src/helpers',
 						'@stores': './src/stores',
 						'@models': './src/model',
-						'@assets': './assets'
+						'@assets': './assets',
+						'@styles': './src/styles/index.ts',
+						'@screens': './src/screens',
+						'@contexts': './src/contexts/index.ts'
 					}
 				}
 			]

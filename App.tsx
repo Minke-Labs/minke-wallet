@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { Text } from 'react-native';
+import { ThemeProvider } from '@contexts';
 
 const App = () => (
-	<View>
+	<ThemeProvider>
 		<Text>APP aqui</Text>
-	</View>
+	</ThemeProvider>
 );
 
 export default App;
