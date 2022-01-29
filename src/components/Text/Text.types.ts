@@ -1,3 +1,4 @@
+import { StyleProp, TextStyle } from 'react-native';
 import { fontWeight, fontType } from './Text.utils';
 
 type FontWeightType = keyof typeof fontWeight;
@@ -10,6 +11,7 @@ interface MakeStylesProps {
 	chosenColor: string;
 	marginBottom: number;
 	width: number;
+	style: StyleProp<TextStyle>;
 }
 
 interface TextComponentProps {
@@ -18,6 +20,7 @@ interface TextComponentProps {
 	color: keyof ReactNativePaper.ThemeColors;
 	marginBottom: number;
 	width: number;
+	style: StyleProp<TextStyle>;
 }
 
 export type { FontWeightType, FontType, MakeStylesProps, TextComponentProps };

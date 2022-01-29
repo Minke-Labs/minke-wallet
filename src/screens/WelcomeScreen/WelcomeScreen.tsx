@@ -17,7 +17,13 @@ const WelcomeScreen = () => {
 					style={styles.backgroundTop}
 				/>
 				<View style={styles.textContainer}>
-					<Text weight="extraBold" type="h1" width={273} marginBottom={16}>
+					<Text
+						weight="extraBold"
+						type="h1"
+						width={273}
+						marginBottom={16}
+						// style={{ borderColor: 'red', borderWidth: 1 }}
+					>
 						Wave goodbye to your bank!
 					</Text>
 					<Text color="placeholder" width={198} marginBottom={16}>

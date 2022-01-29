@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { MakeStylesProps } from './Text.types';
 import { fontWeight, fontType } from './Text.utils';
 
-export const makeStyles = ({ weight, type, chosenColor, marginBottom, width }: MakeStylesProps) =>
+export const makeStyles = ({ weight, type, chosenColor, marginBottom, width, style }: MakeStylesProps) =>
 	StyleSheet.create({
 		text: {
 			fontFamily: fontWeight[weight],
@@ -10,8 +10,7 @@ export const makeStyles = ({ weight, type, chosenColor, marginBottom, width }: M
 			marginBottom,
 			color: chosenColor,
 			...(width > 0 ? { width } : {}),
-			...fontType[type]
-			// borderWidth: 1,
-			// borderColor: 'red'
+			...fontType[type],
+			...{ ...(style as object) }
 		}
 	});
