@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Text, ActivityIndicator, useTheme } from 'react-native-paper';
-import {
-	Transaction as ITransaction,
-	EtherPriceHistoryResponse,
-	smallWalletAddress,
-	getPriceHistory,
-	Coin,
-	getENSAddress
-} from '@models/wallet';
-import { globalWalletState } from '@stores/WalletStore';
-import { BigNumber } from 'ethers';
-import { convertEthToUsd } from '@helpers/utilities';
-import { formatUnits, commify } from 'ethers/lib/utils';
+import React, { useEffect } from 'react';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
+import { useState } from '@hookstate/core';
+import { Transaction as ITransaction, smallWalletAddress, getENSAddress } from '@models/wallet';
+import { formatUnits } from 'ethers/lib/utils';
 import { format } from 'date-fns';
+import * as Linking from 'expo-linking';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { network } from '@src/model/network';
 import globalStyles from '@components/global.styles';
 import transationalReceive from './transational-receive.png';
 import transationalSent from './transational-sent.png';
@@ -39,19 +33,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		}
 	});
 
-const Transaction = ({ transaction, ethusd }: { transaction: ITransaction; ethusd?: number }) => {
-	const [ethLastPrice, setEthLastPrice] = useState<EtherPriceHistoryResponse>();
-	const wallet = globalWalletState();
-	const address = (wallet.value.address || '').toLowerCase();
-	const { from, to, timeStamp, isError, value, tokenSymbol = 'ETH', tokenDecimal = '18' } = transaction;
+const Transaction = ({ transaction }: { transaction: ITransaction }) => {
+	const wallet = useState(globalWalletState());
+	const address = wallet.address.value;
+	const { from, to, timeStamp, isError, value, tokenSymbol = 'ETH', tokenDecimal = '18', hash } = transaction;
 	const received = to.toLowerCase() === address.toLowerCase();
 	const source = received ? from : to;
 	const timestamp = new Date(+timeStamp * 1000);
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const date = format(timestamp, 'dd-MM-yyyy');
-	const today = format(new Date(), 'dd-MM-yyyy');
-	const [formattedSource, setFormattedSource] = useState(smallWalletAddress(source));
+	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
+	const [url, setUrl] = React.useState('');
 
 	useEffect(() => {
 		const formatAddress = async () => {
@@ -61,31 +53,20 @@ const Transaction = ({ transaction, ethusd }: { transaction: ITransaction; ethus
 			}
 		};
 
+		const fetchURL = async () => {
+			const { etherscanURL } = await network();
+			setUrl(`${etherscanURL}tx/${hash}`);
+		};
+
+		fetchURL();
 		formatAddress();
 	}, []);
 
-	useEffect(() => {
-		const fetchEthLastPrice = async () => {
-			const { allTokens } = wallet.value;
-			const coin = allTokens.find((token: Coin) => token.symbol.toLowerCase() === tokenSymbol.toLowerCase());
-			if (coin) {
-				if (date === today && coin.id === 'ethereum') {
-					if (ethusd) {
-						setEthLastPrice({
-							market_data: { current_price: { usd: ethusd } }
-						} as EtherPriceHistoryResponse);
-					}
-				} else {
-					setEthLastPrice(await getPriceHistory(date, coin.id));
-				}
-			}
-		};
-
-		fetchEthLastPrice();
-	}, []);
-
 	return (
-		<View style={[globalStyles.row, styles.transactionItem, { opacity: isError === '1' ? 0.3 : 1 }]}>
+		<TouchableOpacity
+			style={[globalStyles.row, styles.transactionItem, { opacity: isError === '1' ? 0.3 : 1 }]}
+			onPress={() => Linking.openURL(url)}
+		>
 			<View style={globalStyles.row}>
 				<Image source={received ? transationalReceive : transationalSent} style={styles.transationalIcon} />
 				<View>
@@ -99,21 +80,8 @@ const Transaction = ({ transaction, ethusd }: { transaction: ITransaction; ethus
 				<Text style={styles.fontSizeSmall}>
 					{value ? formatUnits(value, tokenDecimal) : ''} {tokenSymbol}
 				</Text>
-				{ethLastPrice && value ? (
-					<Text style={globalStyles.fontBold}>
-						{received ? '' : '-'}$
-						{commify(
-							convertEthToUsd(
-								BigNumber.from(value),
-								ethLastPrice.market_data.current_price.usd.toString()
-							)
-						)}
-					</Text>
-				) : (
-					<ActivityIndicator animating color={colors.background} />
-				)}
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 

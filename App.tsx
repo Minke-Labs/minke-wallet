@@ -16,6 +16,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import ImportWalletButton from '@src/components/ImportWalletButton';
 import PrimaryButton from '@src/components/PrimaryButton';
+import TransactionsScreen from '@src/screens/transactions/TransactionsScreen';
 import WelcomeScreen from './src/screens/welcome-flow/welcome/WelcomeScreen';
 import { WalletCreatedScreen } from './src/screens/welcome-flow/wallet-created/WalletCreatedScreen';
 import { BackupScreen } from './src/screens/welcome-flow/manual-backup/BackupScreen';
@@ -137,6 +138,11 @@ export default function App() {
 					<Stack.Screen
 						name="BackupSettings"
 						component={BackupSettingsScreen}
+						options={(props) => defaultOptions(props)}
+					/>
+					<Stack.Screen
+						name="Transactions"
+						component={TransactionsScreen}
 						options={(props) => defaultOptions(props)}
 					/>
 				</Stack.Navigator>
