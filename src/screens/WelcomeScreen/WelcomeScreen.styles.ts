@@ -26,5 +26,8 @@ export default StyleSheet.create({
 	},
 	textBold: {
 		fontFamily: 'Inter_800ExtraBold'
+	},
+	textContainer: {
+		alignItems: 'center'
 	}
 });
