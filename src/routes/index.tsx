@@ -1,25 +1,26 @@
 import React from 'react';
-import { Text, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+	WelcomeScreen,
+	WalletCreatedScreen,
+	BackupScreen,
+	WalletScreen,
+	TransactionSelectFundsScreen,
+	TransactionContactsScreen,
+	TransactionTransferScreen,
+	ContactCreateScreen,
+	ExchangeScreen,
+	ExchangeResumeScreen,
+	SettingsScreen,
+	ChangeNetworkScreen,
+	BackupSettingsScreen,
+	TransactionsScreen
+} from '@screens';
 import { RootStackParamList } from './types.routes';
-
-const WelcomeScreen = () => <Text>WelcomeScreen</Text>;
-const WalletCreatedScreen = () => <Text>WalletCreatedScreen</Text>;
-const BackupScreen = () => <Text>BackupScreen</Text>;
-const WalletScreen = () => <Text>WalletScreen</Text>;
-const TransactionSelectFundsScreen = () => <Text>TransactionSelectFundsScreen</Text>;
-const TransactionContactsScreen = () => <Text>TransactionContactsScreen</Text>;
-const TransactionTransferScreen = () => <Text>TransactionTransferScreen</Text>;
-const ContactCreateScreen = () => <Text>ContactCreateScreen</Text>;
-const ExchangeScreen = () => <Text>ExchangeScreen</Text>;
-const ExchangeResumeScreen = () => <Text>ExchangeResumeScreen</Text>;
-const SettingsScreen = () => <Text>SettingsScreen</Text>;
-const ChangeNetworkScreen = () => <Text>ChangeNetworkScreen</Text>;
 // const AccountsScreen = () => <Text>AccountsScreen</Text>;
-const BackupSettingsScreen = () => <Text>BackupSettingsScreen</Text>;
-const TransactionsScreen = () => <Text>TransactionsScreen</Text>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
