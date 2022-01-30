@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, useColorScheme } from 'react-native';
 import { WelcomeTemplate } from '@templates';
 import { welcomeImg, waveWelcomeHeaderDarkImg, waveWelcomeHeaderImg } from '@images';
-import { Text, Icon } from '@components';
+import { Text } from '@components';
 import styles from './WelcomeScreen.styles';
 // import PrimaryButton from './PrimaryButton';
 

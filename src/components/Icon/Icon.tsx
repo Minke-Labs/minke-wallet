@@ -4,12 +4,12 @@ import { useTheme } from 'react-native-paper';
 import { Svg, Path, Circle } from 'react-native-svg';
 import { IconProps } from './Icon.types';
 
-const Icon: React.FC<Partial<IconProps>> = ({ name = 'gear', color = 'text' }) => {
+const Icon: React.FC<Partial<IconProps>> = ({ name = 'gear', color = 'text', size = 43 }) => {
 	const { colors } = useTheme();
 	const chosenColor = colors[color];
 
 	return (
-		<Svg>
+		<Svg width={size} height={size} viewBox="0 0 96 96" fill="none">
 			{name === 'networkStroke' && (
 				<>
 					<Circle cx="76.5" cy="64.5" r="10.5" fill={chosenColor} />
