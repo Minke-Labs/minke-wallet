@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, useColorScheme } from 'react-native';
 import { WelcomeTemplate } from '@templates';
 import { welcomeImg, waveWelcomeHeaderDarkImg, waveWelcomeHeaderImg } from '@images';
-import { Text } from '@components';
+import { Text, Token } from '@components';
 import styles from './WelcomeScreen.styles';
 // import PrimaryButton from './PrimaryButton';
 
@@ -32,6 +32,7 @@ const WelcomeScreen = () => {
 						<Text weight="extraBold"> Minke </Text>
 					</Text>
 					{/* <PrimaryButton onPress={() => console.log('CLICOU!!!')}>Create Wallet</PrimaryButton> */}
+					<Token name="clam" size={200} />
 				</View>
 			</View>
 		</WelcomeTemplate>
