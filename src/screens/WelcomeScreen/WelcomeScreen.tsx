@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Image, useColorScheme } from 'react-native';
 import { WelcomeTemplate } from '@templates';
 import { welcomeImg, waveWelcomeHeaderDarkImg, waveWelcomeHeaderImg } from '@images';
-import { Text } from '@components';
+import { Text, Icon } from '@components';
 import styles from './WelcomeScreen.styles';
-import PrimaryButton from './PrimaryButton';
+// import PrimaryButton from './PrimaryButton';
 
 const WelcomeScreen = () => {
 	const scheme = useColorScheme();
@@ -31,7 +31,7 @@ const WelcomeScreen = () => {
 						Easily save, spend and invest with
 						<Text weight="extraBold"> Minke </Text>
 					</Text>
-					<PrimaryButton onPress={() => console.log('CLICOU!!!')}>Create Wallet</PrimaryButton>
+					{/* <PrimaryButton onPress={() => console.log('CLICOU!!!')}>Create Wallet</PrimaryButton> */}
 				</View>
 			</View>
 		</WelcomeTemplate>
