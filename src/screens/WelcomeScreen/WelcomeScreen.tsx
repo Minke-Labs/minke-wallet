@@ -4,6 +4,7 @@ import { WelcomeTemplate } from '@templates';
 import { welcomeImg, waveWelcomeHeaderDarkImg, waveWelcomeHeaderImg } from '@images';
 import { Text } from '@components';
 import styles from './WelcomeScreen.styles';
+import PrimaryButton from './PrimaryButton';
 
 const WelcomeScreen = () => {
 	const scheme = useColorScheme();
@@ -26,10 +27,11 @@ const WelcomeScreen = () => {
 					>
 						Wave goodbye to your bank!
 					</Text>
-					<Text color="placeholder" width={198} marginBottom={16}>
+					<Text color="placeholder" width={198} marginBottom={40}>
 						Easily save, spend and invest with
 						<Text weight="extraBold"> Minke </Text>
 					</Text>
+					<PrimaryButton onPress={() => console.log('CLICOU!!!')}>Create Wallet</PrimaryButton>
 				</View>
 			</View>
 		</WelcomeTemplate>
