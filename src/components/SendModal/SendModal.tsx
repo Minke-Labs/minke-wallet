@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Modal from '@components/Modal';
 import { Portal } from 'react-native-paper';
@@ -35,36 +35,28 @@ const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 		setCoin(name);
 	};
 
+	useEffect(() => {
+		console.log('Visible changed');
+		setSelected(0);
+	}, [visible]);
+
 	return (
 		<Portal>
 			<Modal
 				visible={visible}
 				onDismiss={onDismiss}
 				onCloseAll={onCloseAll}
-				onBack={() => setSelected(selected > 0 ? selected - 1 : 0)}
+				onBack={() => (selected > 0 ? setSelected(selected - 1) : onDismiss())}
 			>
 				<View style={styles.container}>
-					{selected === 0 && (
-						<TransactionContacts
-							onSelected={handlePress1}
+					{selected === 0 && <TransactionContacts onSelected={handlePress1} />}
+					{selected === 1 && (
+						<TransactionSelectFunds
+							user={user} // TODO: use it to get the user's balance
+							onSelected={handlePress2}
 						/>
 					)}
-					{
-						selected === 1 && (
-							<TransactionSelectFunds
-								user={user} // TODO: use it to get the user's balance
-								onSelected={handlePress2}
-							/>
-						)
-					}
-					{
-						selected === 2 && (
-							<TransactionTransfer
-								user={user}
-								coin={coin}
-							/>
-						)
-					}
+					{selected === 2 && <TransactionTransfer user={user} coin={coin} />}
 				</View>
 			</Modal>
 		</Portal>

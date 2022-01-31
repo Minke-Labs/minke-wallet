@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
 	image: {
 		width: 64,
 		height: 64,
-		borderRadius: 64 / 2,
+		borderRadius: 32,
 		overflow: 'hidden',
 		borderWidth: 3,
 		borderColor: '#a3cccc'
@@ -60,25 +60,10 @@ export const styles = StyleSheet.create({
 		margin: 12,
 		borderBottomWidth: 2,
 		padding: 10,
-
 		fontFamily: 'Inter_400Regular',
 		fontStyle: 'normal',
 		fontWeight: 'normal',
 		fontSize: 36,
-		marginBottom: 64
-	},
-	button: {
-		backgroundColor: '#D0D0D0',
-		borderRadius: 64,
-		height: 48,
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginBottom: 280
-	},
-	buttonText: {
-		color: '#fff',
-		fontFamily: 'Inter_500Medium',
-		fontStyle: 'normal',
-		fontSize: 16
+		marginBottom: 32
 	}
 });

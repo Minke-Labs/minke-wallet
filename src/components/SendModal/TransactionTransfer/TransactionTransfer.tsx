@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
+import PrimaryButton from '@src/components/PrimaryButton';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { styles } from './TransactionTransfer.styles';
 
 interface UserProps {
@@ -14,17 +16,10 @@ interface TransactionTransferProps {
 
 const Card = () => (
 	<View style={styles.cardContainer}>
-		<Image
-			style={styles.cardImage}
-			source={require('@assets/eth.png')}
-		/>
+		<Image style={styles.cardImage} source={require('@assets/eth.png')} />
 		<View style={{ flex: 1 }}>
-			<Text style={styles.cardTitle}>
-				Ethereum
-			</Text>
-			<Text style={styles.cardDesc}>
-				$200 (0.045 ETH) Available
-			</Text>
+			<Text style={styles.cardTitle}>Ethereum</Text>
+			<Text style={styles.cardDesc}>$200 (0.045 ETH) Available</Text>
 		</View>
 	</View>
 );
@@ -34,10 +29,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, coin })
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
-				<Image
-					style={styles.image}
-					source={require('@assets/eth.png')}
-				/>
+				<Image style={styles.image} source={require('@assets/eth.png')} />
 				<Image
 					style={[styles.image, { marginLeft: -20, zIndex: -1 }]}
 					source={require('@assets/wallet-created.png')}
@@ -45,9 +37,8 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, coin })
 			</View>
 
 			<Text style={styles.title}>
-				How much{' '}
-				<Text style={styles.titleHighlight}>{coin === 'Ethereum' ? 'ETH' : coin}</Text>
-				{' '}do you want to send to <Text style={styles.titleHighlight}>{user.name}</Text>?
+				How much <Text style={styles.titleHighlight}>{coin === 'Ethereum' ? 'ETH' : coin}</Text> do you want to
+				send to <Text style={styles.titleHighlight}>{user.name}</Text>?
 			</Text>
 
 			<Card />
@@ -56,16 +47,14 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, coin })
 				style={styles.input}
 				onChangeText={(txt: string) => onChangeNumber(txt.replace(/[^0-9]/g, ''))}
 				value={number}
-				placeholder="00.00"
+				placeholder="$00.00"
 				keyboardType="numeric"
+				autoFocus
 			/>
 
-			<TouchableOpacity
-				activeOpacity={0.6}
-				style={styles.button}
-			>
-				<Text style={styles.buttonText}>Send</Text>
-			</TouchableOpacity>
+			<PrimaryButton disabled={!number}>Send</PrimaryButton>
+
+			<KeyboardSpacer />
 		</View>
 	);
 };

@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
 		fontWeight: '800',
 		fontSize: 24,
 		lineHeight: 29,
-		color: '#05222D',
 		marginBottom: 16
 	},
 	item: {
