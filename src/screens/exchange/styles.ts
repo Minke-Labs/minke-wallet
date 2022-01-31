@@ -1,4 +1,3 @@
-import { joinSignature } from 'ethers/lib/utils';
 import { StyleSheet } from 'react-native';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
@@ -31,6 +30,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		tokenCard: {
 			borderRadius: 16,
+			marginTop: 24,
 			backgroundColor: colors.fill
 		},
 		tokenCardCoinContent: {
@@ -193,7 +193,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			position: 'absolute'
 		},
 		exchangeResumeContainer: {
-			paddingTop: 0
+			paddingTop: 0,
+			marginBottom: 16
 		},
 		exchangeResumeCard: {
 			marginBottom: 16,
@@ -213,6 +214,11 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			backgroundColor: colors.fill
 		},
 		summaryRow: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'space-between'
+		},
+		marginBottom: {
 			flexDirection: 'row',
 			alignItems: 'center',
 			justifyContent: 'space-between',
