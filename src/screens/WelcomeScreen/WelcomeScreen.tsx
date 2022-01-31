@@ -32,7 +32,7 @@ const WelcomeScreen = () => {
 						<Text weight="extraBold"> Minke </Text>
 					</Text>
 					{/* <PrimaryButton onPress={() => console.log('CLICOU!!!')}>Create Wallet</PrimaryButton> */}
-					<Token name="xbc" size={200} />
+					<Token name="zilla" size={200} />
 				</View>
 			</View>
 		</WelcomeTemplate>
