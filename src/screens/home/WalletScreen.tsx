@@ -69,7 +69,7 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 
 	const onExchange = () => navigation.navigate('Exchange');
 	const onSettingsPress = () => navigation.navigate('Settings');
-	const onSend = () => navigation.navigate('TransactionSelectFunds');
+	// const onSend = () => navigation.navigate('TransactionSelectFunds');
 	const onSwitchAccounts = () => navigation.navigate('Accounts');
 	const onSeeAllTransactions = () => navigation.navigate('Transactions');
 
@@ -83,7 +83,11 @@ export function WalletScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					style={styles.homeScroll}
 					refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
 				>
-					<AssetsPanel onSend={onSend} balance={balance?.usd || ''} address={address} />
+					<AssetsPanel
+						// onSend={onSend}
+						balance={balance?.usd || ''}
+						address={address}
+					/>
 					<ActionsPanel
 						onCreateWallet={onCreateWallet}
 						onDeleteWallet={onDeleteWallet}
