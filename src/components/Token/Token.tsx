@@ -9,7 +9,7 @@ const Token: React.FC<Partial<TokenProps>> = ({ name = 'aave', size = 96 }) => {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
 			{dArr.map((d, idx) => (
-				<Path d={d} fill={idx === 0 ? tokenColor : 'white'} />
+				<Path key={d} d={d} fill={idx === 0 ? tokenColor : 'white'} />
 			))}
 		</Svg>
 	);
