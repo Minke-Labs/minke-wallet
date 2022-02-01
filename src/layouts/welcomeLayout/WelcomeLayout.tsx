@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from 'react-native-paper';
 import styles from './WelcomeLayout.styles';
@@ -11,10 +11,10 @@ interface WelcomeLayoutProps {
 const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, style }) => {
 	const { colors } = useTheme();
 	return (
-		<View style={[style || styles.container, { backgroundColor: colors.background }]}>
+		<SafeAreaView style={[style || styles.container, { backgroundColor: colors.background }]}>
 			{children}
 			<StatusBar />
-		</View>
+		</SafeAreaView>
 	);
 };
 

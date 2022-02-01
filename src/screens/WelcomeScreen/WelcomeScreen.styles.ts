@@ -1,33 +1,45 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-	headerImage: {
-		resizeMode: 'cover',
-		width: 250,
-		marginLeft: -56,
-		marginBottom: 32,
-		zIndex: 10
+	// ... BACKGROUND ...
+	backgroundContainer: {
+		flex: 1
 	},
 	backgroundTop: {
 		position: 'absolute',
-		top: 16,
-		right: -8,
-		zIndex: 0
+		right: 0
 	},
 	backgroundBottom: {
 		position: 'absolute',
 		bottom: 0,
-		right: -8,
-		zIndex: -1
+		right: 0,
+		zIndex: 0
 	},
-	content: {
-		padding: 48,
-		position: 'relative'
+
+	// ... WELCOME SCREEN ...
+	container: {
+		width: '100%',
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-between',
+
+		borderWidth: 1,
+		borderColor: 'red'
 	},
-	textBold: {
-		fontFamily: 'Inter_800ExtraBold'
+	headerImage: {
+		resizeMode: 'contain',
+		width: 304,
+		height: 288,
+		marginLeft: -24
+
+		// borderWidth: 1,
+		// borderColor: 'red'
 	},
 	textContainer: {
-		alignItems: 'center'
+		width: '100%',
+		alignItems: 'center',
+
+		borderWidth: 1,
+		borderColor: 'black'
 	}
 });
