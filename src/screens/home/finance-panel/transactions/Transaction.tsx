@@ -36,7 +36,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const wallet = useState(globalWalletState());
 	const address = wallet.address.value;
-	const { from, to, timeStamp, isError, value, tokenSymbol = 'ETH', tokenDecimal = '18', hash } = transaction;
+	const { from, to, timeStamp, isError, value, tokenSymbol, tokenDecimal = '18', hash } = transaction;
 	const received = to.toLowerCase() === address.toLowerCase();
 	const source = received ? from : to;
 	const timestamp = new Date(+timeStamp * 1000);
@@ -44,6 +44,7 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const styles = makeStyles(colors);
 	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
 	const [url, setUrl] = React.useState('');
+	const [token, setToken] = React.useState('');
 
 	useEffect(() => {
 		const formatAddress = async () => {
@@ -54,8 +55,9 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 		};
 
 		const fetchURL = async () => {
-			const { etherscanURL } = await network();
+			const { etherscanURL, defaultToken } = await network();
 			setUrl(`${etherscanURL}tx/${hash}`);
+			setToken(defaultToken);
 		};
 
 		fetchURL();
@@ -78,7 +80,7 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 			</View>
 			<View style={styles.alignContentRight}>
 				<Text style={styles.fontSizeSmall}>
-					{value ? formatUnits(value, tokenDecimal) : ''} {tokenSymbol}
+					{value ? formatUnits(value, tokenDecimal) : ''} {tokenSymbol || token}
 				</Text>
 			</View>
 		</TouchableOpacity>
