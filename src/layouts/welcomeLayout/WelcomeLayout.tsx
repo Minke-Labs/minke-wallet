@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from 'react-native-paper';
-import styles from './WelcomeTemplate.styles';
+import styles from './WelcomeLayout.styles';
 
-interface WelcomeTemplateProps {
+interface WelcomeLayoutProps {
 	style?: any;
 }
 
-const WelcomeTemplate: React.FC<WelcomeTemplateProps> = ({ children, style }) => {
+const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, style }) => {
 	const { colors } = useTheme();
 	return (
 		<View style={[style || styles.container, { backgroundColor: colors.background }]}>

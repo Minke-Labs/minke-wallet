@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image, useColorScheme } from 'react-native';
-import { WelcomeTemplate } from '@templates';
+import { WelcomeLayout } from '@layouts';
 import { welcomeImg, waveWelcomeHeaderDarkImg, waveWelcomeHeaderImg } from '@images';
-import { Text, Token } from '@components';
+import { Text } from '@components';
 import styles from './WelcomeScreen.styles';
 // import PrimaryButton from './PrimaryButton';
 
@@ -10,7 +10,7 @@ const WelcomeScreen = () => {
 	const scheme = useColorScheme();
 
 	return (
-		<WelcomeTemplate>
+		<WelcomeLayout>
 			<View style={styles.content}>
 				<Image source={welcomeImg} style={styles.headerImage} />
 				<Image
@@ -23,7 +23,6 @@ const WelcomeScreen = () => {
 						type="h1"
 						width={273}
 						marginBottom={16}
-						// style={{ borderColor: 'red', borderWidth: 1 }}
 					>
 						Wave goodbye to your bank!
 					</Text>
@@ -32,10 +31,9 @@ const WelcomeScreen = () => {
 						<Text weight="extraBold"> Minke </Text>
 					</Text>
 					{/* <PrimaryButton onPress={() => console.log('CLICOU!!!')}>Create Wallet</PrimaryButton> */}
-					<Token name="exmo" size={200} />
 				</View>
 			</View>
-		</WelcomeTemplate>
+		</WelcomeLayout>
 	);
 };
 
