@@ -7,6 +7,7 @@ interface ButtonProps {
 	iconRight?: IconType;
 	disabled?: boolean;
 	mode?: string;
+	marginBottom?: number;
 	onPress?: (event: GestureResponderEvent) => void;
 }
 

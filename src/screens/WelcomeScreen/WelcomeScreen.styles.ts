@@ -21,25 +21,21 @@ export default StyleSheet.create({
 		width: '100%',
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'space-between',
-
-		borderWidth: 1,
-		borderColor: 'red'
+		justifyContent: 'space-between'
 	},
 	headerImage: {
 		resizeMode: 'contain',
 		width: 304,
 		height: 288,
 		marginLeft: -24
-
-		// borderWidth: 1,
-		// borderColor: 'red'
 	},
 	textContainer: {
 		width: '100%',
+		alignItems: 'center'
+	},
+	buttonContainer: {
+		width: '100%',
 		alignItems: 'center',
-
-		borderWidth: 1,
-		borderColor: 'black'
+		marginBottom: 48
 	}
 });

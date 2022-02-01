@@ -14,6 +14,7 @@ const Button: React.FC<ButtonProps> = ({
 	iconLeft,
 	iconRight,
 	disabled = false,
+	marginBottom = 0,
 	onPress
 }) => {
 	const { colors } = useTheme();
@@ -24,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
 			activeOpacity={0.8}
 			disabled={disabled}
 			onPress={onPress}
-			style={[styles.button, { backgroundColor }]}
+			style={[styles.button, { backgroundColor, marginBottom }]}
 		>
 			{iconLeft && <Icon name={iconLeft} />}
 			<Text weight="medium" style={{ color }}>
