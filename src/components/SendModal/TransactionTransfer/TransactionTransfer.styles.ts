@@ -59,6 +59,7 @@ export const styles = StyleSheet.create({
 		height: 54,
 		margin: 12,
 		borderBottomWidth: 2,
+		borderBottomColor: '#213952',
 		padding: 10,
 		fontFamily: 'Inter_400Regular',
 		fontStyle: 'normal',

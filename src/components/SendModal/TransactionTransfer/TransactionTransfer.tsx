@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import PrimaryButton from '@src/components/PrimaryButton';
+import { WalletToken } from '@src/model/wallet';
+import makeBlockie from 'ethereum-blockies-base64';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { styles } from './TransactionTransfer.styles';
 
 interface UserProps {
@@ -11,48 +14,54 @@ interface UserProps {
 
 interface TransactionTransferProps {
 	user: UserProps;
-	coin: string;
+	token: WalletToken;
 }
 
-const Card = () => (
+const Card = ({ token: { symbol, balanceUSD, balance } }: { token: WalletToken }) => (
 	<View style={styles.cardContainer}>
 		<Image style={styles.cardImage} source={require('@assets/eth.png')} />
 		<View style={{ flex: 1 }}>
-			<Text style={styles.cardTitle}>Ethereum</Text>
-			<Text style={styles.cardDesc}>$200 (0.045 ETH) Available</Text>
+			<Text style={styles.cardTitle}>{symbol}</Text>
+			<Text style={styles.cardDesc}>
+				${balanceUSD.toString().match(/^-?\d+(?:\.\d{0,2})?/)} ({balance} {symbol}) available
+			</Text>
 		</View>
 	</View>
 );
 
-const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, coin }) => {
-	const [number, onChangeNumber] = useState('');
+const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }) => {
+	const [amount, onChangeAmount] = useState('');
+	const [number, onChangeNumber] = useState<Number>();
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
 				<Image style={styles.image} source={require('@assets/eth.png')} />
 				<Image
 					style={[styles.image, { marginLeft: -20, zIndex: -1 }]}
-					source={require('@assets/wallet-created.png')}
+					source={{ uri: makeBlockie(user.address) }}
 				/>
 			</View>
 
 			<Text style={styles.title}>
-				How much <Text style={styles.titleHighlight}>{coin === 'Ethereum' ? 'ETH' : coin}</Text> do you want to
-				send to <Text style={styles.titleHighlight}>{user.name}</Text>?
+				How much <Text style={styles.titleHighlight}>{token.symbol}</Text> do you want to send to{' '}
+				<Text style={styles.titleHighlight}>{user.name}</Text>?
 			</Text>
 
-			<Card />
+			<Card token={token} />
 
-			<TextInput
-				style={styles.input}
-				onChangeText={(txt: string) => onChangeNumber(txt.replace(/[^0-9]/g, ''))}
-				value={number}
-				placeholder="$00.00"
-				keyboardType="numeric"
+			<TokenAmountInput
+				amount={amount}
+				onAmountChange={onChangeAmount}
+				onNumberAmountChange={onChangeNumber}
+				visible={!!token}
+				isAmountValid={(number || 0) <= token.balance}
 				autoFocus
+				style={styles.input}
+				placeholder="00.00"
 			/>
 
-			<PrimaryButton disabled={!number}>Send</PrimaryButton>
+			<PrimaryButton disabled={!number || number > token.balance}>Send</PrimaryButton>
 
 			<KeyboardSpacer />
 		</View>

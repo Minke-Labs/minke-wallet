@@ -1,8 +1,9 @@
-/* eslint-disable no-console */
 /* eslint-disable no-tabs */
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Text } from 'react-native-paper';
-import React from 'react';
+import { smallWalletAddress } from '@src/model/wallet';
+import makeBlockie from 'ethereum-blockies-base64';
 import Item from './Item';
 import { styles } from './TransactionContacts.styles';
 // import { useState } from '@hookstate/core';
@@ -10,43 +11,51 @@ import { styles } from './TransactionContacts.styles';
 // const state = useState(globalContactState());
 
 const data = [
-	{ name: 'Devin', address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b' },
 	{
-		name: 'Dan',
-		address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
+		name: 'Alice',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{ name: 'Avelar', address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d' },
+	{
+		name: 'Romullo',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
 	},
 	{
-		name: 'Dominic',
-		address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
+		name: 'Linas',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
 	},
 	{
-		name: 'Jackson',
-		address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
+		name: 'Josh',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
 	},
 	{
-		name: 'James',
-		address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
+		name: 'Jo',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{
+		name: 'Jett',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{
+		name: 'Lyncoln',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{
+		name: 'Bolinhos',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{
+		name: 'Marcola',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{
+		name: 'Amy',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
+	},
+	{
+		name: 'Pillar',
+		address: '0x667fc4B1eDc5ff96F45Bc382cBfB60b51647948d'
 	}
-	// {
-	// 	name: 'Joel',
-	// 	address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
-	// },
-	// {
-	// 	name: 'John',
-	// 	address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
-	// },
-	// {
-	// 	name: 'Jillian',
-	// 	address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
-	// },
-	// {
-	// 	name: 'Jimmy',
-	// 	address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
-	// },
-	// {
-	// 	name: 'Julie',
-	// 	address: '0x29aCe6cF2D4519d3aD9875Fa0d8fAfc4460f6e0b'
-	// }
 ];
 
 interface UserProps {
@@ -65,7 +74,12 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 			keyExtractor={(item, idx) => `${item.address}-${idx}`}
 			data={data}
 			renderItem={({ item }) => (
-				<Item onSelected={() => onSelected(item)} name={item.name} address={item.address} />
+				<Item
+					onSelected={() => onSelected(item)}
+					firstLine={item.name}
+					secondLine={smallWalletAddress(item.address)}
+					imageSource={{ uri: makeBlockie(item.address) }}
+				/>
 			)}
 		/>
 	</View>

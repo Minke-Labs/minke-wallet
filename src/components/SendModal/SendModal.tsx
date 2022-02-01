@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Modal from '@components/Modal';
 import { Portal } from 'react-native-paper';
-import { styles } from './SendModal.styles';
+import { WalletToken } from '@src/model/wallet';
 import TransactionContacts from './TransactionContacts/TransactionContacts';
 import TransactionSelectFunds from './TransactionSelectFunds/TransactionSelectFunds';
 import TransactionTransfer from './TransactionTransfer/TransactionTransfer';
+import { styles } from './SendModal.styles';
 
 interface Props {
 	visible: boolean;
@@ -23,20 +24,19 @@ interface UserProps {
 const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 	const [selected, setSelected] = useState(0);
 	const [user, setUser] = useState<UserProps>(null!);
-	const [coin, setCoin] = useState('');
+	const [token, setToken] = useState<WalletToken>();
 
 	const handlePress1 = (item: UserProps) => {
 		setSelected(selected + 1);
 		setUser(item);
 	};
 
-	const handlePress2 = (name: string) => {
+	const handlePress2 = (coin: WalletToken) => {
 		setSelected(selected + 1);
-		setCoin(name);
+		setToken(coin);
 	};
 
 	useEffect(() => {
-		console.log('Visible changed');
 		setSelected(0);
 	}, [visible]);
 
@@ -50,13 +50,8 @@ const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 			>
 				<View style={styles.container}>
 					{selected === 0 && <TransactionContacts onSelected={handlePress1} />}
-					{selected === 1 && (
-						<TransactionSelectFunds
-							user={user} // TODO: use it to get the user's balance
-							onSelected={handlePress2}
-						/>
-					)}
-					{selected === 2 && <TransactionTransfer user={user} coin={coin} />}
+					{selected === 1 && <TransactionSelectFunds user={user} onSelected={handlePress2} />}
+					{selected === 2 && token && <TransactionTransfer user={user} token={token} />}
 				</View>
 			</Modal>
 		</Portal>

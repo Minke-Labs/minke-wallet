@@ -24,5 +24,15 @@ export const styles = StyleSheet.create({
 	},
 	titleHighlight: {
 		color: '#006AA6'
+	},
+	subtitle: {
+		fontFamily: 'Inter_700Bold',
+		fontStyle: 'normal',
+		fontSize: 12,
+		lineHeight: 16,
+		color: '#213952'
+	},
+	available: {
+		fontFamily: 'Inter_400Regular'
 	}
 });

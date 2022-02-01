@@ -1,22 +1,22 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, ImageSourcePropType } from 'react-native';
 import { Text } from 'react-native-paper';
-import { smallWalletAddress } from '@src/model/wallet';
 import Arrow from '../Arrow';
 import { styles } from './TransactionContacts.styles';
 
 interface ItemProps {
-	name: string;
-	address: string;
+	firstLine: string;
+	secondLine: string | JSX.Element;
+	imageSource: ImageSourcePropType;
 	onSelected: () => void;
 }
 
-const Item: React.FC<ItemProps> = ({ name, address, onSelected }) => (
+const Item: React.FC<ItemProps> = ({ firstLine, secondLine, imageSource, onSelected }) => (
 	<TouchableOpacity style={styles.itemContainer} onPress={onSelected}>
-		<Image style={styles.avatar} source={require('@assets/wallet-created.png')} />
+		{imageSource ? <Image source={imageSource} style={styles.avatar} /> : null}
 		<View style={styles.contactTitleContainer}>
-			<Text style={styles.contactTitle}>{name}</Text>
-			<Text>{smallWalletAddress(address)}</Text>
+			<Text style={styles.contactTitle}>{firstLine}</Text>
+			<Text>{secondLine}</Text>
 		</View>
 		<Arrow />
 	</TouchableOpacity>
