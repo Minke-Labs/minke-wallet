@@ -1,13 +1,11 @@
-import { BigNumberish, Contract, providers, Wallet, BigNumber } from 'ethers';
-import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { deleteItemAsync, SecureStoreOptions, WHEN_UNLOCKED } from 'expo-secure-store';
+import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
-import { parseEther, parseUnits } from 'ethers/lib/utils';
+import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
+import { WalletState } from '@stores/WalletStore';
+import { deleteItemAsync } from 'expo-secure-store';
+import { convertEthToUsd } from '@helpers/utilities';
+import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
-
-export const publicAccessControlOptions: SecureStoreOptions = {
-	keychainAccessible: WHEN_UNLOCKED
-};
 
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
 	const key = `${keychain_id}_minkeSeedPhrase`;
@@ -16,17 +14,21 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 		seedPhrase
 	} as SeedPhraseData;
 
-	const save = await saveObject(key, val, publicAccessControlOptions);
+	const save = await saveObject(key, val);
 	return save;
 };
 
-export const provider = new providers.InfuraProvider('ropsten', {
-	projectId: process.env.INFURA_API_KEY,
-	projectSecret: process.env.INFURA_PROJECT_SECRET
-});
+export const getProvider = async (network?: string) => {
+	const blockchain = network || (await selectedNetwork()).id;
+	return new providers.InfuraProvider(blockchain, {
+		projectId: process.env.INFURA_API_KEY,
+		projectSecret: process.env.INFURA_PROJECT_SECRET
+	});
+};
 
 export const getENSAddress = async (address: string) => {
-	const name = await provider.lookupAddress(address);
+	const { testnet } = await selectedNetwork();
+	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).lookupAddress(address);
 	return name;
 };
 
@@ -39,45 +41,119 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 		privateKey
 	};
 
-	await saveObject(key, val, publicAccessControlOptions);
+	await saveObject(key, val);
 };
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
 		const allWallets = await loadObject('minkeAllWallets');
-		console.log(allWallets);
 		if (allWallets) {
 			return allWallets as AllMinkeWallets;
 		}
 		return null;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return null;
 	}
 };
 
-export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	await saveObject('minkeAllWallets', wallets, publicAccessControlOptions);
+export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
+	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
+	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
+	return result.json();
 };
 
-export const walletCreate = async (): Promise<null | { wallet: Wallet; walletId: string; balance: BigNumberish }> => {
-	const mnemonic = generateMnemonic();
-	const seed = await mnemonicToSeed(mnemonic);
-	const wallet: Wallet = new Wallet(seed, provider);
+export const saveAllWallets = async (wallets: AllMinkeWallets) => {
+	Object.values(wallets).forEach((w) => {
+		w.network = w.network || networks.ropsten.id;
+	});
+	await saveObject('minkeAllWallets', wallets);
+};
+
+const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Promise<WalletAndMnemonic> => {
+	const blockchain = await selectedNetwork();
+	const provider = await getProvider(blockchain.id);
+	if (!mnemonicOrPrivateKey) {
+		// mnemonic / PK is empty: generating a random wallet with the default path m/44'/60'/0'/0/0
+		const wallet = Wallet.createRandom().connect(provider);
+		return { wallet, mnemonic: wallet.mnemonic.phrase };
+	}
+
+	if (isValidMnemonic(mnemonicOrPrivateKey)) {
+		// mnemonic is valid: generating a wallet based on it.
+		const wallet = Wallet.fromMnemonic(mnemonicOrPrivateKey).connect(provider);
+		return { wallet, mnemonic: mnemonicOrPrivateKey };
+	}
+
+	// Generating a wallet based in the PK (without mnemonic since its not possible to get it from the PK)
+	return { wallet: new Wallet(mnemonicOrPrivateKey, provider) };
+};
+
+export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletState> => {
+	const blockchain = await selectedNetwork();
+	const { wallet, mnemonic } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
+
 	const id = `wallet_${Date.now()}`;
-	await saveSeedPhrase(mnemonic, id);
+	if (mnemonic) {
+		await saveSeedPhrase(mnemonic, id);
+	}
+
 	await savePrivateKey(wallet.address, wallet.privateKey);
-	console.log(wallet, wallet.privateKey, wallet.address);
-	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false };
+	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
+
+	// sets the new wallet as the primary wallet
 	const existingWallets = (await getAllWallets()) || {};
 	const primaryWallet = find(existingWallets, (w) => w.primary);
-	if (isEmpty(existingWallets) || isEmpty(primaryWallet)) {
-		newWallet.primary = true;
+	if (primaryWallet) {
+		primaryWallet.primary = false;
+		existingWallets[primaryWallet.id] = primaryWallet;
 	}
+
+	newWallet.primary = true;
 	existingWallets[id] = newWallet;
 	await saveAllWallets(existingWallets);
-	const balance = await provider.getBalance(wallet.address);
-	return { wallet, walletId: id, balance };
+	const eth = await wallet.getBalance();
+	const ethPrice = await getEthLastPrice();
+	const balance = {
+		eth,
+		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+	};
+	return {
+		privateKey: wallet.privateKey,
+		address: wallet.address,
+		walletId: id,
+		network: blockchain,
+		balance,
+		allTokens: [],
+		transactions: []
+	};
+};
+
+export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<WalletState> => {
+	const blockchain = await selectedNetwork();
+	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
+
+	const existingWallets = (await getAllWallets()) || {};
+	const existingWallet = find(existingWallets, (w) => w.address === wallet.address);
+
+	if (!existingWallet || isEmpty(existingWallet)) {
+		return walletCreate(mnemonicOrPrivateKey);
+	}
+	const eth = await wallet.getBalance();
+	const ethPrice = await getEthLastPrice();
+	const balance = {
+		eth,
+		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+	};
+	return {
+		privateKey: wallet.privateKey,
+		address: wallet.address,
+		walletId: existingWallet.id,
+		network: blockchain,
+		balance,
+		allTokens: []
+	};
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
@@ -86,7 +162,6 @@ export const walletDelete = async (id: string): Promise<boolean> => {
 	const allWallets = (await getAllWallets()) || {};
 	if (allWallets[id]) {
 		delete allWallets[id];
-		console.log('aaaaaaaaaaaa', allWallets);
 		await saveAllWallets(allWallets || {});
 		return true;
 	}
@@ -128,13 +203,15 @@ export const erc20abi = [
 ];
 
 export const sendTransaction = async (
-	wallet: Wallet,
+	privateKey: string,
 	to: string,
 	amount: string,
 	gasPrice: string,
+	network: string,
 	contractAddress: string = ''
 ) => {
-	const nonce = await provider.getTransactionCount(wallet.address, 'latest');
+	const wallet = new Wallet(privateKey, await getProvider(network));
+	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
 		to,
@@ -147,9 +224,9 @@ export const sendTransaction = async (
 	if (contractAddress) {
 		// const signer = provider.getSigner(wallet.address)
 
-		const erc20 = new Contract(contractAddress, erc20abi, provider);
+		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
 		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount));
-		tx.gasPrice = await provider.estimateGas(tx);
+		tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {
@@ -159,36 +236,53 @@ export const sendTransaction = async (
 	}
 
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
-	return provider.sendTransaction(signedTx as string);
+	return wallet.provider.sendTransaction(signedTx as string);
 };
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
+	const { gasURL, etherscanAPIURL } = await selectedNetwork();
 	const result = await fetch(
-		'https://ethgasstation.info/api/ethgasAPI.json?c7f3543e2274a227ad0f60c97ba1a22abd5c950cc27c25a9ecd7d1a766f0'
+		`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
 	);
 	return result.json();
 };
 
-export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const result = await fetch(
-		'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N'
-	);
+// The date of data snapshot in dd-mm-yyyy eg. 30-12-2017
+export const getPriceHistory = async (date: string, tokenId = 'ethereum'): Promise<EtherPriceHistoryResponse> => {
+	const result = await fetch(`https://api.coingecko.com/api/v3/coins/${tokenId}/history?date=${date}`);
 	return result.json();
 };
 
 export const getWalletTokens = async (wallet: string): Promise<WalletTokensResponse> => {
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
-	const result = await fetch(
-		`https://api.zapper.fi/v1/protocols/tokens/balances?api_key=${apiKey}&addresses[]=${wallet}`
-	);
+	const { zapperNetwork } = await selectedNetwork();
+	const baseURL = 'https://api.zapper.fi/v1/protocols/tokens/balances';
+	const result = await fetch(`${baseURL}?api_key=${apiKey}&addresses[]=${wallet}&network=${zapperNetwork}`);
+	return result.json();
+};
+
+export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {
+	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
+	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const baseUrl = `${etherscanAPIURL}api?module=account&action=txlist&address=`;
+	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=${apiKey}`;
+	const result = await fetch(`${baseUrl}${suffix}`);
+	const { result: normal }: TransactionResponse = await result.json();
+
+	const erc20BaseUrl = `${etherscanAPIURL}api?module=account&action=tokentx&address=`;
+	const erc20result = await fetch(`${erc20BaseUrl}${suffix}`);
+	const { result: erc20 }: TransactionResponse = await erc20result.json();
+
+	const all = [...erc20, ...normal];
+	return all.sort((a, b) => +b.timeStamp - +a.timeStamp);
+};
+
+export const getTokenList = async (): Promise<Array<Coin>> => {
+	const result = await fetch('https://api.coingecko.com/api/v3/coins/list');
 	return result.json();
 };
 
 export const smallWalletAddress = (address: string): string =>
 	`${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
-
-export const supportedTokenList = {
-	dai: '0x31f42841c2db5173425b5223809cf3a38fede360'
-};
 
 export interface MinkeTokenList {
 	[name: string]: {
@@ -202,6 +296,12 @@ export interface MinkeWallet {
 	address: string;
 	name: string;
 	primary: boolean;
+	network: string;
+}
+
+export interface WalletAndMnemonic {
+	wallet: Wallet;
+	mnemonic?: string;
 }
 
 export interface AllMinkeWallets {
@@ -219,17 +319,16 @@ export interface SeedPhraseData {
 }
 
 export interface EstimateGasResponse {
-	fast: number;
-	fastest: number;
-	average: number;
-	safeLow: number;
-	speed: number;
-	block_time: number;
-	blockNum: number;
-	safeLowWait: number;
-	avgWait: number;
-	fastWait: number;
-	fastestWait: number;
+	status: string;
+	message: string;
+	result: {
+		LastBlock: string;
+		SafeGasPrice: string;
+		ProposeGasPrice: string;
+		FastGasPrice: string;
+		suggestBaseFee: string;
+		gasUsedRatio: string;
+	};
 }
 
 export interface EtherLastPriceResponse {
@@ -251,6 +350,13 @@ export interface WalletTokensResponse {
 				assets: [WalletToken];
 			}
 		];
+		meta: [
+			{
+				label: string;
+				value: number;
+				type: string;
+			}
+		];
 	};
 }
 
@@ -264,4 +370,61 @@ export interface WalletToken {
 	balance: number;
 	balanceRaw: string;
 	balanceUSD: number;
+}
+
+export interface Transaction {
+	accessList: string;
+	blockHash: string;
+	blockNumber: string;
+	chainId: string;
+	confirmations: string;
+	data: string;
+	from: string;
+	gasLimit: string;
+	gasPrice: string;
+	hash: string;
+	nonce: string;
+	timeStamp: string;
+	to: string;
+	transactionIndex: string;
+	type: string;
+	value: string;
+	contractAddress: string;
+	cumulativeGasUsed: string;
+	gas: string;
+	gasUsed: string;
+	input: string;
+	isError: string;
+	txreceipt_status: string;
+	tokenName: string;
+	tokenSymbol: string;
+	tokenDecimal: string;
+}
+
+export interface TransactionResponse {
+	result: [Transaction];
+	status: string;
+	message: string;
+}
+
+export interface AllTransactionsResponse {
+	normal: Array<TransactionResponse>;
+	erc20: Array<TransactionResponse>;
+}
+
+export interface EtherPriceHistoryResponse {
+	id: string;
+	symbol: string;
+	name: string;
+	market_data: {
+		current_price: {
+			usd: number;
+		};
+	};
+}
+
+export interface Coin {
+	id: string;
+	symbol: string;
+	name: string;
 }

@@ -61,19 +61,9 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors, scheme?: string
 		cardBalance: {
 			fontSize: 36
 		},
-		fontSizeDefault: {
-			fontSize: 16
-		},
-		fontSizeSmall: {
+		secondaryText: {
 			color: colors.secondaryText,
 			fontSize: 12
-		},
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
-		},
-		fontBold: {
-			fontFamily: 'Inter_800ExtraBold'
 		},
 		arrowPadding: {
 			paddingLeft: 4,

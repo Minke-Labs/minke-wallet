@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
+import globalStyles from '@src/components/global.styles';
 import { makeStyles } from './styles';
 
 const TabSelector = ({ selectedTab, onTabSelect }: { selectedTab: string; onTabSelect: Function }) => {
@@ -21,7 +22,7 @@ const TabSelector = ({ selectedTab, onTabSelect }: { selectedTab: string; onTabS
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (
-		<View style={styles.row}>
+		<View style={globalStyles.row}>
 			<TouchableOpacity
 				disabled={selectedTab === 'transactions'}
 				onPress={() => onTabSelect('transactions')}

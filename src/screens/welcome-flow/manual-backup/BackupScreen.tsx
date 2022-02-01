@@ -3,7 +3,7 @@ import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Text, Headline, Subheading, Snackbar, useTheme } from 'react-native-paper';
+import { Text, Headline, Subheading, Snackbar, useTheme, Portal } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState } from '@stores/WalletStore';
@@ -75,14 +75,16 @@ export function BackupScreen({ navigation }: NativeStackScreenProps<RootStackPar
 					<MaterialIcons name="content-copy" size={16} color={colors.text} style={styles.contentCopy} />
 					<Text style={{ color: colors.text }}>Copy to clipboard</Text>
 				</TouchableOpacity>
-
-				<Snackbar
-					onDismiss={() => snackbarVisible.set(false)}
-					visible={snackbarVisible.value}
-					style={styles.snackbar}
-				>
-					Copied!
-				</Snackbar>
+				<Portal>
+					<Snackbar
+						onDismiss={() => snackbarVisible.set(false)}
+						visible={snackbarVisible.value}
+						style={styles.snackbar}
+						duration={3000}
+					>
+						Copied!
+					</Snackbar>
+				</Portal>
 			</View>
 		</WelcomeContainer>
 	);

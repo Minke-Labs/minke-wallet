@@ -1,45 +1,67 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/indent */
+import React, { useState } from 'react';
 import { View, Image, useColorScheme } from 'react-native';
-import AppLoading from 'expo-app-loading';
-import { useState } from '@hookstate/core';
+// import { View, Image, GestureResponderEvent, useColorScheme } from 'react-native';
 import { commify } from 'ethers/lib/utils';
 import { Text, Card, useTheme } from 'react-native-paper';
 import TextButton from '@components/TextButton';
-import { globalWalletState } from '@stores/WalletStore';
 import makeBlockie from 'ethereum-blockies-base64';
 import AddFundsButton from '@components/AddFundsButton';
+import SendModal from '@src/components/SendModal/SendModal';
 import { makeStyles } from './styles';
 
-const AssetsPanel = () => {
-	const state = useState(globalWalletState());
+interface AssetsPanelProps {
+	balance: string;
+	address: string;
+	// onSend: (event: GestureResponderEvent) => void;
+}
+
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
+	const [sendModalOpen, setSendModalOpen] = useState(false);
 	const { colors } = useTheme();
 	const styles = makeStyles(colors, useColorScheme());
 
-	if (state.promised) return <AppLoading />;
-
-	const balance = state.value.balance?.usd || '';
 	return (
-		<View style={styles.paddingContent}>
-			<Card style={styles.card}>
-				<View style={styles.cardTopContent}>
-					<View>
-						<Text style={styles.cardLabel}>Your total assets</Text>
-						<Text style={styles.cardBalance}>${commify(balance)}</Text>
+		<>
+			<View style={styles.paddingContent}>
+				<Card style={styles.card}>
+					<View style={styles.cardTopContent}>
+						<View>
+							<Text style={styles.cardLabel}>Your total assets</Text>
+							<Text style={styles.cardBalance}>${commify(balance)}</Text>
+						</View>
+						<View>
+							{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}
+						</View>
 					</View>
-					<View>
-						<Image source={{ uri: makeBlockie(state.value.wallet?.address || '') }} style={styles.avatar} />
+					<View style={styles.cardBottomContent}>
+						<AddFundsButton
+							button={
+							// eslint-disable-next-line react/jsx-wrap-multilines
+								<TextButton
+									text="Add funds"
+									icon="add-circle-outline"
+									containerStyle={styles.cardDivisor}
+								/>
+						}
+						/>
+						<TextButton
+							text="Send"
+							icon="arrow-circle-up"
+							// onPress={onSend}
+							onPress={() => setSendModalOpen(true)}
+							containerStyle={{ flexGrow: 1, flexBasis: 0, justifyContent: 'center' }}
+						/>
 					</View>
-				</View>
-				<View style={styles.cardBottomContent}>
-					<AddFundsButton />
-					<TextButton
-						text="Send"
-						icon="arrow-circle-up"
-						containerStyle={{ flexGrow: 1, flexBasis: 0, justifyContent: 'center' }}
-					/>
-				</View>
-			</Card>
-		</View>
+				</Card>
+			</View>
+			<SendModal
+				visible={sendModalOpen}
+				onDismiss={() => setSendModalOpen(false)}
+				onCloseAll={() => setSendModalOpen(false)}
+				// onBack={() => console.log('BACK')}
+			/>
+		</>
 	);
 };
 

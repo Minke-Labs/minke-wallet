@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -9,19 +9,20 @@ import { Svg, Path } from 'react-native-svg';
 import { getENSAddress, smallWalletAddress } from '@models/wallet';
 import { makeStyles } from './styles';
 
-const Header = () => {
+const Header = ({ onSettingsPress }: { onSettingsPress: (event: GestureResponderEvent) => void }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
 	const [ensName, setEnsName] = React.useState<string | null>('');
 	const state = useState(globalWalletState());
-	const address = state.value.wallet?.address || '';
+	const { address } = state.value;
 
 	useEffect(() => {
 		const fetchENSAddress = async () => {
 			const name = await getENSAddress(address);
 			setEnsName(name);
 		};
+
 		fetchENSAddress();
 	}, []);
 
@@ -38,7 +39,7 @@ const Header = () => {
 		<Appbar.Header style={styles.appBar}>
 			<View style={styles.appBarContent}>
 				<View>
-					<Text style={styles.welcomeText}>Welcome</Text>
+					<Text style={styles.welcomeText}>Welcome ({state.value.network.name})</Text>
 					<Text style={styles.appBarUserName}>{accountName()}</Text>
 				</View>
 				<Appbar.Content title="" />
@@ -73,7 +74,13 @@ const Header = () => {
 						</Svg>
 					</TouchableOpacity>
 					<TouchableOpacity>
-						<MaterialIcons name="settings" size={20} color={colors.primary} style={styles.appBarIcon} />
+						<MaterialIcons
+							name="settings"
+							size={20}
+							color={colors.primary}
+							style={styles.appBarIcon}
+							onPress={onSettingsPress}
+						/>
 					</TouchableOpacity>
 				</View>
 			</View>

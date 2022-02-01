@@ -1,48 +1,65 @@
-import React from 'react';
-import { View, Image } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import React, { useCallback } from 'react';
+import { useColorScheme, View } from 'react-native';
+import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
+import { useState } from '@hookstate/core';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { globalWalletState } from '@stores/WalletStore';
+import AddFundsButton from '@components/AddFundsButton';
+import PrimaryButton from '@src/components/PrimaryButton';
+import Transaction from './Transaction';
 import { makeStyles } from './styles';
-import transationalReceive from './transational-receive.png';
-import transationalSent from './transational-sent.png';
 
-const Transactions = () => {
+const Transactions = ({ loading, onSeeAllTransactions }: { loading: boolean; onSeeAllTransactions: () => void }) => {
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const styles = makeStyles(colors, useColorScheme());
+	const wallet = useState(globalWalletState());
+	const { transactions = [] } = wallet.value;
+
+	const Table = useCallback(() => {
+		if (transactions.length > 0) {
+			return (
+				<View style={styles.transactionDayRow}>
+					{transactions.map((transaction, index) => {
+						if (transaction.value) {
+							return (
+								<Transaction
+									transaction={transaction}
+									// eslint-disable-next-line react/no-array-index-key
+									key={`${transaction.hash}${transaction.value}${index}`}
+								/>
+							);
+						}
+						return null;
+					})}
+					<PrimaryButton onPress={onSeeAllTransactions} mode="text">
+						See all
+					</PrimaryButton>
+				</View>
+			);
+		}
+		return (
+			<View style={{ alignItems: 'center' }}>
+				<View style={styles.netWorthIcon}>
+					<MaterialIcons name="account-balance-wallet" size={32} color={colors.text} />
+				</View>
+				<Text style={styles.transactionsText}>Your transactions will appear here</Text>
+				<Text style={styles.startedText}>Let&apos;s get started?</Text>
+				<AddFundsButton
+					button={
+						// eslint-disable-next-line react/jsx-wrap-multilines
+						<PrimaryButton>
+							<MaterialCommunityIcons name="plus-circle-outline" size={20} />
+							Add funds to start
+						</PrimaryButton>
+					}
+				/>
+			</View>
+		);
+	}, [transactions]);
+
 	return (
 		<View style={styles.tabsTransactions}>
-			<View style={styles.row}>
-				<Text style={styles.transactionDateLabel}>Today</Text>
-				<Text style={styles.fontSizeSmall}>Day balance: $00.00</Text>
-			</View>
-
-			<View style={styles.transactionDayRow}>
-				<View style={(styles.row, styles.transactionItem)}>
-					<View style={styles.row}>
-						<Image source={transationalSent} style={styles.transationalIcon} />
-						<View>
-							<Text style={styles.fontSizeSmall}>7h30 pm</Text>
-							<Text style={styles.fontSizeDefault}>To marcost.eth</Text>
-						</View>
-					</View>
-					<View style={styles.alignContentRight}>
-						<Text style={styles.fontSizeSmall}>0.01 ETH</Text>
-						<Text style={styles.fontBold}>-$20.00</Text>
-					</View>
-				</View>
-				<View style={styles.row}>
-					<View style={styles.row}>
-						<Image source={transationalReceive} style={styles.transationalIcon} />
-						<View>
-							<Text style={styles.fontSizeSmall}>10h00 pm</Text>
-							<Text style={styles.fontSizeDefault}>From minke.eth</Text>
-						</View>
-					</View>
-					<View style={styles.alignContentRight}>
-						<Text style={styles.fontSizeSmall}>0.01 ETH</Text>
-						<Text style={styles.fontBold}>$20.00</Text>
-					</View>
-				</View>
-			</View>
+			{loading ? <ActivityIndicator animating color={colors.primary} /> : <Table />}
 		</View>
 	);
 };

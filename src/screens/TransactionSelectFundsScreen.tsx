@@ -13,8 +13,8 @@ export function TransactionSelectFundsScreen({ navigation }: NativeStackScreenPr
 	const onSelectFunds = (coin = 'eth') => {
 		navigation.navigate('TransactionContacts', { coin });
 	};
-
 	const balance = wallet.value.balance ? formatEther(wallet.value.balance.eth as BigNumberish) : '';
+
 	return (
 		<View>
 			<Appbar.Header>
