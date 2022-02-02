@@ -8,8 +8,10 @@ import { ButtonProps } from './Button.types';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 
-const getKeyByValue = (object: any, value: string) =>
-	Object.keys(object).find((key) => object[key] === value) as keyof ReactNativePaper.ThemeColors;
+const getKeyByValue = (object: ReactNativePaper.ThemeColors, value: string) =>
+	Object.keys(object).find(
+		(key) => object[key as keyof ReactNativePaper.ThemeColors] === value
+	) as keyof ReactNativePaper.ThemeColors;
 
 const Button: React.FC<ButtonProps> = ({
 	title = 'button',
