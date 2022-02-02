@@ -4,7 +4,7 @@ import { FlatList, Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
-import { paraswapTokens, ParaswapToken } from '../../model/token';
+import { paraswapTokens, ParaswapToken } from '../../../model/token';
 import { makeStyles } from './styles';
 
 const SearchTokens = ({

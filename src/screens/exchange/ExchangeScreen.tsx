@@ -14,7 +14,7 @@ import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@mod
 import { ether, ParaswapToken, Quote, getExchangePrice } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
-import SearchTokens from './SearchTokens';
+import SearchTokens from './search-tokens/SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { makeStyles } from './styles';
