@@ -237,7 +237,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<View style={styles.exchangeSection}>
 					<View style={styles.exchangeHeadlineRow}>
 						<Headline style={styles.pageTitle}>Exchange</Headline>
-						<Text>{exchangeSummary()}</Text>
+						<Text style={styles.exchangeSummaryText}>{exchangeSummary()}</Text>
 					</View>
 					<Card style={styles.tokenCard}>
 						<TokenCard

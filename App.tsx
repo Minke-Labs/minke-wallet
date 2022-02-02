@@ -27,7 +27,7 @@ import { TransactionContactsScreen } from './src/screens/TransactionContactsScre
 import { TransactionTransferScreen } from './src/screens/TransactionTransferScreen';
 import { ContactCreateScreen } from './src/screens/ContactCreateScreen';
 import ExchangeScreen from './src/screens/exchange/ExchangeScreen';
-import ExchangeResumeScreen from './src/screens/exchange/ExchangeResumeScreen';
+import ExchangeResumeScreen from './src/screens/exchange/exchange-resume/ExchangeResumeScreen';
 import SettingsScreen from './src/screens/settings/SettingsScreen';
 import ChangeNetworkScreen from './src/screens/settings/network/ChangeNetworkScreen';
 import AccountsScreen from './src/screens/settings/accounts/AccountsScreen';

@@ -15,7 +15,8 @@ import { Wallet, BigNumber, utils } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Linking from 'expo-linking';
-import GasOption from './GasOption';
+import globalStyles from '@src/components/global.styles';
+import GasOption from '../GasOption';
 import { makeStyles } from './styles';
 
 const TokenDetail = ({
@@ -142,7 +143,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	return (
 		<Container style={styles.exchangeContainer}>
 			<View style={styles.exchangeResumeContainer}>
-				<Headline style={styles.pageTitle}>Exchange Resume</Headline>
+				<Headline style={globalStyles.headline}>Exchange Resume</Headline>
 
 				<Card style={styles.tokenCard}>
 					<TokenDetail
@@ -199,7 +200,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				<Card.Content>
 					<View style={(styles.summaryRow, styles.marginBottom)}>
 						<Text>Maximum sold</Text>
-						<Text style={styles.textBold}>
+						<Text style={globalStyles.fontBold}>
 							{formatAmount(priceQuote?.priceRoute.srcAmount, priceQuote?.priceRoute.srcDecimals) ||
 								fromAmount}{' '}
 							{from.symbol}
@@ -208,17 +209,17 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 					<View style={(styles.summaryRow, styles.marginBottom)}>
 						<Text>Rate</Text>
-						<Text style={styles.textBold}>{exchangeSummary()}</Text>
+						<Text style={globalStyles.fontBold}>{exchangeSummary()}</Text>
 					</View>
 
 					<View style={(styles.summaryRow, styles.marginBottom)}>
 						<Text>{to.symbol} contract</Text>
-						<Text style={styles.textBold}>{smallWalletAddress(to.address)}</Text>
+						<Text style={globalStyles.fontBold}>{smallWalletAddress(to.address)}</Text>
 					</View>
 
 					<View style={styles.summaryRow}>
 						<Text>Swapping via</Text>
-						<Text style={styles.textBold}>{exchangeName}</Text>
+						<Text style={globalStyles.fontBold}>{exchangeName}</Text>
 					</View>
 				</Card.Content>
 			</Card>
@@ -260,13 +261,13 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 						<Image source={{ uri: exchange.value.to.img }} style={{ width: 50, height: 50 }} />
 					</View>
 					<View style={styles.modalColumn}>
-						<Headline style={styles.pageTitle}>Processing Transaction</Headline>
+						<Headline style={globalStyles.headline}>Processing Transaction</Headline>
 					</View>
 					<View style={styles.modalRow}>
 						<Text>Exchanging </Text>
-						<Text style={styles.textBold}> {exchange.value.from.symbol}</Text>
+						<Text style={globalStyles.fontBold}> {exchange.value.from.symbol}</Text>
 						<Text> for </Text>
-						<Text style={styles.textBold}> {exchange.value.to.symbol}</Text>
+						<Text style={globalStyles.fontBold}> {exchange.value.to.symbol}</Text>
 					</View>
 					<View style={styles.modalRow}>
 						<Text>Transaction:</Text>
