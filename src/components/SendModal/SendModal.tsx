@@ -44,17 +44,21 @@ const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 		setAddContactVisible(false);
 	}, [visible]);
 
-	const onContactsBack = () => (selected > 0 ? setSelected(selected - 1) : onDismiss());
+	const onBack = () => (selected > 0 ? setSelected(selected - 1) : onDismiss());
+	const onContactsBack = () => (addContactVisible ? setAddContactVisible(false) : onBack());
 
 	return (
 		<Portal>
 			<Modal
 				visible={visible && selected === 0}
 				onDismiss={onDismiss}
+				onCloseAll={addContactVisible && onCloseAll}
 				right={
-					<PrimaryButton mode="text" onPress={() => setAddContactVisible(true)}>
-						+ Add
-					</PrimaryButton>
+					!addContactVisible && (
+						<PrimaryButton mode="text" onPress={() => setAddContactVisible(true)}>
+							+ Add
+						</PrimaryButton>
+					)
 				}
 				onBack={onContactsBack}
 			>
@@ -69,23 +73,13 @@ const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 				)}
 			</Modal>
 
-			<Modal
-				visible={visible && selected === 1}
-				onDismiss={onDismiss}
-				onCloseAll={onCloseAll}
-				onBack={() => (selected > 0 ? setSelected(selected - 1) : onDismiss())}
-			>
+			<Modal visible={visible && selected === 1} onDismiss={onDismiss} onCloseAll={onCloseAll} onBack={onBack}>
 				<View style={styles.smallContainer}>
 					<TransactionSelectFunds user={user} onSelected={onTokenSelected} />
 				</View>
 			</Modal>
 
-			<Modal
-				visible={visible && selected === 2}
-				onDismiss={onDismiss}
-				onCloseAll={onCloseAll}
-				onBack={() => (selected > 0 ? setSelected(selected - 1) : onDismiss())}
-			>
+			<Modal visible={visible && selected === 2} onDismiss={onDismiss} onCloseAll={onCloseAll} onBack={onBack}>
 				<View style={styles.container}>{token && <TransactionTransfer user={user} token={token} />}</View>
 			</Modal>
 		</Portal>

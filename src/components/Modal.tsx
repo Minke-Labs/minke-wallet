@@ -34,11 +34,11 @@ const Modal = ({
 }: {
 	visible: boolean;
 	onDismiss: () => void;
-	onCloseAll?: () => void;
+	onCloseAll?: () => void | boolean;
 	onBack?: () => void;
 	headline?: string;
 	children?: JSX.Element;
-	right?: JSX.Element;
+	right?: JSX.Element | boolean;
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
