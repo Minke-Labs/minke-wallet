@@ -29,23 +29,26 @@ const Modal = ({
 	onCloseAll,
 	onBack,
 	headline,
-	children
+	children,
+	right
 }: {
 	visible: boolean;
 	onDismiss: () => void;
-	onCloseAll: () => void;
+	onCloseAll?: () => void;
 	onBack?: () => void;
 	headline?: string;
 	children?: JSX.Element;
+	right?: JSX.Element;
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (
 		<PaperModal visible={visible} onDismiss={onDismiss} contentContainerStyle={styles.modalContainerStyle}>
 			<View style={styles.modalHeader}>
-				{onBack ? <IconButton icon="chevron-left" size={24} color={colors.primary} onPress={onBack} /> : null}
-				{headline ? <Text style={globalStyle.headline}>{headline}</Text> : null}
-				<IconButton icon="close" size={24} color={colors.primary} onPress={onCloseAll} />
+				{onBack && <IconButton icon="chevron-left" size={24} color={colors.primary} onPress={onBack} />}
+				{headline && <Text style={globalStyle.headline}>{headline}</Text>}
+				{onCloseAll && <IconButton icon="close" size={24} color={colors.primary} onPress={onCloseAll} />}
+				{right}
 			</View>
 
 			{children}

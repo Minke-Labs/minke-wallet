@@ -32,6 +32,12 @@ export const getENSAddress = async (address: string) => {
 	return name;
 };
 
+export const resolveENSAddress = async (ensAddress: string) => {
+	const { testnet } = await selectedNetwork();
+	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).resolveName(ensAddress);
+	return name;
+};
+
 export const savePrivateKey = async (address: string, privateKey: null | string) => {
 	// const privateAccessControlOptions = await getPrivateAccessControlOptions();
 
@@ -281,8 +287,12 @@ export const getTokenList = async (): Promise<Array<Coin>> => {
 	return result.json();
 };
 
-export const smallWalletAddress = (address: string): string =>
-	`${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+export const smallWalletAddress = (address: string): string => {
+	if (address.includes('.')) {
+		return address;
+	}
+	return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+};
 
 export interface MinkeTokenList {
 	[name: string]: {

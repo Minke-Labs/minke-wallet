@@ -58,6 +58,7 @@ const ImportWalletButton = ({ button, onImportFinished }: { button: JSX.Element;
 									autoCapitalize="none"
 									autoFocus
 									autoCorrect={false}
+									autoCompleteType="off"
 								/>
 							</View>
 							<PrimaryButton disabled={!text.trim()} onPress={onImportWallet}>

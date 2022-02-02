@@ -7,7 +7,9 @@ import { WalletToken } from '@src/model/wallet';
 import TransactionContacts from './TransactionContacts/TransactionContacts';
 import TransactionSelectFunds from './TransactionSelectFunds/TransactionSelectFunds';
 import TransactionTransfer from './TransactionTransfer/TransactionTransfer';
+import AddContact from './TransactionContacts/AddContact/AddContact';
 import { styles } from './SendModal.styles';
+import PrimaryButton from '../PrimaryButton';
 
 interface Props {
 	visible: boolean;
@@ -23,36 +25,68 @@ interface UserProps {
 
 const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 	const [selected, setSelected] = useState(0);
+	const [addContactVisible, setAddContactVisible] = useState(false);
 	const [user, setUser] = useState<UserProps>(null!);
 	const [token, setToken] = useState<WalletToken>();
 
-	const handlePress1 = (item: UserProps) => {
+	const onUserSelected = (item: UserProps) => {
 		setSelected(selected + 1);
 		setUser(item);
 	};
 
-	const handlePress2 = (coin: WalletToken) => {
+	const onTokenSelected = (coin: WalletToken) => {
 		setSelected(selected + 1);
 		setToken(coin);
 	};
 
 	useEffect(() => {
 		setSelected(0);
+		setAddContactVisible(false);
 	}, [visible]);
+
+	const onContactsBack = () => (selected > 0 ? setSelected(selected - 1) : onDismiss());
 
 	return (
 		<Portal>
 			<Modal
-				visible={visible}
+				visible={visible && selected === 0}
+				onDismiss={onDismiss}
+				right={
+					<PrimaryButton mode="text" onPress={() => setAddContactVisible(true)}>
+						+ Add
+					</PrimaryButton>
+				}
+				onBack={onContactsBack}
+			>
+				{addContactVisible ? (
+					<View style={styles.container}>
+						<AddContact onContactAdded={() => setAddContactVisible(false)} />
+					</View>
+				) : (
+					<View style={styles.smallContainer}>
+						<TransactionContacts onSelected={onUserSelected} />
+					</View>
+				)}
+			</Modal>
+
+			<Modal
+				visible={visible && selected === 1}
 				onDismiss={onDismiss}
 				onCloseAll={onCloseAll}
 				onBack={() => (selected > 0 ? setSelected(selected - 1) : onDismiss())}
 			>
-				<View style={styles.container}>
-					{selected === 0 && <TransactionContacts onSelected={handlePress1} />}
-					{selected === 1 && <TransactionSelectFunds user={user} onSelected={handlePress2} />}
-					{selected === 2 && token && <TransactionTransfer user={user} token={token} />}
+				<View style={styles.smallContainer}>
+					<TransactionSelectFunds user={user} onSelected={onTokenSelected} />
 				</View>
+			</Modal>
+
+			<Modal
+				visible={visible && selected === 2}
+				onDismiss={onDismiss}
+				onCloseAll={onCloseAll}
+				onBack={() => (selected > 0 ? setSelected(selected - 1) : onDismiss())}
+			>
+				<View style={styles.container}>{token && <TransactionTransfer user={user} token={token} />}</View>
 			</Modal>
 		</Portal>
 	);

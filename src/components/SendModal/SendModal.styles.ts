@@ -5,5 +5,10 @@ export const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		maxHeight: Dimensions.get('screen').height * 0.8
+	},
+	smallContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		maxHeight: Dimensions.get('screen').height * 0.5
 	}
 });

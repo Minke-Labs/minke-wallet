@@ -26,7 +26,8 @@ export const darkTheme = {
 		surface: '#0A2138',
 		secondaryText: '#748190',
 		fill: 'rgba(255, 255, 255, 0.1)',
-		disabled: 'rgba(255, 255, 255, 0.05)'
+		disabled: 'rgba(255, 255, 255, 0.05)',
+		surface: 'red'
 	}
 };
 
