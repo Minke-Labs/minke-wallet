@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native-paper';
-import Modal from 'old/src/components/Modal';
+import Modal from '@src/components/Modal';
 import globalStyles from 'old/src/components/global.styles';
 import CoinSelector from './CoinSelector';
 

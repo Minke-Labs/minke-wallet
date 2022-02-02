@@ -4,7 +4,7 @@ import { Text, Portal, Snackbar, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { globalWalletState } from 'old/src/stores/WalletStore';
 import * as Clipboard from 'expo-clipboard';
-import Modal from 'old/src/components/Modal';
+import Modal from '@src/components/Modal';
 import RoundButton from 'old/src/components/RoundButton';
 import ApplePayButton from 'old/src/components/ApplePayButton';
 import { ICoin } from 'old/src/helpers/coins';

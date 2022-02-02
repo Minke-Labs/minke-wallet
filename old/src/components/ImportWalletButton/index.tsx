@@ -5,7 +5,7 @@ import { useState } from '@hookstate/core';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { restoreWalletByMnemonic } from 'old/src/model/wallet';
 import { globalWalletState } from 'old/src/stores/WalletStore';
-import Modal from '../Modal';
+import Modal from '../../../../src/components/Modal';
 import PrimaryButton from '../PrimaryButton';
 import { makeStyles } from './styles';
 import globalStyles from '../global.styles';

@@ -5,7 +5,7 @@ import CurrencyInput from 'react-native-currency-input';
 import ApplePayButton from 'old/src/components/ApplePayButton';
 import { MaterialIcons } from '@expo/vector-icons';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import Modal from 'old/src/components/Modal';
+import Modal from '@src/components/Modal';
 import globalStyles from 'old/src/components/global.styles';
 import styles from './styles';
 

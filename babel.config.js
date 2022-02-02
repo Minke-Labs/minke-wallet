@@ -4,6 +4,7 @@ module.exports = (api) => {
 		presets: ['babel-preset-expo'],
 		plugins: [
 			'inline-dotenv',
+			'react-native-reanimated/plugin',
 			[
 				'module-resolver',
 				{

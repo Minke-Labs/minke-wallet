@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import Modal from 'old/src/components/Modal';
+import Modal from '@src/components/Modal';
 import { Portal } from 'react-native-paper';
 import { styles } from './SendModal.styles';
 import TransactionContacts from './TransactionContacts/TransactionContacts';
