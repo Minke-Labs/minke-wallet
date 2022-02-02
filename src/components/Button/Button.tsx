@@ -8,6 +8,9 @@ import { ButtonProps } from './Button.types';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 
+const getKeyByValue = (object: any, value: string) =>
+	Object.keys(object).find((key) => object[key] === value) as keyof ReactNativePaper.ThemeColors;
+
 const Button: React.FC<ButtonProps> = ({
 	title = 'button',
 	mode = 'contained',
@@ -27,11 +30,15 @@ const Button: React.FC<ButtonProps> = ({
 			onPress={onPress}
 			style={[styles.button, { backgroundColor, marginBottom }]}
 		>
-			{iconLeft && <Icon name={iconLeft} />}
+			{iconLeft && (
+				<Icon name={iconLeft} size={18} style={{ marginRight: 9.25 }} color={getKeyByValue(colors, color)} />
+			)}
 			<Text weight="medium" style={{ color }}>
 				{title}
 			</Text>
-			{iconRight && <Icon name={iconRight} />}
+			{iconRight && (
+				<Icon name={iconRight} size={18} style={{ marginLeft: 9.25 }} color={getKeyByValue(colors, color)} />
+			)}
 		</TouchableOpacity>
 	);
 };

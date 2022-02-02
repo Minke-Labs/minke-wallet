@@ -57,6 +57,7 @@ const WelcomeScreen = () => {
 								title="Create Wallet"
 								onPress={() => console.log('Create Wallet!')}
 								marginBottom={14}
+								// iconRight="cloudStroke"
 							/>
 							<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
 						</View>

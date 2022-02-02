@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
 		height: 48,
 		borderRadius: 64,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		flexDirection: 'row'
 	}
 });
