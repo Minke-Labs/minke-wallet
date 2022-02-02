@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
+import { useState } from '@hookstate/core';
 import PrimaryButton from '@src/components/PrimaryButton';
-import { WalletToken } from '@src/model/wallet';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { estimateGas, sendTransaction, EstimateGasResponse, WalletToken, resolveENSAddress } from '@src/model/wallet';
 import makeBlockie from 'ethereum-blockies-base64';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
@@ -30,8 +32,53 @@ const Card = ({ token: { symbol, balanceUSD, balance } }: { token: WalletToken }
 );
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }) => {
-	const [amount, onChangeAmount] = useState('');
-	const [number, onChangeNumber] = useState<Number>();
+	const state = useState(globalWalletState());
+	const [amount, onChangeAmount] = React.useState('');
+	const [number, onChangeNumber] = React.useState<Number>();
+	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
+
+	useEffect(() => {
+		const fetchGasPrice = async () => {
+			const result = await estimateGas();
+			setGasPrice(result);
+		};
+		fetchGasPrice();
+	}, []);
+
+	const GasPriceLine = useCallback(
+		({ gas, label, priceUSD }) => {
+			const coinValue = gas * 21000 * 10 ** -9;
+			return (
+				<Text>
+					{label}: Normal - {coinValue} {token.symbol} | $
+					{(coinValue * priceUSD).toString().match(/^-?\d+(?:\.\d{0,6})?/)} Network Fee
+				</Text>
+			);
+		},
+		[token]
+	);
+
+	const {
+		privateKey,
+		network: { id, defaultToken }
+	} = state.value;
+
+	const onSend = async () => {
+		if (gasPrice) {
+			const ens = user.address;
+			const to = (await resolveENSAddress(ens)) || ens;
+			const result = await sendTransaction(
+				privateKey,
+				to,
+				amount,
+				gasPrice.result.ProposeGasPrice,
+				id,
+				token.symbol.toLowerCase() === defaultToken.toLowerCase() ? '' : token.address
+			);
+
+			console.log(result);
+		}
+	};
 
 	return (
 		<View style={styles.container}>
@@ -61,8 +108,22 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 				placeholder="00.00"
 			/>
 
-			<PrimaryButton disabled={!number || number > token.balance}>Send</PrimaryButton>
-
+			{gasPrice && (
+				<GasPriceLine label="Low" gas={+gasPrice.result.SafeGasPrice} priceUSD={+gasPrice.result.UsdPrice} />
+			)}
+			{gasPrice && (
+				<GasPriceLine
+					label="Normal"
+					gas={+gasPrice.result.ProposeGasPrice}
+					priceUSD={+gasPrice.result.UsdPrice}
+				/>
+			)}
+			{gasPrice && (
+				<GasPriceLine label="Fast" gas={+gasPrice.result.FastGasPrice} priceUSD={+gasPrice.result.UsdPrice} />
+			)}
+			<PrimaryButton disabled={!number || number > token.balance} onPress={onSend}>
+				Send
+			</PrimaryButton>
 			<KeyboardSpacer />
 		</View>
 	);

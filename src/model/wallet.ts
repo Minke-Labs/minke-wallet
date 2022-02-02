@@ -218,11 +218,12 @@ export const sendTransaction = async (
 ) => {
 	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
-
+	const chainId = await wallet.getChainId();
 	const txDefaults = {
+		chainId,
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: 41000,
+		gasLimit: 21000,
 		nonce
 	};
 
@@ -245,9 +246,11 @@ export const sendTransaction = async (
 	return wallet.provider.sendTransaction(signedTx as string);
 };
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
-	const { gasURL, etherscanAPIURL } = await selectedNetwork();
+	const { gasURL, etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
 	const result = await fetch(
-		`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
+		`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=${
+			etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N'
+		}`
 	);
 	return result.json();
 };
@@ -338,6 +341,7 @@ export interface EstimateGasResponse {
 		FastGasPrice: string;
 		suggestBaseFee: string;
 		gasUsedRatio: string;
+		UsdPrice: string;
 	};
 }
 

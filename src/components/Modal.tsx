@@ -34,7 +34,7 @@ const Modal = ({
 }: {
 	visible: boolean;
 	onDismiss: () => void;
-	onCloseAll?: () => void | boolean;
+	onCloseAll?: boolean | (() => void);
 	onBack?: () => void;
 	headline?: string;
 	children?: JSX.Element;
