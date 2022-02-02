@@ -15,11 +15,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		exchangeHeadlineRow: {
 			flexDirection: 'column',
-			paddingTop: 24,
-			marginBottom: 24
-		},
-		pageTitle: {
-			fontFamily: 'Inter_800ExtraBold'
+			paddingTop: 24
 		},
 		exchangeSummaryText: {
 			marginTop: 8
@@ -31,7 +27,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		tokenCard: {
 			borderRadius: 16,
-			marginTop: 24,
+			marginTop: 16,
 			backgroundColor: colors.fill
 		},
 		tokenCardCoinContent: {
@@ -98,7 +94,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		currencyIcon: {
 			padding: 8,
 			marginRight: 8,
-			borderRadius: 500
+			borderRadius: 500,
+			backgroundColor: colors.backgroundIcons
 		},
 
 		// Gas Option

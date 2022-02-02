@@ -12,6 +12,7 @@ import PrimaryButton from '@components/PrimaryButton';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
 import { ether, ParaswapToken, Quote, getExchangePrice } from '@models/token';
+import globalStyles from '@src/components/global.styles';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
 import SearchTokens from './search-tokens/SearchTokens';
@@ -236,7 +237,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			<Container>
 				<View style={styles.exchangeSection}>
 					<View style={styles.exchangeHeadlineRow}>
-						<Headline style={styles.pageTitle}>Exchange</Headline>
+						<Headline style={globalStyles.headline}>Exchange</Headline>
 						<Text style={styles.exchangeSummaryText}>{exchangeSummary()}</Text>
 					</View>
 					<Card style={styles.tokenCard}>

@@ -62,8 +62,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			flexDirection: 'row',
 			alignItems: 'center',
 			justifyContent: 'center',
-			paddingTop: 8,
-			paddingBottom: 8,
+			paddingTop: 16,
+			paddingBottom: 16,
 			borderTopWidth: 1,
 			borderTopColor: colors.background
 		},
