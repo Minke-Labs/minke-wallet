@@ -9,7 +9,7 @@ import {
 	waveWelcomeFooterImg,
 	waveWelcomeFooterDarkImg
 } from '@images';
-import { Text, Button, Modal } from '@components';
+import { Text, Button, Modal2 } from '@components';
 import styles from './WelcomeScreen.styles';
 
 const Background: React.FC = ({ children }) => {
@@ -66,9 +66,9 @@ const WelcomeScreen = () => {
 				</Background>
 			</WelcomeLayout>
 
-			<Modal visible={isModalVisible} onBackdropPress={() => setModalVisible(false)}>
+			<Modal2 isVisible={isModalVisible} height={500} onDismiss={() => setModalVisible(false)}>
 				<View style={{ height: 500 }} />
-			</Modal>
+			</Modal2>
 		</>
 	);
 };
