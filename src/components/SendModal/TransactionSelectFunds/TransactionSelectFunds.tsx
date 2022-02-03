@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Image, Text, FlatList } from 'react-native';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
-import makeBlockie from 'ethereum-blockies-base64';
-import { getWalletTokens, WalletToken } from '@src/model/wallet';
+import { WalletToken, getWalletTokens, imageSource } from '@src/model/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { styles } from './TransactionSelectFunds.styles';
 import Item from '../TransactionContacts/Item';
@@ -19,6 +18,7 @@ interface TransactionSelectFundsProps {
 }
 
 const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
+	const [image, setImage] = React.useState<{ uri: string }>();
 	const wallet = useState(globalWalletState());
 	const { colors } = useTheme();
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
@@ -32,12 +32,17 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 			setWalletTokens(tokens);
 		};
 
+		const fetchImage = async () => {
+			setImage(await imageSource(user.address));
+		};
+
 		fetchWalletTokens();
+		fetchImage();
 	}, []);
 
 	return (
 		<View style={styles.container}>
-			{user.address ? <Image source={{ uri: makeBlockie(user.address) }} style={styles.image} /> : null}
+			{user.address ? <Image source={image} style={styles.image} /> : null}
 			<Text style={styles.title}>
 				Which <Text style={styles.titleHighlight}>asset</Text> do you want to send to{' '}
 				<Text style={styles.titleHighlight}>{user.name}</Text>?

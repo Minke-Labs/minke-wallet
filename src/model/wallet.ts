@@ -1,6 +1,7 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
+import makeBlockie from 'ethereum-blockies-base64';
 import { WalletState } from '@stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
 import { convertEthToUsd } from '@helpers/utilities';
@@ -295,6 +296,14 @@ export const smallWalletAddress = (address: string): string => {
 		return address;
 	}
 	return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+};
+
+export const imageSource = async (address: string): Promise<{ uri: string }> => {
+	let wallet = address;
+	if (address.includes('.')) {
+		wallet = await resolveENSAddress(address);
+	}
+	return { uri: makeBlockie(wallet) };
 };
 
 export interface MinkeTokenList {

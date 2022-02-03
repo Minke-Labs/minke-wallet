@@ -2,11 +2,9 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Text } from 'react-native-paper';
-import { smallWalletAddress } from '@src/model/wallet';
-import makeBlockie from 'ethereum-blockies-base64';
 import { useState } from '@hookstate/core';
 import { globalContactState } from '@src/stores/ContactStore';
-import Item from './Item';
+import ContactItem from './Contact/Contact';
 import { styles } from './TransactionContacts.styles';
 
 interface UserProps {
@@ -28,14 +26,7 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 			<FlatList
 				keyExtractor={(item, idx) => `${item.address}-${idx}`}
 				data={contactList}
-				renderItem={({ item }) => (
-					<Item
-						onSelected={() => onSelected(item)}
-						firstLine={item.name}
-						secondLine={smallWalletAddress(item.address)}
-						imageSource={{ uri: makeBlockie(item.address) }}
-					/>
-				)}
+				renderItem={({ item }) => <ContactItem contact={item} onSelected={() => onSelected(item)} />}
 			/>
 		</View>
 	);

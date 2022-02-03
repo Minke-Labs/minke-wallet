@@ -30,20 +30,18 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
 							<Text style={styles.cardLabel}>Your total assets</Text>
 							<Text style={styles.cardBalance}>${commify(balance)}</Text>
 						</View>
-						<View>
-							{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}
-						</View>
+						<View>{address && <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} />}</View>
 					</View>
 					<View style={styles.cardBottomContent}>
 						<AddFundsButton
 							button={
-							// eslint-disable-next-line react/jsx-wrap-multilines
+								// eslint-disable-next-line react/jsx-wrap-multilines
 								<TextButton
 									text="Add funds"
 									icon="add-circle-outline"
 									containerStyle={styles.cardDivisor}
 								/>
-						}
+							}
 						/>
 						<TextButton
 							text="Send"

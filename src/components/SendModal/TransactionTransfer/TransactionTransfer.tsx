@@ -3,8 +3,14 @@ import { View, Text, Image } from 'react-native';
 import { useState } from '@hookstate/core';
 import PrimaryButton from '@src/components/PrimaryButton';
 import { globalWalletState } from '@src/stores/WalletStore';
-import { estimateGas, sendTransaction, EstimateGasResponse, WalletToken, resolveENSAddress } from '@src/model/wallet';
-import makeBlockie from 'ethereum-blockies-base64';
+import {
+	estimateGas,
+	sendTransaction,
+	EstimateGasResponse,
+	WalletToken,
+	resolveENSAddress,
+	imageSource
+} from '@src/model/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { styles } from './TransactionTransfer.styles';
@@ -33,6 +39,7 @@ const Card = ({ token: { symbol, balanceUSD, balance } }: { token: WalletToken }
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }) => {
 	const state = useState(globalWalletState());
+	const [image, setImage] = React.useState<{ uri: string }>();
 	const [amount, onChangeAmount] = React.useState('');
 	const [number, onChangeNumber] = React.useState<Number>();
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
@@ -42,7 +49,12 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 			const result = await estimateGas();
 			setGasPrice(result);
 		};
+		const fetchImage = async () => {
+			setImage(await imageSource(user.address));
+		};
+
 		fetchGasPrice();
+		fetchImage();
 	}, []);
 
 	const GasPriceLine = useCallback(
@@ -84,10 +96,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
 				<Image style={styles.image} source={require('@assets/eth.png')} />
-				<Image
-					style={[styles.image, { marginLeft: -20, zIndex: -1 }]}
-					source={{ uri: makeBlockie(user.address) }}
-				/>
+				{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
 			</View>
 
 			<Text style={styles.title}>

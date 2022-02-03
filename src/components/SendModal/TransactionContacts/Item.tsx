@@ -7,13 +7,13 @@ import { styles } from './TransactionContacts.styles';
 interface ItemProps {
 	firstLine: string;
 	secondLine: string | JSX.Element;
-	imageSource: ImageSourcePropType;
+	imageSource?: ImageSourcePropType;
 	onSelected: () => void;
 }
 
 const Item: React.FC<ItemProps> = ({ firstLine, secondLine, imageSource, onSelected }) => (
 	<TouchableOpacity style={styles.itemContainer} onPress={onSelected}>
-		{imageSource ? <Image source={imageSource} style={styles.avatar} /> : null}
+		{imageSource && <Image source={imageSource} style={styles.avatar} />}
 		<View style={styles.contactTitleContainer}>
 			<Text style={styles.contactTitle}>{firstLine}</Text>
 			<Text>{secondLine}</Text>
