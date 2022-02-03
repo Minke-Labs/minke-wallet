@@ -3,6 +3,7 @@ import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { Transaction as ITransaction, smallWalletAddress, getENSAddress } from '@models/wallet';
+import { searchContact } from '@models/contact';
 import { formatUnits } from 'ethers/lib/utils';
 import { format } from 'date-fns';
 import * as Linking from 'expo-linking';
@@ -48,9 +49,17 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 
 	useEffect(() => {
 		const formatAddress = async () => {
-			const ens = await getENSAddress(source);
-			if (ens) {
-				setFormattedSource(ens);
+			const contact = await searchContact(source);
+			if (contact?.name) {
+				setFormattedSource(contact.name);
+			} else {
+				const ens = await getENSAddress(source);
+				if (ens) {
+					const ensContact = await searchContact(ens);
+					setFormattedSource(ensContact?.name || ens);
+				} else {
+					setFormattedSource(smallWalletAddress(source));
+				}
 			}
 		};
 

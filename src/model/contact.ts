@@ -18,6 +18,11 @@ const formatAddress = (address: string): string => {
 	return getAddress(address);
 };
 
+export const searchContact = async (address: string): Promise<ContactItem | undefined> => {
+	const existingContacts = await getAllContacts();
+	return existingContacts.find((c) => c.address.toLocaleLowerCase() === address.toLowerCase());
+};
+
 export const contactCreate = async (name: string, address: string) => {
 	const contact = { name, address: formatAddress(address) };
 	const existingContacts = await getAllContacts();
