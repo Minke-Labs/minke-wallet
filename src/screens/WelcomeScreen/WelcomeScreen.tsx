@@ -9,7 +9,7 @@ import {
 	waveWelcomeFooterImg,
 	waveWelcomeFooterDarkImg
 } from '@images';
-import { Text, Button, Modal2, Token } from '@components';
+import { Text, Button, Modal2 } from '@components';
 import styles from './WelcomeScreen.styles';
 
 const Background: React.FC = ({ children }) => {
@@ -50,8 +50,6 @@ const WelcomeScreen = () => {
 								<Text weight="extraBold"> Minke </Text>
 							</Text>
 						</View>
-
-						<Token name="nav" size={200} />
 
 						<View style={styles.buttonContainer}>
 							<Button

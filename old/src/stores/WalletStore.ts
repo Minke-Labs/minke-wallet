@@ -2,7 +2,7 @@ import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
 import { convertEthToUsd } from 'old/src/helpers/utilities';
-import { defaultNetwork, Network, network as selectedNetwork } from 'old/src/model/network';
+import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
 import {
 	erc20abi,
 	Coin,
@@ -13,7 +13,7 @@ import {
 	MinkeTokenList,
 	Transaction,
 	MinkeWallet
-} from 'old/src/model/wallet';
+} from '@src/model/wallet';
 
 export interface WalletState {
 	// wallet: (privateKey: string) => Wallet;

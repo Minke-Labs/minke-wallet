@@ -6,7 +6,7 @@ import { globalWalletState } from 'old/src/stores/WalletStore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, useTheme, Text } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
-import { getENSAddress, smallWalletAddress } from 'old/src/model/wallet';
+import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
 import { makeStyles } from './styles';
 
 const Header = ({ onSettingsPress }: { onSettingsPress: (event: GestureResponderEvent) => void }) => {

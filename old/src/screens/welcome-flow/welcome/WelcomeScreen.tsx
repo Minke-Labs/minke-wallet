@@ -5,7 +5,7 @@ import { useState } from '@hookstate/core';
 import PrimaryButton from 'old/src/components/PrimaryButton';
 import { globalWalletState } from 'old/src/stores/WalletStore';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
-import { walletCreate } from 'old/src/model/wallet';
+import { walletCreate } from '@src/model/wallet';
 import ImportWalletButton from 'old/src/components/ImportWalletButton';
 import WelcomeContainer from '../WelcomeContainer';
 import MainText from '../MainText';

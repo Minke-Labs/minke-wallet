@@ -24,13 +24,18 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
 	const { colors } = useTheme();
 	const color = mode === 'contained' ? colors.buttonText : colors.linkText;
-	const backgroundColor = mode === 'contained' ? '#006AA6' : undefined;
+	const backgroundColor = () => {
+		if (disabled) return colors.buttonDisabled;
+		if (mode === 'contained') return colors.buttonColor;
+		return 'transparent';
+	};
+
 	return (
 		<TouchableOpacity
 			activeOpacity={0.8}
 			disabled={disabled}
 			onPress={onPress}
-			style={[styles.button, { backgroundColor, marginBottom }]}
+			style={[styles.button, { backgroundColor: backgroundColor(), marginBottom }]}
 		>
 			{iconLeft && (
 				<Icon name={iconLeft} size={18} style={{ marginRight: 9.25 }} color={getKeyByValue(colors, color)} />

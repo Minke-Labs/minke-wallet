@@ -1,5 +1,5 @@
 import { createState } from '@hookstate/core';
-import { ParaswapToken } from 'old/src/model/token';
+import { ParaswapToken } from '@src/model/token';
 
 export interface Gas {
 	type: string;

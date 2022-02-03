@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Share } from 'react-native';
 import { Portal, Text } from 'react-native-paper';
-import { getENSAddress } from 'old/src/model/wallet';
+import { getENSAddress } from '@src/model/wallet';
 import { globalWalletState } from 'old/src/stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
 import Modal from '@src/components/Modal';

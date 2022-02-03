@@ -22,7 +22,6 @@ export default StyleSheet.create({
 		width: screen.width,
 		bottom: 0,
 		position: 'absolute',
-		backgroundColor: '#F2EAE1',
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20
 	},

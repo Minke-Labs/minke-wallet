@@ -18,7 +18,7 @@ export type ModalProps = {
 	dismiss: () => void;
 };
 
-const Bare = React.forwardRef<ModalProps, PropsWithChildren<{ height: number; onDismiss: () => void }>>(
+const Bare = React.forwardRef<ModalProps, PropsWithChildren<{ height: number; onDismiss:() => void }>>(
 	({ height, onDismiss, children }, ref) => {
 		const { colors } = useTheme();
 		const top = useSharedValue(screen.height);
@@ -53,7 +53,6 @@ const Bare = React.forwardRef<ModalProps, PropsWithChildren<{ height: number; on
 				</Animated.View>
 			</View>
 		);
-	}
-);
+	});
 
 export default Bare;

@@ -5,7 +5,7 @@ import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import Container from 'old/src/components/Container';
 import { useState } from '@hookstate/core';
 import { globalWalletState, walletState, emptyWallet } from 'old/src/stores/WalletStore';
-import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from 'old/src/model/wallet';
+import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@src/model/wallet';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from './header/Header';
 import AssetsPanel from './assets-panel/AssetsPanel';

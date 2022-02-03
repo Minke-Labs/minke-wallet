@@ -4,7 +4,7 @@ import React, { useState, useEffect, RefObject } from 'react';
 import { Image, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Card, IconButton, Text } from 'react-native-paper';
-import { ParaswapToken } from '../../model/token';
+import { ParaswapToken } from '../../../../src/model/token';
 
 const TokenCard = ({
 	token,

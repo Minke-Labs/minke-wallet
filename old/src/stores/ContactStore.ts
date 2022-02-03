@@ -1,5 +1,5 @@
 import { createState } from '@hookstate/core';
-import { ContactItem, getAllContacts } from 'old/src/model/contact';
+import { ContactItem, getAllContacts } from '@src/model/contact';
 
 export interface ContactState {
 	contactList?: ContactItem[];

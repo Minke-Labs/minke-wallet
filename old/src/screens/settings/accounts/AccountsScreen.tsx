@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { useState } from '@hookstate/core';
 import { Headline } from 'react-native-paper';
-import { MinkeWallet, getAllWallets, saveAllWallets, AllMinkeWallets } from 'old/src/model/wallet';
+import { MinkeWallet, getAllWallets, saveAllWallets, AllMinkeWallets } from '@src/model/wallet';
 import ListItem from 'old/src/components/ListItem';
 import Container from 'old/src/components/Container';
 import { find } from 'lodash';

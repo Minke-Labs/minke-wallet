@@ -1,7 +1,7 @@
 import React from 'react';
 import { State, useState } from '@hookstate/core';
 import { ExchangeState, Gas, globalExchangeState } from 'old/src/stores/ExchangeStore';
-import { EstimateGasResponse } from '../../model/wallet';
+import { EstimateGasResponse } from '../../../../src/model/wallet';
 import GasOption from './GasOption';
 
 const GasSelector = ({ gweiPrice, gasPrice }: { gweiPrice: number; gasPrice: EstimateGasResponse }) => {

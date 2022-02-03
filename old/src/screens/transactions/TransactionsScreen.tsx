@@ -3,7 +3,7 @@ import { View, FlatList, ActivityIndicator } from 'react-native';
 import { Headline, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from 'old/src/stores/WalletStore';
-import { getTransactions } from 'old/src/model/wallet';
+import { getTransactions } from '@src/model/wallet';
 import Container from 'old/src/components/Container';
 import globalStyles from 'old/src/components/global.styles';
 import Transaction from '../home/finance-panel/transactions/Transaction';

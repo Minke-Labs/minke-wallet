@@ -3,7 +3,7 @@ import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Portal, TextInput, Headline, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { restoreWalletByMnemonic } from 'old/src/model/wallet';
+import { restoreWalletByMnemonic } from '@src/model/wallet';
 import { globalWalletState } from 'old/src/stores/WalletStore';
 import Modal from '../../../../src/components/Modal';
 import PrimaryButton from '../PrimaryButton';

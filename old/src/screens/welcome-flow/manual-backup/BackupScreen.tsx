@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState } from 'old/src/stores/WalletStore';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
-import { getSeedPhrase } from 'old/src/model/wallet';
+import { getSeedPhrase } from '@src/model/wallet';
 import styles from './styles';
 import WelcomeContainer from '../WelcomeContainer';
 

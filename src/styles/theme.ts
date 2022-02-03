@@ -4,6 +4,8 @@ declare global {
 	namespace ReactNativePaper {
 		interface ThemeColors {
 			buttonText: string;
+			buttonDisabled: string;
+			buttonColor: string;
 			linkText: string;
 			secondaryText: string;
 			fill: string;
@@ -22,6 +24,8 @@ const darkTheme = {
 		placeholder: '#B7B9BB',
 		primary: '#FFFFFF',
 		buttonText: '#FFFFFF',
+		buttonColor: '#006AA6',
+		buttonDisabled: 'rgba(255, 255, 255, 0.5)',
 		linkText: '#FFFFFF',
 		surface: '#0A2138',
 		secondaryText: '#748190',
@@ -39,6 +43,8 @@ const lightTheme = {
 		placeholder: '#213952',
 		primary: '#006AA6',
 		buttonText: '#FFFFFF',
+		buttonColor: '#006AA6',
+		buttonDisabled: '#D0D0D0',
 		linkText: '#006AA6',
 		secondaryText: '#4E5E6F',
 		fill: '#FFFFFF'

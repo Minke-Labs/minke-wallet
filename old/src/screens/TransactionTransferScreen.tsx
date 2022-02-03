@@ -8,7 +8,7 @@ import { CommonActions, useRoute } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
 import { isNaN } from 'lodash';
 import AppLoading from 'expo-app-loading';
-import { estimateGas, sendTransaction } from 'old/src/model/wallet';
+import { estimateGas, sendTransaction } from '@src/model/wallet';
 
 export function TransactionTransferScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const route = useRoute<RootRouteProps<'TransactionTransfer'>>();
