@@ -109,7 +109,7 @@ const SearchTokens = ({
 								<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
 								<View style={styles.tokenItemNameContainer}>
 									<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
-									<Text style={styles.tokenItemName}>DAI</Text>
+									<Text style={styles.tokenItemName}>{item.symbol}</Text>
 								</View>
 							</TouchableOpacity>
 						)}

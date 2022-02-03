@@ -7,13 +7,14 @@ export interface Network {
 	testnet: boolean;
 	etherscanURL: string;
 	etherscanAPIURL: string;
-	etherscanAPIKey?: string;
+	etherscanAPIKey: string;
 	gasURL?: string;
 	zapperNetwork: string;
 	supportedTokenList?: {
 		[key: string]: string;
 	};
 	nativeTokenSymbol: string;
+	transactionTimesEndpoint: boolean;
 }
 
 export interface Networks {
@@ -31,11 +32,13 @@ export const networks: Networks = {
 		testnet: false,
 		etherscanURL: 'https://etherscan.io/',
 		etherscanAPIURL: 'https://api.etherscan.io/',
+		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		supportedTokenList: {
 			dai: '0x6b175474e89094c44da98b954eedeac495271d0f'
 		},
-		nativeTokenSymbol: 'ETH'
+		nativeTokenSymbol: 'ETH',
+		transactionTimesEndpoint: true
 	},
 	matic: {
 		chainId: 137,
@@ -49,7 +52,8 @@ export const networks: Networks = {
 		supportedTokenList: {
 			dai: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
 		},
-		nativeTokenSymbol: 'MATIC'
+		nativeTokenSymbol: 'MATIC',
+		transactionTimesEndpoint: false
 	},
 	mumbai: {
 		chainId: 80001,
@@ -64,7 +68,8 @@ export const networks: Networks = {
 		supportedTokenList: {
 			dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
 		},
-		nativeTokenSymbol: 'MATIC'
+		nativeTokenSymbol: 'MATIC',
+		transactionTimesEndpoint: false
 	},
 	ropsten: {
 		chainId: 3,
@@ -73,11 +78,13 @@ export const networks: Networks = {
 		testnet: true,
 		etherscanURL: 'https://ropsten.etherscan.io/',
 		etherscanAPIURL: 'https://api-ropsten.etherscan.io/',
+		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		supportedTokenList: {
 			dai: '0xad6d458402f60fd3bd25163575031acdce07538d'
 		},
-		nativeTokenSymbol: 'ETH'
+		nativeTokenSymbol: 'ETH',
+		transactionTimesEndpoint: true
 	}
 };
 

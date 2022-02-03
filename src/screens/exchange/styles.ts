@@ -115,6 +115,10 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginRight: 16,
 			backgroundColor: colors.fill
 		},
+		selectedCard: {
+			borderWidth: 2,
+			borderColor: colors.primary
+		},
 		gasSelectorCardContent: {
 			flexDirection: 'row',
 			alignItems: 'center'

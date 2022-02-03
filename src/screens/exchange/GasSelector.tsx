@@ -1,18 +1,81 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, SafeAreaView, ScrollView } from 'react-native';
 import { State, useState } from '@hookstate/core';
-import { useTheme } from 'react-native-paper';
-import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
-import { EstimateGasResponse } from '../../model/wallet';
+import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
+import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
+import { network } from '@src/model/network';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { estimateConfirmationTime, estimateGas, EstimateGasResponse, getEthLastPrice } from '@models/wallet';
 import GasOption from './GasOption';
 import { makeStyles } from './styles';
 
-const GasSelector = ({ gweiPrice, gasPrice }: { gweiPrice: number; gasPrice: EstimateGasResponse }) => {
-	const exchange: State<ExchangeState> = useState(globalExchangeState());
-	exchange.gas.set({ type: 'normal', gweiValue: gasPrice.average, gweiPrice, wait: gasPrice.avgWait } as Gas);
+interface WaitingTimes {
+	['key']?: number;
+}
+
+const GasSelector = () => {
+	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
+	const [usdPrice, setUsdPrice] = React.useState<number>();
+	const [waitingTimes, setWaitingTimes] = React.useState<WaitingTimes>({});
+	// const exchange: State<ExchangeState> = useState(globalExchangeState());
+	// exchange.gas.set({ type: 'normal', gweiValue: gasPrice.average, gweiPrice, wait: gasPrice.avgWait } as Gas);
+
+	useEffect(() => {
+		const fetchGas = async () => {
+			const gas = await estimateGas();
+			const {
+				result: { UsdPrice: usd }
+			} = gas;
+			setGasPrice(gas);
+			if (usd) {
+				setUsdPrice(+usd);
+			} else {
+				const {
+					result: { ethusd }
+				} = await getEthLastPrice();
+				setUsdPrice(+ethusd);
+			}
+		};
+
+		fetchGas();
+	}, []);
+
+	useEffect(() => {
+		const fetchConfirmationTimes = async () => {
+			if (gasPrice) {
+				const { transactionTimesEndpoint } = await network();
+				if (transactionTimesEndpoint) {
+					const {
+						result: { ProposeGasPrice: normal, SafeGasPrice: slow, FastGasPrice: fast }
+					} = gasPrice;
+					const times = [normal, slow, fast].filter((v, i, a) => a.indexOf(v) === i);
+					const waitings: WaitingTimes = {};
+					times.forEach(async (time) => {
+						const { result } = await estimateConfirmationTime(+time * 1000000000);
+						waitings[time as keyof WaitingTimes] = +result;
+					});
+					setWaitingTimes(waitings);
+				}
+			}
+		};
+
+		fetchConfirmationTimes();
+	}, [gasPrice]);
 
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+
+	if (!gasPrice) {
+		return <ActivityIndicator size={24} color={colors.primary} />;
+	}
+
+	const {
+		result: { ProposeGasPrice: normal, SafeGasPrice: slow, FastGasPrice: fast }
+	} = gasPrice;
+
+	if (!usdPrice) {
+		return <ActivityIndicator size={24} color={colors.primary} />;
+	}
 
 	return (
 		<SafeAreaView>
@@ -25,34 +88,22 @@ const GasSelector = ({ gweiPrice, gasPrice }: { gweiPrice: number; gasPrice: Est
 				<View style={styles.scrollviewHorizontalContent}>
 					<GasOption
 						type="normal"
-						gweiValue={gasPrice.average}
-						gweiPrice={gweiPrice}
-						wait={gasPrice.avgWait}
+						gweiValue={+normal}
+						usdPrice={usdPrice}
+						wait={waitingTimes[normal as keyof WaitingTimes] || 5}
 					/>
-
 					<GasOption
-						type="low"
-						gweiValue={gasPrice.safeLow}
-						gweiPrice={gweiPrice}
-						wait={gasPrice.safeLowWait}
+						type="fast"
+						gweiValue={+fast}
+						usdPrice={usdPrice}
+						wait={waitingTimes[fast as keyof WaitingTimes] || 10}
 					/>
-					{false ? (
-						<>
-							<GasOption
-								type="fast"
-								gweiValue={gasPrice.fast}
-								gweiPrice={gweiPrice}
-								wait={gasPrice.fastWait}
-							/>
-
-							<GasOption
-								type="fastest"
-								gweiValue={gasPrice.fastest}
-								gweiPrice={gweiPrice}
-								wait={gasPrice.fastestWait}
-							/>
-						</>
-					) : null}
+					<GasOption
+						type="slow"
+						gweiValue={+slow}
+						usdPrice={usdPrice}
+						wait={waitingTimes[slow as keyof WaitingTimes] || 30}
+					/>
 				</View>
 			</ScrollView>
 		</SafeAreaView>

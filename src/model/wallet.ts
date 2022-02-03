@@ -58,8 +58,7 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 };
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
-	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
 };
@@ -238,10 +237,17 @@ export const sendTransaction = async (
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 	return wallet.provider.sendTransaction(signedTx as string);
 };
+
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
-	const { gasURL, etherscanAPIURL } = await selectedNetwork();
+	const { gasURL, etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
+	const result = await fetch(`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=${apiKey}`);
+	return result.json();
+};
+
+export const estimateConfirmationTime = async (gasPrice: number): Promise<EstimateConfirmationTime> => {
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const result = await fetch(
-		`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
+		`${etherscanAPIURL}api?module=gastracker&action=gasestimate&gasprice=${gasPrice}&apikey=${apiKey}`
 	);
 	return result.json();
 };
@@ -261,8 +267,7 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 };
 
 export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {
-	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
-	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const baseUrl = `${etherscanAPIURL}api?module=account&action=txlist&address=`;
 	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=${apiKey}`;
 	const result = await fetch(`${baseUrl}${suffix}`);
@@ -328,6 +333,7 @@ export interface EstimateGasResponse {
 		FastGasPrice: string;
 		suggestBaseFee: string;
 		gasUsedRatio: string;
+		UsdPrice: string | undefined;
 	};
 }
 
@@ -427,4 +433,10 @@ export interface Coin {
 	id: string;
 	symbol: string;
 	name: string;
+}
+
+export interface EstimateConfirmationTime {
+	status: string;
+	message: string;
+	result: string;
 }

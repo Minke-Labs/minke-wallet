@@ -4,7 +4,7 @@ import { ParaswapToken } from '@models/token';
 export interface Gas {
 	type: string;
 	gweiValue: number;
-	gweiPrice: number;
+	usdPrice: number;
 	wait: number;
 }
 

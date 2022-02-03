@@ -4,13 +4,12 @@ import { View, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity }
 import { ActivityIndicator, Card, Headline, Text, useTheme } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
 import { Svg, Path } from 'react-native-svg';
-import AppLoading from 'expo-app-loading';
 import { BigNumber, utils } from 'ethers';
 import { toBn } from 'evm-bn';
 import Container from '@components/Container';
 import PrimaryButton from '@components/PrimaryButton';
 import { RootStackParamList } from '@helpers/param-list-type';
-import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
+import { getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
 import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens } from '@models/token';
 import { network } from '@src/model/network';
 import { globalWalletState } from '@stores/WalletStore';
@@ -25,8 +24,6 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const wallet = useState(globalWalletState());
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const gweiPrice = useState(0);
-
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
@@ -156,7 +153,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			exchange.set({} as ExchangeState);
 			setQuote(null);
 			const backup = fromToken;
-			updateFromToken(toToken);
+			updateFromToken(toToken || ({} as ParaswapToken));
 			updateToToken(backup);
 		}
 	};
@@ -167,10 +164,10 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			setFromToken(nativeTokens[nativeTokenSymbol as keyof NativeTokens]);
 		};
 
-		async function getGweiPrice() {
-			const ethPrice = await getEthLastPrice();
-			gweiPrice.set(+ethPrice.result.ethusd / 1000000000);
-		}
+		//		async function getGweiPrice() {
+		//			const ethPrice = await getEthLastPrice();
+		//			gweiPrice.set(+ethPrice.result.ethusd / 1000000000);
+		//		}
 
 		async function fetchWalletTokens() {
 			const address = wallet.address.value || '';
@@ -182,7 +179,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 		exchange.set({} as ExchangeState);
 		loadNativeToken();
-		getGweiPrice();
+		//		getGweiPrice();
 		fetchWalletTokens();
 	}, []);
 
@@ -255,7 +252,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							conversionAmount={fromConversionAmount}
 						/>
 
-						<TouchableOpacity style={styles.tokenCardDivisor} onPress={directionSwap}>
+						<TouchableOpacity
+							style={styles.tokenCardDivisor}
+							onPress={directionSwap}
+							disabled={!canChangeDirections}
+						>
 							<View style={styles.tokenCardDivisorBackground}>
 								<Svg
 									width={24}
@@ -293,7 +294,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					</Card>
 				</View>
 
-				{false && <GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />}
+				<GasSelector />
 
 				<View style={styles.exchangeSection}>
 					<SearchTokens

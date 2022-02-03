@@ -1,64 +1,75 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useCallback } from 'react';
 import { Card, Text, useTheme } from 'react-native-paper';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ExchangeState, Gas, globalExchangeState } from '@src/stores/ExchangeStore';
+import { State, useState } from '@hookstate/core';
 import { makeStyles } from './styles';
 
 const GasOption = ({
 	type,
 	gweiValue,
-	gweiPrice,
+	usdPrice,
 	wait
 }: {
-	type: string;
+	type: 'normal' | 'fast' | 'slow';
 	gweiValue: number;
-	gweiPrice: number;
+	usdPrice: number;
 	wait: number;
 }) => {
+	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const waiting = () => {
-		if (wait < 1) {
-			return `${60 * wait} sec`;
+		if (wait > 60) {
+			return `${wait / 60} min`;
 		}
-		return `${wait} mins`;
+		return `${wait} secs`;
 	};
 
 	const Icon = useCallback(() => {
 		switch (type) {
-			case 'low':
+			case 'slow':
 				return <MaterialIcon name="turtle" size={20} />;
 			case 'fast':
-				return <EntypoIcon name="flash" size={20} />;
-			case 'fastest':
 				return <EntypoIcon name="flash" size={20} />;
 			default:
 				return <AntDesignIcon name="clockcircleo" size={20} />; // normal
 		}
 	}, []);
 
+	const onSelectGas = () => {
+		exchange.gas.set({ type, gweiValue, usdPrice, wait } as Gas);
+	};
+
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const coinValue = gweiValue * 21000 * 10 ** -9;
+	const gas = exchange.gas.value;
 
 	return (
-		<Card style={styles.gasSelectorCard}>
-			<Card.Content style={styles.gasSelectorCardContent}>
-				<View style={styles.gasSelectorCardIcon}>
-					<Icon />
-				</View>
-				<View style={styles.gasSelectorCardGasOption}>
-					<Text style={styles.textBold}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
-					<Text>
-						{gweiValue / 10} gwei ~ {waiting()}
-					</Text>
-				</View>
-				<View style={styles.alignRight}>
-					<Text style={styles.textBold}>${((gweiValue / 100) * gweiPrice * 200000).toFixed(2)}</Text>
-					<Text>Network Fee</Text>
-				</View>
-			</Card.Content>
-		</Card>
+		<TouchableOpacity onPress={onSelectGas}>
+			<Card style={[styles.gasSelectorCard, gas && gas.type === type ? styles.selectedCard : {}]}>
+				<Card.Content style={styles.gasSelectorCardContent}>
+					<View style={styles.gasSelectorCardIcon}>
+						<Icon />
+					</View>
+					<View style={styles.gasSelectorCardGasOption}>
+						<Text style={styles.textBold}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
+						<Text>
+							{gweiValue} gwei ~ {waiting()}
+						</Text>
+					</View>
+					<View style={styles.alignRight}>
+						<Text style={styles.textBold}>
+							${(coinValue * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
+						</Text>
+						<Text>Network Fee</Text>
+					</View>
+				</Card.Content>
+			</Card>
+		</TouchableOpacity>
 	);
 };
 
