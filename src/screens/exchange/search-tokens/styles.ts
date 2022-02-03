@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 	StyleSheet.create({
@@ -41,5 +41,11 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			color: colors.text,
 			fontFamily: 'Inter_800ExtraBold',
 			fontSize: 16
+		},
+		containerStyle: {
+			backgroundColor: colors.background,
+			bottom: 0,
+			width: '100%',
+			height: Dimensions.get('screen').height * 0.8
 		}
 	});

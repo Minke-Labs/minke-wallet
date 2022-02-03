@@ -1,6 +1,6 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { Card, Headline, Text, useTheme } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
 import { Svg, Path } from 'react-native-svg';
@@ -11,14 +11,16 @@ import Container from '@components/Container';
 import PrimaryButton from '@components/PrimaryButton';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
-import { ether, ParaswapToken, Quote, getExchangePrice } from '@models/token';
-import globalStyles from '@src/components/global.styles';
+import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens } from '@models/token';
+import { network } from '@src/model/network';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
+import globalStyles from '@src/components/global.styles';
 import SearchTokens from './search-tokens/SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { makeStyles } from './styles';
+import { parseUnits } from 'ethers/lib/utils';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
@@ -27,7 +29,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const gasPrice = useState(estimateGas);
 	const gweiPrice = useState(0);
 
-	const [fromToken, setFromToken] = React.useState<ParaswapToken>(ether);
+	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
 	const [toTokenBalance, setToTokenBalance] = React.useState('0');
@@ -89,14 +91,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		// eslint-disable-next-line no-useless-escape
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			// 1 ETH ==== > 10 DAI
-			// X ETH ==== > formatedValue DAI
-			// quote.from[fromToken.symbol] ==== > quote.to[toToken?.symbol || '']
-			// X                            ==== > toBn(formatedValue)
 			if (quote) {
-				let converted = quote.from[fromToken.symbol].mul(toBn(formatedValue));
-				converted = converted.div(quote.to[toToken?.symbol || '']);
-				const convertedAmount = utils.formatUnits(converted, fromToken.decimals);
+				const bigNumberAmount = toBn(formatedValue);
+				let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
+				converted = converted.div(quote.from[fromToken.symbol]);
+				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
 				exchange.fromAmount.set(convertedAmount);
 				setFromConversionAmount(convertedAmount);
 			}
@@ -127,15 +126,18 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	};
 
 	const loadPrices = async (amount?: string) => {
-		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
-		if (result.error) {
-			console.error(result.error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+		const {
+			error,
+			priceRoute: { srcAmount, destAmount }
+		} = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
+		if (error) {
+			console.error(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 			Keyboard.dismiss();
 			setQuote(undefined);
 		} else {
 			setQuote({
-				from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
-				to: { [toToken?.symbol || '']: BigNumber.from(result.priceRoute.destAmount) }
+				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
+				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
 			});
 		}
 	};
@@ -150,8 +152,10 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 	};
 
+	const canChangeDirections = fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase());
 	const directionSwap = () => {
-		if (fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase())) {
+		if (canChangeDirections) {
+			exchange.set({} as ExchangeState);
 			setQuote(null);
 			const backup = fromToken;
 			updateFromToken(toToken);
@@ -160,6 +164,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	};
 
 	useEffect(() => {
+		const loadNativeToken = async () => {
+			const { nativeTokenSymbol } = await network();
+			setFromToken(nativeTokens[nativeTokenSymbol as keyof NativeTokens]);
+		};
+
 		async function getGweiPrice() {
 			const ethPrice = await getEthLastPrice();
 			gweiPrice.set(+ethPrice.result.ethusd / 1000000000);
@@ -173,7 +182,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			setWalletTokens(tokens);
 			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
 		}
-
+		exchange.set({} as ExchangeState);
+		loadNativeToken();
 		getGweiPrice();
 		fetchWalletTokens();
 	}, []);
@@ -212,7 +222,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 			return `1 ${fromToken.symbol} = ${utils
 				.formatUnits(destQuantity, toToken.decimals)
-				.match(/^-?\d+(?:\.\d{0,6})?/)} ${toToken.symbol}`;
+				.match(/^-?\d+(?:\.\d{0,9})?/)} ${toToken.symbol}`;
 		}
 		return null;
 	};
@@ -251,26 +261,31 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							conversionAmount={fromConversionAmount}
 						/>
 
-						<View style={styles.tokenCardDivisor}>
+						<TouchableOpacity style={styles.tokenCardDivisor} onPress={directionSwap}>
 							<View style={styles.tokenCardDivisorBackground}>
-								<Svg width={24} height={23} viewBox="0 0 24 24" fill={colors.primary}>
+								<Svg
+									width={24}
+									height={23}
+									viewBox="0 0 24 24"
+									fill={canChangeDirections ? colors.primary : colors.disabled}
+								>
 									<Path
 										fill-rule="evenodd"
 										clip-rule="evenodd"
 										// eslint-disable-next-line max-len
 										d="M10.9822 19.6603C11.4723 20.1604 12.2776 20.1604 12.7678 19.6603L17.2858 15.0501C17.6723 14.6556 18.3055 14.6492 18.6999 15.0358C19.0944 15.4224 19.1008 16.0555 18.7142 16.4499L14.1962 21.0602C12.9219 22.3605 10.8281 22.3605 9.55381 21.0602L5.03579 16.4499C4.64922 16.0555 4.65562 15.4224 5.05007 15.0358C5.44452 14.6492 6.07765 14.6556 6.46421 15.0501L10.9822 19.6603Z"
-										fill={colors.primary}
+										fill={canChangeDirections ? colors.primary : colors.disabled}
 									/>
 									<Path
 										fill-rule="evenodd"
 										clip-rule="evenodd"
 										// eslint-disable-next-line max-len
 										d="M11.875 22C11.3227 22 10.875 21.5523 10.875 21L10.875 8.5C10.875 7.94771 11.3227 7.5 11.875 7.5C12.4273 7.5 12.875 7.94771 12.875 8.5L12.875 21C12.875 21.5523 12.4273 22 11.875 22ZM11.875 5.875C11.3227 5.875 10.875 5.42728 10.875 4.875L10.875 3.125C10.875 2.57271 11.3227 2.125 11.875 2.125C12.4273 2.125 12.875 2.57271 12.875 3.125L12.875 4.875C12.875 5.42728 12.4273 5.875 11.875 5.875Z"
-										fill={colors.primary}
+										fill={canChangeDirections ? colors.primary : colors.disabled}
 									/>
 								</Svg>
 							</View>
-						</View>
+						</TouchableOpacity>
 
 						<TokenCard
 							token={toToken}

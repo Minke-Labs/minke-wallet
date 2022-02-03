@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Portal, Modal, TextInput, IconButton, useTheme } from 'react-native-paper';
+import { Portal, TextInput, IconButton, useTheme } from 'react-native-paper';
 import { FlatList, Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Modal from '@src/components/Modal';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken } from '../../../model/token';
@@ -29,7 +30,6 @@ const SearchTokens = ({
 
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const containerStyle = { backgroundColor: colors.background, padding: 20, bottom: 0, width: '100%' };
 
 	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
 		let selectedTokens: ParaswapToken[] = [];
@@ -89,34 +89,32 @@ const SearchTokens = ({
 
 	return (
 		<Portal>
-			<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
-				<View style={styles.header}>
-					<IconButton icon="close" size={20} onPress={onDismiss} />
+			<Modal visible={visible} onBack={onDismiss} onDismiss={onDismiss} onCloseAll={onDismiss}>
+				<View style={styles.containerStyle}>
+					<TextInput
+						style={styles.searchBar}
+						underlineColorAndroid="transparent"
+						placeholder="Search token"
+						placeholderTextColor={colors.placeholder}
+						value={search}
+						onChangeText={(text) => onSearch(text)}
+						left={<TextInput.Icon name="magnify" />}
+					/>
+
+					<FlatList
+						data={filteredTokens}
+						keyExtractor={(token) => token.symbol}
+						renderItem={({ item }) => (
+							<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+								<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
+								<View style={styles.tokenItemNameContainer}>
+									<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
+									<Text style={styles.tokenItemName}>DAI</Text>
+								</View>
+							</TouchableOpacity>
+						)}
+					/>
 				</View>
-
-				<TextInput
-					style={styles.searchBar}
-					underlineColorAndroid="transparent"
-					placeholder="Search token"
-					placeholderTextColor={colors.placeholder}
-					value={search}
-					onChangeText={(text) => onSearch(text)}
-					left={<TextInput.Icon name="magnify" />}
-				/>
-
-				<FlatList
-					data={filteredTokens}
-					keyExtractor={(token) => token.symbol}
-					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
-							<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
-							<View style={styles.tokenItemNameContainer}>
-								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
-								<Text style={styles.tokenItemName}>DAI</Text>
-							</View>
-						</TouchableOpacity>
-					)}
-				/>
 			</Modal>
 		</Portal>
 	);

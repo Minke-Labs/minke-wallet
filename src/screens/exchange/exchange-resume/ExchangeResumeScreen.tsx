@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Image, View, SafeAreaView, ScrollView } from 'react-native';
 import { Card, Headline, Text, Portal, Button, useTheme } from 'react-native-paper';
+import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
@@ -42,12 +43,12 @@ const TokenDetail = ({
 );
 
 const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
-	const exchange = globalExchangeState();
-	const wallet = globalWalletState();
+	const exchange = useState(globalExchangeState());
+	const wallet = useState(globalWalletState());
 	const { to, from, fromAmount, toAmount } = exchange.value;
-	const [priceQuote, setPriceQuote] = useState<ExchangeRoute>();
-	const [visible, setVisible] = useState(false);
-	const [transactionHash, setTransactionHash] = useState(
+	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
+	const [visible, setVisible] = React.useState(false);
+	const [transactionHash, setTransactionHash] = React.useState(
 		'0x94f47857de4edbdbc18d5c788856795533b2fe6c21b966166fae143c7688f193'
 	);
 

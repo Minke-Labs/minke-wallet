@@ -1,8 +1,9 @@
 import { BigNumber } from 'ethers';
+import { network } from './network';
 
-const network = 3; // ropsten
 export const paraswapTokens = async (): Promise<TokenResponse> => {
-	const result = await fetch(`https://apiv5.paraswap.io/tokens/${network}`);
+	const { chainId } = await network();
+	const result = await fetch(`https://apiv5.paraswap.io/tokens/${chainId}`);
 	return result.json();
 };
 
@@ -11,9 +12,10 @@ export const getExchangePrice = async (
 	destToken: string,
 	amount = '1000000000000000000'
 ): Promise<ExchangeRoute> => {
+	const { chainId } = await network();
 	const baseURL = 'https://apiv5.paraswap.io/prices';
 	const result = await fetch(
-		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${network}`
+		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${chainId}`
 	);
 	return result.json();
 };
@@ -35,13 +37,14 @@ export const createTransaction = async ({
 	priceRoute: PriceRoute;
 	userAddress: string;
 }): Promise<TransactionData> => {
+	const { chainId } = await network();
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ srcToken, destToken, srcAmount, priceRoute, userAddress, destAmount, side: 'SELL' })
 	};
 
-	const baseURL = `https://apiv5.paraswap.io/transactions/${network}`;
+	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}`;
 	const result = await fetch(baseURL, requestOptions);
 	return result.json();
 };
@@ -53,6 +56,24 @@ export const ether: ParaswapToken = {
 	img: 'https://img.paraswap.network/ETH.png',
 	network: 1
 };
+
+export const matic: ParaswapToken = {
+	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+	decimals: 18,
+	img: 'https://img.paraswap.network/MATIC.png',
+	network: 137,
+	symbol: 'MATIC'
+};
+
+export const nativeTokens: NativeTokens = {
+	ETH: ether,
+	MATIC: matic
+};
+
+export interface NativeTokens {
+	ETH: ParaswapToken;
+	MATIC: ParaswapToken;
+}
 
 export interface ParaswapToken {
 	symbol: string;

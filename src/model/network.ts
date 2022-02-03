@@ -13,7 +13,7 @@ export interface Network {
 	supportedTokenList?: {
 		[key: string]: string;
 	};
-	defaultToken: string;
+	nativeTokenSymbol: string;
 }
 
 export interface Networks {
@@ -35,7 +35,7 @@ export const networks: Networks = {
 		supportedTokenList: {
 			dai: '0x6b175474e89094c44da98b954eedeac495271d0f'
 		},
-		defaultToken: 'ETH'
+		nativeTokenSymbol: 'ETH'
 	},
 	matic: {
 		chainId: 137,
@@ -49,7 +49,7 @@ export const networks: Networks = {
 		supportedTokenList: {
 			dai: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
 		},
-		defaultToken: 'MATIC'
+		nativeTokenSymbol: 'MATIC'
 	},
 	mumbai: {
 		chainId: 80001,
@@ -64,7 +64,7 @@ export const networks: Networks = {
 		supportedTokenList: {
 			dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
 		},
-		defaultToken: 'MATIC'
+		nativeTokenSymbol: 'MATIC'
 	},
 	ropsten: {
 		chainId: 3,
@@ -77,7 +77,7 @@ export const networks: Networks = {
 		supportedTokenList: {
 			dai: '0xad6d458402f60fd3bd25163575031acdce07538d'
 		},
-		defaultToken: 'ETH'
+		nativeTokenSymbol: 'ETH'
 	}
 };
 

@@ -55,9 +55,9 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 		};
 
 		const fetchURL = async () => {
-			const { etherscanURL, defaultToken } = await network();
+			const { etherscanURL, nativeTokenSymbol } = await network();
 			setUrl(`${etherscanURL}tx/${hash}`);
-			setToken(defaultToken);
+			setToken(nativeTokenSymbol);
 		};
 
 		fetchURL();
