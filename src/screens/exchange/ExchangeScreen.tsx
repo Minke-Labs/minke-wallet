@@ -1,7 +1,7 @@
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
-import { Card, Headline, Text, useTheme } from 'react-native-paper';
+import { ActivityIndicator, Card, Headline, Text, useTheme } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
 import { Svg, Path } from 'react-native-svg';
 import AppLoading from 'expo-app-loading';
@@ -20,13 +20,11 @@ import SearchTokens from './search-tokens/SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { makeStyles } from './styles';
-import { parseUnits } from 'ethers/lib/utils';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const gasPrice = useState(estimateGas);
 	const gweiPrice = useState(0);
 
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
@@ -209,20 +207,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 	}, [quote]);
 
-	if (gasPrice.promised) {
-		return <AppLoading />;
-	}
-	if (gasPrice.error) {
-		return <Text>Could not get Gas Prices</Text>;
-	}
-
 	const exchangeSummary = () => {
-		if (fromToken && toToken && quote) {
-			const destQuantity = quote.to[toToken.symbol];
+		if (fromToken && toToken) {
+			if (quote) {
+				const destQuantity = quote.to[toToken.symbol];
 
-			return `1 ${fromToken.symbol} = ${utils
-				.formatUnits(destQuantity, toToken.decimals)
-				.match(/^-?\d+(?:\.\d{0,9})?/)} ${toToken.symbol}`;
+				return `1 ${fromToken.symbol} = ${utils
+					.formatUnits(destQuantity, toToken.decimals)
+					.match(/^-?\d+(?:\.\d{0,9})?/)} ${toToken.symbol}`;
+			}
+			return <ActivityIndicator color={colors.primary} size={16} />;
 		}
 		return null;
 	};
@@ -299,7 +293,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					</Card>
 				</View>
 
-				<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
+				{false && <GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />}
 
 				<View style={styles.exchangeSection}>
 					<SearchTokens
