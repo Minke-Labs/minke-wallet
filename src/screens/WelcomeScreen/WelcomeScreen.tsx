@@ -9,7 +9,7 @@ import {
 	waveWelcomeFooterImg,
 	waveWelcomeFooterDarkImg
 } from '@images';
-import { Text, Button, Modal2 } from '@components';
+import { Text, Button, Modal2, Token } from '@components';
 import styles from './WelcomeScreen.styles';
 
 const Background: React.FC = ({ children }) => {
@@ -51,14 +51,13 @@ const WelcomeScreen = () => {
 							</Text>
 						</View>
 
-						{/* <Token name="pot" size={200} /> */}
+						<Token name="nav" size={200} />
 
 						<View style={styles.buttonContainer}>
 							<Button
 								title="Create Wallet"
 								onPress={() => console.log('Create Wallet!')}
 								marginBottom={14}
-								// iconRight="addStroke"
 							/>
 							<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
 						</View>
@@ -67,7 +66,7 @@ const WelcomeScreen = () => {
 			</WelcomeLayout>
 
 			<Modal2 isVisible={isModalVisible} height={500} onDismiss={() => setModalVisible(false)}>
-				<View style={{ height: 500 }} />
+				<Text>adf</Text>
 			</Modal2>
 		</>
 	);
