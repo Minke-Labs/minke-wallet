@@ -166,8 +166,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 
 		async function fetchWalletTokens() {
-			// const address = wallet.value.wallet?.address || '';
-			const address = '0xfe6b7a4494b308f8c0025dcc635ac22630ec7330';
+			const address = wallet.address.value || '';
 			const result = await getWalletTokens(address);
 			const { products } = result[address.toLowerCase()];
 			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
@@ -211,7 +210,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		if (fromToken && toToken && quote) {
 			const destQuantity = quote.to[toToken.symbol];
 
-			return `1 ${fromToken.symbol} = ${utils.formatUnits(destQuantity, toToken.decimals)} ${toToken.symbol}`;
+			return `1 ${fromToken.symbol} = ${utils
+				.formatUnits(destQuantity, toToken.decimals)
+				.match(/^-?\d+(?:\.\d{0,6})?/)} ${toToken.symbol}`;
 		}
 		return null;
 	};
@@ -236,7 +237,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<Container>
 				<View style={styles.exchangeSection}>
-					<View style={styles.exchangeHeadlineRow}>
+					<View style={[globalStyles.row, styles.exchangeHeadlineRow]}>
 						<Headline style={globalStyles.headline}>Exchange</Headline>
 						<Text style={styles.exchangeSummaryText}>{exchangeSummary()}</Text>
 					</View>

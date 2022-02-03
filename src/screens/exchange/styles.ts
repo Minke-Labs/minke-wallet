@@ -14,11 +14,12 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingRight: 24
 		},
 		exchangeHeadlineRow: {
-			flexDirection: 'column',
-			paddingTop: 24
+			alignItems: 'center'
 		},
 		exchangeSummaryText: {
-			marginTop: 8
+			marginTop: 8,
+			fontSize: 12,
+			color: colors.secondaryText
 		},
 
 		// Token card
