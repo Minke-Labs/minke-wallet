@@ -8,6 +8,7 @@ import Animated, {
 	useSharedValue,
 	withTiming
 } from 'react-native-reanimated';
+import { useTheme } from 'react-native-paper';
 import styles from './Modal.styles';
 
 const screen = Dimensions.get('screen');
@@ -17,8 +18,9 @@ export type ModalProps = {
 	dismiss: () => void;
 };
 
-const Bare = React.forwardRef<ModalProps, PropsWithChildren<{ height: number; onDismiss:() => void }>>(
+const Bare = React.forwardRef<ModalProps, PropsWithChildren<{ height: number; onDismiss: () => void }>>(
 	({ height, onDismiss, children }, ref) => {
+		const { colors } = useTheme();
 		const top = useSharedValue(screen.height);
 
 		const isActive = useDerivedValue<boolean>(() => {
@@ -44,9 +46,14 @@ const Bare = React.forwardRef<ModalProps, PropsWithChildren<{ height: number; on
 				<TouchableWithoutFeedback onPress={onDismiss}>
 					<Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
 				</TouchableWithoutFeedback>
-				<Animated.View style={[styles.container, { height }, containerAnimatedStyle]}>{children}</Animated.View>
+				<Animated.View
+					style={[styles.container, { height, backgroundColor: colors.background }, containerAnimatedStyle]}
+				>
+					{children}
+				</Animated.View>
 			</View>
 		);
-	});
+	}
+);
 
 export default Bare;
