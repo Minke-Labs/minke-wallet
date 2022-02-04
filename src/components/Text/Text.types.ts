@@ -12,6 +12,7 @@ interface MakeStylesProps {
 	marginBottom: number;
 	width: number;
 	style: StyleProp<TextStyle>;
+	center: boolean;
 }
 
 interface TextComponentProps {
@@ -21,6 +22,7 @@ interface TextComponentProps {
 	marginBottom: number;
 	width: number;
 	style: StyleProp<TextStyle>;
+	center: boolean;
 }
 
 export type { FontWeightType, FontType, MakeStylesProps, TextComponentProps };
