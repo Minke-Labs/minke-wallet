@@ -5,7 +5,7 @@ import { Image, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, useTheme } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { ParaswapToken } from '../../model/token';
 import { makeStyles } from './styles';
 
@@ -70,15 +70,19 @@ const TokenCard = ({
 								<Image source={{ uri: token.img }} style={styles.tokenImage} />
 							</View>
 							<Text style={styles.tokenName}>{token.symbol}</Text>
-							<MaterialIcon name="chevron-right" color={colors.primary} size={20} />
+							<MaterialIcons name="chevron-right" color={colors.primary} size={20} />
 						</View>
 					) : (
 						<View style={styles.selectTokenRow}>
 							<View style={styles.currencyIcon}>
-								<MaterialIcon name="currency-usd" color={colors.primary} size={20} />
+								<MaterialCommunityIcons
+									name="currency-usd-circle-outline"
+									color={colors.primary}
+									size={32}
+								/>
 							</View>
 							<Text>Choose token</Text>
-							<MaterialIcon name="chevron-right" color={colors.primary} size={20} />
+							<MaterialIcons name="chevron-right" color={colors.primary} size={20} />
 						</View>
 					)}
 				</TouchableOpacity>

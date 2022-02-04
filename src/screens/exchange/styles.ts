@@ -94,9 +94,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		currencyIcon: {
 			padding: 8,
-			marginRight: 8,
-			borderRadius: 500,
-			backgroundColor: colors.backgroundIcons
+			marginRight: 8
 		},
 
 		// Gas Option
