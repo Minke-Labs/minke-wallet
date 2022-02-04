@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { View, Image, useColorScheme } from 'react-native';
@@ -9,8 +10,9 @@ import {
 	waveWelcomeFooterImg,
 	waveWelcomeFooterDarkImg
 } from '@images';
-import { Text, Button, Modal2 } from '@components';
+import { Text, Button, Modal } from '@components';
 import styles from './WelcomeScreen.styles';
+import ImportFlow from './ImportFlow';
 
 const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
@@ -63,9 +65,10 @@ const WelcomeScreen = () => {
 				</Background>
 			</WelcomeLayout>
 
-			<Modal2 isVisible={isModalVisible} height={500} onDismiss={() => setModalVisible(false)}>
-				<Text>adf</Text>
-			</Modal2>
+			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
+				<ImportFlow />
+				<View style={{ borderWidth: 2, borderColor: 'purple', height: 300, width: '100%' }} />
+			</Modal>
 		</>
 	);
 };

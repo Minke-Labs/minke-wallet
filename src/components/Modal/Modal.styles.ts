@@ -1,15 +1,24 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const screen = Dimensions.get('screen');
 
 export default StyleSheet.create({
-	container: {
+	fullScreen: {
+		height: screen.height,
 		position: 'absolute',
+		top: 0,
+		justifyContent: 'center'
+	},
+	backdrop: {
+		position: 'absolute',
+		height: screen.height,
+		width: screen.width,
 		backgroundColor: 'rgba(6, 19, 33, 0.9)'
 	},
-	inner: {
-		width: '100%',
+	container: {
+		width: screen.width,
 		bottom: 0,
 		position: 'absolute',
-		backgroundColor: '#F2EAE1',
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20
 	},
