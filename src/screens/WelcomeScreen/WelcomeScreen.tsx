@@ -66,7 +66,6 @@ const WelcomeScreen = () => {
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
 				<ImportFlow />
-				<View style={{ borderWidth: 2, borderColor: 'purple', height: 300, width: '100%' }} />
 			</Modal>
 		</>
 	);

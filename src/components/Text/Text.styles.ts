@@ -9,7 +9,7 @@ export const makeStyles = ({ weight, type, chosenColor, marginBottom, width, cen
 			textAlign: center ? 'center' : 'left',
 			marginBottom,
 			color: chosenColor,
-			...(width > 0 ? { width } : {}),
+			...(width ? { width } : {}),
 			...fontType[type],
 			...{ ...(style as object) }
 		}

@@ -10,7 +10,7 @@ interface MakeStylesProps {
 	type: FontType;
 	chosenColor: string;
 	marginBottom: number;
-	width: number;
+	width: number | string;
 	style: StyleProp<TextStyle>;
 	center: boolean;
 }
@@ -20,7 +20,7 @@ interface TextComponentProps {
 	type: FontType;
 	color: keyof ReactNativePaper.ThemeColors;
 	marginBottom: number;
-	width: number;
+	width: number | string;
 	style: StyleProp<TextStyle>;
 	center: boolean;
 }
