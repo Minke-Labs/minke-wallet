@@ -102,10 +102,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			width: 24,
 			height: 24
 		},
-		// ExchangeResumeModal
-		modalContent: {
-			backgroundColor: 'red'
-		},
 		modalRow: {
 			flexDirection: 'row',
 			justifyContent: 'center',

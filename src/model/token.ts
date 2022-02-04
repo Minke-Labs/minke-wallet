@@ -14,6 +14,7 @@ export const getExchangePrice = async (
 ): Promise<ExchangeRoute> => {
 	const { chainId } = await network();
 	const baseURL = 'https://apiv5.paraswap.io/prices';
+	console.log(`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${chainId}`);
 	const result = await fetch(
 		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${chainId}`
 	);

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
@@ -9,7 +10,7 @@ import { toBn } from 'evm-bn';
 import Container from '@components/Container';
 import PrimaryButton from '@components/PrimaryButton';
 import { RootStackParamList } from '@helpers/param-list-type';
-import { getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
+import { getWalletTokens, WalletToken } from '@models/wallet';
 import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens } from '@models/token';
 import { network } from '@src/model/network';
 import { globalWalletState } from '@stores/WalletStore';
@@ -18,7 +19,13 @@ import globalStyles from '@src/components/global.styles';
 import SearchTokens from './search-tokens/SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
+import { debounce, throttle } from 'lodash';
 import { makeStyles } from './styles';
+
+interface Conversion {
+	direction: 'from' | 'to';
+	amount: string;
+}
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
@@ -35,6 +42,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const [quote, setQuote] = React.useState<Quote | null>();
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
+	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
 
@@ -66,10 +74,28 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		toAmountRef.current?.focus();
 	};
 
-	const updateFromQuotes = (amount: string) => {
-		// eslint-disable-next-line no-useless-escape
+	const loadPrices = async (amount?: string) => {
+		const {
+			error,
+			priceRoute: { srcAmount, destAmount, srcDecimals, destDecimals }
+		} = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
+		if (error) {
+			console.error(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+			Keyboard.dismiss();
+			setQuote(undefined);
+		} else {
+			setQuote({
+				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
+				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
+			});
+		}
+	};
+
+	const updateFromQuotes = debounce(async (amount: string) => {
+		console.log('caiu no updateFromQuotes', amount);
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+			await loadPrices();
 			if (quote) {
 				const bigNumberAmount = toBn(formatedValue);
 				let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
@@ -77,26 +103,31 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
 				exchange.toAmount.set(convertedAmount);
 				setToConversionAmount(convertedAmount);
+				setFromConversionAmount(formatedValue); // trying
+				setLastConversion({ direction: 'from', amount: formatedValue });
 			}
 			exchange.fromAmount.set(formatedValue);
 		}
-	};
+	}, 500);
 
-	const updateToQuotes = (amount: string) => {
-		// eslint-disable-next-line no-useless-escape
+	const updateToQuotes = debounce(async (amount: string) => {
+		console.log('caiu no updateToQuotes', amount);
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+			await loadPrices();
 			if (quote) {
 				const bigNumberAmount = toBn(formatedValue);
-				let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
-				converted = converted.div(quote.from[fromToken.symbol]);
+				let converted = quote.from[fromToken.symbol || ''].mul(bigNumberAmount);
+				converted = converted.div(quote.to[toToken?.symbol || '']);
 				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
 				exchange.fromAmount.set(convertedAmount);
 				setFromConversionAmount(convertedAmount);
+				setToConversionAmount(formatedValue); // trying
+				setLastConversion({ direction: 'to', amount: formatedValue });
 			}
 			exchange.toAmount.set(formatedValue);
 		}
-	};
+	}, 500);
 
 	const goToExchangeResume = () => {
 		navigation.navigate('ExchangeResume');
@@ -120,23 +151,6 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		showModal();
 	};
 
-	const loadPrices = async (amount?: string) => {
-		const {
-			error,
-			priceRoute: { srcAmount, destAmount }
-		} = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
-		if (error) {
-			console.error(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
-			Keyboard.dismiss();
-			setQuote(undefined);
-		} else {
-			setQuote({
-				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
-				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
-			});
-		}
-	};
-
 	const onTokenSelect = (token: ParaswapToken) => {
 		hideModal();
 		setQuote(null);
@@ -155,54 +169,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			const backup = fromToken;
 			updateFromToken(toToken || ({} as ParaswapToken));
 			updateToToken(backup);
-		}
-	};
-
-	useEffect(() => {
-		const loadNativeToken = async () => {
-			const { nativeTokenSymbol } = await network();
-			setFromToken(nativeTokens[nativeTokenSymbol as keyof NativeTokens]);
-		};
-
-		//		async function getGweiPrice() {
-		//			const ethPrice = await getEthLastPrice();
-		//			gweiPrice.set(+ethPrice.result.ethusd / 1000000000);
-		//		}
-
-		async function fetchWalletTokens() {
-			const address = wallet.address.value || '';
-			const result = await getWalletTokens(address);
-			const { products } = result[address.toLowerCase()];
-			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
-			setWalletTokens(tokens);
-			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
-		}
-		exchange.set({} as ExchangeState);
-		loadNativeToken();
-		//		getGweiPrice();
-		fetchWalletTokens();
-	}, []);
-
-	useEffect(() => {
-		setFromTokenBalance(balanceFrom(fromToken));
-		setToTokenBalance(balanceFrom(toToken));
-	}, [ownedTokens]);
-
-	useEffect(() => {
-		if (fromToken && toToken) {
-			loadPrices();
-		}
-	}, [fromToken, toToken]);
-
-	useEffect(() => {
-		if (quote) {
-			if (exchange.value.fromAmount) {
-				updateFromQuotes(exchange.value.fromAmount);
-			} else if (exchange.value.toAmount) {
-				updateToQuotes(exchange.value.toAmount);
+			if (lastConversion) {
+				const { direction, amount } = lastConversion;
+				if (direction === 'from') {
+					exchange.toAmount.set(amount);
+				} else {
+					exchange.fromAmount.set(amount);
+				}
 			}
 		}
-	}, [quote]);
+	};
 
 	const exchangeSummary = () => {
 		if (fromToken && toToken) {
@@ -213,7 +189,12 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					.formatUnits(destQuantity, toToken.decimals)
 					.match(/^-?\d+(?:\.\d{0,9})?/)} ${toToken.symbol}`;
 			}
-			return <ActivityIndicator color={colors.primary} size={16} />;
+			return (
+				<>
+					<Text style={styles.exchangeSummaryText}>Fetching...</Text>
+					<ActivityIndicator color={colors.primary} size={16} />
+				</>
+			);
 		}
 		return null;
 	};
@@ -232,6 +213,46 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
 		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
+
+	useEffect(() => {
+		const loadNativeToken = async () => {
+			const { nativeTokenSymbol } = await network();
+			setFromToken(nativeTokens[nativeTokenSymbol as keyof NativeTokens]);
+		};
+
+		async function fetchWalletTokens() {
+			const address = wallet.address.value || '';
+			const result = await getWalletTokens(address);
+			const { products } = result[address.toLowerCase()];
+			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
+			setWalletTokens(tokens);
+			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
+		}
+		exchange.set({} as ExchangeState);
+		loadNativeToken();
+		fetchWalletTokens();
+	}, []);
+
+	useEffect(() => {
+		setFromTokenBalance(balanceFrom(fromToken));
+		setToTokenBalance(balanceFrom(toToken));
+	}, [ownedTokens]);
+
+	useEffect(() => {
+		if (fromToken && toToken) {
+			loadPrices();
+		}
+	}, [toToken, fromToken]);
+
+	/* 	useEffect(() => {
+		if (quote) {
+			if (exchange.value.fromAmount) {
+				updateFromQuotes(exchange.value.fromAmount);
+			} else if (exchange.value.toAmount) {
+				updateToQuotes(exchange.value.toAmount);
+			}
+		}
+	}, [quote]); */
 
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (

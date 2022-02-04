@@ -94,7 +94,7 @@ const SearchTokens = ({
 					<TextInput
 						style={styles.searchBar}
 						underlineColorAndroid="transparent"
-						placeholder="Search token"
+						placeholder="Search tokens"
 						placeholderTextColor={colors.placeholder}
 						value={search}
 						onChangeText={(text) => onSearch(text)}

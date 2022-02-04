@@ -52,13 +52,15 @@ const GasOption = ({
 		<TouchableOpacity onPress={onSelectGas}>
 			<Card style={[styles.gasSelectorCard, gas && gas.type === type ? styles.selectedCard : {}]}>
 				<Card.Content style={styles.gasSelectorCardContent}>
-					<RadioButton
-						value={gas?.type || ''}
-						status={gas && gas.type === type ? 'checked' : 'unchecked'}
-						onPress={onSelectGas}
-						color={colors.primary}
-						uncheckedColor="red"
-					/>
+					<View style={{ marginRight: 4 }}>
+						<RadioButton
+							value={gas?.type || ''}
+							status={gas && gas.type === type ? 'checked' : 'unchecked'}
+							onPress={onSelectGas}
+							color={colors.primary}
+							uncheckedColor="red"
+						/>
+					</View>
 					<View style={styles.gasSelectorCardIcon}>
 						<Icon />
 					</View>

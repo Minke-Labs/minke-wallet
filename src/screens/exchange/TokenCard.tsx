@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, useTheme } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { ParaswapToken } from '../../model/token';
+import { ParaswapToken } from '@models/token';
 import { makeStyles } from './styles';
 
 const TokenCard = ({
@@ -27,6 +27,9 @@ const TokenCard = ({
 	conversionAmount?: string;
 }) => {
 	const [amount, setAmount] = useState('');
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
 		// eslint-disable-next-line no-useless-escape
@@ -41,7 +44,7 @@ const TokenCard = ({
 
 	useEffect(() => {
 		setAmount('');
-		updateQuotes(amount);
+		updateQuotes('');
 	}, [token]);
 
 	useEffect(() => {
@@ -57,22 +60,11 @@ const TokenCard = ({
 	const isMaxEnabled = !disableMax && token && balance;
 	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
 
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
-
-	return (
-		<View style={styles.tokenCardWrap}>
-			<View style={styles.tokenCardCoinContent}>
-				<TouchableOpacity onPress={onPress}>
-					{token ? (
-						<View style={styles.tokenCardCoin}>
-							<View style={styles.tokenImageContainer}>
-								<Image source={{ uri: token.img }} style={styles.tokenImage} />
-							</View>
-							<Text style={styles.tokenName}>{token.symbol}</Text>
-							<MaterialIcons name="chevron-right" color={colors.primary} size={20} />
-						</View>
-					) : (
+	if (!token) {
+		return (
+			<TouchableOpacity onPress={onPress}>
+				<View style={styles.tokenCardWrap}>
+					<View style={styles.tokenCardCoinContent}>
 						<View style={styles.selectTokenRow}>
 							<View style={styles.currencyIcon}>
 								<MaterialCommunityIcons
@@ -84,7 +76,23 @@ const TokenCard = ({
 							<Text>Choose token</Text>
 							<MaterialIcons name="chevron-right" color={colors.primary} size={20} />
 						</View>
-					)}
+					</View>
+				</View>
+			</TouchableOpacity>
+		);
+	}
+
+	return (
+		<View style={styles.tokenCardWrap}>
+			<View style={styles.tokenCardCoinContent}>
+				<TouchableOpacity onPress={onPress}>
+					<View style={styles.tokenCardCoin}>
+						<View style={styles.tokenImageContainer}>
+							<Image source={{ uri: token.img }} style={styles.tokenImage} />
+						</View>
+						<Text style={styles.tokenName}>{token.symbol}</Text>
+						<MaterialIcons name="chevron-right" color={colors.primary} size={20} />
+					</View>
 				</TouchableOpacity>
 				<TextInput
 					keyboardType="numeric"
@@ -105,12 +113,12 @@ const TokenCard = ({
 					onChangeText={(text) => onChangeText(text)}
 				/>
 			</View>
-			{isMaxEnabled ? (
-				<TouchableOpacity
-					onPress={() => setAmount(balance.replace(/\./g, ','))}
-					style={styles.tokenCardMaxButton}
-				>
-					<View style={styles.tokenCardMaxButtonContent}>
+			{isMaxEnabled && (
+				<View style={styles.tokenCardMaxButtonContent}>
+					<TouchableOpacity
+						onPress={() => setAmount(balance.replace(/\./g, ','))}
+						style={styles.tokenCardMaxButton}
+					>
 						<Svg width={16} height={16} strokeWidth={1} fill={colors.primary} viewBox="0 0 16 16">
 							<Path
 								fill-rule="evenodd"
@@ -128,9 +136,9 @@ const TokenCard = ({
 							/>
 						</Svg>
 						<Text style={styles.tokenCardMaxButtonText}>Max</Text>
-					</View>
-				</TouchableOpacity>
-			) : null}
+					</TouchableOpacity>
+				</View>
+			)}
 		</View>
 	);
 };

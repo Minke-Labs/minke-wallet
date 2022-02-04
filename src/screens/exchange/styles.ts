@@ -24,16 +24,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 
 		// Token card
 		tokenCardWrap: {
-			padding: 16
+			padding: 16,
+			width: '100%'
 		},
 		tokenCard: {
 			borderRadius: 16,
-			marginTop: 16,
-			backgroundColor: colors.fill
+			marginTop: 16
 		},
 		tokenCardCoinContent: {
 			flexWrap: 'wrap',
-			flexDirection: 'row'
+			flexDirection: 'row',
+			width: '100%'
 		},
 		tokenCardCoin: {
 			flexWrap: 'wrap',
@@ -46,6 +47,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderColor: 'rgba(98, 126, 234, 0.2)'
 		},
 		tokenImage: {
+			borderRadius: 100,
 			width: 40,
 			height: 40
 		},
@@ -76,11 +78,10 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			alignItems: 'center'
 		},
 		tokenCardMaxButton: {
-			alignItems: 'flex-end'
+			flexDirection: 'row'
 		},
 		tokenCardMaxButtonContent: {
-			flexDirection: 'row',
-			alignItems: 'center',
+			alignItems: 'flex-end',
 			marginTop: 8
 		},
 		tokenCardMaxButtonText: {
@@ -119,7 +120,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		gasSelectorCardContent: {
 			flexDirection: 'row',
-			alignItems: 'center'
+			alignItems: 'center',
+			paddingLeft: 8
 		},
 		gasSelectorCardIcon: {
 			padding: 8,
