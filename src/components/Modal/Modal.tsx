@@ -13,12 +13,12 @@ import ModalHeader from './ModalHeader';
 
 const screenHeight = Dimensions.get('window').height;
 
-interface Props {
+interface ModalProps {
 	isVisible: boolean;
 	onDismiss: () => void;
 }
 
-const Modal: React.FC<Props> = ({ children, onDismiss, isVisible }) => {
+const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible }) => {
 	const { colors } = useTheme();
 	const top = useSharedValue(screenHeight);
 
@@ -46,7 +46,7 @@ const Modal: React.FC<Props> = ({ children, onDismiss, isVisible }) => {
 				<Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
 			</TouchableWithoutFeedback>
 			<Animated.View style={[styles.container, animatedStyles, { backgroundColor: colors.background }]}>
-				<ModalHeader onBackdropPress={onDismiss} />
+				<ModalHeader onDismiss={onDismiss} />
 				{children}
 			</Animated.View>
 		</View>
