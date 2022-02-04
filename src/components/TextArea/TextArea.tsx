@@ -8,7 +8,6 @@ const TextArea: React.FC<TextAreaProps> = ({
 	label,
 	value,
 	onChangeText,
-	multiline = true,
 	numberOfLines = 6,
 	style
 }) => {
@@ -31,7 +30,8 @@ const TextArea: React.FC<TextAreaProps> = ({
 				autoCapitalize="none"
 				autoFocus
 				autoCorrect={false}
-				{...{ multiline, numberOfLines, onChangeText, value }}
+				multiline
+				{...{ numberOfLines, onChangeText, value }}
 			/>
 		</View>
 	);
