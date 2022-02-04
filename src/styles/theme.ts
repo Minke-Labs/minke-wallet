@@ -47,7 +47,7 @@ const lightTheme = {
 		buttonDisabled: '#D0D0D0',
 		linkText: '#006AA6',
 		secondaryText: '#4E5E6F',
-		fill: '#FFFFFF'
+		fill: '#FFFCF5'
 	}
 };
 

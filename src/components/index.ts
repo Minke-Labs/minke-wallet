@@ -3,5 +3,6 @@ import Button from './Button/Button';
 import Icon from './Icon/Icon';
 import Token from './Token/Token';
 import Modal from './Modal/Modal';
+import TextArea from './TextArea/TextArea';
 
-export { Text, Button, Icon, Token, Modal };
+export { Text, Button, Icon, Token, Modal, TextArea };
