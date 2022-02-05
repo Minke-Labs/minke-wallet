@@ -17,7 +17,8 @@ import {
 	SettingsScreen,
 	ChangeNetworkScreen,
 	BackupSettingsScreen,
-	TransactionsScreen
+	TransactionsScreen,
+	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
 // const AccountsScreen = () => <Text>AccountsScreen</Text>;
@@ -45,8 +46,9 @@ const Routes: React.FC = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Welcome">
+			<Stack.Navigator initialRouteName="Test">
 				<Stack.Screen options={{ headerShown: false }} name="Welcome" component={WelcomeScreen} />
+				<Stack.Screen options={{ headerShown: false }} name="Test" component={Test} />
 				<Stack.Screen options={{ headerShown: false }} name="WalletCreated" component={WalletCreatedScreen} />
 				<Stack.Screen options={{ headerShown: false }} name="Backup" component={BackupScreen} />
 				<Stack.Screen options={{ headerShown: false }} name="Wallet" component={WalletScreen} />

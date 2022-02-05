@@ -14,4 +14,5 @@ export type RootStackParamList = {
 	Accounts: undefined;
 	BackupSettings: undefined;
 	Transactions: undefined;
+	Test: undefined;
 };

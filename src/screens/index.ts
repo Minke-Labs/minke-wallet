@@ -13,6 +13,8 @@ import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 
+import Test from './Test/Test';
+
 export {
 	WelcomeScreen,
 	WalletCreatedScreen,
@@ -27,5 +29,6 @@ export {
 	SettingsScreen,
 	ChangeNetworkScreen,
 	BackupSettingsScreen,
-	TransactionsScreen
+	TransactionsScreen,
+	Test
 };
