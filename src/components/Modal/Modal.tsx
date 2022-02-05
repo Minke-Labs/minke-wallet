@@ -28,8 +28,8 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible }) => {
 	}, [top]);
 
 	const backdropAnimatedStyle = useAnimatedStyle(() => ({
-		opacity: interpolate(top.value, [0, screenHeight], [1, 0]),
-		top: isActive.value ? 0 : screenHeight
+		display: isActive.value ? 'flex' : 'none',
+		opacity: interpolate(top.value, [0, screenHeight], [1, 0])
 	}));
 
 	const animatedStyles = useAnimatedStyle(() => ({
