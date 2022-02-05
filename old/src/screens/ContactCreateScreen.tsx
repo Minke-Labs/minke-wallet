@@ -5,7 +5,7 @@ import { Appbar, Button, Text, TextInput } from 'react-native-paper';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import { isAddress } from 'ethers/lib/utils';
-import { globalContactState } from 'old/src/stores/ContactStore';
+import { globalContactState } from '@src/stores/ContactStore';
 import { contactCreate } from '@src/model/contact';
 
 export function ContactCreateScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {

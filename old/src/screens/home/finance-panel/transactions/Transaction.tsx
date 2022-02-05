@@ -6,7 +6,7 @@ import { Transaction as ITransaction, smallWalletAddress, getENSAddress } from '
 import { formatUnits } from 'ethers/lib/utils';
 import { format } from 'date-fns';
 import * as Linking from 'expo-linking';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@src/model/network';
 import globalStyles from 'old/src/components/global.styles';
 import transationalReceive from './transational-receive.png';

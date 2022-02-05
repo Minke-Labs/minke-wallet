@@ -6,7 +6,7 @@ import { Text, Appbar, Button, Card } from 'react-native-paper';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import { formatEther, formatUnits } from 'ethers/lib/utils';
 import { BigNumberish } from 'ethers';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 
 export function TransactionSelectFundsScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const wallet = globalWalletState();

@@ -5,7 +5,7 @@ import { RootRouteProps, RootStackParamList } from 'old/src/helpers/param-list-t
 import { RefreshControl, SafeAreaView, ScrollView, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
-import { globalContactState, initializeContacts } from 'old/src/stores/ContactStore';
+import { globalContactState, initializeContacts } from '@src/stores/ContactStore';
 
 export function TransactionContactsScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const route = useRoute<RootRouteProps<'TransactionContacts'>>();

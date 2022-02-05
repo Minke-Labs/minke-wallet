@@ -3,7 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Alert, View } from 'react-native';
 import { RootRouteProps, RootStackParamList } from 'old/src/helpers/param-list-type';
 import { Appbar, Button, Card, RadioButton, Text, TextInput } from 'react-native-paper';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import { CommonActions, useRoute } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
 import { isNaN } from 'lodash';

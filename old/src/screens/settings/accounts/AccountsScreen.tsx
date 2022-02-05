@@ -7,7 +7,7 @@ import ListItem from 'old/src/components/ListItem';
 import Container from 'old/src/components/Container';
 import { find } from 'lodash';
 import globalStyle from 'old/src/components/global.styles';
-import { walletState, globalWalletState } from 'old/src/stores/WalletStore';
+import { walletState, globalWalletState } from '@src/stores/WalletStore';
 
 const AccountsScreen = () => {
 	const state = useState(globalWalletState());

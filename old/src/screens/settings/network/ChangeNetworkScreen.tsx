@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { globalWalletState, fetchTokensAndBalances } from 'old/src/stores/WalletStore';
+import { globalWalletState, fetchTokensAndBalances } from '@src/stores/WalletStore';
 import { Network, networks, network as selectedNetwork, networkSettingsKey } from '@src/model/network';
 import Container from 'old/src/components/Container';
 import ListItem from 'old/src/components/ListItem';

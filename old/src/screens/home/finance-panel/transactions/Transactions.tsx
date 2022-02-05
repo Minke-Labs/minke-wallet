@@ -3,7 +3,7 @@ import { useColorScheme, View } from 'react-native';
 import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import AddFundsButton from 'old/src/components/AddFundsButton';
 import PrimaryButton from 'old/src/components/PrimaryButton';
 import Transaction from './Transaction';

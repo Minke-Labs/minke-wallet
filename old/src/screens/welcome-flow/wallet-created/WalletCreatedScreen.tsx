@@ -5,14 +5,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import PrimaryButton from 'old/src/components/PrimaryButton';
 import { Entypo } from '@expo/vector-icons';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import { getSeedPhrase } from '@src/model/wallet';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import logo from '@assets/wallet-created.png';
 import { backupSeedOnKeychain } from '@src/model/keychain';
-import WelcomeContainer from '../WelcomeContainer';
+import WelcomeContainer from './WelcomeContainer';
 import MainText from '../MainText';
-import SecondaryText from '../SecondaryText';
+import SecondaryText from './SecondaryText';
 import styles from './styles';
 
 export function WalletCreatedScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {

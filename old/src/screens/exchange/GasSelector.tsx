@@ -1,6 +1,6 @@
 import React from 'react';
 import { State, useState } from '@hookstate/core';
-import { ExchangeState, Gas, globalExchangeState } from 'old/src/stores/ExchangeStore';
+import { ExchangeState, Gas, globalExchangeState } from '@src/stores/ExchangeStore';
 import { EstimateGasResponse } from '../../../../src/model/wallet';
 import GasOption from './GasOption';
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { useState } from '@hookstate/core';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Appbar, useTheme, Text } from 'react-native-paper';
 import { Svg, Path } from 'react-native-svg';

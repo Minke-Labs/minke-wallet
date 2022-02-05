@@ -9,7 +9,10 @@ import {
 	waveWelcomeFooterImg,
 	waveWelcomeFooterDarkImg
 } from '@images';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, Button, Modal } from '@components';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../routes/types.routes';
 import styles from './WelcomeScreen.styles';
 import ImportFlow from './ImportFlow';
 
@@ -31,7 +34,13 @@ const Background: React.FC = ({ children }) => {
 };
 
 const WelcomeScreen = () => {
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [isModalVisible, setModalVisible] = useState(false);
+
+	const onImportFinished = () => {
+		setModalVisible(false);
+		navigation.navigate('WalletCreated');
+	};
 
 	return (
 		<>
@@ -65,7 +74,7 @@ const WelcomeScreen = () => {
 			</WelcomeLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportFlow />
+				<ImportFlow onImportFinished={onImportFinished} />
 			</Modal>
 		</>
 	);

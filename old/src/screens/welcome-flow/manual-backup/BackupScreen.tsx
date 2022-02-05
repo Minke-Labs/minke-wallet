@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, Headline, Subheading, Snackbar, useTheme, Portal } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import { getSeedPhrase } from '@src/model/wallet';
 import styles from './styles';

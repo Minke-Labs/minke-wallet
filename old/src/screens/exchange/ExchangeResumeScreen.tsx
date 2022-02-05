@@ -5,13 +5,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'old/src/helpers/param-list-type';
 import Container from 'old/src/components/Container';
 import ProgressButton from 'old/src/components/ProgressButton';
-import { globalExchangeState } from 'old/src/stores/ExchangeStore';
+import { globalExchangeState } from '@src/stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@src/model/token';
 import { getProvider, smallWalletAddress } from '@src/model/wallet';
 import { toBn } from 'evm-bn';
 import { Wallet, BigNumber, utils } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import * as Linking from 'expo-linking';
 import GasOption from './GasOption';
 

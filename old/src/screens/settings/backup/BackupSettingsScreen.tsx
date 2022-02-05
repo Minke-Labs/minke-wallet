@@ -13,7 +13,7 @@ import AppLoading from 'expo-app-loading';
 import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain';
 import { smallWalletAddress, getSeedPhrase } from '@src/model/wallet';
 import globalStyles from 'old/src/components/global.styles';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import BackupImage from '@assets/backup.svg';
 import styles from './styles';
 

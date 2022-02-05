@@ -4,7 +4,7 @@ import { Portal, Snackbar, Text } from 'react-native-paper';
 import * as Clipboard from 'expo-clipboard';
 import RoundButton from 'old/src/components/RoundButton';
 import ReceiveModal from 'old/src/components/ReceiveModal';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 
 const styles = StyleSheet.create({
 	scrollviewHorizontal: {

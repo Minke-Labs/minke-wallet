@@ -4,7 +4,7 @@ import { MaterialIcons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vecto
 import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { useTheme, Text } from 'react-native-paper';
-import { globalWalletState } from 'old/src/stores/WalletStore';
+import { globalWalletState } from '@src/stores/WalletStore';
 import globalStyles from 'old/src/components/global.styles';
 import { makeStyles } from './styles';
 
