@@ -6,12 +6,21 @@ import styles from './WelcomeLayout.styles';
 
 interface WelcomeLayoutProps {
 	style?: any;
+	center?: boolean;
 }
 
-const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, style }) => {
+const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, center, style }) => {
 	const { colors } = useTheme();
 	return (
-		<SafeAreaView style={[style || styles.container, { backgroundColor: colors.background }]}>
+		<SafeAreaView
+			style={[
+				style || styles.container,
+				{
+					backgroundColor: colors.background,
+					...(center && { alignItems: 'center' })
+				}
+			]}
+		>
 			{children}
 			<StatusBar />
 		</SafeAreaView>
