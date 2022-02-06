@@ -4,27 +4,21 @@ import { View, StyleSheet, TextInput, Animated, Text } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
-		marginBottom: 20,
-		marginTop: 20,
 		backgroundColor: '#FFFCF5',
-		paddingTop: 5,
-		paddingHorizontal: 10,
 		borderRadius: 41,
 		width: 208,
 		height: 56,
-		alignSelf: 'center',
 		borderColor: '#D0D0D0',
 		borderWidth: 1
 	},
-	icon: {
-		width: 40,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
 	input: {
-		fontSize: 13,
+		fontSize: 16,
 		height: 35,
-		color: '#000'
+		color: '#05222D',
+		borderWidth: 1,
+		borderColor: 'red',
+		flex: 1,
+		paddingLeft: 24
 	},
 	label: {
 		color: '#748190',

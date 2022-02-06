@@ -22,7 +22,8 @@ module.exports = (api) => {
 						'@contexts': './src/contexts',
 						'@routes': './src/routes',
 						'@layouts': './src/layouts',
-						'@images': './src/images'
+						'@images': './src/images',
+						'@hooks': './src/hooks'
 					}
 				}
 			]

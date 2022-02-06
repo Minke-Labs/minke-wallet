@@ -1,7 +1,8 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '@hooks';
+
 import styles from './WelcomeLayout.styles';
 
 interface WelcomeLayoutProps {
@@ -16,7 +17,7 @@ const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, center, style
 			style={[
 				style || styles.container,
 				{
-					backgroundColor: colors.background,
+					backgroundColor: colors.background1,
 					...(center && { alignItems: 'center' })
 				}
 			]}

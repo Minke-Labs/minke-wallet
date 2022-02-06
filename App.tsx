@@ -1,5 +1,8 @@
 import React from 'react';
-import { ThemeProvider } from '@contexts';
+import {
+	// ThemeProvider,
+	ThemeProvider
+} from '@contexts';
 import Routes from '@routes';
 import AppLoading from 'expo-app-loading';
 import {
@@ -21,7 +24,9 @@ const App = () => {
 
 	return (
 		<ThemeProvider>
+			{/* <ThemeProvider> */}
 			<Routes />
+			{/* </ThemeProvider> */}
 		</ThemeProvider>
 	);
 };
