@@ -21,6 +21,10 @@ const fontType = {
 	p: {
 		fontSize: 18,
 		lineHeight: 22
+	},
+	a: {
+		fontSize: 14,
+		lineHeight: 16
 	}
 };
 
