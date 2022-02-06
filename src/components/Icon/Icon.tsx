@@ -1,10 +1,10 @@
 import React from 'react';
 import { icon } from '@styles';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import { Svg, Path, Circle } from 'react-native-svg';
 import { IconProps } from './Icon.types';
 
-const Icon: React.FC<Partial<IconProps>> = ({ name = 'gear', color = 'text', size = 43, style }) => {
+const Icon: React.FC<Partial<IconProps>> = ({ name = 'gear', color = 'text1', size = 43, style }) => {
 	const { colors } = useTheme();
 	const chosenColor = colors[color];
 
@@ -20,7 +20,7 @@ const Icon: React.FC<Partial<IconProps>> = ({ name = 'gear', color = 'text', siz
 			{icon[name].map((d) => (
 				<Path key={d} fillRule="evenodd" clipRule="evenodd" d={d} fill={chosenColor} />
 			))}
-			{name === 'avatarColor' && <Circle cx="48" cy="33" r="20" stroke={colors.text} strokeWidth="8" />}
+			{name === 'avatarColor' && <Circle cx="48" cy="33" r="20" stroke={colors.text1} strokeWidth="8" />}
 		</Svg>
 	);
 };

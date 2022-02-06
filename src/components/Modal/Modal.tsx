@@ -7,7 +7,7 @@ import Animated, {
 	useSharedValue,
 	withTiming
 } from 'react-native-reanimated';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import styles from './Modal.styles';
 import ModalHeader from './ModalHeader';
 
@@ -16,9 +16,10 @@ const screenHeight = Dimensions.get('window').height;
 interface ModalProps {
 	isVisible: boolean;
 	onDismiss: () => void;
+	center?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible }) => {
+const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center }) => {
 	const { colors } = useTheme();
 	const top = useSharedValue(screenHeight);
 
@@ -45,7 +46,16 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible }) => {
 			<TouchableWithoutFeedback onPress={onDismiss}>
 				<Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
 			</TouchableWithoutFeedback>
-			<Animated.View style={[styles.container, animatedStyles, { backgroundColor: colors.background }]}>
+			<Animated.View
+				style={[
+					styles.container,
+					animatedStyles,
+					{
+						backgroundColor: colors.background1,
+						...(center && { alignItems: 'center' })
+					}
+				]}
+			>
 				<ModalHeader onDismiss={onDismiss} />
 				{children}
 			</Animated.View>

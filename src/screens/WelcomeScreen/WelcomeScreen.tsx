@@ -55,7 +55,7 @@ const WelcomeScreen = () => {
 							<Text center weight="extraBold" type="h1" width={273} marginBottom={16}>
 								Wave goodbye to your bank!
 							</Text>
-							<Text center color="placeholder" width={198}>
+							<Text center color="text2" width={198}>
 								Easily save, spend and invest with
 								<Text weight="extraBold"> Minke </Text>
 							</Text>

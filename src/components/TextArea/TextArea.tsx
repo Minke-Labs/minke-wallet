@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import { View, TextInput, Text } from 'react-native';
 import styles from './TextArea.styles';
 import { TextAreaProps } from './TextArea.types';
@@ -14,18 +14,18 @@ const TextArea: React.FC<TextAreaProps> = ({
 	const { colors } = useTheme();
 	return (
 		<View>
-			<Text style={[styles.label, { color: colors.primary }]}>{label}</Text>
+			<Text style={[styles.label, { color: colors.text7 }]}>{label}</Text>
 			<TextInput
 				style={[
 					styles.textarea,
 					{
-						backgroundColor: colors.fill,
-						borderColor: colors.primary,
-						color: colors.text,
+						backgroundColor: colors.background4,
+						borderColor: colors.text7,
+						color: colors.text1,
 						...(style && { ...(style as object) })
 					}
 				]}
-				selectionColor={colors.primary}
+				selectionColor={colors.text7}
 				spellCheck={false}
 				autoCapitalize="none"
 				autoFocus

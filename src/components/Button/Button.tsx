@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '@hooks';
+import { ColorType } from '@styles';
 import { TouchableOpacity } from 'react-native';
 
 import { styles } from './Button.styles';
@@ -8,10 +9,8 @@ import { ButtonProps } from './Button.types';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 
-type Colors = ReactNativePaper.ThemeColors;
-
-const getKeyByValue = (object: Colors, value: string) =>
-	Object.keys(object).find((key) => object[key as keyof Colors] === value) as keyof Colors;
+const getKeyByValue = (object: ColorType, value: string) =>
+	Object.keys(object).find((key) => object[key as keyof ColorType] === value) as keyof ColorType;
 
 const Button: React.FC<ButtonProps> = ({
 	title = 'button',
@@ -23,10 +22,10 @@ const Button: React.FC<ButtonProps> = ({
 	onPress
 }) => {
 	const { colors } = useTheme();
-	const color = mode === 'contained' ? colors.buttonText : colors.linkText;
+	const color = mode === 'contained' ? colors.text6 : colors.text7;
 	const backgroundColor = () => {
-		if (disabled) return colors.buttonDisabled;
-		if (mode === 'contained') return colors.buttonColor;
+		if (disabled) return colors.detail2;
+		if (mode === 'contained') return colors.cta1;
 		return 'transparent';
 	};
 

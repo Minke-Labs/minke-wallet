@@ -13,6 +13,7 @@ export default StyleSheet.create({
 	textarea: {
 		borderRadius: 24,
 		height: 104,
+		minWidth: 280,
 		overflow: 'hidden',
 		borderWidth: 1,
 		paddingHorizontal: 24,

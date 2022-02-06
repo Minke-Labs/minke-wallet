@@ -48,7 +48,7 @@ const WalletCreatedScreen = () => {
 			<Text center weight="extraBold" type="h2" width={273} marginBottom={16}>
 				Wallet created!
 			</Text>
-			<Text center color="placeholder" width={258} marginBottom={48}>
+			<Text center color="text2" width={258} marginBottom={48}>
 				Your keys your coin. Backup your wallet incase of loss.
 			</Text>
 			<Button title="Back up to iCloud" iconRight="cloudStroke" onPress={backupOnKeychain} marginBottom={14} />

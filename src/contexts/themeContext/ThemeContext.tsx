@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { createContext, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
-import { Provider } from 'react-native-paper';
-import { darkTheme, lightTheme } from '@styles';
+import { colors, ColorType } from '@styles';
 
-const ThemeContext: React.FC = ({ children }) => {
-	const scheme = useColorScheme();
+interface ThemeContextProps {
+	colors: ColorType;
+}
 
-	return <Provider theme={scheme === 'dark' ? darkTheme : lightTheme}>{children}</Provider>;
+// Necessary because Typescript 🙄
+const mock = {
+	colors: colors.darkTheme
 };
 
-export default ThemeContext;
+export const ThemeContext = createContext<ThemeContextProps>(mock);
+
+const ThemeProvider: React.FC = ({ children }) => {
+	const scheme = useColorScheme();
+
+	const theme = useMemo(
+		() => ({
+			colors: scheme === 'dark' ? colors.darkTheme : colors.lightTheme
+		}),
+		[scheme]
+	);
+
+	return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
+};
+
+export default ThemeProvider;
