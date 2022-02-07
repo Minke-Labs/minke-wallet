@@ -1,4 +1,6 @@
 import { BigNumber } from 'ethers';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { toBn } from 'evm-bn';
 import { network } from './network';
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {
@@ -7,16 +9,31 @@ export const paraswapTokens = async (): Promise<TokenResponse> => {
 	return result.json();
 };
 
-export const getExchangePrice = async (
-	srcToken: string,
-	destToken: string,
-	amount = '1000000000000000000'
-): Promise<ExchangeRoute> => {
+export interface ExchangeParams {
+	srcToken: string;
+	srcDecimals: number;
+	destToken: string;
+	destDecimals: number;
+	side: 'SELL' | 'BUY';
+	amount: string;
+}
+
+export const getExchangePrice = async ({
+	srcToken,
+	srcDecimals,
+	destToken,
+	destDecimals,
+	side,
+	amount
+}: ExchangeParams): Promise<ExchangeRoute> => {
 	const { chainId } = await network();
 	const baseURL = 'https://apiv5.paraswap.io/prices';
-	console.log(`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${chainId}`);
+	const sourceParams = `srcToken=${srcToken}&srcDecimals=${srcDecimals}`;
+	const destParams = `destToken=${destToken}&destDecimals=${destDecimals}`;
+	const decimals = side === 'SELL' ? srcDecimals : destDecimals;
+	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
 	const result = await fetch(
-		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${chainId}`
+		`${baseURL}?${sourceParams}&${destParams}&side=${side}&amount=${tokenAmount}&network=${chainId}`
 	);
 	return result.json();
 };

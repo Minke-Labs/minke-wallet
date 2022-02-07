@@ -19,7 +19,7 @@
     "@tradle/react-native-http": "^2.0.1",
     "assert": "^1.5.0",
     "babel-plugin-inline-dotenv": "^1.6.0",
-    "bignumber.js": "^9.0.1",
+    "bignumber.js": "^9.0.2",
     "bip39": "^3.0.4",
     "browserify-zlib": "^0.1.4",
     "buffer": "^6.0.3",

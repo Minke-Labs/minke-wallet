@@ -37,13 +37,13 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
 					<View style={styles.cardBottomContent}>
 						<AddFundsButton
 							button={
-							// eslint-disable-next-line react/jsx-wrap-multilines
+								// eslint-disable-next-line react/jsx-wrap-multilines
 								<TextButton
 									text="Add funds"
 									icon="add-circle-outline"
 									containerStyle={styles.cardDivisor}
 								/>
-						}
+							}
 						/>
 						<TextButton
 							text="Send"
@@ -59,7 +59,6 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
 				visible={sendModalOpen}
 				onDismiss={() => setSendModalOpen(false)}
 				onCloseAll={() => setSendModalOpen(false)}
-				// onBack={() => console.log('BACK')}
 			/>
 		</>
 	);

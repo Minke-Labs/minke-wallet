@@ -1,25 +1,26 @@
 /* eslint-disable no-useless-escape */
-import React, { useEffect, createRef } from 'react';
+import React, { useEffect, createRef, useCallback } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { ActivityIndicator, Card, Headline, Text, useTheme } from 'react-native-paper';
 import { useState, State } from '@hookstate/core';
 import { Svg, Path } from 'react-native-svg';
 import { BigNumber, utils } from 'ethers';
-import { toBn } from 'evm-bn';
+import { BigNumber as BN } from 'bignumber.js';
+import { fromBn } from 'evm-bn';
 import Container from '@components/Container';
 import PrimaryButton from '@components/PrimaryButton';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { getWalletTokens, WalletToken } from '@models/wallet';
-import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens } from '@models/token';
+import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens, ExchangeParams } from '@models/token';
 import { network } from '@src/model/network';
+import { debounce } from 'lodash';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
 import globalStyles from '@src/components/global.styles';
 import SearchTokens from './search-tokens/SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
-import { debounce, throttle } from 'lodash';
 import { makeStyles } from './styles';
 
 interface Conversion {
@@ -74,60 +75,69 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		toAmountRef.current?.focus();
 	};
 
-	const loadPrices = async (amount?: string) => {
-		const {
-			error,
-			priceRoute: { srcAmount, destAmount, srcDecimals, destDecimals }
-		} = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
-		if (error) {
-			console.error(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
-			Keyboard.dismiss();
-			setQuote(undefined);
-		} else {
-			setQuote({
+	interface PriceParams {
+		amount?: string;
+		side?: ExchangeParams['side'];
+	}
+
+	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
+		if (fromToken && toToken) {
+			const { address: srcToken, decimals: srcDecimals } = fromToken;
+			const { address: destToken, decimals: destDecimals } = toToken;
+			const {
+				error,
+				priceRoute: { srcAmount, destAmount }
+			} = await getExchangePrice({ srcToken, srcDecimals, destToken, destDecimals, amount, side });
+			if (error) {
+				console.error(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+				Keyboard.dismiss();
+				setQuote(undefined);
+				return undefined;
+			}
+
+			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
 				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
-			});
+			};
+			setQuote(newQuote);
+			return newQuote;
 		}
+
+		return undefined;
 	};
 
 	const updateFromQuotes = debounce(async (amount: string) => {
-		console.log('caiu no updateFromQuotes', amount);
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			await loadPrices();
-			if (quote) {
-				const bigNumberAmount = toBn(formatedValue);
-				let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
-				converted = converted.div(quote.from[fromToken.symbol]);
+			const newQuote = await loadPrices({ amount: formatedValue, side: 'SELL' });
+			if (newQuote) {
+				const converted = newQuote.to[toToken?.symbol || ''];
+				// converted = converted.div(newQuote.from[fromToken.symbol]);
 				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
 				exchange.toAmount.set(convertedAmount);
 				setToConversionAmount(convertedAmount);
-				setFromConversionAmount(formatedValue); // trying
+				setFromConversionAmount(formatedValue);
 				setLastConversion({ direction: 'from', amount: formatedValue });
 			}
 			exchange.fromAmount.set(formatedValue);
 		}
-	}, 500);
+	}, 300);
 
 	const updateToQuotes = debounce(async (amount: string) => {
-		console.log('caiu no updateToQuotes', amount);
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			await loadPrices();
-			if (quote) {
-				const bigNumberAmount = toBn(formatedValue);
-				let converted = quote.from[fromToken.symbol || ''].mul(bigNumberAmount);
-				converted = converted.div(quote.to[toToken?.symbol || '']);
-				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
+			const newQuote = await loadPrices({ amount: formatedValue, side: 'BUY' });
+			if (newQuote) {
+				const converted = newQuote.from[fromToken?.symbol || ''];
+				const convertedAmount = utils.formatUnits(converted, fromToken.decimals);
 				exchange.fromAmount.set(convertedAmount);
 				setFromConversionAmount(convertedAmount);
-				setToConversionAmount(formatedValue); // trying
+				setToConversionAmount(formatedValue);
 				setLastConversion({ direction: 'to', amount: formatedValue });
 			}
 			exchange.toAmount.set(formatedValue);
 		}
-	}, 500);
+	}, 300);
 
 	const goToExchangeResume = () => {
 		navigation.navigate('ExchangeResume');
@@ -180,14 +190,15 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 	};
 
-	const exchangeSummary = () => {
+	const exchangeSummary = useCallback(() => {
 		if (fromToken && toToken) {
 			if (quote) {
-				const destQuantity = quote.to[toToken.symbol];
+				const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
+				const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
+				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
+				const destQuantityString = division.match(/^-?\d+(?:\.\d{0,9})?/);
 
-				return `1 ${fromToken.symbol} = ${utils
-					.formatUnits(destQuantity, toToken.decimals)
-					.match(/^-?\d+(?:\.\d{0,9})?/)} ${toToken.symbol}`;
+				return `1 ${fromToken.symbol} = ${destQuantityString} ${toToken.symbol}`;
 			}
 			return (
 				<>
@@ -197,7 +208,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			);
 		}
 		return null;
-	};
+	}, [quote]);
 
 	if (fromToken && !exchange.value.from) {
 		exchange.from.set(fromToken);
@@ -240,7 +251,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	useEffect(() => {
 		if (fromToken && toToken) {
-			loadPrices();
+			loadPrices({});
 		}
 	}, [toToken, fromToken]);
 
