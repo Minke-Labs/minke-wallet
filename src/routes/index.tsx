@@ -46,7 +46,7 @@ const Routes: React.FC = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Welcome">
+			<Stack.Navigator initialRouteName="Wallet">
 				<Stack.Screen options={{ headerShown: false }} name="Welcome" component={WelcomeScreen} />
 				<Stack.Screen options={{ headerShown: false }} name="Test" component={Test} />
 				<Stack.Screen options={{ headerShown: false }} name="WalletCreated" component={WalletCreatedScreen} />

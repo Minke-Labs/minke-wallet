@@ -24,7 +24,7 @@ const fontType = {
 	},
 	a: {
 		fontSize: 14,
-		lineHeight: 16
+		lineHeight: 17
 	}
 };
 
