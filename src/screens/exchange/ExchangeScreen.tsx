@@ -117,8 +117,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				exchange.toAmount.set(convertedAmount);
 				setToConversionAmount(convertedAmount);
 				setFromConversionAmount(formatedValue);
-				setLastConversion({ direction: 'from', amount: formatedValue });
 			}
+			setLastConversion({ direction: 'from', amount: formatedValue });
 			exchange.fromAmount.set(formatedValue);
 		}
 	};
@@ -135,8 +135,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				exchange.fromAmount.set(convertedAmount);
 				setFromConversionAmount(convertedAmount);
 				setToConversionAmount(formatedValue);
-				setLastConversion({ direction: 'to', amount: formatedValue });
 			}
+			setLastConversion({ direction: 'to', amount: formatedValue });
 			exchange.toAmount.set(formatedValue);
 		}
 	};
@@ -180,6 +180,10 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const canChangeDirections = fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase());
 	const directionSwap = () => {
 		if (canChangeDirections) {
+			if (lastConversion) {
+				const { amount, direction } = lastConversion;
+				setLastConversion({ amount, direction: direction === 'from' ? 'to' : 'from' });
+			}
 			exchange.set({} as ExchangeState);
 			const backup = fromToken;
 			updateFromToken(toToken || ({} as ParaswapToken));
@@ -189,7 +193,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const ExchangeSummary = useCallback(() => {
 		if (fromToken && toToken) {
-			if (quote && quote.to[toToken.symbol] && quote.from[fromToken.symbol]) {
+			if (quote) {
 				const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
 				const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
 				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
@@ -248,9 +252,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			if (lastConversion) {
 				const { direction, amount } = lastConversion;
 				if (direction === 'from') {
-					updateToQuotes('1');
+					updateFromQuotes(amount);
 				} else {
-					updateFromQuotes('1');
+					updateToQuotes(amount);
 				}
 			} else {
 				loadPrices({});
