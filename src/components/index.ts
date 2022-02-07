@@ -5,5 +5,6 @@ import Token from './Token/Token';
 import Modal from './Modal/Modal';
 import TextArea from './TextArea/TextArea';
 import Input from './Input/Input';
+import Flag from './Flag/Flag';
 
-export { Text, Button, Icon, Token, Modal, TextArea, Input };
+export { Text, Button, Icon, Token, Modal, TextArea, Input, Flag };

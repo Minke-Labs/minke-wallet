@@ -1,9 +1,15 @@
 /* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { WelcomeLayout } from '@layouts';
 import { ColorType } from '@styles';
 import { useTheme } from '@hooks';
-import { Button, Icon, Text, TextArea, Modal } from '@components';
+import {
+	Button,
+	// Icon, Text, TextArea,
+	Modal,
+	Flag
+} from '@components';
 import { View, StyleSheet } from 'react-native';
 
 const makeStyles = (colors: ColorType) =>
@@ -31,7 +37,7 @@ const Test = () => {
 	return (
 		<>
 			<WelcomeLayout center>
-				<View style={style.box} />
+				{/* <View style={style.box} />
 				<View style={[style.box2, { backgroundColor: colors.alert3 }]} />
 				<View style={{ marginBottom: 10 }} />
 
@@ -51,8 +57,10 @@ const Test = () => {
 					value={text}
 					numberOfLines={6}
 					onChangeText={(t) => setText(t)}
-				/>
+				/> */}
 				<View style={{ marginBottom: 10 }} />
+
+				<Flag name="australia" />
 			</WelcomeLayout>
 
 			<Modal center isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
