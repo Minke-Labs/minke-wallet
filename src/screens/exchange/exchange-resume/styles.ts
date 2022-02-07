@@ -5,7 +5,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		// ExchangeResume
 		exchangeContainer: {
 			flex: 1,
-			padding: 24,
+			paddingLeft: 24,
+			paddingRight: 24,
 			flexDirection: 'column'
 		},
 		exchangeResumeDivisor: {
@@ -23,8 +24,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			position: 'absolute'
 		},
 		exchangeResumeContainer: {
-			paddingTop: 0,
-			marginBottom: 16
+			paddingTop: 0
 		},
 		exchangeResumeCard: {
 			marginBottom: 16,
@@ -40,6 +40,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		},
 		summaryCard: {
 			borderRadius: 16,
+			marginTop: 16,
 			marginBottom: 16,
 			backgroundColor: colors.fill
 		},

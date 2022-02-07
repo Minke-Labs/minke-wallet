@@ -16,17 +16,12 @@ import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens, Exc
 import { network } from '@src/model/network';
 import { debounce } from 'lodash';
 import { globalWalletState } from '@stores/WalletStore';
-import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
+import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import globalStyles from '@src/components/global.styles';
 import SearchTokens from './search-tokens/SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { makeStyles } from './styles';
-
-interface Conversion {
-	direction: 'from' | 'to';
-	amount: string;
-}
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
@@ -144,7 +139,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const goToExchangeResume = () => {
 		if (fromToken && toToken) {
 			exchange.from.set(fromToken);
-			exchange.from.set(toToken);
+			exchange.to.set(toToken);
 			navigation.navigate('ExchangeResume');
 		}
 	};

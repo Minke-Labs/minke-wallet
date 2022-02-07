@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Image, View, SafeAreaView, ScrollView } from 'react-native';
-import { Card, Headline, Text, Portal, Button, useTheme } from 'react-native-paper';
+import { Card, Headline, Text, Portal, Button, useTheme, ActivityIndicator } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
@@ -20,21 +20,13 @@ import globalStyles from '@src/components/global.styles';
 import GasOption from '../GasOption';
 import { makeStyles } from './styles';
 
-const TokenDetail = ({
-	token,
-	amount,
-	usdAmount
-}: {
-	token: ParaswapToken;
-	amount: string | undefined;
-	usdAmount: string | undefined;
-}) => (
+const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
 		<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
 			<Image source={{ uri: token.img }} style={{ width: 40, height: 40 }} />
 		</View>
 		<View>
-			<Text style={{ fontWeight: 'bold' }}>${usdAmount}</Text>
+			<Text style={{ fontWeight: 'bold' }}>${usdAmount.match(/^-?\d+(?:\.\d{0,2})?/)}</Text>
 			<Text>
 				{token.symbol} {amount}
 			</Text>
@@ -45,7 +37,7 @@ const TokenDetail = ({
 const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const exchange = useState(globalExchangeState());
 	const wallet = useState(globalWalletState());
-	const { to, from, fromAmount, toAmount } = exchange.value;
+	const { to, from, fromAmount, toAmount, lastConversion } = exchange.value;
 	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
 	const [visible, setVisible] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState(
@@ -66,7 +58,18 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 	useEffect(() => {
 		const loadPrices = async () => {
-			const result = await getExchangePrice(from.symbol, to.symbol, toBn(fromAmount || '').toString());
+			const { address: srcToken, decimals: srcDecimals } = from;
+			const { address: destToken, decimals: destDecimals } = to;
+			const { direction = 'SELL' } = lastConversion || {};
+			const result = await getExchangePrice({
+				srcToken,
+				srcDecimals,
+				destToken,
+				destDecimals,
+				amount: (direction === 'to' ? toAmount : fromAmount) || '',
+				side: direction === 'to' ? 'BUY' : 'SELL'
+			});
+
 			if (result.error) {
 				console.error(result.error);
 			} else {
@@ -76,14 +79,6 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 		loadPrices();
 	}, []);
-
-	const formatAmount = (amount: string | undefined, decimals: number | undefined): string | null => {
-		if (amount) {
-			return utils.formatUnits(BigNumber.from(amount), decimals);
-		}
-
-		return null;
-	};
 
 	const exchangeSummary = () => {
 		let src = fromAmount || 1;
@@ -95,7 +90,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		}
 
 		if (fromAmount && toAmount) {
-			return `${+dest / +src} ${to.symbol} per ${from.symbol}`;
+			return `${(+dest / +src).toString().match(/^-?\d+(?:\.\d{0,9})?/)} ${to.symbol} per ${from.symbol}`;
 		}
 
 		return null;
@@ -149,16 +144,18 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 						<Headline style={globalStyles.headline}>Exchange Resume</Headline>
 
 						<Card style={styles.tokenCard}>
-							<TokenDetail
-								token={from}
-								amount={
-									formatAmount(
-										priceQuote?.priceRoute.srcAmount,
-										priceQuote?.priceRoute.srcDecimals
-									) || fromAmount
-								}
-								usdAmount={priceQuote?.priceRoute.srcUSD}
-							/>
+							{priceQuote ? (
+								<TokenDetail
+									token={from}
+									amount={formatUnits(
+										priceQuote.priceRoute.srcAmount,
+										priceQuote.priceRoute.srcDecimals
+									)}
+									usdAmount={priceQuote?.priceRoute.srcUSD}
+								/>
+							) : (
+								<ActivityIndicator size={24} color={colors.primary} />
+							)}
 
 							<View style={styles.tokenCardDivisor}>
 								<View style={styles.tokenCardDivisorBackground}>
@@ -181,16 +178,18 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 								</View>
 							</View>
 
-							<TokenDetail
-								token={to}
-								amount={
-									formatAmount(
-										priceQuote?.priceRoute.destAmount,
-										priceQuote?.priceRoute.destDecimals
-									) || toAmount
-								}
-								usdAmount={priceQuote?.priceRoute.destUSD}
-							/>
+							{priceQuote ? (
+								<TokenDetail
+									token={to}
+									amount={formatUnits(
+										priceQuote.priceRoute.destAmount,
+										priceQuote.priceRoute.destDecimals
+									)}
+									usdAmount={priceQuote?.priceRoute.destUSD}
+								/>
+							) : (
+								<ActivityIndicator size={24} color={colors.primary} />
+							)}
 
 							<View style={styles.exchangeResumeRateFixedContiner}>
 								<View style={styles.exchangeResumeRateFixedLabel}>
@@ -207,13 +206,17 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 						<Card.Content>
 							<View style={(styles.summaryRow, styles.marginBottom)}>
 								<Text>Maximum sold</Text>
-								<Text style={globalStyles.fontBold}>
-									{formatAmount(
-										priceQuote?.priceRoute.srcAmount,
-										priceQuote?.priceRoute.srcDecimals
-									) || fromAmount}{' '}
-									{from.symbol}
-								</Text>
+								{priceQuote ? (
+									<Text style={globalStyles.fontBold}>
+										{formatUnits(
+											priceQuote.priceRoute.srcAmount,
+											priceQuote.priceRoute.srcDecimals
+										).match(/^-?\d+(?:\.\d{0,9})?/)}{' '}
+										{from.symbol}
+									</Text>
+								) : (
+									<ActivityIndicator size={24} color={colors.primary} />
+								)}
 							</View>
 
 							<View style={(styles.summaryRow, styles.marginBottom)}>
@@ -236,7 +239,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 					{exchange.value.gas ? (
 						<GasOption
 							type={exchange.value.gas.type}
-							gweiPrice={exchange.value.gas.gweiPrice}
+							usdPrice={exchange.value.gas.usdPrice}
 							gweiValue={exchange.value.gas.gweiValue}
 							wait={exchange.value.gas.wait}
 						/>

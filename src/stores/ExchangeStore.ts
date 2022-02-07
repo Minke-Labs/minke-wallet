@@ -8,12 +8,18 @@ export interface Gas {
 	wait: number;
 }
 
+export interface Conversion {
+	direction: 'from' | 'to';
+	amount: string;
+}
+
 export interface ExchangeState {
 	from: ParaswapToken;
 	to: ParaswapToken;
 	fromAmount: string | undefined;
 	toAmount: string | undefined;
 	gas: Gas | undefined;
+	lastConversion?: Conversion;
 }
 
 const globalStateInit = createState({} as ExchangeState);
