@@ -60,7 +60,7 @@ const Test = () => {
 				/> */}
 				<View style={{ marginBottom: 10 }} />
 
-				<Flag name="hawaii" />
+				<Flag name="lesotho" />
 			</WelcomeLayout>
 
 			<Modal center isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
