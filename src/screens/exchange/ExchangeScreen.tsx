@@ -36,7 +36,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
 	const [toTokenBalance, setToTokenBalance] = React.useState('0');
-	const [searchSource, setSearchSource] = React.useState('from');
+	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
 	const [ownedTokens, setOwnedTokens] = React.useState<Array<string>>();
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
@@ -106,13 +106,13 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		return undefined;
 	};
 
-	const updateFromQuotes = debounce(async (amount: string) => {
+	const updateFromQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
 			const newQuote = await loadPrices({ amount: formatedValue, side: 'SELL' });
+			setQuote(newQuote);
 			if (newQuote) {
 				const converted = newQuote.to[toToken?.symbol || ''];
-				// converted = converted.div(newQuote.from[fromToken.symbol]);
 				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
 				exchange.toAmount.set(convertedAmount);
 				setToConversionAmount(convertedAmount);
@@ -121,13 +121,15 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			}
 			exchange.fromAmount.set(formatedValue);
 		}
-	}, 300);
+	};
 
-	const updateToQuotes = debounce(async (amount: string) => {
+	const updateToQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
 			const newQuote = await loadPrices({ amount: formatedValue, side: 'BUY' });
+			setQuote(newQuote);
 			if (newQuote) {
+				setQuote(newQuote);
 				const converted = newQuote.from[fromToken?.symbol || ''];
 				const convertedAmount = utils.formatUnits(converted, fromToken.decimals);
 				exchange.fromAmount.set(convertedAmount);
@@ -137,10 +139,14 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			}
 			exchange.toAmount.set(formatedValue);
 		}
-	}, 300);
+	};
 
 	const goToExchangeResume = () => {
-		navigation.navigate('ExchangeResume');
+		if (fromToken && toToken) {
+			exchange.from.set(fromToken);
+			exchange.from.set(toToken);
+			navigation.navigate('ExchangeResume');
+		}
 	};
 
 	const showModal = () => {
@@ -175,30 +181,24 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const directionSwap = () => {
 		if (canChangeDirections) {
 			exchange.set({} as ExchangeState);
-			setQuote(null);
 			const backup = fromToken;
 			updateFromToken(toToken || ({} as ParaswapToken));
 			updateToToken(backup);
-			if (lastConversion) {
-				const { direction, amount } = lastConversion;
-				if (direction === 'from') {
-					exchange.toAmount.set(amount);
-				} else {
-					exchange.fromAmount.set(amount);
-				}
-			}
 		}
 	};
 
-	const exchangeSummary = useCallback(() => {
+	const ExchangeSummary = useCallback(() => {
 		if (fromToken && toToken) {
-			if (quote) {
+			if (quote && quote.to[toToken.symbol] && quote.from[fromToken.symbol]) {
 				const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
 				const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
 				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
 				const destQuantityString = division.match(/^-?\d+(?:\.\d{0,9})?/);
-
-				return `1 ${fromToken.symbol} = ${destQuantityString} ${toToken.symbol}`;
+				return (
+					<Text style={styles.exchangeSummaryText}>
+						1 {fromToken.symbol} = {destQuantityString} {toToken.symbol}
+					</Text>
+				);
 			}
 			return (
 				<>
@@ -210,16 +210,10 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		return null;
 	}, [quote]);
 
-	if (fromToken && !exchange.value.from) {
-		exchange.from.set(fromToken);
-	}
-
 	const canSwap = () =>
 		quote &&
 		fromToken &&
 		toToken &&
-		exchange.value.from &&
-		exchange.value.to &&
 		exchange.value.fromAmount &&
 		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
@@ -251,7 +245,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	useEffect(() => {
 		if (fromToken && toToken) {
-			loadPrices({});
+			if (lastConversion) {
+				const { direction, amount } = lastConversion;
+				if (direction === 'from') {
+					updateToQuotes('1');
+				} else {
+					updateFromQuotes('1');
+				}
+			} else {
+				loadPrices({});
+			}
 		}
 	}, [toToken, fromToken]);
 
@@ -272,7 +275,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<View style={styles.exchangeSection}>
 					<View style={[globalStyles.row, styles.exchangeHeadlineRow]}>
 						<Headline style={globalStyles.headline}>Exchange</Headline>
-						<Text style={styles.exchangeSummaryText}>{exchangeSummary()}</Text>
+						<ExchangeSummary />
 					</View>
 					<Card style={styles.tokenCard}>
 						<TokenCard
@@ -280,7 +283,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							onPress={showModalFrom}
 							balance={fromTokenBalance}
 							innerRef={fromAmountRef}
-							updateQuotes={updateFromQuotes}
+							updateQuotes={debounce(updateFromQuotes, 300)}
 							conversionAmount={fromConversionAmount}
 						/>
 
@@ -319,7 +322,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 							onPress={showModalTo}
 							balance={toTokenBalance}
 							innerRef={toAmountRef}
-							updateQuotes={updateToQuotes}
+							updateQuotes={debounce(updateToQuotes, 300)}
 							conversionAmount={toConversionAmount}
 							disableMax
 						/>
