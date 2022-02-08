@@ -69,16 +69,21 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderTopColor: colors.background
 		},
 		exchangeResumeRateFixedLabel: {
-			marginRight: 8
+			marginRight: 8,
+			fontSize: 12
 		},
 		exchangeResumeRateFixed: {
 			borderWidth: 1,
 			borderRadius: 16,
 			borderColor: colors.background,
-			paddingTop: 2,
-			paddingBottom: 2,
+			paddingLeft: 16,
 			paddingRight: 16,
-			paddingLeft: 16
+			paddingTop: 8,
+			paddingBottom: 8,
+			height: 16,
+			width: 64,
+			overflow: 'hidden',
+			position: 'relative'
 		},
 		tokenCard: {
 			borderRadius: 16,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Image, View, SafeAreaView, ScrollView } from 'react-native';
 import { Card, Headline, Text, Portal, Button, useTheme, ActivityIndicator } from 'react-native-paper';
 import { useState } from '@hookstate/core';
@@ -39,6 +39,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const { to, from, fromAmount, toAmount, lastConversion } = exchange.value;
 	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
 	const [visible, setVisible] = React.useState(false);
+	const [count, setCount] = React.useState(45);
+	const [intervalId, setIntervalId] = React.useState<NodeJS.Timer>();
 	const [transactionHash, setTransactionHash] = React.useState(
 		'0x94f47857de4edbdbc18d5c788856795533b2fe6c21b966166fae143c7688f193'
 	);
@@ -54,29 +56,52 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		navigation.navigate('Wallet');
 	};
 
-	useEffect(() => {
-		const loadPrices = async () => {
-			const { address: srcToken, decimals: srcDecimals } = from;
-			const { address: destToken, decimals: destDecimals } = to;
-			const { direction = 'SELL' } = lastConversion || {};
-			const result = await getExchangePrice({
-				srcToken,
-				srcDecimals,
-				destToken,
-				destDecimals,
-				amount: (direction === 'to' ? toAmount : fromAmount) || '',
-				side: direction === 'to' ? 'BUY' : 'SELL'
-			});
-
-			if (result.error) {
-				console.error(result.error);
-			} else {
-				setPriceQuote(result);
-			}
-		};
-
-		loadPrices();
+	const startCounter = useCallback(() => {
+		setCount(45);
+		setIntervalId(setInterval(() => setCount((c) => c - 1), 1000));
 	}, []);
+
+	const resetInterval = () => {
+		if (intervalId) {
+			clearInterval(intervalId);
+		}
+	};
+
+	const loadPrices = async () => {
+		const { address: srcToken, decimals: srcDecimals } = from;
+		const { address: destToken, decimals: destDecimals } = to;
+		const { direction = 'SELL' } = lastConversion || {};
+		const result = await getExchangePrice({
+			srcToken,
+			srcDecimals,
+			destToken,
+			destDecimals,
+			amount: (direction === 'to' ? toAmount : fromAmount) || '',
+			side: direction === 'to' ? 'BUY' : 'SELL'
+		});
+
+		if (result.error) {
+			console.error(result.error);
+		} else {
+			setPriceQuote(result);
+		}
+	};
+
+	useEffect(() => {
+		resetInterval();
+		loadPrices();
+		startCounter();
+	}, []);
+
+	useEffect(() => {
+		if (count === 0) {
+			loadPrices();
+		}
+	}, [count]);
+
+	useEffect(() => {
+		setCount(45);
+	}, [priceQuote]);
 
 	const exchangeSummary = () => {
 		let src = fromAmount || 1;
@@ -194,7 +219,36 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 									<Text>Rate fixed for: </Text>
 								</View>
 								<View style={styles.exchangeResumeRateFixed}>
-									<Text>1:95</Text>
+									<View
+										style={[
+											{
+												position: 'absolute',
+												top: 0,
+												left: 0,
+												right: 0,
+												bottom: 0,
+												backgroundColor: '#D0D0D0'
+											},
+											{ width: count * 1.42222222 }
+										]}
+									/>
+									<View
+										style={{
+											position: 'absolute',
+											top: 0,
+											left: 0,
+											right: 0,
+											bottom: 0,
+											justifyContent: 'center',
+											alignItems: 'center'
+										}}
+									>
+										{count >= 0 && (
+											<Text style={{ fontSize: 12, fontWeight: 'bold' }}>
+												0:{count < 10 ? `0${count}` : count}
+											</Text>
+										)}
+									</View>
 								</View>
 							</View>
 						</Card>
