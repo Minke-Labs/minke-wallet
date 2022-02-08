@@ -119,5 +119,22 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'center',
 			alignItems: 'center',
 			marginBottom: 16
+		},
+		exchangeProgressBar: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+			backgroundColor: '#D0D0D0'
+		},
+		timerContainer: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+			justifyContent: 'center',
+			alignItems: 'center'
 		}
 	});

@@ -219,30 +219,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 									<Text>Rate fixed for: </Text>
 								</View>
 								<View style={styles.exchangeResumeRateFixed}>
-									<View
-										style={[
-											{
-												position: 'absolute',
-												top: 0,
-												left: 0,
-												right: 0,
-												bottom: 0,
-												backgroundColor: '#D0D0D0'
-											},
-											{ width: count * 1.42222222 }
-										]}
-									/>
-									<View
-										style={{
-											position: 'absolute',
-											top: 0,
-											left: 0,
-											right: 0,
-											bottom: 0,
-											justifyContent: 'center',
-											alignItems: 'center'
-										}}
-									>
+									<View style={[styles.exchangeProgressBar, { width: count * 1.42222222 }]} />
+									<View style={styles.timerContainer}>
 										{count >= 0 && (
 											<Text style={{ fontSize: 12, fontWeight: 'bold' }}>
 												0:{count < 10 ? `0${count}` : count}

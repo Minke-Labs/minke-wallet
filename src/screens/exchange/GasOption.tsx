@@ -1,7 +1,9 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useCallback } from 'react';
-import { Card, Text, RadioButton, useTheme } from 'react-native-paper';
+import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { Card, Text, RadioButton, useTheme, ActivityIndicator } from 'react-native-paper';
+import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@src/model/wallet';
+import { network } from '@src/model/network';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,31 +14,87 @@ import { makeStyles } from './styles';
 interface Wait {
 	normal: number;
 	fast: number;
+	slow: number;
 }
 
 const defaultWait: Wait = {
+	slow: 30,
 	normal: 10,
 	fast: 5
 };
 
-const GasOption = ({
-	type,
-	gweiValue,
-	usdPrice,
-	wait,
-	disabled = false
-}: {
-	type: 'normal' | 'fast' | 'slow';
-	gweiValue: number;
-	usdPrice: number;
-	wait: number;
-	disabled: boolean;
-}) => {
+const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow'; disabled?: boolean }) => {
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
+	const [gasPrice, setGasPrice] = React.useState<number>();
+	const [usdPrice, setUsdPrice] = React.useState<number>();
+	const [wait, setWait] = React.useState<number>(0);
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const coinValue = gweiValue * 21000 * 10 ** -9;
-	const gas = exchange.gas.value;
+
+	const fetchGas = async () => {
+		const gas = await estimateGas();
+		const {
+			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, SafeGasPrice: slow }
+		} = gas;
+
+		let gasValue = normal;
+		if (type === 'fast') {
+			gasValue = fast;
+		} else if (type === 'slow') {
+			gasValue = slow;
+		}
+		setGasPrice(+gasValue);
+		if (!exchange.gas.value && type === 'normal') {
+			exchange.gas.set({ type: 'normal', gweiValue: +normal, wait: defaultWait.normal } as Gas);
+		}
+		if (usd) {
+			// matic network includes the USD price in the payload
+			setUsdPrice(+usd);
+		} else {
+			const {
+				result: { ethusd }
+			} = await getEthLastPrice();
+			setUsdPrice(+ethusd);
+		}
+	};
+
+	useEffect(() => {
+		fetchGas();
+	}, []);
+
+	useEffect(() => {
+		// ethereum network has this endpoint to check the times
+		const fetchConfirmationTimes = async () => {
+			if (gasPrice) {
+				const { transactionTimesEndpoint } = await network();
+				if (transactionTimesEndpoint) {
+					const { result } = await estimateConfirmationTime(gasPrice * 1000000000);
+					setWait(+result);
+				} else {
+					setWait(defaultWait[type as keyof Wait]);
+				}
+			}
+		};
+
+		fetchConfirmationTimes();
+	}, [gasPrice]);
+
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+			fetchGas();
+		}, 15000);
+
+		return () => clearInterval(intervalId);
+	}, [type, useState]);
+
+	const { type: selectedType } = exchange.gas.value || {};
+	const selected = selectedType === type;
+
+	useEffect(() => {
+		if (selected) {
+			exchange.gas.merge({ usdPrice, wait: wait || defaultWait[type as keyof Wait], gweiValue: gasPrice });
+		}
+	}, [gasPrice, usdPrice, wait]);
 
 	const waiting = () => {
 		if (wait > 60) {
@@ -57,17 +115,21 @@ const GasOption = ({
 	}, []);
 
 	const onSelectGas = () => {
-		exchange.gas.set({ type, gweiValue, usdPrice, wait: wait || defaultWait[type as keyof Wait] } as Gas);
+		exchange.gas.set({ type, gweiValue: gasPrice, usdPrice, wait: wait || defaultWait[type as keyof Wait] } as Gas);
 	};
+
+	if (!gasPrice || !usdPrice) {
+		return <ActivityIndicator size={24} color={colors.primary} style={styles.scrollviewHorizontal} />;
+	}
 
 	return (
 		<TouchableOpacity onPress={onSelectGas} disabled={disabled}>
-			<Card style={[styles.gasSelectorCard, gas && gas.type === type ? styles.selectedCard : {}]}>
+			<Card style={[styles.gasSelectorCard, selected ? styles.selectedCard : {}]}>
 				<Card.Content style={styles.gasSelectorCardContent}>
 					<View style={{ marginRight: 4 }}>
 						<RadioButton
-							value={gas?.type || ''}
-							status={gas && gas.type === type ? 'checked' : 'unchecked'}
+							value={type}
+							status={selected ? 'checked' : 'unchecked'}
 							onPress={onSelectGas}
 							color={colors.primary}
 							uncheckedColor="red"
@@ -82,7 +144,7 @@ const GasOption = ({
 					</View>
 					<View style={styles.alignRight}>
 						<Text style={styles.textBold}>
-							${(coinValue * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
+							${(gasPrice * 21000 * 10 ** -9 * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
 						</Text>
 						<Text>Transaction Fee</Text>
 					</View>
