@@ -58,6 +58,16 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 		}
 	};
 
+	const waiting = useCallback(() => {
+		if (wait) {
+			if (wait > 60) {
+				return `~ ${wait / 60} min`;
+			}
+			return `~ ${wait} secs`;
+		}
+		return null;
+	}, [wait]);
+
 	useEffect(() => {
 		fetchGas();
 	}, []);
@@ -79,29 +89,25 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 		fetchConfirmationTimes();
 	}, [gasPrice]);
 
+	const { type: selectedType } = exchange.gas.value || {};
+	const selected = selectedType === type;
+
 	useEffect(() => {
-		const intervalId = setInterval(() => {
-			fetchGas();
-		}, 15000);
+		const intervalId = setInterval(
+			() => {
+				fetchGas();
+			},
+			selected ? 13000 : 16000
+		);
 
 		return () => clearInterval(intervalId);
 	}, [type, useState]);
-
-	const { type: selectedType } = exchange.gas.value || {};
-	const selected = selectedType === type;
 
 	useEffect(() => {
 		if (selected) {
 			exchange.gas.merge({ usdPrice, wait: wait || defaultWait[type as keyof Wait], gweiValue: gasPrice });
 		}
 	}, [gasPrice, usdPrice, wait]);
-
-	const waiting = () => {
-		if (wait > 60) {
-			return `${wait / 60} min`;
-		}
-		return `${wait} secs`;
-	};
 
 	const Icon = useCallback(() => {
 		switch (type) {
@@ -140,7 +146,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 					</View>
 					<View style={styles.gasSelectorCardGasOption}>
 						<Text style={styles.textBold}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
-						<Text>~ {waiting()}</Text>
+						<Text>{waiting()}</Text>
 					</View>
 					<View style={styles.alignRight}>
 						<Text style={styles.textBold}>
