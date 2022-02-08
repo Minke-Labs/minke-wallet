@@ -21,7 +21,8 @@ export default StyleSheet.create({
 		width: '100%',
 		height: 161,
 		borderRadius: 24,
-		overflow: 'hidden'
+		overflow: 'hidden',
+		marginBottom: 16
 	},
 	assetsMain: {
 		flexDirection: 'row',
@@ -54,5 +55,19 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+
+	// ... ACTIONS PANEL ...
+	actionsPanelContainer: {},
+	actionsPanelCardContainer: {
+		height: 48,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#fff',
+		borderRadius: 16,
+		paddingHorizontal: 16,
+		alignSelf: 'center',
+		marginRight: 12
 	}
 });

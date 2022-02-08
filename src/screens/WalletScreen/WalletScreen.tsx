@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Header from './Header';
 import AssetsPanel from './AssetsPanel';
+import ActionsPanel from './ActionsPanel';
 import styles from './WalletScreen.styles';
 import { RootStackParamList } from '../../routes/types.routes';
 
@@ -18,6 +19,7 @@ const WalletScreen = () => {
 			<View style={styles.container}>
 				<Header onSettingsPress={onSettingsPress} />
 				<AssetsPanel />
+				<ActionsPanel />
 			</View>
 		</WelcomeLayout>
 	);
