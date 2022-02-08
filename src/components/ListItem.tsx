@@ -31,7 +31,7 @@ const ListItem = ({
 	return (
 		<TouchableOpacity onPress={onPress} style={styles.listItem} disabled={selected}>
 			<Text style={styles.itemLabel}>{label}</Text>
-			{selected ? <MaterialIcons name="check" size={20} color={colors.text} /> : null}
+			{selected && <MaterialIcons name="check" size={20} color={colors.text} />}
 		</TouchableOpacity>
 	);
 };

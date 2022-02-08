@@ -64,11 +64,11 @@ const BackupSettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 							If you lose this device you can recover your encrpyted wallet backup from iCloud. Remember
 							to activate the iCloud Keychain backup
 						</SecondaryText>
-						{seed.value ? (
+						{seed.value && (
 							<PrimaryButton onPress={() => navigation.navigate('Backup')} mode="outlined">
 								View Secret Phrase
 							</PrimaryButton>
-						) : null}
+						)}
 					</>
 				) : (
 					<>

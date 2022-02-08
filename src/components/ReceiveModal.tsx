@@ -70,7 +70,7 @@ const ReceiveModal = ({
 							marginTop: 30
 						}}
 					>
-						{ensName ? <Text style={styles.boldText}>{ensName}</Text> : null}
+						{ensName && <Text style={styles.boldText}>{ensName}</Text>}
 						<Text style={styles.address}>{address}</Text>
 					</View>
 					<RoundButton text="Share" icon="ios-share" onPress={onShare} />

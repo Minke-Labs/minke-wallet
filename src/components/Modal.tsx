@@ -43,8 +43,8 @@ const Modal = ({
 	return (
 		<PaperModal visible={visible} onDismiss={onDismiss} contentContainerStyle={styles.modalContainerStyle}>
 			<View style={styles.modalHeader}>
-				{onBack ? <IconButton icon="chevron-left" size={24} color={colors.primary} onPress={onBack} /> : null}
-				{headline ? <Text style={globalStyle.headline}>{headline}</Text> : null}
+				{onBack && <IconButton icon="chevron-left" size={24} color={colors.primary} onPress={onBack} />}
+				{headline && <Text style={globalStyle.headline}>{headline}</Text>}
 				<IconButton icon="close" size={24} color={colors.primary} onPress={onCloseAll} />
 			</View>
 

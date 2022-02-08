@@ -29,7 +29,7 @@ const TextButton = ({
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity style={[containerStyle, styles.cardActionButton]} onPress={onPress}>
-			{icon ? <MaterialIcons name={icon} size={20} color={colors.primary} style={styles.cardButtonIcon} /> : null}
+			{icon && <MaterialIcons name={icon} size={20} color={colors.primary} style={styles.cardButtonIcon} />}
 			<Text>{text}</Text>
 		</TouchableOpacity>
 	);
