@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Header from './Header';
 import AssetsPanel from './AssetsPanel';
 import ActionsPanel from './ActionsPanel';
+import FinancePanel from './FinancePanel';
 import styles from './WalletScreen.styles';
 import { RootStackParamList } from '../../routes/types.routes';
 
@@ -20,6 +21,7 @@ const WalletScreen = () => {
 				<Header onSettingsPress={onSettingsPress} />
 				<AssetsPanel />
 				<ActionsPanel />
+				<FinancePanel />
 			</View>
 		</WelcomeLayout>
 	);

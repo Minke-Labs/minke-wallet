@@ -4,9 +4,6 @@ export default StyleSheet.create({
 	container: {
 		paddingHorizontal: 24
 	},
-	iconsContainer: {
-		flexDirection: 'row'
-	},
 
 	// ... HEADER ...
 	headerContainer: {
@@ -14,6 +11,10 @@ export default StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		marginBottom: 24
+	},
+	iconsContainer: {
+		flexDirection: 'row',
+		alignItems: 'center'
 	},
 
 	// ... ASSETS ...
@@ -58,7 +59,9 @@ export default StyleSheet.create({
 	},
 
 	// ... ACTIONS PANEL ...
-	actionsPanelContainer: {},
+	actionsPanelContainer: {
+		marginBottom: 32
+	},
 	actionsPanelCardContainer: {
 		height: 48,
 		flexDirection: 'row',
@@ -69,5 +72,11 @@ export default StyleSheet.create({
 		paddingHorizontal: 16,
 		alignSelf: 'center',
 		marginRight: 12
+	},
+
+	// ... FINANCE PANEL ...
+	financePanelContainer: {
+		borderWidth: 1,
+		borderColor: 'purple'
 	}
 });

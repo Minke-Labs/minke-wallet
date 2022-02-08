@@ -34,7 +34,6 @@ const ActionsPanel = () => (
 			renderItem={({ item }) => <Card name={item.name as IconType} icon={item.icon} />}
 			horizontal
 			showsHorizontalScrollIndicator={false}
-			style={{ flexGrow: 0, marginBottom: 24 }}
 		/>
 	</View>
 );
