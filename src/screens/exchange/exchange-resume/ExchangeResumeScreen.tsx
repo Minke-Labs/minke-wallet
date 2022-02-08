@@ -11,8 +11,7 @@ import { Svg, Path } from 'react-native-svg';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
 import { getProvider, smallWalletAddress } from '@models/wallet';
-import { toBn } from 'evm-bn';
-import { Wallet, BigNumber, utils } from 'ethers';
+import { Wallet, BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Linking from 'expo-linking';
@@ -26,7 +25,7 @@ const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amoun
 			<Image source={{ uri: token.img }} style={{ width: 40, height: 40 }} />
 		</View>
 		<View>
-			<Text style={{ fontWeight: 'bold' }}>${usdAmount.match(/^-?\d+(?:\.\d{0,2})?/)}</Text>
+			<Text style={{ fontWeight: 'bold' }}>${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}</Text>
 			<Text>
 				{token.symbol} {amount}
 			</Text>
@@ -242,6 +241,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 							usdPrice={exchange.value.gas.usdPrice}
 							gweiValue={exchange.value.gas.gweiValue}
 							wait={exchange.value.gas.wait}
+							disabled
 						/>
 					) : null}
 					{priceQuote ? <ProgressButton onFinish={onFinish} /> : null}

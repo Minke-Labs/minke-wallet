@@ -12,11 +12,23 @@ interface WaitingTimes {
 	['key']?: number;
 }
 
+interface Wait {
+	normal: number;
+	fast: number;
+}
+
+const defaultWait: Wait = {
+	normal: 10,
+	fast: 5
+};
+
 const GasSelector = () => {
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
 	const [usdPrice, setUsdPrice] = React.useState<number>();
 	const [waitingTimes, setWaitingTimes] = React.useState<WaitingTimes>({});
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	useEffect(() => {
 		const fetchGas = async () => {
@@ -26,7 +38,7 @@ const GasSelector = () => {
 			} = gas;
 
 			if (!exchange.gas.value) {
-				exchange.gas.set({ type: 'normal', gweiValue: +normal } as Gas);
+				exchange.gas.set({ type: 'normal', gweiValue: +normal, wait: defaultWait.normal } as Gas);
 			}
 			setGasPrice(gas);
 			if (usd) {
@@ -64,8 +76,15 @@ const GasSelector = () => {
 		fetchConfirmationTimes();
 	}, [gasPrice]);
 
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	useEffect(() => {
+		const { type } = exchange.gas.value || {};
+		if (type) {
+			exchange.gas.merge({
+				usdPrice,
+				wait: waitingTimes[type as keyof WaitingTimes] || defaultWait[type as keyof Wait]
+			});
+		}
+	}, [usdPrice, waitingTimes]);
 
 	if (!gasPrice) {
 		return <ActivityIndicator size={24} color={colors.primary} style={styles.scrollviewHorizontal} />;
@@ -92,13 +111,13 @@ const GasSelector = () => {
 						type="normal"
 						gweiValue={+normal}
 						usdPrice={usdPrice}
-						wait={waitingTimes[normal as keyof WaitingTimes] || 5}
+						wait={waitingTimes[normal as keyof WaitingTimes] || 10}
 					/>
 					<GasOption
 						type="fast"
 						gweiValue={+fast}
 						usdPrice={usdPrice}
-						wait={waitingTimes[fast as keyof WaitingTimes] || 10}
+						wait={waitingTimes[fast as keyof WaitingTimes] || 5}
 					/>
 				</View>
 			</ScrollView>

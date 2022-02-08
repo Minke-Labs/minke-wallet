@@ -9,16 +9,28 @@ import { ExchangeState, Gas, globalExchangeState } from '@src/stores/ExchangeSto
 import { State, useState } from '@hookstate/core';
 import { makeStyles } from './styles';
 
+interface Wait {
+	normal: number;
+	fast: number;
+}
+
+const defaultWait: Wait = {
+	normal: 10,
+	fast: 5
+};
+
 const GasOption = ({
 	type,
 	gweiValue,
 	usdPrice,
-	wait
+	wait,
+	disabled = false
 }: {
 	type: 'normal' | 'fast' | 'slow';
 	gweiValue: number;
 	usdPrice: number;
 	wait: number;
+	disabled: boolean;
 }) => {
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const { colors } = useTheme();
@@ -45,11 +57,11 @@ const GasOption = ({
 	}, []);
 
 	const onSelectGas = () => {
-		exchange.gas.set({ type, gweiValue, usdPrice, wait } as Gas);
+		exchange.gas.set({ type, gweiValue, usdPrice, wait: wait || defaultWait[type as keyof Wait] } as Gas);
 	};
 
 	return (
-		<TouchableOpacity onPress={onSelectGas}>
+		<TouchableOpacity onPress={onSelectGas} disabled={disabled}>
 			<Card style={[styles.gasSelectorCard, gas && gas.type === type ? styles.selectedCard : {}]}>
 				<Card.Content style={styles.gasSelectorCardContent}>
 					<View style={{ marginRight: 4 }}>
