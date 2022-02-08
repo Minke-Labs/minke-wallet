@@ -76,7 +76,33 @@ export default StyleSheet.create({
 
 	// ... FINANCE PANEL ...
 	financePanelContainer: {
-		borderWidth: 1,
-		borderColor: 'purple'
+		flex: 1,
+		position: 'absolute',
+		bottom: 0,
+		zIndex: 1,
+		width: '100%'
+	},
+	tabContainer: {
+		height: 51,
+		flexDirection: 'row'
+	},
+	body: {
+		flex: 1,
+		backgroundColor: '#fff'
+	},
+	tabLeft: {
+		width: '50%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderTopRightRadius: 16,
+		borderTopLeftRadius: 16,
+		backgroundColor: '#fff'
+	},
+	tabRight: {
+		width: '50%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#F2EAE1',
+		borderBottomLeftRadius: 16
 	}
 });
