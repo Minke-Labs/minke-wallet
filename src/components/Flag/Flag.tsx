@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable no-tabs */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -18,8 +19,8 @@ const Token: React.FC<Partial<FlagProps>> = ({ name = 'abkhazia', size = 96 }) =
 	}, [] as any);
 	return (
 		<Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-			{newDArr.map((item: string) => (
-				<Path key={item} d={item[0]} fill={item[1]} />
+			{newDArr.map((item: string, idx: number) => (
+				<Path key={`${item}-${idx}`} d={item[0]} fill={item[1]} />
 			))}
 		</Svg>
 	);
