@@ -1,26 +1,17 @@
 import React from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '@components';
 import styles from './WalletScreen.styles';
 
-const screen = Dimensions.get('screen');
+const Body = () => (
+	<View style={styles.body}>
+		<Text>FINANCE</Text>
+	</View>
+);
 
-interface FinancePanelProps {
-	height: number;
-}
-
-const FinancePanel: React.FC<FinancePanelProps> = ({ height }) => (
-	<View style={[styles.financePanelContainer, { height: screen.height - height - 50 }]}>
-		<View style={styles.tabContainer}>
-			<TouchableOpacity activeOpacity={0.6} style={styles.tabLeft}>
-				<Text>Transactions</Text>
-			</TouchableOpacity>
-			<TouchableOpacity activeOpacity={0.6} style={styles.tabRight}>
-				<Text>Net worth</Text>
-			</TouchableOpacity>
-		</View>
-		<View style={styles.body}>
-			<Text>FINANCE</Text>
-		</View>
+const FinancePanel: React.FC = () => (
+	<View style={styles.financePanelContainer}>
+		<Body />
 	</View>
 );
 

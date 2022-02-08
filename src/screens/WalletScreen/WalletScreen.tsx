@@ -9,23 +9,24 @@ import ActionsPanel from './ActionsPanel';
 import FinancePanel from './FinancePanel';
 import styles from './WalletScreen.styles';
 import { RootStackParamList } from '../../routes/types.routes';
+import TabSelector from './TabSelector/TabSelector';
 
 const WalletScreen = () => {
-	const [height, setHeight] = useState(0);
+	const [selectedTab, setSelectedTab] = useState('transactions');
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
 	const onSettingsPress = () => navigation.navigate('Settings');
 
 	return (
 		<>
-			<WelcomeLayout>
-				<View style={styles.container} onLayout={(e) => setHeight(e.nativeEvent.layout.height)}>
+			<WelcomeLayout style={{ flex: 0 }}>
+				<View style={styles.container}>
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel />
 					<ActionsPanel />
+					<TabSelector {...{ setSelectedTab, selectedTab }} />
 				</View>
 			</WelcomeLayout>
-			<FinancePanel {...{ height }} />
+			<FinancePanel />
 		</>
 	);
 };

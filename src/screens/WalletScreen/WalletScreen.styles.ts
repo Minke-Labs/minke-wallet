@@ -60,7 +60,7 @@ export default StyleSheet.create({
 
 	// ... ACTIONS PANEL ...
 	actionsPanelContainer: {
-		marginBottom: 32
+		marginBottom: 32 + 51
 	},
 	actionsPanelCardContainer: {
 		height: 48,
@@ -77,32 +77,16 @@ export default StyleSheet.create({
 	// ... FINANCE PANEL ...
 	financePanelContainer: {
 		flex: 1,
-		position: 'absolute',
-		bottom: 0,
-		zIndex: 1,
 		width: '100%'
+		// borderWidth: 4
+		// borderColor: 'green'
+		// backgroundColor: '#fff'
 	},
-	tabContainer: {
-		height: 51,
-		flexDirection: 'row'
-	},
+
 	body: {
 		flex: 1,
 		backgroundColor: '#fff'
-	},
-	tabLeft: {
-		width: '50%',
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderTopRightRadius: 16,
-		borderTopLeftRadius: 16,
-		backgroundColor: '#fff'
-	},
-	tabRight: {
-		width: '50%',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F2EAE1',
-		borderBottomLeftRadius: 16
+		// borderWidth: 1
+		// borderColor: 'purple'
 	}
 });
