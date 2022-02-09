@@ -1,7 +1,19 @@
 import React from 'react';
-import { View, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { View, TouchableOpacity, GestureResponderEvent, StyleSheet } from 'react-native';
 import { Text, Icon } from '@components';
-import styles from './WalletScreen.styles';
+
+const styles = StyleSheet.create({
+	headerContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginBottom: 24
+	},
+	iconsContainer: {
+		flexDirection: 'row',
+		alignItems: 'center'
+	}
+});
 
 interface HeaderProps {
 	onSettingsPress: (event: GestureResponderEvent) => void;

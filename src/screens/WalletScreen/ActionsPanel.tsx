@@ -1,8 +1,24 @@
 import React from 'react';
-import { View, TouchableOpacity, FlatList } from 'react-native';
+import { View, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { IconType } from '@styles';
 import { Text, Icon } from '@components';
-import styles from './WalletScreen.styles';
+
+const styles = StyleSheet.create({
+	actionsPanelContainer: {
+		marginBottom: 32 + 51
+	},
+	actionsPanelCardContainer: {
+		height: 48,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 16,
+		paddingHorizontal: 16,
+		alignSelf: 'center',
+		marginRight: 12,
+		backgroundColor: '#fff'
+	}
+});
 
 interface CardProps {
 	name: IconType;
