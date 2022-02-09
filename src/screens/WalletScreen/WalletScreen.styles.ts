@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-	container: {
-		paddingHorizontal: 24
-	},
-
 	// ... HEADER ...
 	headerContainer: {
 		flexDirection: 'row',
@@ -67,26 +63,10 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#fff',
 		borderRadius: 16,
 		paddingHorizontal: 16,
 		alignSelf: 'center',
-		marginRight: 12
-	},
-
-	// ... FINANCE PANEL ...
-	financePanelContainer: {
-		flex: 1,
-		width: '100%'
-		// borderWidth: 4
-		// borderColor: 'green'
-		// backgroundColor: '#fff'
-	},
-
-	body: {
-		flex: 1,
+		marginRight: 12,
 		backgroundColor: '#fff'
-		// borderWidth: 1
-		// borderColor: 'purple'
 	}
 });
