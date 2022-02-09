@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import PrimaryButton from '@components/PrimaryButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
-import { format } from 'url';
+import { MaterialIcons } from '@expo/vector-icons';
 import globalStyle from '@components/global.styles';
 import styles from './styles';
+import background from './background-rounded-waves.png';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export function SaveScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
 	const goToWalletScreen = () => {
@@ -14,15 +16,19 @@ export function SaveScreen({ navigation }: NativeStackScreenProps<RootStackParam
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.saveCurrentValueContainer}>
-				<Text style={[globalStyle.fontSizeDefault, globalStyle.textAlignCenter]}>Current value</Text>
-				<Text style={[globalStyle.textAlignCenter, styles.saveCurrentValue]}>$0.00</Text>
+			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
+				<View style={styles.saveCurrentValueContainer}>
+					<Text style={[globalStyle.fontSizeDefault, globalStyle.textAlignCenter]}>Current value</Text>
+					<Text style={[globalStyle.textAlignCenter, styles.saveCurrentValue]}>$0.00</Text>
 
-				<View>
-					<Text>icon</Text>
-					<Text>Deposit</Text>
+					<TouchableOpacity style={[styles.row, styles.depositButton]}>
+						<Text>
+							<MaterialIcons name="settings" size={20} />
+						</Text>
+						<Text>Deposit</Text>
+					</TouchableOpacity>
 				</View>
-			</View>
+			</ImageBackground>
 
 			<View style={styles.depositCardContainer}>
 				<View style={styles.depositCard}>

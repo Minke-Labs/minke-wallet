@@ -7,8 +7,28 @@ export default StyleSheet.create({
 		justifyContent: 'space-between',
 		backgroundColor: '#FFF'
 	},
+	background: {
+		flex: 1
+	},
 	saveCurrentValueContainer: {
-		padding: 24
+		flex: 1,
+		flexDirection: 'column',
+		padding: 24,
+		alignItems: 'center',
+		alignContent: 'center',
+		justifyContent: 'center'
+	},
+	row: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	depositButton: {
+		paddingTop: 16,
+		paddingRight: 32,
+		paddingBottom: 16,
+		paddingLeft: 32,
+		backgroundColor: '#fff'
 	},
 	saveCurrentValue: {
 		fontSize: 48,
