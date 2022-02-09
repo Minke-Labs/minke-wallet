@@ -34,6 +34,7 @@ import AccountsScreen from './src/screens/settings/accounts/AccountsScreen';
 import BackupSettingsScreen from './src/screens/settings/backup/BackupSettingsScreen';
 import { darkTheme, lightTheme } from './src/helpers/themes';
 import { RootStackParamList } from './src/helpers/param-list-type';
+import SaveScreen from './src/screens/save/SaveScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -145,6 +146,7 @@ export default function App() {
 						component={TransactionsScreen}
 						options={(props) => defaultOptions(props)}
 					/>
+					<Stack.Screen name="Save" component={SaveScreen} options={(props) => defaultOptions(props)} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</PaperProvider>
