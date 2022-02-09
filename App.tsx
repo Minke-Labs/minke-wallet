@@ -48,7 +48,7 @@ export default function App() {
 		Inter_500Medium
 	});
 	if (!fontsLoaded || walletState.promised) return <AppLoading />;
-	const initialScreen = walletState.value.walletId ? 'Wallet' : 'Welcome';
+	const initialScreen = walletState.value.walletId ? 'Save' : 'Welcome';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
