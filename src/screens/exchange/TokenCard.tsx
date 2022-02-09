@@ -27,6 +27,8 @@ const TokenCard = ({
 	conversionAmount?: string;
 }) => {
 	const [amount, setAmount] = useState('');
+	// if enabled always set the max according to the balance
+	const [maxModeEnabled, setMaxModeEnabled] = useState(false);
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
@@ -40,6 +42,12 @@ const TokenCard = ({
 			lastValid = amount;
 		}
 		setAmount(lastValid);
+		setMaxModeEnabled(false);
+	};
+
+	const onMaxPress = () => {
+		setMaxModeEnabled(true);
+		setAmount(balance.replace(/\./g, ','));
 	};
 
 	useEffect(() => {
@@ -56,6 +64,12 @@ const TokenCard = ({
 	useEffect(() => {
 		setAmount(conversionAmount.replace(/\./g, ','));
 	}, [conversionAmount]);
+
+	useEffect(() => {
+		if (maxModeEnabled && !disableMax) {
+			onMaxPress();
+		}
+	}, [balance]);
 
 	const isMaxEnabled = !disableMax && token && balance;
 	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
@@ -115,10 +129,7 @@ const TokenCard = ({
 			</View>
 			{isMaxEnabled && (
 				<View style={styles.tokenCardMaxButtonContent}>
-					<TouchableOpacity
-						onPress={() => setAmount(balance.replace(/\./g, ','))}
-						style={styles.tokenCardMaxButton}
-					>
+					<TouchableOpacity onPress={onMaxPress} style={styles.tokenCardMaxButton}>
 						<Svg width={16} height={16} strokeWidth={1} fill={colors.primary} viewBox="0 0 16 16">
 							<Path
 								fill-rule="evenodd"

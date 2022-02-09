@@ -27,6 +27,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const wallet = useState(globalWalletState());
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
+	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
@@ -45,17 +46,28 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
-	const balanceFrom = (token: ParaswapToken | undefined): string => {
-		if (!token) {
-			return '0';
-		}
-		const walletToken = walletTokens?.find((owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase());
-		return walletToken?.balance.toString() || '0';
-	};
+	const balanceFrom = useCallback(
+		(token: ParaswapToken | undefined): number => {
+			if (!token) {
+				return 0;
+			}
+			const walletToken = walletTokens?.find(
+				(owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase()
+			);
+			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
+			if (isNativeToken && walletToken) {
+				const { gweiValue } = exchange.gas.value || {};
+				const gasPrice = gweiValue ? gweiValue * 21000 * 10 ** -9 : 0;
+				return walletToken.balance - gasPrice;
+			}
+			return walletToken?.balance || 0;
+		},
+		[exchange.gas.value]
+	);
 
 	const updateFromToken = (token: ParaswapToken) => {
 		setFromToken(token);
-		setFromTokenBalance(balanceFrom(token));
+		setFromTokenBalance(balanceFrom(token).toString());
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
@@ -216,31 +228,33 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		exchange.value.fromAmount &&
 		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
-		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
+		balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
 
 	useEffect(() => {
 		const loadNativeToken = async () => {
 			const { nativeTokenSymbol } = await network();
-			setFromToken(nativeTokens[nativeTokenSymbol as keyof NativeTokens]);
+			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
+			setFromToken(native);
+			setNativeToken(native);
 		};
 
-		async function fetchWalletTokens() {
+		const fetchWalletTokens = async () => {
 			const address = wallet.address.value || '';
 			const result = await getWalletTokens(address);
 			const { products } = result[address.toLowerCase()];
 			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
 			setWalletTokens(tokens);
 			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
-		}
+		};
 		exchange.set({} as ExchangeState);
 		loadNativeToken();
 		fetchWalletTokens();
 	}, []);
 
 	useEffect(() => {
-		setFromTokenBalance(balanceFrom(fromToken));
-		setToTokenBalance(balanceFrom(toToken));
-	}, [ownedTokens]);
+		setFromTokenBalance(balanceFrom(fromToken).toString());
+		setToTokenBalance(balanceFrom(toToken).toString());
+	}, [ownedTokens, exchange.gas.value]);
 
 	useEffect(() => {
 		if (fromToken && toToken) {
@@ -256,6 +270,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			}
 		}
 	}, [toToken, fromToken]);
+
+	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
 
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
@@ -329,6 +345,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 						showOnlyOwnedTokens={showOnlyOwnedTokens}
 						selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
 					/>
+					{!enoughForGas && <Text>Not enough balance for gas</Text>}
 					<PrimaryButton onPress={goToExchangeResume} disabled={!canSwap()}>
 						Exchange
 					</PrimaryButton>
