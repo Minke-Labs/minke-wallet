@@ -65,7 +65,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 			}
 			return `~ ${wait} secs`;
 		}
-		return null;
+		return <ActivityIndicator color={colors.primary} size={16} />;
 	}, [wait]);
 
 	useEffect(() => {
@@ -79,7 +79,13 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 				const { transactionTimesEndpoint } = await network();
 				if (transactionTimesEndpoint) {
 					const { result } = await estimateConfirmationTime(gasPrice * 1000000000);
-					setWait(+result);
+					if (Number.isNaN(+result)) {
+						setTimeout(() => {
+							fetchConfirmationTimes();
+						}, 5000);
+					} else {
+						setWait(+result);
+					}
 				} else {
 					setWait(defaultWait[type as keyof Wait]);
 				}
@@ -93,12 +99,9 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 	const selected = selectedType === type;
 
 	useEffect(() => {
-		const intervalId = setInterval(
-			() => {
-				fetchGas();
-			},
-			selected ? 13000 : 16000
-		);
+		const intervalId = setInterval(() => {
+			fetchGas();
+		}, 15000);
 
 		return () => clearInterval(intervalId);
 	}, [type, useState]);

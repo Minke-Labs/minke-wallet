@@ -275,6 +275,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 							disabled
 						/>
 					)}
+
 					{priceQuote && <ProgressButton onFinish={onFinish} />}
 					<Portal>
 						<Modal visible={visible} onDismiss={hideModal} onCloseAll={hideModal}>

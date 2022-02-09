@@ -257,16 +257,6 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 	}, [toToken, fromToken]);
 
-	/* 	useEffect(() => {
-		if (quote) {
-			if (exchange.value.fromAmount) {
-				updateFromQuotes(exchange.value.fromAmount);
-			} else if (exchange.value.toAmount) {
-				updateToQuotes(exchange.value.toAmount);
-			}
-		}
-	}, [quote]); */
-
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
