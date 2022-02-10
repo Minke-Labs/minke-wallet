@@ -1,19 +1,13 @@
 import React from 'react';
 import { View, Text, ImageBackground } from 'react-native';
 import PrimaryButton from '@components/PrimaryButton';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@helpers/param-list-type';
 import { MaterialIcons } from '@expo/vector-icons';
 import globalStyle from '@components/global.styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styles';
 import background from './background-rounded-waves.png';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export function SaveScreen({ navigation }: NativeStackScreenProps<RootStackParamList>) {
-	const goToWalletScreen = () => {
-		navigation.navigate('Wallet');
-	};
-
+export function SaveScreen() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
@@ -52,7 +46,7 @@ export function SaveScreen({ navigation }: NativeStackScreenProps<RootStackParam
 							Let's get started?
 						</Text>
 					</View>
-					<PrimaryButton onPress={goToWalletScreen}>Deposit</PrimaryButton>
+					<PrimaryButton>Deposit</PrimaryButton>
 				</View>
 			</View>
 		</View>

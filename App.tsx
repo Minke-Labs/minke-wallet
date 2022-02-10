@@ -146,7 +146,7 @@ export default function App() {
 						component={TransactionsScreen}
 						options={(props) => defaultOptions(props)}
 					/>
-					<Stack.Screen name="Save" component={SaveScreen} options={(props) => defaultOptions(props)} />
+					<Stack.Screen name="Save" component={SaveScreen} options={{ headerShown: false }} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</PaperProvider>
