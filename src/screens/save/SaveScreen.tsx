@@ -15,14 +15,22 @@ export function SaveScreen() {
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
+				<View style={styles.headerNavegation}>
+					<View style={styles.headerNavegationLeft}>
+						<MaterialIcons name="arrow-back" color={colors.secondaryText} size={20} />
+						<Text style={globalStyle.headline}>Save</Text>
+					</View>
+					<TouchableOpacity>
+						<MaterialIcons name="info-outline" color={colors.secondaryText} size={20} />
+					</TouchableOpacity>
+				</View>
+
 				<View style={styles.saveCurrentValueContainer}>
 					<Text style={[globalStyle.fontSizeDefault, globalStyle.textAlignCenter]}>Current value</Text>
 					<Text style={[globalStyle.textAlignCenter, styles.saveCurrentValue]}>$0.00</Text>
 
 					<TouchableOpacity style={[styles.row, styles.depositButton]}>
-						<Text>
-							<MaterialIcons name="attach-money" size={20} />
-						</Text>
+						<MaterialIcons name="attach-money" color={colors.secondaryText} size={20} />
 						<Text>Deposit</Text>
 					</TouchableOpacity>
 				</View>
@@ -31,12 +39,18 @@ export function SaveScreen() {
 			<View style={styles.depositCardContainer}>
 				<View style={styles.depositCard}>
 					<View style={styles.depositCardItem}>
-						<Text style={styles.depositsAmountLebel}>Deposits since joining</Text>
+						<View>
+							<Text style={styles.depositsAmountLebel}>Deposits</Text>
+							<Text style={styles.depositsAmountLebel}>since joining</Text>
+						</View>
 						<Text style={styles.depositsAmount}>$0.00</Text>
 					</View>
 					<View style={styles.divisor} />
 					<View style={styles.depositCardItem}>
-						<Text style={styles.depositsAmountLebel}>Interest since joining</Text>
+						<View>
+							<Text style={styles.depositsAmountLebel}>Interest</Text>
+							<Text style={styles.depositsAmountLebel}>since joining</Text>
+						</View>
 						<Text style={styles.depositsAmount}>$0.00</Text>
 					</View>
 				</View>
