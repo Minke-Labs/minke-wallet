@@ -1,3 +1,4 @@
+import { joinSignature } from 'ethers/lib/utils';
 import { StyleSheet } from 'react-native';
 
 export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
@@ -11,6 +12,19 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		background: {
 			flex: 1
 		},
+		headerNavegation: {
+			paddingTop: 24,
+			paddingLeft: 24,
+			paddingRight: 24,
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		},
+		headerNavegationLeft: {
+			flexDirection: 'row',
+			alignItems: 'center'
+		},
+		headerNavegationTitle: {},
 		saveCurrentValueContainer: {
 			flex: 1,
 			flexDirection: 'column',
@@ -72,7 +86,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginTop: 8
 		},
 		depositsAmountLebel: {
-			color: colors.text
+			color: colors.secondaryText
 		},
 		actionDepositCard: {
 			borderRadius: 16,
