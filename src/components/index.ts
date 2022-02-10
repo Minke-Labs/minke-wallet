@@ -6,5 +6,6 @@ import Modal from './Modal/Modal';
 import TextArea from './TextArea/TextArea';
 import Input from './Input/Input';
 import Flag from './Flag/Flag';
+import Card from './Card/Card';
 
-export { Text, Button, Icon, Token, Modal, TextArea, Input, Flag };
+export { Text, Button, Icon, Token, Modal, TextArea, Input, Flag, Card };

@@ -1,23 +1,32 @@
 /* eslint-disable no-console */
 import React from 'react';
+import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { Icon, Text } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity, FlatList } from 'react-native';
+import { getSeedPhrase } from '@models/wallet';
+import AppLoading from 'expo-app-loading';
+import { globalWalletState } from '@stores/WalletStore';
+import * as Clipboard from 'expo-clipboard';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Card from './Card';
 import CopyButton from './CopyButton';
 import styles from './BackupScreen.styles';
 import { RootStackParamList } from '../../routes/types.routes';
 
-const seed = 'wasp turtle courage ship meteor pasta ticket chess record door television mist';
-
 const BackupScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const onFinish = () => navigation.navigate('Wallet');
+	const snackbarVisible = useState(false);
+	const walletState = useState(globalWalletState());
+	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
+	const seed = useState(loadSeed);
+	if (seed.promised) return <AppLoading />;
 
 	const onCopyToClipboard = () => {
-		console.log('Copy to clipboard');
+		Clipboard.setString(seed.value || '');
+		snackbarVisible.set(true);
 	};
 
 	return (
@@ -44,7 +53,7 @@ const BackupScreen = () => {
 
 				<FlatList
 					keyExtractor={(item, idx) => `${item}-${idx}`}
-					data={seed.split(' ')}
+					data={seed.value?.split(' ')}
 					renderItem={({ item, index }) => <Card title={item} idx={index} />}
 					numColumns={2}
 					style={{ flexGrow: 0, marginBottom: 24 }}

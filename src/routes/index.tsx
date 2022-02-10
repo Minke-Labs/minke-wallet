@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -21,12 +22,16 @@ import {
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
+import { globalWalletState } from '../stores/WalletStore';
+
 // const AccountsScreen = () => <Text>AccountsScreen</Text>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Routes: React.FC = () => {
 	const scheme = useColorScheme();
+	const walletState = useState(globalWalletState());
+	const initialScreen = walletState.value.walletId ? 'Wallet' : 'Welcome';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
@@ -46,7 +51,7 @@ const Routes: React.FC = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Wallet">
+			<Stack.Navigator initialRouteName={initialScreen}>
 				<Stack.Screen options={{ headerShown: false }} name="Welcome" component={WelcomeScreen} />
 				<Stack.Screen options={{ headerShown: false }} name="Test" component={Test} />
 				<Stack.Screen options={{ headerShown: false }} name="WalletCreated" component={WalletCreatedScreen} />

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from '@hookstate/core';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button, TextArea } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-// import { globalWalletState } from '@src/stores/WalletStore';
-// import { restoreWalletByMnemonic } from '@src/model/wallet';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { restoreWalletByMnemonic } from '@src/model/wallet';
 
 const styles = StyleSheet.create({
 	container: {
@@ -31,14 +32,14 @@ interface ImportFlowProps {
 }
 
 const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished }) => {
-	const [text, setText] = useState('');
-	// const state = useState(globalWalletState());
+	const [text, setText] = React.useState('');
+	const state = useState(globalWalletState());
 
 	const onImportWallet = async () => {
 		if (text.trim()) {
 			try {
-				// const wallet = await restoreWalletByMnemonic(text.trim());
-				// state.set(wallet);
+				const wallet = await restoreWalletByMnemonic(text.trim());
+				state.set(wallet);
 				onImportFinished();
 			} catch (error) {
 				console.error('Invalid seed phrase or primary key');

@@ -1,9 +1,11 @@
 /* eslint-disable no-tabs */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// import { useState } from '@hookstate/core';
-// import AppLoading from 'expo-app-loading';
-// import { globalWalletState } from '@src/stores/WalletStore';
+import { useState } from '@hookstate/core';
+import AppLoading from 'expo-app-loading';
+import { getSeedPhrase } from '@models/wallet';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { backupSeedOnKeychain } from '@models/keychain';
 import React from 'react';
 import { Image } from 'react-native';
 import { WelcomeLayout } from '@layouts';
@@ -17,30 +19,25 @@ import { RootStackParamList } from '../../routes/types.routes';
 const WalletCreatedScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+	const backupManually = () => navigation.navigate('Backup');
 	const onFinish = () => navigation.navigate('Wallet');
 
+	const walletState = useState(globalWalletState());
+	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
+	const seed = useState(loadSeed);
+	if (seed.promised) return <AppLoading />;
+
 	const backupOnKeychain = async () => {
-		console.log('Back up to iCloud!');
-		// const toBackup = seed.value || walletState.privateKey.value;
-		// if (toBackup) {
-		// 	const backedUp = await backupSeedOnKeychain(toBackup);
-		// 	if (backedUp) {
-		// 		onFinish();
-		// 	} else {
-		// 		backupManually();
-		// 	}
-		// }
+		const toBackup = seed.value || walletState.privateKey.value;
+		if (toBackup) {
+			const backedUp = await backupSeedOnKeychain(toBackup);
+			if (backedUp) {
+				onFinish();
+			} else {
+				backupManually();
+			}
+		}
 	};
-
-	const backupManually = async () => {
-		console.log('Back up manually!');
-		navigation.navigate('Backup');
-	};
-
-	// const walletState = useState(globalWalletState());
-	// const loadSeed = getSeedPhrase(walletState.value.walletId || '');
-	// const seed = useState(loadSeed);
-	// if (seed.promised) return <AppLoading />;
 
 	return (
 		<WelcomeLayout center>

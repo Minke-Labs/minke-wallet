@@ -1,7 +1,10 @@
-import React from 'react';
-import { View, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react';
+import { View, TouchableOpacity, FlatList, StyleSheet, GestureResponderEvent } from 'react-native';
 import { IconType } from '@styles';
 import { Text, Icon } from '@components';
+import * as Clipboard from 'expo-clipboard';
+import { globalWalletState } from '../../stores/WalletStore';
 
 const styles = StyleSheet.create({
 	actionsPanelContainer: {
@@ -21,12 +24,13 @@ const styles = StyleSheet.create({
 });
 
 interface CardProps {
-	name: IconType;
-	icon: string;
+	icon: IconType;
+	name: string;
+	onPress: (event: GestureResponderEvent) => void;
 }
 
-const Card: React.FC<CardProps> = ({ name, icon }) => (
-	<TouchableOpacity activeOpacity={0.6} style={styles.actionsPanelCardContainer}>
+const Card: React.FC<CardProps> = ({ name, icon, onPress }) => (
+	<TouchableOpacity activeOpacity={0.6} style={styles.actionsPanelCardContainer} onPress={onPress}>
 		<Icon size={20} name={icon as IconType} color="cta1" style={{ marginRight: 8 }} />
 		<Text weight="medium" type="a">
 			{name}
@@ -39,19 +43,66 @@ const arr = [
 	{ name: 'Receive', icon: 'sendStroke' },
 	{ name: 'Copy address', icon: 'copyStroke' },
 	{ name: 'New wallet', icon: 'walletStroke' },
-	{ name: 'Switch accounts', icon: 'avatarStroke' }
+	{ name: 'Switch accounts', icon: 'avatarStroke' },
+	{ name: 'Delete wallet', icon: 'closeStroke' }
 ];
 
-const ActionsPanel = () => (
-	<View style={styles.actionsPanelContainer}>
-		<FlatList
-			keyExtractor={(item, idx) => `${item.name}-${idx}`}
-			data={arr}
-			renderItem={({ item }) => <Card name={item.name as IconType} icon={item.icon} />}
-			horizontal
-			showsHorizontalScrollIndicator={false}
-		/>
-	</View>
-);
+interface ActionsPanelProps {
+	onCreateWallet: (event: GestureResponderEvent) => void;
+	onDeleteWallet: (event: GestureResponderEvent) => void;
+	onExchange: (event: GestureResponderEvent) => void;
+	onSwitchAccounts: (event: GestureResponderEvent) => void;
+}
+
+const ActionsPanel: React.FC<ActionsPanelProps> = ({
+	onCreateWallet,
+	onDeleteWallet,
+	onExchange,
+	onSwitchAccounts
+}) => {
+	const [receiveVisible, setReceiveVisible] = useState(false);
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
+	const showReceive = () => setReceiveVisible(true);
+	const hideReceive = () => setReceiveVisible(false);
+	const wallet = globalWalletState();
+
+	const onCopyToClipboard = () => {
+		Clipboard.setString(wallet.value.address || '');
+		setSnackbarVisible(true);
+	};
+
+	const chooseFnc = (name: string) => {
+		switch (name) {
+			case 'Exchange':
+				return onExchange;
+			case 'Receive':
+				return showReceive;
+			case 'Copy address':
+				return onCopyToClipboard;
+			case 'New wallet':
+				return onCreateWallet;
+			case 'Switch accounts':
+				return onSwitchAccounts;
+			case 'Delete wallet':
+				return onDeleteWallet;
+			default:
+				return () => {};
+		}
+	};
+
+	return (
+		<View style={styles.actionsPanelContainer}>
+			<FlatList
+				keyExtractor={(item, idx) => `${item.name}-${idx}`}
+				data={arr}
+				renderItem={({ item }) => (
+					<Card onPress={chooseFnc(item.name)} name={item.name} icon={item.icon as IconType} />
+				)}
+				horizontal
+				showsHorizontalScrollIndicator={false}
+			/>
+		</View>
+	);
+};
 
 export default ActionsPanel;

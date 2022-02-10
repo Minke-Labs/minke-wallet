@@ -1,6 +1,11 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Text, Icon, Token } from '@components';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable arrow-body-style */
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text, Icon } from '@components';
+import { commify } from 'ethers/lib/utils';
+import makeBlockie from 'ethereum-blockies-base64';
+import { useTheme } from '@hooks';
 
 const styles = StyleSheet.create({
 	assetsContainer: {
@@ -17,8 +22,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingHorizontal: 24,
 		paddingTop: 24,
-		paddingBottom: 17,
-		backgroundColor: '#FFFCF5'
+		paddingBottom: 17
+		// backgroundColor: '#FFFCF5'
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
@@ -41,35 +46,54 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+
+	avatar: {
+		width: 48,
+		height: 48,
+		borderRadius: 24,
+		borderColor: 'rgba(243, 247, 255, 1)',
+		borderWidth: 4
 	}
 });
 
-const AssetsPanel = () => (
-	<View style={styles.assetsContainer}>
-		<View style={styles.assetsMain}>
-			<View>
-				<Text type="a" marginBottom={8}>
-					Your total assets
-				</Text>
-				<Text type="h1" weight="medium">
-					$200.00
-				</Text>
+interface AssetsPanelProps {
+	balance: string;
+	address: string;
+	// onSend: (event: GestureResponderEvent) => void;
+}
+
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
+	// const [sendModalOpen, setSendModalOpen] = useState(false);
+	const { colors } = useTheme();
+
+	return (
+		<View style={styles.assetsContainer}>
+			<View style={[styles.assetsMain, { backgroundColor: colors.background2 }]}>
+				<View>
+					<Text type="a" marginBottom={8}>
+						Your total assets
+					</Text>
+					<Text type="h1" weight="medium">
+						${commify(balance)}
+					</Text>
+				</View>
+				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>
 			</View>
-			<Token size={48} />
+			<View style={styles.buttonsContainer}>
+				<TouchableOpacity activeOpacity={0.6} style={styles.addFundsButtonContainer}>
+					<Icon name="addStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
+					<Text type="a">Add Funds</Text>
+				</TouchableOpacity>
+				<TouchableOpacity activeOpacity={0.6} style={styles.sendButtonContainer}>
+					<Text type="a" style={{ marginRight: 8 }}>
+						Send
+					</Text>
+					<Icon name="sendStroke" color="cta1" size={20} />
+				</TouchableOpacity>
+			</View>
 		</View>
-		<View style={styles.buttonsContainer}>
-			<TouchableOpacity activeOpacity={0.6} style={styles.addFundsButtonContainer}>
-				<Icon name="addStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
-				<Text type="a">Add Funds</Text>
-			</TouchableOpacity>
-			<TouchableOpacity activeOpacity={0.6} style={styles.sendButtonContainer}>
-				<Text type="a" style={{ marginRight: 8 }}>
-					Send
-				</Text>
-				<Icon name="sendStroke" color="cta1" size={20} />
-			</TouchableOpacity>
-		</View>
-	</View>
-);
+	);
+};
 
 export default AssetsPanel;

@@ -1,9 +1,10 @@
+/* eslint-disable no-param-reassign */
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@src/stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
-import { convertEthToUsd } from 'old/src/helpers/utilities';
+import { convertEthToUsd } from '../helpers/utilities';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 

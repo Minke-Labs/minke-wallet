@@ -1,7 +1,8 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Contract, Wallet } from 'ethers';
-import { convertEthToUsd } from 'old/src/helpers/utilities';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
 import {
 	erc20abi,
@@ -14,6 +15,7 @@ import {
 	Transaction,
 	MinkeWallet
 } from '@src/model/wallet';
+import { convertEthToUsd } from '../helpers/utilities';
 
 export interface WalletState {
 	// wallet: (privateKey: string) => Wallet;
