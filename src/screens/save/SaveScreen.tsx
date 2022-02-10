@@ -2,12 +2,16 @@ import React from 'react';
 import { View, Text, ImageBackground } from 'react-native';
 import PrimaryButton from '@components/PrimaryButton';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useTheme } from 'react-native-paper';
 import globalStyle from '@components/global.styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import styles from './styles';
+import { makeStyles } from './styles';
 import background from './background-rounded-waves.png';
 
 export function SaveScreen() {
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
@@ -17,7 +21,7 @@ export function SaveScreen() {
 
 					<TouchableOpacity style={[styles.row, styles.depositButton]}>
 						<Text>
-							<MaterialIcons name="settings" size={20} />
+							<MaterialIcons name="attach-money" size={20} />
 						</Text>
 						<Text>Deposit</Text>
 					</TouchableOpacity>
@@ -26,13 +30,14 @@ export function SaveScreen() {
 
 			<View style={styles.depositCardContainer}>
 				<View style={styles.depositCard}>
-					<View>
-						<Text>Deposits since joining</Text>
-						<Text>$0.00</Text>
+					<View style={styles.depositCardItem}>
+						<Text style={styles.depositsAmountLebel}>Deposits since joining</Text>
+						<Text style={styles.depositsAmount}>$0.00</Text>
 					</View>
-					<View>
-						<Text>Interest since joining</Text>
-						<Text>Deposit</Text>
+					<View style={styles.divisor} />
+					<View style={styles.depositCardItem}>
+						<Text style={styles.depositsAmountLebel}>Interest since joining</Text>
+						<Text style={styles.depositsAmount}>$0.00</Text>
 					</View>
 				</View>
 
