@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
-/* eslint-disable react/no-unescaped-entities */
 import React, { useCallback } from 'react';
 import { whale2Img } from '@images';
 import { Text, Button } from '@components';
-import { View, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Image, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
 import { useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -40,18 +39,22 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 		if (transactions.length > 0) {
 			return (
 				<View>
-					{transactions.map((transaction, index) => {
-						if (transaction.value) {
-							return (
-								<Transaction
-									transaction={transaction}
-									// eslint-disable-next-line react/no-array-index-key
-									key={`${transaction.hash}${transaction.value}${index}`}
-								/>
-							);
-						}
-						return null;
-					})}
+					<FlatList
+						keyExtractor={(item, idx) => `${item.hash}${item.value}${idx}`}
+						data={transactions}
+						showsVerticalScrollIndicator={false}
+						renderItem={({ item, index }) => {
+							if (item.value) {
+								return (
+									<Transaction
+										transaction={item}
+										key={`${item.hash}${item.value}${index}`}
+									/>
+								);
+							}
+							return null;
+						}}
+					/>
 					<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
 				</View>
 			);
@@ -63,7 +66,7 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 					No transactions here
 				</Text>
 				<Text weight="bold" marginBottom={64}>
-					Let's get started?
+					Let&apos;s get started?
 				</Text>
 				<Button
 					iconLeft="addStroke"

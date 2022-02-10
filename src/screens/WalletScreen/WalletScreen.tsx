@@ -12,13 +12,8 @@ import Header from './Header';
 import AssetsPanel from './AssetsPanel';
 import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
-import Transactions from './Transactions';
-
-const Right = () => (
-	<View>
-		<Text>RIGHT</Text>
-	</View>
-);
+import Transactions from './Transactions/Transactions';
+import NetWorth from './NetWorth/NetWorth';
 
 const WalletScreen = () => {
 	const state = useState(globalWalletState());
@@ -84,7 +79,7 @@ const WalletScreen = () => {
 	const { address, balance } = state.value;
 
 	return (
-		<TabLayout left={<Transactions {...{ onSeeAllTransactions, loading }} />} right={<Right />}>
+		<TabLayout left={<Transactions {...{ onSeeAllTransactions, loading }} />} right={<NetWorth />}>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
