@@ -44,7 +44,7 @@
     "expo-secure-store": "~11.1.0",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
-    "expo-updates": "~0.11.5",
+    "expo-updates": "~0.11.6",
     "https-browserify": "0.0.1",
     "lodash": "^4.17.21",
     "main": "^1000.0.1",
