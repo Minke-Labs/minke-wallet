@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
@@ -10,9 +10,12 @@ import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { backupImg } from '@images';
+import { useNavigation } from '@react-navigation/native';
 import styles from './BackupSettingsScreen.styles';
 
-const BackupSettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
+const BackupSettingsScreen = () => {
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
 	const state = useState(globalWalletState());
 	const { address } = state.value;
 	const wallet = smallWalletAddress(address);

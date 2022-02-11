@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
@@ -5,26 +6,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
-	WelcomeScreen,
-	WalletCreatedScreen,
+	AccountsScreen,
 	BackupScreen,
-	WalletScreen,
-	TransactionSelectFundsScreen,
-	TransactionContactsScreen,
-	TransactionTransferScreen,
-	ContactCreateScreen,
-	ExchangeScreen,
-	ExchangeResumeScreen,
-	SettingsScreen,
-	ChangeNetworkScreen,
 	BackupSettingsScreen,
+	ChangeNetworkScreen,
+	ContactCreateScreen,
+	ExchangeResumeScreen,
+	ExchangeScreen,
+	SettingsScreen,
+	TransactionContactsScreen,
+	TransactionSelectFundsScreen,
 	TransactionsScreen,
+	TransactionTransferScreen,
+	WalletCreatedScreen,
+	WalletScreen,
+	WelcomeScreen,
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
 import { globalWalletState } from '../stores/WalletStore';
-
-// const AccountsScreen = () => <Text>AccountsScreen</Text>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -84,41 +84,23 @@ const Routes: React.FC = () => {
 					name="Settings"
 					component={SettingsScreen}
 					options={{ headerShown: false }}
-					// options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen
 					name="ChangeNetwork"
 					component={ChangeNetworkScreen}
 					options={{ headerShown: false }}
-					// options={(props) => defaultOptions(props)}
 				/>
 
-				{/* <Stack.Screen
+				<Stack.Screen
 					name="Accounts"
 					component={AccountsScreen}
-					options={(props) => ({
-						...defaultOptions(props),
-						...{
-							headerRight: () => {
-								// eslint-disable-next-line react/prop-types
-								const { navigation }: NativeStackScreenProps<RootStackParamList> = props;
-								return (
-									<ImportWalletButton
-										// eslint-disable-next-line react/prop-types
-										onImportFinished={() => navigation.navigate('WalletCreated')}
-										button={<PrimaryButton mode="text">Import</PrimaryButton>}
-									/>
-								);
-							}
-						}
-					})}
-				/> */}
+					options={{ headerShown: false }}
+				/>
 
 				<Stack.Screen
 					name="BackupSettings"
 					options={{ headerShown: false }}
 					component={BackupSettingsScreen}
-					// options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen
 					name="Transactions"
