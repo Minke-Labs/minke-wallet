@@ -3,6 +3,7 @@ import { signERC2612Permit } from 'eth-permit';
 import { parseUnits } from 'ethers/lib/utils';
 import { erc20abi, getProvider } from './wallet';
 import { network } from './network';
+import { ParaswapToken } from './token';
 
 interface ContractAbiResponse {
 	message: string;
@@ -35,7 +36,6 @@ export const onChainApproval = async ({
 	contractAddress: string;
 	spender: string;
 }): Promise<ContractApproval> => {
-	console.log('onChain approval');
 	const provider = await getProvider();
 	const wallet = new Wallet(privateKey, provider);
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
@@ -44,7 +44,7 @@ export const onChainApproval = async ({
 		// from: await wallet.getAddress(),
 		type: 2,
 		chainId: await wallet.getChainId(),
-		gasLimit: 41000,
+		gasLimit: 100000,
 		maxFeePerGas: parseUnits('60', 'gwei'),
 		maxPriorityFeePerGas: parseUnits('60', 'gwei'),
 		nonce
@@ -56,22 +56,35 @@ export const onChainApproval = async ({
 		wallet
 	);
 	const tx = await erc20.populateTransaction.approve(spender, amount);
-	console.log('tx', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
 };
 
+export const getAllowance = async (address: string, contract: string): Promise<number> => {
+	const { chainId } = await network();
+	const result = await fetch(`https://apiv5.paraswap.io/users/tokens/${chainId}/${address}`);
+	const { tokens }: UserTokens = await result.json();
+	const token = tokens.find((t) => t.address.toLowerCase() === contract.toLowerCase());
+	return +(token?.allowance || 0);
+};
+
 export const approveSpending = async ({
+	userAddress,
 	privateKey,
 	amount,
 	contractAddress,
 	spender
 }: {
+	userAddress: string;
 	privateKey: string;
 	amount: string;
 	contractAddress: string;
 	spender: string;
 }): Promise<ContractApproval> => {
+	const approved = await getAllowance(userAddress, contractAddress); // @TODO - query the blockchain instead
+	if (approved >= +amount) {
+		return {};
+	}
 	return onChainApproval({ privateKey, amount, spender, contractAddress });
 	const wallet = new Wallet(
 		privateKey,
@@ -103,7 +116,11 @@ export const approveSpending = async ({
 		const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 		return { permit: signedTx };
 	} catch (error) {
-		console.log('Error trying to sign', error);
+		console.error('Error trying to sign', error);
 		return onChainApproval({ privateKey, amount, spender, contractAddress });
 	}
 };
+
+interface UserTokens {
+	tokens: [ParaswapToken];
+}

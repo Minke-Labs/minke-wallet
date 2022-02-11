@@ -111,6 +111,7 @@ export interface ParaswapToken {
 	decimals: number;
 	img: string;
 	network: number;
+	allowance?: string; // available only when query user tokens
 }
 export interface TokenResponse {
 	tokens: Array<ParaswapToken>;

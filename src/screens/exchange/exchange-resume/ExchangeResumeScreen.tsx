@@ -71,7 +71,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const loadPrices = async () => {
 		const { address: srcToken, decimals: srcDecimals } = from;
 		const { address: destToken, decimals: destDecimals } = to;
-		const { direction = 'SELL' } = lastConversion || {};
+		const { direction = 'from' } = lastConversion || {};
 		const result = await getExchangePrice({
 			srcToken,
 			srcDecimals,
@@ -125,7 +125,6 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		if (priceQuote?.priceRoute) {
 			const { priceRoute } = priceQuote;
 			const {
-				contractAddress,
 				srcToken,
 				srcDecimals,
 				destToken,
@@ -134,31 +133,17 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				destAmount,
 				tokenTransferProxy: spender
 			} = priceRoute;
-			console.log('contractAddress', contractAddress);
-			console.log('srcToken', srcToken);
-			console.log('amount', srcAmount);
-			console.log('srcDecimals', srcDecimals);
-			console.log('destToken', destToken);
-			console.log('destAmount', destAmount);
-			console.log('destDecimals', destDecimals);
-			console.log('spender', spender);
+
 			const { permit, approvalTransaction } = await approveSpending({
+				userAddress: wallet.address.value,
 				amount: srcAmount,
 				privateKey: wallet.privateKey.value,
 				contractAddress: srcToken,
 				spender
 			});
-			console.log('Finished approval', permit);
 			if (approvalTransaction) {
-				console.log('Contract does not accept permit', approvalTransaction);
 				await approvalTransaction.wait();
 			}
-
-			if (permit) {
-				console.log('Contract accepts permit', permit);
-			}
-
-			console.log('permitting...');
 			const result = await createTransaction({
 				srcToken,
 				srcDecimals,
@@ -175,7 +160,6 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				console.error(result.error);
 			} else if (wallet.value && exchange.value.gas) {
 				const provider = await getProvider();
-				console.log('result', result);
 				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;
 				const nonce = await provider.getTransactionCount(wallet.value.address, 'latest');
 				const txDefaults = {
@@ -190,9 +174,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				};
 				const walletObject = new Wallet(wallet.privateKey.value, provider);
 				const signedTx = await walletObject.signTransaction(txDefaults);
-				const lala = await provider.sendTransaction(signedTx as string);
-				console.log('transaction on PS', lala);
-				setTransactionHash(lala.hash);
+				const { hash } = await provider.sendTransaction(signedTx as string);
+				setTransactionHash(hash);
 				showModal();
 			}
 		}
