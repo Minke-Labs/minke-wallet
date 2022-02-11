@@ -69,7 +69,8 @@ export const createTransaction = async ({
 			userAddress,
 			destAmount,
 			side: 'SELL', // @TODO: (Marcos) - This can be buy too!
-			permit
+			permit,
+			eip1559: true
 		})
 	};
 

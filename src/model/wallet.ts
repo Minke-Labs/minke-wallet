@@ -1,10 +1,10 @@
-import { BigNumber, BigNumberish, Contract, providers, Wallet } from 'ethers';
+import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
 import { convertEthToUsd } from '@helpers/utilities';
-import { network, network as selectedNetwork, networks } from './network';
+import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
@@ -64,9 +64,6 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	Object.values(wallets).forEach((w) => {
-		w.network = w.network || networks.ropsten.id;
-	});
 	await saveObject('minkeAllWallets', wallets);
 };
 
@@ -197,6 +194,8 @@ export const erc20abi = [
 	// Authenticated Functions
 	'function transfer(address to, uint amount) returns (bool)',
 	'function approve(address spender, uint256 amount) external returns (bool)',
+	// eslint-disable-next-line max-len
+	'function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external',
 
 	// Events
 	'event Transfer(address indexed from, address indexed to, uint amount)'
@@ -214,7 +213,7 @@ export const sendTransaction = async (
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
-		// @TODO (Marcos): Add chainId
+		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
 		gasLimit: 41000,
@@ -236,37 +235,6 @@ export const sendTransaction = async (
 		};
 	}
 
-	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
-	return wallet.provider.sendTransaction(signedTx as string);
-};
-
-export const approveSpending = async ({
-	privateKey,
-	amount,
-	contractAddress,
-	spender
-}: {
-	privateKey: string;
-	amount: string;
-	contractAddress: string;
-	spender: string;
-}) => {
-	const provider = await getProvider();
-	const wallet = new Wallet(privateKey, provider);
-	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
-
-	const txDefaults = {
-		from: await wallet.getAddress(),
-		type: 2,
-		chainId: await wallet.getChainId(),
-		gasLimit: 41000,
-		maxFeePerGas: parseUnits('100', 'gwei'),
-		maxPriorityFeePerGas: parseUnits('100', 'gwei'),
-		nonce
-	};
-
-	const erc20 = new Contract(contractAddress, erc20abi, wallet);
-	const tx = await erc20.populateTransaction.approve(spender, amount);
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 	return wallet.provider.sendTransaction(signedTx as string);
 };

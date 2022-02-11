@@ -10,16 +10,15 @@ import Modal from '@components/Modal';
 import { Svg, Path } from 'react-native-svg';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
-import { signERC2612Permit } from 'eth-permit';
-import { approveSpending, getProvider, smallWalletAddress } from '@models/wallet';
-import { Wallet, BigNumber, providers } from 'ethers';
+import { approveSpending } from '@models/contract';
+import { getProvider, smallWalletAddress } from '@models/wallet';
+import { Wallet, BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Linking from 'expo-linking';
 import globalStyles from '@src/components/global.styles';
 import GasOption from '../GasOption';
 import { makeStyles } from './styles';
-import { setChainIdOverride } from 'eth-permit/dist/rpc';
 
 const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
@@ -143,31 +142,40 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			console.log('destAmount', destAmount);
 			console.log('destDecimals', destDecimals);
 			console.log('spender', spender);
-			const transaction = await approveSpending({
+			const { permit, approvalTransaction } = await approveSpending({
 				amount: srcAmount,
 				privateKey: wallet.privateKey.value,
 				contractAddress: srcToken,
 				spender
 			});
-			console.log('Waiting', transaction.hash);
-			const receipt = await transaction.wait();
-			console.log(receipt);
+			console.log('Finished approval', permit);
+			if (approvalTransaction) {
+				console.log('Contract does not accept permit', approvalTransaction);
+				await approvalTransaction.wait();
+			}
 
-			// const result = await createTransaction({
-			// 	srcToken,
-			// 	srcDecimals,
-			// 	destToken,
-			// 	destDecimals,
-			// 	srcAmount,
-			// 	destAmount,
-			// 	priceRoute,
-			// 	userAddress: wallet.value.address || ''
-			// });
+			if (permit) {
+				console.log('Contract accepts permit', permit);
+			}
 
-			if (true) {
-				console.error('Marcos');
+			console.log('permitting...');
+			const result = await createTransaction({
+				srcToken,
+				srcDecimals,
+				destToken,
+				destDecimals,
+				srcAmount,
+				destAmount,
+				priceRoute,
+				userAddress: wallet.value.address || '',
+				permit
+			});
+
+			if (result.error) {
+				console.error(result.error);
 			} else if (wallet.value && exchange.value.gas) {
 				const provider = await getProvider();
+				console.log('result', result);
 				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;
 				const nonce = await provider.getTransactionCount(wallet.value.address, 'latest');
 				const txDefaults = {
@@ -181,9 +189,10 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 					value: BigNumber.from(value)
 				};
 				const walletObject = new Wallet(wallet.privateKey.value, provider);
-				const signedTx = await walletObject.signTransaction({ ...txDefaults });
-				const { hash } = await provider.sendTransaction(signedTx as string);
-				setTransactionHash(hash);
+				const signedTx = await walletObject.signTransaction(txDefaults);
+				const lala = await provider.sendTransaction(signedTx as string);
+				console.log('transaction on PS', lala);
+				setTransactionHash(lala.hash);
 				showModal();
 			}
 		}
