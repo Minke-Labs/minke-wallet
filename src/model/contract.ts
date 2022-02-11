@@ -1,6 +1,5 @@
 import { Wallet, Contract, providers } from 'ethers';
 import { signERC2612Permit } from 'eth-permit';
-import { parseUnits } from 'ethers/lib/utils';
 import { erc20abi, getProvider } from './wallet';
 import { network } from './network';
 import { ParaswapToken } from './token';
@@ -29,12 +28,14 @@ export const onChainApproval = async ({
 	privateKey,
 	amount,
 	contractAddress,
-	spender
+	spender,
+	gasPrice
 }: {
 	privateKey: string;
 	amount: string;
 	contractAddress: string;
 	spender: string;
+	gasPrice: number;
 }): Promise<ContractApproval> => {
 	const provider = await getProvider();
 	const wallet = new Wallet(privateKey, provider);
@@ -45,8 +46,8 @@ export const onChainApproval = async ({
 		type: 2,
 		chainId: await wallet.getChainId(),
 		gasLimit: 100000,
-		maxFeePerGas: parseUnits('60', 'gwei'),
-		maxPriorityFeePerGas: parseUnits('60', 'gwei'),
+		maxFeePerGas: gasPrice.toString(),
+		maxPriorityFeePerGas: gasPrice.toString(),
 		nonce
 	};
 
@@ -73,19 +74,22 @@ export const approveSpending = async ({
 	privateKey,
 	amount,
 	contractAddress,
-	spender
+	spender,
+	gasPrice
 }: {
 	userAddress: string;
 	privateKey: string;
 	amount: string;
 	contractAddress: string;
 	spender: string;
+	gasPrice: number;
 }): Promise<ContractApproval> => {
 	const approved = await getAllowance(userAddress, contractAddress); // @TODO - query the blockchain instead
 	if (approved >= +amount) {
 		return {};
 	}
-	return onChainApproval({ privateKey, amount, spender, contractAddress });
+	return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
+
 	const wallet = new Wallet(
 		privateKey,
 		new providers.JsonRpcProvider('https://polygon-mainnet.infura.io/v3/83f8ae2f577f4b8b9f2db515d2273d17') // @TODO
@@ -117,7 +121,7 @@ export const approveSpending = async ({
 		return { permit: signedTx };
 	} catch (error) {
 		console.error('Error trying to sign', error);
-		return onChainApproval({ privateKey, amount, spender, contractAddress });
+		return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
 	}
 };
 

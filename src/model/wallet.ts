@@ -86,6 +86,7 @@ const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Pro
 	return { wallet: new Wallet(mnemonicOrPrivateKey, provider) };
 };
 
+// @TODO - Create always from the same mnemonic if possible.
 export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletState> => {
 	const blockchain = await selectedNetwork();
 	const { wallet, mnemonic } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);

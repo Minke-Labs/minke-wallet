@@ -136,18 +136,20 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				side
 			} = priceRoute;
 
+			const { gweiValue = 30 } = exchange.gas.value || {};
+
 			const { permit, approvalTransaction } = await approveSpending({
 				userAddress: wallet.address.value,
 				amount: srcAmount,
 				privateKey: wallet.privateKey.value,
 				contractAddress: srcToken,
-				spender
+				spender,
+				gasPrice: +gweiValue * 1000000000
 			});
 			if (approvalTransaction) {
 				await approvalTransaction.wait();
 			}
 
-			const { gweiValue } = exchange.gas.value || {};
 			const result = await createTransaction({
 				srcToken,
 				srcDecimals,
