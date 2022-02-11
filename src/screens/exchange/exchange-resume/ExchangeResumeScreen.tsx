@@ -1,25 +1,23 @@
 import React, { useCallback, useEffect } from 'react';
 import { Image, View, SafeAreaView, ScrollView } from 'react-native';
-import { Card, Headline, Text, Portal, Button, useTheme, ActivityIndicator } from 'react-native-paper';
+import { Card, Headline, Text, Portal, useTheme, ActivityIndicator } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import Container from '@components/Container';
 import ProgressButton from '@components/ProgressButton';
-import Modal from '@components/Modal';
+import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import { Svg, Path } from 'react-native-svg';
-import { globalExchangeState } from '@stores/ExchangeStore';
+import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
 import { approveSpending } from '@models/contract';
 import { getProvider, smallWalletAddress } from '@models/wallet';
 import { Wallet, BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
-import * as Linking from 'expo-linking';
 import globalStyles from '@src/components/global.styles';
 import GasOption from '../GasOption';
 import { makeStyles } from './styles';
-import { network } from '@src/model/network';
 
 const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
@@ -38,14 +36,13 @@ const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amoun
 const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const exchange = useState(globalExchangeState());
 	const wallet = useState(globalWalletState());
-	const { to, from, fromAmount, toAmount, lastConversion } = exchange.value;
+	const { to, from, fromAmount, toAmount, lastConversion, gas = {} as Gas } = exchange.value;
 	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
+	const [loading, setLoading] = React.useState(false); // creating transaction
 	const [visible, setVisible] = React.useState(false);
 	const [count, setCount] = React.useState(45);
 	const [intervalId, setIntervalId] = React.useState<NodeJS.Timer>();
-	const [transactionHash, setTransactionHash] = React.useState(
-		'0x94f47857de4edbdbc18d5c788856795533b2fe6c21b966166fae143c7688f193'
-	);
+	const [transactionHash, setTransactionHash] = React.useState('');
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
@@ -70,22 +67,24 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	};
 
 	const loadPrices = async () => {
-		const { address: srcToken, decimals: srcDecimals } = from;
-		const { address: destToken, decimals: destDecimals } = to;
-		const { direction = 'from' } = lastConversion || {};
-		const result = await getExchangePrice({
-			srcToken,
-			srcDecimals,
-			destToken,
-			destDecimals,
-			amount: (direction === 'to' ? toAmount : fromAmount) || '',
-			side: direction === 'to' ? 'BUY' : 'SELL'
-		});
+		if (!loading) {
+			const { address: srcToken, decimals: srcDecimals } = from;
+			const { address: destToken, decimals: destDecimals } = to;
+			const { direction = 'from' } = lastConversion || {};
+			const result = await getExchangePrice({
+				srcToken,
+				srcDecimals,
+				destToken,
+				destDecimals,
+				amount: (direction === 'to' ? toAmount : fromAmount) || '',
+				side: direction === 'to' ? 'BUY' : 'SELL'
+			});
 
-		if (result.error) {
-			console.error(result.error);
-		} else {
-			setPriceQuote(result);
+			if (result.error) {
+				console.error(result.error);
+			} else {
+				setPriceQuote(result);
+			}
 		}
 	};
 
@@ -109,7 +108,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		let src = fromAmount || 1;
 		let dest = toAmount || 1;
 		if (priceQuote) {
-			const { srcAmount, destAmount, srcDecimals, destDecimals, side } = priceQuote.priceRoute;
+			const { srcAmount, destAmount, srcDecimals, destDecimals } = priceQuote.priceRoute;
 			src = formatUnits(srcAmount, srcDecimals);
 			dest = formatUnits(destAmount, destDecimals);
 		}
@@ -124,6 +123,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const exchangeName = priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange;
 	const onFinish = async () => {
 		if (priceQuote?.priceRoute) {
+			setLoading(true);
 			const { priceRoute } = priceQuote;
 			const {
 				srcToken,
@@ -163,17 +163,18 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			});
 
 			if (result.error) {
+				setLoading(false);
 				console.error(result.error);
-			} else if (wallet.value && exchange.value.gas) {
+			} else if (wallet.value && gas) {
 				const provider = await getProvider();
-				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;
+				const { chainId, data, from: src, gas: gasLimit, gasPrice, to: dest, value } = result;
 				const nonce = await provider.getTransactionCount(wallet.value.address, 'latest');
 				const txDefaults = {
 					chainId,
 					data,
 					from: src,
 					gasPrice: BigNumber.from(gasPrice),
-					gasLimit: +gas,
+					gasLimit: +gasLimit,
 					nonce,
 					to: dest,
 					value: BigNumber.from(value)
@@ -185,11 +186,6 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				showModal();
 			}
 		}
-	};
-
-	const openTransaction = async () => {
-		const { etherscanURL } = await network();
-		Linking.openURL(`${etherscanURL}/tx/${transactionHash}`);
 	};
 
 	return (
@@ -247,21 +243,23 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 								<ActivityIndicator size={24} color={colors.primary} />
 							)}
 
-							<View style={styles.exchangeResumeRateFixedContiner}>
-								<View style={styles.exchangeResumeRateFixedLabel}>
-									<Text>Rate fixed for: </Text>
-								</View>
-								<View style={styles.exchangeResumeRateFixed}>
-									<View style={[styles.exchangeProgressBar, { width: count * 1.42222222 }]} />
-									<View style={styles.timerContainer}>
-										{count >= 0 && (
-											<Text style={{ fontSize: 12, fontWeight: 'bold' }}>
-												0:{count < 10 ? `0${count}` : count}
-											</Text>
-										)}
+							{!loading && (
+								<View style={styles.exchangeResumeRateFixedContiner}>
+									<View style={styles.exchangeResumeRateFixedLabel}>
+										<Text>Rate fixed for: </Text>
+									</View>
+									<View style={styles.exchangeResumeRateFixed}>
+										<View style={[styles.exchangeProgressBar, { width: count * 1.42222222 }]} />
+										<View style={styles.timerContainer}>
+											{count >= 0 && (
+												<Text style={{ fontSize: 12, fontWeight: 'bold' }}>
+													0:{count < 10 ? `0${count}` : count}
+												</Text>
+											)}
+										</View>
 									</View>
 								</View>
-							</View>
+							)}
 						</Card>
 					</View>
 
@@ -299,62 +297,22 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 						</Card.Content>
 					</Card>
 
-					{exchange.value.gas && (
-						<GasOption
-							type={exchange.value.gas.type}
-							usdPrice={exchange.value.gas.usdPrice}
-							gweiValue={exchange.value.gas.gweiValue}
-							wait={exchange.value.gas.wait}
-							disabled
-						/>
-					)}
+					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
-					{priceQuote && <ProgressButton onFinish={onFinish} />}
+					{priceQuote &&
+						(loading ? (
+							<ActivityIndicator color={colors.primary} />
+						) : (
+							<ProgressButton onFinish={onFinish} />
+						))}
 					<Portal>
-						<Modal visible={visible} onDismiss={hideModal} onCloseAll={hideModal}>
-							<>
-								<View style={styles.modalRow}>
-									<Image
-										source={{ uri: exchange.value.from.img }}
-										style={{ width: 50, height: 50, marginRight: 56 }}
-									/>
-									<View style={styles.exchangeResumeBackground}>
-										<Svg width="24" height="24" viewBox="0 0 24 24" fill={colors.primary}>
-											<Path
-												fill-rule="evenodd"
-												clip-rule="evenodd"
-												// eslint-disable-next-line max-len
-												d="M19.6601 13.0178C20.1602 12.5277 20.1602 11.7224 19.6601 11.2322L15.0498 6.71421C14.6554 6.32765 14.649 5.69452 15.0356 5.30007C15.4221 4.90562 16.0552 4.89923 16.4497 5.28579L21.0599 9.80381C22.3602 11.0781 22.3602 13.1719 21.0599 14.4462L16.4497 18.9642C16.0552 19.3508 15.4221 19.3444 15.0356 18.9499C14.649 18.5555 14.6554 17.9224 15.0498 17.5358L19.6601 13.0178Z"
-												fill={colors.primary}
-											/>
-											<Path
-												fill-rule="evenodd"
-												clip-rule="evenodd"
-												// eslint-disable-next-line max-len
-												d="M22 12.125C22 12.6773 21.5523 13.125 21 13.125L8.5 13.125C7.94771 13.125 7.5 12.6773 7.5 12.125C7.5 11.5727 7.94771 11.125 8.5 11.125L21 11.125C21.5523 11.125 22 11.5727 22 12.125ZM5.875 12.125C5.875 12.6773 5.42728 13.125 4.875 13.125L3.125 13.125C2.57271 13.125 2.125 12.6773 2.125 12.125C2.125 11.5727 2.57271 11.125 3.125 11.125L4.875 11.125C5.42728 11.125 5.875 11.5727 5.875 12.125Z"
-												fill={colors.primary}
-											/>
-										</Svg>
-									</View>
-									<Image source={{ uri: exchange.value.to.img }} style={{ width: 50, height: 50 }} />
-								</View>
-								<View style={styles.modalColumn}>
-									<Headline style={globalStyles.headline}>Processing Transaction</Headline>
-								</View>
-								<View style={styles.modalRow}>
-									<Text>Exchanging </Text>
-									<Text style={globalStyles.fontBold}> {exchange.value.from.symbol}</Text>
-									<Text> for </Text>
-									<Text style={globalStyles.fontBold}> {exchange.value.to.symbol}</Text>
-								</View>
-								<View style={styles.modalRow}>
-									<Text>Transaction:</Text>
-									<Button mode="text" onPress={openTransaction}>
-										{smallWalletAddress(transactionHash)}
-									</Button>
-								</View>
-							</>
-						</Modal>
+						<TransactionWaitModal
+							visible={visible}
+							fromToken={from}
+							toToken={to}
+							onDismiss={hideModal}
+							transactionHash={transactionHash}
+						/>
 					</Portal>
 				</ScrollView>
 			</SafeAreaView>

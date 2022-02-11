@@ -2,7 +2,7 @@ import { createState } from '@hookstate/core';
 import { ParaswapToken } from '@models/token';
 
 export interface Gas {
-	type: string;
+	type: 'normal' | 'fast' | 'slow';
 	gweiValue: number;
 	usdPrice: number;
 	wait: number;

@@ -231,7 +231,7 @@ export const sendTransaction = async (
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseEther(amount) // @todo: should this be able to process other tokens with other decimals?
+			value: parseEther(amount)
 		};
 	}
 

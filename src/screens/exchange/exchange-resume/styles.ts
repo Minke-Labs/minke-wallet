@@ -17,12 +17,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginTop: 24,
 			marginBottom: 24
 		},
-		exchangeResumeBackground: {
-			borderRadius: 50,
-			padding: 8,
-			backgroundColor: colors.background,
-			position: 'absolute'
-		},
 		exchangeResumeContainer: {
 			paddingTop: 0
 		},
@@ -107,18 +101,6 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		tokenCardDivisorImage: {
 			width: 24,
 			height: 24
-		},
-		modalRow: {
-			flexDirection: 'row',
-			justifyContent: 'center',
-			alignItems: 'center',
-			marginBottom: 24
-		},
-		modalColumn: {
-			flexDirection: 'column',
-			justifyContent: 'center',
-			alignItems: 'center',
-			marginBottom: 16
 		},
 		exchangeProgressBar: {
 			position: 'absolute',
