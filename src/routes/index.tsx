@@ -80,7 +80,12 @@ const Routes: React.FC = () => {
 					component={ExchangeResumeScreen}
 					options={(props) => defaultOptions(props)}
 				/>
-				<Stack.Screen name="Settings" component={SettingsScreen} options={(props) => defaultOptions(props)} />
+				<Stack.Screen
+					name="Settings"
+					component={SettingsScreen}
+					options={{ headerShown: false }}
+					// options={(props) => defaultOptions(props)}
+				/>
 				<Stack.Screen
 					name="ChangeNetwork"
 					component={ChangeNetworkScreen}
