@@ -109,7 +109,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		let src = fromAmount || 1;
 		let dest = toAmount || 1;
 		if (priceQuote) {
-			const { srcAmount, destAmount, srcDecimals, destDecimals } = priceQuote.priceRoute;
+			const { srcAmount, destAmount, srcDecimals, destDecimals, side } = priceQuote.priceRoute;
 			src = formatUnits(srcAmount, srcDecimals);
 			dest = formatUnits(destAmount, destDecimals);
 		}
@@ -132,7 +132,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				destDecimals,
 				srcAmount,
 				destAmount,
-				tokenTransferProxy: spender
+				tokenTransferProxy: spender,
+				side
 			} = priceRoute;
 
 			const { permit, approvalTransaction } = await approveSpending({
@@ -157,7 +158,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				priceRoute,
 				userAddress: wallet.value.address || '',
 				permit,
-				gasPrice: gweiValue ? +gweiValue * 1000000000 : undefined
+				gasPrice: gweiValue ? +gweiValue * 1000000000 : undefined,
+				side
 			});
 
 			if (result.error) {

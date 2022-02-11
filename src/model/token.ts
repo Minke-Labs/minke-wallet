@@ -46,7 +46,8 @@ export const createTransaction = async ({
 	destAmount,
 	userAddress,
 	permit,
-	gasPrice
+	gasPrice,
+	side
 }: {
 	srcToken: string;
 	srcDecimals: number;
@@ -58,6 +59,7 @@ export const createTransaction = async ({
 	userAddress: string;
 	permit?: string;
 	gasPrice?: number;
+	side: string;
 }): Promise<TransactionData> => {
 	const { chainId } = await network();
 	const requestOptions = {
@@ -70,7 +72,7 @@ export const createTransaction = async ({
 			priceRoute,
 			userAddress,
 			destAmount,
-			side: 'SELL', // @TODO: (Marcos) - This can be buy too!
+			side,
 			permit,
 			eip1559: true
 		})
@@ -137,6 +139,7 @@ export interface PriceRoute {
 	bestRoute: Array<BestRoute>;
 	tokenTransferProxy: string;
 	contractAddress: string;
+	side: string;
 }
 
 export interface ExchangeRoute {
