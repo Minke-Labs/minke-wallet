@@ -19,6 +19,7 @@ import * as Linking from 'expo-linking';
 import globalStyles from '@src/components/global.styles';
 import GasOption from '../GasOption';
 import { makeStyles } from './styles';
+import { network } from '@src/model/network';
 
 const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
@@ -144,6 +145,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			if (approvalTransaction) {
 				await approvalTransaction.wait();
 			}
+
+			const { gweiValue } = exchange.gas.value || {};
 			const result = await createTransaction({
 				srcToken,
 				srcDecimals,
@@ -153,7 +156,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				destAmount,
 				priceRoute,
 				userAddress: wallet.value.address || '',
-				permit
+				permit,
+				gasPrice: gweiValue ? +gweiValue * 1000000000 : undefined
 			});
 
 			if (result.error) {
@@ -179,6 +183,11 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				showModal();
 			}
 		}
+	};
+
+	const openTransaction = async () => {
+		const { etherscanURL } = await network();
+		Linking.openURL(`${etherscanURL}/tx/${transactionHash}`);
 	};
 
 	return (
@@ -338,13 +347,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 								</View>
 								<View style={styles.modalRow}>
 									<Text>Transaction:</Text>
-									<Button
-										mode="text"
-										onPress={
-											() => Linking.openURL(`https://ropsten.etherscan.io/tx/${transactionHash}`)
-											// eslint-disable-next-line react/jsx-curly-newline
-										}
-									>
+									<Button mode="text" onPress={openTransaction}>
 										{smallWalletAddress(transactionHash)}
 									</Button>
 								</View>

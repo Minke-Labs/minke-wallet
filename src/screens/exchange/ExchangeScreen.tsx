@@ -57,7 +57,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
 			if (isNativeToken && walletToken) {
 				const { gweiValue } = exchange.gas.value || {};
-				const gasPrice = gweiValue ? gweiValue * 21000 * 10 ** -9 : 0;
+				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
 				return walletToken.balance - gasPrice;
 			}
 			return walletToken?.balance || 0;
@@ -191,7 +191,13 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				const { amount, direction } = lastConversion;
 				setLastConversion({ amount, direction: direction === 'from' ? 'to' : 'from' });
 			}
-			exchange.set({} as ExchangeState);
+			exchange.merge({
+				from: undefined,
+				to: undefined,
+				fromAmount: undefined,
+				toAmount: undefined,
+				lastConversion: undefined
+			});
 			const backup = fromToken;
 			updateFromToken(toToken || ({} as ParaswapToken));
 			updateToToken(backup);

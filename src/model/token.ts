@@ -45,7 +45,8 @@ export const createTransaction = async ({
 	priceRoute,
 	destAmount,
 	userAddress,
-	permit
+	permit,
+	gasPrice
 }: {
 	srcToken: string;
 	srcDecimals: number;
@@ -56,6 +57,7 @@ export const createTransaction = async ({
 	priceRoute: PriceRoute;
 	userAddress: string;
 	permit?: string;
+	gasPrice?: number;
 }): Promise<TransactionData> => {
 	const { chainId } = await network();
 	const requestOptions = {
@@ -74,7 +76,7 @@ export const createTransaction = async ({
 		})
 	};
 
-	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}`;
+	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}?gasPrice=${gasPrice}`;
 	const result = await fetch(baseURL, requestOptions);
 	return result.json();
 };

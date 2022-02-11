@@ -153,7 +153,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 					</View>
 					<View style={styles.alignRight}>
 						<Text style={styles.textBold}>
-							${(gasPrice * 21000 * 10 ** -9 * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
+							${(gasPrice * 41000 * 10 ** -9 * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
 						</Text>
 						<Text>Transaction Fee</Text>
 					</View>
