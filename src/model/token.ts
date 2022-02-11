@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { network } from './network';
 
@@ -44,7 +44,8 @@ export const createTransaction = async ({
 	srcAmount,
 	priceRoute,
 	destAmount,
-	userAddress
+	userAddress,
+	permit
 }: {
 	srcToken: string;
 	srcDecimals: number;
@@ -54,12 +55,22 @@ export const createTransaction = async ({
 	destAmount: string;
 	priceRoute: PriceRoute;
 	userAddress: string;
+	permit?: string;
 }): Promise<TransactionData> => {
 	const { chainId } = await network();
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ srcToken, destToken, srcAmount, priceRoute, userAddress, destAmount, side: 'SELL' })
+		body: JSON.stringify({
+			srcToken,
+			destToken,
+			srcAmount,
+			priceRoute,
+			userAddress,
+			destAmount,
+			side: 'SELL', // @TODO: (Marcos) - This can be buy too!
+			permit
+		})
 	};
 
 	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}`;
@@ -120,6 +131,8 @@ export interface PriceRoute {
 	srcDecimals: number;
 	destDecimals: number;
 	bestRoute: Array<BestRoute>;
+	tokenTransferProxy: string;
+	contractAddress: string;
 }
 
 export interface ExchangeRoute {

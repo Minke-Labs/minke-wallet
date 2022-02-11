@@ -10,14 +10,16 @@ import Modal from '@components/Modal';
 import { Svg, Path } from 'react-native-svg';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { ParaswapToken, ExchangeRoute, getExchangePrice, createTransaction } from '@models/token';
-import { getProvider, smallWalletAddress } from '@models/wallet';
-import { Wallet, BigNumber } from 'ethers';
+import { signERC2612Permit } from 'eth-permit';
+import { approveSpending, getProvider, smallWalletAddress } from '@models/wallet';
+import { Wallet, BigNumber, providers } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Linking from 'expo-linking';
 import globalStyles from '@src/components/global.styles';
 import GasOption from '../GasOption';
 import { makeStyles } from './styles';
+import { setChainIdOverride } from 'eth-permit/dist/rpc';
 
 const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
@@ -122,20 +124,48 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const exchangeName = priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange;
 	const onFinish = async () => {
 		if (priceQuote?.priceRoute) {
-			const { srcToken, srcDecimals, destToken, destDecimals, srcAmount, destAmount } = priceQuote.priceRoute;
-			const result = await createTransaction({
+			const { priceRoute } = priceQuote;
+			const {
+				contractAddress,
 				srcToken,
 				srcDecimals,
 				destToken,
 				destDecimals,
 				srcAmount,
 				destAmount,
-				priceRoute: priceQuote.priceRoute,
-				userAddress: wallet.value.address || ''
+				tokenTransferProxy: spender
+			} = priceRoute;
+			console.log('contractAddress', contractAddress);
+			console.log('srcToken', srcToken);
+			console.log('amount', srcAmount);
+			console.log('srcDecimals', srcDecimals);
+			console.log('destToken', destToken);
+			console.log('destAmount', destAmount);
+			console.log('destDecimals', destDecimals);
+			console.log('spender', spender);
+			const transaction = await approveSpending({
+				amount: srcAmount,
+				privateKey: wallet.privateKey.value,
+				contractAddress: srcToken,
+				spender
 			});
+			console.log('Waiting', transaction.hash);
+			const receipt = await transaction.wait();
+			console.log(receipt);
 
-			if (result.error) {
-				console.error(result.error);
+			// const result = await createTransaction({
+			// 	srcToken,
+			// 	srcDecimals,
+			// 	destToken,
+			// 	destDecimals,
+			// 	srcAmount,
+			// 	destAmount,
+			// 	priceRoute,
+			// 	userAddress: wallet.value.address || ''
+			// });
+
+			if (true) {
+				console.error('Marcos');
 			} else if (wallet.value && exchange.value.gas) {
 				const provider = await getProvider();
 				const { chainId, data, from: src, gas, gasPrice, to: dest, value } = result;

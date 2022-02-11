@@ -1,10 +1,10 @@
-import { BigNumberish, Contract, providers, Wallet } from 'ethers';
+import { BigNumber, BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
 import { WalletState } from '@stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
 import { convertEthToUsd } from '@helpers/utilities';
-import { network as selectedNetwork, networks } from './network';
+import { network, network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
@@ -196,6 +196,7 @@ export const erc20abi = [
 
 	// Authenticated Functions
 	'function transfer(address to, uint amount) returns (bool)',
+	'function approve(address spender, uint256 amount) external returns (bool)',
 
 	// Events
 	'event Transfer(address indexed from, address indexed to, uint amount)'
@@ -213,6 +214,7 @@ export const sendTransaction = async (
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
+		// @TODO (Marcos): Add chainId
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
 		gasLimit: 41000,
@@ -234,6 +236,37 @@ export const sendTransaction = async (
 		};
 	}
 
+	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
+	return wallet.provider.sendTransaction(signedTx as string);
+};
+
+export const approveSpending = async ({
+	privateKey,
+	amount,
+	contractAddress,
+	spender
+}: {
+	privateKey: string;
+	amount: string;
+	contractAddress: string;
+	spender: string;
+}) => {
+	const provider = await getProvider();
+	const wallet = new Wallet(privateKey, provider);
+	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
+
+	const txDefaults = {
+		from: await wallet.getAddress(),
+		type: 2,
+		chainId: await wallet.getChainId(),
+		gasLimit: 41000,
+		maxFeePerGas: parseUnits('100', 'gwei'),
+		maxPriorityFeePerGas: parseUnits('100', 'gwei'),
+		nonce
+	};
+
+	const erc20 = new Contract(contractAddress, erc20abi, wallet);
+	const tx = await erc20.populateTransaction.approve(spender, amount);
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 	return wallet.provider.sendTransaction(signedTx as string);
 };
