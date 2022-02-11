@@ -42,8 +42,6 @@ const ChangeNetworkScreen = () => {
 		fetchNetwork();
 	}, []);
 
-	console.log(networks);
-
 	return (
 		<WelcomeLayout>
 			<View style={styles.header}>

@@ -1,9 +1,10 @@
-import { Text, Icon } from '@components';
-import { TouchableOpacity } from 'react-native';
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { IconType } from '@styles';
 import { useTheme } from '@hooks';
 import styles from './WhiteButton.styles';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
 
 interface WhiteButtonProps {
 	title: string;
