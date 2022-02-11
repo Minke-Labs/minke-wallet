@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@helpers/param-list-type';
 import * as Linking from 'expo-linking';
 import { WelcomeLayout } from '@layouts';
 import { Icon, Text } from '@components';
 import { useTheme } from '@hooks';
+import { useNavigation } from '@react-navigation/native';
 import styles from './SettingsScreen.styles';
 import SettingsOption from './SettingsOption';
 
-const SettingsScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
+const SettingsScreen = () => {
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const onChangeNetwork = () => navigation.navigate('ChangeNetwork');
 	const onAccounts = () => navigation.navigate('Accounts');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');

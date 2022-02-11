@@ -89,7 +89,8 @@ const Routes: React.FC = () => {
 				<Stack.Screen
 					name="ChangeNetwork"
 					component={ChangeNetworkScreen}
-					options={(props) => defaultOptions(props)}
+					options={{ headerShown: false }}
+					// options={(props) => defaultOptions(props)}
 				/>
 
 				{/* <Stack.Screen
