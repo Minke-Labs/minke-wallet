@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, FlatList, StyleSheet, GestureResponderEvent } from 'react-native';
 import { IconType } from '@styles';
 import { useTheme } from '@hooks';
 import { Text, Icon } from '@components';
-import * as Clipboard from 'expo-clipboard';
-import { globalWalletState } from '../../stores/WalletStore';
 
 const styles = StyleSheet.create({
 	actionsPanelContainer: {
@@ -64,25 +61,18 @@ interface ActionsPanelProps {
 	onDeleteWallet: (event: GestureResponderEvent) => void;
 	onExchange: (event: GestureResponderEvent) => void;
 	onSwitchAccounts: (event: GestureResponderEvent) => void;
+	showReceive: (event: GestureResponderEvent) => void;
+	onCopyToClipboard: (event: GestureResponderEvent) => void;
 }
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	onCreateWallet,
 	onDeleteWallet,
 	onExchange,
-	onSwitchAccounts
+	onSwitchAccounts,
+	showReceive,
+	onCopyToClipboard
 }) => {
-	const [receiveVisible, setReceiveVisible] = useState(false);
-	const [snackbarVisible, setSnackbarVisible] = useState(false);
-	const showReceive = () => setReceiveVisible(true);
-	const hideReceive = () => setReceiveVisible(false);
-	const wallet = globalWalletState();
-
-	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.address || '');
-		setSnackbarVisible(true);
-	};
-
 	const chooseFnc = (name: string) => {
 		switch (name) {
 			case 'Exchange':

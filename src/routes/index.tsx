@@ -51,24 +51,19 @@ const Routes: React.FC = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName={initialScreen}>
-				<Stack.Screen options={{ headerShown: false }} name="Welcome" component={WelcomeScreen} />
-				<Stack.Screen options={{ headerShown: false }} name="Test" component={Test} />
-				<Stack.Screen options={{ headerShown: false }} name="WalletCreated" component={WalletCreatedScreen} />
-				<Stack.Screen options={{ headerShown: false }} name="Backup" component={BackupScreen} />
-				<Stack.Screen options={{ headerShown: false }} name="Wallet" component={WalletScreen} />
+			<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="Welcome" component={WelcomeScreen} />
+				<Stack.Screen name="Test" component={Test} />
+				<Stack.Screen name="WalletCreated" component={WalletCreatedScreen} />
+				<Stack.Screen name="Backup" component={BackupScreen} />
+				<Stack.Screen name="Wallet" component={WalletScreen} />
 				<Stack.Screen name="TransactionSelectFunds" component={TransactionSelectFundsScreen} />
 				<Stack.Screen
-					options={{ headerShown: false }}
 					initialParams={{ coin: 'eth' }}
 					name="TransactionContacts"
 					component={TransactionContactsScreen}
 				/>
-				<Stack.Screen
-					options={{ headerShown: false }}
-					name="TransactionTransfer"
-					component={TransactionTransferScreen}
-				/>
+				<Stack.Screen name="TransactionTransfer" component={TransactionTransferScreen} />
 				<Stack.Screen
 					options={(props) => defaultOptions(props)}
 					name="ContactCreate"
@@ -80,28 +75,12 @@ const Routes: React.FC = () => {
 					component={ExchangeResumeScreen}
 					options={(props) => defaultOptions(props)}
 				/>
-				<Stack.Screen
-					name="Settings"
-					component={SettingsScreen}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name="ChangeNetwork"
-					component={ChangeNetworkScreen}
-					options={{ headerShown: false }}
-				/>
+				<Stack.Screen name="Settings" component={SettingsScreen} />
+				<Stack.Screen name="ChangeNetwork" component={ChangeNetworkScreen} />
 
-				<Stack.Screen
-					name="Accounts"
-					component={AccountsScreen}
-					options={{ headerShown: false }}
-				/>
+				<Stack.Screen name="Accounts" component={AccountsScreen} />
 
-				<Stack.Screen
-					name="BackupSettings"
-					options={{ headerShown: false }}
-					component={BackupSettingsScreen}
-				/>
+				<Stack.Screen name="BackupSettings" component={BackupSettingsScreen} />
 				<Stack.Screen
 					name="Transactions"
 					component={TransactionsScreen}
