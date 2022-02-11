@@ -115,8 +115,9 @@ const Routes: React.FC = () => {
 
 				<Stack.Screen
 					name="BackupSettings"
+					options={{ headerShown: false }}
 					component={BackupSettingsScreen}
-					options={(props) => defaultOptions(props)}
+					// options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen
 					name="Transactions"
