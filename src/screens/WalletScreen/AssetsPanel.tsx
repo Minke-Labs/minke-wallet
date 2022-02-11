@@ -23,25 +23,20 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 24,
 		paddingTop: 24,
 		paddingBottom: 17
-		// backgroundColor: '#FFFCF5'
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
 		height: 53
 	},
 	addFundsButtonContainer: {
-		backgroundColor: '#fff',
 		width: '50%',
-		borderRightColor: '#F2EAE1',
 		borderRightWidth: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	sendButtonContainer: {
-		backgroundColor: '#fff',
 		width: '50%',
-		borderLeftColor: '#F2EAE1',
 		borderLeftWidth: 1,
 		flexDirection: 'row',
 		justifyContent: 'center',
@@ -81,11 +76,23 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>
 			</View>
 			<View style={styles.buttonsContainer}>
-				<TouchableOpacity activeOpacity={0.6} style={styles.addFundsButtonContainer}>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					style={[
+						styles.addFundsButtonContainer,
+						{ backgroundColor: colors.background2, borderRightColor: colors.background1 }
+					]}
+				>
 					<Icon name="addStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
 					<Text type="a">Add Funds</Text>
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} style={styles.sendButtonContainer}>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					style={[
+						styles.sendButtonContainer,
+						{ backgroundColor: colors.background2, borderLeftColor: colors.background1 }
+					]}
+				>
 					<Text type="a" style={{ marginRight: 8 }}>
 						Send
 					</Text>

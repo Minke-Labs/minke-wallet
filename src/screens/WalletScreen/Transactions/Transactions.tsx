@@ -11,6 +11,7 @@ import Transaction from './Transaction';
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		paddingHorizontal: 14,
 		paddingTop: 14
 	},
@@ -45,12 +46,7 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 						showsVerticalScrollIndicator={false}
 						renderItem={({ item, index }) => {
 							if (item.value) {
-								return (
-									<Transaction
-										transaction={item}
-										key={`${item.hash}${item.value}${index}`}
-									/>
-								);
+								return <Transaction transaction={item} key={`${item.hash}${item.value}${index}`} />;
 							}
 							return null;
 						}}
@@ -62,10 +58,10 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 		return (
 			<View style={styles.tableContainer}>
 				<Image source={whale2Img} style={styles.image} />
-				<Text weight="medium" marginBottom={16}>
+				<Text color="text4" weight="medium" marginBottom={16}>
 					No transactions here
 				</Text>
-				<Text weight="bold" marginBottom={64}>
+				<Text color="text3" weight="bold" marginBottom={64}>
 					Let&apos;s get started?
 				</Text>
 				<Button

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, FlatList, StyleSheet, GestureResponderEvent } from 'react-native';
 import { IconType } from '@styles';
+import { useTheme } from '@hooks';
 import { Text, Icon } from '@components';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState } from '../../stores/WalletStore';
@@ -18,8 +19,7 @@ const styles = StyleSheet.create({
 		borderRadius: 16,
 		paddingHorizontal: 16,
 		alignSelf: 'center',
-		marginRight: 12,
-		backgroundColor: '#fff'
+		marginRight: 12
 	}
 });
 
@@ -29,14 +29,26 @@ interface CardProps {
 	onPress: (event: GestureResponderEvent) => void;
 }
 
-const Card: React.FC<CardProps> = ({ name, icon, onPress }) => (
-	<TouchableOpacity activeOpacity={0.6} style={styles.actionsPanelCardContainer} onPress={onPress}>
-		<Icon size={20} name={icon as IconType} color="cta1" style={{ marginRight: 8 }} />
-		<Text weight="medium" type="a">
-			{name}
-		</Text>
-	</TouchableOpacity>
-);
+const Card: React.FC<CardProps> = ({ name, icon, onPress }) => {
+	const { colors } = useTheme();
+	return (
+		<TouchableOpacity
+			activeOpacity={0.6}
+			style={[
+				styles.actionsPanelCardContainer,
+				{
+					backgroundColor: colors.background2
+				}
+			]}
+			onPress={onPress}
+		>
+			<Icon size={20} name={icon as IconType} color="cta1" style={{ marginRight: 8 }} />
+			<Text weight="medium" type="a">
+				{name}
+			</Text>
+		</TouchableOpacity>
+	);
+};
 
 const arr = [
 	{ name: 'Exchange', icon: 'exchangeStroke' },
