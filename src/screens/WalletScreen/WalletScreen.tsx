@@ -79,7 +79,12 @@ const WalletScreen = () => {
 	const { address, balance } = state.value;
 
 	return (
-		<TabLayout left={<Transactions {...{ onSeeAllTransactions, loading }} />} right={<NetWorth />}>
+		<TabLayout
+			leftTitle="Transactions"
+			rightTitle="Net worth"
+			left={<Transactions {...{ onSeeAllTransactions, loading }} />}
+			right={<NetWorth />}
+		>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}

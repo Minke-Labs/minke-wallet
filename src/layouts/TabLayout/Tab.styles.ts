@@ -20,8 +20,7 @@ export default StyleSheet.create({
 		width: 20,
 		height: 20,
 		position: 'absolute',
-		bottom: 0,
-		backgroundColor: '#fff'
+		bottom: 0
 	},
 	titleBox: {
 		flex: 1,
