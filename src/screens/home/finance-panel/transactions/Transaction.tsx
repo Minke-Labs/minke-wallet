@@ -43,10 +43,10 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
-	const [url, setUrl] = React.useState('');
 	const [token, setToken] = React.useState('');
 
 	useEffect(() => {
+		let mounted = true;
 		const formatAddress = async () => {
 			const ens = await getENSAddress(source);
 			if (ens) {
@@ -54,20 +54,28 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 			}
 		};
 
-		const fetchURL = async () => {
-			const { etherscanURL, nativeTokenSymbol } = await network();
-			setUrl(`${etherscanURL}tx/${hash}`);
-			setToken(nativeTokenSymbol);
+		const fetchDefaultToken = async () => {
+			const { nativeTokenSymbol } = await network();
+			if (mounted) {
+				setToken(nativeTokenSymbol);
+			}
 		};
 
-		fetchURL();
+		fetchDefaultToken();
 		formatAddress();
+		// eslint-disable-next-line no-return-assign
+		return () => (mounted = false);
 	}, []);
+
+	const openTransaction = async () => {
+		const { etherscanURL } = await network();
+		Linking.openURL(`${etherscanURL}/tx/${hash}`);
+	};
 
 	return (
 		<TouchableOpacity
 			style={[globalStyles.row, styles.transactionItem, { opacity: isError === '1' ? 0.3 : 1 }]}
-			onPress={() => Linking.openURL(url)}
+			onPress={openTransaction}
 		>
 			<View style={globalStyles.row}>
 				<Image source={received ? transationalReceive : transationalSent} style={styles.transationalIcon} />
