@@ -26,7 +26,10 @@ const lightTheme = {
 	text4: '#748190',
 	text5: '#B7B9BB',
 	text6: '#FFFFFF',
-	text7: '#006AA6'
+	text7: '#006AA6',
+
+	// Colors aren't in tokens, but are used in the project.
+	brand4: '#0A2036'
 };
 
 const darkTheme = {
@@ -57,7 +60,10 @@ const darkTheme = {
 	text4: '#748190',
 	text5: '#D0D0D0',
 	text6: '#FFFFFF',
-	text7: '#FFFFFF'
+	text7: '#FFFFFF',
+
+	// Colors aren't in tokens, but are used in the project.
+	brand4: '#0A2036'
 };
 
 export const colors = { darkTheme, lightTheme };

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable arrow-body-style */
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, GestureResponderEvent } from 'react-native';
 import { Text, Icon } from '@components';
 import { commify } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
@@ -56,9 +56,10 @@ interface AssetsPanelProps {
 	balance: string;
 	address: string;
 	// onSend: (event: GestureResponderEvent) => void;
+	onAddFunds: (event: GestureResponderEvent) => void;
 }
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds }) => {
 	// const [sendModalOpen, setSendModalOpen] = useState(false);
 	const { colors } = useTheme();
 
@@ -77,6 +78,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address }) => {
 			</View>
 			<View style={styles.buttonsContainer}>
 				<TouchableOpacity
+					onPress={onAddFunds}
 					activeOpacity={0.6}
 					style={[
 						styles.addFundsButtonContainer,

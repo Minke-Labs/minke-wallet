@@ -16,6 +16,7 @@ import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
 import NetWorth from './NetWorth/NetWorth';
+import AddFunds from './AddFunds/AddFunds';
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -25,6 +26,7 @@ const WalletScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
+	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 
 	const onDeleteWallet = useCallback(async () => {
@@ -104,7 +106,11 @@ const WalletScreen = () => {
 					refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
 				>
 					<Header onSettingsPress={onSettingsPress} />
-					<AssetsPanel balance={balance?.usd || ''} address={address} />
+					<AssetsPanel
+						onAddFunds={() => setAddFundsVisible(true)}
+						balance={balance?.usd || ''}
+						address={address}
+					/>
 					<ActionsPanel
 						{...{
 							onCreateWallet,
@@ -117,13 +123,17 @@ const WalletScreen = () => {
 					/>
 				</ScrollView>
 			</TabLayout>
+			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
+				<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
+			</Snackbar>
+
 			<Modal isVisible={receiveVisible} onDismiss={hideReceive}>
 				<ReceiveModal />
 			</Modal>
 
-			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
-			</Snackbar>
+			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
+				<AddFunds onDismiss={() => setAddFundsVisible(false)} />
+			</Modal>
 		</>
 	);
 };

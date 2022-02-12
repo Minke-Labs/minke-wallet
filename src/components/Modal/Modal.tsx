@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useTheme } from '@hooks';
 import styles from './Modal.styles';
-import ModalHeader from './ModalHeader';
+// import ModalHeader from './ModalHeader';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -56,7 +56,7 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 					}
 				]}
 			>
-				<ModalHeader onDismiss={onDismiss} />
+				{/* <ModalHeader onDismiss={onDismiss} /> */}
 				{children}
 			</Animated.View>
 		</View>
