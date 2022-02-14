@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ImageBackground } from 'react-native';
 import PrimaryButton from '@components/PrimaryButton';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 import globalStyle from '@components/global.styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -65,7 +65,12 @@ export function SaveScreen() {
 							Let's get started?
 						</Text>
 					</View>
-					<PrimaryButton>Deposit</PrimaryButton>
+					<PrimaryButton>
+						<MaterialCommunityIcons name="plus-circle-outline" size={20} />
+						<Text>Deposit</Text>
+					</PrimaryButton>
+					{/* Change PrimaryButton to Button when merge with Romullo improvements */}
+					{/* <Button iconLeft=plus-circle-outline" title="Depoist" onPress="" marginBottom={16}></Button> */}
 				</View>
 			</View>
 		</View>
