@@ -21,7 +21,7 @@ export function SaveScreen() {
 						<Text style={[globalStyle.headline, styles.headerNavegationTitle]}>Save</Text>
 					</View>
 					<TouchableOpacity>
-						<MaterialIcons name="info-outline" color={colors.secondaryText} size={20} />
+						<MaterialIcons name="info-outline" color={colors.primary} size={24} />
 					</TouchableOpacity>
 				</View>
 
