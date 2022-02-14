@@ -8,7 +8,7 @@ import { Prices } from './Graph.types';
 const values = data.data.prices as Prices;
 
 const POINTS = 60;
-export const height = 295;
+export const height = 263;
 export const { width } = Dimensions.get('window');
 
 type PriceList = [string, number][];

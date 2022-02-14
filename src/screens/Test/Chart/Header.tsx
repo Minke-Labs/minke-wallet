@@ -1,29 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue } from 'react-native-reanimated';
-import { ReText, Vector, round } from 'react-native-redash';
-
-import ETH from './ETH';
+import { Vector, round } from 'react-native-redash';
+import { Text, Token, Icon, AnimatedText } from '@components';
+import { useTheme } from '@hooks';
 import { graphs, width } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
 const styles = StyleSheet.create({
 	container: {
-		padding: 16,
-		borderWidth: 1,
-		borderColor: 'purple'
+		justifyContent: 'space-between',
+		paddingHorizontal: 24,
+		backgroundColor: '#fff'
 	},
-	values: {
-		marginTop: 16,
+	upperContainer: {
 		flexDirection: 'row',
-		justifyContent: 'space-between'
-	},
-	value: {
-		fontWeight: '500',
-		fontSize: 24
-	},
-	label: {
-		fontSize: 18
+		alignItems: 'center',
+		marginBottom: 32
 	}
 });
 
@@ -33,6 +27,7 @@ interface HeaderProps {
 }
 
 const Header = ({ translation, index }: HeaderProps) => {
+	const { colors } = useTheme();
 	const data = useDerivedValue(() => graphs[index.value].data);
 	const price = useDerivedValue(() => {
 		const p = interpolate(translation.y.value, [0, width], [data.value.maxPrice, data.value.minPrice]);
@@ -40,23 +35,32 @@ const Header = ({ translation, index }: HeaderProps) => {
 	});
 	const percentChange = useDerivedValue(() => `${round(data.value.percentChange, 3)}%`);
 	const label = useDerivedValue(() => data.value.label);
-	const style = useAnimatedStyle(() => ({
-		fontWeight: '500',
-		fontSize: 24,
-		color: data.value.percentChange > 0 ? 'green' : 'red'
+	const animatedTextStyle = useAnimatedStyle(() => ({
+		color: data.value.percentChange > 0 ? colors.alert3 : colors.alert1
 	}));
 	return (
 		<View style={styles.container}>
-			<ETH />
-			<View style={styles.values}>
-				<View>
-					<ReText style={styles.value} text={price} />
-					<Text style={styles.label}>Etherum</Text>
+			<View style={styles.upperContainer}>
+				<TouchableOpacity style={{ marginRight: 24 }}>
+					<Icon name="arrowBackStroke" size={24} color="text7" />
+				</TouchableOpacity>
+				<Token name="eth" size={40} />
+				<View style={{ marginLeft: 8 }}>
+					<Text weight="extraBold" style={{ fontSize: 18 }}>
+						Etherum
+					</Text>
+					<Text>$ETH</Text>
 				</View>
-				<View>
-					<ReText style={style} text={percentChange} />
-					<ReText style={styles.label} text={label} />
-				</View>
+			</View>
+
+			<View
+				style={{
+					justifyContent: 'center',
+					alignItems: 'center'
+				}}
+			>
+				<AnimatedText marginBottom={2} text={price} weight="extraBold" style={{ fontSize: 28 }} />
+				<AnimatedText text={percentChange} style={animatedTextStyle} type="a" />
 			</View>
 		</View>
 	);

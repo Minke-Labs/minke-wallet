@@ -2,7 +2,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { useTheme } from '@hooks';
-import { Text } from '@components';
+import Text from '../Text/Text';
 
 const styles = StyleSheet.create({
 	container: {

@@ -1,11 +1,13 @@
 import React from 'react';
-import { WelcomeLayout } from '@layouts';
+import { SafeAreaView, ScrollView } from 'react-native';
 import Chart from './Chart/Chart';
 
 const Test = () => (
-	<WelcomeLayout center>
-		<Chart />
-	</WelcomeLayout>
+	<SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+		<ScrollView>
+			<Chart />
+		</ScrollView>
+	</SafeAreaView>
 );
 
 export default Test;

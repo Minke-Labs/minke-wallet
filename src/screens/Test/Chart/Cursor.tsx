@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		width: CURSOR,
 		height: CURSOR,
 		borderRadius: CURSOR / 2,
-		backgroundColor: '#cda8e73b',
+		backgroundColor: '#acffc74b',
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 		width: 15,
 		height: 15,
 		borderRadius: 7.5,
-		backgroundColor: '#6a0dad'
+		backgroundColor: '#30C061'
 	}
 });
 

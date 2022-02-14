@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTheme } from '@hooks';
 import { View, StyleSheet } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
 import Animated, { SharedValue, useAnimatedProps } from 'react-native-reanimated';
@@ -9,9 +10,7 @@ import Cursor from './Cursor';
 const styles = StyleSheet.create({
 	container: {
 		width,
-		height,
-		borderColor: 'green',
-		borderWidth: 2
+		height
 	}
 });
 
@@ -27,6 +26,8 @@ interface ChartProps {
 }
 
 const Chart: React.FC<ChartProps> = ({ previous, current, transition, translation }) => {
+	const { colors } = useTheme();
+
 	const animatedPropsLine = useAnimatedProps(() => {
 		const previousPath = graphs[previous.value].data.path;
 		const currentPath = graphs[current.value].data.path;
@@ -48,13 +49,18 @@ const Chart: React.FC<ChartProps> = ({ previous, current, transition, translatio
 			<Svg>
 				<Defs>
 					<LinearGradient id="gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-						<Stop offset="0%" stopColor="#b36de6" />
-						<Stop offset="15%" stopColor="#cda8e7" />
-						<Stop offset="100%" stopColor="#feffff" />
+						<Stop offset="0%" stopColor="#3fc96d68" />
+						<Stop offset="15%" stopColor="#acffc74b" />
+						<Stop offset="100%" stopColor="#ffffff46" />
 					</LinearGradient>
 				</Defs>
 				<AnimatedPath animatedProps={animatedPropsBg} fill="url(#gradient)" />
-				<AnimatedPath fill="transparent" stroke="#6a0dad" animatedProps={animatedPropsLine} strokeWidth={2} />
+				<AnimatedPath
+					fill="transparent"
+					stroke={colors.alert3}
+					animatedProps={animatedPropsLine}
+					strokeWidth={2}
+				/>
 			</Svg>
 			<Cursor translation={translation} index={current} />
 		</View>
