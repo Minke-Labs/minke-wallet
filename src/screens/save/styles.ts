@@ -13,7 +13,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			flex: 1
 		},
 		headerNavegation: {
-			paddingTop: 24,
+			paddingTop: 40,
 			paddingLeft: 24,
 			paddingRight: 24,
 			flexDirection: 'row',
@@ -24,7 +24,10 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			flexDirection: 'row',
 			alignItems: 'center'
 		},
-		headerNavegationTitle: {},
+		headerNavegationTitle: {
+			marginLeft: 8,
+			fontSize: 16
+		},
 		saveCurrentValueContainer: {
 			flex: 1,
 			flexDirection: 'column',

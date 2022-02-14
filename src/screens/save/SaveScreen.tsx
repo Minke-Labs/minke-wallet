@@ -17,8 +17,8 @@ export function SaveScreen() {
 			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
 				<View style={styles.headerNavegation}>
 					<View style={styles.headerNavegationLeft}>
-						<MaterialIcons name="arrow-back" color={colors.secondaryText} size={20} />
-						<Text style={globalStyle.headline}>Save</Text>
+						<MaterialIcons name="arrow-back-ios" color={colors.secondaryText} size={20} />
+						<Text style={[globalStyle.headline, styles.headerNavegationTitle]}>Save</Text>
 					</View>
 					<TouchableOpacity>
 						<MaterialIcons name="info-outline" color={colors.secondaryText} size={20} />
