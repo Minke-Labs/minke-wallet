@@ -28,8 +28,10 @@ const lightTheme = {
 	text6: '#FFFFFF',
 	text7: '#006AA6',
 
-	// Colors aren't in tokens, but are used in the project.
-	brand4: '#0A2036'
+	// Colors that aren't in tokens, but are used in the project.
+	brand4: '#0A2036',
+	alert3b: 'rgba(48, 192, 97, 0.15)',
+	alert3c: 'rgba(48, 192, 97, 0)'
 };
 
 const darkTheme = {
@@ -62,8 +64,10 @@ const darkTheme = {
 	text6: '#FFFFFF',
 	text7: '#FFFFFF',
 
-	// Colors aren't in tokens, but are used in the project.
-	brand4: '#0A2036'
+	// Colors that aren't in tokens, but are used in the project.
+	brand4: '#0A2036',
+	alert3b: 'rgba(172, 232, 185, 0.15)',
+	alert3c: 'rgba(172, 232, 185, 0)'
 };
 
 export const colors = { darkTheme, lightTheme };

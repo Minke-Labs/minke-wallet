@@ -28,11 +28,14 @@ interface ChartProps {
 const Chart: React.FC<ChartProps> = ({ previous, current, transition, translation }) => {
 	const { colors } = useTheme();
 
+	// const perc = useDerivedValue(() => graphs[current.value].data);
+
 	const animatedPropsLine = useAnimatedProps(() => {
 		const previousPath = graphs[previous.value].data.path;
 		const currentPath = graphs[current.value].data.path;
 		return {
 			d: mixPath(transition.value, previousPath, currentPath)
+			// stroke: perc.value.percentChange > 0 ? colors.alert3 : colors.alert1
 		};
 	});
 

@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
 		marginBottom: 34
 	},
 
-	backgroundSelection: {
+	backgroundTag: {
 		backgroundColor: '#006AA6',
 		...StyleSheet.absoluteFillObject,
-		width: BUTTON_WIDTH,
+		width: 52,
 		height: '100%',
 		borderRadius: 16
 	},
@@ -41,12 +41,12 @@ interface SelectionProps {
 
 const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) => {
 	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [{ translateX: withTiming(BUTTON_WIDTH * current.value) }]
+		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.18)) }]
 	}));
 
 	return (
 		<View style={styles.container}>
-			<Animated.View style={[styles.backgroundSelection, animatedStyle]} />
+			<Animated.View style={[styles.backgroundTag, animatedStyle]} />
 
 			<FlatList
 				keyExtractor={(item) => item.label}
@@ -62,7 +62,7 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) 
 						}}
 					>
 						<Animated.View style={[styles.labelContainer]}>
-							<Text color="text4" weight={current.value === index ? 'extraBold' : 'regular'}>
+							<Text color="text4" weight="extraBold">
 								{item.label}
 							</Text>
 						</Animated.View>
