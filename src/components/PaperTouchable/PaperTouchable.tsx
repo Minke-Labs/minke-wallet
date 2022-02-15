@@ -15,16 +15,17 @@ const styles = StyleSheet.create({
 		borderRadius: 16,
 		justifyContent: 'center',
 		alignItems: 'center',
-		paddingHorizontal: 20
+		paddingHorizontal: 14
 	}
 });
 
 interface PaperProps {
 	onPress?: (event: GestureResponderEvent) => void;
 	marginBottom?: number;
+	active?: boolean;
 }
 
-const Paper: React.FC<PaperProps> = ({ children, onPress, marginBottom = 0 }) => {
+const Paper: React.FC<PaperProps> = ({ children, onPress, marginBottom = 0, active = false }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity
@@ -33,8 +34,8 @@ const Paper: React.FC<PaperProps> = ({ children, onPress, marginBottom = 0 }) =>
 			style={[
 				styles.container,
 				{
-					backgroundColor: colors.background2,
-					marginBottom
+					marginBottom,
+					backgroundColor: active ? colors.text7 : colors.background2
 				}
 			]}
 		>

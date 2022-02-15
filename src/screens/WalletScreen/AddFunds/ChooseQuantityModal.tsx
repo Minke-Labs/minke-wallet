@@ -47,8 +47,8 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					keyExtractor={(item) => item.toString()}
 					data={[100, 200, 300]}
 					renderItem={({ item }) => (
-						<PaperTouchable onPress={() => setPresetAmount(item)}>
-							<Text type="h3" weight="medium">
+						<PaperTouchable active={amount === item} onPress={() => setPresetAmount(item)}>
+							<Text type="h3" weight="medium" color={amount === item ? 'text8' : 'text1'}>
 								${item}
 							</Text>
 						</PaperTouchable>

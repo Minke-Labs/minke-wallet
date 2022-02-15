@@ -98,7 +98,9 @@ const WalletScreen = () => {
 			<TabLayout
 				leftTitle="Transactions"
 				rightTitle="Net worth"
-				left={<Transactions {...{ onSeeAllTransactions, loading }} />}
+				left={
+					<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />
+				}
 				right={<NetWorth />}
 			>
 				<ScrollView
@@ -128,7 +130,7 @@ const WalletScreen = () => {
 			</Snackbar>
 
 			<Modal isVisible={receiveVisible} onDismiss={hideReceive}>
-				<ReceiveModal />
+				<ReceiveModal onDismiss={hideReceive} />
 			</Modal>
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>

@@ -17,21 +17,22 @@ const styles = StyleSheet.create({
 	},
 	tableContainer: {
 		flex: 1,
-		alignItems: 'center'
+		alignItems: 'center',
+		paddingVertical: 14
 	},
 	image: {
 		width: 152,
-		height: 152,
-		marginTop: 34
+		height: 152
 	}
 });
 
 interface TransactionsProps {
 	loading: boolean;
 	onSeeAllTransactions: () => void;
+	onAddFunds: () => void;
 }
 
-const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions }) => {
+const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
 	const { colors } = useTheme();
 	const wallet = useState(globalWalletState());
 	const { transactions = [] } = wallet.value;
@@ -65,9 +66,9 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 					Let&apos;s get started?
 				</Text>
 				<Button
+					onPress={onAddFunds}
 					iconLeft="addStroke"
 					title="Add funds to start"
-					onPress={() => console.log('Add funds to start!')}
 					marginBottom={14}
 				/>
 			</View>

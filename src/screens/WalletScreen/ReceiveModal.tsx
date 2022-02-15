@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Share, SafeAreaView } from 'react-native';
-import { Text, WhiteButton } from '@components';
+import { Text, WhiteButton, ModalHeader } from '@components';
 import { getENSAddress } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
 
-const ReceiveModal = () => {
+const ReceiveModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
 	const wallet = globalWalletState();
 	const [ensName, setEnsName] = useState<string | null>();
 
@@ -24,6 +24,7 @@ const ReceiveModal = () => {
 
 	return (
 		<SafeAreaView>
+			<ModalHeader {...{ onDismiss }} />
 			<View style={{ paddingHorizontal: 24, alignItems: 'center' }}>
 				<Text type="h3" weight="extraBold" style={{ width: '100%' }}>
 					Receive
