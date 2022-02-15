@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Image, useColorScheme } from 'react-native';
 import { WelcomeLayout } from '@layouts';
 import {
@@ -9,9 +9,11 @@ import {
 	waveWelcomeFooterImg,
 	waveWelcomeFooterDarkImg
 } from '@images';
+import { walletCreate } from '@models/wallet';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, Button, Modal } from '@components';
 import { useNavigation } from '@react-navigation/native';
+import { globalWalletState } from '@stores/WalletStore';
 import { RootStackParamList } from '../../routes/types.routes';
 import styles from './WelcomeScreen.styles';
 import ImportFlow from './ImportFlow';
@@ -36,11 +38,19 @@ const Background: React.FC = ({ children }) => {
 const WelcomeScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [isModalVisible, setModalVisible] = useState(false);
+	const walletState = useState(globalWalletState());
 
 	const onImportFinished = () => {
 		setModalVisible(false);
 		navigation.navigate('WalletCreated');
 	};
+
+	const onCreateWallet = useCallback(async () => {
+		const newWallet = await walletCreate();
+		console.log('NEW WALLET', newWallet);
+		walletState.set(newWallet as any);
+		navigation.navigate('WalletCreated');
+	}, [navigation]);
 
 	return (
 		<>
@@ -64,7 +74,7 @@ const WelcomeScreen = () => {
 						<View style={styles.buttonContainer}>
 							<Button
 								title="Create Wallet"
-								onPress={() => console.log('Create Wallet!')}
+								onPress={onCreateWallet}
 								marginBottom={14}
 							/>
 							<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
@@ -74,7 +84,7 @@ const WelcomeScreen = () => {
 			</WelcomeLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportFlow onImportFinished={onImportFinished} />
+				<ImportFlow onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
 			</Modal>
 		</>
 	);

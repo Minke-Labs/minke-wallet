@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { View, StyleSheet } from 'react-native';
-import { Text, Button, TextArea } from '@components';
+import { Text, Button, TextArea, ModalHeader } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { restoreWalletByMnemonic } from '@src/model/wallet';
 
 const styles = StyleSheet.create({
 	container: {
-		alignItems: 'center',
 		paddingHorizontal: 24
 	},
 	textAreaContainer: {
@@ -29,9 +27,10 @@ const styles = StyleSheet.create({
 
 interface ImportFlowProps {
 	onImportFinished: () => void;
+	onDismiss: () => void;
 }
 
-const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished }) => {
+const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished, onDismiss }) => {
 	const [text, setText] = React.useState('');
 	const state = useState(globalWalletState());
 
@@ -49,18 +48,21 @@ const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
-				Add Wallet
-			</Text>
-			<View style={styles.textAreaContainer}>
-				<TextArea
-					label="Seed phrase or private key"
-					value={text}
-					numberOfLines={6}
-					onChangeText={(t) => setText(t)}
-				/>
+			<ModalHeader {...{ onDismiss }} />
+			<View style={{ alignItems: 'center' }}>
+				<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
+					Add Wallet
+				</Text>
+				<View style={styles.textAreaContainer}>
+					<TextArea
+						label="Seed phrase or private key"
+						value={text}
+						numberOfLines={6}
+						onChangeText={(t) => setText(t)}
+					/>
+				</View>
+				<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
 			</View>
-			<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
 			<KeyboardSpacer />
 		</View>
 	);
