@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useTheme } from '@hooks';
 import { View, StyleSheet } from 'react-native';

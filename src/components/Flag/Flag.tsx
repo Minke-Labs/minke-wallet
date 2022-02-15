@@ -1,7 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable no-console */
-/* eslint-disable no-tabs */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Svg, Path } from 'react-native-svg';
 import { flag, FlagType } from '@styles';

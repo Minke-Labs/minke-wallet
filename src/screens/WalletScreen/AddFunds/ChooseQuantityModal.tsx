@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, createRef } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
@@ -13,7 +12,7 @@ import { Button } from '@components';
 import { RootStackParamList } from '@helpers/param-list-type';
 import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
 import { ether, ParaswapToken, Quote, getExchangePrice } from '@models/token';
-import { globalWalletState } from '@stores/WalletStore';
+// import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
@@ -21,7 +20,7 @@ import TokenCard from './TokenCard';
 import swap from '../../../assets/swap.png';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
-	const wallet = useState(globalWalletState());
+	// const wallet = useState(globalWalletState());
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const gasPrice = useState(estimateGas);

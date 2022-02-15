@@ -1,6 +1,3 @@
-/* eslint-disable no-tabs */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { getSeedPhrase } from '@models/wallet';

@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable arrow-body-style */
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Image, GestureResponderEvent } from 'react-native';
 import { Text, Icon } from '@components';
 import { commify } from 'ethers/lib/utils';

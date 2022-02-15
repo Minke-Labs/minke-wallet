@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue } from 'react-native-reanimated';
@@ -34,7 +33,7 @@ const Header = ({ translation, index }: HeaderProps) => {
 		return `$ ${round(p, 2).toLocaleString('en-US', { currency: 'USD' })}`;
 	});
 	const percentChange = useDerivedValue(() => `${round(data.value.percentChange, 3)}%`);
-	const label = useDerivedValue(() => data.value.label);
+	// const label = useDerivedValue(() => data.value.label);
 	const animatedTextStyle = useAnimatedStyle(() => ({
 		color: data.value.percentChange > 0 ? colors.alert3 : colors.alert1
 	}));

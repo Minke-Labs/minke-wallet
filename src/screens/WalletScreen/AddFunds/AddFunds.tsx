@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { createRef, useState } from 'react';
 import { View, SafeAreaView, TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';

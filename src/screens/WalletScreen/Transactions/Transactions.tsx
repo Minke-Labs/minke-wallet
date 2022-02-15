@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
 import React, { useCallback } from 'react';
 import { whale2Img } from '@images';
 import { Text, Button } from '@components';
@@ -65,12 +63,7 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 				<Text color="text3" weight="bold" marginBottom={64}>
 					Let&apos;s get started?
 				</Text>
-				<Button
-					onPress={onAddFunds}
-					iconLeft="addStroke"
-					title="Add funds to start"
-					marginBottom={14}
-				/>
+				<Button onPress={onAddFunds} iconLeft="addStroke" title="Add funds to start" marginBottom={14} />
 			</View>
 		);
 	}, [transactions]);
