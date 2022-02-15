@@ -1,26 +1,16 @@
-/* eslint-disable no-console */
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Text, Icon } from '@components';
+import { View } from 'react-native';
+import Card from './Card';
+import AssetHeader from './AssetHeader';
+import AssetSelector from './AssetSelector';
 
 const AssetList = () => (
 	<View style={{ paddingTop: 32 }}>
-		<View
-			style={{
-				borderWidth: 1,
-				borderColor: 'red',
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				alignItems: 'center',
-				paddingHorizontal: 24,
-				marginBottom: 16
-			}}
-		>
-			<Text weight="extraBold">Asset</Text>
-			<TouchableOpacity onPress={() => console.log('Searching...')}>
-				<Icon name="searchStroke" size={24} color="text7" />
-			</TouchableOpacity>
-		</View>
+		<AssetHeader />
+		<AssetSelector />
+		{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+			<Card key={item} />
+		))}
 	</View>
 );
 
