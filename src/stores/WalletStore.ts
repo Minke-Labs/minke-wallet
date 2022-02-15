@@ -2,20 +2,18 @@
 /* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
 import { find } from 'lodash';
-import { BigNumber, Contract, Wallet } from 'ethers';
+import { BigNumber, Wallet } from 'ethers';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
 import {
-	erc20abi,
 	Coin,
 	getAllWallets,
-	getEthLastPrice,
 	getPrivateKey,
 	getProvider,
 	MinkeTokenList,
 	Transaction,
-	MinkeWallet
-} from '@src/model/wallet';
-import { convertEthToUsd } from '../helpers/utilities';
+	MinkeWallet,
+	getWalletTokens
+} from '@models/wallet';
 
 export interface WalletState {
 	// wallet: (privateKey: string) => Wallet;
@@ -46,22 +44,15 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
 	const eth = await walletObj.getBalance();
 	const tokens: MinkeTokenList = {};
+	const walletTokens = await getWalletTokens(address);
+	const { meta } = walletTokens[address.toLowerCase()];
+	const { value: total = 0 } = find(meta, (m) => m.label === 'Total') || {};
 
-	for (const [key, tokenAddress] of Object.entries(blockchain.supportedTokenList || [])) {
-		const contract = new Contract(tokenAddress, erc20abi, walletObj.provider);
-		const balance = await contract.balanceOf(address);
-		tokens[key] = {
-			contract,
-			balance
-		};
-	}
-
-	const ethPrice = await getEthLastPrice();
+	const usd = total.toString().match(/^-?\d+(?:\.\d{0,2})?/);
 	const balance = {
 		eth,
-		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
+		usd: usd ? usd[0] : '0'
 	};
-
 	return { tokens, balance, network: blockchain };
 };
 

@@ -351,6 +351,13 @@ export interface WalletTokensResponse {
 				assets: [WalletToken];
 			}
 		];
+		meta: [
+			{
+				label: string;
+				value: number;
+				type: string;
+			}
+		];
 	};
 }
 
