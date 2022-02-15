@@ -31,8 +31,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Routes: React.FC = () => {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
-	// const initialScreen = walletState.value.walletId ? 'Wallet' : 'Welcome';
-	const initialScreen = walletState.value.walletId ? 'Test' : 'Test';
+	const initialScreen = walletState.value.walletId ? 'Wallet' : 'Welcome';
+	// const initialScreen = walletState.value.walletId ? 'Test' : 'Test';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
