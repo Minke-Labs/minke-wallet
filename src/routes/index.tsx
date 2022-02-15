@@ -18,6 +18,7 @@ import {
 	TransactionSelectFundsScreen,
 	TransactionsScreen,
 	TransactionTransferScreen,
+	WalletAssets,
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,
@@ -58,6 +59,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="WalletCreated" component={WalletCreatedScreen} />
 				<Stack.Screen name="Backup" component={BackupScreen} />
 				<Stack.Screen name="Wallet" component={WalletScreen} />
+				<Stack.Screen name="WalletAssets" component={WalletAssets} />
 				<Stack.Screen name="TransactionSelectFunds" component={TransactionSelectFundsScreen} />
 				<Stack.Screen
 					initialParams={{ coin: 'eth' }}

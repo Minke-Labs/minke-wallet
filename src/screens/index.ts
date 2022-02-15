@@ -10,6 +10,7 @@ import TransactionContactsScreen from './TransactionContactsScreen/TransactionCo
 import TransactionSelectFundsScreen from './TransactionSelectFundsScreen/TransactionSelectFundsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 import TransactionTransferScreen from './TransactionTransferScreen/TransactionTransferScreen';
+import WalletAssets from './WalletAssets/WalletAssets';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
@@ -29,6 +30,7 @@ export {
 	TransactionSelectFundsScreen,
 	TransactionsScreen,
 	TransactionTransferScreen,
+	WalletAssets,
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,

@@ -4,10 +4,14 @@ import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import { makeStyles } from './styles';
 import Image from './Image';
 
 const NetWorth = () => {
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const state = useState(globalWalletState());
 	const styles = makeStyles();
 	return (
@@ -17,6 +21,7 @@ const NetWorth = () => {
 				<Text style={styles.cardBalance}>${commify(state.value.balance?.usd || '')}</Text>
 			</View>
 			<Card
+				onPress={() => navigation.navigate('WalletAssets')}
 				image={<Image />}
 				title="Wallet"
 				subtitle="Available funds in your wallet"
