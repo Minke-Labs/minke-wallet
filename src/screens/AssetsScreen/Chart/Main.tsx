@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@hooks';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, useColorScheme } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
 import Animated, { SharedValue, useAnimatedProps } from 'react-native-reanimated';
 import { mixPath, Vector } from 'react-native-redash';
@@ -26,6 +26,7 @@ interface ChartProps {
 }
 
 const Chart: React.FC<ChartProps> = ({ previous, current, transition, translation }) => {
+	const scheme = useColorScheme();
 	const { colors } = useTheme();
 
 	// const perc = useDerivedValue(() => graphs[current.value].data);
@@ -52,9 +53,9 @@ const Chart: React.FC<ChartProps> = ({ previous, current, transition, translatio
 			<Svg>
 				<Defs>
 					<LinearGradient id="gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-						<Stop offset="0%" stopColor="#3fc96d68" />
-						<Stop offset="15%" stopColor="#acffc74b" />
-						<Stop offset="100%" stopColor="#ffffff46" />
+						<Stop offset="0%" stopColor={colors.graphic1} stopOpacity={scheme === 'dark' ? 0.4 : 0.6} />
+						<Stop offset="15%" stopColor={colors.graphic2} stopOpacity={scheme === 'dark' ? 0.2 : 0.6} />
+						<Stop offset="100%" stopColor={colors.graphic3} stopOpacity={scheme === 'dark' ? 0 : 1} />
 					</LinearGradient>
 				</Defs>
 				<AnimatedPath animatedProps={animatedPropsBg} fill="url(#gradient)" />

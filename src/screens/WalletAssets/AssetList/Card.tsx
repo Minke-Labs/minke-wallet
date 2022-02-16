@@ -2,8 +2,27 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Token, Icon, Text } from '@components';
+import { TokenType } from '@styles';
 
-const Card = () => (
+interface CardProps {
+	onPress: () => void;
+	coinName: string;
+	coinSymbol: TokenType;
+	walletBalance: number;
+	walletBalanceUsd: number;
+	interest: number;
+	reward?: number;
+}
+
+const Card: React.FC<CardProps> = ({
+	onPress,
+	coinName,
+	coinSymbol,
+	walletBalance,
+	walletBalanceUsd,
+	interest,
+	reward
+}) => (
 	<View style={{ borderBottomWidth: 1, marginTop: 24, borderColor: '#fff', height: 129 }}>
 		<View
 			style={{
@@ -16,12 +35,12 @@ const Card = () => (
 			}}
 		>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-				<Token name="eth" size={32} />
+				<Token name={coinSymbol as TokenType} size={32} />
 				<Text type="a" weight="bold" style={{ marginLeft: 8 }}>
-					Ethereum
+					{coinName}
 				</Text>
 			</View>
-			<TouchableOpacity onPress={() => console.log('GO!')}>
+			<TouchableOpacity {...{ onPress }}>
 				<Icon name="arrowForwardStroke" color="text7" size={24} />
 			</TouchableOpacity>
 		</View>
@@ -32,10 +51,10 @@ const Card = () => (
 					Your wallet balance
 				</Text>
 				<Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
-					4.08543
+					{walletBalance}
 				</Text>
 				<Text marginBottom={24} style={{ fontSize: 12, lineHeight: 14 }}>
-					$15,058.76106
+					${walletBalanceUsd}
 				</Text>
 			</View>
 			<View style={{ flex: 0.5 }}>
@@ -43,10 +62,10 @@ const Card = () => (
 					Interest
 				</Text>
 				<Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
-					0.00%
+					{interest}%
 				</Text>
 				<Text marginBottom={24} style={{ fontSize: 12, lineHeight: 14 }}>
-					0.25% Reward
+					{reward && `${reward}% Reward` }
 				</Text>
 			</View>
 		</View>

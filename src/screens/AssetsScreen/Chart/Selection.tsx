@@ -1,9 +1,9 @@
-/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
-import React from 'react';
+import React, { useState } from 'react';
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { View, StyleSheet, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
+// import { useTheme } from '@hooks';
 import { graphs } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
@@ -40,13 +40,16 @@ interface SelectionProps {
 }
 
 const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) => {
-	const animatedStyle = useAnimatedStyle(() => ({
+	// const { colors } = useTheme();
+	const [using, setUsing] = useState(0);
+
+	const animatedBackgroundTag = useAnimatedStyle(() => ({
 		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.18)) }]
 	}));
 
 	return (
 		<View style={styles.container}>
-			<Animated.View style={[styles.backgroundTag, animatedStyle]} />
+			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
 
 			<FlatList
 				keyExtractor={(item) => item.label}
@@ -59,10 +62,14 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) 
 							transition.value = 0;
 							current.value = index as GraphIndex;
 							transition.value = withTiming(1);
+							setUsing(item.value);
 						}}
 					>
 						<Animated.View style={[styles.labelContainer]}>
-							<Text color="text4" weight="extraBold">
+							<Text
+								color={item.value === using ? 'text6' : 'text9'}
+								weight={item.value === using ? 'bold' : 'regular'}
+							>
 								{item.label}
 							</Text>
 						</Animated.View>
