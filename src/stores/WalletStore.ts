@@ -57,8 +57,23 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	return { tokens, balance, network: blockchain };
 };
 
+export const setPrimaryWallet = async (wallet: MinkeWallet): Promise<MinkeWallet> => {
+	const allWallets = (await getAllWallets()) || {};
+	const chosen = wallet;
+	const primaryWallet = find(allWallets, (w) => w.primary);
+	if (primaryWallet) {
+		primaryWallet.primary = false;
+		allWallets[primaryWallet.id] = primaryWallet;
+	}
+	chosen.primary = true;
+	allWallets[chosen.id] = chosen;
+	await saveAllWallets(allWallets);
+	return chosen;
+};
+
 export const walletState = async (wallet: MinkeWallet | undefined): Promise<WalletState> => {
 	if (wallet) {
+		await setPrimaryWallet(wallet);
 		const privateKey = await getPrivateKey(wallet.address);
 
 		if (privateKey) {
@@ -72,25 +87,9 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 	return emptyWallet;
 };
 
-export const setPrimaryWallet = async (wallet: MinkeWallet) => {
-	const allWallets = (await getAllWallets()) || {};
-	const chosen = wallet;
-	const primaryWallet = find(allWallets, (w) => w.primary);
-	if (primaryWallet) {
-		primaryWallet.primary = false;
-		allWallets[primaryWallet.id] = primaryWallet;
-	}
-	chosen.primary = true;
-	allWallets[chosen.id] = chosen;
-	await saveAllWallets(allWallets);
-};
-
 const initializeWallet = async (): Promise<WalletState> => {
 	const wallets = (await getAllWallets()) || [];
 	const wallet = find(wallets, (w: MinkeWallet) => w.primary);
-	if (Object.values(wallets).length > 0 && !wallet) {
-		await setPrimaryWallet(Object.values(wallets)[0]);
-	}
 	return walletState(wallet as MinkeWallet);
 };
 

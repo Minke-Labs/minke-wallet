@@ -26,7 +26,6 @@ const AccountsScreen = () => {
 	}, [address]);
 
 	const onSelectWallet = async (wallet: MinkeWallet) => {
-		await setPrimaryWallet(wallet);
 		state.set(walletState(wallet));
 	};
 
