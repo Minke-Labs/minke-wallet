@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
-		height: 53
+		height: 53,
+		borderTopWidth: 1
 	},
 	addFundsButtonContainer: {
 		width: '50%',
@@ -74,7 +75,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds 
 				</View>
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>
 			</View>
-			<View style={styles.buttonsContainer}>
+			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
 				<TouchableOpacity
 					onPress={onAddFunds}
 					activeOpacity={0.6}
