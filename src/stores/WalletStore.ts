@@ -86,12 +86,12 @@ export const setPrimaryWallet = async (wallet: MinkeWallet) => {
 };
 
 const initializeWallet = async (): Promise<WalletState> => {
-	const wallets = await getAllWallets();
-	const wallet = find(wallets, (w) => w.primary);
-	if (wallets && !wallet) {
+	const wallets = (await getAllWallets()) || [];
+	const wallet = find(wallets, (w: MinkeWallet) => w.primary);
+	if (Object.values(wallets).length > 0 && !wallet) {
 		await setPrimaryWallet(Object.values(wallets)[0]);
 	}
-	return walletState(wallet);
+	return walletState(wallet as MinkeWallet);
 };
 
 const globalStateInit = createState(initializeWallet);

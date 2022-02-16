@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
+import { Alert, RefreshControl, ScrollView } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TabLayout } from '@layouts';
-import { RefreshControl, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { Text, Modal } from '@components';
 import * as Clipboard from 'expo-clipboard';
@@ -29,19 +29,29 @@ const WalletScreen = () => {
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 
-	const onDeleteWallet = useCallback(async () => {
-		await walletDelete(state.value?.walletId || '');
-		const allWallets = (await getAllWallets()) || {};
-		const wallets = Object.values(allWallets);
+	const onDeleteWallet = () =>
+		Alert.alert('Are you sure?', '', [
+			{
+				text: 'Cancel',
+				style: 'cancel'
+			},
+			{
+				text: 'OK',
+				onPress: async () => {
+					await walletDelete(state.value?.walletId || '');
+					const allWallets = (await getAllWallets()) || {};
+					const wallets = Object.values(allWallets);
 
-		if (wallets.length > 0) {
-			await setPrimaryWallet(wallets[0]);
-			state.set(await walletState(wallets[0]));
-		} else {
-			state.set(emptyWallet);
-			navigation.navigate('Welcome');
-		}
-	}, [navigation]);
+					if (wallets.length > 0) {
+						await setPrimaryWallet(wallets[0]);
+						state.set(await walletState(wallets[0]));
+					} else {
+						state.set(emptyWallet);
+						navigation.navigate('Welcome');
+					}
+				}
+			}
+		]);
 
 	const fetchTransactions = async () => {
 		setLoading(true);
