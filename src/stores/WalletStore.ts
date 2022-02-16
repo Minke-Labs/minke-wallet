@@ -12,7 +12,8 @@ import {
 	MinkeTokenList,
 	Transaction,
 	MinkeWallet,
-	getWalletTokens
+	getWalletTokens,
+	saveAllWallets
 } from '@models/wallet';
 
 export interface WalletState {
@@ -71,9 +72,25 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 	return emptyWallet;
 };
 
+export const setPrimaryWallet = async (wallet: MinkeWallet) => {
+	const allWallets = (await getAllWallets()) || {};
+	const chosen = wallet;
+	const primaryWallet = find(allWallets, (w) => w.primary);
+	if (primaryWallet) {
+		primaryWallet.primary = false;
+		allWallets[primaryWallet.id] = primaryWallet;
+	}
+	chosen.primary = true;
+	allWallets[chosen.id] = chosen;
+	await saveAllWallets(allWallets);
+};
+
 const initializeWallet = async (): Promise<WalletState> => {
 	const wallets = await getAllWallets();
 	const wallet = find(wallets, (w) => w.primary);
+	if (wallets && !wallet) {
+		await setPrimaryWallet(Object.values(wallets)[0]);
+	}
 	return walletState(wallet);
 };
 

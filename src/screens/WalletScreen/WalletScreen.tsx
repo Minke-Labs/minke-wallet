@@ -7,7 +7,7 @@ import { useState } from '@hookstate/core';
 import { Text, Modal } from '@components';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
-import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import { globalWalletState, walletState, emptyWallet, setPrimaryWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 import Header from './Header';
 import ReceiveModal from './ReceiveModal';
@@ -35,6 +35,7 @@ const WalletScreen = () => {
 		const wallets = Object.values(allWallets);
 
 		if (wallets.length > 0) {
+			await setPrimaryWallet(wallets[0]);
 			state.set(await walletState(wallets[0]));
 		} else {
 			state.set(emptyWallet);

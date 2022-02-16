@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
