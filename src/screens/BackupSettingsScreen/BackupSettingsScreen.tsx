@@ -53,7 +53,7 @@ const BackupSettingsScreen = () => {
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6}>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Wallet')}>
 					<Text weight="medium" color="text7" type="a">
 						Done
 					</Text>

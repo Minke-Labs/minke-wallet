@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { View, Image, useColorScheme } from 'react-native';
+import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import {
 	welcomeImg,
@@ -37,7 +37,7 @@ const Background: React.FC = ({ children }) => {
 
 const WelcomeScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-	const [isModalVisible, setModalVisible] = useState(false);
+	const [isModalVisible, setModalVisible] = React.useState(false);
 	const walletState = useState(globalWalletState());
 
 	const onImportFinished = () => {
@@ -47,8 +47,7 @@ const WelcomeScreen = () => {
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
-		console.log('NEW WALLET', newWallet);
-		walletState.set(newWallet as any);
+		walletState.set(newWallet);
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
 
@@ -72,11 +71,7 @@ const WelcomeScreen = () => {
 						</View>
 
 						<View style={styles.buttonContainer}>
-							<Button
-								title="Create Wallet"
-								onPress={onCreateWallet}
-								marginBottom={14}
-							/>
+							<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
 							<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
 						</View>
 					</View>

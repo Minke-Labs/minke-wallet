@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Share, SafeAreaView } from 'react-native';
+import { useState } from '@hookstate/core';
 import { Text, WhiteButton, ModalHeader } from '@components';
 import { getENSAddress } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
+import { ActivityIndicator } from 'react-native-paper';
 
 const ReceiveModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
-	const wallet = globalWalletState();
-	const [ensName, setEnsName] = useState<string | null>();
+	const wallet = useState(globalWalletState());
+	const [ensName, setEnsName] = React.useState<string | null>();
 
 	const address = wallet.value.address || '';
 	const onShare = async () => {
@@ -21,6 +23,10 @@ const ReceiveModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
 		};
 		fetchENSAddress();
 	}, []);
+
+	if (!address) {
+		return <ActivityIndicator />;
+	}
 
 	return (
 		<SafeAreaView>
@@ -51,11 +57,11 @@ const ReceiveModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
 						marginBottom: 30
 					}}
 				>
-					{ensName ? (
+					{ensName && (
 						<Text weight="extraBold" type="h3">
 							{ensName}
 						</Text>
-					) : null}
+					)}
 					<Text>{address}</Text>
 				</View>
 				<WhiteButton title="Share" icon="shareStroke" onPress={onShare} />

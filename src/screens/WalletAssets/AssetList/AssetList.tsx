@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon } from '@components';

@@ -43,7 +43,6 @@ const WalletScreen = () => {
 					const wallets = Object.values(allWallets);
 
 					if (wallets.length > 0) {
-						await setPrimaryWallet(wallets[0]);
 						state.set(await walletState(wallets[0]));
 					} else {
 						state.set(emptyWallet);

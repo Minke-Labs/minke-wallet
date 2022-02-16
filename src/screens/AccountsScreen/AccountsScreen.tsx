@@ -3,19 +3,21 @@ import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
-import { Text, Icon } from '@components';
-import { walletState, globalWalletState, setPrimaryWallet } from '@src/stores/WalletStore';
+import { Text, Icon, Modal } from '@components';
+import { walletState, globalWalletState } from '@src/stores/WalletStore';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem';
+import ImportFlow from '../WelcomeScreen/ImportFlow';
 
 const AccountsScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	const state = useState(globalWalletState());
 	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
+	const [isModalVisible, setModalVisible] = React.useState(false);
 	const { address } = state.value;
 
 	useEffect(() => {
@@ -34,6 +36,11 @@ const AccountsScreen = () => {
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
+				</TouchableOpacity>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => setModalVisible(true)}>
+					<Text weight="medium" color="text7" type="a">
+						Import
+					</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -57,6 +64,12 @@ const AccountsScreen = () => {
 					/>
 				</SafeAreaView>
 			</View>
+			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
+				<ImportFlow
+					onImportFinished={() => navigation.navigate('Wallet')}
+					onDismiss={() => setModalVisible(false)}
+				/>
+			</Modal>
 		</WelcomeLayout>
 	);
 };

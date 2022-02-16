@@ -26,7 +26,6 @@ const TokenCard = ({
 	const [amount, setAmount] = useState('');
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
-		// eslint-disable-next-line no-useless-escape
 		const validNumber = new RegExp(/^\d*\,?\d*$/); // for comma
 		if (validNumber.test(value)) {
 			lastValid = value;

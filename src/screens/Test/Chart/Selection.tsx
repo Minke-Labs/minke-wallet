@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-param-reassign */
 import React from 'react';
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { View, StyleSheet, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
