@@ -4,6 +4,7 @@ module.exports = (api) => {
 		presets: ['babel-preset-expo'],
 		plugins: [
 			'inline-dotenv',
+			'react-native-reanimated/plugin',
 			[
 				'module-resolver',
 				{
@@ -15,7 +16,14 @@ module.exports = (api) => {
 						'@helpers': './src/helpers',
 						'@stores': './src/stores',
 						'@models': './src/model',
-						'@assets': './assets'
+						'@assets': './assets',
+						'@styles': './src/styles',
+						'@screens': './src/screens',
+						'@contexts': './src/contexts',
+						'@routes': './src/routes',
+						'@layouts': './src/layouts',
+						'@images': './src/images',
+						'@hooks': './src/hooks'
 					}
 				}
 			]

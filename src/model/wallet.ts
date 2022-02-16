@@ -1,9 +1,8 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
-import { WalletState } from '@stores/WalletStore';
+import { walletState, WalletState } from '@src/stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
-import { convertEthToUsd } from '@helpers/utilities';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
@@ -102,36 +101,10 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletSta
 	await savePrivateKey(wallet.address, wallet.privateKey);
 	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
 
-	// sets the new wallet as the primary wallet
-	const existingWallets = (await getAllWallets()) || {};
-	const primaryWallet = find(existingWallets, (w) => w.primary);
-	if (primaryWallet) {
-		primaryWallet.primary = false;
-		existingWallets[primaryWallet.id] = primaryWallet;
-	}
-
-	newWallet.primary = true;
-	existingWallets[id] = newWallet;
-	await saveAllWallets(existingWallets);
-	const eth = await wallet.getBalance();
-	const ethPrice = await getEthLastPrice();
-	const balance = {
-		eth,
-		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
-	};
-	return {
-		privateKey: wallet.privateKey,
-		address: wallet.address,
-		walletId: id,
-		network: blockchain,
-		balance,
-		allTokens: [],
-		transactions: []
-	};
+	return walletState(newWallet);
 };
 
 export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<WalletState> => {
-	const blockchain = await selectedNetwork();
 	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 
 	const existingWallets = (await getAllWallets()) || {};
@@ -140,20 +113,8 @@ export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Pro
 	if (!existingWallet || isEmpty(existingWallet)) {
 		return walletCreate(mnemonicOrPrivateKey);
 	}
-	const eth = await wallet.getBalance();
-	const ethPrice = await getEthLastPrice();
-	const balance = {
-		eth,
-		usd: convertEthToUsd(eth, ethPrice.result.ethusd)
-	};
-	return {
-		privateKey: wallet.privateKey,
-		address: wallet.address,
-		walletId: existingWallet.id,
-		network: blockchain,
-		balance,
-		allTokens: []
-	};
+
+	return walletState(existingWallet);
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');

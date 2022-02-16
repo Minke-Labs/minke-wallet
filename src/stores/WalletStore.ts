@@ -1,7 +1,9 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Wallet } from 'ethers';
-import { defaultNetwork, Network, network as selectedNetwork } from '@models/network';
+import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
 import {
 	Coin,
 	getAllWallets,
@@ -10,7 +12,8 @@ import {
 	MinkeTokenList,
 	Transaction,
 	MinkeWallet,
-	getWalletTokens
+	getWalletTokens,
+	saveAllWallets
 } from '@models/wallet';
 
 export interface WalletState {
@@ -54,8 +57,23 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	return { tokens, balance, network: blockchain };
 };
 
+export const setPrimaryWallet = async (wallet: MinkeWallet): Promise<MinkeWallet> => {
+	const allWallets = (await getAllWallets()) || {};
+	const chosen = wallet;
+	const primaryWallet = find(allWallets, (w) => w.primary);
+	if (primaryWallet) {
+		primaryWallet.primary = false;
+		allWallets[primaryWallet.id] = primaryWallet;
+	}
+	chosen.primary = true;
+	allWallets[chosen.id] = chosen;
+	await saveAllWallets(allWallets);
+	return chosen;
+};
+
 export const walletState = async (wallet: MinkeWallet | undefined): Promise<WalletState> => {
 	if (wallet) {
+		await setPrimaryWallet(wallet);
 		const privateKey = await getPrivateKey(wallet.address);
 
 		if (privateKey) {
@@ -71,8 +89,8 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 
 const initializeWallet = async (): Promise<WalletState> => {
 	const wallets = await getAllWallets();
-	const wallet = find(wallets, (w) => w.primary);
-	return walletState(wallet);
+	const wallet = find(wallets, (w: MinkeWallet) => w.primary);
+	return walletState(wallet as MinkeWallet);
 };
 
 const globalStateInit = createState(initializeWallet);
