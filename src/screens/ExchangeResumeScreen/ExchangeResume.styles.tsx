@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { ColorType } from '@styles';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
 		// ExchangeResume
 		exchangeContainer: {
@@ -9,22 +10,12 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingRight: 24,
 			flexDirection: 'column'
 		},
-		exchangeResumeDivisor: {
-			justifyContent: 'center',
-			alignItems: 'center',
-			borderRightWidth: 1,
-			borderColor: colors.background,
-			marginTop: 24,
-			marginBottom: 24
+		header: {
+			height: 48
 		},
 		exchangeResumeContainer: {
-			paddingTop: 0
-		},
-		exchangeResumeCard: {
-			marginBottom: 16,
-			flexDirection: 'column',
-			borderRadius: 16,
-			backgroundColor: colors.fill
+			paddingLeft: 24,
+			paddingRight: 24
 		},
 		exchangeResume: {
 			flexDirection: 'row',
@@ -36,7 +27,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			borderRadius: 16,
 			marginTop: 16,
 			marginBottom: 16,
-			backgroundColor: colors.fill
+			backgroundColor: colors.background2
 		},
 		summaryRow: {
 			flexDirection: 'row',
@@ -53,14 +44,14 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			width: '50%',
 			padding: 16
 		},
-		exchangeResumeRateFixedContiner: {
+		exchangeResumeRateFixedContainer: {
 			flexDirection: 'row',
 			alignItems: 'center',
 			justifyContent: 'center',
 			paddingTop: 16,
 			paddingBottom: 16,
 			borderTopWidth: 1,
-			borderTopColor: colors.background
+			borderTopColor: colors.background1
 		},
 		exchangeResumeRateFixedLabel: {
 			marginRight: 8,
@@ -69,7 +60,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		exchangeResumeRateFixed: {
 			borderWidth: 1,
 			borderRadius: 16,
-			borderColor: colors.background,
+			borderColor: colors.detail1,
 			paddingLeft: 16,
 			paddingRight: 16,
 			paddingTop: 8,
@@ -82,20 +73,20 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		tokenCard: {
 			borderRadius: 16,
 			marginTop: 24,
-			backgroundColor: colors.fill
+			backgroundColor: colors.background2
 		},
 		tokenCardDivisor: {
 			justifyContent: 'center',
 			alignItems: 'center',
 			borderBottomWidth: 1,
-			borderColor: colors.background,
+			borderColor: colors.background1,
 			marginTop: 24,
 			marginBottom: 24
 		},
 		tokenCardDivisorBackground: {
 			borderRadius: 50,
 			padding: 8,
-			backgroundColor: colors.background,
+			backgroundColor: colors.background1,
 			position: 'absolute'
 		},
 		tokenCardDivisorImage: {

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
-import { Image, View, SafeAreaView, ScrollView } from 'react-native';
-import { Card, Headline, Text, Portal, useTheme, ActivityIndicator } from 'react-native-paper';
+import { Image, View, TouchableOpacity } from 'react-native';
+import { Card, ActivityIndicator } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
@@ -12,12 +13,12 @@ import { getProvider, smallWalletAddress } from '@models/wallet';
 import { Wallet, BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
+import { WelcomeLayout } from '@layouts';
+import { Icon, Modal, Text } from '@components';
 import ProgressButton from '../../components/ProgressButton';
 import { RootStackParamList } from '../../routes/types.routes';
 import GasOption from '../ExchangeScreen/GasOption';
 import { makeStyles } from './ExchangeResume.styles';
-import { WelcomeLayout } from '@src/layouts';
-import { Modal } from '@components';
 
 const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
@@ -25,9 +26,11 @@ const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amoun
 			<Image source={{ uri: token.img }} style={{ width: 40, height: 40 }} />
 		</View>
 		<View>
-			<Text style={{ fontWeight: 'bold' }}>${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}</Text>
-			<Text>
-				{token.symbol} {amount}
+			<Text type="p2" weight="extraBold" color="text2">
+				${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}
+			</Text>
+			<Text type="a" weight="medium" color="text2">
+				{amount} {token.symbol}
 			</Text>
 		</View>
 	</View>
@@ -191,86 +194,92 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	};
 
 	return (
-		<WelcomeLayout style={styles.exchangeContainer}>
-			<SafeAreaView>
-				<ScrollView>
-					<View style={styles.exchangeResumeContainer}>
-						<Headline>Exchange Resume</Headline>
+		<>
+			<WelcomeLayout>
+				<View style={styles.exchangeResumeContainer}>
+					<View style={styles.header}>
+						<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+							<Icon name="arrowBackStroke" color="text7" size={24} />
+						</TouchableOpacity>
+					</View>
+					<Text type="h3" weight="extraBold">
+						Exchange Resume
+					</Text>
 
-						<Card style={styles.tokenCard}>
-							{priceQuote ? (
-								<TokenDetail
-									token={from}
-									amount={formatUnits(
-										priceQuote.priceRoute.srcAmount,
-										priceQuote.priceRoute.srcDecimals
-									)}
-									usdAmount={priceQuote?.priceRoute.srcUSD}
-								/>
-							) : (
-								<ActivityIndicator size={24} color={colors.primary} />
-							)}
+					<Card style={styles.tokenCard}>
+						{priceQuote ? (
+							<TokenDetail
+								token={from}
+								amount={formatUnits(priceQuote.priceRoute.srcAmount, priceQuote.priceRoute.srcDecimals)}
+								usdAmount={priceQuote?.priceRoute.srcUSD}
+							/>
+						) : (
+							<ActivityIndicator size={24} color={colors.cta1} />
+						)}
 
-							<View style={styles.tokenCardDivisor}>
-								<View style={styles.tokenCardDivisorBackground}>
-									<Svg width={24} height={23} viewBox="0 0 24 24" fill={colors.primary}>
-										<Path
-											fill-rule="evenodd"
-											clip-rule="evenodd"
-											// eslint-disable-next-line max-len
-											d="M10.9822 19.6603C11.4723 20.1604 12.2776 20.1604 12.7678 19.6603L17.2858 15.0501C17.6723 14.6556 18.3055 14.6492 18.6999 15.0358C19.0944 15.4224 19.1008 16.0555 18.7142 16.4499L14.1962 21.0602C12.9219 22.3605 10.8281 22.3605 9.55381 21.0602L5.03579 16.4499C4.64922 16.0555 4.65562 15.4224 5.05007 15.0358C5.44452 14.6492 6.07765 14.6556 6.46421 15.0501L10.9822 19.6603Z"
-											fill={colors.primary}
-										/>
-										<Path
-											fill-rule="evenodd"
-											clip-rule="evenodd"
-											// eslint-disable-next-line max-len
-											d="M11.875 22C11.3227 22 10.875 21.5523 10.875 21L10.875 8.5C10.875 7.94771 11.3227 7.5 11.875 7.5C12.4273 7.5 12.875 7.94771 12.875 8.5L12.875 21C12.875 21.5523 12.4273 22 11.875 22ZM11.875 5.875C11.3227 5.875 10.875 5.42728 10.875 4.875L10.875 3.125C10.875 2.57271 11.3227 2.125 11.875 2.125C12.4273 2.125 12.875 2.57271 12.875 3.125L12.875 4.875C12.875 5.42728 12.4273 5.875 11.875 5.875Z"
-											fill={colors.primary}
-										/>
-									</Svg>
+						<View style={styles.tokenCardDivisor}>
+							<View style={styles.tokenCardDivisorBackground}>
+								<Svg width={24} height={23} viewBox="0 0 24 24" fill={colors.cta1}>
+									<Path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										// eslint-disable-next-line max-len
+										d="M10.9822 19.6603C11.4723 20.1604 12.2776 20.1604 12.7678 19.6603L17.2858 15.0501C17.6723 14.6556 18.3055 14.6492 18.6999 15.0358C19.0944 15.4224 19.1008 16.0555 18.7142 16.4499L14.1962 21.0602C12.9219 22.3605 10.8281 22.3605 9.55381 21.0602L5.03579 16.4499C4.64922 16.0555 4.65562 15.4224 5.05007 15.0358C5.44452 14.6492 6.07765 14.6556 6.46421 15.0501L10.9822 19.6603Z"
+										fill={colors.cta1}
+									/>
+									<Path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										// eslint-disable-next-line max-len
+										d="M11.875 22C11.3227 22 10.875 21.5523 10.875 21L10.875 8.5C10.875 7.94771 11.3227 7.5 11.875 7.5C12.4273 7.5 12.875 7.94771 12.875 8.5L12.875 21C12.875 21.5523 12.4273 22 11.875 22ZM11.875 5.875C11.3227 5.875 10.875 5.42728 10.875 4.875L10.875 3.125C10.875 2.57271 11.3227 2.125 11.875 2.125C12.4273 2.125 12.875 2.57271 12.875 3.125L12.875 4.875C12.875 5.42728 12.4273 5.875 11.875 5.875Z"
+										fill={colors.cta1}
+									/>
+								</Svg>
+							</View>
+						</View>
+
+						{priceQuote ? (
+							<TokenDetail
+								token={to}
+								amount={formatUnits(
+									priceQuote.priceRoute.destAmount,
+									priceQuote.priceRoute.destDecimals
+								)}
+								usdAmount={priceQuote?.priceRoute.destUSD}
+							/>
+						) : (
+							<ActivityIndicator size={24} color={colors.cta2} />
+						)}
+
+						{!loading && (
+							<View style={styles.exchangeResumeRateFixedContainer}>
+								<View style={styles.exchangeResumeRateFixedLabel}>
+									<Text type="span" color="text2">
+										Rate fixed for:
+									</Text>
+								</View>
+								<View style={styles.exchangeResumeRateFixed}>
+									<View style={[styles.exchangeProgressBar, { width: count * 1.42222222 }]} />
+									<View style={styles.timerContainer}>
+										{count >= 0 && (
+											<Text type="span" weight="bold">
+												0:{count < 10 ? `0${count}` : count}
+											</Text>
+										)}
+									</View>
 								</View>
 							</View>
-
-							{priceQuote ? (
-								<TokenDetail
-									token={to}
-									amount={formatUnits(
-										priceQuote.priceRoute.destAmount,
-										priceQuote.priceRoute.destDecimals
-									)}
-									usdAmount={priceQuote?.priceRoute.destUSD}
-								/>
-							) : (
-								<ActivityIndicator size={24} color={colors.primary} />
-							)}
-
-							{!loading && (
-								<View style={styles.exchangeResumeRateFixedContiner}>
-									<View style={styles.exchangeResumeRateFixedLabel}>
-										<Text>Rate fixed for: </Text>
-									</View>
-									<View style={styles.exchangeResumeRateFixed}>
-										<View style={[styles.exchangeProgressBar, { width: count * 1.42222222 }]} />
-										<View style={styles.timerContainer}>
-											{count >= 0 && (
-												<Text style={{ fontSize: 12, fontWeight: 'bold' }}>
-													0:{count < 10 ? `0${count}` : count}
-												</Text>
-											)}
-										</View>
-									</View>
-								</View>
-							)}
-						</Card>
-					</View>
+						)}
+					</Card>
 
 					<Card style={styles.summaryCard}>
 						<Card.Content>
 							<View style={(styles.summaryRow, styles.marginBottom)}>
-								<Text>Maximum sold</Text>
+								<Text type="a" weight="medium" color="text3">
+									Maximum sold
+								</Text>
 								{priceQuote ? (
-									<Text>
+									<Text type="p2" weight="extraBold" color="text2">
 										{formatUnits(
 											priceQuote.priceRoute.srcAmount,
 											priceQuote.priceRoute.srcDecimals
@@ -278,23 +287,35 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 										{from.symbol}
 									</Text>
 								) : (
-									<ActivityIndicator size={24} color={colors.primary} />
+									<ActivityIndicator size={24} color={colors.cta2} />
 								)}
 							</View>
 
 							<View style={(styles.summaryRow, styles.marginBottom)}>
-								<Text>Rate</Text>
-								<Text>{exchangeSummary()}</Text>
+								<Text type="a" weight="medium" color="text3">
+									Rate
+								</Text>
+								<Text type="p2" weight="extraBold" color="text2">
+									{exchangeSummary()}
+								</Text>
 							</View>
 
 							<View style={(styles.summaryRow, styles.marginBottom)}>
-								<Text>{to.symbol} contract</Text>
-								<Text>{smallWalletAddress(to.address)}</Text>
+								<Text type="a" weight="medium" color="text3">
+									{to.symbol} contract
+								</Text>
+								<Text type="p2" weight="extraBold" color="text2">
+									{smallWalletAddress(to.address)}
+								</Text>
 							</View>
 
 							<View style={styles.summaryRow}>
-								<Text>Swapping via</Text>
-								<Text>{exchangeName}</Text>
+								<Text type="a" weight="medium" color="text3">
+									Swapping via
+								</Text>
+								<Text type="p2" weight="extraBold" color="text2">
+									{exchangeName}
+								</Text>
 							</View>
 						</Card.Content>
 					</Card>
@@ -302,17 +323,18 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
 					{priceQuote &&
-						(loading ? (
-							<ActivityIndicator color={colors.primary} />
-						) : (
-							<ProgressButton onFinish={onFinish} />
-						))}
-					<Modal isVisible={visible} onDismiss={hideModal}>
-						<TransactionWaitModal fromToken={from} toToken={to} transactionHash={transactionHash} />
-					</Modal>
-				</ScrollView>
-			</SafeAreaView>
-		</WelcomeLayout>
+						(loading ? <ActivityIndicator color={colors.cta2} /> : <ProgressButton onFinish={onFinish} />)}
+				</View>
+			</WelcomeLayout>
+			<Modal isVisible={visible} onDismiss={hideModal}>
+				<TransactionWaitModal
+					onDismiss={hideModal}
+					fromToken={from}
+					toToken={to}
+					transactionHash={transactionHash}
+				/>
+			</Modal>
+		</>
 	);
 };
 
