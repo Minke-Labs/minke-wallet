@@ -346,7 +346,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					{!loadingPrices && !enoughForGas && <Text>Not enough balance for gas</Text>}
 
 					{loadingPrices ? (
-						<ActivityIndicator color={colors.text1} />
+						<ActivityIndicator color={colors.cta1} />
 					) : (
 						<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
 					)}

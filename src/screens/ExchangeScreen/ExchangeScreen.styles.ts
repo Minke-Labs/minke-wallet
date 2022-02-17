@@ -38,7 +38,8 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		tokenCard: {
 			borderRadius: 16,
-			marginTop: 16
+			marginTop: 16,
+			backgroundColor: colors.background2
 		},
 		tokenCardCoinContent: {
 			flexWrap: 'wrap',
@@ -134,7 +135,7 @@ export const makeStyles = (colors: ColorType) =>
 			padding: 8,
 			borderRadius: 50,
 			marginRight: 16,
-			backgroundColor: '#F3F7FF'
+			backgroundColor: colors.background4
 		},
 		gasSelectorCardGasOption: {
 			marginRight: 16

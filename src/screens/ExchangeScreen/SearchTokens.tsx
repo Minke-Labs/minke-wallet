@@ -90,7 +90,7 @@ const SearchTokens = ({
 
 	return (
 		<SafeAreaView>
-			<ModalHeader {...{ onDismiss }} />
+			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
 				<View style={styles.searchSection}>
 					<Icon name="searchStroke" style={styles.searchIcon} color="cta1" size={20} />

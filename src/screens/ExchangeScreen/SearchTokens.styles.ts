@@ -31,7 +31,8 @@ export const makeStyles = (colors: ColorType) =>
 			paddingLeft: 0,
 			fontFamily: 'Inter_400Regular',
 			fontWeight: '400',
-			fontSize: 16
+			fontSize: 16,
+			color: colors.text1
 		},
 		tokenItem: {
 			flexDirection: 'row',
