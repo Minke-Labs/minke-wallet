@@ -61,7 +61,6 @@ export const makeStyles = (colors: ColorType) =>
 			height: 40
 		},
 		tokenName: {
-			fontFamily: 'Inter_800ExtraBold',
 			paddingLeft: 8
 		},
 		tokenCardDivisor: {
@@ -94,7 +93,6 @@ export const makeStyles = (colors: ColorType) =>
 			marginTop: 8
 		},
 		tokenCardMaxButtonText: {
-			color: colors.background1,
 			paddingLeft: 4
 		},
 		selectTokenRow: {
@@ -121,11 +119,11 @@ export const makeStyles = (colors: ColorType) =>
 		gasSelectorCard: {
 			borderRadius: 16,
 			marginRight: 16,
-			backgroundColor: colors.cta2
+			backgroundColor: colors.background2
 		},
 		selectedCard: {
 			borderWidth: 2,
-			borderColor: colors.background1
+			borderColor: colors.cta1
 		},
 		gasSelectorCardContent: {
 			flexDirection: 'row',

@@ -1,11 +1,10 @@
 /* eslint-disable no-useless-escape */
 import React, { useEffect, createRef, useCallback } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 import { ActivityIndicator, Card } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { useState, State } from '@hookstate/core';
-import { Svg, Path } from 'react-native-svg';
 import { BigNumber, utils } from 'ethers';
 import { BigNumber as BN } from 'bignumber.js';
 import { fromBn } from 'evm-bn';
@@ -192,6 +191,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const canChangeDirections =
 		!loadingPrices && fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase());
+
 	const directionSwap = () => {
 		if (canChangeDirections) {
 			if (lastConversion) {
@@ -219,14 +219,16 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
 				const destQuantityString = division.match(/^-?\d+(?:\.\d{0,9})?/);
 				return (
-					<Text style={styles.exchangeSummaryText}>
+					<Text type="span" weight="regular" color="text3">
 						1 {fromToken.symbol} = {destQuantityString} {toToken.symbol}
 					</Text>
 				);
 			}
 			return (
 				<>
-					<Text style={styles.exchangeSummaryText}>Fetching...</Text>
+					<Text type="span" weight="regular" color="text3">
+						Fetching...
+					</Text>
 					<ActivityIndicator color={colors.background1} size={16} />
 				</>
 			);
@@ -319,29 +321,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 						>
 							<View style={styles.tokenCardDivisorBackground}>
 								{loadingPrices ? (
-									<ActivityIndicator color={colors.background1} />
+									<ActivityIndicator color={colors.cta1} />
 								) : (
-									<Svg
-										width={24}
-										height={23}
-										viewBox="0 0 24 24"
-										fill={canChangeDirections ? colors.background1 : colors.background1}
-									>
-										<Path
-											fill-rule="evenodd"
-											clip-rule="evenodd"
-											// eslint-disable-next-line max-len
-											d="M10.9822 19.6603C11.4723 20.1604 12.2776 20.1604 12.7678 19.6603L17.2858 15.0501C17.6723 14.6556 18.3055 14.6492 18.6999 15.0358C19.0944 15.4224 19.1008 16.0555 18.7142 16.4499L14.1962 21.0602C12.9219 22.3605 10.8281 22.3605 9.55381 21.0602L5.03579 16.4499C4.64922 16.0555 4.65562 15.4224 5.05007 15.0358C5.44452 14.6492 6.07765 14.6556 6.46421 15.0501L10.9822 19.6603Z"
-											fill={canChangeDirections ? colors.background1 : colors.background1}
-										/>
-										<Path
-											fill-rule="evenodd"
-											clip-rule="evenodd"
-											// eslint-disable-next-line max-len
-											d="M11.875 22C11.3227 22 10.875 21.5523 10.875 21L10.875 8.5C10.875 7.94771 11.3227 7.5 11.875 7.5C12.4273 7.5 12.875 7.94771 12.875 8.5L12.875 21C12.875 21.5523 12.4273 22 11.875 22ZM11.875 5.875C11.3227 5.875 10.875 5.42728 10.875 4.875L10.875 3.125C10.875 2.57271 11.3227 2.125 11.875 2.125C12.4273 2.125 12.875 2.57271 12.875 3.125L12.875 4.875C12.875 5.42728 12.4273 5.875 11.875 5.875Z"
-											fill={canChangeDirections ? colors.background1 : colors.background1}
-										/>
-									</Svg>
+									<Icon name="arrowDown" size={24} color={canChangeDirections ? 'cta1' : 'cta2'} />
 								)}
 							</View>
 						</TouchableOpacity>

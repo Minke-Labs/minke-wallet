@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Card, Text, RadioButton, useTheme, ActivityIndicator } from 'react-native-paper';
+import { Card, RadioButton, ActivityIndicator } from 'react-native-paper';
+import { useTheme } from '@hooks';
+import { Text, Icon as IconImg } from '@components';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@src/model/wallet';
-import { network } from '@src/model/network';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { network } from '@models/network';
 import { ExchangeState, Gas, globalExchangeState } from '@src/stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { makeStyles } from './ExchangeScreen.styles';
@@ -64,7 +63,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 			}
 			return `~ ${wait} secs`;
 		}
-		return <ActivityIndicator color={colors.primary} size={16} />;
+		return <ActivityIndicator color={colors.cta1} size={16} />;
 	}, [wait]);
 
 	useEffect(() => {
@@ -113,12 +112,10 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 
 	const Icon = useCallback(() => {
 		switch (type) {
-			case 'slow':
-				return <MaterialIcon name="turtle" size={20} color={colors.primary} />;
 			case 'fast':
-				return <EntypoIcon name="flash" size={20} color={colors.primary} />;
+				return <IconImg name="boltStroke" size={20} color="cta1" />;
 			default:
-				return <AntDesignIcon name="clockcircleo" size={20} color={colors.primary} />; // normal
+				return <IconImg name="clockStroke" size={20} color="cta1" />; // normal
 		}
 	}, []);
 
@@ -127,7 +124,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 	};
 
 	if (!gasPrice || !usdPrice) {
-		return <ActivityIndicator size={24} color={colors.primary} style={styles.scrollviewHorizontal} />;
+		return <ActivityIndicator size={24} color={colors.cta1} style={styles.scrollviewHorizontal} />;
 	}
 
 	return (
@@ -139,22 +136,23 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 							value={type}
 							status={selected ? 'checked' : 'unchecked'}
 							onPress={onSelectGas}
-							color={colors.primary}
-							uncheckedColor="red"
+							color={colors.cta1}
 						/>
 					</View>
 					<View style={styles.gasSelectorCardIcon}>
 						<Icon />
 					</View>
 					<View style={styles.gasSelectorCardGasOption}>
-						<Text style={styles.textBold}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
-						<Text>{waiting()}</Text>
+						<Text type="span" weight="bold">
+							{type.charAt(0).toUpperCase() + type.slice(1)}
+						</Text>
+						<Text type="span">{waiting()}</Text>
 					</View>
 					<View style={styles.alignRight}>
-						<Text style={styles.textBold}>
+						<Text type="span" weight="bold">
 							${(gasPrice * 41000 * 10 ** -9 * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
 						</Text>
-						<Text>Transaction Fee</Text>
+						<Text type="span">Transaction Fee</Text>
 					</View>
 				</Card.Content>
 			</Card>
