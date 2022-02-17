@@ -41,6 +41,7 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 				<View>
 					<FlatList
 						keyExtractor={(item, idx) => `${item.hash}${item.value}${idx}`}
+						ListFooterComponent={<Button onPress={onSeeAllTransactions} mode="text" title="See all" />}
 						data={transactions}
 						showsVerticalScrollIndicator={false}
 						renderItem={({ item, index }) => {
@@ -50,7 +51,6 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 							return null;
 						}}
 					/>
-					<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
 				</View>
 			);
 		}

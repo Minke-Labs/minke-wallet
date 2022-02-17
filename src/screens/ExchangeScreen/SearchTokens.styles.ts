@@ -8,16 +8,30 @@ export const makeStyles = (colors: ColorType) =>
 			flexDirection: 'row',
 			justifyContent: 'flex-end'
 		},
+		searchSection: {
+			flex: 1,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			marginBottom: 40,
+			backgroundColor: colors.background2,
+			borderRadius: 41
+		},
+		searchIcon: {
+			marginLeft: 16,
+			marginRight: 16,
+			marginTop: 10,
+			marginBottom: 10
+		},
 		searchBar: {
-			borderTopLeftRadius: 50,
-			borderTopRightRadius: 50,
-			borderRadius: 50,
-			overflow: 'hidden',
-			marginBottom: 24,
-			height: 48,
-			borderBottomWidth: 0,
-			borderBottomColor: colors.cta2,
-			backgroundColor: colors.cta2
+			flex: 1,
+			paddingTop: 10,
+			paddingRight: 10,
+			paddingBottom: 10,
+			paddingLeft: 0,
+			fontFamily: 'Inter_400Regular',
+			fontWeight: '400',
+			fontSize: 16
 		},
 		tokenItem: {
 			flexDirection: 'row',
@@ -28,8 +42,8 @@ export const makeStyles = (colors: ColorType) =>
 			flexDirection: 'column'
 		},
 		tokenItemImage: {
-			width: 50,
-			height: 50,
+			width: 40,
+			height: 40,
 			borderRadius: 100,
 			marginRight: 16
 		},
@@ -43,10 +57,7 @@ export const makeStyles = (colors: ColorType) =>
 			fontFamily: 'Inter_800ExtraBold',
 			fontSize: 16
 		},
-		containerStyle: {
-			backgroundColor: colors.background1,
-			bottom: 0,
-			width: '100%',
-			height: Dimensions.get('screen').height * 0.8
+		list: {
+			maxHeight: Dimensions.get('screen').height * 0.3
 		}
 	});

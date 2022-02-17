@@ -16,7 +16,7 @@ import { debounce } from 'lodash';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { WelcomeLayout } from '@layouts';
-import { Text, Button, Icon } from '@components';
+import { Text, Button, Icon, Modal } from '@components';
 import { RootStackParamList } from '../../routes/types.routes';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
@@ -163,7 +163,10 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		Keyboard.dismiss();
 		setSearchVisible(true);
 	};
-	const hideModal = () => setSearchVisible(false);
+	const hideModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(false);
+	};
 
 	const showModalFrom = (): void => {
 		setShowOnlyOwnedTokens(true);
@@ -285,7 +288,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<>
 			<WelcomeLayout>
 				<View style={styles.header}>
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
@@ -358,14 +361,6 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<GasSelector />
 
 				<View style={styles.exchangeSection}>
-					<SearchTokens
-						visible={searchVisible}
-						onDismiss={hideModal}
-						onTokenSelect={onTokenSelect}
-						ownedTokens={ownedTokens}
-						showOnlyOwnedTokens={showOnlyOwnedTokens}
-						selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
-					/>
 					{!loadingPrices && !enoughForGas && <Text>Not enough balance for gas</Text>}
 
 					{loadingPrices ? (
@@ -375,7 +370,17 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					)}
 				</View>
 			</WelcomeLayout>
-		</TouchableWithoutFeedback>
+			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+				<SearchTokens
+					visible={searchVisible}
+					onDismiss={hideModal}
+					onTokenSelect={onTokenSelect}
+					ownedTokens={ownedTokens}
+					showOnlyOwnedTokens={showOnlyOwnedTokens}
+					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
+				/>
+			</Modal>
+		</>
 	);
 };
 
