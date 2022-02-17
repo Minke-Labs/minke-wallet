@@ -36,7 +36,10 @@ const lightTheme = {
 	text9: '#4E5E6F',
 	graphic1: '#49d67855',
 	graphic2: '#acffc83e',
-	graphic3: '#ffffff4e'
+	graphic3: '#ffffff4e',
+	graphicRed1: '#ee808073',
+	graphicRed2: 'rgba(192, 48, 48, 0.15)',
+	graphicRed3: 'rgba(192, 48, 48, 0)'
 };
 
 const darkTheme = {
@@ -77,7 +80,10 @@ const darkTheme = {
 	text9: '#FFFFFF',
 	graphic1: '#49d67855',
 	graphic2: 'rgba(172, 232, 185, 0.15)',
-	graphic3: 'rgba(172, 232, 185, 0)'
+	graphic3: 'rgba(172, 232, 185, 0)',
+	graphicRed1: '#C03030',
+	graphicRed2: 'rgba(192, 48, 48, 0.15)',
+	graphicRed3: 'rgba(192, 48, 48, 0)'
 };
 
 export const colors = { darkTheme, lightTheme };

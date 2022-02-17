@@ -25,9 +25,10 @@ const styles = StyleSheet.create({
 interface HeaderProps {
 	translation: Vector<Animated.SharedValue<number>>;
 	index: Animated.SharedValue<GraphIndex>;
+	percChange: number;
 }
 
-const Header = ({ translation, index }: HeaderProps) => {
+const Header: React.FC<HeaderProps> = ({ translation, index, percChange }) => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const { colors } = useTheme();
 	const data = useDerivedValue(() => graphs[index.value].data);
@@ -73,9 +74,8 @@ const Header = ({ translation, index }: HeaderProps) => {
 					}}
 				>
 					<Icon
-						name="chevronUp"
-						// color={data.value.percentChange > 0 ? 'alert3' : 'alert1'}
-						color="alert3"
+						name={percChange > 0 ? 'iconUp' : 'iconDown'}
+						color={percChange > 0 ? 'alert3' : 'alert1'}
 						size={16}
 						style={{ marginRight: 4 }}
 					/>

@@ -9,6 +9,7 @@ import Animated, {
 	withSpring
 } from 'react-native-reanimated';
 import { getYForX, Vector } from 'react-native-redash';
+import { useTheme } from '@hooks';
 import { graphs } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
@@ -25,17 +26,18 @@ const styles = StyleSheet.create({
 	cursorBody: {
 		width: 15,
 		height: 15,
-		borderRadius: 7.5,
-		backgroundColor: '#30C061'
+		borderRadius: 7.5
 	}
 });
 
 interface CursorProps {
 	index: Animated.SharedValue<GraphIndex>;
 	translation: Vector<Animated.SharedValue<number>>;
+	percChange: number;
 }
 
-const Cursor = ({ index, translation }: CursorProps) => {
+const Cursor: React.FC<CursorProps> = ({ index, translation, percChange }) => {
+	const { colors } = useTheme();
 	const isActive = useSharedValue(false);
 	const onGestureEvent = useAnimatedGestureHandler({
 		onStart: () => {
@@ -62,8 +64,23 @@ const Cursor = ({ index, translation }: CursorProps) => {
 		<View style={StyleSheet.absoluteFill}>
 			<PanGestureHandler {...{ onGestureEvent }}>
 				<Animated.View style={StyleSheet.absoluteFill}>
-					<Animated.View style={[styles.cursor, style]}>
-						<View style={styles.cursorBody} />
+					<Animated.View
+						style={[
+							styles.cursor,
+							style,
+							{
+								backgroundColor: percChange > 0 ? colors.graphic2 : colors.graphicRed2
+							}
+						]}
+					>
+						<View
+							style={[
+								styles.cursorBody,
+								{
+									backgroundColor: percChange > 0 ? colors.alert3 : colors.alert1
+								}
+							]}
+						/>
 					</Animated.View>
 				</Animated.View>
 			</PanGestureHandler>

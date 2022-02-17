@@ -40,11 +40,10 @@ interface SelectionProps {
 }
 
 const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) => {
-	// const { colors } = useTheme();
 	const [using, setUsing] = useState(0);
 
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
-		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.18)) }]
+		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.16)) }]
 	}));
 
 	return (
