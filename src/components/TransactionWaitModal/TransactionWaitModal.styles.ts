@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { ColorType } from '@styles';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
 		modalRow: {
 			flexDirection: 'row',
@@ -17,7 +18,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		exchangeResumeBackground: {
 			borderRadius: 50,
 			padding: 8,
-			backgroundColor: colors.background,
+			backgroundColor: colors.background1,
 			position: 'absolute'
 		}
 	});

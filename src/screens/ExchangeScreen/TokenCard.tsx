@@ -3,7 +3,8 @@
 import React, { useState, useEffect, RefObject } from 'react';
 import { Image, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, useTheme } from 'react-native-paper';
+import { Text } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import { Svg, Path } from 'react-native-svg';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { ParaswapToken } from '@models/token';

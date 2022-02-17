@@ -1,8 +1,15 @@
 import { StyleSheet } from 'react-native';
+import { ColorType } from '@styles';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
-		contaier: {},
+		header: {
+			height: 48,
+			paddingHorizontal: 32,
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		},
 		textBold: {
 			fontFamily: 'Inter_800ExtraBold'
 		},
@@ -14,12 +21,14 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingRight: 24
 		},
 		exchangeHeadlineRow: {
+			flexDirection: 'row',
+			justifyContent: 'space-between',
 			alignItems: 'center'
 		},
 		exchangeSummaryText: {
 			marginTop: 8,
 			fontSize: 12,
-			color: colors.secondaryText
+			color: colors.cta2
 		},
 
 		// Token card
@@ -59,14 +68,14 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			justifyContent: 'center',
 			alignItems: 'center',
 			borderBottomWidth: 1,
-			borderColor: colors.background,
+			borderColor: colors.background1,
 			marginTop: 24,
 			marginBottom: 24
 		},
 		tokenCardDivisorBackground: {
 			borderRadius: 50,
 			padding: 8,
-			backgroundColor: colors.background,
+			backgroundColor: colors.background1,
 			position: 'absolute'
 		},
 		tokenCardDivisorImage: {
@@ -85,7 +94,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginTop: 8
 		},
 		tokenCardMaxButtonText: {
-			color: colors.primary,
+			color: colors.background1,
 			paddingLeft: 4
 		},
 		selectTokenRow: {
@@ -112,11 +121,11 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 		gasSelectorCard: {
 			borderRadius: 16,
 			marginRight: 16,
-			backgroundColor: colors.fill
+			backgroundColor: colors.cta2
 		},
 		selectedCard: {
 			borderWidth: 2,
-			borderColor: colors.primary
+			borderColor: colors.background1
 		},
 		gasSelectorCardContent: {
 			flexDirection: 'row',

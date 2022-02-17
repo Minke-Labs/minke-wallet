@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { ColorType } from '@styles';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
 		// SearchTokens
 		header: {
@@ -15,8 +16,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginBottom: 24,
 			height: 48,
 			borderBottomWidth: 0,
-			borderBottomColor: colors.fill,
-			backgroundColor: colors.fill
+			borderBottomColor: colors.cta2,
+			backgroundColor: colors.cta2
 		},
 		tokenItem: {
 			flexDirection: 'row',
@@ -33,17 +34,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginRight: 16
 		},
 		tokenItemSymbol: {
-			color: colors.placeholder,
+			color: colors.cta2,
 			fontSize: 12,
 			marginBottom: 4
 		},
 		tokenItemName: {
-			color: colors.text,
+			color: colors.text1,
 			fontFamily: 'Inter_800ExtraBold',
 			fontSize: 16
 		},
 		containerStyle: {
-			backgroundColor: colors.background,
+			backgroundColor: colors.background1,
 			bottom: 0,
 			width: '100%',
 			height: Dimensions.get('screen').height * 0.8

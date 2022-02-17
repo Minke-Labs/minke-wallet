@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, SafeAreaView, ScrollView } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import GasOption from './GasOption';
 import { makeStyles } from './ExchangeScreen.styles';
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
-import { Modal } from '@components';
-import { TextInput, useTheme } from 'react-native-paper';
+import { FlatList, Image, SafeAreaView, Text, View } from 'react-native';
+import { Modal, ModalHeader } from '@components';
+import { useTheme } from '@hooks';
+import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
@@ -89,31 +90,34 @@ const SearchTokens = ({
 
 	return (
 		<Modal isVisible={visible} onDismiss={onDismiss}>
-			<View style={styles.containerStyle}>
-				<TextInput
-					style={styles.searchBar}
-					underlineColorAndroid="transparent"
-					placeholder="Search tokens"
-					placeholderTextColor={colors.placeholder}
-					value={search}
-					onChangeText={(text) => onSearch(text)}
-					left={<TextInput.Icon name="magnify" />}
-				/>
+			<SafeAreaView>
+				<ModalHeader {...{ onDismiss }} />
+				<View style={{}}>
+					<TextInput
+						style={styles.searchBar}
+						underlineColorAndroid="transparent"
+						placeholder="Search tokens"
+						placeholderTextColor={colors.cta3}
+						value={search}
+						onChangeText={(text) => onSearch(text)}
+						left={<TextInput.Icon name="magnify" />}
+					/>
 
-				<FlatList
-					data={filteredTokens}
-					keyExtractor={(token) => token.symbol}
-					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
-							<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
-							<View style={styles.tokenItemNameContainer}>
-								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
-								<Text style={styles.tokenItemName}>{item.symbol}</Text>
-							</View>
-						</TouchableOpacity>
-					)}
-				/>
-			</View>
+					<FlatList
+						data={filteredTokens}
+						keyExtractor={(token) => token.symbol}
+						renderItem={({ item }) => (
+							<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+								<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
+								<View style={styles.tokenItemNameContainer}>
+									<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
+									<Text style={styles.tokenItemName}>{item.symbol}</Text>
+								</View>
+							</TouchableOpacity>
+						)}
+					/>
+				</View>
+			</SafeAreaView>
 		</Modal>
 	);
 };
