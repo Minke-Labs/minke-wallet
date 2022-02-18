@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Text } from '@components';
-import { View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -9,10 +9,10 @@ const Header = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	return (
-		<SafeAreaView>
+		<View>
 			<View
 				style={{
-					marginTop: 14,
+					marginBottom: 54,
 					flexDirection: 'row',
 					justifyContent: 'space-between',
 					alignItems: 'center',
@@ -31,7 +31,7 @@ const Header = () => {
 					<Icon size={24} color="text7" />
 				</TouchableOpacity>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 };
 

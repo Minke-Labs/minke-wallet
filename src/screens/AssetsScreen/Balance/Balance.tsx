@@ -1,12 +1,15 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
 import Buttons from './Buttons';
+import Selector from './Selector';
 
 const Balance = () => {
 	const { colors } = useTheme();
+	const [active, setActive] = useState(false);
+
 	return (
 		<View
 			style={{
@@ -15,7 +18,6 @@ const Balance = () => {
 				borderRadius: 16,
 				marginBottom: 16,
 				overflow: 'hidden',
-
 				backgroundColor: colors.background2
 			}}
 		>
@@ -29,22 +31,16 @@ const Balance = () => {
 			>
 				<View
 					style={{
-						borderWidth: 1,
 						flexDirection: 'row',
 						justifyContent: 'space-between',
+						alignItems: 'center',
 						marginBottom: 8
 					}}
 				>
-					<Text>Balance</Text>
+					<Text color="text4">Balance</Text>
+					<Selector {...{ active, setActive }} />
 				</View>
-				<Text
-					style={{
-						fontSize: 32,
-						lineHeight: 39
-					}}
-				>
-					$200.00
-				</Text>
+				<Text style={{ fontSize: 32, lineHeight: 39 }}>{active ? '1eth' : '$200.00'}</Text>
 			</View>
 
 			<Buttons onPress={() => console.log('PRESSED!')} />

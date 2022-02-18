@@ -1,54 +1,32 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { View, ScrollView, StyleSheet, Image } from 'react-native';
-import { Text } from '@components';
-import { walletAssetBackImg } from '@images';
-import Header from './Header';
+import { View } from 'react-native';
+import { useTheme } from '@hooks';
+
 import AssetList from './AssetList/AssetList';
+import ValueBox from './ValueBox';
 
-const styles = StyleSheet.create({
-	backgroundContainer: {
-		flex: 1
-	},
-	background: {
-		position: 'absolute',
-		right: 0
-	}
-});
-
-const Background: React.FC = ({ children }) => (
-	<View style={styles.backgroundContainer}>
-		<Image source={walletAssetBackImg} style={styles.background} />
-		{children}
-	</View>
-);
-
-const ValueBox = () => (
-	<Background>
-		<View style={{ height: 207, alignItems: 'center', paddingTop: 64 }}>
-			<Text marginBottom={10}>Current value</Text>
-			<Text weight="medium" style={{ fontSize: 48, lineHeight: 58 }}>
-				$200.00
-			</Text>
-		</View>
-	</Background>
-);
-
-const WalletAssets = () => (
-	<ScrollView showsVerticalScrollIndicator={false}>
-		<Header />
-		<ValueBox />
+const WalletAssets = () => {
+	const { colors } = useTheme();
+	return (
 		<View
 			style={{
-				borderTopLeftRadius: 24,
-				borderTopRightRadius: 24,
-				backgroundColor: '#F2EAE1',
-				height: '100%'
+				height: '100%',
+				backgroundColor: colors.detail4
 			}}
 		>
-			<AssetList />
+			<ValueBox />
+			<View
+				style={{
+					borderTopLeftRadius: 24,
+					borderTopRightRadius: 24,
+					flex: 1,
+					backgroundColor: colors.background1
+				}}
+			>
+				<AssetList />
+			</View>
 		</View>
-	</ScrollView>
-);
+	);
+};
 
 export default WalletAssets;

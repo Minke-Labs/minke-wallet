@@ -7,6 +7,7 @@ import walletCreatedImg from './wallet-created.png';
 import whale2Img from './whale2.png';
 import backupImg from './backupImage.png';
 import walletAssetBackImg from './wallet-asset-back.png';
+import walletAssetBackDarkImg from './wallet-asset-back-dark.png';
 
 export {
 	welcomeImg,
@@ -17,5 +18,6 @@ export {
 	walletCreatedImg,
 	whale2Img,
 	backupImg,
-	walletAssetBackImg
+	walletAssetBackImg,
+	walletAssetBackDarkImg
 };
