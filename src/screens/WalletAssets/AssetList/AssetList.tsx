@@ -1,70 +1,36 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { coinParamFromSymbol } from '@helpers/utilities';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { TokenType } from '@styles';
+import { WalletToken } from '@models/wallet';
 import Card from './Card';
 import AssetHeader from './AssetHeader';
 import AssetSelector from './AssetSelector';
+import coins from './coins.json';
 
-const arr = [
-	{
-		coinName: 'Ethereum',
-		coinSymbol: 'eth',
-		walletBalance: 4.08543,
-		walletBalanceUsd: 15.05876106,
-		interest: 0.0,
-		reward: 0.25,
-		stablecoin: false
-	},
-	{
-		coinName: 'Maker',
-		coinSymbol: 'mkr',
-		walletBalance: 1.2,
-		walletBalanceUsd: 3.16747,
-		interest: 0.0,
-		reward: 0.25,
-		stablecoin: false
-	},
-	{
-		coinName: 'SNX',
-		coinSymbol: 'snx',
-		walletBalance: 60.87307,
-		walletBalanceUsd: 598.63,
-		interest: 4.91,
-		stablecoin: false
-	},
-	{
-		coinName: 'ChainLink',
-		coinSymbol: 'link',
-		walletBalance: 10.08679,
-		walletBalanceUsd: 277.95,
-		interest: 0.0,
-		reward: 0.69,
-		stablecoin: false
-	},
-	{
-		coinName: 'DAI',
-		coinSymbol: 'dai',
-		walletBalance: 0.0,
-		walletBalanceUsd: 0.0,
-		interest: 2.98,
-		reward: 1.14,
-		stablecoin: true
-	}
-];
+interface AssetListProps {
+	walletTokens: WalletToken[];
+}
+type Coins = typeof coins[number];
 
-const AssetList = () => {
-	const [active, setActive] = useState(0);
+const stablecoins = ['USDT', 'DAI', 'BUSD', 'TUSD', 'USDC', 'UST', 'DGX'];
+
+const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
+	const [active, setActive] = React.useState(0);
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-	// const onSelected = (item: typeof arr) => navigation.navigate('Assets', { coin: item });
-	const onSelected = () => navigation.navigate('Assets');
+	const onSelected = (coin: WalletToken) => {
+		console.log(coin);
+		navigation.navigate('Assets', { coin });
+	};
 
-	const filterArr = () => {
-		if (active) return arr.filter((item) => item.stablecoin);
-		return arr;
+	const filterByStablecoin = () => {
+		if (active) return walletTokens.filter((item) => stablecoins.includes(item.symbol));
+		return walletTokens;
 	};
 
 	return (
@@ -73,18 +39,18 @@ const AssetList = () => {
 			<AssetSelector {...{ active, setActive }} />
 			<FlatList
 				showsVerticalScrollIndicator={false}
-				keyExtractor={(item) => `${item.coinSymbol}`}
-				data={filterArr()}
+				keyExtractor={(item) => `${item.address}`}
+				data={filterByStablecoin()}
 				renderItem={({ item }) => (
 					<Card
-						key={item.coinSymbol}
-						coinName={item.coinName}
-						coinSymbol={item.coinSymbol as TokenType}
-						walletBalance={item.walletBalance}
-						walletBalanceUsd={item.walletBalanceUsd}
-						interest={item.interest}
-						reward={item.reward}
-						onPress={() => onSelected()}
+						key={item.address}
+						coinName={coinParamFromSymbol({ symbol: item.symbol, type: 'name' }) || ''}
+						coinSymbol={item.symbol.toLowerCase() as TokenType}
+						walletBalance={Number(item.balance.toFixed(5))}
+						walletBalanceUsd={item.balanceUSD}
+						interest={0}
+						reward={0}
+						onPress={() => onSelected(item)}
 					/>
 				)}
 			/>

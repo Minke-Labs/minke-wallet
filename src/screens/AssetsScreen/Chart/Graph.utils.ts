@@ -71,6 +71,11 @@ export const graphs = [
 		data: buildGraph(values.day, 'Today')
 	},
 	{
+		label: '1W',
+		value: 1,
+		data: buildGraph(values.month, 'Last Week')
+	},
+	{
 		label: '1M',
 		value: 2,
 		data: buildGraph(values.month, 'Last Month')

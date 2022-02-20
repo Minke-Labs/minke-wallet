@@ -1,17 +1,25 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { useTheme } from '@hooks';
+import { RootStackParamList } from '@src/routes/types.routes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Chart from './Chart/Chart';
 import Balance from './Balance/Balance';
 import MarketCap from './MarketCap';
+import Header from './Header';
 
-const AssetsScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Assets'>;
+
+const AssetsScreen = ({ route }: Props) => {
 	const { colors } = useTheme();
+	const { coin } = route.params;
 
+	console.log('\n\n\n');
+	console.log(coin);
 	return (
 		<ScrollView style={{ flex: 1, backgroundColor: colors.detail4 }}>
 			<SafeAreaView>
+				<Header {...{ coin }} />
 				<Chart />
 				<ScrollView
 					style={{

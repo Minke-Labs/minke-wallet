@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image, useColorScheme, SafeAreaView } from 'react-native';
+import { BigNumber } from 'ethers';
 import { Text } from '@components';
 import { walletAssetBackImg, walletAssetBackDarkImg } from '@images';
 import Header from './Header';
@@ -28,13 +29,20 @@ const Background: React.FC = ({ children }) => {
 	);
 };
 
-const ValueBox = () => (
+interface ValueBoxProps {
+	balance: {
+		eth?: BigNumber | undefined;
+		usd?: string | undefined;
+	} | undefined;
+}
+
+const ValueBox: React.FC<ValueBoxProps> = ({ balance }) => (
 	<Background>
 		<Header />
 		<View style={{ height: 207, alignItems: 'center' }}>
 			<Text marginBottom={10}>Current value</Text>
 			<Text weight="medium" style={{ fontSize: 48, lineHeight: 58 }}>
-				$200.00
+				${balance?.usd}
 			</Text>
 		</View>
 	</Background>

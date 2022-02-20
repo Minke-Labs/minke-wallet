@@ -43,7 +43,7 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) 
 	const [using, setUsing] = useState(0);
 
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
-		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.16)) }]
+		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.11)) }]
 	}));
 
 	return (

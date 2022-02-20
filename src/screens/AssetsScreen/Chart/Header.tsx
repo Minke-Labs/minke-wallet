@@ -1,24 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { interpolate, useAnimatedStyle, useDerivedValue } from 'react-native-reanimated';
 import { Vector, round } from 'react-native-redash';
-import { Text, Token, Icon, AnimatedText } from '@components';
+import { Icon, AnimatedText } from '@components';
 import { useTheme } from '@hooks';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
+
 import { graphs, width } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
 const styles = StyleSheet.create({
 	container: {
-		justifyContent: 'space-between',
-		paddingHorizontal: 24
-	},
-	upperContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		marginBottom: 32
+		justifyContent: 'space-between'
 	}
 });
 
@@ -29,7 +21,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ translation, index, percChange }) => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const { colors } = useTheme();
 	const data = useDerivedValue(() => graphs[index.value].data);
 	const price = useDerivedValue(() => {
@@ -42,19 +33,6 @@ const Header: React.FC<HeaderProps> = ({ translation, index, percChange }) => {
 	}));
 	return (
 		<View style={styles.container}>
-			<View style={styles.upperContainer}>
-				<TouchableOpacity style={{ marginRight: 24 }} onPress={() => navigation.goBack()}>
-					<Icon name="arrowBackStroke" size={24} color="text7" />
-				</TouchableOpacity>
-				<Token name="eth" size={40} />
-				<View style={{ marginLeft: 8 }}>
-					<Text weight="extraBold" style={{ fontSize: 18 }}>
-						Etherum
-					</Text>
-					<Text>$ETH</Text>
-				</View>
-			</View>
-
 			<View
 				style={{
 					justifyContent: 'center',
