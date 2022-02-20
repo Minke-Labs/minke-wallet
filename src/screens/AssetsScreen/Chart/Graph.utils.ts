@@ -18,14 +18,14 @@ interface DataPoints {
 	prices: PriceList;
 }
 
-const buildGraph = (datapoints: DataPoints, label: string) => {
-	const priceList = datapoints.prices.slice(0, POINTS);
+export const buildGraph = (datapoints: DataPoints, label: string) => {
+	const priceList = datapoints?.prices.slice(0, POINTS);
 
 	// I REVERSED IT HERE BECAUSE THE API ORDER DATE IS DESC, AND THE AREA WON'T WORK OTHERWISE
 	const formattedValues = priceList
-		.slice(0)
-		.reverse()
-		.map((price) => [parseFloat(price[0]), price[1]] as [number, number]);
+		// .slice(0)
+		// .reverse()
+		.map((price) => [price[1], parseFloat(price[0])] as [number, number]);
 
 	const prices = formattedValues.map((value) => value[0]);
 	const dates = formattedValues.map((value) => value[1]);
@@ -72,22 +72,22 @@ export const graphs = [
 	},
 	{
 		label: '1W',
-		value: 1,
+		value: 2,
 		data: buildGraph(values.month, 'Last Week')
 	},
 	{
 		label: '1M',
-		value: 2,
+		value: 3,
 		data: buildGraph(values.month, 'Last Month')
 	},
 	{
 		label: '1Y',
-		value: 3,
+		value: 4,
 		data: buildGraph(values.year, 'This Year')
 	},
 	{
 		label: 'All',
-		value: 4,
+		value: 5,
 		data: buildGraph(values.all, 'All time')
 	}
 ] as const;

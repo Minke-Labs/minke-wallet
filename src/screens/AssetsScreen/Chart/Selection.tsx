@@ -3,13 +3,10 @@ import React, { useState } from 'react';
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { View, StyleSheet, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
-// import { useTheme } from '@hooks';
-import { graphs } from './Graph.utils';
+// import { graphs } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
 const { width } = Dimensions.get('window');
-
-const BUTTON_WIDTH = width / graphs.length;
 
 const styles = StyleSheet.create({
 	container: {
@@ -28,7 +25,6 @@ const styles = StyleSheet.create({
 	labelContainer: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		width: BUTTON_WIDTH,
 		height: 32
 	}
 });
@@ -37,9 +33,12 @@ interface SelectionProps {
 	previous: SharedValue<GraphIndex>;
 	transition: SharedValue<number>;
 	current: SharedValue<GraphIndex>;
+	graphs: any;
 }
 
-const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) => {
+const Selection: React.FC<SelectionProps> = ({ previous, current, transition, graphs }) => {
+	const BUTTON_WIDTH = width / graphs.length;
+
 	const [using, setUsing] = useState(0);
 
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
@@ -64,7 +63,7 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) 
 							setUsing(item.value);
 						}}
 					>
-						<Animated.View style={[styles.labelContainer]}>
+						<Animated.View style={[styles.labelContainer, { width: BUTTON_WIDTH }]}>
 							<Text
 								color={item.value === using ? 'text6' : 'text9'}
 								weight={item.value === using ? 'bold' : 'regular'}

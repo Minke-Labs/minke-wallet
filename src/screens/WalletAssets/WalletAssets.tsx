@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
@@ -22,9 +20,6 @@ const WalletAssets = () => {
 		};
 		getTokens();
 	}, []);
-
-	// console.log('\n\n\n');
-	// console.log('TOKENS: ', walletTokens);
 
 	return (
 		<View style={{ height: '100%', backgroundColor: colors.detail4 }}>

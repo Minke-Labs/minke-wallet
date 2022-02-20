@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -10,12 +9,10 @@ import { WalletToken } from '@models/wallet';
 import Card from './Card';
 import AssetHeader from './AssetHeader';
 import AssetSelector from './AssetSelector';
-import coins from './coins.json';
 
 interface AssetListProps {
 	walletTokens: WalletToken[];
 }
-type Coins = typeof coins[number];
 
 const stablecoins = ['USDT', 'DAI', 'BUSD', 'TUSD', 'USDC', 'UST', 'DGX'];
 
@@ -23,10 +20,7 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	const [active, setActive] = React.useState(0);
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-	const onSelected = (coin: WalletToken) => {
-		console.log(coin);
-		navigation.navigate('Assets', { coin });
-	};
+	const onSelected = (coin: WalletToken) => navigation.navigate('Assets', { coin });
 
 	const filterByStablecoin = () => {
 		if (active) return walletTokens.filter((item) => stablecoins.includes(item.symbol));

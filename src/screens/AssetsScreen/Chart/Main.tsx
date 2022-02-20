@@ -4,7 +4,8 @@ import { View, StyleSheet, useColorScheme } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
 import Animated, { SharedValue, useAnimatedProps } from 'react-native-reanimated';
 import { mixPath, Vector } from 'react-native-redash';
-import { width, height, graphs } from './Graph.utils';
+import { GraphIndex } from './Graph.types';
+import { width, height } from './Graph.utils';
 import Cursor from './Cursor';
 
 const styles = StyleSheet.create({
@@ -16,17 +17,16 @@ const styles = StyleSheet.create({
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-type GraphIndex = 0 | 1 | 2 | 3 | 4;
-
 interface ChartProps {
 	previous: SharedValue<GraphIndex>;
 	transition: SharedValue<number>;
 	current: SharedValue<GraphIndex>;
 	translation: Vector<Animated.SharedValue<number>>;
 	percChange: number;
+	graphs: any;
 }
 
-const Chart: React.FC<ChartProps> = ({ previous, current, transition, translation, percChange }) => {
+const Chart: React.FC<ChartProps> = ({ previous, current, transition, translation, percChange, graphs }) => {
 	const scheme = useColorScheme();
 	const { colors } = useTheme();
 
@@ -76,7 +76,7 @@ const Chart: React.FC<ChartProps> = ({ previous, current, transition, translatio
 					strokeWidth={2}
 				/>
 			</Svg>
-			<Cursor index={current} {...{ percChange, translation }} />
+			<Cursor index={current} {...{ percChange, translation }} {...{ graphs }} />
 		</View>
 	);
 };

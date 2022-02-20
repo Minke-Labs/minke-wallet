@@ -10,7 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { getYForX, Vector } from 'react-native-redash';
 import { useTheme } from '@hooks';
-import { graphs } from './Graph.utils';
+// import { graphs } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
 const CURSOR = 50;
@@ -34,9 +34,10 @@ interface CursorProps {
 	index: Animated.SharedValue<GraphIndex>;
 	translation: Vector<Animated.SharedValue<number>>;
 	percChange: number;
+	graphs: any;
 }
 
-const Cursor: React.FC<CursorProps> = ({ index, translation, percChange }) => {
+const Cursor: React.FC<CursorProps> = ({ index, translation, percChange, graphs }) => {
 	const { colors } = useTheme();
 	const isActive = useSharedValue(false);
 	const onGestureEvent = useAnimatedGestureHandler({
