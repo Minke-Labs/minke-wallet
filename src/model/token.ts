@@ -1,19 +1,39 @@
 import { BigNumber } from 'ethers';
+import { formatUnits } from 'ethers/lib/utils';
+import { toBn } from 'evm-bn';
+import { network } from './network';
 
-const network = 3; // ropsten
 export const paraswapTokens = async (): Promise<TokenResponse> => {
-	const result = await fetch(`https://apiv5.paraswap.io/tokens/${network}`);
+	const { chainId } = await network();
+	const result = await fetch(`https://apiv5.paraswap.io/tokens/${chainId}`);
 	return result.json();
 };
 
-export const getExchangePrice = async (
-	srcToken: string,
-	destToken: string,
-	amount = '1000000000000000000'
-): Promise<ExchangeRoute> => {
+export interface ExchangeParams {
+	srcToken: string;
+	srcDecimals: number;
+	destToken: string;
+	destDecimals: number;
+	side: 'SELL' | 'BUY';
+	amount: string;
+}
+
+export const getExchangePrice = async ({
+	srcToken,
+	srcDecimals,
+	destToken,
+	destDecimals,
+	side,
+	amount
+}: ExchangeParams): Promise<ExchangeRoute> => {
+	const { chainId } = await network();
 	const baseURL = 'https://apiv5.paraswap.io/prices';
+	const sourceParams = `srcToken=${srcToken}&srcDecimals=${srcDecimals}`;
+	const destParams = `destToken=${destToken}&destDecimals=${destDecimals}`;
+	const decimals = side === 'SELL' ? srcDecimals : destDecimals;
+	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
 	const result = await fetch(
-		`${baseURL}?srcToken=${srcToken}&destToken=${destToken}&side=SELL&amount=${amount}&network=${network}`
+		`${baseURL}?${sourceParams}&${destParams}&side=${side}&amount=${tokenAmount}&network=${chainId}`
 	);
 	return result.json();
 };
@@ -24,7 +44,10 @@ export const createTransaction = async ({
 	srcAmount,
 	priceRoute,
 	destAmount,
-	userAddress
+	userAddress,
+	permit,
+	gasPrice,
+	side
 }: {
 	srcToken: string;
 	srcDecimals: number;
@@ -34,14 +57,28 @@ export const createTransaction = async ({
 	destAmount: string;
 	priceRoute: PriceRoute;
 	userAddress: string;
+	permit?: string;
+	gasPrice?: number;
+	side: string;
 }): Promise<TransactionData> => {
+	const { chainId } = await network();
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ srcToken, destToken, srcAmount, priceRoute, userAddress, destAmount, side: 'SELL' })
+		body: JSON.stringify({
+			srcToken,
+			destToken,
+			srcAmount,
+			priceRoute,
+			userAddress,
+			destAmount,
+			side,
+			permit,
+			eip1559: true
+		})
 	};
 
-	const baseURL = `https://apiv5.paraswap.io/transactions/${network}`;
+	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}?gasPrice=${gasPrice}`;
 	const result = await fetch(baseURL, requestOptions);
 	return result.json();
 };
@@ -54,12 +91,31 @@ export const ether: ParaswapToken = {
 	network: 1
 };
 
+export const matic: ParaswapToken = {
+	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+	decimals: 18,
+	img: 'https://img.paraswap.network/MATIC.png',
+	network: 137,
+	symbol: 'MATIC'
+};
+
+export const nativeTokens: NativeTokens = {
+	ETH: ether,
+	MATIC: matic
+};
+
+export interface NativeTokens {
+	ETH: ParaswapToken;
+	MATIC: ParaswapToken;
+}
+
 export interface ParaswapToken {
 	symbol: string;
 	address: string;
 	decimals: number;
 	img: string;
 	network: number;
+	allowance?: string; // available only when query user tokens
 }
 export interface TokenResponse {
 	tokens: Array<ParaswapToken>;
@@ -81,6 +137,9 @@ export interface PriceRoute {
 	srcDecimals: number;
 	destDecimals: number;
 	bestRoute: Array<BestRoute>;
+	tokenTransferProxy: string;
+	contractAddress: string;
+	side: string;
 }
 
 export interface ExchangeRoute {

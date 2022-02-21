@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Portal, Modal, TextInput, IconButton } from 'react-native-paper';
-import { FlatList, Image, Text } from 'react-native';
+import { FlatList, Image, SafeAreaView, Text, View, TextInput } from 'react-native';
+import { Icon, ModalHeader } from '@components';
+import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
-import { paraswapTokens, ParaswapToken } from '../../model/token';
+import { paraswapTokens, ParaswapToken } from '@models/token';
+import { makeStyles } from './SearchTokens.styles';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const SearchTokens = ({
 	visible,
@@ -21,11 +24,13 @@ const SearchTokens = ({
 	ownedTokens?: Array<string>;
 	selected?: Array<string | undefined>;
 }) => {
-	const containerStyle = { backgroundColor: 'white', padding: 20, bottom: 0, width: '100%' };
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
+
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
 		let selectedTokens: ParaswapToken[] = [];
@@ -75,7 +80,7 @@ const SearchTokens = ({
 			const data = _.filter(filteredTokens, (token) => token.symbol.toLowerCase().includes(text.toLowerCase()));
 			setFilteredTokens(data);
 		} else {
-			setFilteredTokens(tokens);
+			setFilteredTokens(filteredTokens);
 		}
 	};
 
@@ -84,28 +89,39 @@ const SearchTokens = ({
 	}
 
 	return (
-		<Portal>
-			<Modal visible={visible} onDismiss={onDismiss} contentContainerStyle={containerStyle}>
-				<TextInput
-					placeholder="Search token"
-					value={search}
-					onChangeText={(text) => onSearch(text)}
-					left={<TextInput.Icon name="magnify" />}
-				/>
+		<SafeAreaView>
+			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
+			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
+				<View style={styles.searchSection}>
+					<Icon name="searchStroke" style={styles.searchIcon} color="cta1" size={20} />
+					<TextInput
+						style={styles.searchBar}
+						underlineColorAndroid="transparent"
+						placeholder="Search tokens"
+						placeholderTextColor={colors.text5}
+						value={search}
+						onChangeText={(text) => onSearch(text)}
+						autoCapitalize="none"
+					/>
+				</View>
 
-				<IconButton icon="close" size={20} color="#006AA6" onPress={onDismiss} />
 				<FlatList
+					style={styles.list}
 					data={filteredTokens}
 					keyExtractor={(token) => token.symbol}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onTokenSelect(item)}>
-							<Image source={{ uri: item.img }} style={{ width: 50, height: 50 }} />
-							<Text>{item.symbol}</Text>
+						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+							<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
+							<View style={styles.tokenItemNameContainer}>
+								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
+								<Text style={styles.tokenItemName}>{item.symbol}</Text>
+							</View>
 						</TouchableOpacity>
 					)}
 				/>
-			</Modal>
-		</Portal>
+				<KeyboardSpacer />
+			</View>
+		</SafeAreaView>
 	);
 };
 

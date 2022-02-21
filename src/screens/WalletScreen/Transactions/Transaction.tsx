@@ -47,10 +47,10 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const source = received ? from : to;
 	const timestamp = new Date(+timeStamp * 1000);
 	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
-	const [url, setUrl] = React.useState('');
 	const [token, setToken] = React.useState('');
 
 	useEffect(() => {
+		let mounted = true;
 		const formatAddress = async () => {
 			const ens = await getENSAddress(source);
 			if (ens) {
@@ -58,30 +58,39 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 			}
 		};
 
-		const fetchURL = async () => {
-			const { etherscanURL, defaultToken } = await network();
-			setUrl(`${etherscanURL}tx/${hash}`);
-			setToken(defaultToken);
+		const fetchDefaultToken = async () => {
+			const { nativeTokenSymbol } = await network();
+			if (mounted) {
+				setToken(nativeTokenSymbol);
+			}
 		};
 
-		fetchURL();
+		fetchDefaultToken();
 		formatAddress();
+		// eslint-disable-next-line no-return-assign
+		return () => (mounted = false);
 	}, []);
+
+	const openTransaction = async () => {
+		const { etherscanURL } = await network();
+		Linking.openURL(`${etherscanURL}/tx/${hash}`);
+	};
 
 	return (
 		<Card
 			image={<TransactionIcon received={received} />}
 			title={format(timestamp, 'MM/dd/yyyy hh:mm aa')}
 			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
-			right={(
+			right={
+				// eslint-disable-next-line react/jsx-wrap-multilines
 				<Text style={{ fontSize: 12 }}>
 					{value ? formatUnits(value, tokenDecimal) : ''} {tokenSymbol || token}
 				</Text>
-			)}
+			}
 			style={{
 				opacity: isError === '1' ? 0.3 : 1
 			}}
-			onPress={() => Linking.openURL(url)}
+			onPress={openTransaction}
 		/>
 	);
 };

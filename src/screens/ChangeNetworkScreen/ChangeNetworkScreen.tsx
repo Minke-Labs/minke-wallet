@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +8,7 @@ import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { Network, networks, network as selectedNetwork, networkSettingsKey } from '@models/network';
 import { WelcomeLayout } from '@layouts';
 import { Icon, Text } from '@components';
+import { RootStackParamList } from '../../routes/types.routes';
 import ListItem from './ListItem';
 import styles from './ChangeNetworkScreen.styles';
 

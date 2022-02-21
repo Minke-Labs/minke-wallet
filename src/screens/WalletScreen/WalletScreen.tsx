@@ -7,7 +7,7 @@ import { useState } from '@hookstate/core';
 import { Text, Modal } from '@components';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
-import { globalWalletState, walletState, emptyWallet, setPrimaryWallet } from '@stores/WalletStore';
+import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 import Header from './Header';
 import ReceiveModal from './ReceiveModal';
@@ -84,7 +84,7 @@ const WalletScreen = () => {
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
-		state.set(newWallet as any);
+		state.set(walletState(newWallet));
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
 
