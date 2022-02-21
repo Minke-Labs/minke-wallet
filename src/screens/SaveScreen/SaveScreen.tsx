@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { Text, Icon, Button } from '@components';
-import { useTheme } from 'react-native-paper';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { makeStyles } from './SaveScreen.styles';
 import background from './background-rounded-waves.png';
@@ -9,17 +12,18 @@ import background from './background-rounded-waves.png';
 const SaveScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	return (
 		<View style={styles.container}>
 			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
 				<View style={styles.headerNavegation}>
-					<View style={styles.headerNavegationLeft}>
-						<Icon name="eyeStroke" size={20} />
-						<Text type="h3">Save</Text>
-					</View>
+					<TouchableOpacity style={styles.headerNavegationLeft} onPress={() => navigation.goBack()}>
+						<Icon name="chevronLeft" color="cta1" size={24} />
+						<Text weight="extraBold">Save</Text>
+					</TouchableOpacity>
 					<TouchableOpacity>
-						<Icon name="eyeStroke" color="cta1" size={24} />
+						<Icon name="infoStroke" color="cta1" size={24} />
 					</TouchableOpacity>
 				</View>
 
@@ -28,7 +32,7 @@ const SaveScreen = () => {
 					<Text style={styles.saveCurrentValue}>$0.00</Text>
 
 					<TouchableOpacity style={[styles.row, styles.depositButton]}>
-						<Icon name="eyeStroke" color="cta1" size={20} />
+						<Icon name="saveStroke" color="cta1" size={20} />
 						<Text>Deposit</Text>
 					</TouchableOpacity>
 				</View>

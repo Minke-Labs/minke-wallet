@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
+import { ColorType } from '@styles';
 
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
+export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
 		container: {
 			flex: 1,
 			flexDirection: 'column',
 			justifyContent: 'space-between',
-			backgroundColor: colors.fill
+			backgroundColor: 'transparent'
 		},
 		background: {
 			flex: 1
@@ -44,7 +45,7 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingRight: 32,
 			paddingBottom: 16,
 			paddingLeft: 32,
-			backgroundColor: colors.fill
+			backgroundColor: colors.detail4
 		},
 		saveCurrentValue: {
 			fontSize: 48,
@@ -52,18 +53,17 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			marginBottom: 24
 		},
 		depositCardContainer: {
-			backgroundColor: colors.background,
-			// backgroundColor: '#FFF',
-			borderTopLeftRadius: 24,
-			borderTopRightRadius: 24,
+			backgroundColor: colors.background1,
 			paddingTop: 32,
 			paddingRight: 24,
 			paddingBottom: 32,
-			paddingLeft: 24
+			paddingLeft: 24,
+			borderTopLeftRadius: 24,
+			borderTopRightRadius: 24
 		},
 		depositCard: {
 			borderRadius: 16,
-			backgroundColor: colors.fill,
+			backgroundColor: colors.detail4,
 			marginBottom: 16,
 			flexDirection: 'row',
 			alignContent: 'center',
@@ -78,20 +78,20 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			flexGrow: 1,
 			flexBasis: 0,
 			justifyContent: 'center',
-			borderRightColor: colors.background
+			borderRightColor: colors.background1
 		},
 		depositsAmount: {
-			color: colors.text,
+			color: colors.text1,
 			fontSize: 24,
 			fontFamily: 'Inter_800ExtraBold',
 			marginTop: 8
 		},
 		depositsAmountLebel: {
-			color: colors.secondaryText
+			color: colors.text4
 		},
 		actionDepositCard: {
 			borderRadius: 16,
-			backgroundColor: colors.fill,
+			backgroundColor: colors.detail4,
 			padding: 24,
 			alignItems: 'center',
 			justifyContent: 'center'
@@ -101,12 +101,14 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			paddingBottom: 40
 		},
 		cardInfo: {
-			color: colors.secondaryText,
+			color: colors.text4,
 			fontSize: 16,
+			textAlign: 'center',
 			marginBottom: 16
 		},
 		cardCta: {
-			color: colors.secondaryText,
+			color: colors.text4,
+			textAlign: 'center',
 			fontSize: 16
 		}
 	});
