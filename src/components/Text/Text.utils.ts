@@ -22,9 +22,18 @@ const fontType = {
 		fontSize: 18,
 		lineHeight: 22
 	},
+	// @TODO: Talk to Romullo about these new sizes
+	p2: {
+		fontSize: 16,
+		lineHeight: 19
+	},
 	a: {
 		fontSize: 14,
 		lineHeight: 17
+	},
+	span: {
+		fontSize: 12,
+		lineHeight: 16
 	}
 };
 

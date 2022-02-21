@@ -13,7 +13,7 @@ import { walletCreate } from '@models/wallet';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, Button, Modal } from '@components';
 import { useNavigation } from '@react-navigation/native';
-import { globalWalletState } from '@stores/WalletStore';
+import { globalWalletState, walletState } from '@stores/WalletStore';
 import { RootStackParamList } from '../../routes/types.routes';
 import styles from './WelcomeScreen.styles';
 import ImportFlow from './ImportFlow';
@@ -38,7 +38,7 @@ const Background: React.FC = ({ children }) => {
 const WelcomeScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [isModalVisible, setModalVisible] = React.useState(false);
-	const walletState = useState(globalWalletState());
+	const state = useState(globalWalletState());
 
 	const onImportFinished = () => {
 		setModalVisible(false);
@@ -47,7 +47,7 @@ const WelcomeScreen = () => {
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
-		walletState.set(newWallet);
+		state.set(walletState(newWallet));
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
 

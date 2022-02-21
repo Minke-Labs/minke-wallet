@@ -1,56 +1,73 @@
-import React, { useEffect, createRef } from 'react';
+/* eslint-disable no-useless-escape */
+import React, { useEffect, createRef, useCallback } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Headline, Text } from 'react-native-paper';
+import { View, TextInput, Keyboard, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Card } from 'react-native-paper';
+import { useTheme } from '@hooks';
 import { useState, State } from '@hookstate/core';
-import AppLoading from 'expo-app-loading';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BigNumber, utils } from 'ethers';
-import { toBn } from 'evm-bn';
+import { BigNumber as BN } from 'bignumber.js';
+import { fromBn } from 'evm-bn';
+import { getWalletTokens, WalletToken } from '@models/wallet';
+import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens, ExchangeParams } from '@models/token';
+import { network } from '@models/network';
+import { debounce } from 'lodash';
+import { globalWalletState } from '@stores/WalletStore';
+import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { WelcomeLayout } from '@layouts';
-import { Button } from '@components';
-import { RootStackParamList } from '@helpers/param-list-type';
-import { estimateGas, getEthLastPrice, getWalletTokens, WalletToken } from '@models/wallet';
-import { ether, ParaswapToken, Quote, getExchangePrice } from '@models/token';
-// import { globalWalletState } from '@stores/WalletStore';
-import { ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
+import { Text, Button, Icon, Modal } from '@components';
+import { RootStackParamList } from '../../routes/types.routes';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
-import swap from '../../../assets/swap.png';
+import { makeStyles } from './ExchangeScreen.styles';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
-	// const wallet = useState(globalWalletState());
+	const wallet = useState(globalWalletState());
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const gasPrice = useState(estimateGas);
-	const gweiPrice = useState(0);
-
-	const [fromToken, setFromToken] = React.useState<ParaswapToken>(ether);
+	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
+	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
+	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
 	const [toTokenBalance, setToTokenBalance] = React.useState('0');
-	const [searchSource, setSearchSource] = React.useState('from');
+	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
 	const [ownedTokens, setOwnedTokens] = React.useState<Array<string>>();
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
+	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
 
-	const balanceFrom = (token: ParaswapToken | undefined): string => {
-		if (!token) {
-			return '0';
-		}
-		const walletToken = walletTokens?.find((owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase());
-		return walletToken?.balance.toString() || '0';
-	};
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+
+	const balanceFrom = useCallback(
+		(token: ParaswapToken | undefined): number => {
+			if (!token) {
+				return 0;
+			}
+			const walletToken = walletTokens?.find(
+				(owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase()
+			);
+			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
+			if (isNativeToken && walletToken) {
+				const { gweiValue } = exchange.gas.value || {};
+				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
+				return walletToken.balance - gasPrice;
+			}
+			return walletToken?.balance || 0;
+		},
+		[exchange.gas.value]
+	);
 
 	const updateFromToken = (token: ParaswapToken) => {
 		setFromToken(token);
-		setFromTokenBalance(balanceFrom(token));
+		setFromTokenBalance(balanceFrom(token).toString());
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
@@ -65,50 +82,90 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		toAmountRef.current?.focus();
 	};
 
-	const updateFromQuotes = (amount: string) => {
-		// eslint-disable-next-line no-useless-escape
+	interface PriceParams {
+		amount?: string;
+		side?: ExchangeParams['side'];
+	}
+
+	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
+		if (fromToken && toToken) {
+			setLoadingPrices(true);
+			const { address: srcToken, decimals: srcDecimals } = fromToken;
+			const { address: destToken, decimals: destDecimals } = toToken;
+			const {
+				error,
+				priceRoute: { srcAmount, destAmount }
+			} = await getExchangePrice({ srcToken, srcDecimals, destToken, destDecimals, amount, side });
+			if (error) {
+				console.error(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+				Keyboard.dismiss();
+				setQuote(undefined);
+				setLoadingPrices(false);
+				return undefined;
+			}
+
+			const newQuote = {
+				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
+				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
+			};
+			setQuote(newQuote);
+			setLoadingPrices(false);
+			return newQuote;
+		}
+		setLoadingPrices(false);
+		return undefined;
+	};
+
+	const updateFromQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			if (quote) {
-				const bigNumberAmount = toBn(formatedValue);
-				let converted = quote.to[toToken?.symbol || ''].mul(bigNumberAmount);
-				converted = converted.div(quote.from[fromToken.symbol]);
+			const newQuote = await loadPrices({ amount: formatedValue, side: 'SELL' });
+			setQuote(newQuote);
+			if (newQuote) {
+				const converted = newQuote.to[toToken?.symbol || ''];
 				const convertedAmount = utils.formatUnits(converted, toToken?.decimals);
 				exchange.toAmount.set(convertedAmount);
 				setToConversionAmount(convertedAmount);
+				setFromConversionAmount(formatedValue);
 			}
+			setLastConversion({ direction: 'from', amount: formatedValue });
 			exchange.fromAmount.set(formatedValue);
 		}
 	};
 
-	const updateToQuotes = (amount: string) => {
-		// eslint-disable-next-line no-useless-escape
+	const updateToQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
-			// 1 ETH ==== > 10 DAI
-			// X ETH ==== > formatedValue DAI
-			// quote.from[fromToken.symbol] ==== > quote.to[toToken?.symbol || '']
-			// X                            ==== > toBn(formatedValue)
-			if (quote) {
-				let converted = quote.from[fromToken.symbol].mul(toBn(formatedValue));
-				converted = converted.div(quote.to[toToken?.symbol || '']);
+			const newQuote = await loadPrices({ amount: formatedValue, side: 'BUY' });
+			setQuote(newQuote);
+			if (newQuote) {
+				setQuote(newQuote);
+				const converted = newQuote.from[fromToken?.symbol || ''];
 				const convertedAmount = utils.formatUnits(converted, fromToken.decimals);
 				exchange.fromAmount.set(convertedAmount);
 				setFromConversionAmount(convertedAmount);
+				setToConversionAmount(formatedValue);
 			}
+			setLastConversion({ direction: 'to', amount: formatedValue });
 			exchange.toAmount.set(formatedValue);
 		}
 	};
 
 	const goToExchangeResume = () => {
-		navigation.navigate('ExchangeResume');
+		if (fromToken && toToken) {
+			exchange.merge({ from: fromToken, to: toToken, lastConversion });
+			navigation.navigate('ExchangeResume');
+		}
 	};
 
 	const showModal = () => {
 		Keyboard.dismiss();
 		setSearchVisible(true);
 	};
-	const hideModal = () => setSearchVisible(false);
+	const hideModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(false);
+	};
 
 	const showModalFrom = (): void => {
 		setShowOnlyOwnedTokens(true);
@@ -122,20 +179,6 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		showModal();
 	};
 
-	const loadPrices = async (amount?: string) => {
-		const result = await getExchangePrice(fromToken.symbol, toToken?.symbol || '', amount);
-		if (result.error) {
-			console.error(result.error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
-			Keyboard.dismiss();
-			setQuote(undefined);
-		} else {
-			setQuote({
-				from: { [fromToken.symbol]: BigNumber.from(result.priceRoute.srcAmount) },
-				to: { [toToken?.symbol || '']: BigNumber.from(result.priceRoute.destAmount) }
-			});
-		}
-	};
-
 	const onTokenSelect = (token: ParaswapToken) => {
 		hideModal();
 		setQuote(null);
@@ -146,129 +189,180 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		}
 	};
 
+	const canChangeDirections =
+		!loadingPrices && fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase());
+
 	const directionSwap = () => {
-		if (fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase())) {
-			setQuote(null);
+		if (canChangeDirections) {
+			if (lastConversion) {
+				const { amount, direction } = lastConversion;
+				setLastConversion({ amount, direction: direction === 'from' ? 'to' : 'from' });
+			}
+			exchange.merge({
+				from: undefined,
+				to: undefined,
+				fromAmount: undefined,
+				toAmount: undefined,
+				lastConversion: undefined
+			});
 			const backup = fromToken;
-			updateFromToken(toToken);
+			updateFromToken(toToken || ({} as ParaswapToken));
 			updateToToken(backup);
 		}
 	};
 
-	useEffect(() => {
-		async function getGweiPrice() {
-			const ethPrice = await getEthLastPrice();
-			gweiPrice.set(+ethPrice.result.ethusd / 1000000000);
-		}
-
-		async function fetchWalletTokens() {
-			// const address = wallet.value.wallet?.address || '';
-			const address = '0xfe6b7a4494b308f8c0025dcc635ac22630ec7330';
-			const result = await getWalletTokens(address);
-			const { products } = result[address.toLowerCase()];
-			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
-			setWalletTokens(tokens);
-			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
-		}
-
-		getGweiPrice();
-		fetchWalletTokens();
-	}, []);
-
-	useEffect(() => {
-		setFromTokenBalance(balanceFrom(fromToken));
-		setToTokenBalance(balanceFrom(toToken));
-	}, [ownedTokens]);
-
-	useEffect(() => {
+	const ExchangeSummary = useCallback(() => {
 		if (fromToken && toToken) {
-			loadPrices();
-		}
-	}, [fromToken, toToken]);
-
-	useEffect(() => {
-		if (quote) {
-			if (exchange.value.fromAmount) {
-				updateFromQuotes(exchange.value.fromAmount);
-			} else if (exchange.value.toAmount) {
-				updateToQuotes(exchange.value.toAmount);
+			if (quote) {
+				const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
+				const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
+				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
+				const destQuantityString = division.match(/^-?\d+(?:\.\d{0,9})?/);
+				return (
+					<Text type="span" weight="regular" color="text3">
+						1 {fromToken.symbol} = {destQuantityString} {toToken.symbol}
+					</Text>
+				);
 			}
-		}
-	}, [quote]);
-
-	if (gasPrice.promised) {
-		return <AppLoading />;
-	}
-	if (gasPrice.error) {
-		return <Text>Could not get Gas Prices</Text>;
-	}
-
-	const exchangeSummary = () => {
-		if (fromToken && toToken && quote) {
-			const destQuantity = quote.to[toToken.symbol];
-
-			return `1 ${fromToken.symbol} = ${utils.formatUnits(destQuantity, toToken.decimals)} ${toToken.symbol}`;
+			return (
+				<>
+					<Text type="span" weight="regular" color="text3">
+						Fetching...
+					</Text>
+					<ActivityIndicator color={colors.background1} size={16} />
+				</>
+			);
 		}
 		return null;
-	};
-
-	if (fromToken && !exchange.value.from) {
-		exchange.from.set(fromToken);
-	}
+	}, [quote]);
 
 	const canSwap = () =>
 		quote &&
 		fromToken &&
 		toToken &&
-		exchange.value.from &&
-		exchange.value.to &&
 		exchange.value.fromAmount &&
 		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
-		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
+		balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
+
+	useEffect(() => {
+		const loadNativeToken = async () => {
+			const { nativeTokenSymbol } = await network();
+			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
+			setFromToken(native);
+			setNativeToken(native);
+		};
+
+		const fetchWalletTokens = async () => {
+			const address = wallet.address.value || '';
+			const result = await getWalletTokens(address);
+			const { products } = result[address.toLowerCase()];
+			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
+			setWalletTokens(tokens);
+			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
+		};
+		exchange.set({} as ExchangeState);
+		loadNativeToken();
+		fetchWalletTokens();
+	}, []);
+
+	useEffect(() => {
+		setFromTokenBalance(balanceFrom(fromToken).toString());
+		setToTokenBalance(balanceFrom(toToken).toString());
+	}, [ownedTokens, exchange.gas.value]);
+
+	useEffect(() => {
+		if (fromToken && toToken) {
+			if (lastConversion) {
+				const { direction, amount } = lastConversion;
+				if (direction === 'from') {
+					updateFromQuotes(amount);
+				} else {
+					updateToQuotes(amount);
+				}
+			} else {
+				loadPrices({});
+			}
+		}
+	}, [toToken, fromToken]);
+
+	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
 
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-			<View style={{ flex: 1 }}>
-				<WelcomeLayout>
-					<Headline>Exchange</Headline>
-					<Text>{exchangeSummary()}</Text>
-					<View style={{ padding: 20 }}>
+		<>
+			<WelcomeLayout>
+				<View style={styles.header}>
+					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+						<Icon name="arrowBackStroke" color="text7" size={24} />
+					</TouchableOpacity>
+				</View>
+				<View style={styles.exchangeSection}>
+					<View style={styles.exchangeHeadlineRow}>
+						<Text type="h3" weight="extraBold">
+							Exchange
+						</Text>
+						<ExchangeSummary />
+					</View>
+					<Card style={styles.tokenCard}>
 						<TokenCard
 							token={fromToken}
 							onPress={showModalFrom}
 							balance={fromTokenBalance}
 							innerRef={fromAmountRef}
-							updateQuotes={updateFromQuotes}
+							updateQuotes={debounce(updateFromQuotes, 500)}
 							conversionAmount={fromConversionAmount}
 						/>
-						<TouchableOpacity onPress={directionSwap}>
-							<Image source={swap} />
+
+						<TouchableOpacity
+							style={styles.tokenCardDivisor}
+							onPress={directionSwap}
+							disabled={!canChangeDirections}
+						>
+							<View style={styles.tokenCardDivisorBackground}>
+								{loadingPrices ? (
+									<ActivityIndicator color={colors.cta1} />
+								) : (
+									<Icon name="arrowDown" size={24} color={canChangeDirections ? 'cta1' : 'cta2'} />
+								)}
+							</View>
 						</TouchableOpacity>
+
 						<TokenCard
 							token={toToken}
 							onPress={showModalTo}
 							balance={toTokenBalance}
 							innerRef={toAmountRef}
-							updateQuotes={updateToQuotes}
+							updateQuotes={debounce(updateToQuotes, 500)}
 							conversionAmount={toConversionAmount}
 							disableMax
 						/>
-					</View>
-					<GasSelector gasPrice={gasPrice.value} gweiPrice={gweiPrice.value} />
-					<SearchTokens
-						visible={searchVisible}
-						onDismiss={hideModal}
-						onTokenSelect={onTokenSelect}
-						ownedTokens={ownedTokens}
-						showOnlyOwnedTokens={showOnlyOwnedTokens}
-						selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
-					/>
-					<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
-				</WelcomeLayout>
-			</View>
-		</TouchableWithoutFeedback>
+					</Card>
+				</View>
+
+				<GasSelector />
+
+				<View style={styles.exchangeSection}>
+					{!loadingPrices && !enoughForGas && <Text>Not enough balance for gas</Text>}
+
+					{loadingPrices ? (
+						<ActivityIndicator color={colors.cta1} />
+					) : (
+						<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
+					)}
+				</View>
+			</WelcomeLayout>
+			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+				<SearchTokens
+					visible={searchVisible}
+					onDismiss={hideModal}
+					onTokenSelect={onTokenSelect}
+					ownedTokens={ownedTokens}
+					showOnlyOwnedTokens={showOnlyOwnedTokens}
+					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
+				/>
+			</Modal>
+		</>
 	);
 };
 

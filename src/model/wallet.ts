@@ -1,7 +1,7 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
-import { walletState, WalletState } from '@src/stores/WalletStore';
+import { WalletState } from '@src/stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -57,16 +57,12 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 };
 
 export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
-	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	Object.values(wallets).forEach((w) => {
-		w.network = w.network || networks.ropsten.id;
-	});
 	await saveObject('minkeAllWallets', wallets);
 };
 
@@ -89,7 +85,8 @@ const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Pro
 	return { wallet: new Wallet(mnemonicOrPrivateKey, provider) };
 };
 
-export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletState> => {
+// @TODO - Create always from the same mnemonic if possible.
+export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWallet> => {
 	const blockchain = await selectedNetwork();
 	const { wallet, mnemonic } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 
@@ -100,8 +97,7 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<WalletSta
 
 	await savePrivateKey(wallet.address, wallet.privateKey);
 	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
-
-	return walletState(newWallet);
+	return newWallet;
 };
 
 export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<WalletState> => {
@@ -158,6 +154,9 @@ export const erc20abi = [
 
 	// Authenticated Functions
 	'function transfer(address to, uint amount) returns (bool)',
+	'function approve(address spender, uint256 amount) external returns (bool)',
+	// eslint-disable-next-line max-len
+	'function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external',
 
 	// Events
 	'event Transfer(address indexed from, address indexed to, uint amount)'
@@ -175,6 +174,7 @@ export const sendTransaction = async (
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
+		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
 		gasLimit: 41000,
@@ -192,17 +192,24 @@ export const sendTransaction = async (
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseEther(amount) // @todo: should this be able to process other tokens with other decimals?
+			value: parseEther(amount)
 		};
 	}
 
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 	return wallet.provider.sendTransaction(signedTx as string);
 };
+
 export const estimateGas = async (): Promise<EstimateGasResponse> => {
-	const { gasURL, etherscanAPIURL } = await selectedNetwork();
+	const { gasURL, etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
+	const result = await fetch(`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=${apiKey}`);
+	return result.json();
+};
+
+export const estimateConfirmationTime = async (gasPrice: number): Promise<EstimateConfirmationTime> => {
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const result = await fetch(
-		`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N`
+		`${etherscanAPIURL}api?module=gastracker&action=gasestimate&gasprice=${gasPrice}&apikey=${apiKey}`
 	);
 	return result.json();
 };
@@ -222,8 +229,7 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 };
 
 export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {
-	const { etherscanAPIURL, etherscanAPIKey } = await selectedNetwork();
-	const apiKey = etherscanAPIKey || 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N';
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const baseUrl = `${etherscanAPIURL}api?module=account&action=txlist&address=`;
 	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=${apiKey}`;
 	const result = await fetch(`${baseUrl}${suffix}`);
@@ -289,6 +295,7 @@ export interface EstimateGasResponse {
 		FastGasPrice: string;
 		suggestBaseFee: string;
 		gasUsedRatio: string;
+		UsdPrice: string | undefined;
 	};
 }
 
@@ -388,4 +395,10 @@ export interface Coin {
 	id: string;
 	symbol: string;
 	name: string;
+}
+
+export interface EstimateConfirmationTime {
+	status: string;
+	message: string;
+	result: string;
 }

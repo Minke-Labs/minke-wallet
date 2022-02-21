@@ -83,7 +83,6 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 			};
 		}
 	}
-
 	return emptyWallet;
 };
 
