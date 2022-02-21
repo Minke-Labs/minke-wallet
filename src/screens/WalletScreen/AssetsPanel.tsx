@@ -4,6 +4,9 @@ import { Text, Icon } from '@components';
 import { commify } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { useTheme } from '@hooks';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 
 const styles = StyleSheet.create({
 	assetsContainer: {
@@ -61,6 +64,7 @@ interface AssetsPanelProps {
 const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds }) => {
 	// const [sendModalOpen, setSendModalOpen] = useState(false);
 	const { colors } = useTheme();
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	return (
 		<View style={styles.assetsContainer}>
@@ -88,6 +92,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds 
 					<Text type="a">Add Funds</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					onPress={() => navigation.navigate('Save')}
 					activeOpacity={0.6}
 					style={[
 						styles.sendButtonContainer,

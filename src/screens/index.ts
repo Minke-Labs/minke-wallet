@@ -14,6 +14,7 @@ import WalletAssets from './WalletAssets/WalletAssets';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
+import SaveScreen from './SaveScreen/SaveScreen';
 
 import Test from './Test/Test';
 
@@ -34,5 +35,6 @@ export {
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,
+	SaveScreen,
 	Test
 };

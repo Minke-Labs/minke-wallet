@@ -21,6 +21,7 @@ import {
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,
+	SaveScreen,
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
@@ -88,6 +89,7 @@ const Routes: React.FC = () => {
 					component={TransactionsScreen}
 					options={(props) => defaultOptions(props)}
 				/>
+				<Stack.Screen name="Save" component={SaveScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
