@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
 interface SelectorProps {
 	active: boolean;
 	setActive: (active: boolean) => void;
+	coinSymbol: string;
 }
 
-const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
+const Selector: React.FC<SelectorProps> = ({ active, setActive, coinSymbol }) => {
 	const { colors } = useTheme();
 
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
@@ -54,7 +55,7 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
 			</View>
 			<View style={styles.titleContainer}>
 				<Text weight={active ? 'bold' : 'medium'} style={{ fontSize: 12 }} color={active ? 'text6' : 'text3'}>
-					ETH
+					{coinSymbol}
 				</Text>
 			</View>
 		</TouchableOpacity>

@@ -18,9 +18,9 @@ export const getExchangePrice = async (
 	return result.json();
 };
 
-export const getTokenHistory = async (token = 'ethereum', type = 'all') => {
-	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
-	const result = await fetch(`${baseURL}${token}/market_chart?vs_currency=usd&days=60&interval=${type}'`);
+export const getTokenHistory = async (token = 'ethereum') => {
+	const baseURL = 'https://www.coinbase.com/api/v2/assets/prices/';
+	const result = await fetch(`${baseURL}${token.toLowerCase()}?base=USD`);
 	return result.json();
 };
 

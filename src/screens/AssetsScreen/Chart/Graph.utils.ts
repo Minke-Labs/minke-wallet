@@ -2,12 +2,8 @@ import * as shape from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { Dimensions } from 'react-native';
 import { parse } from 'react-native-redash';
-import data from './data.json';
-import { Prices } from './Graph.types';
 
-const values = data.data.prices as Prices;
-
-const POINTS = 60;
+const POINTS = 30;
 export const height = 263;
 export const { width } = Dimensions.get('window');
 
@@ -23,9 +19,9 @@ export const buildGraph = (datapoints: DataPoints, label: string) => {
 
 	// I REVERSED IT HERE BECAUSE THE API ORDER DATE IS DESC, AND THE AREA WON'T WORK OTHERWISE
 	const formattedValues = priceList
-		// .slice(0)
-		// .reverse()
-		.map((price) => [price[1], parseFloat(price[0])] as [number, number]);
+		.slice(0)
+		.reverse()
+		.map((price) => [parseFloat(price[0]), price[1]] as [number, number]);
 
 	const prices = formattedValues.map((value) => value[0]);
 	const dates = formattedValues.map((value) => value[1]);
@@ -58,36 +54,3 @@ export const buildGraph = (datapoints: DataPoints, label: string) => {
 		path: d
 	};
 };
-
-export const graphs = [
-	{
-		label: '1H',
-		value: 0,
-		data: buildGraph(values.hour, 'Last Hour')
-	},
-	{
-		label: '1D',
-		value: 1,
-		data: buildGraph(values.day, 'Today')
-	},
-	{
-		label: '1W',
-		value: 2,
-		data: buildGraph(values.month, 'Last Week')
-	},
-	{
-		label: '1M',
-		value: 3,
-		data: buildGraph(values.month, 'Last Month')
-	},
-	{
-		label: '1Y',
-		value: 4,
-		data: buildGraph(values.year, 'This Year')
-	},
-	{
-		label: 'All',
-		value: 5,
-		data: buildGraph(values.all, 'All time')
-	}
-] as const;

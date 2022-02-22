@@ -3,10 +3,15 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
+import { WalletToken } from '@models/wallet';
 import Buttons from './Buttons';
 import Selector from './Selector';
 
-const Balance = () => {
+interface BalanceProps {
+	coin: WalletToken;
+}
+
+const Balance: React.FC<BalanceProps> = ({ coin }) => {
 	const { colors } = useTheme();
 	const [active, setActive] = useState(false);
 
@@ -38,9 +43,11 @@ const Balance = () => {
 					}}
 				>
 					<Text color="text4">Balance</Text>
-					<Selector {...{ active, setActive }} />
+					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
 				</View>
-				<Text style={{ fontSize: 32, lineHeight: 39 }}>{active ? '1eth' : '$200.00'}</Text>
+				<Text style={{ fontSize: 32, lineHeight: 39 }}>
+					{active ? `$${coin.balance.toFixed(5)}` : `$${coin.balanceUSD.toFixed(5)}`}
+				</Text>
 			</View>
 
 			<Buttons onPress={() => console.log('PRESSED!')} />

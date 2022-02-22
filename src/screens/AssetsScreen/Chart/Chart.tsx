@@ -6,54 +6,50 @@ import Main from './Main';
 import Selection from './Selection';
 import Header from './Header';
 import { buildGraph } from './Graph.utils';
-import { GraphIndex } from './Graph.types';
+import { GraphIndex, Prices } from './Graph.types';
 
 interface ChartProps {
-	all: any;
-	hour: any;
-	day: any;
-	week: any;
-	month: any;
-	year: any;
+	data: any;
 }
 
-const Chart: React.FC<ChartProps> = ({ all, hour, day, week, month, year }) => {
+const Chart: React.FC<ChartProps> = ({ data }) => {
 	const [percChange, setPercChange] = useState(0);
 	const translation = useVector();
 	const transition = useSharedValue(0);
 	const previous = useSharedValue<GraphIndex>(0);
 	const current = useSharedValue<GraphIndex>(0);
+	const values = data.data.prices as Prices;
 
 	const graphs = [
 		{
 			label: '1H',
 			value: 0,
-			data: buildGraph(hour, 'Last Hour')
+			data: buildGraph(values.hour, 'Last Hour')
 		},
 		{
 			label: '1D',
 			value: 1,
-			data: buildGraph(day, 'Last Day')
+			data: buildGraph(values.day, 'Last Day')
 		},
 		{
 			label: '1W',
 			value: 2,
-			data: buildGraph(week, 'Last Week')
+			data: buildGraph(values.week, 'Last Week')
 		},
 		{
 			label: '1M',
 			value: 3,
-			data: buildGraph(month, 'Last Month')
+			data: buildGraph(values.month, 'Last Month')
 		},
 		{
 			label: '1Y',
 			value: 4,
-			data: buildGraph(year, 'This Year')
+			data: buildGraph(values.year, 'This Year')
 		},
 		{
 			label: 'All',
 			value: 5,
-			data: buildGraph(all, 'All time')
+			data: buildGraph(values.all, 'All time')
 		}
 	] as const;
 
