@@ -1,10 +1,16 @@
+/* eslint-disable no-console */
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
 import React from 'react';
 
-const MarketCap = () => {
+interface MarketCapProps {
+	marketCap: number;
+}
+
+const MarketCap: React.FC<MarketCapProps> = ({ marketCap }) => {
 	const { colors } = useTheme();
+	console.log(marketCap);
 	return (
 		<View
 			style={{
@@ -26,7 +32,7 @@ const MarketCap = () => {
 					lineHeight: 36
 				}}
 			>
-				$286.39B
+				${marketCap}
 			</Text>
 		</View>
 	);

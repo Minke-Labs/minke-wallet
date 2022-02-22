@@ -24,6 +24,15 @@ export const getTokenHistory = async (token = 'ethereum') => {
 	return result.json();
 };
 
+export const getTokenMarketCap = async (tokenName: string) => {
+	const baseURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false';
+	const result = await fetch(baseURL);
+	const toJson = await result.json();
+	const mktCapArr = toJson.map((item: any) => ({ id: item.id, market_cap: item.market_cap }));
+	const mktCap = mktCapArr.find((item: any) => item.id === tokenName.toLowerCase());
+	return mktCap.market_cap;
+};
+
 export const createTransaction = async ({
 	srcToken,
 	destToken,
