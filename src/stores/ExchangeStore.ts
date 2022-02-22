@@ -1,11 +1,16 @@
 import { createState } from '@hookstate/core';
-import { ParaswapToken } from '@models/token';
+import { ParaswapToken } from '@src/model/token';
 
 export interface Gas {
-	type: string;
+	type: 'normal' | 'fast' | 'slow';
 	gweiValue: number;
-	gweiPrice: number;
+	usdPrice: number;
 	wait: number;
+}
+
+export interface Conversion {
+	direction: 'from' | 'to';
+	amount: string;
 }
 
 export interface ExchangeState {
@@ -14,6 +19,7 @@ export interface ExchangeState {
 	fromAmount: string | undefined;
 	toAmount: string | undefined;
 	gas: Gas | undefined;
+	lastConversion?: Conversion;
 }
 
 const globalStateInit = createState({} as ExchangeState);
