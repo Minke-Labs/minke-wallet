@@ -47,15 +47,15 @@ const SaveScreen = () => {
 				<View style={styles.depositCard}>
 					<View style={styles.depositCardItem}>
 						<View>
-							<Text style={styles.depositsAmountLebel}>Deposits</Text>
-							<Text style={styles.depositsAmountLebel}>since joining</Text>
+							<Text style={styles.depositsAmountLebel}>Earnings</Text>
+							<Text style={styles.depositsAmountLebel}>this month</Text>
 						</View>
 						<Text style={styles.depositsAmount}>$0.00</Text>
 					</View>
 					<View style={styles.divisor} />
 					<View style={styles.depositCardItem}>
 						<View>
-							<Text style={styles.depositsAmountLebel}>Interest</Text>
+							<Text style={styles.depositsAmountLebel}>Earnt</Text>
 							<Text style={styles.depositsAmountLebel}>since joining</Text>
 						</View>
 						<Text style={styles.depositsAmount}>$0.00</Text>
