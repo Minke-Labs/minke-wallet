@@ -38,7 +38,7 @@ const SaveScreen = () => {
 					</Text>
 					<TouchableOpacity style={[styles.row, styles.depositButton]}>
 						<Icon name="saveStroke" color="cta1" size={20} />
-						<Text>Deposit</Text>
+						<Text style={styles.depositButtonText}>Deposit</Text>
 					</TouchableOpacity>
 				</View>
 			</ImageBackground>

@@ -51,6 +51,10 @@ export const makeStyles = (colors: ColorType) =>
 			borderRadius: 100,
 			backgroundColor: colors.detail4
 		},
+		depositButtonText: {
+			marginLeft: 8,
+			marginBottom: 4
+		},
 		depositCardContainer: {
 			backgroundColor: colors.background1,
 			paddingTop: 32,
