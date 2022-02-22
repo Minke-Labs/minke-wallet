@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@helpers/param-list-type';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { Button, Text, Icon } from '@components';
@@ -11,6 +10,7 @@ import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { backupImg } from '@images';
 import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../routes/types.routes';
 import styles from './BackupSettingsScreen.styles';
 
 const BackupSettingsScreen = () => {
@@ -53,7 +53,7 @@ const BackupSettingsScreen = () => {
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6}>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Wallet')}>
 					<Text weight="medium" color="text7" type="a">
 						Done
 					</Text>

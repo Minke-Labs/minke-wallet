@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, TextInput, Animated, Text } from 'react-native';
 

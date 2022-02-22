@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@helpers/param-list-type';
 import * as Linking from 'expo-linking';
 import { WelcomeLayout } from '@layouts';
 import { Icon, Text } from '@components';
 import { useTheme } from '@hooks';
 import { useNavigation } from '@react-navigation/native';
 import styles from './SettingsScreen.styles';
+import { RootStackParamList } from '../../routes/types.routes';
 import SettingsOption from './SettingsOption';
 
 const SettingsScreen = () => {

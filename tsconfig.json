@@ -17,7 +17,7 @@
 			"@routes": ["src/routes/index"],
 			"@layouts": ["src/layouts/index"],
 			"@images": ["src/images/index"],
-			"@hooks": ["src/hooks/index"],
+			"@hooks": ["src/hooks/index"]
 		}
 	}
 }

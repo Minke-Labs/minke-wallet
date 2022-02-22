@@ -1,11 +1,12 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { View, StyleSheet } from 'react-native';
+import { useTheme } from '@hooks';
 import { Text, Button, TextArea, ModalHeader } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { restoreWalletByMnemonic } from '@src/model/wallet';
+import { ActivityIndicator } from 'react-native-paper';
 
 const styles = StyleSheet.create({
 	container: {
@@ -32,15 +33,20 @@ interface ImportFlowProps {
 
 const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished, onDismiss }) => {
 	const [text, setText] = React.useState('');
+	const [importing, setImporting] = React.useState(false);
 	const state = useState(globalWalletState());
+	const { colors } = useTheme();
 
 	const onImportWallet = async () => {
 		if (text.trim()) {
 			try {
+				setImporting(true);
 				const wallet = await restoreWalletByMnemonic(text.trim());
 				state.set(wallet);
+				setImporting(false);
 				onImportFinished();
 			} catch (error) {
+				setImporting(false);
 				console.error('Invalid seed phrase or primary key');
 			}
 		}
@@ -61,7 +67,11 @@ const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished, onDismiss }) 
 						onChangeText={(t) => setText(t)}
 					/>
 				</View>
-				<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
+				{importing ? (
+					<ActivityIndicator animating color={colors.text7} />
+				) : (
+					<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
+				)}
 			</View>
 			<KeyboardSpacer />
 		</View>
