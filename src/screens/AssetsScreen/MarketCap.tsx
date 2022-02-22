@@ -10,7 +10,6 @@ interface MarketCapProps {
 
 const MarketCap: React.FC<MarketCapProps> = ({ marketCap }) => {
 	const { colors } = useTheme();
-	console.log(marketCap);
 	return (
 		<View
 			style={{
