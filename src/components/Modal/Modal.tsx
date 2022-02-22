@@ -56,7 +56,6 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 					}
 				]}
 			>
-				{/* <ModalHeader onDismiss={onDismiss} /> */}
 				{children}
 			</Animated.View>
 		</View>

@@ -144,7 +144,7 @@ const WalletScreen = () => {
 			</Modal>
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<AddFunds onDismiss={() => setAddFundsVisible(false)} />
+				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 		</>
 	);
