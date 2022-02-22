@@ -7,7 +7,7 @@ export const makeStyles = (colors: ColorType) =>
 			flex: 1,
 			flexDirection: 'column',
 			justifyContent: 'space-between',
-			backgroundColor: 'transparent'
+			backgroundColor: '#fff'
 		},
 		background: {
 			flex: 1
@@ -32,8 +32,11 @@ export const makeStyles = (colors: ColorType) =>
 			flexDirection: 'column',
 			padding: 24,
 			alignItems: 'center',
-			alignContent: 'center',
 			justifyContent: 'center'
+		},
+		saveCurrentValue: {
+			fontSize: 48,
+			marginBottom: 24
 		},
 		row: {
 			flexDirection: 'row',
@@ -45,12 +48,8 @@ export const makeStyles = (colors: ColorType) =>
 			paddingRight: 32,
 			paddingBottom: 16,
 			paddingLeft: 32,
+			borderRadius: 100,
 			backgroundColor: colors.detail4
-		},
-		saveCurrentValue: {
-			fontSize: 48,
-			marginTop: 8,
-			marginBottom: 24
 		},
 		depositCardContainer: {
 			backgroundColor: colors.background1,
@@ -84,7 +83,8 @@ export const makeStyles = (colors: ColorType) =>
 			color: colors.text1,
 			fontSize: 24,
 			fontFamily: 'Inter_800ExtraBold',
-			marginTop: 8
+			marginTop: 8,
+			paddingTop: 10
 		},
 		depositsAmountLebel: {
 			color: colors.text4
