@@ -20,7 +20,9 @@ const SaveScreen = () => {
 				<View style={styles.headerNavegation}>
 					<TouchableOpacity style={styles.headerNavegationLeft} onPress={() => navigation.goBack()}>
 						<Icon name="chevronLeft" color="cta1" size={24} />
-						<Text weight="extraBold">Save</Text>
+						<Text weight="extraBold" color="#0A2138">
+							Save
+						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity>
 						<Icon name="infoStroke" color="cta1" size={24} />
@@ -28,8 +30,10 @@ const SaveScreen = () => {
 				</View>
 
 				<View style={styles.saveCurrentValueContainer}>
-					<Text>Current value</Text>
-					<Text style={styles.saveCurrentValue}>$0.00</Text>
+					<Text color="#0A2138">Current value</Text>
+					<Text color="#0A2138" style={styles.saveCurrentValue}>
+						$0.00
+					</Text>
 
 					<TouchableOpacity style={[styles.row, styles.depositButton]}>
 						<Icon name="saveStroke" color="cta1" size={20} />
