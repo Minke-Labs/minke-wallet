@@ -63,7 +63,9 @@ const SaveScreen = () => {
 				</View>
 
 				<View style={styles.actionDepositCard}>
-					<Text>illustration</Text>
+					<View style={styles.actionDepositCardIcon}>
+						<Icon name="wallet2Stroke" color="cta1" size={24} />
+					</View>
 					<View style={styles.actionDepositCardInfo}>
 						<Text style={styles.cardInfo}>Your transactions will appear here</Text>
 						<Text style={styles.cardCta}>Let's get started?</Text>

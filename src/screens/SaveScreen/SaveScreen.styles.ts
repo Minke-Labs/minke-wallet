@@ -96,6 +96,11 @@ export const makeStyles = (colors: ColorType) =>
 			alignItems: 'center',
 			justifyContent: 'center'
 		},
+		actionDepositCardIcon: {
+			backgroundColor: 'rgba(103, 152, 242, 0.1)',
+			padding: 16,
+			borderRadius: 16
+		},
 		actionDepositCardInfo: {
 			paddingTop: 40,
 			paddingBottom: 40

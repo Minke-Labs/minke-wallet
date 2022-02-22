@@ -27,7 +27,7 @@ const NetWorth = () => {
 				subtitle="Available funds in your wallet"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
-				right={(
+				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text weight="bold" style={{ fontSize: 16 }}>
 							${commify(state.value.balance?.usd || '')}
@@ -39,7 +39,7 @@ const NetWorth = () => {
 							style={{ transform: [{ rotate: '180deg' }] }}
 						/>
 					</View>
-				)}
+				}
 			/>
 			<Card
 				image={<Image icon="vaultStroke" />}
@@ -47,7 +47,7 @@ const NetWorth = () => {
 				subtitle="Funds deposited in vaults"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
-				right={(
+				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text color="text7" type="a">
 							Deposit
@@ -59,7 +59,7 @@ const NetWorth = () => {
 							style={{ transform: [{ rotate: '180deg' }] }}
 						/>
 					</View>
-				)}
+				}
 			/>
 			<Card
 				image={<Image alert icon="borrowStroke" />}
@@ -67,7 +67,7 @@ const NetWorth = () => {
 				subtitle="Open loans"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
-				right={(
+				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text color="text7" type="a">
 							Borrow
@@ -79,7 +79,7 @@ const NetWorth = () => {
 							style={{ transform: [{ rotate: '180deg' }] }}
 						/>
 					</View>
-				)}
+				}
 			/>
 		</View>
 	);
