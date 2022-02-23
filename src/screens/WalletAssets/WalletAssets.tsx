@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
+import { Modal } from '@components';
+import { AddFunds } from '@containers';
 import { getWalletTokens, WalletToken } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import AssetList from './AssetList/AssetList';
@@ -10,6 +12,7 @@ import AssetListEmpty from './AssetListEmpty';
 
 const WalletAssets = () => {
 	const { colors } = useTheme();
+	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
 	const { address, balance } = globalWalletState().value;
 
@@ -24,21 +27,26 @@ const WalletAssets = () => {
 	}, []);
 
 	return (
-		<View style={{ height: '100%', backgroundColor: colors.detail4 }}>
-			<ValueBox {...{ balance }} />
-			<View
-				style={{
-					borderTopLeftRadius: 24,
-					borderTopRightRadius: 24,
-					flex: 1,
-					backgroundColor: colors.background1
-				}}
-			>
-				{walletTokens && walletTokens.length > 0 ?
-					<AssetList walletTokens={walletTokens} /> :
-					<AssetListEmpty onPress={() => console.log('PRESSED!')} />}
+		<>
+			<View style={{ height: '100%', backgroundColor: colors.detail4 }}>
+				<ValueBox {...{ balance }} />
+				<View
+					style={{
+						borderTopLeftRadius: 24,
+						borderTopRightRadius: 24,
+						flex: 1,
+						backgroundColor: colors.background1
+					}}
+				>
+					{walletTokens && walletTokens.length > 0 ?
+						<AssetList walletTokens={walletTokens} /> :
+						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />}
+				</View>
 			</View>
-		</View>
+			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
+				<AddFunds onDismiss={() => setAddFundsVisible(false)} />
+			</Modal>
+		</>
 	);
 };
 
