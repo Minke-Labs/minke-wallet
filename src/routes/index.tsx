@@ -6,6 +6,7 @@ import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navig
 import { MaterialIcons } from '@expo/vector-icons';
 import {
 	AccountsScreen,
+	AssetsScreen,
 	BackupScreen,
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
@@ -54,6 +55,7 @@ const Routes: React.FC = () => {
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="Welcome" component={WelcomeScreen} />
+				<Stack.Screen name="Assets" component={AssetsScreen} />
 				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="WalletCreated" component={WalletCreatedScreen} />
 				<Stack.Screen name="Backup" component={BackupScreen} />

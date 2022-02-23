@@ -3,6 +3,7 @@ import { Text } from '@components';
 import { network } from '@models/network';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
+// import { coins } from '@helpers/coins';
 import CoinCard from './CoinCard';
 
 const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => {

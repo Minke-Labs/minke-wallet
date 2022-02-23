@@ -9,7 +9,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useTheme } from '@hooks';
 import styles from './Modal.styles';
-// import ModalHeader from './ModalHeader';
 
 const screenHeight = Dimensions.get('window').height;
 

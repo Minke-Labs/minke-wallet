@@ -18,6 +18,7 @@ module.exports = (api) => {
 						'@models': './src/model',
 						'@assets': './assets',
 						'@styles': './src/styles',
+						'@containers': './src/containers',
 						'@screens': './src/screens',
 						'@contexts': './src/contexts',
 						'@routes': './src/routes',

@@ -1,13 +1,12 @@
-import React from 'react';
+/* eslint-disable no-param-reassign */
+import React, { useState } from 'react';
 import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { View, StyleSheet, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
-import { graphs } from './Graph.utils';
+// import { graphs } from './Graph.utils';
 import { GraphIndex } from './Graph.types';
 
 const { width } = Dimensions.get('window');
-
-const BUTTON_WIDTH = width / graphs.length;
 
 const styles = StyleSheet.create({
 	container: {
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
 	labelContainer: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		width: BUTTON_WIDTH,
 		height: 32
 	}
 });
@@ -35,16 +33,21 @@ interface SelectionProps {
 	previous: SharedValue<GraphIndex>;
 	transition: SharedValue<number>;
 	current: SharedValue<GraphIndex>;
+	graphs: any;
 }
 
-const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) => {
-	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.18)) }]
+const Selection: React.FC<SelectionProps> = ({ previous, current, transition, graphs }) => {
+	const BUTTON_WIDTH = width / graphs.length;
+
+	const [using, setUsing] = useState(0);
+
+	const animatedBackgroundTag = useAnimatedStyle(() => ({
+		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.11)) }]
 	}));
 
 	return (
 		<View style={styles.container}>
-			<Animated.View style={[styles.backgroundTag, animatedStyle]} />
+			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
 
 			<FlatList
 				keyExtractor={(item) => item.label}
@@ -57,10 +60,14 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition }) 
 							transition.value = 0;
 							current.value = index as GraphIndex;
 							transition.value = withTiming(1);
+							setUsing(item.value);
 						}}
 					>
-						<Animated.View style={[styles.labelContainer]}>
-							<Text color="text4" weight="extraBold">
+						<Animated.View style={[styles.labelContainer, { width: BUTTON_WIDTH }]}>
+							<Text
+								color={item.value === using ? 'text6' : 'text9'}
+								weight={item.value === using ? 'bold' : 'regular'}
+							>
 								{item.label}
 							</Text>
 						</Animated.View>
