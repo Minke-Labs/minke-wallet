@@ -84,7 +84,7 @@ const WalletScreen = () => {
 
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
-		state.set(walletState(newWallet));
+		state.set(await walletState(newWallet));
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
 
