@@ -70,7 +70,12 @@ const SaveScreen = () => {
 						<Text style={styles.cardInfo}>Your transactions will appear here</Text>
 						<Text style={styles.cardCta}>Lets get started?</Text>
 					</View>
-					<Button iconLeft="addStroke" title="Depoist" marginBottom={16} />
+					<Button
+						iconLeft="addStroke"
+						title="Depoist"
+						marginBottom={16}
+						onPress={() => navigation.navigate('SaveEmptyState')}
+					/>
 				</View>
 			</View>
 		</View>
