@@ -49,7 +49,7 @@ const Card: React.FC<CardProps> = ({ name, icon, onPress }) => {
 
 const arr = [
 	{ name: 'Exchange', icon: 'exchangeStroke' },
-	{ name: 'Receive', icon: 'sendStroke' },
+	{ name: 'Receive', icon: 'receiveStroke' },
 	{ name: 'Copy address', icon: 'copyStroke' },
 	{ name: 'New wallet', icon: 'walletStroke' },
 	{ name: 'Switch accounts', icon: 'avatarStroke' },

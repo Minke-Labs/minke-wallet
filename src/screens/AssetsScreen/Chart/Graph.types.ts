@@ -36,7 +36,7 @@ interface Prices {
 	all: DataPoints;
 }
 
-type GraphIndex = 0 | 1 | 2 | 3 | 4;
+type GraphIndex = 0 | 1 | 2 | 3 | 4 | 5;
 
 export {
 	Amount, PercentChange, LatestPrice, PriceList, DataPoints, Prices, GraphIndex

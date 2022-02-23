@@ -32,7 +32,15 @@ const lightTheme = {
 	brand4: '#0A2036',
 	alert3b: 'rgba(48, 192, 97, 0.15)',
 	alert3c: 'rgba(48, 192, 97, 0)',
-	text8: '#FFFFFF'
+	text8: '#FFFFFF',
+	text9: '#4E5E6F',
+	text10: '#F3D2BB',
+	graphic1: '#49d67855',
+	graphic2: '#acffc83e',
+	graphic3: '#ffffff4e',
+	graphicRed1: '#ee808073',
+	graphicRed2: 'rgba(192, 48, 48, 0.15)',
+	graphicRed3: 'rgba(192, 48, 48, 0)'
 };
 
 const darkTheme = {
@@ -69,7 +77,15 @@ const darkTheme = {
 	brand4: '#0A2036',
 	alert3b: 'rgba(172, 232, 185, 0.15)',
 	alert3c: 'rgba(172, 232, 185, 0)',
-	text8: '#0A2138'
+	text8: '#0A2138',
+	text9: '#FFFFFF',
+	text10: '#FFFFFF',
+	graphic1: '#49d67855',
+	graphic2: 'rgba(172, 232, 185, 0.15)',
+	graphic3: 'rgba(172, 232, 185, 0)',
+	graphicRed1: '#C03030',
+	graphicRed2: 'rgba(192, 48, 48, 0.15)',
+	graphicRed3: 'rgba(192, 48, 48, 0)'
 };
 
 export const colors = { darkTheme, lightTheme };

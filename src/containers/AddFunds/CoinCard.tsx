@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Token, Icon, Text } from '@components';
 import { TokenType } from '@styles';
 import { useTheme } from '@hooks';
-import { ICoin } from '../../../helpers/coins';
+import { ICoin } from '../../helpers/coins';
 
 const styles = StyleSheet.create({
 	container: {
