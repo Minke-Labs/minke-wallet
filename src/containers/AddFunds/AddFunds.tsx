@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { View, SafeAreaView, TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
 import { ModalHeader } from '@components';
@@ -14,10 +14,11 @@ const useFormProgress = () => {
 };
 
 interface AddFundsModalProps {
+	visible: boolean;
 	onDismiss: () => void;
 }
 
-const AddFundsModal: React.FC<AddFundsModalProps> = ({ onDismiss }) => {
+const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismiss }) => {
 	const [currentStep, setCurrentStep, goForward, goBack] = useFormProgress();
 	const [coin, setCoin] = useState<ICoin>(coins.ethereum);
 	const [amount, setAmount] = useState<number | undefined>(undefined);
@@ -41,9 +42,15 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ onDismiss }) => {
 	};
 
 	const dismissCoin = () => {
-		onDismiss();
 		setCurrentStep(0);
+		onDismiss();
 	};
+
+	useEffect(() => {
+		if (!visible) {
+			setCurrentStep(0);
+		}
+	}, [visible]);
 
 	return (
 		<SafeAreaView>

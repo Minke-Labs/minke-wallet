@@ -107,7 +107,7 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWall
 	return newWallet;
 };
 
-export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<WalletState> => {
+export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<MinkeWallet> => {
 	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 
 	const existingWallets = (await getAllWallets()) || {};
@@ -117,7 +117,7 @@ export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Pro
 		return walletCreate(mnemonicOrPrivateKey);
 	}
 
-	return walletState(existingWallet);
+	return existingWallet;
 };
 
 export const purgeWallets = () => deleteItemAsync('minkeAllWallets');

@@ -1,68 +1,52 @@
-import React from 'react';
-import { View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Icon, Text } from '@components';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
+/* eslint-disable max-len */
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
+import { useTheme } from '@hooks';
+import { Modal } from '@components';
+import { AddFunds } from '@containers';
+import { getWalletTokens, WalletToken } from '@models/wallet';
+import { globalWalletState } from '@stores/WalletStore';
 import AssetList from './AssetList/AssetList';
+import ValueBox from './ValueBox';
+import AssetListEmpty from './AssetListEmpty';
 
 const WalletAssets = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const { colors } = useTheme();
+	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
+	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
+	const { address, balance } = globalWalletState().value;
+
+	useEffect(() => {
+		const getTokens = async () => {
+			const result = await getWalletTokens(address);
+			const { products } = result[address.toLowerCase()];
+			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
+			setWalletTokens(tokens);
+		};
+		getTokens();
+	}, []);
 
 	return (
-		<ScrollView>
-			<SafeAreaView>
+		<>
+			<View style={{ height: '100%', backgroundColor: colors.detail4 }}>
+				<ValueBox {...{ balance }} />
 				<View
 					style={{
-						marginTop: 14,
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						paddingHorizontal: 24
-					}}
-				>
-					<View
-						style={{
-							flexDirection: 'row',
-							alignItems: 'center'
-						}}
-					>
-						<TouchableOpacity onPress={() => navigation.goBack()}>
-							<Icon name="arrowBackStroke" size={24} color="text7" style={{ marginRight: 12 }} />
-						</TouchableOpacity>
-						<Text type="h3" weight="extraBold">
-							WalletAssets
-						</Text>
-					</View>
-					<TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-						<Icon size={24} color="text7" />
-					</TouchableOpacity>
-				</View>
-				<View
-					style={{
-						height: 207,
-						alignItems: 'center',
-						paddingTop: 64
-					}}
-				>
-					<Text marginBottom={10}>Current value</Text>
-					<Text weight="medium" style={{ fontSize: 48, lineHeight: 58 }}>
-						$200.00
-					</Text>
-				</View>
-				<View
-					style={{
-						flex: 1,
-						width: '100%',
 						borderTopLeftRadius: 24,
 						borderTopRightRadius: 24,
-						backgroundColor: '#F2EAE1'
+						flex: 1,
+						backgroundColor: colors.background1
 					}}
 				>
-					<AssetList />
+					{walletTokens && walletTokens.length > 0 ?
+						<AssetList walletTokens={walletTokens} /> :
+						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />}
 				</View>
-			</SafeAreaView>
-		</ScrollView>
+			</View>
+			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
+				<AddFunds onDismiss={() => setAddFundsVisible(false)} />
+			</Modal>
+		</>
 	);
 };
 

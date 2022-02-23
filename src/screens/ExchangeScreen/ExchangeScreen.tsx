@@ -247,7 +247,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	useEffect(() => {
 		const loadNativeToken = async () => {
-			const { nativeTokenSymbol } = await network();
+			const {
+				nativeToken: { symbol: nativeTokenSymbol }
+			} = await network();
 			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
 			setFromToken(native);
 			setNativeToken(native);

@@ -37,6 +37,6 @@ export default StyleSheet.create({
 		width: '100%',
 		alignItems: 'center',
 		marginBottom: 48,
-		padding: 24
+		paddingHorizontal: 24
 	}
 });
