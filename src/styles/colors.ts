@@ -62,7 +62,7 @@ const darkTheme = {
 	text3: '#B7B9BB',
 	text4: '#748190',
 	text5: '#D0D0D0',
-	text6: '#FFFFFF',
+	text6: '#0A2138',
 	text7: '#FFFFFF',
 
 	// Colors that aren't in tokens, but are used in the project.

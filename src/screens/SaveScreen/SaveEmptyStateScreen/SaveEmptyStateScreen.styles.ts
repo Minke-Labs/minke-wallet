@@ -29,7 +29,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		saveEmptyStateCard: {
 			width: '100%',
-			height: '52%',
+			height: '45%',
 			alignItems: 'center',
 			paddingHorizontal: 24,
 			paddingTop: '16%',
@@ -41,7 +41,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		bgSaveEmptyScreen: {
 			width: '100%',
-			height: 531,
+			height: 583,
 			position: 'absolute',
 			top: 0,
 			left: 0,
