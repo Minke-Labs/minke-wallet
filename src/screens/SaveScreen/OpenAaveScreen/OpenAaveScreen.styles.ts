@@ -12,7 +12,7 @@ export const makeStyles = (colors: ColorType) =>
 			height: '100%'
 		},
 		headerNavegation: {
-			paddingTop: 56,
+			paddingTop: 32,
 			flexDirection: 'row',
 			marginBottom: 16
 		},

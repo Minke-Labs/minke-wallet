@@ -26,7 +26,7 @@ const OpenAaveScreen = () => {
 		>
 			<View style={styles.container}>
 				<View style={styles.headerNavegation}>
-					<TouchableOpacity style={styles.headerNavegationLeft} onPress={() => navigation.goBack()}>
+					<TouchableOpacity onPress={() => navigation.goBack()}>
 						<Icon name="chevronLeft" color="cta1" size={24} />
 					</TouchableOpacity>
 				</View>
