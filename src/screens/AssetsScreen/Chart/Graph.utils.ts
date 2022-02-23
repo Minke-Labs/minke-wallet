@@ -3,7 +3,7 @@ import { scaleLinear } from 'd3-scale';
 import { Dimensions } from 'react-native';
 import { parse } from 'react-native-redash';
 
-const POINTS = 25;
+const POINTS = 24;
 export const height = 263;
 export const { width } = Dimensions.get('window');
 
@@ -16,6 +16,7 @@ interface DataPoints {
 
 export const buildGraph = (datapoints: DataPoints, label: string) => {
 	const { length } = datapoints.prices;
+	console.log(length);
 	const priceList = datapoints.prices.slice(0, Math.min(length, POINTS));
 
 	// I REVERSED IT HERE BECAUSE THE API ORDER DATE IS DESC, AND THE AREA WON'T WORK OTHERWISE
