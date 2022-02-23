@@ -29,10 +29,10 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		saveEmptyStateCard: {
 			width: '100%',
-			height: '45%',
+			height: '50%',
 			alignItems: 'center',
 			paddingHorizontal: 24,
-			paddingTop: '16%',
+			paddingTop: '10%',
 			borderTopRightRadius: 88,
 			backgroundColor: colors.text6
 		},
@@ -46,5 +46,27 @@ export const makeStyles = (colors: ColorType) =>
 			top: 0,
 			left: 0,
 			zIndex: -1
+		},
+		greenButton: {
+			marginBottom: 56,
+			borderColor: 'rgba(222, 245, 236, 1)',
+			borderRadius: 12.5,
+			borderWidth: 4
+		},
+		greenButtonText: {
+			fontSize: 14
+		},
+		greenButtonIcon: {
+			marginBottom: -8,
+			marginRight: 8
+		},
+		linearGradient: {
+			flexDirection: 'row',
+			alignContent: 'center',
+			alignItems: 'center',
+			justifyContent: 'center',
+			borderRadius: 8,
+			paddingVertical: 8,
+			paddingHorizontal: 24
 		}
 	});
