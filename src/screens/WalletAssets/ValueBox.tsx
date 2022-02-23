@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, useColorScheme, SafeAreaView } from 'react-nat
 import { BigNumber } from 'ethers';
 import { Text } from '@components';
 import { walletAssetBackImg, walletAssetBackDarkImg } from '@images';
+import { numberFormat } from '@helpers/utilities';
 import Header from './Header';
 
 const styles = StyleSheet.create({
@@ -42,7 +43,7 @@ const ValueBox: React.FC<ValueBoxProps> = ({ balance }) => (
 		<View style={{ height: 207, alignItems: 'center' }}>
 			<Text marginBottom={10}>Current value</Text>
 			<Text weight="medium" style={{ fontSize: 48, lineHeight: 58 }}>
-				${balance?.usd}
+				{numberFormat(Number(balance?.usd) || 0)}
 			</Text>
 		</View>
 	</Background>
