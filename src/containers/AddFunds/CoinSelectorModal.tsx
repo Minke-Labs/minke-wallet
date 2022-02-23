@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from '@components';
 import CoinCard from './CoinCard';
-import { coins } from '../../../helpers/coins';
+import { coins } from '../../helpers/coins';
 
 const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => (
 	<>

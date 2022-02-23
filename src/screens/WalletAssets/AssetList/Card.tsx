@@ -68,14 +68,14 @@ const Card: React.FC<CardProps> = ({
 				</View>
 				<View style={{ flex: 0.5 }}>
 					<Text marginBottom={6} style={{ fontSize: 12, lineHeight: 14 }}>
-						Interest
+						24h change
 					</Text>
-					<Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
+					{/* <Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
 						{interest}%
 					</Text>
 					<Text marginBottom={24} style={{ fontSize: 12, lineHeight: 14 }}>
 						{reward && `${reward}% Reward`}
-					</Text>
+					</Text> */}
 				</View>
 			</View>
 		</View>

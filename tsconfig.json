@@ -16,6 +16,7 @@
 			"@contexts": ["src/contexts/index"],
 			"@routes": ["src/routes/index"],
 			"@layouts": ["src/layouts/index"],
+			"@containers": ["src/containers/index"],
 			"@images": ["src/images/index"],
 			"@hooks": ["src/hooks/index"]
 		}

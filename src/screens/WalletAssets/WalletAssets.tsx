@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
@@ -5,6 +6,7 @@ import { getWalletTokens, WalletToken } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import AssetList from './AssetList/AssetList';
 import ValueBox from './ValueBox';
+import AssetListEmpty from './AssetListEmpty';
 
 const WalletAssets = () => {
 	const { colors } = useTheme();
@@ -32,7 +34,9 @@ const WalletAssets = () => {
 					backgroundColor: colors.background1
 				}}
 			>
-				{walletTokens && walletTokens.length > 0 && <AssetList walletTokens={walletTokens} />}
+				{walletTokens && walletTokens.length > 0 ?
+					<AssetList walletTokens={walletTokens} /> :
+					<AssetListEmpty onPress={() => console.log('PRESSED!')} />}
 			</View>
 		</View>
 	);

@@ -9,6 +9,7 @@ import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
+import { AddFunds } from '@containers';
 import Header from './Header';
 import ReceiveModal from './ReceiveModal';
 import AssetsPanel from './AssetsPanel';
@@ -16,7 +17,6 @@ import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
 import NetWorth from './NetWorth/NetWorth';
-import AddFunds from './AddFunds/AddFunds';
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();

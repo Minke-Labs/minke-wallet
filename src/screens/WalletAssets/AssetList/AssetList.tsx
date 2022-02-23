@@ -27,6 +27,9 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 		return walletTokens;
 	};
 
+	console.log('SOMETHING');
+	console.log('LENGTH: ', filterByStablecoin());
+
 	return (
 		<View style={{ paddingTop: 32, height: '100%' }}>
 			<AssetHeader />

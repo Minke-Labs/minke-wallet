@@ -5,6 +5,7 @@ import waveWelcomeFooterImg from './wave-welcome-footer.png';
 import waveWelcomeFooterDarkImg from './wave-welcome-footer-dark.png';
 import walletCreatedImg from './wallet-created.png';
 import whale2Img from './whale2.png';
+import whale3Img from './whale3.png';
 import backupImg from './backupImage.png';
 import walletAssetBackImg from './wallet-asset-back.png';
 import walletAssetBackDarkImg from './wallet-asset-back-dark.png';
@@ -17,6 +18,7 @@ export {
 	waveWelcomeHeaderImg,
 	walletCreatedImg,
 	whale2Img,
+	whale3Img,
 	backupImg,
 	walletAssetBackImg,
 	walletAssetBackDarkImg
