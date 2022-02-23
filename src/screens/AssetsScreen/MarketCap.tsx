@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
+import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
-import React from 'react';
+import { numberFormat } from '@helpers/utilities';
 
 interface MarketCapProps {
 	marketCap: number;
@@ -31,7 +31,7 @@ const MarketCap: React.FC<MarketCapProps> = ({ marketCap }) => {
 					lineHeight: 36
 				}}
 			>
-				${marketCap}
+				{numberFormat(marketCap)}
 			</Text>
 		</View>
 	);

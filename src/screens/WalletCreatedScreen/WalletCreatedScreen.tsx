@@ -1,10 +1,10 @@
+import React from 'react';
+import { Image, View } from 'react-native';
 import { useState } from '@hookstate/core';
 import AppLoading from 'expo-app-loading';
 import { getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { backupSeedOnKeychain } from '@models/keychain';
-import React from 'react';
-import { Image } from 'react-native';
 import { WelcomeLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button } from '@components';
@@ -45,7 +45,14 @@ const WalletCreatedScreen = () => {
 			<Text center color="text2" width={258} marginBottom={48}>
 				Your keys your coin. Backup your wallet incase of loss.
 			</Text>
-			<Button title="Back up to iCloud" iconRight="cloudStroke" onPress={backupOnKeychain} marginBottom={14} />
+			<View style={{ width: '100%', paddingHorizontal: 24 }}>
+				<Button
+					title="Back up to iCloud"
+					iconRight="cloudStroke"
+					onPress={backupOnKeychain}
+					marginBottom={14}
+				/>
+			</View>
 			<Button title="Back up manually" mode="text" onPress={backupManually} />
 		</WelcomeLayout>
 	);
