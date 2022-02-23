@@ -70,12 +70,7 @@ const SaveScreen = () => {
 						<Text style={styles.cardInfo}>Your transactions will appear here</Text>
 						<Text style={styles.cardCta}>Lets get started?</Text>
 					</View>
-					<Button
-						iconLeft="addStroke"
-						title="Depoist"
-						marginBottom={16}
-						onPress={() => navigation.navigate('OpenAave')}
-					/>
+					<Button iconLeft="addStroke" title="Depoist" marginBottom={16} />
 				</View>
 			</View>
 		</View>
