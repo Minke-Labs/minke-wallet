@@ -59,7 +59,9 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 		};
 
 		const fetchDefaultToken = async () => {
-			const { nativeTokenSymbol } = await network();
+			const {
+				nativeToken: { symbol: nativeTokenSymbol }
+			} = await network();
 			if (mounted) {
 				setToken(nativeTokenSymbol);
 			}

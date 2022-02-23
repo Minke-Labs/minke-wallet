@@ -66,7 +66,7 @@ const ChangeNetworkScreen = () => {
 							label={item.name}
 							onPress={() => selectNetwork(item)}
 							selected={item.id === connectedNetwork?.id}
-							token={item.defaultToken}
+							token={item.nativeToken.symbol}
 							testnet={item.testnet}
 						/>
 					)}

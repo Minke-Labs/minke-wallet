@@ -10,10 +10,7 @@ export interface Network {
 	etherscanAPIKey: string;
 	gasURL?: string;
 	zapperNetwork: string;
-	supportedTokenList?: {
-		[key: string]: string;
-	};
-	nativeTokenSymbol: string;
+	nativeToken: { symbol: string; name: string };
 	transactionTimesEndpoint: boolean;
 }
 
@@ -34,10 +31,7 @@ export const networks: Networks = {
 		etherscanAPIURL: 'https://api.etherscan.io/',
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
-		supportedTokenList: {
-			dai: '0x6b175474e89094c44da98b954eedeac495271d0f'
-		},
-		nativeTokenSymbol: 'ETH',
+		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		transactionTimesEndpoint: true
 	},
 	matic: {
@@ -49,10 +43,7 @@ export const networks: Networks = {
 		etherscanAPIURL: 'https://api.polygonscan.com/',
 		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		zapperNetwork: 'polygon',
-		supportedTokenList: {
-			dai: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'
-		},
-		nativeTokenSymbol: 'MATIC',
+		nativeToken: { symbol: 'MATIC', name: 'Matic' },
 		transactionTimesEndpoint: false
 	},
 	mumbai: {
@@ -65,10 +56,7 @@ export const networks: Networks = {
 		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		gasURL: 'https://api.polygonscan.com/',
 		zapperNetwork: 'polygon',
-		supportedTokenList: {
-			dai: '0xd393b1e02da9831ff419e22ea105aae4c47e1253'
-		},
-		nativeTokenSymbol: 'MATIC',
+		nativeToken: { symbol: 'MATIC', name: 'Matic' },
 		transactionTimesEndpoint: false
 	},
 	ropsten: {
@@ -80,16 +68,13 @@ export const networks: Networks = {
 		etherscanAPIURL: 'https://api-ropsten.etherscan.io/',
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
-		supportedTokenList: {
-			dai: '0xad6d458402f60fd3bd25163575031acdce07538d'
-		},
-		nativeTokenSymbol: 'ETH',
+		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		transactionTimesEndpoint: true
 	}
 };
 
 export const networkSettingsKey = '@minke:network';
-export const defaultNetwork = networks.mumbai;
+export const defaultNetwork = networks.matic;
 
 export const network = async (): Promise<Network> => {
 	const id = await AsyncStorage.getItem(networkSettingsKey);
