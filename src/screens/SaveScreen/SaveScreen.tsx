@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { Text, Icon, Button } from '@components';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { makeStyles } from './SaveScreen.styles';
@@ -68,9 +68,14 @@ const SaveScreen = () => {
 					</View>
 					<View style={styles.actionDepositCardInfo}>
 						<Text style={styles.cardInfo}>Your transactions will appear here</Text>
-						<Text style={styles.cardCta}>Let's get started?</Text>
+						<Text style={styles.cardCta}>Lets get started?</Text>
 					</View>
-					<Button iconLeft="addStroke" title="Depoist" marginBottom={16} />
+					<Button
+						iconLeft="addStroke"
+						title="Depoist"
+						marginBottom={16}
+						onPress={() => navigation.navigate('OpenAave')}
+					/>
 				</View>
 			</View>
 		</View>

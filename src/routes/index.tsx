@@ -22,6 +22,7 @@ import {
 	WalletScreen,
 	WelcomeScreen,
 	SaveScreen,
+	OpenAaveScreen,
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
@@ -90,6 +91,7 @@ const Routes: React.FC = () => {
 					options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen name="Save" component={SaveScreen} />
+				<Stack.Screen name="OpenAave" component={OpenAaveScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
