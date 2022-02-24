@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { View, FlatList, Image, TouchableOpacity } from 'react-native';
-import { Text, Token } from '@components';
-import { TokenType } from '@styles';
-import { numberFormat, coinParamFromSymbol } from '@helpers/utilities';
+import { View, FlatList, Image } from 'react-native';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
+import { Text } from '@components';
 import { useState } from '@hookstate/core';
 import { WalletToken, getWalletTokens, imageSource } from '@src/model/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { styles } from './TransactionSelectFunds.styles';
+import Card from '../Card';
 
 interface UserProps {
 	name: string;
@@ -46,39 +45,15 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 		<View style={styles.container}>
 			{user.address ? <Image source={image!} style={styles.image} /> : null}
 			<Text type="h3" weight="extraBold" marginBottom={32}>
-				Which <Text color="text7" type="h3" weight="extraBold">asset</Text> do you want to send to{' '}
-				<Text color="text7" type="h3" weight="extraBold">{user.name}</Text>?
+				Which <Text color="text11" type="h3" weight="extraBold">asset</Text> do you want to send to{' '}
+				<Text color="text11" type="h3" weight="extraBold">{user.name}</Text>?
 			</Text>
 
 			{walletTokens ? (
 				<FlatList
 					keyExtractor={(item) => item.symbol}
 					data={walletTokens}
-					renderItem={({ item }) =>
-						(
-							<TouchableOpacity
-								onPress={() => onSelected(item)}
-								style={{
-									height: 40,
-									flexDirection: 'row',
-									marginBottom: 24
-								}}
-							>
-								<Token
-									name={item.symbol.toLowerCase() as TokenType}
-									size={40}
-								/>
-								<View style={{ marginLeft: 16, justifyContent: 'space-between' }}>
-									<Text weight="bold" type="p2">
-										{coinParamFromSymbol({ symbol: item.symbol, type: 'name' })}
-									</Text>
-									<Text type="span" weight="bold">
-										{numberFormat(item.balanceUSD)} ({item.balance.toFixed(3)} {item.symbol})
-										<Text weight="regular" type="span"> available</Text>
-									</Text>
-								</View>
-							</TouchableOpacity>
-						)}
+					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
 				<ActivityIndicator color={colors.primary} />

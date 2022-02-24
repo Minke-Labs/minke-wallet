@@ -1,16 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import React, { useCallback, useEffect } from 'react';
-import { Alert, RefreshControl, ScrollView } from 'react-native';
+import { Alert, RefreshControl, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TabLayout } from '@layouts';
 import { useState } from '@hookstate/core';
-import { Text, Modal } from '@components';
+import { Text, Modal, Token } from '@components';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
+import { network } from '@src/model/network';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 import { AddFunds } from '@containers';
+import { TokenType } from '@styles';
+import * as Linking from 'expo-linking';
 import Header from './Header';
 import ReceiveModal from './ReceiveModal';
 import AssetsPanel from './AssetsPanel';
@@ -19,6 +23,11 @@ import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
 import NetWorth from './NetWorth/NetWorth';
 import SendModal from './SendModal/SendModal';
+
+type ResultProps = {
+	link: string;
+	symbol: string;
+};
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -31,6 +40,8 @@ const WalletScreen = () => {
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+	const [sendModalFinished, setSendModalFinished] = React.useState(false);
+	const [sentObj, setSendObj] = React.useState<ResultProps>();
 
 	const onDeleteWallet = () =>
 		Alert.alert('Are you sure?', '', [
@@ -104,7 +115,17 @@ const WalletScreen = () => {
 		setSnackbarVisible(true);
 	};
 
+	const onSendFinished = (obj: ResultProps) => {
+		setSendModalFinished(true);
+		setSendObj(obj);
+	};
+
 	const { address, balance } = state.value;
+
+	const openTransaction = async () => {
+		const { etherscanURL } = await network();
+		Linking.openURL(`${etherscanURL}/tx/${sentObj?.link}`);
+	};
 
 	return (
 		<>
@@ -153,8 +174,55 @@ const WalletScreen = () => {
 			</Modal>
 
 			<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>
-				<SendModal onDismiss={() => setSendModalOpen(false)} />
+				<SendModal
+					onDismiss={() => setSendModalOpen(false)}
+					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
+				/>
 			</Modal>
+
+			<Modal isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>
+				<SafeAreaView
+					style={{
+						flex: 1,
+						alignItems: 'center',
+						paddingHorizontal: 32
+					}}
+				>
+					<Text
+						type="h3"
+						weight="extraBold"
+						color="text1"
+						marginBottom={12}
+						style={{ marginTop: 32 }}
+					>
+						Token Sent
+					</Text>
+					<Token name={sentObj?.symbol as TokenType} size={60} />
+					<Text
+						weight="extraBold"
+						color="text1"
+						marginBottom={12}
+						style={{ marginTop: 12 }}
+					>
+						{sentObj?.symbol}
+					</Text>
+					<Text
+						type="p2"
+						weight="medium"
+						color="text3"
+						marginBottom={12}
+						style={{ marginTop: 8 }}
+					>
+						Linke of transaction:
+					</Text>
+					<TouchableOpacity onPress={openTransaction}>
+						<Text type="p2" weight="medium" color="text3" width={300} center>
+							{sentObj?.link}
+						</Text>
+					</TouchableOpacity>
+				</SafeAreaView>
+			</Modal>
+
 		</>
 	);
 };

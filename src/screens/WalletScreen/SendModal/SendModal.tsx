@@ -14,11 +14,17 @@ interface UserProps {
 	address: string;
 }
 
+type ResultProps = {
+	link: string;
+	symbol: string;
+};
+
 interface Props {
 	onDismiss: () => void;
+	sentSuccessfully: (obj: ResultProps) => void;
 }
 
-const SendModal: React.FC<Props> = ({ onDismiss }) => {
+const SendModal: React.FC<Props> = ({ onDismiss, sentSuccessfully }) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [currentStep, setCurrentStep, goForward, goBack] = useFormProgress();
 	const [user, setUser] = useState<UserProps>(null!);
@@ -68,7 +74,7 @@ const SendModal: React.FC<Props> = ({ onDismiss }) => {
 				<TransactionSelectFunds user={user} onSelected={onTokenSelected} />}
 
 			{currentStep === 2 &&
-					token && <TransactionTransfer {...{ user, token }} />}
+					token && <TransactionTransfer {...{ user, token, onDismiss, sentSuccessfully }} />}
 		</SafeAreaView>
 	);
 };

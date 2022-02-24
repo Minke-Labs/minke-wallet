@@ -6,8 +6,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken } from '@models/token';
-import { makeStyles } from './SearchTokens.styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { makeStyles } from './SearchTokens.styles';
 
 const SearchTokens = ({
 	visible,

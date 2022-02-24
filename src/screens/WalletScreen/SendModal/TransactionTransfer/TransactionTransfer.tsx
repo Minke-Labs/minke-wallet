@@ -1,12 +1,13 @@
+/* eslint-disable no-tabs */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable no-console */
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Image } from 'react-native';
-import { Text, Token, Button } from '@components';
+import { Text, Token, Button, Modal } from '@components';
 import { useState } from '@hookstate/core';
 import { TokenType } from '@styles';
-import PrimaryButton from '@src/components/PrimaryButton';
 import { globalWalletState } from '@src/stores/WalletStore';
-import { numberFormat, coinParamFromSymbol } from '@helpers/utilities';
 import {
 	estimateGas,
 	sendTransaction,
@@ -15,33 +16,47 @@ import {
 	resolveENSAddress,
 	imageSource
 } from '@src/model/wallet';
+import { numberFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { styles } from './TransactionTransfer.styles';
+import Card from '../Card';
 
 interface UserProps {
 	name: string;
 	address: string;
 }
 
+type ResultProps = {
+	link: string;
+	symbol: string;
+};
+
 interface TransactionTransferProps {
 	user: UserProps;
 	token: WalletToken;
+	onDismiss: () => void;
+	sentSuccessfully: (obj: ResultProps) => void;
 }
 
-const Card = ({ token: { symbol, balanceUSD, balance } }: { token: WalletToken }) => (
-	<View style={styles.cardContainer}>
-		<Image style={styles.cardImage} source={require('@assets/eth.png')} />
-		<View style={{ flex: 1 }}>
-			<Text style={styles.cardTitle}>{symbol}</Text>
-			<Text style={styles.cardDesc}>
-				${balanceUSD.toString().match(/^-?\d+(?:\.\d{0,2})?/)} ({balance} {symbol}) available
-			</Text>
-		</View>
-	</View>
-);
+interface GasPriceLineProps {
+	gas: number;
+	label: string;
+	priceUSD: number;
+	token: WalletToken;
+}
 
-const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }) => {
+const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD, token }) => {
+	const coinValue = gas * 21000 * 10 ** -9;
+	return (
+		<Text color="text2" type="span" marginBottom={8}>
+			{label}: Normal - {coinValue.toFixed(5)} {token.symbol} | $
+			{numberFormat(coinValue * priceUSD, 5)} Network Fee
+		</Text>
+	);
+};
+
+const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, onDismiss, sentSuccessfully }) => {
 	const state = useState(globalWalletState());
 	const [image, setImage] = React.useState<{ uri: string }>();
 	const [amount, onChangeAmount] = React.useState('');
@@ -61,36 +76,29 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 		fetchImage();
 	}, []);
 
-	const GasPriceLine = useCallback(
-		({ gas, label, priceUSD }) => {
-			const coinValue = gas * 21000 * 10 ** -9;
-			return (
-				<Text>
-					{label}: Normal - {coinValue} {token.symbol} | $
-					{(coinValue * priceUSD).toString().match(/^-?\d+(?:\.\d{0,6})?/)} Network Fee
-				</Text>
-			);
-		},
-		[token]
-	);
-
 	const { privateKey, network: { id, defaultToken } } = state.value;
 
 	const onSend = async () => {
-		if (gasPrice) {
-			const ens = user.address;
-			const to = (await resolveENSAddress(ens)) || ens;
-			const result = await sendTransaction(
-				privateKey,
-				to,
-				amount,
-				gasPrice.result.ProposeGasPrice,
-				id,
-				token.symbol.toLowerCase() === defaultToken.toLowerCase() ? '' : token.address
-			);
+		// if (gasPrice) {
+		// 	const ens = user.address;
+		// 	const to = (await resolveENSAddress(ens)) || ens;
+		// 	const result = await sendTransaction(
+		// 		privateKey,
+		// 		to,
+		// 		amount,
+		// 		gasPrice.result.ProposeGasPrice,
+		// 		id,
+		// 		token.symbol.toLowerCase() === defaultToken.toLowerCase() ? '' : token.address
+		// 	);
 
-			console.log(result);
-		}
+		// 	console.log(result);
+		// }
+		const result = {
+			symbol: 'eth',
+			link: '0x1234567890123456789012345678901234567890'
+		};
+		onDismiss();
+		sentSuccessfully(result);
 	};
 
 	return (
@@ -105,8 +113,8 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 			</View>
 
 			<Text type="h3" weight="extraBold" marginBottom={32}>
-				How much <Text color="text7" type="h3" weight="extraBold">{token.symbol}</Text> do you want to send to
-				<Text color="text7" type="h3" weight="extraBold"> {user.name}</Text>?
+				How much <Text color="text11" type="h3" weight="extraBold">{token.symbol}</Text> do you want to send to
+				<Text color="text11" type="h3" weight="extraBold"> {user.name}</Text>?
 			</Text>
 
 			<Card token={token} />
@@ -123,29 +131,33 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 			/>
 
 			{gasPrice && (
-				<GasPriceLine
-					label="Low"
-					gas={+gasPrice.result.SafeGasPrice}
-					priceUSD={+gasPrice.result.UsdPrice!}
-				/>
+				<View style={{ marginBottom: 32 }}>
+					<GasPriceLine
+						token={token}
+						label="Low"
+						gas={+gasPrice.result.SafeGasPrice}
+						priceUSD={+gasPrice.result.UsdPrice!}
+					/>
+					<GasPriceLine
+						token={token}
+						label="Normal"
+						gas={+gasPrice.result.ProposeGasPrice}
+						priceUSD={+gasPrice.result.UsdPrice!}
+					/>
+					<GasPriceLine
+						token={token}
+						label="Fast"
+						gas={+gasPrice.result.FastGasPrice}
+						priceUSD={+gasPrice.result.UsdPrice!}
+					/>
+				</View>
 			)}
-			{gasPrice && (
-				<GasPriceLine
-					label="Normal"
-					gas={+gasPrice.result.ProposeGasPrice}
-					priceUSD={+gasPrice.result.UsdPrice!}
-				/>
-			)}
-			{gasPrice && (
-				<GasPriceLine
-					label="Fast"
-					gas={+gasPrice.result.FastGasPrice}
-					priceUSD={+gasPrice.result.UsdPrice!}
-				/>
-			)}
-			<PrimaryButton disabled={!number || number > token.balance} onPress={onSend}>
-				Send
-			</PrimaryButton>
+
+			<Button
+				title="Send"
+				disabled={!number || number > token.balance}
+				onPress={onSend}
+			/>
 			<KeyboardSpacer />
 		</View>
 	);

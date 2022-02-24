@@ -29,12 +29,6 @@ export const styles = StyleSheet.create({
 	titleHighlight: {
 		color: '#006AA6'
 	},
-	cardImage: {
-		width: 40,
-		height: 40,
-		borderRadius: 20,
-		marginRight: 16
-	},
 	cardTitle: {
 		fontFamily: 'Inter_700Bold',
 		fontStyle: 'normal',

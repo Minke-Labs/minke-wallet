@@ -21,8 +21,9 @@ export const coinParamFromSymbol = ({ symbol, type = 'id' }: CoinParamFromSymbol
 	return filtered![indexed];
 };
 
-export const numberFormat = (value: number) =>
+export const numberFormat = (value: number, digits?: number) =>
 	new Intl.NumberFormat('en-US', {
 		style: 'currency',
-		currency: 'USD'
+		currency: 'USD',
+		minimumFractionDigits: digits || 2
 	}).format(value);
