@@ -33,10 +33,9 @@ const NetWorth = () => {
 							${commify(state.value.balance?.usd || '')}
 						</Text>
 						<Icon
-							name="arrowBackStroke"
+							name="arrowForwardStroke"
 							size={16}
 							color="text7"
-							style={{ transform: [{ rotate: '180deg' }] }}
 						/>
 					</View>
 				}

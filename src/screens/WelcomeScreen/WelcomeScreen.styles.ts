@@ -36,6 +36,7 @@ export default StyleSheet.create({
 	buttonContainer: {
 		width: '100%',
 		alignItems: 'center',
-		marginBottom: 48
+		marginBottom: 48,
+		paddingHorizontal: 24
 	}
 });

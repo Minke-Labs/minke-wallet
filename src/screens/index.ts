@@ -1,4 +1,5 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
+import AssetsScreen from './AssetsScreen/AssetsScreen';
 import BackupScreen from './BackupScreen/BackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
@@ -21,6 +22,7 @@ import Test from './Test/Test';
 
 export {
 	AccountsScreen,
+	AssetsScreen,
 	BackupScreen,
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
