@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
@@ -10,7 +10,8 @@ export const makeStyles = (colors: ColorType) =>
 			backgroundColor: '#fff'
 		},
 		background: {
-			flex: 1
+			flex: 1,
+			maxHeight: Dimensions.get('screen').height * 0.35
 		},
 		headerNavegation: {
 			paddingTop: 56,
@@ -28,7 +29,6 @@ export const makeStyles = (colors: ColorType) =>
 			marginLeft: 8
 		},
 		saveCurrentValueContainer: {
-			flex: 1,
 			flexDirection: 'column',
 			padding: 24,
 			alignItems: 'center',
@@ -56,11 +56,10 @@ export const makeStyles = (colors: ColorType) =>
 			marginBottom: 4
 		},
 		depositCardContainer: {
+			minHeight: Dimensions.get('screen').height * 0.65,
 			backgroundColor: colors.background1,
 			paddingTop: 32,
-			paddingRight: 24,
 			paddingBottom: 32,
-			paddingLeft: 24,
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
 		},

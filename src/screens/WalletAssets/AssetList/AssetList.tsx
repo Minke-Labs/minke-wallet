@@ -6,6 +6,7 @@ import { coinParamFromSymbol } from '@helpers/utilities';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { TokenType } from '@styles';
 import { WalletToken } from '@models/wallet';
+import { stablecoins } from '@models/token';
 import Card from './Card';
 import AssetHeader from './AssetHeader';
 import AssetSelector from './AssetSelector';
@@ -13,8 +14,6 @@ import AssetSelector from './AssetSelector';
 interface AssetListProps {
 	walletTokens: WalletToken[];
 }
-
-const stablecoins = ['USDT', 'DAI', 'BUSD', 'TUSD', 'USDC', 'UST', 'DGX'];
 
 const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	const [active, setActive] = React.useState(0);
@@ -42,8 +41,6 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 						coinSymbol={item.symbol.toLowerCase() as TokenType}
 						walletBalance={Number(item.balance.toFixed(5))}
 						walletBalanceUsd={item.balanceUSD}
-						interest={0}
-						reward={0}
 						onPress={() => onSelected(item)}
 					/>
 				)}

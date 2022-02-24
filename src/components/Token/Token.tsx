@@ -4,6 +4,8 @@ import { token } from '@styles';
 import { Svg, Path } from 'react-native-svg';
 import { TokenProps } from './Token.types';
 
+// @TODO: Romullo - make this component work with any string. If we dont have it return a fallback token
+
 const Token: React.FC<Partial<TokenProps>> = ({ name = 'aave', size = 96, outline }) => {
 	const tokenColor = token[name][0];
 	const dArr = token[name].slice(1);

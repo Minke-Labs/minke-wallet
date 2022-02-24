@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, SafeAreaView, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,6 +7,16 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { aaveGhost } from '@src/images';
 import styles from './OpenAaveScreen.styles';
+
+const Background: React.FC = ({ children }) => {
+	const scheme = useColorScheme();
+	return (
+		<SafeAreaView style={styles.backgroundContainer}>
+			<Image resizeMode="cover" source={scheme === 'dark' ? aaveGhost : aaveGhost} style={styles.background} />
+			{children}
+		</SafeAreaView>
+	);
+};
 
 const OpenAaveScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -28,24 +38,21 @@ const OpenAaveScreen = () => {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.header}>
-					<Text type="h2" weight="bold" color="text1">
-						Open Aave
-					</Text>
-					<Text type="h2" weight="bold" color="text1">
-						Savings Account
+					<Text type="h3" weight="bold" color="text1">
+						Open Aave Savings Account
 					</Text>
 				</View>
 
 				<View style={[styles.transparentCard, styles.whatsAave]}>
-					<Text type="h3" weight="bold" color="text1" marginBottom={24}>
+					<Text type="p" weight="bold" color="text1" marginBottom={24}>
 						What is Aave
 					</Text>
-					<Text color="text1" style={styles.fontSizeSmall} marginBottom={16}>
+					<Text type="a" color="text1" marginBottom={16}>
 						Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a
 						decentralized protocol for lending and borrowing crypto. Rates are variable and can change at
 						any time.
 					</Text>
-					<Text color="text1" style={styles.fontSizeSmall}>
+					<Text type="a" color="text1">
 						Risks include the economics of the protocol, market risks, security of the smart contracts,
 						counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.
 					</Text>
@@ -54,7 +61,7 @@ const OpenAaveScreen = () => {
 				<View style={styles.actionContainer}>
 					<TouchableOpacity style={[styles.transparentCard, styles.actionOpenAave]}>
 						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
-						<Text color="text2" style={styles.fontSizeSmall}>
+						<Text type="a" color="text2">
 							View Site
 						</Text>
 						<Icon name="chevronRight" color="cta1" size={24} />
@@ -62,17 +69,22 @@ const OpenAaveScreen = () => {
 
 					<TouchableOpacity style={[styles.transparentCard, styles.actionOpenAave]}>
 						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
-						<Text color="text2" style={styles.fontSizeSmall}>
+						<Text type="a" color="text2">
 							Learn More
 						</Text>
 						<Icon name="chevronRight" color="cta1" size={24} />
 					</TouchableOpacity>
 				</View>
 
-				<View style={styles.ctaBottom}>
-					<Button iconRight="arrowRight" title="Open account" marginBottom={16} />
-					<Text color="text2" style={styles.fontSizeSmall}>
-						This transaction will cost a few cents
+				<View style={{ marginTop: 'auto', marginBottom: 12 }}>
+					<Button
+						iconRight="arrowRight"
+						title="Open account"
+						marginBottom={16}
+						onPress={() => navigation.navigate('Deposit')}
+					/>
+					<Text type="span" color="text2">
+						This transaction will cost a few cents when you confirm your deposit
 					</Text>
 				</View>
 			</View>

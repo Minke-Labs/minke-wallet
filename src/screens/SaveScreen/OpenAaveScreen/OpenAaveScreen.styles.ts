@@ -1,20 +1,28 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+	backgroundContainer: {
+		height: 277
+	},
+	background: {
+		position: 'absolute',
+		width: '100%'
+	},
 	container: {
 		padding: 24,
-		height: '100%'
+		height: '100%',
+		flex: 1
 	},
 	linearGradient: {
 		height: '100%'
 	},
 	headerNavegation: {
-		paddingTop: 32,
+		paddingTop: 16,
 		flexDirection: 'row',
 		marginBottom: 16
 	},
 	header: {
-		marginBottom: 32
+		marginBottom: 16
 	},
 	transparentCard: {
 		backgroundColor: 'rgba(255, 255, 255, 0.12)'
@@ -34,7 +42,8 @@ export default StyleSheet.create({
 		alignContent: 'center',
 		justifyContent: 'center',
 		padding: 16,
-		borderRadius: 16
+		borderRadius: 16,
+		alignItems: 'center'
 	},
 	actionTextButton: {
 		paddingTop: 0,
@@ -42,25 +51,11 @@ export default StyleSheet.create({
 		paddingBottom: 0,
 		paddingLeft: 4
 	},
-	ctaBottom: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingLeft: 24,
-		paddingRight: 24,
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		bottom: 32
-	},
-	fontSizeSmall: {
-		fontSize: 14
-	},
 	subtract: {
 		width: 344,
 		height: 499,
 		position: 'absolute',
 		bottom: -56,
-		right: -56,
-		zIndex: -1
+		right: -56
 	}
 });

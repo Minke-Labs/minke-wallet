@@ -17,6 +17,7 @@ import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
 import OpenAaveScreen from './SaveScreen/OpenAaveScreen/OpenAaveScreen';
+import DepositScreen from './DepositScreen/DepositScreen';
 
 import Test from './Test/Test';
 
@@ -40,5 +41,6 @@ export {
 	WelcomeScreen,
 	SaveScreen,
 	OpenAaveScreen,
+	DepositScreen,
 	Test
 };
