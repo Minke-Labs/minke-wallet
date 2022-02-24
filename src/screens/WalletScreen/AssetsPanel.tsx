@@ -99,10 +99,8 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds 
 						{ backgroundColor: colors.background2, borderLeftColor: colors.background1 }
 					]}
 				>
-					<Text type="a" style={{ marginRight: 8 }}>
-						Send
-					</Text>
-					<Icon name="sendStroke" color="cta1" size={20} />
+					<Icon name="saveStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
+					<Text type="a">Save</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

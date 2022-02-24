@@ -6,6 +6,10 @@ import waveWelcomeFooterDarkImg from './wave-welcome-footer-dark.png';
 import walletCreatedImg from './wallet-created.png';
 import whale2Img from './whale2.png';
 import backupImg from './backupImage.png';
+import backgroundRoundedWaves from './background-rounded-waves.png';
+import aaveGhost from './aave-ghost.png';
+import bgSaveBackground from './bg-save-background.png';
+import bgSaveBackgroundDark from './bg-save-background-dark.png';
 
 export {
 	welcomeImg,
@@ -15,5 +19,9 @@ export {
 	waveWelcomeHeaderImg,
 	walletCreatedImg,
 	whale2Img,
-	backupImg
+	backupImg,
+	backgroundRoundedWaves,
+	aaveGhost,
+	bgSaveBackground,
+	bgSaveBackgroundDark
 };

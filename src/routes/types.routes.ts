@@ -16,5 +16,6 @@ export type RootStackParamList = {
 	BackupSettings: undefined;
 	Transactions: undefined;
 	Save: undefined;
+	OpenAave: undefined;
 	Test: undefined;
 };

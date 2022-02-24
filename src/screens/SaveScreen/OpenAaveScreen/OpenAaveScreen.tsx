@@ -1,17 +1,14 @@
 import React from 'react';
 import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import { Icon, Text, Button } from '@components';
-import { useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { makeStyles } from './OpenAaveScreen.styles';
-import subtract from './subtract.png';
+import { aaveGhost } from '@src/images';
+import styles from './OpenAaveScreen.styles';
 
 const OpenAaveScreen = () => {
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	return (
@@ -79,7 +76,7 @@ const OpenAaveScreen = () => {
 					</Text>
 				</View>
 			</View>
-			<ImageBackground source={subtract} style={styles.subtract} />
+			<ImageBackground source={aaveGhost} style={styles.subtract} />
 		</LinearGradient>
 	);
 };

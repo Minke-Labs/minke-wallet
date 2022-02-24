@@ -6,13 +6,16 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { backgroundRoundedWaves as background } from '@images';
 import { makeStyles } from './SaveScreen.styles';
-import background from './background-rounded-waves.png';
+import EmptyState from './EmptyState/EmptyState';
 
 const SaveScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+	return <EmptyState />;
 
 	return (
 		<View style={styles.container}>
@@ -72,9 +75,9 @@ const SaveScreen = () => {
 					</View>
 					<Button
 						iconLeft="addStroke"
-						title="Depoist"
+						title="Deposit"
 						marginBottom={16}
-						onPress={() => navigation.navigate('SaveEmptyState')}
+						onPress={() => navigation.navigate('OpenAave')}
 					/>
 				</View>
 			</View>
