@@ -1,10 +1,8 @@
 /* eslint-disable no-tabs */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable max-len */
-/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import { View, Image } from 'react-native';
-import { Text, Token, Button, Modal } from '@components';
+import { Text, Token, Button } from '@components';
 import { useState } from '@hookstate/core';
 import { TokenType } from '@styles';
 import { globalWalletState } from '@src/stores/WalletStore';

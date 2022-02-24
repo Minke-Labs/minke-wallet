@@ -213,7 +213,7 @@ const WalletScreen = () => {
 						marginBottom={12}
 						style={{ marginTop: 8 }}
 					>
-						Linke of transaction:
+						Link of transaction:
 					</Text>
 					<TouchableOpacity onPress={openTransaction}>
 						<Text type="p2" weight="medium" color="text3" width={300} center>
