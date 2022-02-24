@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, Text, View, TextInput } from 'react-native';
-import { Icon, ModalHeader } from '@components';
+import { FlatList, Image, SafeAreaView, View, TextInput } from 'react-native';
+import { whale2Img } from '@images';
+import { Icon, ModalHeader, Text } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken } from '@models/token';
-import { makeStyles } from './SearchTokens.styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { makeStyles } from './SearchTokens.styles';
 
 const SearchTokens = ({
 	visible,
@@ -119,6 +120,14 @@ const SearchTokens = ({
 						</TouchableOpacity>
 					)}
 				/>
+				{(filteredTokens || []).length === 0 && (
+					<View style={styles.tableContainer}>
+						<Image source={whale2Img} style={styles.image} />
+						<Text color="text4" weight="medium" marginBottom={16}>
+							No tokens here
+						</Text>
+					</View>
+				)}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

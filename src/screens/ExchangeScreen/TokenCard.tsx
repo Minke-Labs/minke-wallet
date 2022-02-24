@@ -22,7 +22,7 @@ const TokenCard = ({
 	balance: string;
 	innerRef?: RefObject<TextInput>;
 	disableMax?: boolean;
-	updateQuotes: Function;
+	updateQuotes?: Function;
 	conversionAmount?: string;
 }) => {
 	const [amount, setAmount] = useState('');
@@ -50,11 +50,11 @@ const TokenCard = ({
 
 	useEffect(() => {
 		setAmount('');
-		updateQuotes('');
+		if (updateQuotes) updateQuotes('');
 	}, [token]);
 
 	useEffect(() => {
-		if (!(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
+		if (updateQuotes && !(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
 			updateQuotes(amount);
 		}
 	}, [amount]);
