@@ -3,7 +3,6 @@ import { loadObject, saveObject } from './keychain';
 
 export const getAllContacts = async (): Promise<ContactItem[]> => {
 	const contacts = (await loadObject('minkeContacts')) || [];
-
 	return contacts as ContactItem[];
 };
 

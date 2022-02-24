@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
-import { View, Image, Text, FlatList } from 'react-native';
+import { View, FlatList, Image, TouchableOpacity } from 'react-native';
+import { Text, Token } from '@components';
+import { TokenType } from '@styles';
+import { numberFormat, coinParamFromSymbol } from '@helpers/utilities';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
 import { useState } from '@hookstate/core';
 import { WalletToken, getWalletTokens, imageSource } from '@src/model/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { styles } from './TransactionSelectFunds.styles';
-import Item from '../TransactionContacts/Item';
 
 interface UserProps {
 	name: string;
@@ -43,30 +44,41 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 
 	return (
 		<View style={styles.container}>
-			{/* {user.address ? <Image source={image} style={styles.image} /> : null} */}
-			<Text style={styles.title}>
-				Which <Text style={styles.titleHighlight}>asset</Text> do you want to send to{' '}
-				<Text style={styles.titleHighlight}>{user.name}</Text>?
+			{user.address ? <Image source={image!} style={styles.image} /> : null}
+			<Text type="h3" weight="extraBold" marginBottom={32}>
+				Which <Text color="text7" type="h3" weight="extraBold">asset</Text> do you want to send to{' '}
+				<Text color="text7" type="h3" weight="extraBold">{user.name}</Text>?
 			</Text>
 
 			{walletTokens ? (
 				<FlatList
 					keyExtractor={(item) => item.symbol}
 					data={walletTokens}
-					renderItem={({ item }) => (
-						<Item
-							firstLine={item.symbol}
-							secondLine={
-								// eslint-disable-next-line react/jsx-wrap-multilines
-								<Text style={styles.subtitle}>
-									${item.balanceUSD.toString().match(/^-?\d+(?:\.\d{0,2})?/)} ({item.balance}{' '}
-									{item.symbol})<Text style={styles.available}> available</Text>
-								</Text>
-							}
-							imageSource={require('@assets/eth.png')}
-							onSelected={() => onSelected(item)}
-						/>
-					)}
+					renderItem={({ item }) =>
+						(
+							<TouchableOpacity
+								onPress={() => onSelected(item)}
+								style={{
+									height: 40,
+									flexDirection: 'row',
+									marginBottom: 24
+								}}
+							>
+								<Token
+									name={item.symbol.toLowerCase() as TokenType}
+									size={40}
+								/>
+								<View style={{ marginLeft: 16, justifyContent: 'space-between' }}>
+									<Text weight="bold" type="p2">
+										{coinParamFromSymbol({ symbol: item.symbol, type: 'name' })}
+									</Text>
+									<Text type="span" weight="bold">
+										{numberFormat(item.balanceUSD)} ({item.balance.toFixed(3)} {item.symbol})
+										<Text weight="regular" type="span"> available</Text>
+									</Text>
+								</View>
+							</TouchableOpacity>
+						)}
 				/>
 			) : (
 				<ActivityIndicator color={colors.primary} />

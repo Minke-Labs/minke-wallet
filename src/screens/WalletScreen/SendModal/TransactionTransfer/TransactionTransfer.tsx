@@ -1,8 +1,12 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
+import { Text, Token, Button } from '@components';
 import { useState } from '@hookstate/core';
+import { TokenType } from '@styles';
 import PrimaryButton from '@src/components/PrimaryButton';
 import { globalWalletState } from '@src/stores/WalletStore';
+import { numberFormat, coinParamFromSymbol } from '@helpers/utilities';
 import {
 	estimateGas,
 	sendTransaction,
@@ -70,10 +74,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 		[token]
 	);
 
-	const {
-		privateKey,
-		network: { id, defaultToken }
-	} = state.value;
+	const { privateKey, network: { id, defaultToken } } = state.value;
 
 	const onSend = async () => {
 		if (gasPrice) {
@@ -95,13 +96,17 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
-				<Image style={styles.image} source={require('@assets/eth.png')} />
-				{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
+				<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
+				{image &&
+					<Image
+						style={[styles.image, { marginLeft: -20, zIndex: -1 }]}
+						source={image}
+					/>}
 			</View>
 
-			<Text style={styles.title}>
-				How much <Text style={styles.titleHighlight}>{token.symbol}</Text> do you want to send to{' '}
-				<Text style={styles.titleHighlight}>{user.name}</Text>?
+			<Text type="h3" weight="extraBold" marginBottom={32}>
+				How much <Text color="text7" type="h3" weight="extraBold">{token.symbol}</Text> do you want to send to
+				<Text color="text7" type="h3" weight="extraBold"> {user.name}</Text>?
 			</Text>
 
 			<Card token={token} />
@@ -118,17 +123,25 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 			/>
 
 			{gasPrice && (
-				<GasPriceLine label="Low" gas={+gasPrice.result.SafeGasPrice} priceUSD={+gasPrice.result.UsdPrice} />
+				<GasPriceLine
+					label="Low"
+					gas={+gasPrice.result.SafeGasPrice}
+					priceUSD={+gasPrice.result.UsdPrice!}
+				/>
 			)}
 			{gasPrice && (
 				<GasPriceLine
 					label="Normal"
 					gas={+gasPrice.result.ProposeGasPrice}
-					priceUSD={+gasPrice.result.UsdPrice}
+					priceUSD={+gasPrice.result.UsdPrice!}
 				/>
 			)}
 			{gasPrice && (
-				<GasPriceLine label="Fast" gas={+gasPrice.result.FastGasPrice} priceUSD={+gasPrice.result.UsdPrice} />
+				<GasPriceLine
+					label="Fast"
+					gas={+gasPrice.result.FastGasPrice}
+					priceUSD={+gasPrice.result.UsdPrice!}
+				/>
 			)}
 			<PrimaryButton disabled={!number || number > token.balance} onPress={onSend}>
 				Send

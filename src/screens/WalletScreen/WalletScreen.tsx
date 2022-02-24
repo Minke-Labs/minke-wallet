@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect } from 'react';
 import { Alert, RefreshControl, ScrollView } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -17,11 +18,13 @@ import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
 import NetWorth from './NetWorth/NetWorth';
+import SendModal from './SendModal/SendModal';
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
+	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -119,6 +122,7 @@ const WalletScreen = () => {
 				>
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel
+						onSave={() => console.log('save')}
 						onAddFunds={() => setAddFundsVisible(true)}
 						balance={balance?.usd || ''}
 						address={address}
@@ -132,6 +136,7 @@ const WalletScreen = () => {
 							showReceive,
 							onCopyToClipboard
 						}}
+						setSendModalOpen={() => setSendModalOpen(true)}
 					/>
 				</ScrollView>
 			</TabLayout>
@@ -145,6 +150,10 @@ const WalletScreen = () => {
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
+			</Modal>
+
+			<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>
+				<SendModal onDismiss={() => setSendModalOpen(false)} />
 			</Modal>
 		</>
 	);
