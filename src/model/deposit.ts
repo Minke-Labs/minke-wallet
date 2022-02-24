@@ -1,25 +1,5 @@
 import { network as selectedNetwork } from './network';
-import { stablecoins } from './token';
-
-interface Supported {
-	network: string;
-	appIds: [string];
-}
-
-const aaveV2 = 'aave-v2';
-
-const isAveeSupported = async (): Promise<boolean> => {
-	const result = await fetch(
-		'https://api.zapper.fi/v1/zap-in/interest-bearing/supported?api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241'
-	);
-
-	const supported: Supported[] = (await result.json()) || [];
-	const { zapperNetwork } = await selectedNetwork();
-
-	const network = supported.find((s) => s.network === zapperNetwork) || ({} as Supported);
-
-	return (network.appIds || []).includes(aaveV2);
-};
+import { ParaswapToken, stablecoins } from './token';
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const baseURL = 'https://api.zapper.fi/v1/protocols/aave-v2/token-market-data';
@@ -29,6 +9,17 @@ export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const allMarkets: Array<AaveMarket> = await result.json();
 
 	return allMarkets.filter(({ tokens }) => tokens.find(({ symbol }) => stablecoins.includes(symbol)));
+};
+
+export const aaveMarketTokenToParaswapToken = ({ tokens }: AaveMarket): ParaswapToken => {
+	const { address, decimals, symbol, tokenImageUrl, network } = tokens[0];
+	return {
+		address,
+		decimals,
+		symbol,
+		img: tokenImageUrl,
+		network: +network
+	};
 };
 
 export interface AaveToken {

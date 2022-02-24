@@ -20,7 +20,7 @@ const TokenCard = ({
 	token: ParaswapToken | undefined;
 	onPress: (() => void) | undefined;
 	balance: string;
-	innerRef: RefObject<TextInput>;
+	innerRef?: RefObject<TextInput>;
 	disableMax?: boolean;
 	updateQuotes: Function;
 	conversionAmount?: string;

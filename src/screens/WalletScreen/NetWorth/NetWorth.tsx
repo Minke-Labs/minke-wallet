@@ -32,15 +32,12 @@ const NetWorth = () => {
 						<Text weight="bold" style={{ fontSize: 16 }}>
 							${commify(state.value.balance?.usd || '')}
 						</Text>
-						<Icon
-							name="arrowForwardStroke"
-							size={16}
-							color="text7"
-						/>
+						<Icon name="arrowForwardStroke" size={16} color="text7" />
 					</View>
 				}
 			/>
 			<Card
+				onPress={() => navigation.navigate('Save')}
 				image={<Image icon="vaultStroke" />}
 				title="Deposits"
 				subtitle="Funds deposited in vaults"

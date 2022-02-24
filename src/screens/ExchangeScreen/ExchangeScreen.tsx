@@ -62,7 +62,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			}
 			return walletToken?.balance || 0;
 		},
-		[exchange.gas.value]
+		[exchange.gas.value, walletTokens, nativeToken]
 	);
 
 	const updateFromToken = (token: ParaswapToken) => {

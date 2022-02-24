@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ImageBackground, SafeAreaView, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,16 +7,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { aaveGhost } from '@src/images';
 import styles from './OpenAaveScreen.styles';
-
-const Background: React.FC = ({ children }) => {
-	const scheme = useColorScheme();
-	return (
-		<SafeAreaView style={styles.backgroundContainer}>
-			<Image resizeMode="cover" source={scheme === 'dark' ? aaveGhost : aaveGhost} style={styles.background} />
-			{children}
-		</SafeAreaView>
-	);
-};
 
 const OpenAaveScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();

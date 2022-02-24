@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
-import { getWalletTokens, WalletToken } from '@models/wallet';
+import { useState } from '@hookstate/core';
+import { globalDepositState } from '@stores/DepositStore';
 import { AaveMarket, fetchAaveMarketData } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { FlatList } from 'react-native-gesture-handler';
@@ -13,26 +14,23 @@ import { makeStyles } from './SaveScreen.styles';
 
 const SaveScreen = () => {
 	const navigation = useNavigation();
+	const depositState = useState(globalDepositState());
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const [aaveMarkets, setAaveMarkets] = React.useState<Array<AaveMarket>>();
-	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
-	const { address, balance: walletBallance } = globalWalletState().value;
+	const { balance: walletBallance } = globalWalletState().value;
 
 	useEffect(() => {
-		const getTokens = async () => {
-			const result = await getWalletTokens(address);
-			const { products } = result[address.toLowerCase()];
-			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
-			setWalletTokens(tokens);
-		};
-
 		const getAaveMarkets = async () => {
 			setAaveMarkets(await fetchAaveMarketData());
 		};
-		getTokens();
 		getAaveMarkets();
 	}, []);
+
+	const approveDeposit = (aaveMarket: AaveMarket) => {
+		depositState.market.set(aaveMarket);
+		navigation.navigate('OpenAave');
+	};
 
 	return (
 		<View style={styles.container}>
@@ -56,7 +54,7 @@ const SaveScreen = () => {
 									paddingHorizontal: 24,
 									marginVertical: 16
 								}}
-								onPress={() => navigation.navigate('OpenAave')}
+								onPress={() => approveDeposit(item)}
 							>
 								<View style={{ flexDirection: 'row' }}>
 									<Token name={tokenSymbol.toLowerCase() as TokenType} size={32} />
@@ -69,9 +67,7 @@ const SaveScreen = () => {
 										</Text>
 									</View>
 								</View>
-								<TouchableOpacity>
-									<Icon name="arrowForwardStroke" color="text7" size={24} />
-								</TouchableOpacity>
+								<Icon name="arrowForwardStroke" color="text7" size={24} />
 							</TouchableOpacity>
 						);
 					}}
