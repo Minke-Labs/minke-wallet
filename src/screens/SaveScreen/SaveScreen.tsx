@@ -62,10 +62,10 @@ const SaveScreen = () => {
 				</View>
 
 				<View style={styles.saveCurrentValueContainer}>
-					<Text color="text3" marginBottom={8}>
+					<Text type="p2" color="text3" marginBottom={8}>
 						Current deposits
 					</Text>
-					<Text type="a" weight="medium">
+					<Text type="textLarge" weight="medium">
 						{numberFormat(Number(depositsBalance))}
 					</Text>
 					<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 18 }}>
