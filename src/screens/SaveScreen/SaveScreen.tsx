@@ -83,7 +83,7 @@ const SaveScreen = () => {
 					</Text>
 					{aaveMarket && (
 						<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 18 }}>
-							<Icon name="upArrowSolid" color="alert3" size={14} />
+							<Icon name="upArrowSolid" color="alert3" size={14} style={{ marginRight: 8 }} />
 							<Text weight="medium" type="a" color="alert3">
 								{(aaveMarket.supplyApy * 100).toFixed(2)}% interest p.a.
 							</Text>
