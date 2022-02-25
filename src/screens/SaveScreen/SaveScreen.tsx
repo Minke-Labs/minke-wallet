@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
-import { aaveDeposits, AaveBalances } from '@models/deposit';
+import { aaveDeposits, AaveBalances, usdCoin, AaveMarket, fetchAaveMarketData } from '@models/deposit';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat } from '@src/helpers/utilities';
 import { Text, Icon, Card } from '@components';
@@ -15,24 +15,37 @@ const SaveScreen = () => {
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	// const [aaveMarkets] = React.useState<Array<AaveMarket>>();
+	const [aaveMarket, setAaveMarket] = React.useState<AaveMarket>();
+	const [selectedUSDCoin, setSelectedUSDCoin] = React.useState('');
 	const [aaveBalances, setAaveBalances] = React.useState<AaveBalances>();
 	// const { address } = globalWalletState().value;
 	// mainnet const address = '0xff32e57ceed15c2e07e03984bba66c220c06b13a';
 	const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
 
+	const getAaveMarkets = async () => {
+		const markets = await fetchAaveMarketData();
+		const defaultMarket = markets.find((m) => m.tokens[0].symbol === selectedUSDCoin);
+		setAaveMarket(defaultMarket);
+	};
+
 	useEffect(() => {
-		// const getAaveMarkets = async () => {
-		//  setAaveMarkets(await fetchAaveMarketData());
-		// };
-		// getAaveMarkets();
+		const getDefaultUSDCoin = async () => {
+			setSelectedUSDCoin(await usdCoin());
+		};
 
 		const getAaveDeposits = async () => {
 			setAaveBalances(await aaveDeposits(address));
 		};
 
+		getDefaultUSDCoin();
 		getAaveDeposits();
 	}, []);
+
+	useEffect(() => {
+		if (selectedUSDCoin) {
+			getAaveMarkets();
+		}
+	}, [selectedUSDCoin]);
 
 	if (!aaveBalances) {
 		return <AppLoading />;
@@ -68,12 +81,14 @@ const SaveScreen = () => {
 					<Text type="textLarge" weight="medium">
 						{numberFormat(Number(depositsBalance))}
 					</Text>
-					<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 18 }}>
-						<Icon name="upArrowSolid" color="alert3" size={14} />
-						<Text weight="medium" type="a" color="alert3">
-							10% interest p.a.
-						</Text>
-					</View>
+					{aaveMarket && (
+						<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 18 }}>
+							<Icon name="upArrowSolid" color="alert3" size={14} />
+							<Text weight="medium" type="a" color="alert3">
+								{(aaveMarket.supplyApy * 100).toFixed(2)}% interest p.a.
+							</Text>
+						</View>
+					)}
 					<TouchableOpacity
 						style={[styles.row, styles.depositButton]}
 						onPress={() => navigation.navigate('OpenAave')}
