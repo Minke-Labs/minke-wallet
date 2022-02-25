@@ -74,7 +74,7 @@ const OpenAaveScreen = () => {
 						marginBottom={16}
 						onPress={() => navigation.navigate('Deposit')}
 					/>
-					<Text type="span" color="text2">
+					<Text type="span" color="text2" style={{ textAlign: 'center' }}>
 						This transaction will cost a few cents when you confirm your deposit
 					</Text>
 				</View>

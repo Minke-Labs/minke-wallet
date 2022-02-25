@@ -11,7 +11,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		background: {
 			flex: 1,
-			maxHeight: Dimensions.get('screen').height * 0.35
+			maxHeight: Dimensions.get('screen').height * 0.4
 		},
 		headerNavegation: {
 			paddingTop: 56,
@@ -56,24 +56,17 @@ export const makeStyles = (colors: ColorType) =>
 			marginBottom: 4
 		},
 		depositCardContainer: {
-			minHeight: Dimensions.get('screen').height * 0.65,
+			minHeight: Dimensions.get('screen').height * 0.6,
 			backgroundColor: colors.background1,
 			paddingTop: 32,
 			paddingBottom: 32,
+			paddingHorizontal: 24,
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
 		},
-		depositCard: {
-			borderRadius: 16,
-			backgroundColor: colors.detail4,
-			marginBottom: 16,
-			flexDirection: 'row',
-			alignContent: 'center',
-			justifyContent: 'center'
-		},
+
 		depositCardItem: {
-			width: '50%',
-			padding: 24
+			width: '50%'
 		},
 		divisor: {
 			borderRightWidth: 1,
@@ -95,9 +88,7 @@ export const makeStyles = (colors: ColorType) =>
 		actionDepositCard: {
 			borderRadius: 16,
 			backgroundColor: colors.detail4,
-			padding: 24,
-			alignItems: 'center',
-			justifyContent: 'center'
+			padding: 24
 		},
 		actionDepositCardIcon: {
 			backgroundColor: 'rgba(103, 152, 242, 0.1)',
@@ -105,8 +96,8 @@ export const makeStyles = (colors: ColorType) =>
 			borderRadius: 16
 		},
 		actionDepositCardInfo: {
-			paddingTop: 40,
-			paddingBottom: 40
+			paddingTop: 32,
+			paddingBottom: 32
 		},
 		cardInfo: {
 			color: colors.text4,
