@@ -151,7 +151,11 @@ const WalletScreen = () => {
 			</Modal>
 
 			<Modal isVisible={notAbleToSaveVisible} onDismiss={() => setNotAbleToSaveVisible(false)}>
-				<NotAbleToSaveModal onDismiss={() => setNotAbleToSaveVisible(false)} />
+				<NotAbleToSaveModal
+					visible={notAbleToSaveVisible}
+					onDismiss={() => setNotAbleToSaveVisible(false)}
+					onAddFunds={() => setAddFundsVisible(true)}
+				/>
 			</Modal>
 		</>
 	);

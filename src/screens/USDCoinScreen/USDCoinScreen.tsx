@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { WelcomeLayout } from '@layouts';
 import { Text, Icon } from '@components';
-import { usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
+import { depositStablecoins as stablecoins, usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -13,7 +13,6 @@ import ListItem from './ListItem';
 const USDCoinScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [usdCoin, setUsdCoin] = useState('');
-	const stablecoins = ['USDC', 'DAI', 'USDT'];
 
 	const onSelectCoin = async (token: string) => {
 		await AsyncStorage.setItem(usdCoinSettingsKey, token);
