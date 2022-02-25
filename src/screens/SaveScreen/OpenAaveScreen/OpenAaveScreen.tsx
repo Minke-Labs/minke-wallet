@@ -21,6 +21,7 @@ const OpenAaveScreen = () => {
 			]}
 			style={styles.linearGradient}
 		>
+			<ImageBackground source={aaveGhost} style={styles.subtract} />
 			<View style={styles.container}>
 				<View style={styles.headerNavegation}>
 					<TouchableOpacity onPress={() => navigation.goBack()}>
@@ -78,7 +79,6 @@ const OpenAaveScreen = () => {
 					</Text>
 				</View>
 			</View>
-			<ImageBackground source={aaveGhost} style={styles.subtract} />
 		</LinearGradient>
 	);
 };
