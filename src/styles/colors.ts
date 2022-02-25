@@ -32,6 +32,8 @@ const lightTheme = {
 	brand4: '#0A2036',
 	alert3b: 'rgba(48, 192, 97, 0.15)',
 	alert3c: 'rgba(48, 192, 97, 0)',
+	alert4a: '#FABA18',
+
 	text8: '#FFFFFF',
 	text9: '#4E5E6F',
 	text10: '#F3D2BB',
@@ -77,6 +79,7 @@ const darkTheme = {
 	brand4: '#0A2036',
 	alert3b: 'rgba(172, 232, 185, 0.15)',
 	alert3c: 'rgba(172, 232, 185, 0)',
+	alert4a: '#FABA18',
 	text8: '#0A2138',
 	text9: '#FFFFFF',
 	text10: '#FFFFFF',

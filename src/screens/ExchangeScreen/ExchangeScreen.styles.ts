@@ -20,6 +20,9 @@ export const makeStyles = (colors: ColorType) =>
 			paddingLeft: 24,
 			paddingRight: 24
 		},
+		exchangeButton: {
+			marginTop: 'auto'
+		},
 		exchangeHeadlineRow: {
 			flexDirection: 'row',
 			justifyContent: 'space-between',
