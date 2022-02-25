@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, Linking, TouchableOpacity, View } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { aaveGhost } from '@src/images';
-import styles from './OpenAaveScreen.styles';
+import { approvalTransaction } from '@models/deposit';
+import { aaveGhost } from '@images';
+import { globalDepositState } from '@src/stores/DepositStore';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { getProvider } from '@src/model/wallet';
+import { Wallet, BigNumber } from 'ethers';
+import styles from './OpenAave.styles';
 
-const OpenAaveScreen = () => {
+const OpenAave = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const [loading, setLoading] = useState(false);
+	const { address, privateKey } = globalWalletState().value;
+	const {
+		market: { tokens }
+	} = globalDepositState().value;
+
+	const onOpenAccount = async () => {
+		setLoading(true);
+		const transaction = await approvalTransaction(address, tokens[0].address);
+		console.log(transaction);
+		const provider = await getProvider();
+		const wallet = new Wallet(privateKey, provider);
+		const nonce = await provider.getTransactionCount(address, 'latest');
+		const signedTx = await wallet.signTransaction({
+			...transaction,
+			...{ gasPrice: BigNumber.from(transaction.gasPrice), nonce }
+		});
+		const result = await provider.sendTransaction(signedTx as string);
+		console.log(result);
+		setLoading(false);
+		// navigation.navigate('Deposit');
+	};
 
 	return (
 		<LinearGradient
@@ -78,7 +105,8 @@ const OpenAaveScreen = () => {
 						iconRight="arrowRight"
 						title="Open account"
 						marginBottom={16}
-						onPress={() => navigation.navigate('Deposit')}
+						onPress={onOpenAccount}
+						disabled={loading}
 					/>
 					<Text type="span" color="text2" style={{ textAlign: 'center' }}>
 						This transaction will cost a few cents when you confirm your deposit
@@ -89,4 +117,4 @@ const OpenAaveScreen = () => {
 	);
 };
 
-export default OpenAaveScreen;
+export default OpenAave;

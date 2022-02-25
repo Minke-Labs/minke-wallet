@@ -59,7 +59,7 @@ const EmptyState = () => {
 						iconLeft="addStroke"
 						title="Deposit"
 						marginBottom={16}
-						onPress={() => navigation.navigate('OpenAave')}
+						onPress={() => navigation.navigate('Deposit')}
 					/>
 				</View>
 			</View>

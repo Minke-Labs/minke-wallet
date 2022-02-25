@@ -16,7 +16,6 @@ import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
-import OpenAaveScreen from './SaveScreen/OpenAaveScreen/OpenAaveScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
 
@@ -41,7 +40,6 @@ export {
 	WalletScreen,
 	WelcomeScreen,
 	SaveScreen,
-	OpenAaveScreen,
 	DepositScreen,
 	USDCoinScreen,
 	Test

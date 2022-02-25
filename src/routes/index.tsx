@@ -23,7 +23,6 @@ import {
 	WalletScreen,
 	WelcomeScreen,
 	SaveScreen,
-	OpenAaveScreen,
 	DepositScreen,
 	USDCoinScreen,
 	Test
@@ -95,7 +94,6 @@ const Routes: React.FC = () => {
 					options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen name="Save" component={SaveScreen} />
-				<Stack.Screen name="OpenAave" component={OpenAaveScreen} />
 				<Stack.Screen name="Deposit" component={DepositScreen} />
 				<Stack.Screen name="USDCoin" component={USDCoinScreen} />
 			</Stack.Navigator>

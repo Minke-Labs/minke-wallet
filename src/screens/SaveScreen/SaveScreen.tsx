@@ -22,7 +22,7 @@ const SaveScreen = () => {
 	// mainnet const address = '0xff32e57ceed15c2e07e03984bba66c220c06b13a';
 	const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
 
-	const getAaveMarkets = async () => {
+	const getAaveMarket = async () => {
 		const markets = await fetchAaveMarketData();
 		const defaultMarket = markets.find((m) => m.tokens[0].symbol === selectedUSDCoin);
 		setAaveMarket(defaultMarket);
@@ -43,7 +43,7 @@ const SaveScreen = () => {
 
 	useEffect(() => {
 		if (selectedUSDCoin) {
-			getAaveMarkets();
+			getAaveMarket();
 		}
 	}, [selectedUSDCoin]);
 
@@ -91,7 +91,7 @@ const SaveScreen = () => {
 					)}
 					<TouchableOpacity
 						style={[styles.row, styles.depositButton]}
-						onPress={() => navigation.navigate('OpenAave')}
+						onPress={() => navigation.navigate('Deposit')}
 					>
 						<Icon name="saveStroke" color="cta1" size={20} />
 						<Text style={styles.depositButtonText}>Deposit</Text>

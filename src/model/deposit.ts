@@ -35,10 +35,52 @@ export const aaveDeposits = async (address: string): Promise<AaveBalances> => {
 	return result.json();
 };
 
+export const approvalState = async (address: string, token: string): Promise<ApprovalState> => {
+	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/approval-state`;
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const { zapperNetwork } = await selectedNetwork();
+	const result = await fetch(
+		`${baseURL}?ownerAddress=${address}&sellTokenAddress=${token}&network=${zapperNetwork}&api_key=${apiKey}`
+	);
+
+	return result.json();
+};
+
+export const approvalTransaction = async (address: string, token: string): Promise<ApprovalTransaction> => {
+	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/approval-transaction`;
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const { zapperNetwork } = await selectedNetwork();
+	const result = await fetch(
+		`${baseURL}?ownerAddress=${address}&sellTokenAddress=${token}&network=${zapperNetwork}&api_key=${apiKey}`
+	);
+
+	return result.json();
+};
+
 export const usdCoin = async (): Promise<string> => {
 	const coin = await AsyncStorage.getItem(usdCoinSettingsKey);
 	return coin || 'USDC';
 };
+
+export interface ApprovalTransaction {
+	gasPrice: string;
+	maxFeePerGas: string;
+	maxPriorityFeePerGas: string;
+	from: string;
+	to: string;
+	value: string;
+	gas: string;
+	data: string;
+}
+
+export interface ApprovalState {
+	spenderAddress: string;
+	tokenAddress: string;
+	ownerAddress: string;
+	allowance: string;
+	amount: string;
+	isApproved: false;
+}
 
 export interface AaveBalances {
 	[key: string]: {
