@@ -1,10 +1,12 @@
-import { View, Text } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import React from 'react';
+import { Token } from '@components';
 
 const Test = () => (
-	<View>
-		<Text>Test</Text>
-	</View>
+	<SafeAreaView>
+		<View style={{ marginBottom: 160 }} />
+		<Token />
+	</SafeAreaView>
 );
 
 export default Test;

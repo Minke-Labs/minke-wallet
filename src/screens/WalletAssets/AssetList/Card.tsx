@@ -35,7 +35,7 @@ const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalanc
 				}}
 			>
 				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-					<Token name={coinSymbol as TokenType} size={32} />
+					<Token name={coinSymbol as TokenType} glow size={32} />
 					<Text type="a" weight="bold" style={{ marginLeft: 8 }}>
 						{coinName}
 					</Text>
