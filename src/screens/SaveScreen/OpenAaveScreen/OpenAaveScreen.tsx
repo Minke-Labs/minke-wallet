@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Linking, TouchableOpacity, View } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -50,7 +50,10 @@ const OpenAaveScreen = () => {
 				</View>
 
 				<View style={styles.actionContainer}>
-					<TouchableOpacity style={[styles.transparentCard, styles.actionOpenAave]}>
+					<TouchableOpacity
+						style={[styles.transparentCard, styles.actionOpenAave]}
+						onPress={() => Linking.openURL('https://aave.com/')}
+					>
 						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
 							View Site
@@ -58,7 +61,10 @@ const OpenAaveScreen = () => {
 						<Icon name="chevronRight" color="cta1" size={24} />
 					</TouchableOpacity>
 
-					<TouchableOpacity style={[styles.transparentCard, styles.actionOpenAave]}>
+					<TouchableOpacity
+						style={[styles.transparentCard, styles.actionOpenAave]}
+						onPress={() => Linking.openURL('https://docs.aave.com/faq/')}
+					>
 						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
 							Learn More
