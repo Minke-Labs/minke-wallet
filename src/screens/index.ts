@@ -18,6 +18,7 @@ import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
 import OpenAaveScreen from './SaveScreen/OpenAaveScreen/OpenAaveScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
+import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
 
 import Test from './Test/Test';
 
@@ -42,5 +43,6 @@ export {
 	SaveScreen,
 	OpenAaveScreen,
 	DepositScreen,
+	USDCoinScreen,
 	Test
 };

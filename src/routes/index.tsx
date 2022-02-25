@@ -25,6 +25,7 @@ import {
 	SaveScreen,
 	OpenAaveScreen,
 	DepositScreen,
+	USDCoinScreen,
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
@@ -96,6 +97,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="Save" component={SaveScreen} />
 				<Stack.Screen name="OpenAave" component={OpenAaveScreen} />
 				<Stack.Screen name="Deposit" component={DepositScreen} />
+				<Stack.Screen name="USDCoin" component={USDCoinScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
