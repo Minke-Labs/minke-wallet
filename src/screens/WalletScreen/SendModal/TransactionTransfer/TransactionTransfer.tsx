@@ -74,29 +74,27 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 		fetchImage();
 	}, []);
 
-	const { privateKey, network: { id, defaultToken } } = state.value;
+	const { privateKey, network: { id, nativeToken } } = state.value;
 
 	const onSend = async () => {
-		// if (gasPrice) {
-		// 	const ens = user.address;
-		// 	const to = (await resolveENSAddress(ens)) || ens;
-		// 	const result = await sendTransaction(
-		// 		privateKey,
-		// 		to,
-		// 		amount,
-		// 		gasPrice.result.ProposeGasPrice,
-		// 		id,
-		// 		token.symbol.toLowerCase() === defaultToken.toLowerCase() ? '' : token.address
-		// 	);
+		if (gasPrice) {
+			const ens = user.address;
+			const to = (await resolveENSAddress(ens)) || ens;
+			const result = await sendTransaction(
+				privateKey,
+				to,
+				amount,
+				gasPrice.result.ProposeGasPrice,
+				id,
+				token.symbol.toLowerCase() === nativeToken.symbol.toLowerCase() ? '' : token.address
+			);
 
-		// 	console.log(result);
-		// }
-		const result = {
-			symbol: 'eth',
-			link: '0x1234567890123456789012345678901234567890'
-		};
-		onDismiss();
-		sentSuccessfully(result);
+			onDismiss();
+			sentSuccessfully({
+				symbol: token.symbol.toLowerCase(),
+				link: result.hash
+			});
+		}
 	};
 
 	return (
