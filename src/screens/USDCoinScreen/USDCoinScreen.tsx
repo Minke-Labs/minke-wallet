@@ -1,27 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
-import { useState } from '@hookstate/core';
-import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
-import { Text, Icon, Modal } from '@components';
-import { walletState, globalWalletState } from '@src/stores/WalletStore';
+import { Text, Icon } from '@components';
+import { usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { stablecoins } from '@models/token';
 import styles from './USDCoinScreen.styles';
 import ListItem from './ListItem';
 
 const USDCoinScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-	const state = useState(globalWalletState());
-	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
-	const { address } = state.value;
+	const [usdCoin, setUsdCoin] = useState('');
+	const stablecoins = ['USDC', 'DAI', 'USDT'];
 
 	const onSelectCoin = async (token: string) => {
-		console.log(token);
+		await AsyncStorage.setItem(usdCoinSettingsKey, token);
+		setUsdCoin(token);
 	};
+
+	useEffect(() => {
+		const fetchSelectedCoin = async () => {
+			setUsdCoin(await selectedUSDCoin());
+		};
+
+		fetchSelectedCoin();
+	}, []);
 
 	return (
 		<WelcomeLayout>
@@ -40,7 +45,12 @@ const USDCoinScreen = () => {
 						style={{ paddingTop: 24, paddingBottom: 24 }}
 						data={stablecoins}
 						renderItem={({ item }) => (
-							<ListItem label={item} selected={false} onPress={() => onSelectCoin(item)} token={item} />
+							<ListItem
+								label={item}
+								selected={usdCoin === item}
+								onPress={() => onSelectCoin(item)}
+								token={item}
+							/>
 						)}
 						keyExtractor={(item) => item}
 					/>

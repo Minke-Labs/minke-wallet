@@ -3,7 +3,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { network } from './network';
 
-export const stablecoins = ['USDT', 'DAI', 'BUSD', 'TUSD', 'USDC', 'UST'];
+export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD', 'UST'];
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {
 	const { chainId } = await network();

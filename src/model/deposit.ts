@@ -1,6 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
 
+export const usdCoinSettingsKey = '@minke:usdcoin';
 const protocol = 'aave-v2';
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
@@ -30,6 +32,11 @@ export const aaveDeposits = async (address: string): Promise<AaveBalances> => {
 	const { zapperNetwork } = await selectedNetwork();
 	const result = await fetch(`${baseURL}?addresses%5B%5D=${address}&network=${zapperNetwork}&api_key=${apiKey}`);
 	return result.json();
+};
+
+export const usdCoin = async (): Promise<string> => {
+	const coin = await AsyncStorage.getItem(usdCoinSettingsKey);
+	return coin || 'USDC';
 };
 
 export interface AaveBalances {

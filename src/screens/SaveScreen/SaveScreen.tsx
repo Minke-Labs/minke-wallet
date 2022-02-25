@@ -1,24 +1,18 @@
 import React, { useEffect } from 'react';
-import { Image, ImageBackground, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
-import { useState } from '@hookstate/core';
-import { globalDepositState } from '@stores/DepositStore';
-import { AaveMarket, aaveDeposits, AaveBalances } from '@models/deposit';
-import { globalWalletState } from '@stores/WalletStore';
+import { aaveDeposits, AaveBalances } from '@models/deposit';
 import { FlatList } from 'react-native-gesture-handler';
-import { coinParamFromSymbol, numberFormat } from '@src/helpers/utilities';
-import { TokenType } from '@src/styles';
-import { Token, Text, Icon, Button, Card } from '@components';
-import ValueBox from '../WalletAssets/ValueBox';
-import { makeStyles } from './SaveScreen.styles';
-import EmptyState from './EmptyState/EmptyState';
+import { numberFormat } from '@src/helpers/utilities';
+import { Text, Icon, Card } from '@components';
+import { backgroundRoundedWaves as background } from '@images';
 import AppLoading from 'expo-app-loading';
-import { whale2Img, backgroundRoundedWaves as background } from '@src/images';
+import EmptyState from './EmptyState/EmptyState';
+import { makeStyles } from './SaveScreen.styles';
 import TransactionIcon from '../WalletScreen/Transactions/TransactionIcon';
 
 const SaveScreen = () => {
 	const navigation = useNavigation();
-	const depositState = useState(globalDepositState());
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	// const [aaveMarkets] = React.useState<Array<AaveMarket>>();
@@ -39,11 +33,6 @@ const SaveScreen = () => {
 
 		getAaveDeposits();
 	}, []);
-
-	const approveDeposit = (aaveMarket: AaveMarket) => {
-		depositState.market.set(aaveMarket);
-		navigation.navigate('OpenAave');
-	};
 
 	if (!aaveBalances) {
 		return <AppLoading />;
@@ -76,7 +65,7 @@ const SaveScreen = () => {
 					<Text color="text3" marginBottom={8}>
 						Current deposits
 					</Text>
-					<Text type="textLarge" weight="medium">
+					<Text type="a" weight="medium">
 						{numberFormat(Number(depositsBalance))}
 					</Text>
 					<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 18 }}>
