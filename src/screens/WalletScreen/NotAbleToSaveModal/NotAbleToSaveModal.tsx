@@ -26,11 +26,6 @@ const NotAbleToSaveModal = ({
 		onAddFunds();
 	};
 
-	const goToSettings = () => {
-		onDismiss();
-		navigation.navigate('USDCoin');
-	};
-
 	useEffect(() => {
 		const loadDefaultUSDCoin = async () => {
 			setDefaultUSDCoin(await usdCoin());
@@ -68,14 +63,6 @@ const NotAbleToSaveModal = ({
 						</View>
 					</PaperTouchable>
 				</View>
-				<PaperTouchable onPress={goToSettings}>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<Icon name="gear" style={{ marginRight: 8 }} size={16} />
-						<Text type="a" weight="medium">
-							Change the default USD coin
-						</Text>
-					</View>
-				</PaperTouchable>
 			</View>
 		</SafeAreaView>
 	);
