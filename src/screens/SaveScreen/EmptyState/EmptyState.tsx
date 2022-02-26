@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ImageBackground, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, useColorScheme, TouchableWithoutFeedback } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -43,7 +43,7 @@ const EmptyState = () => {
 						Let&apos;s make your first deposit?
 					</Text>
 
-					<TouchableOpacity style={styles.greenButton}>
+					<TouchableWithoutFeedback style={styles.greenButton}>
 						<LinearGradient
 							start={{ x: 0, y: 0.75 }}
 							end={{ x: 1, y: 0.25 }}
@@ -55,7 +55,7 @@ const EmptyState = () => {
 								{(market.supplyApy * 100).toFixed(2)}% interest p.a.
 							</Text>
 						</LinearGradient>
-					</TouchableOpacity>
+					</TouchableWithoutFeedback>
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>
 						<Button iconLeft="addStroke" title="Deposit" onPress={() => navigation.navigate('Deposit')} />

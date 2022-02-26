@@ -22,7 +22,6 @@ const NotAbleToSaveModal = ({
 	};
 
 	const onAddFundsPressed = () => {
-		onDismiss();
 		onAddFunds();
 	};
 
@@ -35,7 +34,7 @@ const NotAbleToSaveModal = ({
 
 	return (
 		<SafeAreaView>
-			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
+			<ModalHeader {...{ onDismiss }} />
 			<View style={{ paddingHorizontal: 24 }}>
 				<Text type="h3" weight="extraBold" marginBottom={8}>
 					Not able to save

@@ -17,7 +17,6 @@ import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
 import NetWorth from './NetWorth/NetWorth';
-import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -29,7 +28,6 @@ const WalletScreen = () => {
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
-	const [notAbleToSaveVisible, setNotAbleToSaveVisible] = React.useState(false);
 
 	const onDeleteWallet = () =>
 		Alert.alert('Are you sure?', '', [
@@ -122,7 +120,6 @@ const WalletScreen = () => {
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel
 						onAddFunds={() => setAddFundsVisible(true)}
-						onNotAbleToSave={() => setNotAbleToSaveVisible(true)}
 						balance={balance?.usd || ''}
 						address={address}
 					/>
@@ -148,14 +145,6 @@ const WalletScreen = () => {
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
-			</Modal>
-
-			<Modal isVisible={notAbleToSaveVisible} onDismiss={() => setNotAbleToSaveVisible(false)}>
-				<NotAbleToSaveModal
-					visible={notAbleToSaveVisible}
-					onDismiss={() => setNotAbleToSaveVisible(false)}
-					onAddFunds={() => setAddFundsVisible(true)}
-				/>
 			</Modal>
 		</>
 	);

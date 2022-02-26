@@ -24,7 +24,7 @@ const SaveScreen = () => {
 	const depositState = useState(globalDepositState());
 	const { address } = globalWalletState().value;
 	// mainnet const address = '0xff32e57ceed15c2e07e03984bba66c220c06b13a';
-	// polygon const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
+	// const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
 
 	const getAaveMarket = async () => {
 		const markets = await fetchAaveMarketData();

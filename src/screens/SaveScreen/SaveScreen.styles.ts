@@ -10,8 +10,7 @@ export const makeStyles = (colors: ColorType) =>
 			backgroundColor: '#fff'
 		},
 		background: {
-			flex: 1,
-			maxHeight: Dimensions.get('screen').height * 0.4
+			flex: 1
 		},
 		headerNavegation: {
 			paddingTop: 56,
@@ -56,7 +55,7 @@ export const makeStyles = (colors: ColorType) =>
 			marginBottom: 4
 		},
 		depositCardContainer: {
-			minHeight: Dimensions.get('screen').height * 0.6,
+			minHeight: Dimensions.get('screen').height * 0.5,
 			backgroundColor: colors.background1,
 			paddingTop: 32,
 			paddingBottom: 32,
