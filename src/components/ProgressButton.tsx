@@ -26,7 +26,15 @@ const styles = StyleSheet.create({
 	}
 });
 
-const ProgressButton = ({ onFinish }: { onFinish: () => void }) => {
+const ProgressButton = ({
+	onFinish,
+	title = 'Hold to Confirm',
+	disabled = false
+}: {
+	onFinish: () => void;
+	title?: string;
+	disabled?: boolean;
+}) => {
 	const [count, setCount] = useState(0);
 	const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
 
@@ -58,6 +66,7 @@ const ProgressButton = ({ onFinish }: { onFinish: () => void }) => {
 			onPressOut={stopCounter}
 			delayLongPress={5000}
 			style={styles.startCounterButton}
+			disabled={disabled}
 		>
 			<View
 				style={{
@@ -67,7 +76,7 @@ const ProgressButton = ({ onFinish }: { onFinish: () => void }) => {
 				}}
 			/>
 			<View style={styles.startCounterButtonTextContainer}>
-				<Text style={styles.startCounterButtonText}>Hold to Confirm</Text>
+				<Text style={styles.startCounterButtonText}>{title}</Text>
 			</View>
 		</TouchableWithoutFeedback>
 	);

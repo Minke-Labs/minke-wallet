@@ -63,7 +63,6 @@ const SaveScreen = () => {
 	if (!lending) {
 		return <EmptyState />;
 	}
-
 	const { value: depositsBalance = 0 } = meta.find((m) => m.label === 'Assets') || {};
 
 	return (

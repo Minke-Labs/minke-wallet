@@ -1,7 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { formatUnits } from 'ethers/lib/utils';
+import { toBn } from 'evm-bn';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
-import { estimateGas } from './wallet';
+import { estimateGas, getWalletTokens } from './wallet';
 
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
@@ -13,7 +15,6 @@ export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const result = await fetch(`${baseURL}?&type=interest-bearing&api_key=${apiKey}&network=${zapperNetwork}`);
 	const allMarkets: Array<AaveMarket> = await result.json();
-
 	return allMarkets.filter(({ tokens }) => tokens.find(({ symbol }) => stablecoins.includes(symbol)));
 };
 
@@ -64,10 +65,78 @@ export const approvalTransaction = async (address: string, token: string): Promi
 	return result.json();
 };
 
+export const depositTransaction = async ({
+	address,
+	token,
+	decimals,
+	amount,
+	interestBearingToken
+}: {
+	address: string;
+	token: string;
+	decimals: number;
+	interestBearingToken: string;
+	amount: string;
+}): Promise<DepositTransaction> => {
+	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/transaction`;
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const { zapperNetwork } = await selectedNetwork();
+	const {
+		result: { FastGasPrice: gasPrice, suggestBaseFee }
+	} = await estimateGas();
+	const baseFee = +suggestBaseFee * 1000000000;
+	const gasValue = +gasPrice * 1000000000;
+	const gas = `&maxFeePerGas=${baseFee + gasValue}&maxPriorityFeePerGas=${gasValue}`;
+	const addresses = `&ownerAddress=${address}&sellTokenAddress=${token}`;
+	const poolAddresses = `&poolAddress=${interestBearingToken}&payoutTokenAddress=${interestBearingToken}`;
+	const slippage = '&slippagePercentage=0.05';
+	const network = `&network=${zapperNetwork}&api_key=${apiKey}${gas}`;
+	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
+	const result = await fetch(
+		`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`
+	);
+
+	return result.json();
+};
+
 export const usdCoin = async (): Promise<string> => {
 	const coin = await AsyncStorage.getItem(usdCoinSettingsKey);
 	return coin || 'USDC';
 };
+
+export const isAbleToDeposit = async (address: string): Promise<boolean> => {
+	const defaultUSDCoin = await usdCoin();
+	const result = await getWalletTokens(address);
+	const { products } = result[address.toLowerCase()];
+	const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
+	const hasTheDefaultToken = !!tokens.find((t) => t.symbol === defaultUSDCoin);
+
+	if (hasTheDefaultToken) {
+		return true;
+	}
+
+	const { symbol } = tokens.find((t) => depositStablecoins.includes(t.symbol)) || {};
+	if (symbol) {
+		await AsyncStorage.setItem(usdCoinSettingsKey, symbol);
+		return true;
+	}
+
+	return false;
+};
+
+export interface DepositTransaction {
+	buyTokenAddress: string;
+	data: string;
+	from: string;
+	minTokens: string;
+	sellTokenAddress: string;
+	sellTokenAmount: string;
+	to: string;
+	value: string;
+	gas: string;
+	maxFeePerGas: string;
+	maxPriorityFeePerGas: string;
+}
 
 export interface ApprovalTransaction {
 	gasPrice: string;

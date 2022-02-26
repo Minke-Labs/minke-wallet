@@ -22,5 +22,11 @@ export const makeStyles = (colors: ColorType) =>
 			borderRadius: 16,
 			marginTop: 16,
 			backgroundColor: colors.background2
+		},
+
+		depositButton: {
+			paddingHorizontal: 24,
+			marginTop: 'auto',
+			marginBottom: 16
 		}
 	});

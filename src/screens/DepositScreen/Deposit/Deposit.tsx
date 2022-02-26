@@ -2,18 +2,22 @@ import React, { useEffect, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { getWalletTokens, WalletToken } from '@models/wallet';
+import { getProvider, getWalletTokens, WalletToken } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeTokens, nativeTokens, ParaswapToken, stablecoins } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { aaveMarketTokenToParaswapToken } from '@models/deposit';
+import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
 import { Icon, Modal, Text } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { network } from '@models/network';
+import { debounce } from 'lodash';
+import { Wallet } from 'ethers';
+import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
+import ProgressButton from '@src/components/ProgressButton';
 import TokenCard from '../../ExchangeScreen/TokenCard';
 import GasSelector from '../../ExchangeScreen/GasSelector';
 import { makeStyles } from './Deposit.styles';
@@ -23,12 +27,13 @@ const Deposit = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { address } = globalWalletState().value;
+	const { address, privateKey } = globalWalletState().value;
 	const { market } = globalDepositState().value;
 	const { gas } = globalExchangeState().value;
 	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
 	const [token, setToken] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
 	const [tokenBalance, setTokenBalance] = React.useState('0');
+	const [amount, setAmount] = React.useState('0');
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>([]);
 	const [availableTokens, setAvailableTokens] = React.useState<Array<string>>([]);
@@ -57,6 +62,56 @@ const Deposit = () => {
 	const onTokenSelected = (t: ParaswapToken) => {
 		setToken(t);
 		hideModal();
+	};
+
+	const updateAmount = (value: string) => {
+		const formatedValue = value.replace(/\,/g, '.');
+		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+			setAmount(formatedValue);
+		}
+	};
+
+	const enoughForGas = true;
+	const canDeposit = token && +tokenBalance > 0 && +tokenBalance >= +amount && enoughForGas;
+	const onDeposit = async () => {
+		if (canDeposit) {
+			const transaction = await depositTransaction({
+				address,
+				amount,
+				token: token.address,
+				decimals: token.decimals,
+				interestBearingToken: market.address
+			});
+
+			console.log('Came from zapper', transaction);
+
+			const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
+
+			const provider = await getProvider();
+			const wallet = new Wallet(privateKey, provider);
+			const chainId = await wallet.getChainId();
+			const nonce = await provider.getTransactionCount(address, 'latest');
+			const txDefaults = {
+				from,
+				to,
+				data,
+				nonce,
+				gasLimit,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
+				type: 2,
+				chainId
+			};
+			const signedTx = await wallet.signTransaction(txDefaults);
+			const { hash, wait } = await provider.sendTransaction(signedTx as string);
+			console.log('hash', hash);
+			if (hash) {
+				await wait();
+				navigation.navigate('Save');
+			} else {
+				console.error('Error depositing');
+			}
+		}
 	};
 
 	useEffect(() => {
@@ -114,10 +169,21 @@ const Deposit = () => {
 					)}
 
 					<Card style={styles.tokenCard}>
-						<TokenCard token={token} onPress={() => setSearchVisible(true)} balance={tokenBalance} />
+						<TokenCard
+							token={token}
+							onPress={() => setSearchVisible(true)}
+							balance={tokenBalance}
+							updateQuotes={debounce(updateAmount, 500)}
+						/>
 					</Card>
 
 					<GasSelector />
+				</View>
+
+				<View style={styles.depositButton}>
+					{!enoughForGas && <Warning label="Not enough balance for gas" />}
+
+					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
 				</View>
 			</WelcomeLayout>
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>

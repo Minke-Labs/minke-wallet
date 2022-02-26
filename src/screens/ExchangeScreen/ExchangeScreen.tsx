@@ -21,6 +21,7 @@ import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
 import TokenCard from './TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
+import Warning from './Warning/Warning';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const wallet = useState(globalWalletState());
@@ -347,32 +348,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				<GasSelector />
 
 				<View style={[styles.exchangeSection, styles.exchangeButton]}>
-					{!loadingPrices && !enoughForGas && (
-						<View
-							style={{
-								flexDirection: 'row',
-								borderRadius: 16,
-								marginBottom: 32,
-								borderColor: '#FFFCF5',
-								borderWidth: 1
-							}}
-						>
-							<View
-								style={{
-									backgroundColor: '#FFFCF5',
-									paddingVertical: 20,
-									paddingHorizontal: 12,
-									borderTopLeftRadius: 16,
-									borderBottomLeftRadius: 16
-								}}
-							>
-								<Icon name="alertStroke" color="alert4a" size={32} />
-							</View>
-							<Text type="a" style={{ paddingVertical: 10, paddingHorizontal: 16, alignSelf: 'center' }}>
-								Not enough balance for gas
-							</Text>
-						</View>
-					)}
+					{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}
 
 					{loadingPrices ? (
 						<ActivityIndicator color={colors.cta1} />
