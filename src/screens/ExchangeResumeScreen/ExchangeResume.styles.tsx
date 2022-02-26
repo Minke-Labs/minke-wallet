@@ -10,12 +10,10 @@ export const makeStyles = (colors: ColorType) =>
 			paddingRight: 24,
 			flexDirection: 'column'
 		},
-		header: {
-			height: 48
-		},
 		exchangeResumeContainer: {
 			paddingLeft: 24,
-			paddingRight: 24
+			paddingRight: 24,
+			marginTop: 8
 		},
 		exchangeResume: {
 			flexDirection: 'row',
@@ -72,7 +70,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		tokenCard: {
 			borderRadius: 16,
-			marginTop: 24,
+			marginTop: 16,
 			backgroundColor: colors.background2
 		},
 		tokenCardDivisor: {

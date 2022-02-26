@@ -21,7 +21,8 @@ export const makeStyles = (colors: ColorType) =>
 			paddingRight: 24
 		},
 		exchangeButton: {
-			marginTop: 'auto'
+			marginTop: 'auto',
+			marginBottom: 16
 		},
 		exchangeHeadlineRow: {
 			flexDirection: 'row',

@@ -47,7 +47,7 @@ const Deposit = () => {
 			if (isNativeToken && walletToken) {
 				const { gweiValue } = gas || {};
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return walletToken.balance - gasPrice;
+				return Math.max(walletToken.balance - gasPrice, 0);
 			}
 			return walletToken?.balance || 0;
 		},

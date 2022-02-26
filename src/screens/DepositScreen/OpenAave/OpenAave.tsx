@@ -10,7 +10,7 @@ import { aaveGhost } from '@images';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
-import { Wallet, BigNumber } from 'ethers';
+import { Wallet } from 'ethers';
 import styles from './OpenAave.styles';
 
 const OpenAave = () => {
@@ -23,19 +23,34 @@ const OpenAave = () => {
 
 	const onOpenAccount = async () => {
 		setLoading(true);
-		const transaction = await approvalTransaction(address, tokens[0].address);
-		console.log(transaction);
+		const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = await approvalTransaction(
+			address,
+			tokens[0].address
+		);
 		const provider = await getProvider();
 		const wallet = new Wallet(privateKey, provider);
+		const chainId = await wallet.getChainId();
 		const nonce = await provider.getTransactionCount(address, 'latest');
-		const signedTx = await wallet.signTransaction({
-			...transaction,
-			...{ gasPrice: BigNumber.from(transaction.gasPrice), nonce }
-		});
-		const result = await provider.sendTransaction(signedTx as string);
-		console.log(result);
-		setLoading(false);
-		// navigation.navigate('Deposit');
+		const txDefaults = {
+			from,
+			to,
+			data,
+			nonce,
+			maxFeePerGas,
+			maxPriorityFeePerGas,
+			type: 2,
+			gasLimit: 100000,
+			chainId
+		};
+		const signedTx = await wallet.signTransaction(txDefaults);
+		const { hash, wait } = await provider.sendTransaction(signedTx as string);
+		if (hash) {
+			await wait();
+			setLoading(false);
+			navigation.navigate('Deposit');
+		} else {
+			console.error('Error approving');
+		}
 	};
 
 	return (
@@ -109,7 +124,7 @@ const OpenAave = () => {
 						disabled={loading}
 					/>
 					<Text type="span" color="text2" style={{ textAlign: 'center' }}>
-						This transaction will cost a few cents when you confirm your deposit
+						This transaction will cost a few cents.
 					</Text>
 				</View>
 			</View>

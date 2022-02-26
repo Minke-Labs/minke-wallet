@@ -58,7 +58,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			if (isNativeToken && walletToken) {
 				const { gweiValue } = exchange.gas.value || {};
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return walletToken.balance - gasPrice;
+				return Math.max(walletToken.balance - gasPrice, 0);
 			}
 			return walletToken?.balance || 0;
 		},
@@ -236,15 +236,6 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		return null;
 	}, [quote]);
 
-	const canSwap = () =>
-		quote &&
-		fromToken &&
-		toToken &&
-		exchange.value.fromAmount &&
-		exchange.value.toAmount &&
-		+(exchange.value.fromAmount || 0) > 0 &&
-		balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0);
-
 	useEffect(() => {
 		const loadNativeToken = async () => {
 			const {
@@ -289,6 +280,17 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	}, [toToken, fromToken]);
 
 	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
+
+	const canSwap = () =>
+		quote &&
+		fromToken &&
+		toToken &&
+		exchange.value.fromAmount &&
+		exchange.value.toAmount &&
+		+(exchange.value.fromAmount || 0) > 0 &&
+		balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0) &&
+		!loadingPrices &&
+		enoughForGas;
 
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (

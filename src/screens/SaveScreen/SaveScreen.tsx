@@ -5,8 +5,11 @@ import { aaveDeposits, AaveBalances, usdCoin, AaveMarket, fetchAaveMarketData } 
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat } from '@src/helpers/utilities';
 import { Text, Icon, Card } from '@components';
+import { useState } from '@hookstate/core';
+import { globalDepositState } from '@src/stores/DepositStore';
 import { backgroundRoundedWaves as background } from '@images';
 import AppLoading from 'expo-app-loading';
+import { globalWalletState } from '@src/stores/WalletStore';
 import EmptyState from './EmptyState/EmptyState';
 import { makeStyles } from './SaveScreen.styles';
 import TransactionIcon from '../WalletScreen/Transactions/TransactionIcon';
@@ -18,14 +21,18 @@ const SaveScreen = () => {
 	const [aaveMarket, setAaveMarket] = React.useState<AaveMarket>();
 	const [selectedUSDCoin, setSelectedUSDCoin] = React.useState('');
 	const [aaveBalances, setAaveBalances] = React.useState<AaveBalances>();
-	// const { address } = globalWalletState().value;
+	const depositState = useState(globalDepositState());
+	const { address } = globalWalletState().value;
 	// mainnet const address = '0xff32e57ceed15c2e07e03984bba66c220c06b13a';
-	const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
+	// polygon const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
 
 	const getAaveMarket = async () => {
 		const markets = await fetchAaveMarketData();
 		const defaultMarket = markets.find((m) => m.tokens[0].symbol === selectedUSDCoin);
-		setAaveMarket(defaultMarket);
+		if (defaultMarket) {
+			setAaveMarket(defaultMarket);
+			depositState.market.set(defaultMarket);
+		}
 	};
 
 	useEffect(() => {

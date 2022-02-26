@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
+import { estimateGas } from './wallet';
 
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
@@ -50,8 +51,14 @@ export const approvalTransaction = async (address: string, token: string): Promi
 	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/approval-transaction`;
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const { zapperNetwork } = await selectedNetwork();
+	const {
+		result: { FastGasPrice: gasPrice, suggestBaseFee }
+	} = await estimateGas();
+	const baseFee = +suggestBaseFee * 1000000000;
+	const gasValue = +gasPrice * 1000000000;
+	const gas = `&maxFeePerGas=${baseFee + gasValue}&maxPriorityFeePerGas=${gasValue}`;
 	const result = await fetch(
-		`${baseURL}?ownerAddress=${address}&sellTokenAddress=${token}&network=${zapperNetwork}&api_key=${apiKey}`
+		`${baseURL}?ownerAddress=${address}&sellTokenAddress=${token}&network=${zapperNetwork}&api_key=${apiKey}${gas}`
 	);
 
 	return result.json();

@@ -197,14 +197,18 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		<>
 			<WelcomeLayout>
 				<View style={styles.exchangeResumeContainer}>
-					<View style={styles.header}>
-						<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+					<View>
+						<TouchableOpacity
+							activeOpacity={0.6}
+							onPress={() => navigation.goBack()}
+							style={{ flexDirection: 'row', alignItems: 'center' }}
+						>
 							<Icon name="arrowBackStroke" color="text7" size={24} />
+							<Text type="h3" weight="extraBold">
+								Exchange Resume
+							</Text>
 						</TouchableOpacity>
 					</View>
-					<Text type="h3" weight="extraBold">
-						Exchange Resume
-					</Text>
 
 					<Card style={styles.tokenCard}>
 						{priceQuote ? (

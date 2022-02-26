@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
@@ -22,14 +22,14 @@ export const makeStyles = (colors: ColorType) =>
 		headerNavegationTitle: {
 			marginLeft: 8
 		},
-		saceEmptyStateContent: {
+		saveEmptyStateContent: {
 			flex: 1,
 			alignItems: 'flex-end',
 			flexDirection: 'row'
 		},
 		saveEmptyStateCard: {
 			width: '100%',
-			height: '50%',
+			height: Dimensions.get('screen').height * 0.5,
 			alignItems: 'center',
 			paddingHorizontal: 24,
 			paddingTop: '10%',
@@ -41,7 +41,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		bgSaveEmptyScreen: {
 			width: '100%',
-			height: 583,
+			height: Dimensions.get('screen').height * 0.6,
 			position: 'absolute',
 			top: 0,
 			left: 0,
