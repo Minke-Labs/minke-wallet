@@ -3,12 +3,12 @@ import { approvalState, isAbleToDeposit } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import AppLoading from 'expo-app-loading';
-import Deposit from './Deposit/Deposit';
-import OpenAave from './OpenAave/OpenAave';
 import { Modal } from '@components';
 import { AddFunds } from '@containers';
-import NotAbleToSaveModal from '../WalletScreen/NotAbleToSaveModal/NotAbleToSaveModal';
 import { useNavigation } from '@hooks';
+import Deposit from './Deposit/Deposit';
+import OpenAave from './OpenAave/OpenAave';
+import NotAbleToSaveModal from '../WalletScreen/NotAbleToSaveModal/NotAbleToSaveModal';
 
 const DepositScreen = () => {
 	const navigation = useNavigation();
