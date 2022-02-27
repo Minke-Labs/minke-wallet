@@ -40,7 +40,9 @@ const AddContact = ({ onContactAdded }: { onContactAdded: () => void }) => {
 
 	return (
 		<View style={{ flex: 1, paddingHorizontal: 24 }}>
-			<Text weight="extraBold" type="h3" marginBottom={32}>Add Contact</Text>
+			<Text weight="extraBold" type="h3" marginBottom={32}>
+				Add Contact
+			</Text>
 			<TextInput
 				label="Name"
 				value={name}
@@ -59,11 +61,7 @@ const AddContact = ({ onContactAdded }: { onContactAdded: () => void }) => {
 				error={address === '' && ensAddress === ''}
 			/>
 
-			<Button
-				title="Add Contact"
-				onPress={onContactCreate}
-				disabled={!(name && validAddress)}
-			/>
+			<Button title="Add Contact" onPress={onContactCreate} disabled={!(name && validAddress)} />
 
 			<KeyboardSpacer />
 		</View>
