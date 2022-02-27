@@ -12,7 +12,8 @@ import {
 	EstimateGasResponse,
 	WalletToken,
 	resolveENSAddress,
-	imageSource
+	imageSource,
+	smallWalletAddress
 } from '@src/model/wallet';
 import { numberFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -48,8 +49,8 @@ const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD, token
 	const coinValue = gas * 21000 * 10 ** -9;
 	return (
 		<Text color="text2" type="span" marginBottom={8}>
-			{label}: Normal - {coinValue.toFixed(5)} {token.symbol} | $
-			{numberFormat(coinValue * priceUSD, 5)} Network Fee
+			{label}: Normal - {coinValue.toFixed(5)} {token.symbol} | ${numberFormat(coinValue * priceUSD, 5)} Network
+			Fee
 		</Text>
 	);
 };
@@ -74,7 +75,10 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 		fetchImage();
 	}, []);
 
-	const { privateKey, network: { id, nativeToken } } = state.value;
+	const {
+		privateKey,
+		network: { id, nativeToken }
+	} = state.value;
 
 	const onSend = async () => {
 		if (gasPrice) {
@@ -101,16 +105,20 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
 				<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
-				{image &&
-					<Image
-						style={[styles.image, { marginLeft: -20, zIndex: -1 }]}
-						source={image}
-					/>}
+				{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
 			</View>
 
 			<Text type="h3" weight="extraBold" marginBottom={32}>
-				How much <Text color="text11" type="h3" weight="extraBold">{token.symbol}</Text> do you want to send to
-				<Text color="text11" type="h3" weight="extraBold"> {user.name}</Text>?
+				How much{' '}
+				<Text color="text11" type="h3" weight="extraBold">
+					{token.symbol}
+				</Text>{' '}
+				do you want to send to
+				<Text color="text11" type="h3" weight="extraBold">
+					{' '}
+					{smallWalletAddress(user.address)}
+				</Text>
+				?
 			</Text>
 
 			<Card token={token} />
@@ -149,11 +157,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 				</View>
 			)}
 
-			<Button
-				title="Send"
-				disabled={!number || number > token.balance}
-				onPress={onSend}
-			/>
+			<Button title="Send" disabled={!number || number > token.balance} onPress={onSend} />
 			<KeyboardSpacer />
 		</View>
 	);
