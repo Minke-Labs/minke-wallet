@@ -9,9 +9,11 @@ export default StyleSheet.create({
 		width: '100%'
 	},
 	container: {
+		position: 'relative',
 		padding: 24,
 		height: '100%',
-		flex: 1
+		flex: 1,
+		zIndex: 100
 	},
 	linearGradient: {
 		height: '100%'
@@ -51,7 +53,7 @@ export default StyleSheet.create({
 		paddingBottom: 0,
 		paddingLeft: 4
 	},
-	subtract: {
+	aaveGhost: {
 		width: 344,
 		height: 499,
 		position: 'absolute',
