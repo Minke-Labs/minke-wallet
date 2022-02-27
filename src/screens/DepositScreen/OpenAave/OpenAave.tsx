@@ -13,7 +13,7 @@ import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
 import styles from './OpenAave.styles';
 
-const OpenAave = () => {
+const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [loading, setLoading] = useState(false);
 	const { address, privateKey } = globalWalletState().value;
@@ -23,14 +23,13 @@ const OpenAave = () => {
 
 	const onOpenAccount = async () => {
 		setLoading(true);
-		const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = await approvalTransaction(
-			address,
-			tokens[0].address
-		);
+		const transaction = await approvalTransaction(address, tokens[0].address);
+		const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
 		const provider = await getProvider();
 		const wallet = new Wallet(privateKey, provider);
 		const chainId = await wallet.getChainId();
 		const nonce = await provider.getTransactionCount(address, 'latest');
+		console.log('Approval API', transaction);
 		const txDefaults = {
 			from,
 			to,
@@ -42,14 +41,18 @@ const OpenAave = () => {
 			gasLimit: 100000,
 			chainId
 		};
+
+		console.log('Approval', txDefaults);
+
 		const signedTx = await wallet.signTransaction(txDefaults);
 		const { hash, wait } = await provider.sendTransaction(signedTx as string);
 		if (hash) {
 			await wait();
 			setLoading(false);
-			navigation.navigate('Deposit');
+			onApprove();
 		} else {
 			console.error('Error approving');
+			setLoading(false);
 		}
 	};
 
@@ -118,7 +121,7 @@ const OpenAave = () => {
 				<View style={{ marginTop: 'auto', marginBottom: 12 }}>
 					<Button
 						iconRight="arrowRight"
-						title="Open account"
+						title={loading ? 'Opening your account' : 'Open account'}
 						marginBottom={16}
 						onPress={onOpenAccount}
 						disabled={loading}

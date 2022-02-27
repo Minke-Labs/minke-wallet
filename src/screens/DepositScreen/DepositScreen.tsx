@@ -70,7 +70,7 @@ const DepositScreen = () => {
 		);
 	}
 	if (approved) return <Deposit />;
-	return <OpenAave />;
+	return <OpenAave onApprove={() => setApproved(true)} />;
 };
 
 export default DepositScreen;

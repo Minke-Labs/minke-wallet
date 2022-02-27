@@ -127,6 +127,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const onFinish = async () => {
 		if (priceQuote?.priceRoute) {
 			setLoading(true);
+			showModal();
 			const { priceRoute } = priceQuote;
 			const {
 				srcToken,
@@ -188,7 +189,6 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 				const signedTx = await walletObject.signTransaction(txDefaults);
 				const { hash } = await provider.sendTransaction(signedTx as string);
 				setTransactionHash(hash);
-				showModal();
 			}
 		}
 	};

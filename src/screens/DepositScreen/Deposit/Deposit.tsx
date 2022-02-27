@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import React, { useEffect, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -5,7 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getProvider, getWalletTokens, WalletToken } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { NativeTokens, nativeTokens, ParaswapToken, stablecoins } from '@models/token';
+import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
@@ -16,12 +17,13 @@ import { useTheme } from '@hooks';
 import { network } from '@models/network';
 import { debounce } from 'lodash';
 import { Wallet } from 'ethers';
+import { useState } from '@hookstate/core';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import ProgressButton from '@src/components/ProgressButton';
+import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import TokenCard from '../../ExchangeScreen/TokenCard';
 import GasSelector from '../../ExchangeScreen/GasSelector';
 import { makeStyles } from './Deposit.styles';
-import SearchTokens from '../../ExchangeScreen/SearchTokens';
 
 const Deposit = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -29,16 +31,15 @@ const Deposit = () => {
 	const styles = makeStyles(colors);
 	const { address, privateKey } = globalWalletState().value;
 	const { market } = globalDepositState().value;
-	const { gas } = globalExchangeState().value;
+	const { gas } = useState(globalExchangeState()).value;
+	const { gweiValue = 0 } = gas || {};
 	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
-	const [token, setToken] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
+	const [token] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
-	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>([]);
-	const [availableTokens, setAvailableTokens] = React.useState<Array<string>>([]);
-
-	const hideModal = () => setSearchVisible(false);
+	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
+	const [transactionHash, setTransactionHash] = React.useState('');
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {
@@ -50,7 +51,6 @@ const Deposit = () => {
 			);
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
 			if (isNativeToken && walletToken) {
-				const { gweiValue } = gas || {};
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
 				return Math.max(walletToken.balance - gasPrice, 0);
 			}
@@ -59,11 +59,6 @@ const Deposit = () => {
 		[walletTokens, nativeToken, gas]
 	);
 
-	const onTokenSelected = (t: ParaswapToken) => {
-		setToken(t);
-		hideModal();
-	};
-
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/\,/g, '.');
 		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
@@ -71,19 +66,21 @@ const Deposit = () => {
 		}
 	};
 
-	const enoughForGas = true;
-	const canDeposit = token && +tokenBalance > 0 && +tokenBalance >= +amount && enoughForGas;
+	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
+	const canDeposit =
+		token && +tokenBalance > 0 && +amount > 0 && +tokenBalance >= +amount && enoughForGas && gweiValue > 0;
 	const onDeposit = async () => {
 		if (canDeposit) {
+			setWaitingTransaction(true);
 			const transaction = await depositTransaction({
 				address,
 				amount,
 				token: token.address,
 				decimals: token.decimals,
-				interestBearingToken: market.address
+				interestBearingToken: market.address,
+				gweiValue
 			});
-
-			console.log('Came from zapper', transaction);
+			console.log('Deposit API', transaction);
 
 			const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
 
@@ -102,12 +99,14 @@ const Deposit = () => {
 				type: 2,
 				chainId
 			};
+			console.log('Deposit', txDefaults);
 			const signedTx = await wallet.signTransaction(txDefaults);
 			const { hash, wait } = await provider.sendTransaction(signedTx as string);
-			console.log('hash', hash);
 			if (hash) {
+				console.log('Deposit', hash);
 				await wait();
-				navigation.navigate('Save');
+				setTransactionHash(hash);
+				navigation.navigate('DepositSuccess');
 			} else {
 				console.error('Error depositing');
 			}
@@ -120,8 +119,6 @@ const Deposit = () => {
 			const { products } = result[address.toLowerCase()];
 			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
 			setWalletTokens(tokens);
-			const available = tokens.filter(({ symbol }) => stablecoins.includes(symbol));
-			setAvailableTokens(available.map(({ symbol }) => symbol.toLowerCase()));
 		};
 
 		const loadNativeToken = async () => {
@@ -169,31 +166,25 @@ const Deposit = () => {
 					)}
 
 					<Card style={styles.tokenCard}>
-						<TokenCard
-							token={token}
-							onPress={() => setSearchVisible(true)}
-							balance={tokenBalance}
-							updateQuotes={debounce(updateAmount, 500)}
-						/>
+						<TokenCard token={token} balance={tokenBalance} updateQuotes={debounce(updateAmount, 500)} />
 					</Card>
 
 					<GasSelector />
 				</View>
 
 				<View style={styles.depositButton}>
-					{!enoughForGas && <Warning label="Not enough balance for gas" />}
+					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
 
 					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
 				</View>
 			</WelcomeLayout>
-			<Modal isVisible={searchVisible} onDismiss={hideModal}>
-				<SearchTokens
-					visible={searchVisible}
-					onDismiss={hideModal}
-					onTokenSelect={onTokenSelected}
-					ownedTokens={availableTokens}
-					showOnlyOwnedTokens
-					selected={[token.symbol.toLowerCase()]}
+			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccess')}>
+				<TransactionWaitModal
+					onDismiss={() => navigation.navigate('DepositSuccess')}
+					fromToken={token}
+					toToken={{ img: market.appImageUrl, symbol: 'Aave' } as ParaswapToken}
+					transactionHash={transactionHash}
+					deposit
 				/>
 			</Modal>
 		</>

@@ -70,23 +70,21 @@ export const depositTransaction = async ({
 	token,
 	decimals,
 	amount,
-	interestBearingToken
+	interestBearingToken,
+	gweiValue
 }: {
 	address: string;
 	token: string;
 	decimals: number;
 	interestBearingToken: string;
 	amount: string;
+	gweiValue: number;
 }): Promise<DepositTransaction> => {
 	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/transaction`;
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const { zapperNetwork } = await selectedNetwork();
-	const {
-		result: { FastGasPrice: gasPrice, suggestBaseFee }
-	} = await estimateGas();
-	const baseFee = +suggestBaseFee * 1000000000;
-	const gasValue = +gasPrice * 1000000000;
-	const gas = `&maxFeePerGas=${baseFee + gasValue}&maxPriorityFeePerGas=${gasValue}`;
+	const gasValue = gweiValue * 1000000000;
+	const gas = `&maxFeePerGas=${gasValue}&maxPriorityFeePerGas=${gasValue}`;
 	const addresses = `&ownerAddress=${address}&sellTokenAddress=${token}`;
 	const poolAddresses = `&poolAddress=${interestBearingToken}&payoutTokenAddress=${interestBearingToken}`;
 	const slippage = '&slippagePercentage=0.05';

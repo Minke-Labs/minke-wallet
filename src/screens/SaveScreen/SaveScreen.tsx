@@ -4,7 +4,7 @@ import { useTheme, useNavigation } from '@hooks';
 import { aaveDeposits, AaveBalances, usdCoin, AaveMarket, fetchAaveMarketData } from '@models/deposit';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Icon, Card } from '@components';
+import { Text, Icon, Card, Button } from '@components';
 import { useState } from '@hookstate/core';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { backgroundRoundedWaves as background } from '@images';
@@ -133,6 +133,9 @@ const SaveScreen = () => {
 							);
 						}}
 					/>
+				</View>
+				<View style={{ marginTop: 'auto' }}>
+					<Button title="Deposit" onPress={() => navigation.navigate('Deposit')} />
 				</View>
 			</View>
 		</View>

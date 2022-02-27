@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useTheme } from '@src/hooks';
 
 const styles = StyleSheet.create({
 	startCounterButton: {
@@ -35,6 +36,7 @@ const ProgressButton = ({
 	title?: string;
 	disabled?: boolean;
 }) => {
+	const { colors } = useTheme();
 	const [count, setCount] = useState(0);
 	const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
 
@@ -59,13 +61,18 @@ const ProgressButton = ({
 		resetInterval();
 		onFinish();
 	};
+
+	const backgroundColor = () => {
+		if (disabled) return colors.detail2;
+		return colors.cta1;
+	};
 	return (
 		<TouchableWithoutFeedback
 			onPressIn={startCounter}
 			onLongPress={finishCounter}
 			onPressOut={stopCounter}
 			delayLongPress={5000}
-			style={styles.startCounterButton}
+			style={[styles.startCounterButton, { backgroundColor: backgroundColor() }]}
 			disabled={disabled}
 		>
 			<View

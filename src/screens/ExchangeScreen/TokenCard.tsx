@@ -1,11 +1,12 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable prefer-regex-literals */
 import React, { useState, useEffect, RefObject } from 'react';
-import { Image, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from '@hooks';
 import { ParaswapToken } from '@models/token';
-import { Text, Icon } from '@components';
+import { Text, Icon, Token } from '@components';
+import { TokenType } from '@styles';
 import { makeStyles } from './ExchangeScreen.styles';
 
 const TokenCard = ({
@@ -18,7 +19,7 @@ const TokenCard = ({
 	conversionAmount = ''
 }: {
 	token: ParaswapToken | undefined;
-	onPress: (() => void) | undefined;
+	onPress?: (() => void) | undefined;
 	balance: string;
 	innerRef?: RefObject<TextInput>;
 	disableMax?: boolean;
@@ -96,7 +97,7 @@ const TokenCard = ({
 				<TouchableOpacity onPress={onPress}>
 					<View style={styles.tokenCardCoin}>
 						<View style={styles.tokenImageContainer}>
-							<Image source={{ uri: token.img }} style={styles.tokenImage} />
+							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={40} />
 						</View>
 						<Text type="p2" style={styles.tokenName} weight="extraBold">
 							{token.symbol}
