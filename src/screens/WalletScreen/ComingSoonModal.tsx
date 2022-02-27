@@ -11,7 +11,6 @@ const ComingSoonModal: React.FC<ComingSoonModalProps> = ({ onDismiss }) => (
 	<SafeAreaView>
 		<ModalHeader onDismiss={onDismiss} />
 		<View style={{ paddingHorizontal: 24, alignItems: 'center' }}>
-
 			<Image
 				source={whale4Img}
 				style={{
@@ -21,9 +20,13 @@ const ComingSoonModal: React.FC<ComingSoonModalProps> = ({ onDismiss }) => (
 				}}
 			/>
 
-			<Text weight="extraBold" center>Coming soon!</Text>
-			<Text weight="extraBold" center marginBottom={45}>Devs are doing something.</Text>
-			<Button title="Ok, got it" onPress={onDismiss} />
+			<Text weight="extraBold" center>
+				Coming soon!
+			</Text>
+			<Text weight="extraBold" center marginBottom={45}>
+				Devs are doing something.
+			</Text>
+			<Button title="Ok, got it" onPress={onDismiss} marginBottom={8} />
 		</View>
 	</SafeAreaView>
 );
