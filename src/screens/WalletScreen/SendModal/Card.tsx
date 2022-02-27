@@ -17,17 +17,18 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => (
 		{...(!onSelected && { activeOpacity: 1 })}
 		style={{ height: 40, flexDirection: 'row', marginBottom: 24 }}
 	>
-		<Token
-			name={token.symbol.toLowerCase() as TokenType}
-			size={40}
-		/>
+		<Token name={token.symbol.toLowerCase() as TokenType} size={40} />
 		<View style={{ marginLeft: 16, justifyContent: 'space-between' }}>
 			<Text weight="bold" type="p2">
 				{coinParamFromSymbol({ symbol: token.symbol, type: 'name' })}
 			</Text>
 			<Text type="span" weight="bold">
-				{numberFormat(token.balanceUSD)} ({token.balance.toFixed(3)} {token.symbol})
-				<Text weight="regular" type="span"> available</Text>
+				{numberFormat(token.balanceUSD)} ({token.balance.toString().match(/^-?\d+(?:\.\d{0,6})?/)}{' '}
+				{token.symbol})
+				<Text weight="regular" type="span">
+					{' '}
+					available
+				</Text>
 			</Text>
 		</View>
 	</TouchableOpacity>
