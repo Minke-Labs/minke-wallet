@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ImageBackground, TouchableOpacity, useColorScheme, TouchableWithoutFeedback } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -19,45 +19,46 @@ const EmptyState = () => {
 
 	return (
 		<View style={styles.container}>
-			<ImageBackground
-				source={scheme === 'dark' ? bgSaveBackgroundDark : bgSaveBackground}
-				style={styles.bgSaveEmptyScreen}
-			/>
-			<View style={styles.headerNavegation}>
-				<TouchableOpacity style={styles.headerNavegationLeft} onPress={() => navigation.goBack()}>
-					<Icon name="arrowBackStroke" color="cta1" size={24} />
-					<Text weight="extraBold" color="text1" marginBottom={8}>
+			<SafeAreaView>
+				<ImageBackground
+					source={scheme === 'dark' ? bgSaveBackgroundDark : bgSaveBackground}
+					style={styles.bgSaveEmptyScreen}
+				/>
+			</SafeAreaView>
+
+			<View style={styles.headerNavigation}>
+				<TouchableOpacity style={styles.headerNavigationLeft} onPress={() => navigation.goBack()}>
+					<Icon name="arrowBackStroke" color="text7" size={24} />
+					<Text weight="extraBold" type="h3" color="text1" style={{ marginLeft: 12 }}>
 						Save
 					</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={styles.saveEmptyStateContent}>
 				<View style={styles.saveEmptyStateCard}>
-					<Text type="h3" weight="extraBold" color="text1" marginBottom={0} style={styles.textCenter}>
-						Open Aave
+					<Text type="h3" weight="extraBold" color="text1" marginBottom={16} center>
+						Open Aave{'\n'}Savings Account
 					</Text>
-					<Text type="h3" weight="extraBold" color="text1" marginBottom={24} style={styles.textCenter}>
-						Savings Account
-					</Text>
-					<Text color="text3" marginBottom={32} style={styles.textCenter}>
+
+					<Text type="p2" color="text3" marginBottom={32}>
 						Let&apos;s make your first deposit?
 					</Text>
 
-					<TouchableWithoutFeedback style={styles.greenButton}>
+					<View style={styles.linearGradientContainer}>
 						<LinearGradient
 							start={{ x: 0, y: 0.75 }}
 							end={{ x: 1, y: 0.25 }}
-							colors={['rgba(49, 193, 139, 1)', 'rgba(49, 193, 106, 1)']}
+							colors={['#30C061', '#30C08C']}
 							style={styles.linearGradient}
 						>
-							<Icon name="iconUp" color="text1" size={16} style={styles.greenButtonIcon} />
-							<Text weight="bold" style={styles.greenButtonText}>
+							<Icon name="iconUp" color="text11" size={16} style={styles.greenButtonIcon} />
+							<Text weight="bold" type="a" color="text11" style={{ lineHeight: 25 }}>
 								{(market.supplyApy * 100).toFixed(2)}% interest p.a.
 							</Text>
 						</LinearGradient>
-					</TouchableWithoutFeedback>
+					</View>
 
-					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>
+					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 58 }}>
 						<Button iconLeft="addStroke" title="Deposit" onPress={() => navigation.navigate('Deposit')} />
 					</View>
 				</View>

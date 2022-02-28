@@ -26,3 +26,8 @@ export const numberFormat = (value: number) =>
 		style: 'currency',
 		currency: 'USD'
 	}).format(value);
+
+export const addColorOpacity = (color: string, opacity: number): string => {
+	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+	return color + newOpacity.toString(16).toUpperCase();
+};

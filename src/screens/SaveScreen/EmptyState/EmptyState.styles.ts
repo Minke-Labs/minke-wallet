@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
+import { addColorOpacity } from '@helpers/utilities';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
@@ -7,21 +8,26 @@ export const makeStyles = (colors: ColorType) =>
 			height: '100%',
 			backgroundColor: colors.background2
 		},
-		headerNavegation: {
-			paddingTop: 56,
-			paddingLeft: 24,
-			paddingRight: 24,
+		bgSaveEmptyScreen: {
+			width: '100%',
+			height: Dimensions.get('screen').height * 0.6,
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			zIndex: -1
+		},
+		// ... HEADER
+		headerNavigation: {
+			paddingLeft: 24
+		},
+		headerNavigationLeft: {
 			flexDirection: 'row',
-			justifyContent: 'space-between',
 			alignItems: 'center'
 		},
-		headerNavegationLeft: {
-			flexDirection: 'row',
-			alignItems: 'center'
-		},
-		headerNavegationTitle: {
+		headerNavigationTitle: {
 			marginLeft: 8
 		},
+		// .... CONTENT
 		saveEmptyStateContent: {
 			flex: 1,
 			alignItems: 'flex-end',
@@ -36,37 +42,20 @@ export const makeStyles = (colors: ColorType) =>
 			borderTopRightRadius: 88,
 			backgroundColor: colors.text6
 		},
-		textCenter: {
-			textAlign: 'center'
-		},
-		bgSaveEmptyScreen: {
-			width: '100%',
-			height: Dimensions.get('screen').height * 0.6,
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			zIndex: -1
-		},
-		greenButton: {
-			marginBottom: 56,
-			borderColor: 'rgba(222, 245, 236, 1)',
-			borderRadius: 12.5,
-			borderWidth: 4
-		},
-		greenButtonText: {
-			fontSize: 14
-		},
-		greenButtonIcon: {
-			marginBottom: -8,
-			marginRight: 8
+		linearGradientContainer: {
+			borderWidth: 4,
+			borderRadius: 8,
+			borderColor: addColorOpacity('#30C061', 0.3)
 		},
 		linearGradient: {
 			flexDirection: 'row',
-			alignContent: 'center',
 			alignItems: 'center',
 			justifyContent: 'center',
-			borderRadius: 8,
-			paddingVertical: 8,
-			paddingHorizontal: 24
+			borderRadius: 4,
+			paddingHorizontal: 14,
+			paddingVertical: 4
+		},
+		greenButtonIcon: {
+			marginRight: 8
 		}
 	});
