@@ -18,6 +18,7 @@ interface TransactionContactsProps {
 	onSelected: (item: UserProps) => void;
 }
 
+// @TODO: Marcos accept address with a bad format
 const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected }) => {
 	const [address, setAddress] = React.useState('');
 	const [ensAddress, setEnsAddress] = React.useState<string>();
@@ -55,7 +56,7 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 				autoCorrect={false}
 				autoCompleteType="off"
 				autoCapitalize="none"
-				error={validAddress}
+				error={address && !validAddress}
 			/>
 			<Button title="Send" disabled={!validAddress} onPress={onSendAddress} />
 

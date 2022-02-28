@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => (
 				{coinParamFromSymbol({ symbol: token.symbol, type: 'name' })}
 			</Text>
 			<Text type="span" weight="bold">
-				{numberFormat(token.balanceUSD)} ({token.balance.toString().match(/^-?\d+(?:\.\d{0,6})?/)}{' '}
+				{numberFormat(token.balanceUSD)} ({token.balance.toString().match(/^-?\d+(?:\.\d{0,9})?/)}{' '}
 				{token.symbol})
 				<Text weight="regular" type="span">
 					{' '}

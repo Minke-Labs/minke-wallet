@@ -185,7 +185,7 @@ export const sendTransaction = async (
 		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: 21000,
+		gasLimit: 100000,
 		nonce
 	};
 
@@ -195,7 +195,7 @@ export const sendTransaction = async (
 
 		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
 		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount));
-		tx.gasPrice = await wallet.provider.estimateGas(tx);
+		// tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {

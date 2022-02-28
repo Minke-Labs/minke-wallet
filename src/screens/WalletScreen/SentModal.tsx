@@ -4,6 +4,7 @@ import { network } from '@src/model/network';
 import { TokenType } from '@styles';
 import { Text, Token, Icon } from '@components';
 import * as Linking from 'expo-linking';
+import { smallWalletAddress } from '@src/model/wallet';
 
 type ResultProps = {
 	link: string;
@@ -42,36 +43,19 @@ const SentModal: React.FC<SentModalProps> = ({ sentObj, onDismiss }) => {
 					<Icon name="closeStroke" size={24} color="text7" />
 				</TouchableOpacity>
 			</View>
-			<Text
-				type="h3"
-				weight="extraBold"
-				color="text1"
-				marginBottom={12}
-				style={{ marginTop: 32 }}
-			>
+			<Text type="h3" weight="extraBold" color="text1" marginBottom={12} style={{ marginTop: 32 }}>
 				Token Sent
 			</Text>
 			<Token name={sentObj?.symbol as TokenType} size={60} />
-			<Text
-				weight="extraBold"
-				color="text1"
-				marginBottom={12}
-				style={{ marginTop: 12 }}
-			>
-				{sentObj?.symbol}
+			<Text weight="extraBold" color="text1" marginBottom={12} style={{ marginTop: 12 }}>
+				{(sentObj?.symbol || '').toUpperCase()}
 			</Text>
-			<Text
-				type="p2"
-				weight="medium"
-				color="text3"
-				marginBottom={12}
-				style={{ marginTop: 8 }}
-			>
+			<Text type="p2" weight="medium" color="text3" marginBottom={12} style={{ marginTop: 8 }}>
 				Link of transaction:
 			</Text>
-			<TouchableOpacity onPress={openTransaction}>
+			<TouchableOpacity onPress={openTransaction} style={{ marginBottom: 8 }}>
 				<Text type="p2" weight="medium" color="text3" width={300} center>
-					{sentObj?.link}
+					{smallWalletAddress(sentObj?.link || '')}
 				</Text>
 			</TouchableOpacity>
 		</SafeAreaView>
