@@ -6,7 +6,8 @@ export const makeStyles = (colors: ColorType) =>
 		// ... BACKGROUND
 		background: {
 			position: 'absolute',
-			height: '100%'
+			height: '100%',
+			width: '115%'
 		},
 		// ... HEADER
 		headerNavigation: {
