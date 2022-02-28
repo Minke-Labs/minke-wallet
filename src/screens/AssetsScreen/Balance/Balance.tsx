@@ -47,7 +47,7 @@ const Balance: React.FC<BalanceProps> = ({ coin }) => {
 					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
 				</View>
 				<Text style={{ fontSize: 32, lineHeight: 39 }}>
-					{active ? `${numberFormat(coin.balance)} ${coin.symbol}` : `${numberFormat(coin.balanceUSD)}`}
+					{active ? `${coin.balance.toFixed(2)} ${coin.symbol}` : `${numberFormat(coin.balanceUSD)}`}
 				</Text>
 			</View>
 

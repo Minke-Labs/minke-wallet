@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		paddingHorizontal: 24
 	},
 	image: {
 		width: 64,
@@ -21,9 +22,6 @@ export const styles = StyleSheet.create({
 		lineHeight: 29,
 		color: '#05222D',
 		marginBottom: 24
-	},
-	titleHighlight: {
-		color: '#006AA6'
 	},
 	subtitle: {
 		fontFamily: 'Inter_700Bold',

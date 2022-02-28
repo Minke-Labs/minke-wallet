@@ -18,6 +18,8 @@ export const styles = StyleSheet.create({
 		fontSize: 18,
 		height: 44
 	},
+
+	// ITEM.TSX
 	itemContainer: {
 		height: 40,
 		flexDirection: 'row',
@@ -31,7 +33,8 @@ export const styles = StyleSheet.create({
 		marginRight: 16
 	},
 	contactTitleContainer: {
-		flex: 1
+		flex: 1,
+		justifyContent: 'space-between'
 	},
 	contactTitle: {
 		fontFamily: 'Inter_700Bold',

@@ -54,12 +54,11 @@ const styles = StyleSheet.create({
 interface AssetsPanelProps {
 	balance: string;
 	address: string;
-	// onSend: (event: GestureResponderEvent) => void;
+	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;
 }
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds }) => {
-	// const [sendModalOpen, setSendModalOpen] = useState(false);
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave }) => {
 	const { colors } = useTheme();
 
 	return (
@@ -88,16 +87,17 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds 
 					<Text type="a">Add Funds</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					onPress={onSave}
 					activeOpacity={0.6}
 					style={[
 						styles.sendButtonContainer,
 						{ backgroundColor: colors.background2, borderLeftColor: colors.background1 }
 					]}
 				>
-					<Text type="a" style={{ marginRight: 8 }}>
-						Send
+					<Icon name="saveStroke" color="cta1" size={20} />
+					<Text type="a" style={{ marginLeft: 8 }}>
+						Save
 					</Text>
-					<Icon name="sendStroke" color="cta1" size={20} />
 				</TouchableOpacity>
 			</View>
 		</View>

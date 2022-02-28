@@ -13,12 +13,7 @@ const addColorOpacity = (color: string, opacity: number): string => {
 const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 	const dArr = token[name].slice(1);
 	return (
-		<Svg
-			width={size}
-			height={size}
-			viewBox="0 0 32 32"
-			fill="none"
-		>
+		<Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
 			{dArr.map((d, idx) => (
 				<Path key={d} d={d} fill={idx === 0 ? tokenColor : 'white'} />
 			))}
@@ -28,14 +23,16 @@ const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 
 const Token: React.FC<Partial<TokenProps>> = ({ name, size = 96, outline, glow }) => {
 	if (!token[name!]) {
-		return <Image
-			source={whale3Img}
-			style={{
-				width: size,
-				height: size,
-				borderRadius: size / 2
-			}}
-		/>;
+		return (
+			<Image
+				source={whale3Img}
+				style={{
+					width: size,
+					height: size,
+					borderRadius: size / 2
+				}}
+			/>
+		);
 	}
 
 	const tokenColor = token[name!][0];

@@ -1,4 +1,5 @@
 import Text from './Text/Text';
+import TextInput from './TextInput/TextInput';
 import Button from './Button/Button';
 import Icon from './Icon/Icon';
 import Token from './Token/Token';
@@ -15,6 +16,7 @@ import ApplePayButton from './ApplePayButton/ApplePayButton';
 
 export {
 	Text,
+	TextInput,
 	AnimatedText,
 	Button,
 	WhiteButton,
