@@ -25,7 +25,7 @@ const EmptyState = () => {
 			/>
 			<View style={styles.headerNavegation}>
 				<TouchableOpacity style={styles.headerNavegationLeft} onPress={() => navigation.goBack()}>
-					<Icon name="chevronLeft" color="cta1" size={24} />
+					<Icon name="arrowBackStroke" color="cta1" size={24} />
 					<Text weight="extraBold" color="text1" marginBottom={8}>
 						Save
 					</Text>
@@ -50,7 +50,7 @@ const EmptyState = () => {
 							colors={['rgba(49, 193, 139, 1)', 'rgba(49, 193, 106, 1)']}
 							style={styles.linearGradient}
 						>
-							<Icon name="upArrowSolid" color="text1" size={16} style={styles.greenButtonIcon} />
+							<Icon name="iconUp" color="text1" size={16} style={styles.greenButtonIcon} />
 							<Text weight="bold" style={styles.greenButtonText}>
 								{(market.supplyApy * 100).toFixed(2)}% interest p.a.
 							</Text>

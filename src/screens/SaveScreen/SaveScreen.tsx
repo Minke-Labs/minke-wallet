@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
-import { ImageBackground, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, TouchableOpacity, View, Image, useColorScheme, SafeAreaView } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
 import { aaveDeposits, AaveBalances, usdCoin, AaveMarket, fetchAaveMarketData } from '@models/deposit';
 import { FlatList } from 'react-native-gesture-handler';
@@ -7,16 +8,53 @@ import { numberFormat } from '@src/helpers/utilities';
 import { Text, Icon, Card, Button } from '@components';
 import { useState } from '@hookstate/core';
 import { globalDepositState } from '@src/stores/DepositStore';
-import { backgroundRoundedWaves as background } from '@images';
+import { backgroundRoundedWaves as background, walletAssetBackImg, walletAssetBackDarkImg } from '@images';
 import AppLoading from 'expo-app-loading';
+import { BlurView } from 'expo-blur';
 import { globalWalletState } from '@src/stores/WalletStore';
 import EmptyState from './EmptyState/EmptyState';
 import { makeStyles } from './SaveScreen.styles';
 import TransactionIcon from '../WalletScreen/Transactions/TransactionIcon';
 
+const Background: React.FC = ({ children }) => {
+	const scheme = useColorScheme();
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+	return (
+		<View style={{ paddingHorizontal: 24, height: 328 }}>
+			<Image
+				resizeMode="cover"
+				source={scheme === 'dark' ? walletAssetBackDarkImg : walletAssetBackImg}
+				style={styles.background}
+			/>
+			{children}
+		</View>
+	);
+};
+
+const Header = () => {
+	const navigation = useNavigation();
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+	return (
+		<View style={styles.headerNavigation}>
+			<TouchableOpacity style={styles.headerNavigationLeft} onPress={() => navigation.goBack()}>
+				<Icon name="arrowBackStroke" color="text7" size={24} />
+				<Text weight="extraBold" style={{ marginLeft: 12 }}>
+					Save
+				</Text>
+			</TouchableOpacity>
+			<TouchableOpacity>
+				<Icon name="infoStroke" color="text7" size={24} />
+			</TouchableOpacity>
+		</View>
+	);
+};
+
 const SaveScreen = () => {
 	const navigation = useNavigation();
 	const { colors } = useTheme();
+	const scheme = useColorScheme();
 	const styles = makeStyles(colors);
 	const [aaveMarket, setAaveMarket] = React.useState<AaveMarket>();
 	const [selectedUSDCoin, setSelectedUSDCoin] = React.useState('');
@@ -67,43 +105,47 @@ const SaveScreen = () => {
 
 	return (
 		<View style={styles.container}>
-			<ImageBackground source={background} resizeMode="cover" style={styles.background}>
-				<View style={styles.headerNavegation}>
-					<TouchableOpacity style={styles.headerNavegationLeft} onPress={() => navigation.goBack()}>
-						<Icon name="chevronLeft" color="cta1" size={24} />
-						<Text weight="extraBold" color="text1" marginBottom={8}>
-							Save
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity>
-						<Icon name="infoStroke" color="cta1" size={24} />
-					</TouchableOpacity>
-				</View>
-
-				<View style={styles.saveCurrentValueContainer}>
-					<Text type="p2" color="text3" marginBottom={8}>
-						Current deposits
-					</Text>
-					<Text type="textLarge" weight="medium">
-						{numberFormat(Number(depositsBalance))}
-					</Text>
-					{aaveMarket && (
-						<View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 18 }}>
-							<Icon name="upArrowSolid" color="alert3" size={14} style={{ marginRight: 8 }} />
-							<Text weight="medium" type="a" color="alert3">
-								{(aaveMarket.supplyApy * 100).toFixed(2)}% interest p.a.
+			<SafeAreaView>
+				<Background>
+					<Header />
+					<View style={styles.saveCurrentValueContainer}>
+						<BlurView
+							intensity={12}
+							tint={scheme === 'dark' ? 'dark' : 'light'}
+							style={styles.saveCurrentValue}
+						>
+							<Text type="p2" color="text3" marginBottom={8}>
+								Current deposits
 							</Text>
-						</View>
-					)}
-					<TouchableOpacity
-						style={[styles.row, styles.depositButton]}
-						onPress={() => navigation.navigate('Deposit')}
-					>
-						<Icon name="saveStroke" color="cta1" size={20} />
-						<Text style={styles.depositButtonText}>Deposit</Text>
-					</TouchableOpacity>
-				</View>
-			</ImageBackground>
+							<Text type="textLarge" weight="medium" marginBottom={14}>
+								{numberFormat(Number(depositsBalance))}
+							</Text>
+							{aaveMarket && (
+								<View
+									style={{
+										flexDirection: 'row',
+										alignItems: 'center',
+										paddingVertical: 4,
+										paddingHorizontal: 12,
+										backgroundColor: colors.alert4,
+										borderRadius: 8,
+										marginBottom: 16
+									}}
+								>
+									<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
+									<Text weight="medium" type="a" color="alert3">
+										{(aaveMarket.supplyApy * 100).toFixed(2)}% interest p.a.
+									</Text>
+								</View>
+							)}
+						</BlurView>
+						<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('Deposit')}>
+							<Icon name="saveStroke" color="cta1" size={20} />
+							<Text marginBottom={4} style={{ marginLeft: 8 }}>Deposit</Text>
+						</TouchableOpacity>
+					</View>
+				</Background>
+			</SafeAreaView>
 
 			<View style={styles.depositCardContainer}>
 				<View style={styles.actionDepositCard}>
@@ -134,9 +176,7 @@ const SaveScreen = () => {
 						}}
 					/>
 				</View>
-				<View style={{ marginTop: 'auto' }}>
-					<Button title="Deposit" onPress={() => navigation.navigate('Deposit')} />
-				</View>
+				<Button title="Deposit" onPress={() => navigation.navigate('Deposit')} />
 			</View>
 		</View>
 	);

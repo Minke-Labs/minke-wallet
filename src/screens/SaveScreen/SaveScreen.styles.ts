@@ -1,112 +1,67 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
+		// ... BACKGROUND
+		background: {
+			position: 'absolute',
+			height: '100%'
+		},
+		// ... HEADER
+		headerNavigation: {
+			marginTop: 12,
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center'
+		},
+		headerNavigationLeft: {
+			flexDirection: 'row',
+			alignItems: 'center'
+		},
+		// ... SAVESCREEEN
 		container: {
 			flex: 1,
-			flexDirection: 'column',
-			justifyContent: 'space-between',
-			backgroundColor: '#fff'
-		},
-		background: {
-			flex: 1
-		},
-		headerNavegation: {
-			paddingTop: 56,
-			paddingLeft: 24,
-			paddingRight: 24,
-			flexDirection: 'row',
-			justifyContent: 'space-between',
-			alignItems: 'center'
-		},
-		headerNavegationLeft: {
-			flexDirection: 'row',
-			alignItems: 'center'
-		},
-		headerNavegationTitle: {
-			marginLeft: 8
+			backgroundColor: colors.detail4
 		},
 		saveCurrentValueContainer: {
-			flexDirection: 'column',
-			padding: 24,
-			alignItems: 'center',
-			justifyContent: 'center'
+			marginTop: 38,
+			borderRadius: 24,
+			marginBottom: 32,
+			overflow: 'hidden'
 		},
 		saveCurrentValue: {
-			fontSize: 48,
-			marginBottom: 24
-		},
-		row: {
-			flexDirection: 'row',
+			width: '100%',
+			flexDirection: 'column',
+			paddingTop: 16,
+			alignItems: 'center',
 			justifyContent: 'center',
-			alignItems: 'center'
+			borderTopLeftRadius: 24,
+			borderTopRightRadius: 24
 		},
 		depositButton: {
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			width: '100%',
 			paddingTop: 16,
 			paddingRight: 32,
 			paddingBottom: 16,
 			paddingLeft: 32,
-			borderRadius: 100,
 			backgroundColor: colors.detail4
 		},
-		depositButtonText: {
-			marginLeft: 8,
-			marginBottom: 4
-		},
 		depositCardContainer: {
-			minHeight: Dimensions.get('screen').height * 0.5,
+			flex: 1,
 			backgroundColor: colors.background1,
-			paddingTop: 32,
-			paddingBottom: 32,
+			paddingVertical: 32,
 			paddingHorizontal: 24,
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
 		},
-
-		depositCardItem: {
-			width: '50%'
-		},
-		divisor: {
-			borderRightWidth: 1,
-			flexGrow: 1,
-			flexBasis: 0,
-			justifyContent: 'center',
-			borderRightColor: colors.background1
-		},
-		depositsAmount: {
-			color: colors.text1,
-			fontSize: 24,
-			fontFamily: 'Inter_800ExtraBold',
-			marginTop: 8,
-			paddingTop: 10
-		},
-		depositsAmountLebel: {
-			color: colors.text4
-		},
 		actionDepositCard: {
 			borderRadius: 16,
 			backgroundColor: colors.detail4,
-			padding: 24
-		},
-		actionDepositCardIcon: {
-			backgroundColor: 'rgba(103, 152, 242, 0.1)',
-			padding: 16,
-			borderRadius: 16
-		},
-		actionDepositCardInfo: {
-			paddingTop: 32,
-			paddingBottom: 32
-		},
-		cardInfo: {
-			color: colors.text4,
-			fontSize: 16,
-			textAlign: 'center',
-			marginBottom: 16
-		},
-		cardCta: {
-			color: colors.text4,
-			textAlign: 'center',
-			fontSize: 16
+			padding: 24,
+			marginBottom: 32
 		}
 	});

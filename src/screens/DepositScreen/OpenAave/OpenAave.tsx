@@ -70,7 +70,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			<View style={styles.container}>
 				<View style={styles.headerNavegation}>
 					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Icon name="chevronLeft" color="cta1" size={24} />
+						<Icon name="arrowBackStroke" color="cta1" size={24} />
 					</TouchableOpacity>
 				</View>
 				<View style={styles.header}>
