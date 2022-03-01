@@ -22,7 +22,7 @@ const Button: React.FC<ButtonProps> = ({
 	onPress
 }) => {
 	const { colors } = useTheme();
-	const color = mode === 'contained' ? colors.text6 : colors.text7;
+	const color = mode === 'contained' ? colors.text11 : colors.text7;
 	const backgroundColor = () => {
 		if (disabled) return colors.detail2;
 		if (mode === 'contained') return colors.cta1;

@@ -3,22 +3,13 @@ import { View, Image } from 'react-native';
 import { token } from '@styles';
 import { whale3Img } from '@images';
 import { Svg, Path } from 'react-native-svg';
+import { addColorOpacity } from '@helpers/utilities';
 import { TokenProps, ContentProps } from './Token.types';
-
-const addColorOpacity = (color: string, opacity: number): string => {
-	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-	return color + newOpacity.toString(16).toUpperCase();
-};
 
 const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 	const dArr = token[name].slice(1);
 	return (
-		<Svg
-			width={size}
-			height={size}
-			viewBox="0 0 32 32"
-			fill="none"
-		>
+		<Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
 			{dArr.map((d, idx) => (
 				<Path key={d} d={d} fill={idx === 0 ? tokenColor : 'white'} />
 			))}
@@ -28,14 +19,16 @@ const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 
 const Token: React.FC<Partial<TokenProps>> = ({ name, size = 96, outline, glow }) => {
 	if (!token[name!]) {
-		return <Image
-			source={whale3Img}
-			style={{
-				width: size,
-				height: size,
-				borderRadius: size / 2
-			}}
-		/>;
+		return (
+			<Image
+				source={whale3Img}
+				style={{
+					width: size,
+					height: size,
+					borderRadius: size / 2
+				}}
+			/>
+		);
 	}
 
 	const tokenColor = token[name!][0];

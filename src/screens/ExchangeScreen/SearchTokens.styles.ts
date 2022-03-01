@@ -60,5 +60,14 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		list: {
 			maxHeight: Dimensions.get('screen').height * 0.3
+		},
+		tableContainer: {
+			flex: 1,
+			alignItems: 'center',
+			paddingVertical: 14
+		},
+		image: {
+			width: 152,
+			height: 152
 		}
 	});

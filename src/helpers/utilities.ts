@@ -21,8 +21,14 @@ export const coinParamFromSymbol = ({ symbol, type = 'id' }: CoinParamFromSymbol
 	return filtered![indexed];
 };
 
-export const numberFormat = (value: number) =>
+export const numberFormat = (value: number, digits?: number) =>
 	new Intl.NumberFormat('en-US', {
 		style: 'currency',
-		currency: 'USD'
+		currency: 'USD',
+		minimumFractionDigits: digits || 2
 	}).format(value);
+
+export const addColorOpacity = (color: string, opacity: number): string => {
+	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+	return color + newOpacity.toString(16).toUpperCase();
+};

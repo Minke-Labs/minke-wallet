@@ -37,9 +37,9 @@ const TabLayout: React.FC<TabLayoutProps> = ({ children, left, right, leftTitle,
 				style={[
 					styles.tabsContainer,
 					{
-						...(selectedTab === 'transactions' ?
-							{ borderTopRightRadius: 24 } :
-							{ borderTopLeftRadius: 24 }),
+						...(selectedTab === 'transactions'
+							? { borderTopRightRadius: 24 }
+							: { borderTopLeftRadius: 24 }),
 						backgroundColor: colors.detail4
 					}
 				]}

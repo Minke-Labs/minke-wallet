@@ -48,6 +48,7 @@ const Card: React.FC<CardProps> = ({ name, icon, onPress }) => {
 };
 
 const arr = [
+	{ name: 'Send', icon: 'sendStroke' },
 	{ name: 'Exchange', icon: 'exchangeStroke' },
 	{ name: 'Receive', icon: 'receiveStroke' },
 	{ name: 'Copy address', icon: 'copyStroke' },
@@ -57,6 +58,7 @@ const arr = [
 ];
 
 interface ActionsPanelProps {
+	setSendModalOpen: () => void;
 	onCreateWallet: (event: GestureResponderEvent) => void;
 	onDeleteWallet: (event: GestureResponderEvent) => void;
 	onExchange: (event: GestureResponderEvent) => void;
@@ -66,6 +68,7 @@ interface ActionsPanelProps {
 }
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
+	setSendModalOpen,
 	onCreateWallet,
 	onDeleteWallet,
 	onExchange,
@@ -75,6 +78,8 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 }) => {
 	const chooseFnc = (name: string) => {
 		switch (name) {
+			case 'Send':
+				return setSendModalOpen;
 			case 'Exchange':
 				return onExchange;
 			case 'Receive':

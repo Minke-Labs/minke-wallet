@@ -1,23 +1,27 @@
 import React from 'react';
-import { View, Image, Linking, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, Linking, SafeAreaView } from 'react-native';
+import { ActivityIndicator, Button } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { ParaswapToken } from '@models/token';
 import { network } from '@models/network';
 import { smallWalletAddress } from '@src/model/wallet';
 import { ModalHeader, Text, Icon } from '@components';
+import { TokenType } from '@src/styles';
 import { makeStyles } from './TransactionWaitModal.styles';
+import Token from '../Token/Token';
 
 const TransactionWaitModal = ({
 	onDismiss,
 	fromToken,
 	toToken,
-	transactionHash
+	transactionHash,
+	deposit = false
 }: {
 	onDismiss: () => void;
 	fromToken: ParaswapToken;
 	toToken: ParaswapToken;
 	transactionHash: string;
+	deposit?: boolean;
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -31,11 +35,13 @@ const TransactionWaitModal = ({
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.modalRow}>
-				<Image source={{ uri: fromToken.img }} style={{ width: 50, height: 50, marginRight: 56 }} />
+				<View style={{ marginRight: 56 }}>
+					<Token name={fromToken.symbol.toLowerCase() as TokenType} size={50} />
+				</View>
 				<View style={styles.exchangeResumeBackground}>
 					<Icon name="arrowRight" color="cta1" size={24} />
 				</View>
-				<Image source={{ uri: toToken.img }} style={{ width: 50, height: 50 }} />
+				<Token name={toToken.symbol.toLowerCase() as TokenType} size={50} />
 			</View>
 			<View style={styles.modalColumn}>
 				<Text type="h3" weight="extraBold" color="text1">
@@ -44,7 +50,7 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="p2" weight="medium" color="text3">
-					Exchanging{' '}
+					{deposit ? 'Depositing' : 'Exchanging'}{' '}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
@@ -52,7 +58,7 @@ const TransactionWaitModal = ({
 				</Text>
 				<Text type="p2" weight="medium" color="text3">
 					{' '}
-					for{' '}
+					{deposit ? 'in' : 'for'}{' '}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
@@ -65,7 +71,7 @@ const TransactionWaitModal = ({
 				</Text>
 				<Button mode="text" onPress={openTransaction}>
 					<Text type="a" weight="medium" color="text3">
-						{smallWalletAddress(transactionHash)}
+						{transactionHash ? smallWalletAddress(transactionHash) : <ActivityIndicator />}
 					</Text>
 				</Button>
 			</View>

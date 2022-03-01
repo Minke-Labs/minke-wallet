@@ -43,7 +43,11 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 		}
 		setGasPrice(+gasValue);
 		if (!exchange.gas.value && type === 'normal') {
-			exchange.gas.set({ type: 'normal', gweiValue: +normal, wait: defaultWait.normal } as Gas);
+			exchange.gas.set({
+				type: 'normal',
+				gweiValue: +normal,
+				wait: defaultWait.normal
+			} as Gas);
 		}
 		if (usd) {
 			// matic network includes the USD price in the payload

@@ -6,6 +6,10 @@ const fontWeight = {
 };
 
 const fontType = {
+	textLarge: {
+		fontSize: 48,
+		lineHeight: 56
+	},
 	h1: {
 		fontSize: 36,
 		lineHeight: 44

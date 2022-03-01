@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		paddingHorizontal: 24
 	},
 	imageContainer: {
 		flexDirection: 'row',
@@ -27,12 +28,6 @@ export const styles = StyleSheet.create({
 	},
 	titleHighlight: {
 		color: '#006AA6'
-	},
-	cardImage: {
-		width: 40,
-		height: 40,
-		borderRadius: 20,
-		marginRight: 16
 	},
 	cardTitle: {
 		fontFamily: 'Inter_700Bold',

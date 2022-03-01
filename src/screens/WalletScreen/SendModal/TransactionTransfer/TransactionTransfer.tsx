@@ -1,107 +1,135 @@
-import React, { useCallback, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Image } from 'react-native';
+import { Text, Token, Button } from '@components';
 import { useState } from '@hookstate/core';
-import PrimaryButton from '@src/components/PrimaryButton';
+import { TokenType } from '@styles';
 import { globalWalletState } from '@src/stores/WalletStore';
+import { network } from '@models/network';
 import {
 	estimateGas,
 	sendTransaction,
 	EstimateGasResponse,
 	WalletToken,
 	resolveENSAddress,
-	imageSource
-} from '@src/model/wallet';
+	imageSource,
+	smallWalletAddress
+} from '@models/wallet';
+import { numberFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { styles } from './TransactionTransfer.styles';
+import Card from '../Card';
+import { ActivityIndicator } from 'react-native-paper';
 
 interface UserProps {
 	name: string;
 	address: string;
 }
 
+type ResultProps = {
+	link: string;
+	symbol: string;
+};
+
 interface TransactionTransferProps {
 	user: UserProps;
 	token: WalletToken;
+	onDismiss: () => void;
+	sentSuccessfully: (obj: ResultProps) => void;
 }
 
-const Card = ({ token: { symbol, balanceUSD, balance } }: { token: WalletToken }) => (
-	<View style={styles.cardContainer}>
-		<Image style={styles.cardImage} source={require('@assets/eth.png')} />
-		<View style={{ flex: 1 }}>
-			<Text style={styles.cardTitle}>{symbol}</Text>
-			<Text style={styles.cardDesc}>
-				${balanceUSD.toString().match(/^-?\d+(?:\.\d{0,2})?/)} ({balance} {symbol}) available
+interface GasPriceLineProps {
+	gas: number;
+	label: string;
+	priceUSD: number;
+}
+
+const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD }) => {
+	const coinValue = gas * 41000 * 10 ** -9;
+	return (
+		<View style={{ marginBottom: 8, flexDirection: 'row', justifyContent: 'space-between' }}>
+			<Text color="text2" type="span">
+				Speed: {label}
+			</Text>
+			<Text color="text2" type="span">
+				{numberFormat(coinValue * priceUSD, 5)} Network Fee
 			</Text>
 		</View>
-	</View>
-);
+	);
+};
 
-const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }) => {
+const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, onDismiss, sentSuccessfully }) => {
 	const state = useState(globalWalletState());
 	const [image, setImage] = React.useState<{ uri: string }>();
 	const [amount, onChangeAmount] = React.useState('');
 	const [number, onChangeNumber] = React.useState<Number>();
+	const [chainDefaultToken, setChainDefaultToken] = React.useState('');
+	const [sending, setSending] = React.useState(false);
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {
 			const result = await estimateGas();
 			setGasPrice(result);
+			const {
+				nativeToken: { symbol }
+			} = await network();
+			setChainDefaultToken(symbol);
 		};
+
 		const fetchImage = async () => {
 			setImage(await imageSource(user.address));
 		};
 
-		fetchGasPrice();
 		fetchImage();
+		fetchGasPrice();
 	}, []);
-
-	const GasPriceLine = useCallback(
-		({ gas, label, priceUSD }) => {
-			const coinValue = gas * 21000 * 10 ** -9;
-			return (
-				<Text>
-					{label}: Normal - {coinValue} {token.symbol} | $
-					{(coinValue * priceUSD).toString().match(/^-?\d+(?:\.\d{0,6})?/)} Network Fee
-				</Text>
-			);
-		},
-		[token]
-	);
 
 	const {
 		privateKey,
-		network: { id, defaultToken }
+		network: { id }
 	} = state.value;
 
 	const onSend = async () => {
-		if (gasPrice) {
+		if (gasPrice && chainDefaultToken) {
+			setSending(true);
 			const ens = user.address;
 			const to = (await resolveENSAddress(ens)) || ens;
-			const result = await sendTransaction(
+			const { wait, hash } = await sendTransaction(
 				privateKey,
 				to,
 				amount,
 				gasPrice.result.ProposeGasPrice,
 				id,
-				token.symbol.toLowerCase() === defaultToken.toLowerCase() ? '' : token.address
+				token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address
 			);
-
-			console.log(result);
+			console.log(hash);
+			await wait();
+			onDismiss();
+			sentSuccessfully({
+				symbol: token.symbol.toLowerCase(),
+				link: hash
+			});
 		}
 	};
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
-				<Image style={styles.image} source={require('@assets/eth.png')} />
+				<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
 				{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
 			</View>
-
-			<Text style={styles.title}>
-				How much <Text style={styles.titleHighlight}>{token.symbol}</Text> do you want to send to{' '}
-				<Text style={styles.titleHighlight}>{user.name}</Text>?
+			<Text type="h3" weight="extraBold" marginBottom={32}>
+				How much{' '}
+				<Text color="text11" type="h3" weight="extraBold">
+					{token.symbol}
+				</Text>{' '}
+				do you want to send to
+				<Text color="text11" type="h3" weight="extraBold">
+					{' '}
+					{smallWalletAddress(user.address)}
+				</Text>
+				?
 			</Text>
 
 			<Card token={token} />
@@ -116,23 +144,22 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token }
 				style={styles.input}
 				placeholder="00.00"
 			/>
-
 			{gasPrice && (
-				<GasPriceLine label="Low" gas={+gasPrice.result.SafeGasPrice} priceUSD={+gasPrice.result.UsdPrice} />
+				<View style={{ marginBottom: 32 }}>
+					<GasPriceLine
+						label="Normal"
+						gas={+gasPrice.result.ProposeGasPrice}
+						priceUSD={+gasPrice.result.UsdPrice!}
+					/>
+				</View>
 			)}
-			{gasPrice && (
-				<GasPriceLine
-					label="Normal"
-					gas={+gasPrice.result.ProposeGasPrice}
-					priceUSD={+gasPrice.result.UsdPrice}
-				/>
-			)}
-			{gasPrice && (
-				<GasPriceLine label="Fast" gas={+gasPrice.result.FastGasPrice} priceUSD={+gasPrice.result.UsdPrice} />
-			)}
-			<PrimaryButton disabled={!number || number > token.balance} onPress={onSend}>
-				Send
-			</PrimaryButton>
+			<View style={{ marginBottom: 8 }}>
+				{sending ? (
+					<ActivityIndicator />
+				) : (
+					<Button title="Send" disabled={!number || number > token.balance} onPress={onSend} />
+				)}
+			</View>
 			<KeyboardSpacer />
 		</View>
 	);

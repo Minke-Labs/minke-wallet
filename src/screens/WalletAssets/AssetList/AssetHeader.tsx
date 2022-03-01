@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { Text, Icon } from '@components';
-import { View, TouchableOpacity } from 'react-native';
+import { Text } from '@components';
+import { View } from 'react-native';
 
 const AssetHeader = () => (
 	<View
@@ -14,9 +14,6 @@ const AssetHeader = () => (
 		}}
 	>
 		<Text weight="extraBold">Asset</Text>
-		<TouchableOpacity onPress={() => console.log('Searching...')}>
-			<Icon name="searchStroke" size={24} color="text7" />
-		</TouchableOpacity>
 	</View>
 );
 

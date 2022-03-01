@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
@@ -38,13 +37,15 @@ const WalletAssets = () => {
 						backgroundColor: colors.background1
 					}}
 				>
-					{walletTokens && walletTokens.length > 0 ?
-						<AssetList walletTokens={walletTokens} /> :
-						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />}
+					{walletTokens && walletTokens.length > 0 ? (
+						<AssetList walletTokens={walletTokens} />
+					) : (
+						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />
+					)}
 				</View>
 			</View>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<AddFunds onDismiss={() => setAddFundsVisible(false)} />
+				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 		</>
 	);

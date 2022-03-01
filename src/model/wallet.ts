@@ -1,7 +1,7 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
-import { WalletState } from '@src/stores/WalletStore';
+import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -28,6 +28,12 @@ export const getProvider = async (network?: string) => {
 export const getENSAddress = async (address: string) => {
 	const { testnet } = await selectedNetwork();
 	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).lookupAddress(address);
+	return name;
+};
+
+export const resolveENSAddress = async (ensAddress: string) => {
+	const { testnet } = await selectedNetwork();
+	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).resolveName(ensAddress);
 	return name;
 };
 
@@ -172,12 +178,13 @@ export const sendTransaction = async (
 ) => {
 	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
-
+	const chainId = await wallet.getChainId();
 	const txDefaults = {
+		chainId,
 		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: 41000,
+		gasLimit: 100000,
 		nonce
 	};
 
@@ -187,7 +194,7 @@ export const sendTransaction = async (
 
 		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
 		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount));
-		tx.gasPrice = await wallet.provider.estimateGas(tx);
+		// tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {
@@ -248,8 +255,20 @@ export const getTokenList = async (): Promise<Array<Coin>> => {
 	return result.json();
 };
 
-export const smallWalletAddress = (address: string): string =>
-	`${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+export const smallWalletAddress = (address: string): string => {
+	if (address.includes('.')) {
+		return address;
+	}
+	return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+};
+
+export const imageSource = async (address: string): Promise<{ uri: string }> => {
+	let wallet = address;
+	if (address.includes('.')) {
+		wallet = await resolveENSAddress(address);
+	}
+	return { uri: makeBlockie(wallet) };
+};
 
 export interface MinkeTokenList {
 	[name: string]: {

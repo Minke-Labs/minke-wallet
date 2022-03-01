@@ -54,17 +54,20 @@ const styles = StyleSheet.create({
 interface AssetsPanelProps {
 	balance: string;
 	address: string;
-	// onSend: (event: GestureResponderEvent) => void;
+	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;
+	onWalletAssets: (event: GestureResponderEvent) => void;
 }
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds }) => {
-	// const [sendModalOpen, setSendModalOpen] = useState(false);
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave, onWalletAssets }) => {
 	const { colors } = useTheme();
 
 	return (
 		<View style={styles.assetsContainer}>
-			<View style={[styles.assetsMain, { backgroundColor: colors.background2 }]}>
+			<TouchableOpacity
+				style={[styles.assetsMain, { backgroundColor: colors.background2 }]}
+				onPress={onWalletAssets}
+			>
 				<View>
 					<Text type="a" marginBottom={8}>
 						Your total assets
@@ -74,7 +77,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds 
 					</Text>
 				</View>
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>
-			</View>
+			</TouchableOpacity>
 			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
 				<TouchableOpacity
 					onPress={onAddFunds}
@@ -88,16 +91,15 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds 
 					<Text type="a">Add Funds</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					onPress={onSave}
 					activeOpacity={0.6}
 					style={[
 						styles.sendButtonContainer,
 						{ backgroundColor: colors.background2, borderLeftColor: colors.background1 }
 					]}
 				>
-					<Text type="a" style={{ marginRight: 8 }}>
-						Send
-					</Text>
-					<Icon name="sendStroke" color="cta1" size={20} />
+					<Icon name="saveStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
+					<Text type="a">Save</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
