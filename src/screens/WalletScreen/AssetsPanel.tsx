@@ -54,12 +54,11 @@ const styles = StyleSheet.create({
 interface AssetsPanelProps {
 	balance: string;
 	address: string;
-	// onSend: (event: GestureResponderEvent) => void;
+	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;
 }
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds }) => {
-	// const [sendModalOpen, setSendModalOpen] = useState(false);
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave }) => {
 	const { colors } = useTheme();
 	const navigation = useNavigation();
 

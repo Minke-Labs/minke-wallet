@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import Modal from '@components/Modal';
+// import Modal from '@components/Modal';
 import { Portal } from 'react-native-paper';
 import { WalletToken } from '@src/model/wallet';
 import TransactionContacts from './TransactionContacts/TransactionContacts';
@@ -73,11 +73,32 @@ const WhoToPayModal: React.FC<Props> = ({ visible, onDismiss, onCloseAll }) => {
 				)}
 			</Modal>
 
+
+
+
+
+
+
+
 			<Modal visible={visible && selected === 1} onDismiss={onDismiss} onCloseAll={onCloseAll} onBack={onBack}>
 				<View style={styles.smallContainer}>
 					<TransactionSelectFunds user={user} onSelected={onTokenSelected} />
 				</View>
 			</Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			<Modal visible={visible && selected === 2} onDismiss={onDismiss} onCloseAll={onCloseAll} onBack={onBack}>
 				<View style={styles.container}>{token && <TransactionTransfer user={user} token={token} />}</View>

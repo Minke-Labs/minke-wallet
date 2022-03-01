@@ -2,16 +2,10 @@ import React, { createRef, useEffect, useState } from 'react';
 import { View, SafeAreaView, TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
 import { ModalHeader } from '@components';
+import { useFormProgress } from '@hooks';
 import CoinSelectorModal from './CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal';
-
-const useFormProgress = () => {
-	const [currentStep, setCurrentStep] = useState(0);
-	const goForward = () => setCurrentStep(currentStep + 1);
-	const goBack = () => currentStep > 0 && setCurrentStep(currentStep - 1);
-	return [currentStep, setCurrentStep, goForward, goBack] as const;
-};
 
 interface AddFundsModalProps {
 	visible: boolean;

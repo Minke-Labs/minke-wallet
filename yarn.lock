@@ -4676,6 +4676,13 @@ expo-linking@~3.0.0:
     qs "^6.9.1"
     url-parse "^1.4.4"
 
+expo-localization@~12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/expo-localization/-/expo-localization-12.0.0.tgz#c7ed86d32a99eece45541b3f53f287eec4865d25"
+  integrity sha512-CXHRyLqpO+PlX0AQEw0kGYRO9NCPu+tmtx/b39gyC895/UP0Gczn6UoiOpuujqXx6n16NNLnu9UJ+P2UcRquVA==
+  dependencies:
+    rtl-detect "^1.0.2"
+
 expo-manifests@~0.2.2:
   version "0.2.3"
   resolved "https://registry.npmjs.org/expo-manifests/-/expo-manifests-0.2.3.tgz"
@@ -8499,6 +8506,11 @@ rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.npmjs.org/rsvp/-/rsvp-4.8.5.tgz"
   integrity sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
+
+rtl-detect@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/rtl-detect/-/rtl-detect-1.0.4.tgz#40ae0ea7302a150b96bc75af7d749607392ecac6"
+  integrity sha512-EBR4I2VDSSYr7PkBmFy04uhycIpDKp+21p/jARYXlCSjQksTBQcJ0HFUPOO79EPPH5JS6VAhiIQbycf0O3JAxQ==
 
 run-parallel@^1.1.2, run-parallel@^1.1.9:
   version "1.2.0"
