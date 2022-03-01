@@ -1,13 +1,12 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 import { useState } from '@hookstate/core';
-import AppLoading from 'expo-app-loading';
 import { getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { backupSeedOnKeychain } from '@models/keychain';
 import { WelcomeLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
-import { Text, Button } from '@components';
+import { Text, Button, ScreenLoadingIndicator } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import styles from './WalletCreatedScreen.styles';
@@ -22,7 +21,7 @@ const WalletCreatedScreen = () => {
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
 	const seed = useState(loadSeed);
-	if (seed.promised) return <AppLoading />;
+	if (seed.promised) return <ScreenLoadingIndicator />;
 
 	const backupOnKeychain = async () => {
 		const toBackup = seed.value || walletState.privateKey.value;

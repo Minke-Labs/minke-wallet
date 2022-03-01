@@ -5,11 +5,10 @@ import { useTheme, useNavigation } from '@hooks';
 import { aaveDeposits, AaveBalances, usdCoin, AaveMarket, fetchAaveMarketData } from '@models/deposit';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Icon, Card, Button } from '@components';
+import { Text, Icon, Card, Button, ScreenLoadingIndicator } from '@components';
 import { useState } from '@hookstate/core';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { backgroundRoundedWaves as background, walletAssetBackImg, walletAssetBackDarkImg } from '@images';
-import AppLoading from 'expo-app-loading';
 import { BlurView } from 'expo-blur';
 import { globalWalletState } from '@src/stores/WalletStore';
 import EmptyState from './EmptyState/EmptyState';
@@ -93,7 +92,7 @@ const SaveScreen = () => {
 	}, [selectedUSDCoin]);
 
 	if (!aaveBalances) {
-		return <AppLoading />;
+		return <ScreenLoadingIndicator />;
 	}
 
 	const { products = [], meta } = aaveBalances[address.toLowerCase()];

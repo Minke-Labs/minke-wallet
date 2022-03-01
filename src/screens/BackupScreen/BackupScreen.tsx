@@ -1,11 +1,10 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
-import { Icon, Text } from '@components';
+import { Icon, ScreenLoadingIndicator, Text } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
-import AppLoading from 'expo-app-loading';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Clipboard from 'expo-clipboard';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -22,7 +21,7 @@ const BackupScreen = () => {
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
 	const seed = useState(loadSeed);
-	if (seed.promised) return <AppLoading />;
+	if (seed.promised) return <ScreenLoadingIndicator />;
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(seed.value || '');

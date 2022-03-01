@@ -3,8 +3,7 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
-import { Button, Text, Icon } from '@components';
-import AppLoading from 'expo-app-loading';
+import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
 import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain';
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
@@ -32,7 +31,7 @@ const BackupSettingsScreen = () => {
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
 	const seed = useState(loadSeed);
-	if (seed.promised) return <AppLoading />;
+	if (seed.promised) return <ScreenLoadingIndicator />;
 
 	const toBackup = seed.value || walletState.privateKey.value;
 

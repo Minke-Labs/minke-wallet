@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, SafeAreaView, View, TextInput } from 'react-native';
 import { whale2Img } from '@images';
-import { Icon, ModalHeader, Text, Token } from '@components';
+import { Icon, ModalHeader, ScreenLoadingIndicator, Text, Token } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -87,7 +86,7 @@ const SearchTokens = ({
 	};
 
 	if (!tokens || loading) {
-		return <AppLoading />;
+		return <ScreenLoadingIndicator />;
 	}
 
 	return (
