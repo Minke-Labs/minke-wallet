@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageBackground, Linking, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Linking, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,6 +14,7 @@ import { Wallet } from 'ethers';
 import styles from './OpenAave.styles';
 
 const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
+	const scheme = useColorScheme();
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [loading, setLoading] = useState(false);
 	const { address, privateKey } = globalWalletState().value;
@@ -56,16 +57,17 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 		}
 	};
 
+	const lightColors = [
+		'rgba(223, 191, 206, 1)',
+		'rgba(205, 159, 192, 1)',
+		'rgba(185, 197, 207, 1)',
+		'rgba(143, 204, 208, 1)'
+	];
+
+	const darkColors = ['rgba(64, 63, 98, 1)', 'rgba(112, 71, 124, 1)', 'rgba(48, 131, 151, 1)'];
+	const colors = scheme === 'dark' ? darkColors : lightColors;
 	return (
-		<LinearGradient
-			colors={[
-				'rgba(223, 191, 206, 1)',
-				'rgba(205, 159, 192, 1)',
-				'rgba(185, 197, 207, 1)',
-				'rgba(143, 204, 208, 1)'
-			]}
-			style={styles.linearGradient}
-		>
+		<LinearGradient colors={colors} style={styles.linearGradient}>
 			<ImageBackground source={aaveGhost} style={styles.aaveGhost} />
 			<View style={styles.container}>
 				<View style={styles.headerNavegation}>

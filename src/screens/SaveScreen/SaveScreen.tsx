@@ -141,7 +141,9 @@ const SaveScreen = () => {
 						</BlurView>
 						<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('Deposit')}>
 							<Icon name="saveStroke" color="cta1" size={20} />
-							<Text marginBottom={4} style={{ marginLeft: 8 }}>Deposit</Text>
+							<Text marginBottom={4} style={{ marginLeft: 8 }}>
+								Deposit
+							</Text>
 						</TouchableOpacity>
 					</View>
 				</Background>
