@@ -1,21 +1,34 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
-import { ImageBackground, Linking, TouchableOpacity, useColorScheme, View } from 'react-native';
-import { Icon, Text, Button } from '@components';
-import { useNavigation } from '@react-navigation/native';
+import { Image, Linking, TouchableOpacity, useColorScheme, View, SafeAreaView } from 'react-native';
+import { Icon, Text, Button, TransparentCard } from '@components';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
 import { approvalTransaction } from '@models/deposit';
 import { aaveGhost } from '@images';
+import { useNavigation } from '@hooks';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
 import styles from './OpenAave.styles';
 
-const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
+const lightColors = ['rgba(223, 191, 206, 1)', 'rgba(143, 204, 208, 1)'];
+const darkColors = ['rgba(64, 63, 98, 1)', 'rgba(48, 131, 151, 1)'];
+
+const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const colors = scheme === 'dark' ? darkColors : lightColors;
+	return (
+		<View style={{ flex: 1, backgroundColor: scheme === 'dark' ? '#4540687d' : '#F5F5F5' }}>
+			<LinearGradient colors={colors} style={{ flex: 1 }} start={{ x: 0.7, y: 0 }} />
+			<Image source={aaveGhost} style={styles.aaveGhost} />
+			{children}
+		</View>
+	);
+};
+
+const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
+	const navigation = useNavigation();
 	const [loading, setLoading] = useState(false);
 	const { address, privateKey } = globalWalletState().value;
 	const {
@@ -57,70 +70,56 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 		}
 	};
 
-	const lightColors = [
-		'rgba(223, 191, 206, 1)',
-		'rgba(205, 159, 192, 1)',
-		'rgba(185, 197, 207, 1)',
-		'rgba(143, 204, 208, 1)'
-	];
-
-	const darkColors = ['rgba(64, 63, 98, 1)', 'rgba(112, 71, 124, 1)', 'rgba(48, 131, 151, 1)'];
-	const colors = scheme === 'dark' ? darkColors : lightColors;
 	return (
-		<LinearGradient colors={colors} style={styles.linearGradient}>
-			<ImageBackground source={aaveGhost} style={styles.aaveGhost} />
+		<Background>
 			<View style={styles.container}>
-				<View style={styles.headerNavegation}>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
-						<Icon name="arrowBackStroke" color="cta1" size={24} />
-					</TouchableOpacity>
-				</View>
-				<View style={styles.header}>
-					<Text type="h3" weight="bold" color="text1">
-						Open Aave Savings Account
-					</Text>
-				</View>
+				<SafeAreaView>
+					<View style={styles.headerNavigation}>
+						<TouchableOpacity onPress={() => navigation.goBack()}>
+							<Icon name="arrowBackStroke" color="text7" size={24} />
+						</TouchableOpacity>
+					</View>
 
-				<View style={[styles.transparentCard, styles.whatsAave]}>
-					<Text type="p" weight="bold" color="text1" marginBottom={24}>
-						What is Aave
+					<Text type="h3" weight="bold" color="text1" marginBottom={35}>
+						Open Aave {'\n'}Savings Account
 					</Text>
-					<Text type="a" color="text1" marginBottom={16}>
-						Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a
-						decentralized protocol for lending and borrowing crypto. Rates are variable and can change at
-						any time.
-					</Text>
-					<Text type="a" color="text1">
-						Risks include the economics of the protocol, market risks, security of the smart contracts,
-						counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.
-					</Text>
-				</View>
 
-				<View style={styles.actionContainer}>
-					<TouchableOpacity
-						style={[styles.transparentCard, styles.actionOpenAave]}
-						onPress={() => Linking.openURL('https://aave.com/')}
-					>
-						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
-						<Text type="a" color="text2">
-							View Site
+					<TransparentCard marginBottom={8}>
+						<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
+							What is Aave
 						</Text>
-						<Icon name="chevronRight" color="cta1" size={24} />
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						style={[styles.transparentCard, styles.actionOpenAave]}
-						onPress={() => Linking.openURL('https://docs.aave.com/faq/')}
-					>
-						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
-						<Text type="a" color="text2">
-							Learn More
+						<Text type="a">
+							Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave
+							is a decentralized protocol for lending and borrowing crypto. Rates are variable and can
+							change at any time. {'\n\n'}
+							Risks include the economics of the protocol, market risks, security of the smart contracts,
+							counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.
 						</Text>
-						<Icon name="chevronRight" color="cta1" size={24} />
-					</TouchableOpacity>
-				</View>
+					</TransparentCard>
 
-				<View style={{ marginTop: 'auto', marginBottom: 12 }}>
+					<View style={styles.actionContainer}>
+						<TouchableOpacity onPress={() => Linking.openURL('https://aave.com/')}>
+							<TransparentCard row padding={16}>
+								<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
+								<Text type="a" color="text2">
+									View Site
+								</Text>
+								<Icon name="chevronRight" color="cta1" size={24} />
+							</TransparentCard>
+						</TouchableOpacity>
+
+						<TouchableOpacity onPress={() => Linking.openURL('https://docs.aave.com/faq/')}>
+							<TransparentCard row padding={16}>
+								<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
+								<Text type="a" color="text2">
+									Learn More
+								</Text>
+								<Icon name="chevronRight" color="cta1" size={24} />
+							</TransparentCard>
+						</TouchableOpacity>
+					</View>
+				</SafeAreaView>
+				<View style={{ bottom: 34 }}>
 					<Button
 						iconRight="arrowRight"
 						title={loading ? 'Opening your account' : 'Open account'}
@@ -133,7 +132,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 					</Text>
 				</View>
 			</View>
-		</LinearGradient>
+		</Background>
 	);
 };
 

@@ -23,4 +23,5 @@ export type RootStackParamList = {
 	USDCoin: undefined;
 	DepositSuccess: undefined;
 	Test: undefined;
+	OpenAave: undefined;
 };
