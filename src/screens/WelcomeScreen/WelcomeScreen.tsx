@@ -17,6 +17,7 @@ import { globalWalletState, walletState } from '@stores/WalletStore';
 import { RootStackParamList } from '../../routes/types.routes';
 import styles from './WelcomeScreen.styles';
 import ImportFlow from './ImportFlow';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
@@ -38,6 +39,7 @@ const Background: React.FC = ({ children }) => {
 const WelcomeScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 	const [isModalVisible, setModalVisible] = React.useState(false);
+	const [loading, setLoading] = React.useState(false);
 	const state = useState(globalWalletState());
 
 	const onImportFinished = () => {
@@ -46,8 +48,10 @@ const WelcomeScreen = () => {
 	};
 
 	const onCreateWallet = useCallback(async () => {
+		setLoading(true);
 		const newWallet = await walletCreate();
-		state.set(walletState(newWallet));
+		state.set(await walletState(newWallet));
+		setLoading(false);
 		navigation.navigate('WalletCreated');
 	}, [navigation]);
 
@@ -71,7 +75,11 @@ const WelcomeScreen = () => {
 						</View>
 
 						<View style={styles.buttonContainer}>
-							<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
+							{loading ? (
+								<ActivityIndicator />
+							) : (
+								<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
+							)}
 							<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
 						</View>
 					</View>
