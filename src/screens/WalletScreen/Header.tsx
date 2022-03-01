@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, TouchableOpacity, GestureResponderEvent, StyleSheet } from 'react-native';
-import { Text, Icon } from '@components';
-// import { makeStyles } from '@src/components/Text/Text.styles';
+import { Text, Icon, ScreenLoadingIndicator } from '@components';
 import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
-import AppLoading from 'expo-app-loading';
-// import { useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
 
 const styles = StyleSheet.create({
@@ -46,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ onSettingsPress }) => {
 		return smallWalletAddress(address);
 	};
 
-	if (state.promised) return <AppLoading />;
+	if (state.promised) return <ScreenLoadingIndicator />;
 
 	return (
 		<View style={styles.headerContainer}>

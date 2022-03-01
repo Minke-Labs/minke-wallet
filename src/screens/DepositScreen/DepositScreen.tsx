@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { approvalState, isAbleToDeposit } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
-import AppLoading from 'expo-app-loading';
-import { Modal } from '@components';
+import { Modal, ScreenLoadingIndicator } from '@components';
 import { AddFunds } from '@containers';
 import { useNavigation } from '@hooks';
 import Deposit from './Deposit/Deposit';
@@ -36,7 +35,7 @@ const DepositScreen = () => {
 	}, []);
 
 	if (ableToDeposit === undefined || approved === undefined) {
-		return <AppLoading />;
+		return <ScreenLoadingIndicator />;
 	}
 
 	const notAbleToSaveDismiss = () => {

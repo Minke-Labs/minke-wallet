@@ -13,6 +13,7 @@ import Card from './Card/Card';
 import WhiteButton from './WhiteButton/WhiteButton';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
+import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
 
 export {
 	Text,
@@ -29,5 +30,6 @@ export {
 	Flag,
 	Card,
 	PaperTouchable,
-	ApplePayButton
+	ApplePayButton,
+	ScreenLoadingIndicator
 };
