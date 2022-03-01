@@ -2,7 +2,6 @@ import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
-import { WalletState } from '@stores/WalletStore';
 import { deleteItemAsync } from 'expo-secure-store';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';

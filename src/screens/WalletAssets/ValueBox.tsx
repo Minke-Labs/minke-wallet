@@ -31,15 +31,16 @@ const Background: React.FC = ({ children }) => {
 };
 
 interface ValueBoxProps {
-	balance: {
+	title?: string;
+	balance?: {
 		eth?: BigNumber | undefined;
 		usd?: string | undefined;
-	} | undefined;
+	};
 }
 
-const ValueBox: React.FC<ValueBoxProps> = ({ balance }) => (
+const ValueBox: React.FC<ValueBoxProps> = ({ balance, title }) => (
 	<Background>
-		<Header />
+		<Header title={title} />
 		<View style={{ height: 207, alignItems: 'center' }}>
 			<Text marginBottom={10}>Current value</Text>
 			<Text weight="medium" style={{ fontSize: 48, lineHeight: 58 }}>

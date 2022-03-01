@@ -32,9 +32,9 @@ const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress, marginBottom }
 			}
 		]}
 	>
-		<Text color="text6" weight="medium">
+		<Text color="text11" weight="medium">
 			Pay with{' '}
-			<Text color="text6" weight="extraBold">
+			<Text color="text11" weight="extraBold">
 				 Pay
 			</Text>
 		</Text>

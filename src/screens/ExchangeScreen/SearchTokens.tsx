@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, Text, View, TextInput } from 'react-native';
-import { Icon, ModalHeader } from '@components';
+import { FlatList, Image, SafeAreaView, View, TextInput } from 'react-native';
+import { whale2Img } from '@images';
+import { Icon, ModalHeader, Text, Token } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
 
 const SearchTokens = ({
@@ -111,7 +113,9 @@ const SearchTokens = ({
 					keyExtractor={(token) => token.symbol}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
-							<Image source={{ uri: item.img }} style={styles.tokenItemImage} />
+							<View style={{ marginRight: 16 }}>
+								<Token name={item.symbol.toLowerCase() as TokenType} size={40} />
+							</View>
 							<View style={styles.tokenItemNameContainer}>
 								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
 								<Text style={styles.tokenItemName}>{item.symbol}</Text>
@@ -119,6 +123,14 @@ const SearchTokens = ({
 						</TouchableOpacity>
 					)}
 				/>
+				{(filteredTokens || []).length === 0 && (
+					<View style={styles.tableContainer}>
+						<Image source={whale2Img} style={styles.image} />
+						<Text color="text4" weight="medium" marginBottom={16}>
+							No tokens here
+						</Text>
+					</View>
+				)}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

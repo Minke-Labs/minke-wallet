@@ -10,19 +10,10 @@ interface CardProps {
 	coinSymbol: TokenType;
 	walletBalance: number;
 	walletBalanceUsd: number;
-	interest: number;
-	reward?: number;
+	interest?: string;
 }
 
-const Card: React.FC<CardProps> = ({
-	onPress,
-	coinName,
-	coinSymbol,
-	walletBalance,
-	walletBalanceUsd
-	// interest,
-	// reward
-}) => {
+const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalance, walletBalanceUsd, interest }) => {
 	const { colors } = useTheme();
 	return (
 		<View
@@ -66,17 +57,13 @@ const Card: React.FC<CardProps> = ({
 						${walletBalanceUsd}
 					</Text>
 				</View>
-				<View style={{ flex: 0.5 }}>
-					<Text marginBottom={6} style={{ fontSize: 12, lineHeight: 14 }}>
-						24h change
-					</Text>
-					{/* <Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
-						{interest}%
-					</Text>
-					<Text marginBottom={24} style={{ fontSize: 12, lineHeight: 14 }}>
-						{reward && `${reward}% Reward`}
-					</Text> */}
-				</View>
+				{interest && (
+					<View style={{ flex: 0.5 }}>
+						<Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
+							{interest}% APY
+						</Text>
+					</View>
+				)}
 			</View>
 		</View>
 	);

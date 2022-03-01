@@ -56,14 +56,18 @@ interface AssetsPanelProps {
 	address: string;
 	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;
+	onWalletAssets: (event: GestureResponderEvent) => void;
 }
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave }) => {
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave, onWalletAssets }) => {
 	const { colors } = useTheme();
 
 	return (
 		<View style={styles.assetsContainer}>
-			<View style={[styles.assetsMain, { backgroundColor: colors.background2 }]}>
+			<TouchableOpacity
+				style={[styles.assetsMain, { backgroundColor: colors.background2 }]}
+				onPress={onWalletAssets}
+			>
 				<View>
 					<Text type="a" marginBottom={8}>
 						Your total assets
@@ -73,7 +77,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 					</Text>
 				</View>
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>
-			</View>
+			</TouchableOpacity>
 			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
 				<TouchableOpacity
 					onPress={onAddFunds}
@@ -94,10 +98,8 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 						{ backgroundColor: colors.background2, borderLeftColor: colors.background1 }
 					]}
 				>
-					<Icon name="saveStroke" color="cta1" size={20} />
-					<Text type="a" style={{ marginLeft: 8 }}>
-						Save
-					</Text>
+					<Icon name="saveStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
+					<Text type="a">Save</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

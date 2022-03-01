@@ -27,26 +27,23 @@ const NetWorth = () => {
 				subtitle="Available funds in your wallet"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
-				right={(
+				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text weight="bold" style={{ fontSize: 16 }}>
 							${commify(state.value.balance?.usd || '')}
 						</Text>
-						<Icon
-							name="arrowForwardStroke"
-							size={16}
-							color="text7"
-						/>
+						<Icon name="arrowForwardStroke" size={16} color="text7" />
 					</View>
-				)}
+				}
 			/>
 			<Card
+				onPress={() => navigation.navigate('Save')}
 				image={<Image icon="vaultStroke" />}
 				title="Deposits"
 				subtitle="Funds deposited in vaults"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
-				right={(
+				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text color="text7" type="a">
 							Deposit
@@ -58,15 +55,15 @@ const NetWorth = () => {
 							style={{ transform: [{ rotate: '180deg' }] }}
 						/>
 					</View>
-				)}
+				}
 			/>
-			<Card
+			{/* <Card
 				image={<Image alert icon="borrowStroke" />}
 				title="Debit"
 				subtitle="Open loans"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
-				right={(
+				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text color="text7" type="a">
 							Borrow
@@ -78,8 +75,8 @@ const NetWorth = () => {
 							style={{ transform: [{ rotate: '180deg' }] }}
 						/>
 					</View>
-				)}
-			/>
+				}
+			/> */}
 		</View>
 	);
 };

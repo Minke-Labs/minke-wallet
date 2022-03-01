@@ -16,6 +16,7 @@ const SettingsScreen = () => {
 	const onAccounts = () => navigation.navigate('Accounts');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onBackup = () => navigation.navigate('BackupSettings');
+	const onDollarSettings = () => navigation.navigate('USDCoin');
 	const { colors } = useTheme();
 
 	return (
@@ -34,6 +35,7 @@ const SettingsScreen = () => {
 				<ScrollView>
 					<SettingsOption label="Backup" icon="backupStroke" onPress={onBackup} />
 					<SettingsOption label="Network" icon="networkStroke" onPress={onChangeNetwork} />
+					<SettingsOption label="US Dollar coin" icon="dollarStroke" onPress={onDollarSettings} />
 					<SettingsOption label="Contact Support" icon="helpStroke" onPress={onContactSupport} />
 					<View style={[styles.hr, { backgroundColor: colors.background2 }]} />
 					<SettingsOption label="Switch account" onPress={onAccounts} icon="avatarStroke" />

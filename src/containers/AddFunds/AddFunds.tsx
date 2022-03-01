@@ -48,7 +48,7 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 
 	return (
 		<SafeAreaView>
-			<ModalHeader onBack={goBack} onDismiss={dismissCoin} />
+			<ModalHeader onBack={currentStep > 0 ? goBack : undefined} onDismiss={dismissCoin} />
 			<View style={{ paddingHorizontal: 24 }}>
 				{currentStep === 0 && <CoinSelectorModal onSelect={selectCoin} />}
 				{currentStep === 1 && (

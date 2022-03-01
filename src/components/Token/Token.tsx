@@ -3,12 +3,8 @@ import { View, Image } from 'react-native';
 import { token } from '@styles';
 import { whale3Img } from '@images';
 import { Svg, Path } from 'react-native-svg';
+import { addColorOpacity } from '@helpers/utilities';
 import { TokenProps, ContentProps } from './Token.types';
-
-const addColorOpacity = (color: string, opacity: number): string => {
-	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-	return color + newOpacity.toString(16).toUpperCase();
-};
 
 const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 	const dArr = token[name].slice(1);
