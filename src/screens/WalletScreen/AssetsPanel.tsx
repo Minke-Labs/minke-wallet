@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Image, GestureResponderEvent } from
 import { Text, Icon } from '@components';
 import { commify } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
-import { useNavigation, useTheme } from '@hooks';
+import { useTheme } from '@hooks';
 
 const styles = StyleSheet.create({
 	assetsContainer: {
@@ -56,15 +56,18 @@ interface AssetsPanelProps {
 	address: string;
 	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;
+	onWalletAssets: (event: GestureResponderEvent) => void;
 }
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave }) => {
+const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave, onWalletAssets }) => {
 	const { colors } = useTheme();
-	const navigation = useNavigation();
 
 	return (
 		<View style={styles.assetsContainer}>
-			<View style={[styles.assetsMain, { backgroundColor: colors.background2 }]}>
+			<TouchableOpacity
+				style={[styles.assetsMain, { backgroundColor: colors.background2 }]}
+				onPress={onWalletAssets}
+			>
 				<View>
 					<Text type="a" marginBottom={8}>
 						Your total assets
@@ -74,7 +77,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 					</Text>
 				</View>
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>
-			</View>
+			</TouchableOpacity>
 			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
 				<TouchableOpacity
 					onPress={onAddFunds}
@@ -88,7 +91,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 					<Text type="a">Add Funds</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress={() => navigation.navigate('Save')}
+					onPress={onSave}
 					activeOpacity={0.6}
 					style={[
 						styles.sendButtonContainer,

@@ -57,7 +57,7 @@ const NetWorth = () => {
 					</View>
 				}
 			/>
-			<Card
+			{/* <Card
 				image={<Image alert icon="borrowStroke" />}
 				title="Debit"
 				subtitle="Open loans"
@@ -76,7 +76,7 @@ const NetWorth = () => {
 						/>
 					</View>
 				}
-			/>
+			/> */}
 		</View>
 	);
 };

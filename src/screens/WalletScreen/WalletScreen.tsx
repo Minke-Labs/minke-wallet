@@ -137,7 +137,8 @@ const WalletScreen = () => {
 				>
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel
-						onSave={() => console.log('save')}
+						onSave={() => navigation.navigate('Save')}
+						onWalletAssets={() => navigation.navigate('WalletAssets')}
 						onAddFunds={() => setAddFundsVisible(true)}
 						balance={balance?.usd || ''}
 						address={address}
