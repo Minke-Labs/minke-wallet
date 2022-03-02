@@ -21,6 +21,7 @@ interface TransactionContactsProps {
 // @TODO: Marcos accept address with a bad format
 const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected }) => {
 	const [address, setAddress] = React.useState('');
+	const [keyboardToggle, setKeyboardToggle] = React.useState(false);
 	const [ensAddress, setEnsAddress] = React.useState<string>();
 	const state = useState(globalContactState());
 	const { contactList } = state.value;
@@ -43,6 +44,10 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 			onSelected({ name: address, address });
 		}
 	};
+
+	React.useEffect(() => {
+		console.log('keyboardToggle', keyboardToggle);
+	}, [keyboardToggle]);
 
 	return (
 		<View style={{ flex: 1, paddingHorizontal: 24 }}>
@@ -71,31 +76,33 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 					renderItem={({ item }) => <ContactItem contact={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
-				<View
-					style={{
-						flex: 1,
-						alignItems: 'center',
-						paddingHorizontal: 24
-					}}
-				>
-					<Image
-						source={whale3Img}
+				keyboardToggle && (
+					<View
 						style={{
-							width: 147,
-							height: 137,
-							marginBottom: 32
+							flex: 1,
+							alignItems: 'center',
+							paddingHorizontal: 24
 						}}
-					/>
-					<Text type="p2" marginBottom={15}>
-						No contacts yet
-					</Text>
-					<Text weight="bold" type="p2" marginBottom={65}>
-						Add some to start
-					</Text>
-				</View>
+					>
+						<Image
+							source={whale3Img}
+							style={{
+								width: 147,
+								height: 137,
+								marginBottom: 32
+							}}
+						/>
+						<Text type="p2" marginBottom={15}>
+							No contacts yet
+						</Text>
+						<Text weight="bold" type="p2" marginBottom={65}>
+							Add some to start
+						</Text>
+					</View>
+				)
 			)}
 
-			<KeyboardSpacer />
+			<KeyboardSpacer onToggle={() => setKeyboardToggle(!keyboardToggle)} />
 		</View>
 	);
 };
