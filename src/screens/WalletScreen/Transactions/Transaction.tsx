@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { Transaction as ITransaction, smallWalletAddress, getENSAddress } from '@models/wallet';
 import { searchContact } from '@models/contact';
@@ -39,6 +39,8 @@ export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
 			fontSize: 16
 		}
 	});
+
+const truncate = (num: number | string, idx = 2) => +num.toString().slice(0, num.toString().indexOf('.') + (idx + 1));
 
 const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const wallet = useState(globalWalletState());
@@ -93,14 +95,14 @@ const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 			title={format(timestamp, 'MM/dd/yyyy hh:mm aa')}
 			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
 			right={
-				// eslint-disable-next-line react/jsx-wrap-multilines
 				<Text style={{ fontSize: 12 }}>
-					{value ? formatUnits(value, tokenDecimal) : ''} {tokenSymbol || token}
+					{value && Math.trunc(Number(formatUnits(value, tokenDecimal))) > 0 ?
+						formatUnits(value, tokenDecimal) :
+						truncate(formatUnits(value, tokenDecimal), 4)}{' '}
+					{tokenSymbol || token}
 				</Text>
 			}
-			style={{
-				opacity: isError === '1' ? 0.3 : 1
-			}}
+			style={{ opacity: isError === '1' ? 0.3 : 1 }}
 			onPress={openTransaction}
 		/>
 	);

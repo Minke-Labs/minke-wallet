@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { useColorScheme } from 'react-native';
@@ -37,6 +38,7 @@ const Routes: React.FC = () => {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'Wallet' : 'Welcome';
+	// const initialScreen = 'WalletCreated';
 	// const initialScreen = walletState.value.walletId ? 'Test' : 'Test';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({

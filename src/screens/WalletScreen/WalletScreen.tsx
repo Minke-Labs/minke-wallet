@@ -17,7 +17,7 @@ import AssetsPanel from './AssetsPanel';
 import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
-import NetWorth from './NetWorth/NetWorth';
+import Accounts from './Accounts/Accounts';
 import SendModal from './SendModal/SendModal';
 import SentModal from './SentModal';
 import ComingSoonModal from './ComingSoonModal';
@@ -125,11 +125,11 @@ const WalletScreen = () => {
 		<>
 			<TabLayout
 				leftTitle="Transactions"
-				rightTitle="Net worth"
+				rightTitle="Accounts"
 				left={
 					<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />
 				}
-				right={<NetWorth />}
+				right={<Accounts />}
 			>
 				<ScrollView
 					showsVerticalScrollIndicator={false}

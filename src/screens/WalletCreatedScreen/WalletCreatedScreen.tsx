@@ -36,23 +36,37 @@ const WalletCreatedScreen = () => {
 	};
 
 	return (
-		<WelcomeLayout center>
+		<WelcomeLayout
+			center
+			style={{
+				flex: 1,
+				justifyContent: 'space-between'
+			}}
+		>
 			<Image source={walletCreatedImg} style={styles.image} />
-			<Text center weight="extraBold" type="h2" width={273} marginBottom={16}>
-				Wallet created!
-			</Text>
-			<Text center color="text2" width={258} marginBottom={48}>
-				Your keys your coin. Backup your wallet incase of loss.
-			</Text>
-			<View style={{ width: '100%', paddingHorizontal: 24 }}>
+
+			<View
+				style={{
+					width: '100%',
+					alignItems: 'center'
+				}}
+			>
+				<Text center weight="extraBold" type="h2" marginBottom={16}>
+					Wallet created!
+				</Text>
+				<Text center color="text2" width={250}>
+					Your keys your coin. Backup your wallet incase of loss.
+				</Text>
+			</View>
+			<View style={{ width: '100%', paddingHorizontal: 24, marginBottom: 48 }}>
 				<Button
 					title="Back up to iCloud"
 					iconRight="cloudStroke"
 					onPress={backupOnKeychain}
 					marginBottom={14}
 				/>
+				<Button title="Back up manually" mode="text" onPress={backupManually} />
 			</View>
-			<Button title="Back up manually" mode="text" onPress={backupManually} />
 		</WelcomeLayout>
 	);
 };
