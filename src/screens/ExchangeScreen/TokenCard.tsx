@@ -97,7 +97,7 @@ const TokenCard = ({
 				<TouchableOpacity onPress={onPress}>
 					<View style={styles.tokenCardCoin}>
 						<View style={styles.tokenImageContainer}>
-							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={40} />
+							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={34} glow />
 						</View>
 						<Text type="p2" style={styles.tokenName} weight="extraBold">
 							{token.symbol}

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Image, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Card, ActivityIndicator } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
@@ -14,27 +14,31 @@ import { Wallet, BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import { WelcomeLayout } from '@layouts';
-import { Icon, Modal, Text } from '@components';
+import { TokenType } from '@styles';
+import { Icon, Modal, Text, Token } from '@components';
 import ProgressButton from '../../components/ProgressButton';
 import { RootStackParamList } from '../../routes/types.routes';
 import GasOption from '../ExchangeScreen/GasOption';
 import { makeStyles } from './ExchangeResume.styles';
 
-const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
-	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
-		<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
-			<Image source={{ uri: token.img }} style={{ width: 40, height: 40 }} />
+const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => {
+	console.log(token);
+	return (
+		<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
+			<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
+				<Token size={34} name={token.symbol.toLowerCase() as TokenType} glow />
+			</View>
+			<View>
+				<Text type="p2" weight="extraBold" color="text2">
+					${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}
+				</Text>
+				<Text type="a" weight="medium" color="text2">
+					{amount} {token.symbol}
+				</Text>
+			</View>
 		</View>
-		<View>
-			<Text type="p2" weight="extraBold" color="text2">
-				${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}
-			</Text>
-			<Text type="a" weight="medium" color="text2">
-				{amount} {token.symbol}
-			</Text>
-		</View>
-	</View>
-);
+	);
+};
 
 const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const exchange = useState(globalExchangeState());
