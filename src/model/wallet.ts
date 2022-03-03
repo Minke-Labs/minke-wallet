@@ -231,8 +231,15 @@ export const getWalletTokens = async (wallet: string): Promise<WalletTokensRespo
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const { zapperNetwork } = await selectedNetwork();
 	const baseURL = 'https://api.zapper.fi/v1/protocols/tokens/balances';
-	const result = await fetch(`${baseURL}?api_key=${apiKey}&addresses[]=${wallet}&network=${zapperNetwork}`);
-	return result.json();
+	const response = await fetch(`${baseURL}?api_key=${apiKey}&addresses[]=${wallet}&network=${zapperNetwork}`);
+	let result;
+	try {
+		result = await response.json();
+		return result;
+	} catch (error) {
+		console.error('error', error); // temp until we fetch from the chain
+	}
+	return result;
 };
 
 export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {

@@ -46,14 +46,21 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const eth = await walletObj.getBalance();
 	const tokens: MinkeTokenList = {};
 	const walletTokens = await getWalletTokens(address);
-	const { meta } = walletTokens[address.toLowerCase()];
-	const { value: total = 0 } = find(meta, (m) => m.label === 'Total') || {};
 
-	const usd = total.toString().match(/^-?\d+(?:\.\d{0,2})?/);
-	const balance = {
-		eth,
-		usd: usd ? usd[0] : '0'
-	};
+	let balance;
+	if (walletTokens) {
+		const { meta } = walletTokens[address.toLowerCase()];
+		const { value: total = 0 } = find(meta, (m) => m.label === 'Total') || {};
+
+		const usd = total.toString().match(/^-?\d+(?:\.\d{0,2})?/);
+		balance = {
+			eth,
+			usd: usd ? usd[0] : '0'
+		};
+	} else {
+		balance = { usd: '0' };
+	}
+
 	return { tokens, balance, network: blockchain };
 };
 
