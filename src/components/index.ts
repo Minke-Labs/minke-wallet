@@ -10,6 +10,7 @@ import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
 import Flag from './Flag/Flag';
 import Card from './Card/Card';
+import TransparentCard from './TransparentCard/TransparentCard';
 import WhiteButton from './WhiteButton/WhiteButton';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
@@ -29,6 +30,7 @@ export {
 	Input,
 	Flag,
 	Card,
+	TransparentCard,
 	PaperTouchable,
 	ApplePayButton,
 	ScreenLoadingIndicator
