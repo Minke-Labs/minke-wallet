@@ -17,7 +17,8 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.minkeapp.minkewallet"
+			"bundleIdentifier": "com.minkeapp.minkewallet",
+			"buildNumber": "2"
 		},
 		"android": {
 			"adaptiveIcon": {
