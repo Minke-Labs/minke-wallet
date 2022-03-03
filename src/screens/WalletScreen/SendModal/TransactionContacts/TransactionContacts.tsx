@@ -45,10 +45,6 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 		}
 	};
 
-	React.useEffect(() => {
-		console.log('keyboardToggle', keyboardToggle);
-	}, [keyboardToggle]);
-
 	return (
 		<View style={{ flex: 1, paddingHorizontal: 24 }}>
 			<Text weight="extraBold" type="h3" center marginBottom={24}>
