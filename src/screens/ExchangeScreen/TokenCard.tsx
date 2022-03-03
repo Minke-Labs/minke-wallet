@@ -70,10 +70,6 @@ const TokenCard = ({
 		}
 	}, [balance]);
 
-	useEffect(() => {
-		console.log(amount);
-	}, [amount]);
-
 	const isMaxEnabled = !disableMax && token && balance;
 	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
 
