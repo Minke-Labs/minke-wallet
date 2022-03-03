@@ -7,7 +7,6 @@ import { useTheme } from '@hooks';
 import { ParaswapToken } from '@models/token';
 import { Text, Icon, Token } from '@components';
 import { TokenType } from '@styles';
-import { numberFormat } from '@helpers/utilities';
 import { makeStyles } from './ExchangeScreen.styles';
 
 const TokenCard = ({
@@ -124,7 +123,7 @@ const TokenCard = ({
 						display: token ? 'flex' : 'none',
 						flex: 1
 					}}
-					value={amount.replace(',', '.')}
+					value={amount}
 					ref={innerRef}
 					onChangeText={(text) => onChangeText(text)}
 				/>
