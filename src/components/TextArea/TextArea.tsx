@@ -22,7 +22,6 @@ const TextArea: React.FC<TextAreaProps> = ({ label, value, onChangeText, numberO
 				selectionColor={colors.text7}
 				spellCheck={false}
 				autoCapitalize="none"
-				// autoFocus
 				autoCorrect={false}
 				multiline
 				{...{ numberOfLines, onChangeText, value }}

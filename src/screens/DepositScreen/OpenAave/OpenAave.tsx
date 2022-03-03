@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Image, Linking, TouchableOpacity, useColorScheme, View, SafeAreaView } from 'react-native';
 import { Icon, Text, Button, TransparentCard } from '@components';
