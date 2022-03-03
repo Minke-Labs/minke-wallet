@@ -121,11 +121,11 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 			</View>
 			<Text type="h3" weight="extraBold" marginBottom={32}>
 				How much{' '}
-				<Text color="text11" type="h3" weight="extraBold">
+				<Text color="text12" type="h3" weight="extraBold">
 					{token.symbol}
 				</Text>{' '}
 				do you want to send to
-				<Text color="text11" type="h3" weight="extraBold">
+				<Text color="text12" type="h3" weight="extraBold">
 					{' '}
 					{smallWalletAddress(user.address)}
 				</Text>
