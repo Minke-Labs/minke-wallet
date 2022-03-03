@@ -7,6 +7,7 @@ import { useTheme } from '@hooks';
 import { ParaswapToken } from '@models/token';
 import { Text, Icon, Token } from '@components';
 import { TokenType } from '@styles';
+import { numberFormat } from '@helpers/utilities';
 import { makeStyles } from './ExchangeScreen.styles';
 
 const TokenCard = ({
@@ -70,6 +71,10 @@ const TokenCard = ({
 		}
 	}, [balance]);
 
+	useEffect(() => {
+		console.log(amount);
+	}, [amount]);
+
 	const isMaxEnabled = !disableMax && token && balance;
 	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
 
@@ -97,7 +102,7 @@ const TokenCard = ({
 				<TouchableOpacity onPress={onPress}>
 					<View style={styles.tokenCardCoin}>
 						<View style={styles.tokenImageContainer}>
-							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={40} />
+							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={34} glow />
 						</View>
 						<Text type="p2" style={styles.tokenName} weight="extraBold">
 							{token.symbol}
@@ -119,7 +124,7 @@ const TokenCard = ({
 						display: token ? 'flex' : 'none',
 						flex: 1
 					}}
-					value={amount}
+					value={amount.replace(',', '.')}
 					ref={innerRef}
 					onChangeText={(text) => onChangeText(text)}
 				/>

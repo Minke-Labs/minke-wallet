@@ -11,7 +11,7 @@ const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
 			{dArr.map((d, idx) => (
-				<Path key={d} d={d} fill={idx === 0 ? tokenColor : 'white'} />
+				<Path fillRule="evenodd" clipRule="evenodd" key={d} d={d} fill={idx === 0 ? tokenColor : 'white'} />
 			))}
 		</Svg>
 	);

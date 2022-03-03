@@ -5,7 +5,7 @@ import { Token } from '@components';
 const Test = () => (
 	<SafeAreaView>
 		<View style={{ marginBottom: 160 }} />
-		<Token />
+		<Token name="zil" />
 	</SafeAreaView>
 );
 
