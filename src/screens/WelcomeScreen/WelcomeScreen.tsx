@@ -14,10 +14,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, Button, Modal } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { globalWalletState, walletState } from '@stores/WalletStore';
+import { ActivityIndicator } from 'react-native-paper';
 import { RootStackParamList } from '../../routes/types.routes';
 import styles from './WelcomeScreen.styles';
 import ImportFlow from './ImportFlow';
-import { ActivityIndicator } from 'react-native-paper';
 
 const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
@@ -60,9 +60,7 @@ const WelcomeScreen = () => {
 			<WelcomeLayout>
 				<Background>
 					<View style={styles.container}>
-						<View style={{ width: '100%' }}>
-							<Image source={welcomeImg} style={styles.headerImage} />
-						</View>
+						<Image source={welcomeImg} style={styles.headerImage} />
 
 						<View style={styles.textContainer}>
 							<Text center weight="extraBold" type="h1" width={273} marginBottom={16}>

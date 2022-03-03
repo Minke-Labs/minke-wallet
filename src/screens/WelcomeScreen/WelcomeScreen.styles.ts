@@ -25,9 +25,8 @@ export default StyleSheet.create({
 	},
 	headerImage: {
 		resizeMode: 'contain',
-		width: 304,
-		height: 288,
-		marginLeft: -24
+		width: 282,
+		height: 270
 	},
 	textContainer: {
 		width: '100%',
