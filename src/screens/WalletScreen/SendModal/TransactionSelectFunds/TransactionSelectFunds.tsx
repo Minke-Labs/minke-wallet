@@ -45,8 +45,8 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 		<View style={styles.container}>
 			{user.address ? <Image source={image!} style={styles.image} /> : null}
 			<Text type="h3" weight="extraBold" marginBottom={32}>
-				Which <Text color="text11" type="h3" weight="extraBold">asset</Text> do you want to send to{' '}
-				<Text color="text11" type="h3" weight="extraBold">{user.name}</Text>?
+				Which <Text color="text12" type="h3" weight="extraBold">asset</Text> do you want to send to{' '}
+				<Text color="text12" type="h3" weight="extraBold">{user.name}</Text>?
 			</Text>
 
 			{walletTokens ? (
