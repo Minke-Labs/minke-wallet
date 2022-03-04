@@ -17,9 +17,9 @@ import {
 import { numberFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
+import { ActivityIndicator } from 'react-native-paper';
 import { styles } from './TransactionTransfer.styles';
 import Card from '../Card';
-import { ActivityIndicator } from 'react-native-paper';
 
 interface UserProps {
 	name: string;
@@ -101,9 +101,9 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 				amount,
 				gasPrice.result.ProposeGasPrice,
 				id,
-				token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address
+				token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
+				token.decimals
 			);
-			console.log(hash);
 			await wait();
 			onDismiss();
 			sentSuccessfully({
@@ -127,7 +127,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 				do you want to send to
 				<Text color="text12" type="h3" weight="extraBold">
 					{' '}
-					{smallWalletAddress(user.address)}
+					{user.name || smallWalletAddress(user.address)}
 				</Text>
 				?
 			</Text>

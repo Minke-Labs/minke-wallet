@@ -1,6 +1,6 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
-import { isValidMnemonic, parseEther, parseUnits } from 'ethers/lib/utils';
+import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { network as selectedNetwork, networks } from './network';
@@ -174,7 +174,8 @@ export const sendTransaction = async (
 	amount: string,
 	gasPrice: string,
 	network: string,
-	contractAddress: string = ''
+	contractAddress: string = '',
+	decimals: number = 18
 ) => {
 	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
@@ -193,13 +194,13 @@ export const sendTransaction = async (
 		// const signer = provider.getSigner(wallet.address)
 
 		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
-		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount));
+		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount, decimals));
 		// tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseEther(amount)
+			value: parseUnits(amount, decimals)
 		};
 	}
 
