@@ -1,26 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity, GestureResponderEvent, StyleSheet } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon, ScreenLoadingIndicator } from '@components';
 import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { useState } from '@hookstate/core';
-
-const styles = StyleSheet.create({
-	headerContainer: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		marginBottom: 24
-	},
-	iconsContainer: {
-		flexDirection: 'row',
-		alignItems: 'center'
-	}
-});
-
-interface HeaderProps {
-	onSettingsPress: (event: GestureResponderEvent) => void;
-}
+import styles from './styles';
+import { HeaderProps } from './types';
 
 const Header: React.FC<HeaderProps> = ({ onSettingsPress }) => {
 	const [ensName, setEnsName] = React.useState<string | null>('');

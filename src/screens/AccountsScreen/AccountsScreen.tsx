@@ -10,7 +10,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem';
-import ImportFlow from '../WelcomeScreen/ImportFlow';
+import ImportFlow from '../WelcomeScreen/ImportWalletModal';
 
 const AccountsScreen = () => {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();

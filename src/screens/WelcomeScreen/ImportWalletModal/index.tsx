@@ -1,35 +1,14 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
-import { View, StyleSheet, Keyboard } from 'react-native';
+import { View, Keyboard } from 'react-native';
 import { useTheme } from '@hooks';
 import { Text, Button, TextArea, ModalHeader } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { globalWalletState, walletState } from '@src/stores/WalletStore';
 import { restoreWalletByMnemonic } from '@src/model/wallet';
 import { ActivityIndicator } from 'react-native-paper';
-
-const styles = StyleSheet.create({
-	container: {
-		paddingHorizontal: 24
-	},
-	textAreaContainer: {
-		width: '100%',
-		height: 110,
-		marginBottom: 24
-	},
-	textarea: {
-		borderRadius: 24,
-		height: 104,
-		overflow: 'hidden',
-		borderWidth: 1,
-		paddingHorizontal: 24
-	}
-});
-
-interface ImportFlowProps {
-	onImportFinished: () => void;
-	onDismiss: () => void;
-}
+import { styles } from './styles';
+import { ImportFlowProps } from './types';
 
 const ImportFlow: React.FC<ImportFlowProps> = ({ onImportFinished, onDismiss }) => {
 	const [text, setText] = React.useState('');

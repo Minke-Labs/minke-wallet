@@ -11,14 +11,10 @@ import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 // import { AddFunds } from '@containers';
-import Header from './Header';
-import AssetsPanel from './AssetsPanel';
-import ActionsPanel from './ActionsPanel';
-import { RootStackParamList } from '../../routes/types.routes';
-import Transactions from './Transactions/Transactions';
-import Accounts from './Accounts/Accounts';
+import { AssetsPanel, ActionsPanel, Header, Accounts, Transactions } from './components';
 import { SendModal, ComingSoonModal, ReceiveModal, SentModal } from './Modals';
-import { ResultProps } from './WalletScreen.types';
+import { RootStackParamList } from '../../routes/types.routes';
+import { ResultProps } from './types';
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -149,6 +145,7 @@ const WalletScreen = () => {
 					/>
 				</ScrollView>
 			</TabLayout>
+
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
 				<Text color="text11">Address copied!</Text>
 			</Snackbar>

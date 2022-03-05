@@ -1,34 +1,13 @@
 import React, { useCallback } from 'react';
 import { whale2Img } from '@images';
 import { Text, Button } from '@components';
-import { View, Image, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
+import { View, Image, ActivityIndicator, FlatList } from 'react-native';
 import { useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import Transaction from './Transaction';
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		paddingHorizontal: 14,
-		paddingTop: 14
-	},
-	tableContainer: {
-		flex: 1,
-		alignItems: 'center',
-		paddingVertical: 14
-	},
-	image: {
-		width: 152,
-		height: 152
-	}
-});
-
-interface TransactionsProps {
-	loading: boolean;
-	onSeeAllTransactions: () => void;
-	onAddFunds: () => void;
-}
+import { styles } from './styles';
+import { TransactionsProps } from './types';
 
 const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
 	const { colors } = useTheme();

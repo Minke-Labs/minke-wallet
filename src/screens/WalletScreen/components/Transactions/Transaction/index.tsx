@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { Transaction as ITransaction, smallWalletAddress, getENSAddress } from '@models/wallet';
 import { searchContact } from '@models/contact';
@@ -9,38 +8,8 @@ import * as Linking from 'expo-linking';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@src/model/network';
 import { Text, Card } from '@components';
-import TransactionIcon from './TransactionIcon';
-
-export const makeStyles = (colors: ReactNativePaper.ThemeColors) =>
-	StyleSheet.create({
-		transactionItem: {
-			marginBottom: 32,
-			flexDirection: 'row',
-			justifyContent: 'space-between'
-		},
-		transationalIcon: {
-			width: 32,
-			height: 32,
-			marginRight: 8
-		},
-		fontSizeSmall: {
-			color: colors.secondaryText,
-			fontSize: 12
-		},
-		alignContentRight: {
-			alignItems: 'flex-end'
-		},
-
-		row: {
-			flexDirection: 'row',
-			justifyContent: 'space-between'
-		},
-		fontSizeDefault: {
-			fontSize: 16
-		}
-	});
-
-const truncate = (num: number | string, idx = 2) => +num.toString().slice(0, num.toString().indexOf('.') + (idx + 1));
+import TransactionIcon from '../TransactionIcon';
+import { truncate } from './utils';
 
 const Transaction = ({ transaction }: { transaction: ITransaction }) => {
 	const wallet = useState(globalWalletState());

@@ -16,8 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import { ActivityIndicator } from 'react-native-paper';
 import { RootStackParamList } from '../../routes/types.routes';
-import styles from './WelcomeScreen.styles';
-import ImportFlow from './ImportFlow';
+import styles from './styles';
+import ImportWalletModal from './ImportWalletModal';
 
 const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
@@ -85,7 +85,7 @@ const WelcomeScreen = () => {
 			</WelcomeLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportFlow onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
+				<ImportWalletModal onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
 			</Modal>
 		</>
 	);

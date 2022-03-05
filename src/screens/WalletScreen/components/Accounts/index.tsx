@@ -4,14 +4,12 @@ import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
+import { useNavigation } from '@hooks';
 import { makeStyles } from './styles';
 import Image from './Image';
 
-const NetWorth = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+const Accounts = () => {
+	const navigation = useNavigation();
 	const state = useState(globalWalletState());
 	const styles = makeStyles();
 	return (
@@ -48,11 +46,7 @@ const NetWorth = () => {
 						<Text color="text7" type="a">
 							Deposit
 						</Text>
-						<Icon
-							name="arrowForwardStroke"
-							size={16}
-							color="text7"
-						/>
+						<Icon name="arrowForwardStroke" size={16} color="text7" />
 					</View>
 				}
 			/>
@@ -80,4 +74,4 @@ const NetWorth = () => {
 	);
 };
 
-export default NetWorth;
+export default Accounts;

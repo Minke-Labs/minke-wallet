@@ -1,22 +1,12 @@
 import React from 'react';
 import { useTheme } from '@hooks';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Icon } from '@components';
+import { styles } from './styles';
+import { TransactionIconProps } from './types';
 
-const styles = StyleSheet.create({
-	circle: {
-		width: 32,
-		height: 32,
-		borderRadius: 16,
-		borderWidth: 1,
-		justifyContent: 'center',
-		alignItems: 'center'
-	}
-});
-
-const TransactionIcon: React.FC<{ received: boolean }> = ({ received }) => {
+const TransactionIcon: React.FC<TransactionIconProps> = ({ received }) => {
 	const { colors } = useTheme();
-
 	return (
 		<View
 			style={[

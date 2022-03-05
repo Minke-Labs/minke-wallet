@@ -13,7 +13,7 @@ import { BlurView } from 'expo-blur';
 import { globalWalletState } from '@src/stores/WalletStore';
 import EmptyState from './EmptyState/EmptyState';
 import { makeStyles } from './SaveScreen.styles';
-import TransactionIcon from '../WalletScreen/Transactions/TransactionIcon';
+import TransactionIcon from '../WalletScreen/components/Transactions/TransactionIcon';
 
 const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();

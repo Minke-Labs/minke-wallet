@@ -7,13 +7,11 @@ import { backupSeedOnKeychain } from '@models/keychain';
 import { WelcomeLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button, ScreenLoadingIndicator } from '@components';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import styles from './WalletCreatedScreen.styles';
-import { RootStackParamList } from '../../routes/types.routes';
+import { useNavigation } from '@hooks';
+import styles from './styles';
 
 const WalletCreatedScreen = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	const backupManually = () => navigation.navigate('Backup');
 	const onFinish = () => navigation.navigate('Wallet');
@@ -36,21 +34,10 @@ const WalletCreatedScreen = () => {
 	};
 
 	return (
-		<WelcomeLayout
-			center
-			style={{
-				flex: 1,
-				justifyContent: 'space-between'
-			}}
-		>
+		<WelcomeLayout center style={styles.container}>
 			<Image source={walletCreatedImg} style={styles.image} />
 
-			<View
-				style={{
-					width: '100%',
-					alignItems: 'center'
-				}}
-			>
+			<View style={styles.textContainer}>
 				<Text center weight="extraBold" type="h2" marginBottom={16}>
 					Wallet created!
 				</Text>
@@ -58,7 +45,8 @@ const WalletCreatedScreen = () => {
 					Your keys your coin. Backup your wallet incase of loss.
 				</Text>
 			</View>
-			<View style={{ width: '100%', paddingHorizontal: 24, marginBottom: 48 }}>
+
+			<View style={styles.buttonContainer}>
 				<Button
 					title="Back up to iCloud"
 					iconRight="cloudStroke"

@@ -1,0 +1,17 @@
+import { StyleSheet } from 'react-native';
+
+export default StyleSheet.create({
+	actionsPanelContainer: {
+		marginBottom: 32 + 51
+	},
+	actionsPanelCardContainer: {
+		height: 48,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 16,
+		paddingHorizontal: 16,
+		alignSelf: 'center',
+		marginRight: 12
+	}
+});

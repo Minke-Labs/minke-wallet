@@ -1,4 +1,4 @@
-import { ResultProps } from '../../WalletScreen.types';
+import { ResultProps } from '../../types';
 
 interface UserProps {
 	name: string;

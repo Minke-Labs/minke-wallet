@@ -1,6 +1,6 @@
 import { WalletToken } from '@models/wallet';
 import { UserProps } from '../../types';
-import { ResultProps } from '../../../../WalletScreen.types';
+import { ResultProps } from '../../../../types';
 
 export interface TransactionTransferProps {
 	user: UserProps;
