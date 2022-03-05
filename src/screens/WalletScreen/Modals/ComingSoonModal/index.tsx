@@ -2,24 +2,14 @@ import React from 'react';
 import { SafeAreaView, Image, View } from 'react-native';
 import { ModalHeader, Text, Button } from '@components';
 import { whale4Img } from '@images';
-
-interface ComingSoonModalProps {
-	onDismiss: () => void;
-}
+import { ComingSoonModalProps } from './types';
+import styles from './styles';
 
 const ComingSoonModal: React.FC<ComingSoonModalProps> = ({ onDismiss }) => (
 	<SafeAreaView>
 		<ModalHeader onDismiss={onDismiss} />
-		<View style={{ paddingHorizontal: 24, alignItems: 'center' }}>
-			<Image
-				source={whale4Img}
-				style={{
-					width: 147,
-					height: 137,
-					marginBottom: 16
-				}}
-			/>
-
+		<View style={styles.container}>
+			<Image source={whale4Img} style={styles.image} />
 			<Text weight="extraBold" center>
 				Coming soon!
 			</Text>

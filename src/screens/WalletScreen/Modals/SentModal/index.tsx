@@ -5,12 +5,8 @@ import { TokenType } from '@styles';
 import { Text, Token, Icon } from '@components';
 import * as Linking from 'expo-linking';
 import { smallWalletAddress } from '@src/model/wallet';
-import { ResultProps } from '../../WalletScreen.types';
-
-interface SentModalProps {
-	sentObj: ResultProps | undefined;
-	onDismiss: () => void;
-}
+import { SentModalProps } from './types';
+import styles from './styles';
 
 const SentModal: React.FC<SentModalProps> = ({ sentObj, onDismiss }) => {
 	const openTransaction = async () => {
@@ -18,35 +14,20 @@ const SentModal: React.FC<SentModalProps> = ({ sentObj, onDismiss }) => {
 		Linking.openURL(`${etherscanURL}/tx/${sentObj?.link}`);
 	};
 	return (
-		<SafeAreaView
-			style={{
-				flex: 1,
-				alignItems: 'center',
-				paddingHorizontal: 32
-			}}
-		>
-			<View
-				style={{
-					height: 64,
-					flexDirection: 'row',
-					alignItems: 'center',
-					justifyContent: 'flex-end',
-					paddingHorizontal: 32,
-					width: '100%'
-				}}
-			>
+		<SafeAreaView style={styles.container}>
+			<View style={styles.iconContainer}>
 				<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
 					<Icon name="closeStroke" size={24} color="text7" />
 				</TouchableOpacity>
 			</View>
-			<Text type="h3" weight="extraBold" color="text1" marginBottom={12} style={{ marginTop: 32 }}>
+			<Text type="h3" weight="extraBold" color="text1" marginBottom={12}>
 				Token Sent
 			</Text>
 			<Token name={sentObj?.symbol as TokenType} size={60} />
-			<Text weight="extraBold" color="text1" marginBottom={12} style={{ marginTop: 12 }}>
+			<Text weight="extraBold" color="text1" marginBottom={12 + 8} style={{ marginTop: 12 }}>
 				{(sentObj?.symbol || '').toUpperCase()}
 			</Text>
-			<Text type="p2" weight="medium" color="text3" marginBottom={12} style={{ marginTop: 8 }}>
+			<Text type="p2" weight="medium" color="text3" marginBottom={12}>
 				Link of transaction:
 			</Text>
 			<TouchableOpacity onPress={openTransaction} style={{ marginBottom: 8 }}>

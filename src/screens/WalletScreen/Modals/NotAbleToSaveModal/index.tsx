@@ -3,16 +3,9 @@ import { SafeAreaView, View } from 'react-native';
 import { Text, ModalHeader, PaperTouchable, Icon } from '@components';
 import { useNavigation } from '@hooks';
 import { usdCoin } from '@src/model/deposit';
+import { NotAbleToSaveModalProps } from './types';
 
-const NotAbleToSaveModal = ({
-	onDismiss,
-	onAddFunds,
-	visible
-}: {
-	onDismiss: () => void;
-	onAddFunds: () => void;
-	visible: boolean;
-}) => {
+const NotAbleToSaveModal: React.FC<NotAbleToSaveModalProps> = ({ onDismiss, onAddFunds, visible }) => {
 	const navigation = useNavigation();
 	const [defaultUSDCoin, setDefaultUSDCoin] = useState('');
 

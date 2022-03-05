@@ -6,8 +6,10 @@ import { getENSAddress } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
 import { ActivityIndicator } from 'react-native-paper';
+import { ReceiveModalProps } from './types';
+import styles from './styles';
 
-const ReceiveModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
+const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 	const wallet = useState(globalWalletState());
 	const [ensName, setEnsName] = React.useState<string | null>();
 
@@ -31,32 +33,17 @@ const ReceiveModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
 	return (
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
-			<View style={{ paddingHorizontal: 24, alignItems: 'center' }}>
+			<View style={styles.container}>
 				<Text type="h3" weight="extraBold" style={{ width: '100%' }}>
 					Receive
 				</Text>
-				<Text marginBottom={44} style={{ width: '100%' }}>
+				<Text marginBottom={44} width="100%">
 					Show your QR code or share your informations
 				</Text>
-				<View
-					style={{
-						borderRadius: 20,
-						backgroundColor: '#FFFFFF',
-						alignItems: 'center',
-						justifyContent: 'center',
-						width: 280,
-						height: 280,
-						marginBottom: 24
-					}}
-				>
+				<View style={styles.QRCodeContainer}>
 					<QRCode value={address} size={216} color="#34769D" />
 				</View>
-				<View
-					style={{
-						alignItems: 'center',
-						marginBottom: 30
-					}}
-				>
+				<View style={styles.textContainer}>
 					{ensName && (
 						<Text weight="extraBold" type="h3">
 							{ensName}
