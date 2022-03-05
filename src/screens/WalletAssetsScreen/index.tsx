@@ -5,7 +5,7 @@ import { Modal, ModalReusables } from '@components';
 // import { AddFunds } from '@containers';
 import { getWalletTokens, WalletToken } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
-import AssetList from './AssetList/AssetList';
+import AssetList from './AssetList';
 import ValueBox from './ValueBox';
 import AssetListEmpty from './AssetListEmpty';
 import styles from './styles';

@@ -3,38 +3,15 @@ import { View, TouchableOpacity } from 'react-native';
 import { Token, Icon, Text } from '@components';
 import { TokenType } from '@styles';
 import { useTheme } from '@hooks';
-
-interface CardProps {
-	onPress: () => void;
-	coinName: string;
-	coinSymbol: TokenType;
-	walletBalance: number;
-	walletBalanceUsd: number;
-	interest?: string;
-}
+import { CardProps } from './types';
+import styles from './styles';
 
 const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalance, walletBalanceUsd, interest }) => {
 	const { colors } = useTheme();
 	return (
-		<View
-			style={{
-				borderBottomWidth: 1,
-				marginTop: 24,
-				height: 129,
-				borderColor: colors.detail4
-			}}
-		>
-			<View
-				style={{
-					height: 32,
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					paddingHorizontal: 24,
-					marginBottom: 16
-				}}
-			>
-				<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+		<View style={[styles.container, { borderColor: colors.detail4 }]}>
+			<View style={styles.header}>
+				<View style={styles.headerLeft}>
 					<Token name={coinSymbol as TokenType} glow size={32} />
 					<Text type="a" weight="bold" style={{ marginLeft: 8 }}>
 						{coinName}
@@ -45,21 +22,21 @@ const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalanc
 				</TouchableOpacity>
 			</View>
 
-			<View style={{ flexDirection: 'row', paddingHorizontal: 24 }}>
+			<View style={styles.body}>
 				<View style={{ flex: 0.5 }}>
-					<Text marginBottom={6} style={{ fontSize: 12, lineHeight: 14 }}>
+					<Text marginBottom={6} type="span">
 						Your wallet balance
 					</Text>
-					<Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
+					<Text marginBottom={2} weight="medium" type="p2">
 						{walletBalance}
 					</Text>
-					<Text marginBottom={24} style={{ fontSize: 12, lineHeight: 14 }}>
+					<Text marginBottom={24} type="span">
 						${walletBalanceUsd}
 					</Text>
 				</View>
 				{interest && (
 					<View style={{ flex: 0.5 }}>
-						<Text marginBottom={2} weight="medium" style={{ fontSize: 16, lineHeight: 19 }}>
+						<Text marginBottom={2} weight="medium" type="p2">
 							{interest}% APY
 						</Text>
 					</View>

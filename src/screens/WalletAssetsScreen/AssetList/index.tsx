@@ -6,12 +6,10 @@ import { TokenType } from '@styles';
 import { WalletToken } from '@models/wallet';
 import { stablecoins } from '@models/token';
 import Card from './Card';
-import AssetHeader from './AssetHeader';
-import AssetSelector from './AssetSelector';
-
-interface AssetListProps {
-	walletTokens: WalletToken[];
-}
+import Header from './Header';
+import Selector from './Selector';
+import { AssetListProps } from './types';
+import styles from './styles';
 
 const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	const [active, setActive] = React.useState(0);
@@ -25,9 +23,9 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	};
 
 	return (
-		<View style={{ paddingTop: 32, height: '100%' }}>
-			<AssetHeader />
-			<AssetSelector {...{ active, setActive }} />
+		<View style={styles.container}>
+			<Header />
+			<Selector {...{ active, setActive }} />
 			<FlatList
 				showsVerticalScrollIndicator={false}
 				keyExtractor={(item) => `${item.address}`}
