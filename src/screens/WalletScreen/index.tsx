@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import React, { useCallback, useEffect } from 'react';
 import { Alert, RefreshControl, ScrollView } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useFocusEffect } from '@react-navigation/native';
 import { TabLayout } from '@layouts';
 import { useState } from '@hookstate/core';
 import { Text, Modal } from '@components';
+import { useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
@@ -13,7 +13,6 @@ import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallet
 // import { AddFunds } from '@containers';
 import { AssetsPanel, ActionsPanel, Header, Accounts, Transactions } from './components';
 import { SendModal, ComingSoonModal, ReceiveModal, SentModal } from './Modals';
-import { RootStackParamList } from '../../routes/types.routes';
 import { ResultProps } from './types';
 
 const WalletScreen = () => {
@@ -22,7 +21,7 @@ const WalletScreen = () => {
 	const [loading, setLoading] = React.useState(true);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);

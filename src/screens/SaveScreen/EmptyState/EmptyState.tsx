@@ -1,10 +1,7 @@
 import React from 'react';
 import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
-import { useTheme } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { globalDepositState } from '@src/stores/DepositStore';
@@ -14,7 +11,7 @@ const EmptyState = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	const { market } = globalDepositState().value;
 
 	return (

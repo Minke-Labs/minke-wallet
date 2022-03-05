@@ -1,12 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@hooks';
 import { WalletToken } from '@models/wallet';
 import { TokenType } from '@styles';
 import { Text, Token, Icon } from '@components';
 import { coinParamFromSymbol } from '@helpers/utilities';
-import { RootStackParamList } from '@src/routes/types.routes';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
 	container: {
@@ -22,7 +20,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ coin }) => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={{ marginRight: 24 }} onPress={() => navigation.goBack()}>

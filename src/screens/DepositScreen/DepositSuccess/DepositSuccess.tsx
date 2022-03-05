@@ -1,10 +1,7 @@
 import React from 'react';
 import { View, ImageBackground, useColorScheme } from 'react-native';
 import { Text, Button } from '@components';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
-import { useTheme } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { makeStyles } from './DepositSuccess.styles';
 
@@ -12,7 +9,7 @@ const DepositSuccess = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	return (
 		<View style={styles.container}>

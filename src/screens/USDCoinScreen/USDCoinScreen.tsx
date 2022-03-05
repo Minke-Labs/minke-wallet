@@ -4,14 +4,12 @@ import { WelcomeLayout } from '@layouts';
 import { Text, Icon } from '@components';
 import { depositStablecoins as stablecoins, usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
+import { useNavigation } from '@hooks';
 import styles from './USDCoinScreen.styles';
 import ListItem from './ListItem';
 
 const USDCoinScreen = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	const [usdCoin, setUsdCoin] = useState('');
 
 	const onSelectCoin = async (token: string) => {

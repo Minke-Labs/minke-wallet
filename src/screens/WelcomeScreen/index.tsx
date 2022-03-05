@@ -10,12 +10,10 @@ import {
 	waveWelcomeFooterDarkImg
 } from '@images';
 import { walletCreate } from '@models/wallet';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, Button, Modal } from '@components';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@hooks';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import { ActivityIndicator } from 'react-native-paper';
-import { RootStackParamList } from '../../routes/types.routes';
 import styles from './styles';
 import ImportWalletModal from './ImportWalletModal';
 
@@ -37,7 +35,7 @@ const Background: React.FC = ({ children }) => {
 };
 
 const WelcomeScreen = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	const [isModalVisible, setModalVisible] = React.useState(false);
 	const [loading, setLoading] = React.useState(false);
 	const state = useState(globalWalletState());

@@ -2,21 +2,19 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { Icon, ScreenLoadingIndicator, Text } from '@components';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import * as Clipboard from 'expo-clipboard';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Snackbar } from 'react-native-paper';
 import Card from './Card';
 import CopyButton from './CopyButton';
 import styles from './BackupScreen.styles';
-import { RootStackParamList } from '../../routes/types.routes';
 
 const BackupScreen = () => {
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	const onFinish = () => navigation.navigate('Wallet');
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');

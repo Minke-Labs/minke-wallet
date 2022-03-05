@@ -1,12 +1,10 @@
 import React from 'react';
 import { Icon, Text } from '@components';
 import { View, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '@src/routes/types.routes';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@hooks';
 
 const Header = ({ title = 'Wallet' }: { title?: string }) => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	return (
 		<View>

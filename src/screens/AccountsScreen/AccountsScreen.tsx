@@ -5,15 +5,13 @@ import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
 import { walletState, globalWalletState } from '@src/stores/WalletStore';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
+import { useNavigation } from '@hooks';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem';
 import ImportFlow from '../WelcomeScreen/ImportWalletModal';
 
 const AccountsScreen = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	const state = useState(globalWalletState());
 	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();

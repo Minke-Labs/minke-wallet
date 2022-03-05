@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@hooks';
 import { coinParamFromSymbol } from '@helpers/utilities';
-import { RootStackParamList } from '@src/routes/types.routes';
 import { TokenType } from '@styles';
 import { WalletToken } from '@models/wallet';
 import { stablecoins } from '@models/token';
@@ -17,7 +15,7 @@ interface AssetListProps {
 
 const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	const [active, setActive] = React.useState(0);
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	const onSelected = (coin: WalletToken) => navigation.navigate('Assets', { coin });
 
