@@ -12,20 +12,13 @@ import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 // import { AddFunds } from '@containers';
 import Header from './Header';
-import ReceiveModal from './ReceiveModal';
 import AssetsPanel from './AssetsPanel';
 import ActionsPanel from './ActionsPanel';
 import { RootStackParamList } from '../../routes/types.routes';
 import Transactions from './Transactions/Transactions';
 import Accounts from './Accounts/Accounts';
-import SendModal from './SendModal/SendModal';
-import SentModal from './SentModal';
-import ComingSoonModal from './ComingSoonModal';
-
-type ResultProps = {
-	link: string;
-	symbol: string;
-};
+import { SendModal, ComingSoonModal, ReceiveModal, SentModal } from './Modals';
+import { ResultProps } from './WalletScreen.types';
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -157,12 +150,8 @@ const WalletScreen = () => {
 				</ScrollView>
 			</TabLayout>
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
+				<Text color="text11">Address copied!</Text>
 			</Snackbar>
-
-			<Modal isVisible={receiveVisible} onDismiss={hideReceive}>
-				<ReceiveModal onDismiss={hideReceive} />
-			</Modal>
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				{/* <AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} /> */}
@@ -174,6 +163,10 @@ const WalletScreen = () => {
 					onDismiss={() => setSendModalOpen(false)}
 					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
 				/>
+			</Modal>
+
+			<Modal isVisible={receiveVisible} onDismiss={hideReceive}>
+				<ReceiveModal onDismiss={hideReceive} />
 			</Modal>
 
 			<Modal isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>

@@ -7,7 +7,7 @@ import { AddFunds } from '@containers';
 import { useNavigation } from '@hooks';
 import Deposit from './Deposit/Deposit';
 import OpenAave from './OpenAave/OpenAave';
-import NotAbleToSaveModal from '../WalletScreen/NotAbleToSaveModal/NotAbleToSaveModal';
+import { NotAbleToSaveModal } from '../WalletScreen/Modals';
 
 const DepositScreen = () => {
 	const navigation = useNavigation();
