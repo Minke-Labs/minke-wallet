@@ -5,7 +5,7 @@ export type RootStackParamList = {
 	Backup: undefined;
 	Wallet: undefined;
 	Assets: { coin: WalletToken };
-	WalletAssets: undefined;
+	WalletAssetsScreen: undefined;
 	WalletCreated: undefined;
 	TransactionSelectFunds: undefined;
 	TransactionContacts: { coin: string };

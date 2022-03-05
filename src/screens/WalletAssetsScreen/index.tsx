@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
-import { Modal } from '@components';
-import { AddFunds } from '@containers';
+import { Modal, ModalReusables } from '@components';
+// import { AddFunds } from '@containers';
 import { getWalletTokens, WalletToken } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import AssetList from './AssetList/AssetList';
 import ValueBox from './ValueBox';
 import AssetListEmpty from './AssetListEmpty';
+import styles from './styles';
 
 const WalletAssets = () => {
 	const { colors } = useTheme();
@@ -27,16 +28,9 @@ const WalletAssets = () => {
 
 	return (
 		<>
-			<View style={{ height: '100%', backgroundColor: colors.detail4 }}>
+			<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
 				<ValueBox {...{ balance }} />
-				<View
-					style={{
-						borderTopLeftRadius: 24,
-						borderTopRightRadius: 24,
-						flex: 1,
-						backgroundColor: colors.background1
-					}}
-				>
+				<View style={[styles.assetListContainer, { backgroundColor: colors.background1 }]}>
 					{walletTokens && walletTokens.length > 0 ? (
 						<AssetList walletTokens={walletTokens} />
 					) : (
@@ -45,7 +39,8 @@ const WalletAssets = () => {
 				</View>
 			</View>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
+				{/* <AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} /> */}
+				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 		</>
 	);

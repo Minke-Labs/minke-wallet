@@ -19,7 +19,7 @@ const Accounts = () => {
 				<Text style={styles.cardBalance}>${commify(state.value.balance?.usd || '')}</Text>
 			</View>
 			<Card
-				onPress={() => navigation.navigate('WalletAssets')}
+				onPress={() => navigation.navigate('WalletAssetsScreen')}
 				image={<Image />}
 				title="Wallet"
 				subtitle="Available funds in your wallet"

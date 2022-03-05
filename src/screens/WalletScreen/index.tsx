@@ -4,7 +4,7 @@ import { Alert, RefreshControl, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TabLayout } from '@layouts';
 import { useState } from '@hookstate/core';
-import { Text, Modal } from '@components';
+import { Text, Modal, ModalReusables } from '@components';
 import { useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
@@ -12,7 +12,7 @@ import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 // import { AddFunds } from '@containers';
 import { AssetsPanel, ActionsPanel, Header, Accounts, Transactions } from './components';
-import { SendModal, ComingSoonModal, ReceiveModal, SentModal } from './Modals';
+import { SendModal, ReceiveModal, SentModal } from './Modals';
 import { ResultProps } from './types';
 
 const WalletScreen = () => {
@@ -126,7 +126,7 @@ const WalletScreen = () => {
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel
 						onSave={() => navigation.navigate('Save')}
-						onWalletAssets={() => navigation.navigate('WalletAssets')}
+						onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
 						onAddFunds={() => setAddFundsVisible(true)}
 						balance={balance?.usd || ''}
 						address={address}
@@ -151,7 +151,7 @@ const WalletScreen = () => {
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				{/* <AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} /> */}
-				<ComingSoonModal onDismiss={() => setAddFundsVisible(false)} />
+				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 
 			<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>
