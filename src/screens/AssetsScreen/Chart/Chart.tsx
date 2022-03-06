@@ -6,11 +6,7 @@ import Main from './Main/Main';
 import Selection from './Selection/Selection';
 import Header from './Header/Header';
 import { buildGraph } from './Chart.utils';
-import { GraphIndex, Prices } from './Chart.types';
-
-interface ChartProps {
-	data: any;
-}
+import { GraphIndex, Prices, ChartProps } from './Chart.types';
 
 const Chart: React.FC<ChartProps> = ({ data }) => {
 	const [percChange, setPercChange] = useState(0);

@@ -2,26 +2,18 @@ import * as shape from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { Dimensions } from 'react-native';
 import { parse } from 'react-native-redash';
+import { DataPoints } from './Chart.types';
 
 const POINTS = 30;
 export const height = 263;
 export const { width } = Dimensions.get('window');
-
-type PriceList = [string, number][];
-
-interface DataPoints {
-	percent_change: number;
-	prices: PriceList;
-}
 
 export const buildGraph = (datapoints: DataPoints, label: string) => {
 	const { length } = datapoints.prices;
 	const priceList = datapoints.prices.slice(0, Math.min(length, POINTS));
 
 	// I REVERSED IT HERE BECAUSE THE API ORDER DATE IS DESC, AND THE AREA WON'T WORK OTHERWISE
-	const formattedValues = priceList
-		.reverse()
-		.map((price) => [parseFloat(price[0]), price[1]] as [number, number]);
+	const formattedValues = priceList.reverse().map((price) => [parseFloat(price[0]), price[1]] as [number, number]);
 
 	const prices = formattedValues.map((value) => value[0]);
 	const dates = formattedValues.map((value) => value[1]);

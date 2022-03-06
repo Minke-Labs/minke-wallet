@@ -11,7 +11,8 @@ import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
 // import { AddFunds } from '@containers';
-import { AssetsPanel, ActionsPanel, Header, Accounts, Transactions } from './components';
+import { AssetsPanel, ActionsPanel, Header } from './components';
+import { Transactions, Accounts } from './screens';
 import { SendModal, ReceiveModal, SentModal } from './Modals';
 import { ResultProps } from './WalletScreen.types';
 
@@ -125,7 +126,7 @@ const WalletScreen = () => {
 				>
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel
-						onSave={() => navigation.navigate('Save')}
+						onSave={() => navigation.navigate('SaveScreen')}
 						onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
 						onAddFunds={() => setAddFundsVisible(true)}
 						balance={balance?.usd || ''}

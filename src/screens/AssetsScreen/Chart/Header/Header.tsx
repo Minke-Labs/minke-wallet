@@ -4,10 +4,7 @@ import { interpolate, useDerivedValue, useAnimatedStyle } from 'react-native-rea
 import { round } from 'react-native-redash';
 import { Icon, AnimatedText } from '@components';
 import { useTheme } from '@hooks';
-import {
-	// graphs,
-	width
-} from '../Chart.utils';
+import { width } from '../Chart.utils';
 import styles from './Header.styles';
 import { HeaderProps } from './Header.types';
 
@@ -24,24 +21,14 @@ const Header: React.FC<HeaderProps> = ({ translation, index, graphs, percChange 
 	}));
 	return (
 		<View style={styles.container}>
-			<View
-				style={{
-					justifyContent: 'center',
-					alignItems: 'center'
-				}}
-			>
+			<View style={styles.titleContainer}>
 				<AnimatedText
 					marginBottom={2}
 					text={price}
 					weight="extraBold"
 					style={{ fontSize: 28, lineHeight: 34 }}
 				/>
-				<View
-					style={{
-						flexDirection: 'row',
-						alignItems: 'center'
-					}}
-				>
+				<View style={styles.indicatorContainer}>
 					<Icon
 						name={percChange > 0 ? 'iconUp' : 'iconDown'}
 						color={percChange > 0 ? 'alert3' : 'alert1'}

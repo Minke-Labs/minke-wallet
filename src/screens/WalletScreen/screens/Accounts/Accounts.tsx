@@ -35,7 +35,7 @@ const Accounts = () => {
 				}
 			/>
 			<Card
-				onPress={() => navigation.navigate('Save')}
+				onPress={() => navigation.navigate('SaveScreen')}
 				image={<Image icon="vaultStroke" />}
 				title="Deposits"
 				subtitle="Funds deposited in vaults"

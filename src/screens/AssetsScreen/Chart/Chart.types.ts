@@ -1,3 +1,7 @@
+interface ChartProps {
+	data: any;
+}
+
 interface Amount {
 	amount: string;
 	currency: string;
@@ -39,5 +43,12 @@ interface Prices {
 type GraphIndex = 0 | 1 | 2 | 3 | 4 | 5;
 
 export {
-	Amount, PercentChange, LatestPrice, PriceList, DataPoints, Prices, GraphIndex
+	ChartProps,
+	Amount,
+	PercentChange,
+	LatestPrice,
+	PriceList,
+	DataPoints,
+	Prices,
+	GraphIndex
 };
