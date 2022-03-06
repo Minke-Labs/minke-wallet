@@ -8,7 +8,7 @@ import { walletState, globalWalletState } from '@src/stores/WalletStore';
 import { useNavigation } from '@hooks';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem';
-import ImportFlow from '../WelcomeScreen/ImportWalletModal';
+import ImportFlow from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
 
 const AccountsScreen = () => {
 	const navigation = useNavigation();

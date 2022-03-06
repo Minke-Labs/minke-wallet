@@ -1,6 +1,6 @@
-import TransactionContacts from './TransactionContacts';
-import TransactionSelectFunds from './TransactionSelectFunds';
-import TransactionTransfer from './TransactionTransfer';
-import AddContact from './AddContact';
+import TransactionContacts from './TransactionContacts/TransactionContacts';
+import TransactionSelectFunds from './TransactionSelectFunds/TransactionSelectFunds';
+import TransactionTransfer from './TransactionTransfer/TransactionTransfer';
+import AddContact from './AddContact/AddContact';
 
 export { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact };

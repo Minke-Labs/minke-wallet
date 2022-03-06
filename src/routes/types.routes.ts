@@ -4,7 +4,7 @@ export type RootStackParamList = {
 	Welcome: undefined; // undefined because you aren't passing any params to the home screen
 	Backup: undefined;
 	Wallet: undefined;
-	Assets: { coin: WalletToken };
+	AssetsScreen: { coin: WalletToken };
 	WalletAssetsScreen: undefined;
 	WalletCreated: undefined;
 	TransactionSelectFunds: undefined;

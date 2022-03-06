@@ -58,7 +58,7 @@ const Routes: React.FC = () => {
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="Welcome" component={WelcomeScreen} />
-				<Stack.Screen name="Assets" component={AssetsScreen} />
+				<Stack.Screen name="AssetsScreen" component={AssetsScreen} />
 				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="WalletCreated" component={WalletCreatedScreen} />
 				<Stack.Screen name="Backup" component={BackupScreen} />

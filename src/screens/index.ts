@@ -11,10 +11,10 @@ import TransactionContactsScreen from './TransactionContactsScreen/TransactionCo
 import TransactionSelectFundsScreen from './TransactionSelectFundsScreen/TransactionSelectFundsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 import TransactionTransferScreen from './TransactionTransferScreen/TransactionTransferScreen';
-import WalletAssetsScreen from './WalletAssetsScreen';
-import WalletCreatedScreen from './WalletCreatedScreen';
-import WalletScreen from './WalletScreen';
-import WelcomeScreen from './WelcomeScreen';
+import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
+import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
+import WalletScreen from './WalletScreen/WalletScreen';
+import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';

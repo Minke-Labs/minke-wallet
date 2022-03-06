@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { runOnJS, useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { useVector } from 'react-native-redash';
-import Main from './Main';
-import Selection from './Selection';
-import Header from './Header';
-import { buildGraph } from './Graph.utils';
-import { GraphIndex, Prices } from './Graph.types';
+import Main from './Main/Main';
+import Selection from './Selection/Selection';
+import Header from './Header/Header';
+import { buildGraph } from './Chart.utils';
+import { GraphIndex, Prices } from './Chart.types';
 
 interface ChartProps {
 	data: any;
