@@ -1,27 +1,15 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import Animated, { interpolate, useDerivedValue, useAnimatedStyle } from 'react-native-reanimated';
-import { Vector, round } from 'react-native-redash';
+import { View } from 'react-native';
+import { interpolate, useDerivedValue, useAnimatedStyle } from 'react-native-reanimated';
+import { round } from 'react-native-redash';
 import { Icon, AnimatedText } from '@components';
 import { useTheme } from '@hooks';
 import {
 	// graphs,
 	width
 } from '../Chart.utils';
-import { GraphIndex } from '../Chart.types';
-
-const styles = StyleSheet.create({
-	container: {
-		justifyContent: 'space-between'
-	}
-});
-
-interface HeaderProps {
-	translation: Vector<Animated.SharedValue<number>>;
-	index: Animated.SharedValue<GraphIndex>;
-	percChange: number;
-	graphs: any;
-}
+import styles from './Header.styles';
+import { HeaderProps } from './Header.types';
 
 const Header: React.FC<HeaderProps> = ({ translation, index, graphs, percChange }) => {
 	const { colors } = useTheme();

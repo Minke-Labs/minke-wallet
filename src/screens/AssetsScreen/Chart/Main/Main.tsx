@@ -1,30 +1,15 @@
 import React from 'react';
 import { useTheme } from '@hooks';
-import { View, StyleSheet, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
-import Animated, { SharedValue, useAnimatedProps } from 'react-native-reanimated';
-import { mixPath, Vector } from 'react-native-redash';
-import { GraphIndex } from '../Chart.types';
+import Animated, { useAnimatedProps } from 'react-native-reanimated';
+import { mixPath } from 'react-native-redash';
 import { width, height } from '../Chart.utils';
 import Cursor from './Cursor/Cursor';
-
-const styles = StyleSheet.create({
-	container: {
-		width,
-		height
-	}
-});
+import { styles } from './Main.styles';
+import { ChartProps } from './Main.types';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
-
-interface ChartProps {
-	previous: SharedValue<GraphIndex>;
-	transition: SharedValue<number>;
-	current: SharedValue<GraphIndex>;
-	translation: Vector<Animated.SharedValue<number>>;
-	percChange: number;
-	graphs: any;
-}
 
 const Chart: React.FC<ChartProps> = ({ previous, current, transition, translation, percChange, graphs }) => {
 	const scheme = useColorScheme();

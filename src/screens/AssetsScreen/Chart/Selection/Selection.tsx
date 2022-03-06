@@ -1,40 +1,14 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react';
-import Animated, { SharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { View, StyleSheet, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { View, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
 // import { graphs } from './Graph.utils';
 import { GraphIndex } from '../Chart.types';
+import { styles } from './Selection.styles';
+import { SelectionProps } from './Selection.types';
 
 const { width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-	container: {
-		width,
-		marginBottom: 34
-	},
-
-	backgroundTag: {
-		backgroundColor: '#006AA6',
-		...StyleSheet.absoluteFillObject,
-		width: 52,
-		height: '100%',
-		borderRadius: 16
-	},
-
-	labelContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: 32
-	}
-});
-
-interface SelectionProps {
-	previous: SharedValue<GraphIndex>;
-	transition: SharedValue<number>;
-	current: SharedValue<GraphIndex>;
-	graphs: any;
-}
 
 const Selection: React.FC<SelectionProps> = ({ previous, current, transition, graphs }) => {
 	const BUTTON_WIDTH = width / graphs.length;

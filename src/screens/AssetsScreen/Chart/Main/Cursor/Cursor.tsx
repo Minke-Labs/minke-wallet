@@ -8,34 +8,12 @@ import Animated, {
 	useAnimatedStyle,
 	withSpring
 } from 'react-native-reanimated';
-import { getYForX, Vector } from 'react-native-redash';
+import { getYForX } from 'react-native-redash';
 import { useTheme } from '@hooks';
 // import { graphs } from './Graph.utils';
-import { GraphIndex } from '../../Chart.types';
-
-const CURSOR = 50;
-const styles = StyleSheet.create({
-	cursor: {
-		width: CURSOR,
-		height: CURSOR,
-		borderRadius: CURSOR / 2,
-		backgroundColor: '#acffc74b',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	cursorBody: {
-		width: 15,
-		height: 15,
-		borderRadius: 7.5
-	}
-});
-
-interface CursorProps {
-	index: Animated.SharedValue<GraphIndex>;
-	translation: Vector<Animated.SharedValue<number>>;
-	percChange: number;
-	graphs: any;
-}
+import { CURSOR } from './Cursor.utils';
+import { styles } from './Cursor.styles';
+import { CursorProps } from './Cursor.types';
 
 const Cursor: React.FC<CursorProps> = ({ index, translation, percChange, graphs }) => {
 	const { colors } = useTheme();
