@@ -10,7 +10,6 @@ export default StyleSheet.create({
 	},
 	indicatorContainer: {
 		flexDirection: 'row',
-		alignItems: 'center',
-		borderWidth: 3
+		alignItems: 'center'
 	}
 });
