@@ -25,7 +25,7 @@ const ChangeNetworkScreen = () => {
 			state.network.set(network);
 			state.balance.set(balance);
 			state.transactions.set(undefined);
-			navigation.navigate('Wallet');
+			navigation.navigate('WalletScreen');
 		} catch (e) {
 			console.error('Error saving settings');
 		}

@@ -27,7 +27,7 @@ const DepositSuccessScreen = () => {
 					</Text>
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>
-						<Button title="Done" onPress={() => navigation.navigate('Wallet')} />
+						<Button title="Done" onPress={() => navigation.navigate('WalletScreen')} />
 					</View>
 				</View>
 			</View>

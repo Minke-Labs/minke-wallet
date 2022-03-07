@@ -87,14 +87,14 @@ const WalletScreen = () => {
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
 		state.set(await walletState(newWallet));
-		navigation.navigate('WalletCreated');
+		navigation.navigate('WalletCreatedScreen');
 	}, [navigation]);
 
-	const onExchange = () => navigation.navigate('Exchange');
-	const onSettingsPress = () => navigation.navigate('Settings');
-	// const onSend = () => navigation.navigate('TransactionSelectFunds');
-	const onSwitchAccounts = () => navigation.navigate('Accounts');
-	const onSeeAllTransactions = () => navigation.navigate('Transactions');
+	const onExchange = () => navigation.navigate('ExchangeScreen');
+	const onSettingsPress = () => navigation.navigate('SettingsScreen');
+	// const onSend = () => navigation.navigate('TransactionSelectFundsScreen');
+	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
+	const onSeeAllTransactions = () => navigation.navigate('TransactionsScreen');
 
 	const hideReceive = () => setReceiveVisible(false);
 	const showReceive = () => setReceiveVisible(true);

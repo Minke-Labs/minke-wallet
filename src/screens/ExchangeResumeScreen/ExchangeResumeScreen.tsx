@@ -59,7 +59,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		exchange.toAmount.set(undefined);
 		exchange.gas.set(undefined);
 		setVisible(false);
-		navigation.navigate('Wallet');
+		navigation.navigate('WalletScreen');
 	};
 
 	const startCounter = useCallback(() => {

@@ -36,7 +36,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Routes: React.FC = () => {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
-	const initialScreen = walletState.value.walletId ? 'Wallet' : 'Welcome';
+	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
@@ -57,45 +57,48 @@ const Routes: React.FC = () => {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
-				<Stack.Screen name="Welcome" component={WelcomeScreen} />
+				<Stack.Screen name="AccountsScreen" component={AccountsScreen} />
 				<Stack.Screen name="AssetsScreen" component={AssetsScreen} />
-				<Stack.Screen name="Test" component={Test} />
-				<Stack.Screen name="WalletCreated" component={WalletCreatedScreen} />
-				<Stack.Screen name="Backup" component={BackupScreen} />
-				<Stack.Screen name="Wallet" component={WalletScreen} />
-				<Stack.Screen name="WalletAssetsScreen" component={WalletAssetsScreen} />
-				<Stack.Screen name="TransactionSelectFunds" component={TransactionSelectFundsScreen} />
-				<Stack.Screen
-					initialParams={{ coin: 'eth' }}
-					name="TransactionContacts"
-					component={TransactionContactsScreen}
-				/>
-				<Stack.Screen name="TransactionTransfer" component={TransactionTransferScreen} />
+				<Stack.Screen name="BackupScreen" component={BackupScreen} />
+				<Stack.Screen name="BackupSettingsScreen" component={BackupSettingsScreen} />
+				<Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
 				<Stack.Screen
 					options={(props) => defaultOptions(props)}
-					name="ContactCreate"
+					name="ContactCreateScreen"
 					component={ContactCreateScreen}
 				/>
-				<Stack.Screen name="Exchange" component={ExchangeScreen} options={(props) => defaultOptions(props)} />
+				<Stack.Screen name="DepositScreen" component={DepositScreen} />
 				<Stack.Screen
-					name="ExchangeResume"
+					name="ExchangeResumeScreen"
 					component={ExchangeResumeScreen}
 					options={(props) => defaultOptions(props)}
 				/>
-				<Stack.Screen name="Settings" component={SettingsScreen} />
-				<Stack.Screen name="ChangeNetwork" component={ChangeNetworkScreen} />
-
-				<Stack.Screen name="Accounts" component={AccountsScreen} />
-
-				<Stack.Screen name="BackupSettings" component={BackupSettingsScreen} />
 				<Stack.Screen
-					name="Transactions"
-					component={TransactionsScreen}
+					name="ExchangeScreen"
+					component={ExchangeScreen}
 					options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen name="SaveScreen" component={SaveScreen} />
-				<Stack.Screen name="DepositScreen" component={DepositScreen} />
-				<Stack.Screen name="USDCoin" component={USDCoinScreen} />
+				<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+				<Stack.Screen
+					initialParams={{ coin: 'eth' }}
+					name="TransactionContactsScreen"
+					component={TransactionContactsScreen}
+				/>
+				<Stack.Screen name="TransactionSelectFundsScreen" component={TransactionSelectFundsScreen} />
+				<Stack.Screen
+					name="TransactionsScreen"
+					component={TransactionsScreen}
+					options={(props) => defaultOptions(props)}
+				/>
+				<Stack.Screen name="TransactionTransferScreen" component={TransactionTransferScreen} />
+				<Stack.Screen name="USDCoinScreen" component={USDCoinScreen} />
+				<Stack.Screen name="WalletAssetsScreen" component={WalletAssetsScreen} />
+				<Stack.Screen name="WalletCreatedScreen" component={WalletCreatedScreen} />
+				<Stack.Screen name="WalletScreen" component={WalletScreen} />
+				<Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+
+				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>

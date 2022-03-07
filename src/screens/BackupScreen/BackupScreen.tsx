@@ -15,7 +15,7 @@ import styles from './BackupScreen.styles';
 const BackupScreen = () => {
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();
-	const onFinish = () => navigation.navigate('Wallet');
+	const onFinish = () => navigation.navigate('WalletScreen');
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
 	const seed = useState(loadSeed);

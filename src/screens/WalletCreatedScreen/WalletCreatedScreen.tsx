@@ -13,8 +13,8 @@ import styles from './WalletCreatedScreen.styles';
 const WalletCreatedScreen = () => {
 	const navigation = useNavigation();
 
-	const backupManually = () => navigation.navigate('Backup');
-	const onFinish = () => navigation.navigate('Wallet');
+	const backupManually = () => navigation.navigate('BackupScreen');
+	const onFinish = () => navigation.navigate('WalletScreen');
 
 	const walletState = useState(globalWalletState());
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');

@@ -42,7 +42,7 @@ const WelcomeScreen = () => {
 
 	const onImportFinished = () => {
 		setModalVisible(false);
-		navigation.navigate('WalletCreated');
+		navigation.navigate('WalletCreatedScreen');
 	};
 
 	const onCreateWallet = useCallback(async () => {
@@ -50,7 +50,7 @@ const WelcomeScreen = () => {
 		const newWallet = await walletCreate();
 		state.set(await walletState(newWallet));
 		setLoading(false);
-		navigation.navigate('WalletCreated');
+		navigation.navigate('WalletCreatedScreen');
 	}, [navigation]);
 
 	return (

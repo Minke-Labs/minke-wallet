@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ title = 'Wallet' }) => {
 						{title}
 					</Text>
 				</View>
-				<TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+				<TouchableOpacity onPress={() => navigation.navigate('SettingsScreen')}>
 					<Icon size={24} color="text7" />
 				</TouchableOpacity>
 			</View>

@@ -4,20 +4,21 @@ import BackupScreen from './BackupScreen/BackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import ContactCreateScreen from './ContactCreateScreen/ContactCreateScreen';
+import DepositScreen from './DepositScreen/DepositScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
+import SaveScreen from './SaveScreen/SaveScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
 import TransactionContactsScreen from './TransactionContactsScreen/TransactionContactsScreen';
 import TransactionSelectFundsScreen from './TransactionSelectFundsScreen/TransactionSelectFundsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 import TransactionTransferScreen from './TransactionTransferScreen/TransactionTransferScreen';
+import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
 import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
-import SaveScreen from './SaveScreen/SaveScreen';
-import DepositScreen from './DepositScreen/DepositScreen';
-import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
+
 import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
 
 import Test from './Test/Test';
@@ -29,20 +30,21 @@ export {
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
 	ContactCreateScreen,
+	DepositScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
+	SaveScreen,
 	SettingsScreen,
 	TransactionContactsScreen,
 	TransactionSelectFundsScreen,
 	TransactionsScreen,
 	TransactionTransferScreen,
+	USDCoinScreen,
 	WalletAssetsScreen,
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,
-	SaveScreen,
-	DepositScreen,
-	USDCoinScreen,
+
 	DepositSuccessScreen,
 	Test
 };

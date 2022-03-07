@@ -39,7 +39,7 @@ const BackupSettingsScreen = () => {
 			if (backedUp) {
 				loadBackups();
 			} else {
-				navigation.navigate('Backup');
+				navigation.navigate('BackupScreen');
 			}
 		}
 	};
@@ -50,7 +50,7 @@ const BackupSettingsScreen = () => {
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Wallet')}>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
 					<Text weight="medium" color="text7" type="a">
 						Done
 					</Text>
@@ -77,7 +77,7 @@ const BackupSettingsScreen = () => {
 							to activate the iCloud Keychain backup
 						</Text>
 						{seed.value ? (
-							<Button onPress={() => navigation.navigate('Backup')} title="View Secret Phrase" />
+							<Button onPress={() => navigation.navigate('BackupScreen')} title="View Secret Phrase" />
 						) : null}
 					</>
 				) : (

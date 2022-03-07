@@ -11,7 +11,7 @@ const NotAbleToSaveModal: React.FC<NotAbleToSaveModalProps> = ({ onDismiss, onAd
 
 	const goToExchange = () => {
 		onDismiss();
-		navigation.navigate('Exchange');
+		navigation.navigate('ExchangeScreen');
 	};
 
 	const onAddFundsPressed = () => {
