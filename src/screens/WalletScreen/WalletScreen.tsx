@@ -4,12 +4,13 @@ import { Alert, RefreshControl, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TabLayout } from '@layouts';
 import { useState } from '@hookstate/core';
-import { Text, Modal, ModalReusables } from '@components';
+import { Text, Modal } from '@components';
 import { useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
+import { AddFunds } from '@containers';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { SendModal, ReceiveModal, SentModal } from './Modals';
@@ -149,7 +150,7 @@ const WalletScreen = () => {
 			</Snackbar>
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
+				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 
 			<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>

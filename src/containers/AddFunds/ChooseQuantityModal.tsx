@@ -28,6 +28,9 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		Clipboard.setString(wallet.value.address || '');
 		setSnackbarVisible(true);
 	};
+
+	const onApplePayPress = async () => {};
+
 	return (
 		<>
 			<View style={{ paddingHorizontal: 24 }}>
@@ -58,7 +61,8 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 				<PaperTouchable marginBottom={20} onPress={enableCustomAmount}>
 					<Text type="a">Choose another amount</Text>
 				</PaperTouchable>
-				<ApplePayButton marginBottom={48} />
+
+				<ApplePayButton marginBottom={48} onPress={onApplePayPress} />
 
 				<View
 					style={{
