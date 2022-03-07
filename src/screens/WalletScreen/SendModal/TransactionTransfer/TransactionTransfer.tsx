@@ -18,6 +18,7 @@ import { numberFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { ActivityIndicator } from 'react-native-paper';
+import { useKeyboard } from '@hooks';
 import { styles } from './TransactionTransfer.styles';
 import Card from '../Card';
 
@@ -115,22 +116,24 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.imageContainer}>
-				<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
-				{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
-			</View>
-			<Text type="h3" weight="extraBold" marginBottom={32}>
-				How much{' '}
-				<Text color="text12" type="h3" weight="extraBold">
-					{token.symbol}
-				</Text>{' '}
-				do you want to send to
-				<Text color="text12" type="h3" weight="extraBold">
-					{' '}
-					{user.name || smallWalletAddress(user.address)}
+			<>
+				<View style={styles.imageContainer}>
+					<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
+					{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
+				</View>
+				<Text type="h3" weight="extraBold" marginBottom={32}>
+					How much{' '}
+					<Text color="text12" type="h3" weight="extraBold">
+						{token.symbol}
+					</Text>{' '}
+					do you want to send to
+					<Text color="text12" type="h3" weight="extraBold">
+						{' '}
+						{user.name || smallWalletAddress(user.address)}
+					</Text>
+					?
 				</Text>
-				?
-			</Text>
+			</>
 
 			<Card token={token} />
 

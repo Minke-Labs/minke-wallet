@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, TouchableWithoutFeedback, Dimensions } from 'react-native';
+import { View, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native';
 import Animated, {
 	interpolate,
 	useAnimatedStyle,
@@ -38,6 +38,9 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 
 	useEffect(() => {
 		top.value = withTiming(isVisible ? 0 : screenHeight);
+		if (!isVisible) {
+			Keyboard.dismiss();
+		}
 	}, [isVisible]);
 
 	return (

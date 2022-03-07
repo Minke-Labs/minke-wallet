@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
 	container: {
 		flex: 1,
 		paddingTop: 22
@@ -44,5 +44,9 @@ export const styles = StyleSheet.create({
 		fontSize: 16,
 		lineHeight: 19,
 		marginBottom: 4
+	},
+
+	contactsList: {
+		maxHeight: Dimensions.get('screen').height * 0.4
 	}
 });

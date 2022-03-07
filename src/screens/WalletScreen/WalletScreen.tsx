@@ -171,6 +171,7 @@ const WalletScreen = () => {
 				<SendModal
 					onDismiss={() => setSendModalOpen(false)}
 					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
+					isVisible={sendModalOpen}
 				/>
 			</Modal>
 

@@ -13,7 +13,7 @@ interface AddFundsModalProps {
 }
 
 const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismiss }) => {
-	const [currentStep, setCurrentStep, goForward, goBack] = useFormProgress();
+	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const [coin, setCoin] = useState<ICoin>(coins.ethereum);
 	const [amount, setAmount] = useState<number | undefined>(undefined);
 	const [customAmount, setCustomAmount] = useState<number | null>(null);
@@ -36,13 +36,13 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 	};
 
 	const dismissCoin = () => {
-		setCurrentStep(0);
+		reset();
 		onDismiss();
 	};
 
 	useEffect(() => {
 		if (!visible) {
-			setCurrentStep(0);
+			reset();
 		}
 	}, [visible]);
 
