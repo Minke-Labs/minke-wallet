@@ -18,7 +18,6 @@ import { numberFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { ActivityIndicator } from 'react-native-paper';
-import { useKeyboard } from '@hooks';
 import { styles } from './TransactionTransfer.styles';
 import Card from '../Card';
 

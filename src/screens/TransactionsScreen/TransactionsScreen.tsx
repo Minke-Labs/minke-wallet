@@ -58,7 +58,7 @@ const TransactionsScreen = () => {
 			</View>
 			<View style={styles.container}>
 				<Text weight="extraBold" type="h3">
-					Accounts
+					Transactions
 				</Text>
 				<SafeAreaView>
 					<FlatList
