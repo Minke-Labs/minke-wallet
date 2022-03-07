@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
 import React, { useCallback, useEffect } from 'react';
 import { Alert, RefreshControl, ScrollView } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useFocusEffect } from '@react-navigation/native';
 import { TabLayout } from '@layouts';
 import { useState } from '@hookstate/core';
-import { Text, Modal } from '@components';
+import { Text, Modal, ModalReusables } from '@components';
+import { useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
+<<<<<<< HEAD
 import Header from './Header';
 import ReceiveModal from './ReceiveModal';
 import AssetsPanel from './AssetsPanel';
@@ -25,6 +26,13 @@ type ResultProps = {
 	link: string;
 	symbol: string;
 };
+=======
+// import { AddFunds } from '@containers';
+import { AssetsPanel, ActionsPanel, Header } from './components';
+import { Transactions, Accounts } from './screens';
+import { SendModal, ReceiveModal, SentModal } from './Modals';
+import { ResultProps } from './WalletScreen.types';
+>>>>>>> main
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -32,7 +40,7 @@ const WalletScreen = () => {
 	const [loading, setLoading] = React.useState(true);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
@@ -97,14 +105,14 @@ const WalletScreen = () => {
 	const onCreateWallet = useCallback(async () => {
 		const newWallet = await walletCreate();
 		state.set(await walletState(newWallet));
-		navigation.navigate('WalletCreated');
+		navigation.navigate('WalletCreatedScreen');
 	}, [navigation]);
 
-	const onExchange = () => navigation.navigate('Exchange');
-	const onSettingsPress = () => navigation.navigate('Settings');
-	// const onSend = () => navigation.navigate('TransactionSelectFunds');
-	const onSwitchAccounts = () => navigation.navigate('Accounts');
-	const onSeeAllTransactions = () => navigation.navigate('Transactions');
+	const onExchange = () => navigation.navigate('ExchangeScreen');
+	const onSettingsPress = () => navigation.navigate('SettingsScreen');
+	// const onSend = () => navigation.navigate('TransactionSelectFundsScreen');
+	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
+	const onSeeAllTransactions = () => navigation.navigate('TransactionsScreen');
 
 	const hideReceive = () => setReceiveVisible(false);
 	const showReceive = () => setReceiveVisible(true);
@@ -136,8 +144,8 @@ const WalletScreen = () => {
 				>
 					<Header onSettingsPress={onSettingsPress} />
 					<AssetsPanel
-						onSave={() => navigation.navigate('Save')}
-						onWalletAssets={() => navigation.navigate('WalletAssets')}
+						onSave={() => navigation.navigate('SaveScreen')}
+						onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
 						onAddFunds={() => setAddFundsVisible(true)}
 						balance={balance?.usd || ''}
 						address={address}
@@ -155,16 +163,13 @@ const WalletScreen = () => {
 					/>
 				</ScrollView>
 			</TabLayout>
+
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
+				<Text color="text11">Address copied!</Text>
 			</Snackbar>
 
-			<Modal isVisible={receiveVisible} onDismiss={hideReceive}>
-				<ReceiveModal onDismiss={hideReceive} />
-			</Modal>
-
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<ComingSoonModal onDismiss={() => setAddFundsVisible(false)} />
+				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 
 			<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>
@@ -173,6 +178,10 @@ const WalletScreen = () => {
 					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
 					isVisible={sendModalOpen}
 				/>
+			</Modal>
+
+			<Modal isVisible={receiveVisible} onDismiss={hideReceive}>
+				<ReceiveModal onDismiss={hideReceive} />
 			</Modal>
 
 			<Modal isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>

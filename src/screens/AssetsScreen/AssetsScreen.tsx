@@ -8,10 +8,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getTokenHistory, getTokenMarketCap } from '@models/token';
 import Chart from './Chart/Chart';
 import Balance from './Balance/Balance';
-import MarketCap from './MarketCap';
-import Header from './Header';
+import MarketCap from './MarketCap/MarketCap';
+import Header from './Header/Header';
+import styles from './AssetsScreen.styles';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Assets'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'AssetsScreen'>;
 
 const AssetsScreen = ({ route }: Props) => {
 	const [data, setData] = useState<any>(null);
@@ -47,21 +48,11 @@ const AssetsScreen = ({ route }: Props) => {
 	}, []);
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: colors.detail4 }}>
+		<ScrollView style={[styles.container, { backgroundColor: colors.detail4 }]}>
 			<SafeAreaView>
 				<Header {...{ coin }} />
 				{data ? <Chart {...{ data }} /> : <View style={{ height: 390 }} />}
-				<ScrollView
-					style={{
-						width: '100%',
-						height: '100%',
-						borderTopLeftRadius: 24,
-						borderTopRightRadius: 24,
-						paddingHorizontal: 24,
-						paddingTop: 32,
-						backgroundColor: colors.background1
-					}}
-				>
+				<ScrollView style={[styles.bodyContainer, { backgroundColor: colors.background1 }]}>
 					<Balance {...{ coin }} />
 					{marketCap > 0 && <MarketCap marketCap={marketCap} />}
 				</ScrollView>

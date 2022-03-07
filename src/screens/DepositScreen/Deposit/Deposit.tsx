@@ -1,11 +1,8 @@
 /* eslint-disable no-useless-escape */
 import React, { useEffect, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getProvider, getWalletTokens, WalletToken } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
-import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
@@ -13,7 +10,7 @@ import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
 import { Icon, Modal, Text } from '@components';
 import { Card } from 'react-native-paper';
-import { useTheme } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
 import { network } from '@models/network';
 import { debounce } from 'lodash';
 import { Wallet } from 'ethers';
@@ -26,7 +23,7 @@ import GasSelector from '../../ExchangeScreen/GasSelector';
 import { makeStyles } from './Deposit.styles';
 
 const Deposit = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { address, privateKey } = globalWalletState().value;
@@ -106,7 +103,7 @@ const Deposit = () => {
 				console.log('Deposit', hash);
 				await wait();
 				setTransactionHash(hash);
-				navigation.navigate('DepositSuccess');
+				navigation.navigate('DepositSuccessScreen');
 			} else {
 				console.error('Error depositing');
 			}
@@ -178,9 +175,9 @@ const Deposit = () => {
 					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
 				</View>
 			</WelcomeLayout>
-			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccess')}>
+			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccessScreen')}>
 				<TransactionWaitModal
-					onDismiss={() => navigation.navigate('DepositSuccess')}
+					onDismiss={() => navigation.navigate('DepositSuccessScreen')}
 					fromToken={token}
 					toToken={{ img: market.appImageUrl, symbol: 'Aave' } as ParaswapToken}
 					transactionHash={transactionHash}

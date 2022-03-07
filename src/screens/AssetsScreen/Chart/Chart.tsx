@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { runOnJS, useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { useVector } from 'react-native-redash';
-import Main from './Main';
-import Selection from './Selection';
-import Header from './Header';
-import { buildGraph } from './Graph.utils';
-import { GraphIndex, Prices } from './Graph.types';
-
-interface ChartProps {
-	data: any;
-}
+import Main from './Main/Main';
+import Selection from './Selection/Selection';
+import Header from './Header/Header';
+import { buildGraph } from './Chart.utils';
+import { GraphIndex, Prices, ChartProps } from './Chart.types';
 
 const Chart: React.FC<ChartProps> = ({ data }) => {
 	const [percChange, setPercChange] = useState(0);

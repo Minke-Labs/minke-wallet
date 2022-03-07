@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
@@ -8,12 +7,11 @@ import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { backupImg } from '@images';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../routes/types.routes';
+import { useNavigation } from '@hooks';
 import styles from './BackupSettingsScreen.styles';
 
 const BackupSettingsScreen = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	const state = useState(globalWalletState());
 	const { address } = state.value;
@@ -41,7 +39,7 @@ const BackupSettingsScreen = () => {
 			if (backedUp) {
 				loadBackups();
 			} else {
-				navigation.navigate('Backup');
+				navigation.navigate('BackupScreen');
 			}
 		}
 	};
@@ -52,7 +50,7 @@ const BackupSettingsScreen = () => {
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Wallet')}>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
 					<Text weight="medium" color="text7" type="a">
 						Done
 					</Text>
@@ -79,7 +77,7 @@ const BackupSettingsScreen = () => {
 							to activate the iCloud Keychain backup
 						</Text>
 						{seed.value ? (
-							<Button onPress={() => navigation.navigate('Backup')} title="View Secret Phrase" />
+							<Button onPress={() => navigation.navigate('BackupScreen')} title="View Secret Phrase" />
 						) : null}
 					</>
 				) : (
