@@ -21,24 +21,21 @@ import { RootStackParamList } from '../../routes/types.routes';
 import GasOption from '../ExchangeScreen/GasOption';
 import { makeStyles } from './ExchangeResume.styles';
 
-const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => {
-	console.log(token);
-	return (
-		<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
-			<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
-				<Token size={34} name={token.symbol.toLowerCase() as TokenType} glow />
-			</View>
-			<View>
-				<Text type="p2" weight="extraBold" color="text2">
-					${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}
-				</Text>
-				<Text type="a" weight="medium" color="text2">
-					{amount} {token.symbol}
-				</Text>
-			</View>
+const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
+	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
+		<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
+			<Token size={34} name={token.symbol.toLowerCase() as TokenType} glow />
 		</View>
-	);
-};
+		<View>
+			<Text type="p2" weight="extraBold" color="text2">
+				${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}
+			</Text>
+			<Text type="a" weight="medium" color="text2">
+				{amount} {token.symbol}
+			</Text>
+		</View>
+	</View>
+);
 
 const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
 	const exchange = useState(globalExchangeState());
@@ -330,8 +327,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
-					{priceQuote &&
-						(loading ? <ActivityIndicator /> : <ProgressButton onFinish={onFinish} />)}
+					{priceQuote && (loading ? <ActivityIndicator /> : <ProgressButton onFinish={onFinish} />)}
 				</View>
 			</WelcomeLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>
