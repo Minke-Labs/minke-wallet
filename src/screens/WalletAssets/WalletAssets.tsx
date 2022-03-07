@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
 import { Modal } from '@components';
-import { AddFunds } from '@containers';
 import { getWalletTokens, WalletToken } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import AssetList from './AssetList/AssetList';
 import ValueBox from './ValueBox';
 import AssetListEmpty from './AssetListEmpty';
+import ComingSoonModal from '../WalletScreen/ComingSoonModal';
 
 const WalletAssets = () => {
 	const { colors } = useTheme();
@@ -45,7 +45,7 @@ const WalletAssets = () => {
 				</View>
 			</View>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
+				<ComingSoonModal onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 		</>
 	);

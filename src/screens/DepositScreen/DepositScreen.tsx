@@ -3,11 +3,11 @@ import { approvalState, isAbleToDeposit } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { Modal, ScreenLoadingIndicator } from '@components';
-import { AddFunds } from '@containers';
 import { useNavigation } from '@hooks';
 import Deposit from './Deposit/Deposit';
 import OpenAave from './OpenAave/OpenAave';
 import NotAbleToSaveModal from '../WalletScreen/NotAbleToSaveModal/NotAbleToSaveModal';
+import ComingSoonModal from '../WalletScreen/ComingSoonModal';
 
 const DepositScreen = () => {
 	const navigation = useNavigation();
@@ -63,7 +63,7 @@ const DepositScreen = () => {
 					/>
 				</Modal>
 				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
-					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
+					<ComingSoonModal onDismiss={dismissAddFunds} />
 				</Modal>
 			</>
 		);
