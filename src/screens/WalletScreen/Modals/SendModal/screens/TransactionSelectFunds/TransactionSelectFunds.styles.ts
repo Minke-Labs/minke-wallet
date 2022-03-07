@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
 	image: {
 		width: 64,
 		height: 64,
-		borderRadius: 64 / 2,
+		borderRadius: 32,
 		overflow: 'hidden',
 		borderWidth: 3,
 		borderColor: '#a3cccc',
@@ -32,5 +32,9 @@ export const styles = StyleSheet.create({
 	},
 	available: {
 		fontFamily: 'Inter_400Regular'
+	},
+
+	tokensList: {
+		maxHeight: Dimensions.get('screen').height * 0.5
 	}
 });

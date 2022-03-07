@@ -10,7 +10,6 @@ import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
-// import { AddFunds } from '@containers';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { SendModal, ReceiveModal, SentModal } from './Modals';
@@ -48,7 +47,7 @@ const WalletScreen = () => {
 						state.set(await walletState(wallets[0]));
 					} else {
 						state.set(emptyWallet);
-						navigation.navigate('Welcome');
+						navigation.navigate('WelcomeScreen');
 					}
 				}
 			}
@@ -92,7 +91,6 @@ const WalletScreen = () => {
 
 	const onExchange = () => navigation.navigate('ExchangeScreen');
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
-	// const onSend = () => navigation.navigate('TransactionSelectFundsScreen');
 	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
 	const onSeeAllTransactions = () => navigation.navigate('TransactionsScreen');
 
@@ -151,7 +149,6 @@ const WalletScreen = () => {
 			</Snackbar>
 
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				{/* <AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} /> */}
 				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 
@@ -159,6 +156,7 @@ const WalletScreen = () => {
 				<SendModal
 					onDismiss={() => setSendModalOpen(false)}
 					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
+					isVisible={sendModalOpen}
 				/>
 			</Modal>
 

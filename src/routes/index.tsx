@@ -1,9 +1,8 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
-import { useColorScheme } from 'react-native';
+import { TouchableOpacity, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { MaterialIcons } from '@expo/vector-icons';
 import {
 	AccountsScreen,
 	AssetsScreen,
@@ -14,10 +13,7 @@ import {
 	ExchangeResumeScreen,
 	ExchangeScreen,
 	SettingsScreen,
-	TransactionContactsScreen,
-	TransactionSelectFundsScreen,
 	TransactionsScreen,
-	TransactionTransferScreen,
 	WalletAssetsScreen,
 	WalletCreatedScreen,
 	WalletScreen,
@@ -28,6 +24,7 @@ import {
 	DepositSuccessScreen,
 	Test
 } from '@screens';
+import { Icon } from '@components';
 import { RootStackParamList } from './types.routes';
 import { globalWalletState } from '../stores/WalletStore';
 
@@ -45,12 +42,9 @@ const Routes: React.FC = () => {
 		},
 		headerShadowVisible: false,
 		headerLeft: () => (
-			<MaterialIcons
-				name="arrow-back-ios"
-				size={24}
-				color={scheme === 'dark' ? '#FFFFFF' : '#006AA6'}
-				onPress={() => navigation.goBack()}
-			/>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Icon name="arrowBackStroke" color="text7" size={24} />
+			</TouchableOpacity>
 		)
 	});
 
@@ -81,17 +75,10 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="SaveScreen" component={SaveScreen} />
 				<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
 				<Stack.Screen
-					initialParams={{ coin: 'eth' }}
-					name="TransactionContactsScreen"
-					component={TransactionContactsScreen}
-				/>
-				<Stack.Screen name="TransactionSelectFundsScreen" component={TransactionSelectFundsScreen} />
-				<Stack.Screen
 					name="TransactionsScreen"
 					component={TransactionsScreen}
 					options={(props) => defaultOptions(props)}
 				/>
-				<Stack.Screen name="TransactionTransferScreen" component={TransactionTransferScreen} />
 				<Stack.Screen name="USDCoinScreen" component={USDCoinScreen} />
 				<Stack.Screen name="WalletAssetsScreen" component={WalletAssetsScreen} />
 				<Stack.Screen name="WalletCreatedScreen" component={WalletCreatedScreen} />

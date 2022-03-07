@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Icon, Text } from '@components';
 import { useFormProgress } from '@hooks';
@@ -7,12 +7,18 @@ import styles from './SendModal.styles';
 import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact } from './screens';
 import { SendModalProps, UserProps } from './SendModal.types';
 
-const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully }) => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [currentStep, setCurrentStep, goForward, goBack] = useFormProgress();
+const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully, isVisible = false }) => {
+	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const [user, setUser] = useState<UserProps>(null!);
 	const [token, setToken] = useState<WalletToken>();
 	const [addContactVisible, setAddContactVisible] = useState(false);
+
+	useEffect(() => {
+		if (!isVisible) {
+			reset();
+			setAddContactVisible(false);
+		}
+	}, [isVisible]);
 
 	const onUserSelected = (item: UserProps) => {
 		goForward();

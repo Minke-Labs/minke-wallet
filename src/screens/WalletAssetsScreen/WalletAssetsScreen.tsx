@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
 import { Modal, ModalReusables } from '@components';
-// import { AddFunds } from '@containers';
 import { getWalletTokens, WalletToken } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import AssetList from './AssetList/AssetList';
@@ -39,7 +38,6 @@ const WalletAssetsScreen = () => {
 				</View>
 			</View>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				{/* <AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} /> */}
 				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 		</>
