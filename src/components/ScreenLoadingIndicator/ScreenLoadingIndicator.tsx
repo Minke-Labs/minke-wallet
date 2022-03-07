@@ -1,7 +1,7 @@
 import { useTheme } from '@src/hooks';
 import React from 'react';
 import { View } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 
 const ScreenLoadingIndicator = () => {
 	const { colors } = useTheme();
@@ -15,7 +15,7 @@ const ScreenLoadingIndicator = () => {
 				backgroundColor: colors.background1
 			}}
 		>
-			<ActivityIndicator size="large" color={colors.text1} />
+			<ActivityIndicator size="large" />
 		</View>
 	);
 };

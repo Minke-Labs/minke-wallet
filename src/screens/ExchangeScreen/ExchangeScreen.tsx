@@ -2,7 +2,7 @@
 import React, { useEffect, createRef, useCallback } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, TextInput, Keyboard, TouchableOpacity } from 'react-native';
-import { ActivityIndicator, Card } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
@@ -15,7 +15,7 @@ import { debounce } from 'lodash';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { WelcomeLayout } from '@layouts';
-import { Text, Button, Icon, Modal } from '@components';
+import { Text, Button, Icon, Modal, ActivityIndicator } from '@components';
 import { RootStackParamList } from '../../routes/types.routes';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
@@ -230,7 +230,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					<Text type="span" weight="regular" color="text3">
 						Fetching...
 					</Text>
-					<ActivityIndicator color={colors.background1} size={16} />
+					<ActivityIndicator size={16} />
 				</>
 			);
 		}
@@ -326,7 +326,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 						>
 							<View style={styles.tokenCardDivisorBackground}>
 								{loadingPrices ? (
-									<ActivityIndicator color={colors.cta1} />
+									<ActivityIndicator />
 								) : (
 									<Icon name="arrowDown" size={24} color={canChangeDirections ? 'cta1' : 'cta2'} />
 								)}
@@ -351,7 +351,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 					{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}
 
 					{loadingPrices ? (
-						<ActivityIndicator color={colors.cta1} />
+						<ActivityIndicator />
 					) : (
 						<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
 					)}

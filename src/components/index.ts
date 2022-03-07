@@ -1,3 +1,4 @@
+import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
 import TextInput from './TextInput/TextInput';
 import Button from './Button/Button';
@@ -18,6 +19,7 @@ import ApplePayButton from './ApplePayButton/ApplePayButton';
 import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
 
 export {
+	ActivityIndicator,
 	Text,
 	TextInput,
 	AnimatedText,

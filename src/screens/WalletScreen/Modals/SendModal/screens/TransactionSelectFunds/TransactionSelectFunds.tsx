@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, Image } from 'react-native';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
-import { Text } from '@components';
+import { Text, ActivityIndicator } from '@components';
 import { useState } from '@hookstate/core';
 import { WalletToken, getWalletTokens, imageSource } from '@src/model/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
@@ -12,7 +11,6 @@ import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
 const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
 	const [image, setImage] = React.useState<{ uri: string }>();
 	const wallet = useState(globalWalletState());
-	const { colors } = useTheme();
 	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
 
 	useEffect(() => {
@@ -47,7 +45,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
-				<ActivityIndicator color={colors.primary} />
+				<ActivityIndicator />
 			)}
 		</View>
 	);

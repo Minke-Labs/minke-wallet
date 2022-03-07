@@ -1,12 +1,10 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { View, Keyboard } from 'react-native';
-import { useTheme } from '@hooks';
-import { Text, Button, TextArea, ModalHeader } from '@components';
+import { Text, Button, TextArea, ModalHeader, ActivityIndicator } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { globalWalletState, walletState } from '@src/stores/WalletStore';
 import { restoreWalletByMnemonic } from '@src/model/wallet';
-import { ActivityIndicator } from 'react-native-paper';
 import { styles } from './ImportWalletModal.styles';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
 
@@ -14,7 +12,6 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 	const [text, setText] = React.useState('');
 	const [importing, setImporting] = React.useState(false);
 	const state = useState(globalWalletState());
-	const { colors } = useTheme();
 
 	const onImportWallet = async () => {
 		if (text.trim()) {
@@ -48,7 +45,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 					/>
 				</View>
 				{importing ? (
-					<ActivityIndicator animating color={colors.text7} />
+					<ActivityIndicator />
 				) : (
 					<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
 				)}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
-import { ActivityIndicator, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { ParaswapToken } from '@models/token';
 import { network } from '@models/network';
 import { smallWalletAddress } from '@src/model/wallet';
-import { ModalHeader, Text, Icon } from '@components';
+import { ModalHeader, Text, Icon, ActivityIndicator } from '@components';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './TransactionWaitModal.styles';
 import Token from '../Token/Token';

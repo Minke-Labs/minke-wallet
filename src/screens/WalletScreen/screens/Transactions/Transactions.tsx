@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { whale2Img } from '@images';
-import { Text, Button } from '@components';
-import { View, Image, ActivityIndicator, FlatList } from 'react-native';
-import { useTheme } from '@hooks';
+import { Text, Button, ActivityIndicator } from '@components';
+import { View, Image, FlatList } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import Transaction from './Transaction/Transaction';
@@ -10,7 +9,6 @@ import { styles } from './Transactions.styles';
 import { TransactionsProps } from './Transactions.types';
 
 const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
-	const { colors } = useTheme();
 	const wallet = useState(globalWalletState());
 	const { transactions = [] } = wallet.value;
 
@@ -49,7 +47,7 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 
 	return (
 		<View style={styles.container}>
-			{loading ? <ActivityIndicator animating color={colors.text7} /> : <Table />}
+			{loading ? <ActivityIndicator /> : <Table />}
 		</View>
 	);
 };

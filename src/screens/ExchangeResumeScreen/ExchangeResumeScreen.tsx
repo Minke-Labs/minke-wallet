@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Card, ActivityIndicator } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,7 +15,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
 import { WelcomeLayout } from '@layouts';
 import { TokenType } from '@styles';
-import { Icon, Modal, Text, Token } from '@components';
+import { Icon, Modal, Text, Token, ActivityIndicator } from '@components';
 import ProgressButton from '../../components/ProgressButton';
 import { RootStackParamList } from '../../routes/types.routes';
 import GasOption from '../ExchangeScreen/GasOption';
@@ -222,7 +222,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 								usdAmount={priceQuote?.priceRoute.srcUSD}
 							/>
 						) : (
-							<ActivityIndicator size={24} color={colors.cta1} />
+							<ActivityIndicator size={24} />
 						)}
 
 						<View style={styles.tokenCardDivisor}>
@@ -256,7 +256,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 								usdAmount={priceQuote?.priceRoute.destUSD}
 							/>
 						) : (
-							<ActivityIndicator size={24} color={colors.cta2} />
+							<ActivityIndicator size={24} />
 						)}
 
 						{!loading && (
@@ -295,7 +295,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 										{from.symbol}
 									</Text>
 								) : (
-									<ActivityIndicator size={24} color={colors.cta2} />
+									<ActivityIndicator size={24} />
 								)}
 							</View>
 
@@ -331,7 +331,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
 					{priceQuote &&
-						(loading ? <ActivityIndicator color={colors.cta2} /> : <ProgressButton onFinish={onFinish} />)}
+						(loading ? <ActivityIndicator /> : <ProgressButton onFinish={onFinish} />)}
 				</View>
 			</WelcomeLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>

@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, Share, SafeAreaView } from 'react-native';
 import { useState } from '@hookstate/core';
-import { Text, WhiteButton, ModalHeader } from '@components';
+import { Text, WhiteButton, ModalHeader, ActivityIndicator } from '@components';
 import { getENSAddress } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
-import { ActivityIndicator } from 'react-native-paper';
 import { ReceiveModalProps } from './ReceiveModal.types';
 import styles from './ReceiveModal.styles';
 
