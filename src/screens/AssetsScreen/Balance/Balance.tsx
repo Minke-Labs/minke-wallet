@@ -3,50 +3,24 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
-import { WalletToken } from '@models/wallet';
 import { numberFormat } from '@helpers/utilities';
-import Buttons from './Buttons';
-import Selector from './Selector';
-
-interface BalanceProps {
-	coin: WalletToken;
-}
+import Buttons from './Buttons/Buttons';
+import Selector from './Selector/Selector';
+import { BalanceProps } from './Balance.types';
+import styles from './Balance.styles';
 
 const Balance: React.FC<BalanceProps> = ({ coin }) => {
 	const { colors } = useTheme();
 	const [active, setActive] = useState(false);
 
 	return (
-		<View
-			style={{
-				width: '100%',
-				height: 146,
-				borderRadius: 16,
-				marginBottom: 16,
-				overflow: 'hidden',
-				backgroundColor: colors.background2
-			}}
-		>
-			<View
-				style={{
-					flex: 1,
-					paddingTop: 16,
-					paddingLeft: 24,
-					paddingRight: 12
-				}}
-			>
-				<View
-					style={{
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						marginBottom: 8
-					}}
-				>
+		<View style={[styles.container, { backgroundColor: colors.background2 }]}>
+			<View style={styles.valueContainer}>
+				<View style={styles.valueContainerTop}>
 					<Text color="text4">Balance</Text>
 					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
 				</View>
-				<Text style={{ fontSize: 32, lineHeight: 39 }}>
+				<Text type="h2">
 					{active ? `${coin.balance.toFixed(2)} ${coin.symbol}` : `${numberFormat(coin.balanceUSD)}`}
 				</Text>
 			</View>

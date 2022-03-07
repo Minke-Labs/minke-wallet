@@ -5,6 +5,7 @@ import Icon from './Icon/Icon';
 import Token from './Token/Token';
 import Modal from './Modal/Modal';
 import ModalHeader from './ModalHeader/ModalHeader';
+import ModalReusables from './ModalReusables';
 import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
@@ -26,6 +27,7 @@ export {
 	Token,
 	Modal,
 	ModalHeader,
+	ModalReusables,
 	TextArea,
 	Input,
 	Flag,

@@ -155,7 +155,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const goToExchangeResume = () => {
 		if (fromToken && toToken) {
 			exchange.merge({ from: fromToken, to: toToken, lastConversion });
-			navigation.navigate('ExchangeResume');
+			navigation.navigate('ExchangeResumeScreen');
 		}
 	};
 

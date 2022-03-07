@@ -10,14 +10,12 @@ import {
 	waveWelcomeFooterDarkImg
 } from '@images';
 import { walletCreate } from '@models/wallet';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text, Button, Modal } from '@components';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@hooks';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import { ActivityIndicator } from 'react-native-paper';
-import { RootStackParamList } from '../../routes/types.routes';
 import styles from './WelcomeScreen.styles';
-import ImportFlow from './ImportFlow';
+import ImportWalletModal from './ImportWalletModal/ImportWalletModal';
 
 const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
@@ -37,14 +35,14 @@ const Background: React.FC = ({ children }) => {
 };
 
 const WelcomeScreen = () => {
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 	const [isModalVisible, setModalVisible] = React.useState(false);
 	const [loading, setLoading] = React.useState(false);
 	const state = useState(globalWalletState());
 
 	const onImportFinished = () => {
 		setModalVisible(false);
-		navigation.navigate('WalletCreated');
+		navigation.navigate('WalletCreatedScreen');
 	};
 
 	const onCreateWallet = useCallback(async () => {
@@ -52,7 +50,7 @@ const WelcomeScreen = () => {
 		const newWallet = await walletCreate();
 		state.set(await walletState(newWallet));
 		setLoading(false);
-		navigation.navigate('WalletCreated');
+		navigation.navigate('WalletCreatedScreen');
 	}, [navigation]);
 
 	return (
@@ -85,7 +83,7 @@ const WelcomeScreen = () => {
 			</WelcomeLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportFlow onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
+				<ImportWalletModal onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
 			</Modal>
 		</>
 	);

@@ -1,17 +1,14 @@
 import React from 'react';
 import { ImageBackground, View } from 'react-native';
 import { Text, Button } from '@components';
-import { useTheme } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
 import { saveCongratsImg } from '@src/images';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '@src/routes/types.routes';
-import { useNavigation } from '@react-navigation/native';
 import { makeStyles } from './Congrats.styles';
 
 const SaveCongratsScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	return (
 		<View style={styles.container}>
