@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { Text, Icon } from '@components';
-import { commify } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { useTheme } from '@hooks';
+import { numberFormat } from '@helpers/utilities';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
@@ -21,7 +21,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 						Your total assets
 					</Text>
 					<Text type="h1" weight="medium">
-						${commify(balance)}
+						{numberFormat(Number(balance) || 0)}
 					</Text>
 				</View>
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>

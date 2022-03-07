@@ -6,7 +6,7 @@ import { getTransactions } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
 import { Icon, Text } from '@components';
 import { useNavigation } from '@src/hooks';
-import Transaction from '../WalletScreen/Transactions/Transaction';
+import Transaction from '../WalletScreen/screens/Transactions/Transaction/Transaction';
 import styles from './TransactionsScreen.styles';
 
 const TransactionsScreen = () => {

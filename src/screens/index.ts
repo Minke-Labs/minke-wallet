@@ -9,10 +9,7 @@ import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
-import TransactionContactsScreen from './TransactionContactsScreen/TransactionContactsScreen';
-import TransactionSelectFundsScreen from './TransactionSelectFundsScreen/TransactionSelectFundsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
-import TransactionTransferScreen from './TransactionTransferScreen/TransactionTransferScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
 import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
@@ -35,16 +32,12 @@ export {
 	ExchangeScreen,
 	SaveScreen,
 	SettingsScreen,
-	TransactionContactsScreen,
-	TransactionSelectFundsScreen,
 	TransactionsScreen,
-	TransactionTransferScreen,
 	USDCoinScreen,
 	WalletAssetsScreen,
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,
-
 	DepositSuccessScreen,
 	Test
 };

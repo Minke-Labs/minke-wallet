@@ -1,6 +1,8 @@
 import React from 'react';
 import { SafeAreaView, Image, View } from 'react-native';
-import { ModalHeader, Text, Button } from '@components';
+import ModalHeader from '@src/components/ModalHeader/ModalHeader';
+import Text from '@src/components/Text/Text';
+import Button from '@src/components/Button/Button';
 import { whale4Img } from '@images';
 import { ComingSoonModalProps } from './types';
 import styles from './styles';

@@ -10,29 +10,10 @@ import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
-<<<<<<< HEAD
-import Header from './Header';
-import ReceiveModal from './ReceiveModal';
-import AssetsPanel from './AssetsPanel';
-import ActionsPanel from './ActionsPanel';
-import { RootStackParamList } from '../../routes/types.routes';
-import Transactions from './Transactions/Transactions';
-import Accounts from './Accounts/Accounts';
-import SendModal from './SendModal/SendModal';
-import SentModal from './SentModal';
-import ComingSoonModal from './ComingSoonModal';
-
-type ResultProps = {
-	link: string;
-	symbol: string;
-};
-=======
-// import { AddFunds } from '@containers';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { SendModal, ReceiveModal, SentModal } from './Modals';
 import { ResultProps } from './WalletScreen.types';
->>>>>>> main
 
 const WalletScreen = () => {
 	const wallet = globalWalletState();
@@ -66,7 +47,7 @@ const WalletScreen = () => {
 						state.set(await walletState(wallets[0]));
 					} else {
 						state.set(emptyWallet);
-						navigation.navigate('Welcome');
+						navigation.navigate('WelcomeScreen');
 					}
 				}
 			}
@@ -110,7 +91,6 @@ const WalletScreen = () => {
 
 	const onExchange = () => navigation.navigate('ExchangeScreen');
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
-	// const onSend = () => navigation.navigate('TransactionSelectFundsScreen');
 	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
 	const onSeeAllTransactions = () => navigation.navigate('TransactionsScreen');
 

@@ -57,10 +57,6 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 
 				<Button title="Send" disabled={!validAddress} onPress={onSendAddress} marginBottom={32} />
 
-				<Text center weight="extraBold" type="p" marginBottom={32}>
-					Or choose from a saved address
-				</Text>
-
 				{!keyboardVisible &&
 					(contactList!.length > 0 ? (
 						<>

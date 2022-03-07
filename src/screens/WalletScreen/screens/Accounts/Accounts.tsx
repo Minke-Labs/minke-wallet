@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import { commify } from 'ethers/lib/utils';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
 import { useNavigation } from '@hooks';
+import { numberFormat } from '@src/helpers/utilities';
 import { makeStyles } from './Accounts.styles';
 import Image from './Image/Image';
 
@@ -16,7 +16,7 @@ const Accounts = () => {
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
 				<Text style={styles.cardLabel}>Current value</Text>
-				<Text style={styles.cardBalance}>${commify(state.value.balance?.usd || '')}</Text>
+				<Text style={styles.cardBalance}>{numberFormat(Number(state.value.balance?.usd || '0'))}</Text>
 			</View>
 			<Card
 				onPress={() => navigation.navigate('WalletAssetsScreen')}
@@ -28,7 +28,7 @@ const Accounts = () => {
 				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text weight="bold" style={{ fontSize: 16 }}>
-							${commify(state.value.balance?.usd || '')}
+							{numberFormat(Number(state.value.balance?.usd || '0'))}
 						</Text>
 						<Icon name="arrowForwardStroke" size={16} color="text7" />
 					</View>
