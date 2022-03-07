@@ -19,9 +19,9 @@ export type RootStackParamList = {
 	BackupSettings: undefined;
 	Transactions: undefined;
 	SaveScreen: undefined;
-	Deposit: undefined;
+	DepositScreen: undefined;
 	USDCoin: undefined;
-	DepositSuccess: undefined;
+	DepositSuccessScreen: undefined;
 	Test: undefined;
 	OpenAave: undefined;
 };

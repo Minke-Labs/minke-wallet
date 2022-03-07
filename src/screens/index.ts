@@ -18,7 +18,7 @@ import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
-import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccess';
+import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
 
 import Test from './Test/Test';
 

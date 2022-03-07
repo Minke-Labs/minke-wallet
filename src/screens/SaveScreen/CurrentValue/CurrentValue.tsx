@@ -23,17 +23,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 					{numberFormat(Number(depositsBalance))}
 				</Text>
 				{aaveMarket && (
-					<View
-						style={{
-							flexDirection: 'row',
-							alignItems: 'center',
-							paddingVertical: 4,
-							paddingHorizontal: 12,
-							backgroundColor: colors.alert4,
-							borderRadius: 8,
-							marginBottom: 16
-						}}
-					>
+					<View style={styles.interestContainer}>
 						<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 						<Text weight="medium" type="a" color="alert3">
 							{(aaveMarket.supplyApy * 100).toFixed(2)}% interest p.a.
@@ -41,7 +31,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 					</View>
 				)}
 			</BlurView>
-			<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('Deposit')}>
+			<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('DepositScreen')}>
 				<Icon name="saveStroke" color="cta1" size={20} />
 				<Text marginBottom={4} style={{ marginLeft: 8 }}>
 					Deposit

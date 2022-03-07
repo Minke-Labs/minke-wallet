@@ -56,7 +56,11 @@ const EmptyState = () => {
 					</View>
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 58 }}>
-						<Button iconLeft="addStroke" title="Deposit" onPress={() => navigation.navigate('Deposit')} />
+						<Button
+							iconLeft="addStroke"
+							title="Deposit"
+							onPress={() => navigation.navigate('DepositScreen')}
+						/>
 					</View>
 				</View>
 			</View>

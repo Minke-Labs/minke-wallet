@@ -94,9 +94,9 @@ const Routes: React.FC = () => {
 					options={(props) => defaultOptions(props)}
 				/>
 				<Stack.Screen name="SaveScreen" component={SaveScreen} />
-				<Stack.Screen name="Deposit" component={DepositScreen} />
+				<Stack.Screen name="DepositScreen" component={DepositScreen} />
 				<Stack.Screen name="USDCoin" component={USDCoinScreen} />
-				<Stack.Screen name="DepositSuccess" component={DepositSuccessScreen} />
+				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

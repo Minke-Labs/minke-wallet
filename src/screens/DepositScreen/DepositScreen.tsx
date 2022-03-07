@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { approvalState, isAbleToDeposit } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
-import { Modal, ScreenLoadingIndicator } from '@components';
-import { AddFunds } from '@containers';
+import { Modal, ScreenLoadingIndicator, ModalReusables } from '@components';
+// import { AddFunds } from '@containers';
 import { useNavigation } from '@hooks';
 import Deposit from './Deposit/Deposit';
 import OpenAave from './OpenAave/OpenAave';
@@ -63,7 +63,8 @@ const DepositScreen = () => {
 					/>
 				</Modal>
 				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
-					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
+					{/* <AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} /> */}
+					<ModalReusables.ComingSoon onDismiss={dismissAddFunds} />
 				</Modal>
 			</>
 		);

@@ -42,7 +42,7 @@ export const Body: React.FC<BodyProps> = ({ lending }) => {
 					}}
 				/>
 			</View>
-			<Button title="Deposit" onPress={() => navigation.navigate('Deposit')} />
+			<Button title="Deposit" onPress={() => navigation.navigate('DepositScreen')} />
 		</View>
 	);
 };

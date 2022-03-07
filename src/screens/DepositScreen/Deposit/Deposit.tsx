@@ -103,7 +103,7 @@ const Deposit = () => {
 				console.log('Deposit', hash);
 				await wait();
 				setTransactionHash(hash);
-				navigation.navigate('DepositSuccess');
+				navigation.navigate('DepositSuccessScreen');
 			} else {
 				console.error('Error depositing');
 			}
@@ -175,9 +175,9 @@ const Deposit = () => {
 					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
 				</View>
 			</WelcomeLayout>
-			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccess')}>
+			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccessScreen')}>
 				<TransactionWaitModal
-					onDismiss={() => navigation.navigate('DepositSuccess')}
+					onDismiss={() => navigation.navigate('DepositSuccessScreen')}
 					fromToken={token}
 					toToken={{ img: market.appImageUrl, symbol: 'Aave' } as ParaswapToken}
 					transactionHash={transactionHash}
