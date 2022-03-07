@@ -1,14 +1,8 @@
 import React, { useCallback } from 'react';
-import { View, Image, useColorScheme } from 'react-native';
+import { View, Image } from 'react-native';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
-import {
-	welcomeImg,
-	waveWelcomeHeaderImg,
-	waveWelcomeHeaderDarkImg,
-	waveWelcomeFooterImg,
-	waveWelcomeFooterDarkImg
-} from '@images';
+import { welcomeImg } from '@images';
 import { walletCreate } from '@models/wallet';
 import { Text, Button, Modal } from '@components';
 import { useNavigation } from '@hooks';
@@ -16,23 +10,7 @@ import { globalWalletState, walletState } from '@stores/WalletStore';
 import { ActivityIndicator } from 'react-native-paper';
 import styles from './WelcomeScreen.styles';
 import ImportWalletModal from './ImportWalletModal/ImportWalletModal';
-
-const Background: React.FC = ({ children }) => {
-	const scheme = useColorScheme();
-	return (
-		<View style={styles.backgroundContainer}>
-			<Image
-				source={scheme === 'dark' ? waveWelcomeHeaderDarkImg : waveWelcomeHeaderImg}
-				style={styles.backgroundTop}
-			/>
-			<Image
-				source={scheme === 'dark' ? waveWelcomeFooterDarkImg : waveWelcomeFooterImg}
-				style={styles.backgroundBottom}
-			/>
-			{children}
-		</View>
-	);
-};
+import { Background } from './Background/Background';
 
 const WelcomeScreen = () => {
 	const navigation = useNavigation();
@@ -76,7 +54,9 @@ const WelcomeScreen = () => {
 							) : (
 								<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
 							)}
-							<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
+							{!loading && (
+								<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
+							)}
 						</View>
 					</View>
 				</Background>
