@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Card, RadioButton, ActivityIndicator } from 'react-native-paper';
+import { Card, RadioButton } from 'react-native-paper';
 import { useTheme } from '@hooks';
-import { Text, Icon as IconImg } from '@components';
+import { Text, Icon as IconImg, ActivityIndicator } from '@components';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@src/model/wallet';
 import { network } from '@models/network';
 import { ExchangeState, Gas, globalExchangeState } from '@src/stores/ExchangeStore';
@@ -67,7 +67,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 			}
 			return `~ ${wait} secs`;
 		}
-		return <ActivityIndicator color={colors.cta1} size={16} />;
+		return <ActivityIndicator size={16} />;
 	}, [wait]);
 
 	useEffect(() => {
@@ -128,7 +128,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 	};
 
 	if (!gasPrice || !usdPrice) {
-		return <ActivityIndicator size={24} color={colors.cta1} style={styles.scrollviewHorizontal} />;
+		return <ActivityIndicator size={24} style={styles.scrollviewHorizontal} />;
 	}
 
 	return (
