@@ -2,14 +2,8 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useTheme } from '@hooks';
 import { Transaction } from '@components';
-import { Transaction as TransactionProps } from '@models/wallet';
 import { makeStyles } from './Body.styles';
-
-interface BodyProps {
-	transactions: TransactionProps[];
-	loadMoreTransactions: any;
-	renderFooter: any;
-}
+import { BodyProps } from './Body.types';
 
 const Body: React.FC<BodyProps> = ({ transactions, loadMoreTransactions, renderFooter }) => {
 	const { colors } = useTheme();

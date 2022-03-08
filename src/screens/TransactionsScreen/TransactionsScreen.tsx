@@ -10,6 +10,8 @@ import HeaderContainer from './HeaderContainer/HeaderContainer';
 import Body from './Body/Body';
 
 const TransactionsScreen = () => {
+	const [active, setActive] = React.useState(0);
+
 	const wallet = useState(globalWalletState());
 	const [page, setPage] = React.useState(1);
 	const [refreshing, setRefreshing] = React.useState(false);
@@ -52,10 +54,14 @@ const TransactionsScreen = () => {
 		<WelcomeLayout>
 			<HeaderContainer>
 				<Header />
-				<Selector />
+				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
 
-			<Body {...{ transactions, loadMoreTransactions, renderFooter }} />
+			<Body
+				transactions={transactions}
+				{...{ loadMoreTransactions, renderFooter }}
+				//
+			/>
 		</WelcomeLayout>
 	);
 };
