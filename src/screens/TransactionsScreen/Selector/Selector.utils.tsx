@@ -1,0 +1,4 @@
+const BUTTON_WIDTH = 100;
+const BUTTON_PADDING = 4;
+
+export { BUTTON_WIDTH, BUTTON_PADDING };

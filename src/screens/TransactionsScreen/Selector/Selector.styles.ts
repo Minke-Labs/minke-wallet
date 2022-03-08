@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
+import { BUTTON_PADDING } from './Selector.utils';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
@@ -15,7 +16,8 @@ export const makeStyles = (colors: ColorType) =>
 		backgroundTag: {
 			position: 'absolute',
 			backgroundColor: '#006AA6',
-			width: (Dimensions.get('screen').width - 48) / 3, // screen width - padding / number of tabs
+			// screen width - padding / number of tabs
+			width: (Dimensions.get('screen').width - 48) / 3 - BUTTON_PADDING * 2,
 			height: 32,
 			borderRadius: 16
 		},
