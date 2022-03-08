@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
-import { whale2Img } from '@images';
-import { Text, Button, ActivityIndicator } from '@components';
-import { View, Image, FlatList } from 'react-native';
+import { Button, ActivityIndicator, Transaction } from '@components';
+import { View, FlatList } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import Transaction from './Transaction/Transaction';
 import { styles } from './Transactions.styles';
 import { TransactionsProps } from './Transactions.types';
+import { NoTransactionsYet } from './NoTransactionsYet/NoTransactionsYet';
 
 const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
 	const wallet = useState(globalWalletState());
@@ -31,25 +30,11 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 				</View>
 			);
 		}
-		return (
-			<View style={styles.tableContainer}>
-				<Image source={whale2Img} style={styles.image} />
-				<Text color="text4" weight="medium" marginBottom={16}>
-					No transactions here
-				</Text>
-				<Text color="text3" weight="bold" marginBottom={64}>
-					Let&apos;s get started?
-				</Text>
-				<Button onPress={onAddFunds} iconLeft="addStroke" title="Add funds to start" marginBottom={14} />
-			</View>
-		);
+
+		return <NoTransactionsYet {...{ onAddFunds }} />;
 	}, [transactions]);
 
-	return (
-		<View style={styles.container}>
-			{loading ? <ActivityIndicator /> : <Table />}
-		</View>
-	);
+	return <View style={styles.container}>{loading ? <ActivityIndicator /> : <Table />}</View>;
 };
 
 export default Transactions;

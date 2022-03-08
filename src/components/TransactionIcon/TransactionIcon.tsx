@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '@hooks';
 import { View } from 'react-native';
-import { Icon } from '@components';
+import Icon from '../Icon/Icon';
 import { styles } from './TransactionIcon.styles';
 import { TransactionIconProps } from './TransactionIcon.types';
 
