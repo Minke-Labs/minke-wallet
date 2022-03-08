@@ -1,4 +1,7 @@
-const BUTTON_WIDTH = 100;
+import { Dimensions } from 'react-native';
+
+const NUM_TABS = 3;
+const SCREEN_WIDTH = Dimensions.get('screen').width;
 const BUTTON_PADDING = 4;
 
-export { BUTTON_WIDTH, BUTTON_PADDING };
+export { SCREEN_WIDTH, BUTTON_PADDING, NUM_TABS };
