@@ -4,6 +4,7 @@ import { Snackbar } from 'react-native-paper';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
+import { PaymentRequest } from 'react-native-payments';
 import { TokenType } from '@styles';
 import { ICoin } from '@helpers/coins';
 
@@ -29,7 +30,49 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		setSnackbarVisible(true);
 	};
 
-	const onApplePayPress = async () => {};
+	const paymentOptions = {
+		requestBilling: true,
+		requestPayerEmail: true,
+		requestPayerPhone: true
+	};
+
+	const onApplePayPress = async () => {
+		const METHOD_DATA = [
+			{
+				supportedMethods: ['apple-pay'],
+				data: {
+					merchantIdentifier: 'merchant.minke.prod',
+					supportedNetworks: ['visa', 'mastercard', 'amex'],
+					countryCode: 'US',
+					currencyCode: 'USD'
+				}
+			}
+		];
+
+		const DETAILS = {
+			id: 'minke-wyre',
+			displayItems: [
+				{
+					label: `${name} (${symbol})`,
+					amount: { currency: 'USD', value: amount }
+				}
+			],
+			total: {
+				label: 'Minke Labs',
+				amount: { currency: 'USD', value: amount }
+			}
+		};
+		const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS, paymentOptions);
+		try {
+			const paymentResponse = await paymentRequest.show();
+			console.log('paymentResponse', paymentResponse);
+			paymentResponse.complete('success');
+		} catch ({ message }) {
+			if (message !== 'AbortError') {
+				console.error(message);
+			}
+		}
+	};
 
 	return (
 		<>

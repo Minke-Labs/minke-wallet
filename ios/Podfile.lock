@@ -1,5 +1,27 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - Braintree (4.38.0):
+    - Braintree/Card (= 4.38.0)
+    - Braintree/Core (= 4.38.0)
+    - Braintree/PayPal (= 4.38.0)
+    - Braintree/UI (= 4.38.0)
+  - Braintree/Card (4.38.0):
+    - Braintree/Core
+  - Braintree/Core (4.38.0)
+  - Braintree/PayPal (4.38.0):
+    - Braintree/Core
+    - Braintree/PayPalOneTouch
+  - Braintree/PayPalDataCollector (4.38.0):
+    - Braintree/Core
+    - Braintree/PayPalUtils
+  - Braintree/PayPalOneTouch (4.38.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+    - Braintree/PayPalUtils
+  - Braintree/PayPalUtils (4.38.0)
+  - Braintree/UI (4.38.0):
+    - Braintree/Card
+    - Braintree/Core
   - DoubleConversion (1.1.6)
   - EXApplication (4.0.2):
     - ExpoModulesCore
@@ -249,6 +271,10 @@ PODS:
   - React-jsinspector (0.64.3)
   - react-native-get-random-values (1.7.0):
     - React-Core
+  - react-native-payments (0.8.4):
+    - Braintree (~> 4)
+    - React
+    - Stripe (~> 19)
   - react-native-randombytes (3.6.1):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -364,6 +390,7 @@ PODS:
     - React
   - RNVectorIcons (9.0.0):
     - React-Core
+  - Stripe (19.4.1)
   - TcpSockets (3.3.2):
     - React
   - UMAppLoader (3.0.0)
@@ -410,6 +437,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-payments (from `../node_modules/react-native-payments`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-udp (from `../node_modules/react-native-udp`)
@@ -442,6 +470,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - Braintree
+    - Stripe
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -516,6 +546,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-payments:
+    :path: "../node_modules/react-native-payments"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
@@ -575,6 +607,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  Braintree: 78a33deb6f6ec617c2c4891fbe352854358b3a8d
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXBlur: 82055865de17cf2cf797ff064c50fb59fcbe703f
@@ -611,6 +644,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
+  react-native-payments: 0cb00209f3b25a72d5b614554abf688e2cc53002
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-udp: ff9d13e523f2b58e6bc5d4d32321ac60671b5dc9
@@ -635,6 +669,7 @@ SPEC CHECKSUMS:
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  Stripe: 5914399ac5878056b985d56b409cb4bb1e7fc7e8
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   UMAppLoader: 671576daa3fd3017d4879a5f23fc0dd3b36422a8
   UMTaskManagerInterface: 5654c50e68af11b19b9d05452bacf23d19b3f30f

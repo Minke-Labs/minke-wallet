@@ -14,3 +14,21 @@ How to lauch app localy:
 -   make sure postinstall.sh is executable run: `chmod +x ./scripts/postinstall.sh` from project root directory
 -   run postinstall script `./scripts/postinstall.sh`
 -   run `expo run:ios`
+
+Build setup:
+
+```
+eas secret:create --name INFURA_API_KEY --value XXXXXX
+eas secret:create --name INFURA_PROJECT_SECRET --value XXXX
+eas secret:create --name WALLET_CONNECT_PROJECT_ID XXXXXX
+```
+
+To code and test features not supported by Expo Go / Simulator:
+
+In the local machine:
+
+-   react-native run-ios --device "Marcos iPhone"
+
+To build a test version out of it:
+
+-   eas build --profile development --platform ios

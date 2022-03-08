@@ -74,6 +74,7 @@
     "react-native-level-fs": "^3.0.1",
     "react-native-os": "^1.2.6",
     "react-native-paper": "^4.9.2",
+    "react-native-payments": "^0.8.4",
     "react-native-qrcode-svg": "^6.1.1",
     "react-native-randombytes": "^3.6.1",
     "react-native-reanimated": "~2.3.1",
