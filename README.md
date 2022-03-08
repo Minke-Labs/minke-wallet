@@ -13,17 +13,10 @@ How to lauch app localy:
 -   run `yarn`
 -   make sure postinstall.sh is executable run: `chmod +x ./scripts/postinstall.sh` from project root directory
 -   run postinstall script `./scripts/postinstall.sh`
+-   npx install-expo-modules
 -   run `expo run:ios`
 
-Build setup:
-
-```
-eas secret:create --name INFURA_API_KEY --value XXXXXX
-eas secret:create --name INFURA_PROJECT_SECRET --value XXXX
-eas secret:create --name WALLET_CONNECT_PROJECT_ID XXXXXX
-```
-
-To code and test features not supported by Expo Go / Simulator:
+To code and test features not supported by Expo Go / Simulator (Apple Pay):
 
 In the local machine:
 
