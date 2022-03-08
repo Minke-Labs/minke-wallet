@@ -3,9 +3,8 @@ import { View } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Card, Button } from '@components';
+import { Text, Card, Button, TransactionIcon } from '@components';
 import { makeStyles } from './Body.styles';
-import TransactionIcon from '../../WalletScreen/screens/Transactions/TransactionIcon/TransactionIcon';
 import { BodyProps } from './Body.types';
 
 export const Body: React.FC<BodyProps> = ({ lending }) => {

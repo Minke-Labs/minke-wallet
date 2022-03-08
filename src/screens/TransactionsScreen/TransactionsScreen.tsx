@@ -1,20 +1,21 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { getTransactions } from '@models/wallet';
+import { getTransactions, Transaction as TransactionProps } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
-import { Icon, Text } from '@components';
-import { useNavigation } from '@src/hooks';
-import Transaction from '../WalletScreen/screens/Transactions/Transaction/Transaction';
-import styles from './TransactionsScreen.styles';
+import Header from './Header/Header';
+import Selector from './Selector/Selector';
+import HeaderContainer from './HeaderContainer/HeaderContainer';
+import Body from './Body/Body';
 
 const TransactionsScreen = () => {
+	const [active, setActive] = React.useState(0);
+
 	const wallet = useState(globalWalletState());
 	const [page, setPage] = React.useState(1);
 	const [refreshing, setRefreshing] = React.useState(false);
 	const [loadedAll, setLoadedAll] = React.useState(false);
-	const navigation = useNavigation();
 	const { transactions = [] } = wallet.value;
 
 	const loadMoreTransactions = async () => {
@@ -49,29 +50,22 @@ const TransactionsScreen = () => {
 		);
 	};
 
+	const address = wallet.address.value;
+
+	const filteredTransactions = (txs: TransactionProps[]) => {
+		if (active === 1) return txs.filter((tx: any) => tx.to.toLowerCase() !== address.toLowerCase());
+		if (active === 2) return txs.filter((tx: any) => tx.to.toLowerCase() === address.toLowerCase());
+		return txs;
+	};
+
 	return (
 		<WelcomeLayout>
-			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</TouchableOpacity>
-			</View>
-			<View style={styles.container}>
-				<Text weight="extraBold" type="h3">
-					Transactions
-				</Text>
-				<SafeAreaView>
-					<FlatList
-						style={{ marginTop: 24, marginBottom: 24 }}
-						data={transactions}
-						renderItem={({ item }) => <Transaction transaction={item} />}
-						keyExtractor={(transaction, index) => `${transaction.hash}${transaction.value}${index}`}
-						onEndReached={loadMoreTransactions}
-						onEndReachedThreshold={0.5}
-						ListFooterComponent={renderFooter}
-					/>
-				</SafeAreaView>
-			</View>
+			<HeaderContainer>
+				<Header />
+				<Selector {...{ active, setActive }} />
+			</HeaderContainer>
+
+			<Body transactions={filteredTransactions(transactions)!} {...{ loadMoreTransactions, renderFooter }} />
 		</WelcomeLayout>
 	);
 };
