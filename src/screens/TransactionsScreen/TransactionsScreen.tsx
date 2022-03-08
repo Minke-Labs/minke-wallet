@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { getTransactions } from '@models/wallet';
+import { getTransactions, Transaction as TransactionProps } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
@@ -50,6 +50,14 @@ const TransactionsScreen = () => {
 		);
 	};
 
+	const address = wallet.address.value;
+
+	const filteredTransactions = (txs: TransactionProps[]) => {
+		if (active === 1) return txs.filter((tx: any) => tx.to.toLowerCase() !== address.toLowerCase());
+		if (active === 2) return txs.filter((tx: any) => tx.to.toLowerCase() === address.toLowerCase());
+		return txs;
+	};
+
 	return (
 		<WelcomeLayout>
 			<HeaderContainer>
@@ -57,11 +65,7 @@ const TransactionsScreen = () => {
 				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
 
-			<Body
-				transactions={transactions}
-				{...{ loadMoreTransactions, renderFooter }}
-				//
-			/>
+			<Body transactions={filteredTransactions(transactions)!} {...{ loadMoreTransactions, renderFooter }} />
 		</WelcomeLayout>
 	);
 };
