@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
 import { useTheme } from '@hooks';
 import { Text } from '@components';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -12,9 +12,14 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
 	const current = useSharedValue(0);
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const screenWidth = Dimensions.get('screen').width - 48; // width - padding
 
+	// if the index is 0 the first value will be 0
+	// otherwise it will be the width divided by 3 times the index
+	// Ex: index: 2, screenWidth: 380. Should transform to (380 / 3) * 2
+	const transform = current.value === 0 ? 0 : (screenWidth / 3) * current.value;
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
-		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value * 1.13) + 8) }]
+		transform: [{ translateX: withTiming(transform) }]
 	}));
 
 	return (

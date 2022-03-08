@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
@@ -15,7 +15,7 @@ export const makeStyles = (colors: ColorType) =>
 		backgroundTag: {
 			position: 'absolute',
 			backgroundColor: '#006AA6',
-			width: 100,
+			width: (Dimensions.get('screen').width - 48) / 3, // screen width - padding / number of tabs
 			height: 32,
 			borderRadius: 16
 		},
