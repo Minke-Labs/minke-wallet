@@ -1,119 +1,304 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { View, StyleSheet, TextInput, Animated, Text } from 'react-native';
+/* eslint-disable react/jsx-props-no-spreading */
+import { useTheme } from '@hooks';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
+import {
+	View,
+	Animated as ReactAnimated,
+	TextInput,
+	Text,
+	TouchableOpacity,
+	TextStyle,
+	TouchableWithoutFeedback,
+	LayoutChangeEvent
+} from 'react-native';
+import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
+import Icon from '../Icon/Icon';
+import { makeStyles } from './Input.styles';
+import { InputProps, InputRef } from './Input.types';
 
-const styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#FFFCF5',
-		borderRadius: 41,
-		width: 208,
-		height: 56,
-		borderColor: '#D0D0D0',
-		borderWidth: 1
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
+const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
+	{
+		label,
+		isPassword,
+		onChangeText,
+		isFocused,
+		onBlur,
+		onFocus,
+		onTogglePassword,
+		togglePassword,
+		placeholder,
+		onSubmit,
+		multiline,
+		value = '',
+		onSelectionChange,
+		...rest
 	},
-	input: {
-		fontSize: 16,
-		height: 35,
-		color: '#05222D',
-		borderWidth: 1,
-		borderColor: 'red',
-		flex: 1,
-		paddingLeft: 24
-	},
-	label: {
-		color: '#748190',
-		fontSize: 16,
-		lineHeight: 16,
-		fontFamily: 'Inter_400Regular'
-	},
-	animatedStyle: {
-		top: 19,
-		left: 15,
-		position: 'absolute',
-		borderRadius: 90,
-		zIndex: 10000
-	}
-});
+	ref
+) => {
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
-const TestScreen = () => {
-	const [value, setValue] = useState('');
-	const [isFocused, setIsFocused] = useState(false);
-	const moveText = useRef(new Animated.Value(0)).current;
+	const [halfTop, setHalfTop] = useState(0);
+	const [isFocusedState, setIsFocused] = useState(false);
+	const [secureText, setSecureText] = useState(true);
+	const inputRef = useRef<any>(null);
 
-	const onChangeText = (text: string) => {
-		setValue(text);
+	const [fontColorAnimated] = useState(new Animated.Value(0));
+	const [fontSizeAnimated] = useState(new Animated.Value(isFocused ? 10 : 14));
+	const [leftAnimated] = useState(new Animated.Value(0));
+	const [topAnimated] = useState(new Animated.Value(0));
+
+	const setFocus = () => inputRef.current?.focus();
+	const setBlur = () => inputRef.current?.blur();
+
+	const toggleVisibility = (toggle?: boolean) => {
+		if (toggle === undefined) {
+			if (onTogglePassword) {
+				onTogglePassword(!secureText);
+			}
+			setSecureText(!secureText);
+			if (secureText) setFocus();
+			else setBlur();
+		} else if (!((secureText && !toggle) || (!secureText && toggle))) {
+			if (onTogglePassword) {
+				onTogglePassword(!toggle);
+			}
+			setSecureText(!toggle);
+			if (toggle) setFocus();
+			else setBlur();
+		}
 	};
 
-	const moveTextTop = () => {
-		Animated.timing(moveText, {
-			toValue: 1,
-			duration: 100,
-			useNativeDriver: true
-		}).start();
+	const animateFocus = () => {
+		ReactAnimated.parallel([
+			// @ts-ignore
+			timing(leftAnimated, {
+				duration: 300,
+				easing: EasingNode.linear,
+				toValue: 0
+			}),
+			// @ts-ignore
+			timing(fontSizeAnimated, {
+				toValue: 10,
+				duration: 300,
+				easing: EasingNode.linear
+			}),
+			// @ts-ignore
+			timing(topAnimated, {
+				toValue: -halfTop + (isFocusedState ? 10 : 14),
+				duration: 300,
+				easing: EasingNode.linear
+			}),
+			// @ts-ignore
+			timing(fontColorAnimated, {
+				toValue: 1,
+				duration: 300,
+				easing: EasingNode.linear
+			})
+		]).start();
 	};
 
-	const moveTextBottom = () => {
-		Animated.timing(moveText, {
-			toValue: 0,
-			duration: 100,
-			useNativeDriver: true
-		}).start();
+	const animateBlur = () => {
+		ReactAnimated.parallel([
+			// @ts-ignore
+			timing(leftAnimated, {
+				duration: 300,
+				easing: EasingNode.linear,
+				toValue: 0
+			}),
+			// @ts-ignore
+			timing(fontSizeAnimated, {
+				toValue: 14,
+				duration: 300,
+				easing: EasingNode.linear
+			}),
+			// @ts-ignore
+			timing(topAnimated, {
+				toValue: 0,
+				duration: 300,
+				easing: EasingNode.linear
+			}),
+			// @ts-ignore
+			timing(fontColorAnimated, {
+				toValue: 0,
+				duration: 300,
+				easing: EasingNode.linear
+			})
+		]).start();
 	};
 
-	const yVal = moveText.interpolate({
-		inputRange: [0, 1],
-		outputRange: [0, -18]
-	});
+	useEffect(() => {
+		if (isFocused === undefined) {
+			if (value !== '' || isFocusedState) {
+				setIsFocused(true);
+			} else if (value === '' || value === null) {
+				setIsFocused(false);
+			}
+		}
+	}, [value]);
 
-	const animStyle = {
-		transform: [{ translateY: yVal }]
-	};
+	useEffect(() => {
+		if (isFocused !== undefined) {
+			if (value !== '' || isFocused) {
+				setIsFocused(true);
+			} else {
+				setIsFocused(false);
+			}
+		}
+	}, [isFocused, value]);
 
-	const onFocusHandler = () => {
-		setIsFocused(true);
-		moveTextTop();
-	};
+	useEffect(() => {
+		if (togglePassword !== undefined) {
+			toggleVisibility(togglePassword);
+		}
+	}, [togglePassword]);
 
-	const onBlurHandler = () => {
+	useEffect(() => {
+		if (isFocusedState || value !== '') {
+			if (halfTop !== 0) {
+				animateFocus();
+			}
+		} else {
+			animateBlur();
+		}
+	}, [isFocusedState]);
+
+	useImperativeHandle(ref, () => ({
+		focus() {
+			inputRef.current.focus();
+		},
+		blur() {
+			inputRef.current.blur();
+		}
+	}));
+
+	useEffect(() => {
+		if (isFocusedState) {
+			ReactAnimated.parallel([
+				// @ts-ignore
+				timing(leftAnimated, {
+					duration: 300,
+					easing: EasingNode.linear,
+					toValue: 0
+				}),
+				// @ts-ignore
+				timing(fontSizeAnimated, {
+					toValue: 10,
+					duration: 300,
+					easing: EasingNode.linear
+				}),
+				// @ts-ignore
+				timing(topAnimated, {
+					toValue: -halfTop + (isFocusedState ? 10 : 14),
+					duration: 300,
+					easing: EasingNode.linear
+				}),
+				// @ts-ignore
+				timing(fontColorAnimated, {
+					toValue: 1,
+					duration: 300,
+					easing: EasingNode.linear
+				})
+			]).start();
+		}
+	}, [halfTop]);
+
+	const handleFocus = () => setIsFocused(true);
+
+	const handleBlur = () => {
 		if (value === '') {
-			moveTextBottom();
 			setIsFocused(false);
 		}
 	};
 
-	useEffect(() => {
-		if (value !== '') {
-			moveTextTop();
-		} else if (value === '') {
-			moveTextBottom();
-		}
-	}, [value]);
+	const onSubmitEditing = () => {
+		if (onSubmit !== undefined) onSubmit();
+	};
+
+	const newLabelStyles = {
+		fontSizeFocused: 10,
+		fontSizeBlurred: 14,
+		colorFocused: '#49658c',
+		colorBlurred: '#49658c'
+	};
+
+	const labelStyle: TextStyle = {
+		left: 5,
+		fontSize: !isFocusedState ? newLabelStyles.fontSizeBlurred : newLabelStyles.fontSizeFocused,
+		// @ts-ignore
+		color: interpolateColors(fontColorAnimated, {
+			inputRange: [0, 1],
+			outputColorRange: [colors.text4, colors.cta1]
+		}),
+		alignSelf: 'center',
+		position: 'absolute',
+		flex: 1
+	};
+
+	const onChangeTextCallback = (val: string) => (onChangeText ? onChangeText(val) : false);
+
+	const onLayout = (event: LayoutChangeEvent) => {
+		const { height } = event.nativeEvent.layout;
+		setHalfTop(height / 2);
+	};
 
 	return (
-		<View style={[styles.container, { borderColor: isFocused ? '#006AA6' : '#D0D0D0' }]}>
-			<Animated.View style={[styles.animatedStyle, animStyle]}>
-				<Text
-					style={[
-						styles.label,
-						{
-							color: isFocused ? '#006AA6' : '#748190',
-							fontSize: isFocused ? 12 : 16
-						}
-					]}
+		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
+			<View style={{ flexDirection: 'row' }}>
+				<View
+					style={[styles.container, { zIndex: 999 }]}
 				>
-					Label
-				</Text>
-			</Animated.View>
-			<TextInput
-				autoCapitalize="none"
-				style={styles.input}
-				value={value}
-				onChangeText={(text: string) => onChangeText(text)}
-				editable
-				onFocus={onFocusHandler}
-				onBlur={onBlurHandler}
-				blurOnSubmit
-			/>
-		</View>
+					<View style={{ flex: 1, flexDirection: 'row' }}>
+						<AnimatedText
+							onPress={setFocus}
+							style={[
+								labelStyle,
+								{
+									fontSize: fontSizeAnimated,
+									transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
+								}
+							]}
+						>
+							{label}
+						</AnimatedText>
+
+						<TextInput
+							onSubmitEditing={onSubmitEditing}
+							secureTextEntry={isPassword !== undefined ? isPassword && secureText : false}
+							onFocus={onFocus !== undefined ? onFocus : handleFocus}
+							onBlur={onBlur !== undefined ? onBlur : handleBlur}
+							ref={inputRef}
+							onChangeText={onChangeTextCallback}
+							style={[
+								styles.input,
+								{
+									flex: 1,
+									color:
+										styles.input.color !== undefined ?
+											styles.input.color :
+											newLabelStyles.colorFocused,
+									zIndex: 999
+								}
+							]}
+							{...{ value, multiline, ...rest }}
+						/>
+
+						{isPassword && (
+							<TouchableOpacity style={styles.toggleButton} onPress={() => toggleVisibility()}>
+								{secureText ? (
+									<Icon name="eyeCross" size={24} color="cta1" />
+								) : (
+									<Icon name="eyeStroke" size={24} color="cta1" />
+								)}
+							</TouchableOpacity>
+						)}
+					</View>
+				</View>
+			</View>
+		</TouchableWithoutFeedback>
 	);
 };
-export default TestScreen;
+
+export default forwardRef(Input);
