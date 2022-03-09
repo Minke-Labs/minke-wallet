@@ -18,7 +18,7 @@ export const Body: React.FC<BodyProps> = ({ lending }) => {
 					keyExtractor={(item, idx) => `${item.address}${idx}`}
 					data={lending.assets}
 					showsVerticalScrollIndicator={false}
-					renderItem={({ item }) => {
+					renderItem={({ item, index }) => {
 						const deposit = item.groupId === 'supply';
 						const { symbol } = item.tokens[0];
 						return (
@@ -26,6 +26,7 @@ export const Body: React.FC<BodyProps> = ({ lending }) => {
 								image={<TransactionIcon received={deposit} />}
 								title={symbol}
 								subtitle={deposit ? 'Deposit' : 'Borrow'}
+								marginBottom={index === lending.assets.length - 1 ? 0 : 32}
 								right={
 									<View>
 										<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>
