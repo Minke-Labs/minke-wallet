@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
+import { useState } from '@hookstate/core';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
-import { PaymentRequest } from 'react-native-payments';
 import { TokenType } from '@styles';
 import { ICoin } from '@helpers/coins';
+import { useWyreApplePay } from '@src/hooks';
 
 interface ChooseQuantityModalProps {
 	coin: ICoin;
@@ -17,62 +18,20 @@ interface ChooseQuantityModalProps {
 
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
-	amount,
+	amount = 100,
 	setPresetAmount,
 	enableCustomAmount
 }) => {
 	const { name, symbol } = coin;
-	const [snackbarVisible, setSnackbarVisible] = useState(false);
-	const wallet = globalWalletState();
+	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+	const { address } = useState(globalWalletState()).value;
 
 	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.address || '');
+		Clipboard.setString(address || '');
 		setSnackbarVisible(true);
 	};
 
-	const paymentOptions = {
-		requestBilling: true,
-		requestPayerEmail: true,
-		requestPayerPhone: true
-	};
-
-	const onApplePayPress = async () => {
-		const METHOD_DATA = [
-			{
-				supportedMethods: ['apple-pay'],
-				data: {
-					merchantIdentifier: 'merchant.minke.prod',
-					supportedNetworks: ['visa', 'mastercard', 'amex'],
-					countryCode: 'US',
-					currencyCode: 'USD'
-				}
-			}
-		];
-
-		const DETAILS = {
-			id: 'minke-wyre',
-			displayItems: [
-				{
-					label: `${name} (${symbol})`,
-					amount: { currency: 'USD', value: amount }
-				}
-			],
-			total: {
-				label: 'Minke Labs',
-				amount: { currency: 'USD', value: amount }
-			}
-		};
-		const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS, paymentOptions);
-		try {
-			const paymentResponse = await paymentRequest.show();
-			console.log('paymentResponse', paymentResponse);
-			paymentResponse.complete('success');
-		} catch ({ message }) {
-			if (message !== 'AbortError') {
-				console.error(message);
-			}
-		}
-	};
+	const { isPaymentComplete, onPurchase, orderCurrency, orderId } = useWyreApplePay();
 
 	return (
 		<>
@@ -105,7 +64,9 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					<Text type="a">Choose another amount</Text>
 				</PaperTouchable>
 
-				<ApplePayButton marginBottom={48} onPress={onApplePayPress} />
+				{amount > 0 && (
+					<ApplePayButton marginBottom={48} onPress={() => onPurchase({ currency: symbol, value: amount })} />
+				)}
 
 				<View
 					style={{

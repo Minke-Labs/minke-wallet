@@ -12,6 +12,7 @@ export interface Network {
 	zapperNetwork: string;
 	nativeToken: { symbol: string; name: string };
 	transactionTimesEndpoint: boolean;
+	wyreSRN: string;
 }
 
 export interface Networks {
@@ -26,6 +27,7 @@ export const networks: Networks = {
 		chainId: 1,
 		name: 'Ethereum',
 		id: 'mainnet',
+		wyreSRN: 'ethereum',
 		testnet: false,
 		etherscanURL: 'https://etherscan.io/',
 		etherscanAPIURL: 'https://api.etherscan.io/',
@@ -38,6 +40,7 @@ export const networks: Networks = {
 		chainId: 137,
 		name: 'Polygon',
 		id: 'matic',
+		wyreSRN: 'matic',
 		testnet: false,
 		etherscanURL: 'https://polygonscan.com/',
 		etherscanAPIURL: 'https://api.polygonscan.com/',
@@ -50,6 +53,7 @@ export const networks: Networks = {
 		chainId: 80001,
 		name: 'Polygon Test',
 		id: 'maticmum',
+		wyreSRN: 'matic',
 		testnet: true,
 		etherscanURL: 'https://mumbai.polygonscan.com/',
 		etherscanAPIURL: 'https://api-testnet.polygonscan.com/',
@@ -63,6 +67,7 @@ export const networks: Networks = {
 		chainId: 3,
 		name: 'Ropsten',
 		id: 'ropsten',
+		wyreSRN: 'ethereum',
 		testnet: true,
 		etherscanURL: 'https://ropsten.etherscan.io/',
 		etherscanAPIURL: 'https://api-ropsten.etherscan.io/',

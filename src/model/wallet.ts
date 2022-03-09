@@ -108,14 +108,12 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWall
 
 export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<MinkeWallet> => {
 	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
-
 	const existingWallets = (await getAllWallets()) || {};
 	const existingWallet = find(existingWallets, (w) => w.address === wallet.address);
-
 	if (!existingWallet || isEmpty(existingWallet)) {
 		return walletCreate(mnemonicOrPrivateKey);
 	}
-
+	await savePrivateKey(wallet.address, wallet.privateKey);
 	return existingWallet;
 };
 

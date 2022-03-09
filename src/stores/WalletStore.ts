@@ -82,7 +82,6 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 	if (wallet) {
 		await setPrimaryWallet(wallet);
 		const privateKey = await getPrivateKey(wallet.address);
-
 		if (privateKey) {
 			return {
 				...{ privateKey, address: wallet.address, walletId: wallet.id, allTokens: [], transactions: [] },
