@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Linking, TouchableOpacity, useColorScheme, View, SafeAreaView } from 'react-native';
-import { Icon, Text, Button, TransparentCard } from '@components';
+import { Icon, Text, Button, TransparentCard, ActivityIndicator } from '@components';
 import { LinearGradient } from 'expo-linear-gradient';
 import { approvalTransaction } from '@models/deposit';
 import { aaveGhost } from '@images';
@@ -130,6 +130,11 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 						This transaction will cost a few cents.
 					</Text>
 				</View>
+				{loading && (
+					<View style={styles.loadingBox}>
+						<ActivityIndicator />
+					</View>
+				)}
 			</View>
 		</Background>
 	);
