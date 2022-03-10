@@ -4,7 +4,7 @@ export default StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
-		paddingHorizontal: 24
+		paddingHorizontal: 20
 	},
 	image: {
 		width: 147,
