@@ -7,22 +7,16 @@ PODS:
     - ExpoModulesCore
   - EXClipboard (2.1.0):
     - ExpoModulesCore
-  - EXConstants (12.0.0):
+  - EXConstants (13.0.1):
     - ExpoModulesCore
   - EXErrorRecovery (3.0.5):
     - ExpoModulesCore
-  - EXFileSystem (13.0.3):
+  - EXFileSystem (13.1.4):
     - ExpoModulesCore
   - EXFont (10.0.4):
     - ExpoModulesCore
-  - EXImageLoader (3.0.0):
-    - ExpoModulesCore
-    - React-Core
-  - EXJSONUtils (0.2.0)
   - EXKeepAwake (10.0.2):
     - ExpoModulesCore
-  - EXManifests (0.2.3):
-    - EXJSONUtils
   - Expo (44.0.6):
     - ExpoModulesCore
   - ExpoLinearGradient (11.0.3):
@@ -37,14 +31,6 @@ PODS:
   - EXSplashScreen (0.14.1):
     - ExpoModulesCore
     - React-Core
-  - EXStructuredHeaders (2.1.0)
-  - EXUpdates (0.11.6):
-    - EXManifests
-    - ExpoModulesCore
-    - EXStructuredHeaders
-    - EXUpdatesInterface
-    - React-Core
-  - EXUpdatesInterface (0.5.0)
   - FBLazyVector (0.64.3)
   - FBReactNativeSpec (0.64.3):
     - RCT-Folly (= 2020.01.13.00)
@@ -368,9 +354,6 @@ PODS:
     - React-Core
   - TcpSockets (3.3.2):
     - React
-  - UMAppLoader (3.0.0)
-  - UMTaskManagerInterface (7.0.3):
-    - ExpoModulesCore
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -382,19 +365,13 @@ DEPENDENCIES:
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
-  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
-  - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
-  - EXManifests (from `../node_modules/expo-manifests/ios`)
   - Expo (from `../node_modules/expo/ios`)
   - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - ExpoLocalization (from `../node_modules/expo-localization/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
-  - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
-  - EXUpdates (from `../node_modules/expo-updates/ios`)
-  - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -438,8 +415,6 @@ DEPENDENCIES:
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TcpSockets (from `../node_modules/react-native-tcp`)
-  - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
-  - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -463,14 +438,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
     :path: "../node_modules/expo-font/ios"
-  EXImageLoader:
-    :path: "../node_modules/expo-image-loader/ios"
-  EXJSONUtils:
-    :path: "../node_modules/expo-json-utils/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
-  EXManifests:
-    :path: "../node_modules/expo-manifests/ios"
   Expo:
     :path: "../node_modules/expo/ios"
   ExpoLinearGradient:
@@ -483,12 +452,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-secure-store/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
-  EXStructuredHeaders:
-    :path: "../node_modules/expo-structured-headers/ios"
-  EXUpdates:
-    :path: "../node_modules/expo-updates/ios"
-  EXUpdatesInterface:
-    :path: "../node_modules/expo-updates-interface/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -571,10 +534,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-vector-icons"
   TcpSockets:
     :path: "../node_modules/react-native-tcp"
-  UMAppLoader:
-    :path: "../node_modules/unimodules-app-loader/ios"
-  UMTaskManagerInterface:
-    :path: "../node_modules/unimodules-task-manager-interface/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -584,23 +543,17 @@ SPEC CHECKSUMS:
   EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXBlur: 82055865de17cf2cf797ff064c50fb59fcbe703f
   EXClipboard: 4d6ee6f9572ef999fc323e4b99c8d180e041ad33
-  EXConstants: b14b472da01b8191c1cfe86f29caa1e0c6a46bed
+  EXConstants: 6966f4fa7a22770dd240a66d029819ff94c748c9
   EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
-  EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
+  EXFileSystem: 08a3033ac372b6346becf07839e1ccef26fb1058
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
-  EXImageLoader: 939451be6f7b731aaa6588920b90743f20121a4d
-  EXJSONUtils: f515cf71710855d7ba5bfc6752af3b9a6f6aad01
   EXKeepAwake: bf48d7f740a5cd2befed6cf9a49911d385c6c47d
-  EXManifests: d854c4d16fde48a19a2c2b6785b303177597bd08
   Expo: 534e51e607aba8229293297da5585f4b26f50fa1
   ExpoLinearGradient: fd591c223c81f6779036ed4cef4deb20ecb87c50
   ExpoLocalization: 83582a967db52987a8479490b056d5eb9fd70552
   ExpoModulesCore: 32c0ccb47f477d330ee93db72505380adf0de09a
   EXSecureStore: fa0fdde1c81ceee2a3cb0519e649feae42767969
   EXSplashScreen: 7872675b95bb07c25f922b3d3dfae70c76fb5a00
-  EXStructuredHeaders: 2ce79a3770bd3795bade1aab215ada70deae8bbc
-  EXUpdates: bd5fa64f02685ed3e96be86b5ca350cdc2cd8d02
-  EXUpdatesInterface: f459b515151bd73fff7a35366eace34a6c6a0d3f
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: bcbae1611f573cd67d2ba346fed3c358aaf6e7a9
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
@@ -642,8 +595,6 @@ SPEC CHECKSUMS:
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
-  UMAppLoader: 671576daa3fd3017d4879a5f23fc0dd3b36422a8
-  UMTaskManagerInterface: 5654c50e68af11b19b9d05452bacf23d19b3f30f
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
 PODFILE CHECKSUM: 0c60ce7cdb99e6eb906c27237fec2d80a8a4e7a2
