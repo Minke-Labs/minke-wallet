@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
 
 export default StyleSheet.create({
 	// ...BACKGROUND
@@ -40,5 +42,10 @@ export default StyleSheet.create({
 	actionContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-between'
+	},
+	loadingBox: {
+		position: 'absolute',
+		bottom: 24,
+		width: screenWidth
 	}
 });

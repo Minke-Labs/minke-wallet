@@ -3,9 +3,8 @@ import { View } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Card, Button } from '@components';
+import { Text, Card, Button, TransactionIcon } from '@components';
 import { makeStyles } from './Body.styles';
-import TransactionIcon from '../../WalletScreen/screens/Transactions/TransactionIcon/TransactionIcon';
 import { BodyProps } from './Body.types';
 
 export const Body: React.FC<BodyProps> = ({ lending }) => {
@@ -19,7 +18,7 @@ export const Body: React.FC<BodyProps> = ({ lending }) => {
 					keyExtractor={(item, idx) => `${item.address}${idx}`}
 					data={lending.assets}
 					showsVerticalScrollIndicator={false}
-					renderItem={({ item }) => {
+					renderItem={({ item, index }) => {
 						const deposit = item.groupId === 'supply';
 						const { symbol } = item.tokens[0];
 						return (
@@ -27,6 +26,7 @@ export const Body: React.FC<BodyProps> = ({ lending }) => {
 								image={<TransactionIcon received={deposit} />}
 								title={symbol}
 								subtitle={deposit ? 'Deposit' : 'Borrow'}
+								marginBottom={index === lending.assets.length - 1 ? 0 : 32}
 								right={
 									<View>
 										<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>

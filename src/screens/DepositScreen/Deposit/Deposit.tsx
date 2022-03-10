@@ -18,6 +18,7 @@ import { useState } from '@hookstate/core';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import ProgressButton from '@src/components/ProgressButton';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TokenCard from '../../ExchangeScreen/TokenCard';
 import GasSelector from '../../ExchangeScreen/GasSelector';
 import { makeStyles } from './Deposit.styles';
@@ -171,9 +172,9 @@ const Deposit = () => {
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-
 					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
 				</View>
+				<KeyboardSpacer />
 			</WelcomeLayout>
 			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccessScreen')}>
 				<TransactionWaitModal
