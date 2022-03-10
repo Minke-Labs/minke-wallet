@@ -17,7 +17,6 @@ import { SendModal, ReceiveModal, SentModal } from './Modals';
 import { ResultProps } from './WalletScreen.types';
 
 const WalletScreen = () => {
-	const wallet = globalWalletState();
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
@@ -98,7 +97,7 @@ const WalletScreen = () => {
 	const hideReceive = () => setReceiveVisible(false);
 	const showReceive = () => setReceiveVisible(true);
 	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.address || '');
+		Clipboard.setString(state.address.value || '');
 		setSnackbarVisible(true);
 	};
 
