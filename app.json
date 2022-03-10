@@ -1,36 +1,38 @@
 {
-	"expo": {
-		"name": "Minke DeFi Wallet",
-		"slug": "minke-wallet",
-		"owner": "minkelabs",
-		"version": "0.0.1",
-		"orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#0A2138"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true,
-			"bundleIdentifier": "com.minkeapp.minkewallet",
-			"buildNumber": "15"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF"
-			},
-			"package": "com.minkeapp.minkewallet"
-		},
-		"web": {
-			"favicon": "./assets/favicon.png"
-		},
-		"description": "",
-		"userInterfaceStyle": "automatic"
-	}
+  "expo": {
+    "name": "Minke DeFi Wallet",
+    "slug": "minke-wallet",
+    "owner": "minkelabs",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A2138"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.minkeapp.minkewallet",
+      "buildNumber": "22"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.minkeapp.minkewallet"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "",
+    "userInterfaceStyle": "automatic"
+  }
 }
