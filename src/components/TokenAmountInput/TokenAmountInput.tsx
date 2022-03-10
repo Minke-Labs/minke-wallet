@@ -3,6 +3,7 @@
 import React, { RefObject } from 'react';
 import { TextInput, StyleProp, TextStyle } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
+import { useTheme } from '@hooks';
 
 const TokenAmountInput = ({
 	amount,
@@ -25,6 +26,7 @@ const TokenAmountInput = ({
 	placeholder?: string;
 	autoFocus?: boolean;
 }) => {
+	const { colors } = useTheme();
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
 		let validNumber;
@@ -50,7 +52,11 @@ const TokenAmountInput = ({
 			keyboardType="numeric"
 			style={[
 				style,
-				{ borderBottomColor: isAmountValid ? '#D0D0D0' : 'red', display: visible ? 'flex' : 'none' }
+				{
+					borderBottomColor: isAmountValid ? '#D0D0D0' : 'red',
+					display: visible ? 'flex' : 'none',
+					color: colors.text1
+				}
 			]}
 			value={amount}
 			ref={innerRef}
