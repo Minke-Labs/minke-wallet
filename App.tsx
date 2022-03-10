@@ -1,3 +1,4 @@
+import 'expo-dev-client';
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { ThemeProvider } from '@contexts';

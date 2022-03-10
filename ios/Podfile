@@ -9,6 +9,8 @@ podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {
 
 target 'MinkeDeFiWallet' do
   use_expo_modules!
+	pod 'expo-dev-menu', path: '../node_modules/expo-dev-menu', :configurations => :debug
+  pod 'expo-dev-launcher', path: '../node_modules/expo-dev-launcher', :configurations => :debug
   config = use_native_modules!
 
   use_react_native!(
@@ -45,26 +47,6 @@ target 'MinkeDeFiWallet' do
   end
 
   post_integrate do |installer|
-    begin
-      expo_patch_react_imports!(installer)
-    rescue => e
-      Pod::UI.warn e
-    end
-    begin
-      expo_patch_react_imports!(installer)
-    rescue => e
-      Pod::UI.warn e
-    end
-    begin
-      expo_patch_react_imports!(installer)
-    rescue => e
-      Pod::UI.warn e
-    end
-    begin
-      expo_patch_react_imports!(installer)
-    rescue => e
-      Pod::UI.warn e
-    end
     begin
       expo_patch_react_imports!(installer)
     rescue => e
