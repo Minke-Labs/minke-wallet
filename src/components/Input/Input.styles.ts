@@ -1,33 +1,39 @@
 import { StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
 
+const HEIGHT = 56;
+
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
 		container: {
 			backgroundColor: colors.background5,
-			borderColor: colors.detail2,
 			borderWidth: 1,
 			borderRadius: 41,
-			paddingHorizontal: 11,
-			paddingTop: 10,
-			paddingBottom: 10,
+			paddingHorizontal: 24,
+			paddingVertical: 10,
 			alignContent: 'center',
 			justifyContent: 'center',
-			height: 56,
+			height: HEIGHT,
 			alignItems: 'center',
 			flexDirection: 'row',
+			flex: 1,
+			zIndex: 999
+		},
+
+		label: {
+			left: 5,
+			alignSelf: 'center',
+			position: 'absolute',
 			flex: 1
 		},
 
 		input: {
-			minHeight: 28,
-			color: '#000',
-			paddingVertical: 0,
+			minHeight: HEIGHT - 16,
 			flex: 1,
 			zIndex: 10,
-
-			borderWidth: 1,
-			borderColor: 'red'
+			color: colors.text1,
+			paddingBottom: 0,
+			paddingTop: HEIGHT / 2 - 8
 		},
 
 		toggleButton: {

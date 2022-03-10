@@ -31,6 +31,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		placeholder,
 		onSubmit,
 		multiline,
+		error,
 		value = '',
 		onSelectionChange,
 		...rest
@@ -46,7 +47,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	const inputRef = useRef<any>(null);
 
 	const [fontColorAnimated] = useState(new Animated.Value(0));
-	const [fontSizeAnimated] = useState(new Animated.Value(isFocused ? 10 : 14));
+	const [fontSizeAnimated] = useState(new Animated.Value(isFocused ? 12 : 16));
 	const [leftAnimated] = useState(new Animated.Value(0));
 	const [topAnimated] = useState(new Animated.Value(0));
 
@@ -87,7 +88,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 			}),
 			// @ts-ignore
 			timing(topAnimated, {
-				toValue: -halfTop + (isFocusedState ? 10 : 14),
+				toValue: -halfTop + (isFocusedState ? 16 : 14),
 				duration: 300,
 				easing: EasingNode.linear
 			}),
@@ -217,24 +218,12 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		if (onSubmit !== undefined) onSubmit();
 	};
 
-	const newLabelStyles = {
-		fontSizeFocused: 10,
-		fontSizeBlurred: 14,
-		colorFocused: '#49658c',
-		colorBlurred: '#49658c'
-	};
-
 	const labelStyle: TextStyle = {
-		left: 5,
-		fontSize: !isFocusedState ? newLabelStyles.fontSizeBlurred : newLabelStyles.fontSizeFocused,
 		// @ts-ignore
 		color: interpolateColors(fontColorAnimated, {
 			inputRange: [0, 1],
 			outputColorRange: [colors.text4, colors.cta1]
-		}),
-		alignSelf: 'center',
-		position: 'absolute',
-		flex: 1
+		})
 	};
 
 	const onChangeTextCallback = (val: string) => (onChangeText ? onChangeText(val) : false);
@@ -247,14 +236,27 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	return (
 		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
 			<View style={{ flexDirection: 'row' }}>
-				<View
-					style={[styles.container, { zIndex: 999 }]}
+				<Animated.View
+					style={[
+						{
+							// eslint-disable-next-line no-nested-ternary
+							borderColor: error ? colors.alert1 : isFocusedState ? colors.cta1 : colors.cta2
+						},
+						styles.container
+					]}
 				>
-					<View style={{ flex: 1, flexDirection: 'row' }}>
+					<View
+						style={{
+							flex: 1,
+							flexDirection: 'row',
+							alignItems: 'center'
+						}}
+					>
 						<AnimatedText
 							onPress={setFocus}
 							style={[
 								labelStyle,
+								styles.label,
 								{
 									fontSize: fontSizeAnimated,
 									transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
@@ -271,19 +273,11 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							onBlur={onBlur !== undefined ? onBlur : handleBlur}
 							ref={inputRef}
 							onChangeText={onChangeTextCallback}
-							style={[
-								styles.input,
-								{
-									flex: 1,
-									color:
-										styles.input.color !== undefined ?
-											styles.input.color :
-											newLabelStyles.colorFocused,
-									zIndex: 999
-								}
-							]}
+							style={styles.input}
 							{...{ value, multiline, ...rest }}
 						/>
+
+						{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
 
 						{isPassword && (
 							<TouchableOpacity style={styles.toggleButton} onPress={() => toggleVisibility()}>
@@ -295,7 +289,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							</TouchableOpacity>
 						)}
 					</View>
-				</View>
+				</Animated.View>
 			</View>
 		</TouchableWithoutFeedback>
 	);

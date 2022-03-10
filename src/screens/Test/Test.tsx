@@ -12,7 +12,8 @@ const Test = () => {
 					label="Label"
 					value={value}
 					onChangeText={setValue}
-					isPassword
+					// isPassword
+					// error
 				/>
 			</View>
 		</WelcomeLayout>
