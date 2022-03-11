@@ -28,6 +28,11 @@ export const numberFormat = (value: number, digits?: number) =>
 		minimumFractionDigits: digits || 2
 	}).format(value);
 
+export const tokenBalanceFormat = (value: number | string, digits = 5) => {
+	const regex = new RegExp(`^-?\\d+(?:\\.\\d{0,${digits}})?`, 'gi');
+	return value.toString().match(regex);
+};
+
 export const addColorOpacity = (color: string, opacity: number): string => {
 	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
 	return color + newOpacity.toString(16).toUpperCase();

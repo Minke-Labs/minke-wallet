@@ -16,6 +16,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { WelcomeLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator } from '@components';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import { RootStackParamList } from '../../routes/types.routes';
 import SearchTokens from './SearchTokens';
 import GasSelector from './GasSelector';
@@ -218,7 +219,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 				const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
 				const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
 				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
-				const destQuantityString = division.match(/^-?\d+(?:\.\d{0,9})?/);
+				const destQuantityString = tokenBalanceFormat(division, 9);
 				return (
 					<Text type="span" weight="regular" color="text3">
 						1 {fromToken.symbol} = {destQuantityString} {toToken.symbol}

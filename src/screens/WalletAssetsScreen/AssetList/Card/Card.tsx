@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Token, Icon, Text } from '@components';
 import { TokenType } from '@styles';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import { useTheme } from '@hooks';
 import { CardProps } from './Card.types';
 import styles from './Card.styles';
@@ -12,7 +13,7 @@ const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalanc
 		<View style={[styles.container, { borderColor: colors.detail4 }]}>
 			<View style={styles.header}>
 				<View style={styles.headerLeft}>
-					<Token name={coinSymbol as TokenType} glow size={32} />
+					<Token name={coinSymbol.toLowerCase() as TokenType} glow size={32} />
 					<Text type="a" weight="bold" style={{ marginLeft: 8 }}>
 						{coinName}
 					</Text>
@@ -28,7 +29,7 @@ const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalanc
 						Your wallet balance
 					</Text>
 					<Text marginBottom={2} weight="medium" type="p2">
-						{walletBalance}
+						{tokenBalanceFormat(walletBalance, 10)} <Text type="span">{coinSymbol}</Text>
 					</Text>
 					<Text marginBottom={24} type="span">
 						${walletBalanceUsd}

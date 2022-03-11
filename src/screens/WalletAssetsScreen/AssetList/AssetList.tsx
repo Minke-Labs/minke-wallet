@@ -34,8 +34,8 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 					<Card
 						key={item.address}
 						coinName={coinParamFromSymbol({ symbol: item.symbol, type: 'name' }) || ''}
-						coinSymbol={item.symbol.toLowerCase() as TokenType}
-						walletBalance={Number(item.balance.toFixed(5))}
+						coinSymbol={item.symbol as TokenType}
+						walletBalance={Number(item.balance)}
 						walletBalanceUsd={item.balanceUSD}
 						onPress={() => onSelected(item)}
 					/>

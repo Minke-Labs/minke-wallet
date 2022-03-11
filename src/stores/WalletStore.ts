@@ -3,6 +3,7 @@
 import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Wallet } from 'ethers';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
 import {
 	Coin,
