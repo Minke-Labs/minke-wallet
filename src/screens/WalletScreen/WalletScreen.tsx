@@ -8,7 +8,7 @@ import { Text, Modal, ModalReusables } from '@components';
 import { useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
-import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import { globalWalletState, walletState, emptyWallet, fetchTokensAndBalances } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getAllWallets } from '@models/wallet';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
@@ -55,8 +55,10 @@ const WalletScreen = () => {
 
 	const fetchTransactions = async () => {
 		setLoading(true);
-		const result = await getTransactions(state.value.address || '');
-		state.transactions.set(result);
+		const { address, privateKey } = state.value;
+		const transactions = await getTransactions(address || '');
+		const { balance } = await fetchTokensAndBalances(privateKey, address);
+		state.merge({ transactions, balance });
 		setLoading(false);
 		setLastTransationsFetch(new Date().getTime());
 	};
