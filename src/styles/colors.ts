@@ -44,7 +44,8 @@ const lightTheme = {
 	graphic3: '#ffffff4e',
 	graphicRed1: '#ee808073',
 	graphicRed2: 'rgba(192, 48, 48, 0.15)',
-	graphicRed3: 'rgba(192, 48, 48, 0)'
+	graphicRed3: 'rgba(192, 48, 48, 0)',
+	background5: '#FFFFFF'
 };
 
 const darkTheme = {
@@ -92,7 +93,8 @@ const darkTheme = {
 	graphic3: 'rgba(172, 232, 185, 0)',
 	graphicRed1: '#C03030',
 	graphicRed2: 'rgba(192, 48, 48, 0.15)',
-	graphicRed3: 'rgba(192, 48, 48, 0)'
+	graphicRed3: 'rgba(192, 48, 48, 0)',
+	background5: '#22374C'
 };
 
 export const colors = { darkTheme, lightTheme };
