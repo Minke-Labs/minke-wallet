@@ -16,9 +16,10 @@ interface CoinParamFromSymbolProps {
 }
 
 export const coinParamFromSymbol = ({ symbol, type = 'id' }: CoinParamFromSymbolProps) => {
-	const filtered = coins.find((coin) => coin.symbol === symbol.toLowerCase());
+	const filtered = coins.find((coin) => coin.symbol.toLowerCase() === symbol.toLowerCase());
 	const indexed = type as keyof typeof filtered;
-	return filtered![indexed];
+	if (filtered) return filtered![indexed];
+	return symbol;
 };
 
 export const numberFormat = (value: number, digits?: number) =>

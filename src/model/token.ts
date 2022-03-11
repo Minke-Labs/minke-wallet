@@ -134,6 +134,7 @@ export interface ParaswapToken {
 	network: number;
 	allowance?: string; // available only when query user tokens
 }
+
 export interface TokenResponse {
 	tokens: Array<ParaswapToken>;
 }
@@ -178,4 +179,37 @@ export interface TransactionData {
 	to: string;
 	value: string;
 	error: string;
+}
+
+export interface MinkeToken {
+	decimals: number;
+	name: string;
+	symbol: string;
+	address: string;
+	image: string;
+	balance: string;
+	balanceUSD: number;
+}
+
+export interface AccountBalance {
+	address: string;
+	balance: number;
+	tokens: MinkeToken[];
+}
+
+export interface CovalentToken {
+	contract_decimals: number;
+	contract_name: string;
+	contract_ticker_symbol: string;
+	contract_address: string;
+	logo_url: string;
+	last_transferred_at: string;
+	type: string;
+	balance: string;
+	balance_24h: string;
+	quote_rate: number;
+	quote_rate_24h: number;
+	quote: number;
+	quote_24h: number;
+	nft_data: null;
 }

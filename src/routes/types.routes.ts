@@ -1,8 +1,8 @@
-import { WalletToken } from '@models/wallet';
+import { MinkeToken } from '@models/token';
 
 export type RootStackParamList = {
 	AccountsScreen: undefined;
-	AssetsScreen: { coin: WalletToken };
+	AssetsScreen: { coin: MinkeToken };
 	BackupScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeNetworkScreen: undefined;

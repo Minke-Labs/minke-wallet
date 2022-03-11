@@ -3,8 +3,7 @@ import { View, FlatList } from 'react-native';
 import { useNavigation } from '@hooks';
 import { coinParamFromSymbol } from '@helpers/utilities';
 import { TokenType } from '@styles';
-import { WalletToken } from '@models/wallet';
-import { stablecoins } from '@models/token';
+import { MinkeToken, stablecoins } from '@models/token';
 import Card from './Card/Card';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
@@ -15,7 +14,7 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	const [active, setActive] = React.useState(0);
 	const navigation = useNavigation();
 
-	const onSelected = (coin: WalletToken) => navigation.navigate('AssetsScreen', { coin });
+	const onSelected = (coin: MinkeToken) => navigation.navigate('AssetsScreen', { coin });
 
 	const filterByStablecoin = () => {
 		if (active) return walletTokens.filter((item) => stablecoins.includes(item.symbol));

@@ -20,6 +20,7 @@
     "@types/d3-scale": "^4.0.2",
     "@types/d3-shape": "^3.0.2",
     "assert": "^1.5.0",
+    "axios": "^0.26.1",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "bignumber.js": "^9.0.2",
     "bip39": "^3.0.4",

@@ -1,0 +1,36 @@
+import axios from 'axios';
+import { AccountBalance } from '@src/model/token';
+import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
+import coins from '@helpers/coins.json';
+import { BalanceApiResponse, TokenBalanceParams } from './covalent.types';
+
+const instance = axios.create({
+	baseURL: 'https://api.covalenthq.com/v1',
+	timeout: 5000,
+	headers: { 'Content-Type': 'application/json' },
+	params: {
+		'quote-currency': 'USD',
+		format: 'JSON',
+		nft: false,
+		'no-nft-fetch': true,
+		key: ''
+	}
+});
+
+export const getTokenBalances = async ({
+	address,
+	chainId: networkId
+}: TokenBalanceParams): Promise<AccountBalance> => {
+	const response = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
+
+	const {
+		data: { items: apiTokens }
+	}: BalanceApiResponse = response.data;
+
+	const curated = coins.map(({ symbol }) => symbol.toLowerCase());
+	const minkeTokens = convertTokens({ source: 'covalent', tokens: apiTokens });
+	const tokens = minkeTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
+	const balance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
+
+	return { address, tokens, balance };
+};

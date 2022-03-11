@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Card, RadioButton } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { Text, Icon as IconImg, ActivityIndicator } from '@components';
-import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@src/model/wallet';
+import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
