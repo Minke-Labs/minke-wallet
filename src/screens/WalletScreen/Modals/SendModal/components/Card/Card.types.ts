@@ -1,4 +1,4 @@
-import { WalletToken } from '@src/model/wallet';
+import { WalletToken } from '@models/wallet';
 
 export interface CardProps {
 	token: WalletToken;
