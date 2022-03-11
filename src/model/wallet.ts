@@ -3,7 +3,6 @@ import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
-// @ts-ignore
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { useState } from '@hookstate/core';
@@ -7,7 +7,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
 import { TokenType } from '@styles';
 import { ICoin } from '@helpers/coins';
-import { useWyreApplePay } from '@src/hooks';
+import { useWyreApplePay } from '@hooks';
 
 interface ChooseQuantityModalProps {
 	coin: ICoin;

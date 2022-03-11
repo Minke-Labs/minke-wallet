@@ -1,7 +1,7 @@
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useState } from '@hookstate/core';
 import React, { useCallback } from 'react';
-import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@src/model/wyre';
+import { globalWalletState } from '@stores/WalletStore';
+import { useState } from '@hookstate/core';
+import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@models/wyre';
 import useTimeout from './useTimeout';
 
 export default function useWyreApplePay() {

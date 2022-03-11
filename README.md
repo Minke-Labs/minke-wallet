@@ -27,7 +27,7 @@ In the local machine simulator:
 
 In a real device connected through USB
 
--   react-native run-ios --device "Marcos iPhone"
+-   expo run:ios -d "Marcos iPhone"
 
 To build a test version out of it:
 

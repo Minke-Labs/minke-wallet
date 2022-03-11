@@ -2,12 +2,17 @@
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
 import { get, split } from 'lodash';
 import { Network } from './network';
+import {
+	WYRE_MERCHANT_ID_TEST,
+	WYRE_MERCHANT_ID,
+	WYRE_ACCOUNT_ID_TEST,
+	WYRE_ACCOUNT_ID,
+	WYRE_TOKEN,
+	WYRE_TOKEN_TEST
+} from '@env';
 
 const SOURCE_CURRENCY_USD = 'USD';
 const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';
-
-const { WYRE_MERCHANT_ID_TEST, WYRE_MERCHANT_ID, WYRE_ACCOUNT_ID_TEST, WYRE_ACCOUNT_ID, WYRE_TOKEN, WYRE_TOKEN_TEST } =
-	process.env;
 
 const WYRE_ENDPOINT_TEST = 'https://api.testwyre.com';
 const WYRE_ENDPOINT = 'https://api.sendwyre.com';
@@ -19,6 +24,7 @@ const wyreApi = {
 			headers,
 			body: JSON.stringify(data)
 		};
+
 		const result = await fetch(url, requestOptions);
 		return result.json();
 	},
@@ -93,11 +99,15 @@ export const showApplePayRequest = async (
 		requestPayerPhone: true
 	};
 
+	console.log({ methodData });
+	console.log({ paymentDetails });
+	console.log({ paymentOptions });
 	const paymentRequest = new PaymentRequest(methodData, paymentDetails, paymentOptions);
 	try {
 		const paymentResponse = await paymentRequest.show();
 		return paymentResponse;
 	} catch (error) {
+		console.error(error);
 		return null;
 	}
 };
@@ -127,6 +137,8 @@ export const getWalletOrderQuotation = async (
 		Authorization: `Bearer ${wyreAuthToken}`
 	};
 	const response = await wyreApi.post(`${baseUrl}/v3/orders/quote/partner`, data, headers);
+	console.log({ data });
+	console.log({ response });
 	const purchaseFee = response?.fees[SOURCE_CURRENCY_USD];
 	return {
 		purchaseFee,

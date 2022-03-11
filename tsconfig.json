@@ -20,5 +20,6 @@
 			"@images": ["src/images/index"],
 			"@hooks": ["src/hooks/index"]
 		}
-	}
+	},
+	"typeRoots": ["./src/types"]
 }
