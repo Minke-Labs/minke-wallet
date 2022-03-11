@@ -1,6 +1,6 @@
-import { WalletToken } from '@models/wallet';
+import { MinkeToken } from '@models/token';
 
 export interface CardProps {
-	token: WalletToken;
-	onSelected?: (token: WalletToken) => void;
+	token: MinkeToken;
+	onSelected?: (token: MinkeToken) => void;
 }

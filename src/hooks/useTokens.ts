@@ -5,15 +5,12 @@ import { AccountBalance } from '@models/token';
 import { getTokenBalances } from '@src/services/apis';
 
 const useTokens = (): AccountBalance => {
-	const {
-		address,
-		network: { chainId }
-	} = useState(globalWalletState()).value;
+	const { address } = useState(globalWalletState()).value;
 	const [accountBalance, setAccountBalance] = React.useState<AccountBalance>();
 
 	useEffect(() => {
 		const loadTokens = async () => {
-			const balance = await getTokenBalances({ address, chainId });
+			const balance = await getTokenBalances(address);
 			setAccountBalance(balance);
 		};
 

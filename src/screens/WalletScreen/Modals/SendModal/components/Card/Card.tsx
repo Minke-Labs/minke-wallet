@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => (
 		<Token name={token.symbol.toLowerCase() as TokenType} size={40} />
 		<View style={styles.titleContainer}>
 			<Text weight="bold" type="p2">
-				{token.symbol} @TODO: Marcos
+				{token.name}
 			</Text>
 			<Text type="span" weight="bold">
 				{numberFormat(token.balanceUSD)} ({tokenBalanceFormat(token.balance, 9)} {token.symbol})

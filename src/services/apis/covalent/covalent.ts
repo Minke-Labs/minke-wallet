@@ -2,7 +2,8 @@ import axios from 'axios';
 import { AccountBalance } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import coins from '@helpers/coins.json';
-import { BalanceApiResponse, TokenBalanceParams } from './covalent.types';
+import { network } from '@models/network';
+import { BalanceApiResponse } from './covalent.types';
 
 const instance = axios.create({
 	baseURL: 'https://api.covalenthq.com/v1',
@@ -17,10 +18,8 @@ const instance = axios.create({
 	}
 });
 
-export const getTokenBalances = async ({
-	address,
-	chainId: networkId
-}: TokenBalanceParams): Promise<AccountBalance> => {
+export const getTokenBalances = async (address: string): Promise<AccountBalance> => {
+	const { chainId: networkId } = await network();
 	const response = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
 
 	const {

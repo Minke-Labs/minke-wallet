@@ -188,7 +188,7 @@ export interface MinkeToken {
 	symbol: string;
 	address: string;
 	image: string;
-	balance: string;
+	balance: number;
 	balanceUSD: number;
 }
 

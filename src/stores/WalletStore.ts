@@ -31,7 +31,7 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const blockchain = await selectedNetwork();
 	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
 	const eth = await walletObj.getBalance();
-	const { balance: balanceUSD } = await getTokenBalances({ address, chainId: blockchain.chainId });
+	const { balance: balanceUSD } = await getTokenBalances(address);
 
 	const balance = {
 		eth,

@@ -12,7 +12,7 @@ const convertToken = ({ source, token }: TokenConverterParams): MinkeToken => {
 			return {
 				id,
 				address: token.contract_address,
-				balance: formatUnits(token.balance, token.contract_decimals),
+				balance: Number(formatUnits(token.balance, token.contract_decimals)),
 				balanceUSD: token.quote,
 				decimals: token.contract_decimals,
 				image: token.logo_url,

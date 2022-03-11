@@ -1,10 +1,5 @@
 import { CovalentToken } from '@src/model/token';
 
-export interface TokenBalanceParams {
-	address: string;
-	chainId: number;
-}
-
 export interface BalanceApiResponse {
 	data: {
 		address: string;

@@ -1,32 +1,21 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, Image } from 'react-native';
 import { Text, ActivityIndicator } from '@components';
-import { useState } from '@hookstate/core';
-import { WalletToken, getWalletTokens, imageSource } from '@src/model/wallet';
-import { globalWalletState } from '@src/stores/WalletStore';
+import { imageSource } from '@models/wallet';
+import { useTokens } from '@hooks';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
 
 const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
 	const [image, setImage] = React.useState<{ uri: string }>();
-	const wallet = useState(globalWalletState());
-	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
+	const { tokens } = useTokens();
 
 	useEffect(() => {
-		const fetchWalletTokens = async () => {
-			const address = wallet.address.value || '';
-			const result = await getWalletTokens(address);
-			const { products } = result[address.toLowerCase()];
-			const tokens = products.map(({ assets }) => assets).flat();
-			setWalletTokens(tokens);
-		};
-
 		const fetchImage = async () => {
 			setImage(await imageSource(user.address));
 		};
 
-		fetchWalletTokens();
 		fetchImage();
 	}, []);
 
@@ -45,11 +34,11 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				?
 			</Text>
 
-			{walletTokens ? (
+			{tokens ? (
 				<FlatList
 					style={styles.tokensList}
 					keyExtractor={(item) => item.symbol}
-					data={walletTokens}
+					data={tokens}
 					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (

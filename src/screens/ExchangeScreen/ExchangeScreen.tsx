@@ -3,16 +3,14 @@ import React, { useEffect, createRef, useCallback } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, TextInput, Keyboard, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useTheme } from '@hooks';
+import { useTheme, useTokens } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
 import { BigNumber as BN } from 'bignumber.js';
 import { fromBn } from 'evm-bn';
-import { getWalletTokens, WalletToken } from '@models/wallet';
 import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens, ExchangeParams } from '@models/token';
 import { network } from '@models/network';
 import { debounce } from 'lodash';
-import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { WelcomeLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator } from '@components';
@@ -25,7 +23,6 @@ import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 
 const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => {
-	const wallet = useState(globalWalletState());
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
@@ -35,18 +32,18 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
 	const [toTokenBalance, setToTokenBalance] = React.useState('0');
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
-	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>();
-	const [ownedTokens, setOwnedTokens] = React.useState<Array<string>>();
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
+	const [ownedTokens, setOwnedTokens] = React.useState<string[]>();
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
-
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+
+	const { tokens: walletTokens } = useTokens();
 
 	const balanceFrom = useCallback(
 		(token: ParaswapToken | undefined): number => {
@@ -60,9 +57,9 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			if (isNativeToken && walletToken) {
 				const { gweiValue } = exchange.gas.value || {};
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(walletToken.balance - gasPrice, 0);
+				return Math.max(+walletToken.balance - gasPrice, 0);
 			}
-			return walletToken?.balance || 0;
+			return walletToken ? +walletToken.balance : 0;
 		},
 		[exchange.gas.value, walletTokens, nativeToken]
 	);
@@ -248,18 +245,15 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 			setNativeToken(native);
 		};
 
-		const fetchWalletTokens = async () => {
-			const address = wallet.address.value || '';
-			const result = await getWalletTokens(address);
-			const { products } = result[address.toLowerCase()];
-			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
-			setWalletTokens(tokens);
-			setOwnedTokens(tokens.map(({ symbol }) => symbol.toLowerCase()));
-		};
 		exchange.set({} as ExchangeState);
 		loadNativeToken();
-		fetchWalletTokens();
 	}, []);
+
+	useEffect(() => {
+		if (walletTokens) {
+			setOwnedTokens(walletTokens.map(({ symbol }) => symbol.toLowerCase()));
+		}
+	}, [walletTokens]);
 
 	useEffect(() => {
 		setFromTokenBalance(balanceFrom(fromToken).toString());
