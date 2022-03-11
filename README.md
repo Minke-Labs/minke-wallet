@@ -23,12 +23,13 @@ To code and test features not supported by Expo Go / Simulator (Apple Pay):
 
 In the local machine simulator:
 
--   expo run:ios
+-   `expo run:ios`
 
 In a real device connected through USB
 
--   expo run:ios -d "Marcos iPhone"
+-   `expo run:ios -d "Marcos iPhone"` to build and install the app
+-   `yarn start`
 
 To build a test version out of it:
 
--   eas build --profile development --platform ios
+-   `eas build --profile development --platform ios`
