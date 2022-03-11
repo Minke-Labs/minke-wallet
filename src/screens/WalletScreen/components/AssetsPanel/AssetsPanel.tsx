@@ -21,7 +21,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 						Your total assets
 					</Text>
 					<Text type="h1" weight="medium">
-						{numberFormat(Number(balance) || 0)}
+						{numberFormat(balance || 0)}
 					</Text>
 				</View>
 				<View>{address ? <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} /> : null}</View>

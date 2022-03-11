@@ -16,7 +16,7 @@ const Accounts = () => {
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
 				<Text style={styles.cardLabel}>Current value</Text>
-				<Text style={styles.cardBalance}>{numberFormat(Number(state.value.balance?.usd || '0'))}</Text>
+				<Text style={styles.cardBalance}>{numberFormat(state.value.balance?.usd || 0)}</Text>
 			</View>
 			<Card
 				onPress={() => navigation.navigate('WalletAssetsScreen')}
