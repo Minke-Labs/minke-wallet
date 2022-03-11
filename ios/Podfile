@@ -9,8 +9,10 @@ podfile_properties = JSON.parse(File.read('./Podfile.properties.json')) rescue {
 
 target 'MinkeDeFiWallet' do
   use_expo_modules!
+
 	pod 'expo-dev-menu', path: '../node_modules/expo-dev-menu', :configurations => :debug
   pod 'expo-dev-launcher', path: '../node_modules/expo-dev-launcher', :configurations => :debug
+
   config = use_native_modules!
 
   use_react_native!(
@@ -30,12 +32,6 @@ target 'MinkeDeFiWallet' do
     # Workaround `Cycle inside FBReactNativeSpec` error for react-native 0.64
     # Reference: https://github.com/software-mansion/react-native-screens/issues/842#issuecomment-812543933
     installer.pods_project.targets.each do |target|
-
-			target.build_configurations.each do |config|
-				config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
-				config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-			end
-
       if (target.name&.eql?('FBReactNativeSpec'))
         target.build_phases.each do |build_phase|
           if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))

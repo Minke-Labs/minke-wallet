@@ -37,8 +37,8 @@ const Accounts = () => {
 			<Card
 				onPress={() => navigation.navigate('SaveScreen')}
 				image={<Image icon="vaultStroke" />}
-				title="Deposits"
-				subtitle="Funds deposited in vaults"
+				title="Savings"
+				subtitle="Funds deposited in savings"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
 				right={
