@@ -1,18 +1,22 @@
+import { coinFromSymbol } from '@src/helpers/utilities';
 import { MinkeToken } from '@src/model/token';
 import { formatUnits } from 'ethers/lib/utils';
 import { TokenConverterParams, TokensConverterParams } from './tokenConverter.types';
 
 const convertToken = ({ source, token }: TokenConverterParams): MinkeToken => {
+	const { id, name } = coinFromSymbol(token.contract_ticker_symbol);
+
 	switch (source) {
 		// covalent
 		default:
 			return {
+				id,
 				address: token.contract_address,
 				balance: formatUnits(token.balance, token.contract_decimals),
 				balanceUSD: token.quote,
 				decimals: token.contract_decimals,
 				image: token.logo_url,
-				name: token.contract_name,
+				name: name || token.contract_name,
 				symbol: token.contract_ticker_symbol
 			};
 	}

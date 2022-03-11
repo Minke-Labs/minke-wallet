@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useNavigation } from '@hooks';
-import { coinParamFromSymbol } from '@helpers/utilities';
 import { TokenType } from '@styles';
 import { MinkeToken, stablecoins } from '@models/token';
 import Card from './Card/Card';
@@ -32,7 +31,7 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 				renderItem={({ item }) => (
 					<Card
 						key={item.address}
-						coinName={coinParamFromSymbol({ symbol: item.symbol, type: 'name' }) || ''}
+						coinName={item.name}
 						coinSymbol={item.symbol as TokenType}
 						walletBalance={Number(item.balance)}
 						walletBalanceUsd={item.balanceUSD}

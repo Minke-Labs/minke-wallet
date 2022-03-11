@@ -10,17 +10,14 @@ export function convertEthToUsd(ethValue: BigNumber, ethInUsd: string, round = 2
 	return FixedNumber.from(formatUnits(usdInEth)).round(round).toString();
 }
 
-interface CoinParamFromSymbolProps {
+interface CoingeckoToken {
+	id: string;
 	symbol: string;
-	type?: string;
+	name: string;
 }
 
-export const coinParamFromSymbol = ({ symbol, type = 'id' }: CoinParamFromSymbolProps) => {
-	const filtered = coins.find((coin) => coin.symbol.toLowerCase() === symbol.toLowerCase());
-	const indexed = type as keyof typeof filtered;
-	if (filtered) return filtered![indexed];
-	return symbol;
-};
+export const coinFromSymbol = (symbol: string): CoingeckoToken =>
+	coins.find((coin) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
 
 export const numberFormat = (value: number, digits?: number) =>
 	new Intl.NumberFormat('en-US', {

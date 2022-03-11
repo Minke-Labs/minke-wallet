@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
-import { numberFormat } from '@src/helpers/utilities';
+import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { Text, Card, Button, TransactionIcon } from '@components';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
@@ -30,7 +30,7 @@ export const Body: React.FC<BodyProps> = ({ lending }) => {
 								right={
 									<View>
 										<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>
-											{item.balance.toFixed(2)} {symbol}
+											{tokenBalanceFormat(item.balance, 2)} {symbol}
 										</Text>
 										<Text type="p2" weight="bold" style={{ alignSelf: 'flex-end' }}>
 											{numberFormat(item.balanceUSD)}

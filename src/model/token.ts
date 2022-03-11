@@ -47,7 +47,7 @@ export const getTokenHistory = async (token = 'ethereum') => {
 };
 
 export const getTokenMarketCap = async (tokenName: string) => {
-	const baseURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false';
+	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenName}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
 	const mktCapArr = toJson.map((item: any) => ({ id: item.id, market_cap: item.market_cap }));
@@ -182,6 +182,7 @@ export interface TransactionData {
 }
 
 export interface MinkeToken {
+	id?: string;
 	decimals: number;
 	name: string;
 	symbol: string;
