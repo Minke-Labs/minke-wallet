@@ -32,6 +32,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		onSubmit,
 		multiline,
 		error,
+		small,
 		value = '',
 		onSelectionChange,
 		style,
@@ -40,7 +41,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	ref
 ) => {
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const styles = makeStyles(colors, small!);
 
 	const [halfTop, setHalfTop] = useState(0);
 	const [isFocusedState, setIsFocused] = useState(false);
@@ -253,19 +254,21 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							alignItems: 'center'
 						}}
 					>
-						<AnimatedText
-							onPress={setFocus}
-							style={[
-								labelStyle,
-								styles.label,
-								{
-									fontSize: fontSizeAnimated,
-									transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
-								}
-							]}
-						>
-							{label}
-						</AnimatedText>
+						{!small && (
+							<AnimatedText
+								onPress={setFocus}
+								style={[
+									labelStyle,
+									styles.label,
+									{
+										fontSize: fontSizeAnimated,
+										transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
+									}
+								]}
+							>
+								{label}
+							</AnimatedText>
+						)}
 
 						<TextInput
 							onSubmitEditing={onSubmitEditing}

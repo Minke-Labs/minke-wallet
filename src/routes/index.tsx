@@ -34,6 +34,7 @@ const Routes: React.FC = () => {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
+	// const initialScreen = 'Test';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
