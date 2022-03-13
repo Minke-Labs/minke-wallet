@@ -1,4 +1,4 @@
-import { TextInputProps } from 'react-native';
+import { TextInputProps, StyleProp, ViewStyle } from 'react-native';
 
 interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	label: string;
@@ -9,6 +9,7 @@ interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	onTogglePassword?: (show: boolean) => void;
 	togglePassword?: boolean;
 	error?: boolean;
+	style?: StyleProp<ViewStyle>;
 }
 
 interface InputRef {

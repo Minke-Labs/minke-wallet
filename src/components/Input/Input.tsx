@@ -34,6 +34,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		error,
 		value = '',
 		onSelectionChange,
+		style,
 		...rest
 	},
 	ref
@@ -235,7 +236,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 
 	return (
 		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
-			<View style={{ flexDirection: 'row' }}>
+			<View style={{ flexDirection: 'row', ...(style as object) }}>
 				<Animated.View
 					style={[
 						{
