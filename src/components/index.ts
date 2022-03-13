@@ -1,6 +1,5 @@
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
-import TextInput from './TextInput/TextInput';
 import Button from './Button/Button';
 import Icon from './Icon/Icon';
 import Token from './Token/Token';
@@ -23,7 +22,6 @@ import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndica
 export {
 	ActivityIndicator,
 	Text,
-	TextInput,
 	AnimatedText,
 	Button,
 	WhiteButton,
