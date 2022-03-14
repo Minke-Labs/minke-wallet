@@ -194,7 +194,9 @@ export interface MinkeToken {
 
 export interface AccountBalance {
 	address: string;
-	balance: number;
+	balance: number; // total
+	depositedBalance: number; // deposited amount
+	walletBalance: number; // available in the wallet (not deposited)
 	tokens: MinkeToken[];
 }
 

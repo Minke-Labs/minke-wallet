@@ -4,6 +4,7 @@ import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import coins from '@helpers/coins.json';
 import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
+import { interestBearingTokens } from '@models/deposit';
 import { BalanceApiResponse } from './covalent.types';
 
 const instance = axios.create({
@@ -29,8 +30,12 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 
 	const curated = coins.map(({ symbol }) => symbol.toLowerCase());
 	const minkeTokens = convertTokens({ source: 'covalent', tokens: apiTokens });
-	const tokens = minkeTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	const balance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
+	let tokens = minkeTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
+	const interestTokens = tokens.filter((token) => interestBearingTokens.includes(token.symbol.toLowerCase()));
+	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
+	const walletBalance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
+	const depositedBalance = interestTokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
+	const balance = walletBalance + depositedBalance;
 
-	return { address, tokens, balance };
+	return { address, tokens, balance, depositedBalance, walletBalance };
 };
