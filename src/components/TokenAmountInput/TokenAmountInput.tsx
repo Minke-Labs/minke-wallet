@@ -1,11 +1,10 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable prefer-regex-literals */
-import React, { RefObject } from 'react';
-import { TextInput, StyleProp, TextStyle } from 'react-native';
+import React from 'react';
+import { TextInput } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
 import { useTheme } from '@hooks';
+import { TokenAmountInputProps } from './TokenAmountInput.types';
 
-const TokenAmountInput = ({
+const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 	amount,
 	onAmountChange,
 	onNumberAmountChange,
@@ -15,25 +14,15 @@ const TokenAmountInput = ({
 	visible = true,
 	isAmountValid = true,
 	autoFocus = false
-}: {
-	amount: string;
-	onAmountChange: (amount: string) => void;
-	onNumberAmountChange?: (amount: number) => void;
-	visible: boolean;
-	isAmountValid: boolean;
-	innerRef?: RefObject<TextInput>;
-	style?: StyleProp<TextStyle> | undefined;
-	placeholder?: string;
-	autoFocus?: boolean;
 }) => {
 	const { colors } = useTheme();
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
 		let validNumber;
 		if (decimalSeparator === ',') {
-			validNumber = new RegExp(/^\d*\,?\d*$/); // for comma
+			validNumber = /^\d*,?\d*$/; // for comma
 		} else {
-			validNumber = new RegExp(/^\d*\.?\d*$/); // for dot
+			validNumber = /^\d*\.?\d*$/; // for dot
 		}
 
 		if (validNumber.test(value)) {
@@ -53,7 +42,7 @@ const TokenAmountInput = ({
 			style={[
 				style,
 				{
-					borderBottomColor: isAmountValid ? '#D0D0D0' : 'red',
+					borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1,
 					display: visible ? 'flex' : 'none',
 					color: colors.text1
 				}

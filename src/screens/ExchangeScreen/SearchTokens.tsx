@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, View, TextInput } from 'react-native';
+import { FlatList, Image, SafeAreaView, View } from 'react-native';
 import { whale2Img } from '@images';
-import { Icon, ModalHeader, ScreenLoadingIndicator, Text, Token } from '@components';
+import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
@@ -93,18 +93,7 @@ const SearchTokens = ({
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
-				<View style={styles.searchSection}>
-					<Icon name="searchStroke" style={styles.searchIcon} color="cta1" size={20} />
-					<TextInput
-						style={styles.searchBar}
-						underlineColorAndroid="transparent"
-						placeholder="Search tokens"
-						placeholderTextColor={colors.text5}
-						value={search}
-						onChangeText={(text) => onSearch(text)}
-						autoCapitalize="none"
-					/>
-				</View>
+				<SearchInput {...{ search, onSearch }} />
 
 				<FlatList
 					style={styles.list}

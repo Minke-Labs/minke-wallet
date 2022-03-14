@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Image } from 'react-native';
-import { Text, Token, Button, ActivityIndicator } from '@components';
+import { Text, Token, Button, ActivityIndicator, TokenAmountInput } from '@components';
 import { useState } from '@hookstate/core';
 import { TokenType } from '@styles';
 import { globalWalletState } from '@src/stores/WalletStore';
@@ -14,7 +14,6 @@ import {
 	smallWalletAddress
 } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
