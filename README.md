@@ -33,3 +33,8 @@ In a real device connected through USB
 To build a test version out of it:
 
 -   `eas build --profile development --platform ios`
+
+# Release the app to Apple Store
+
+Build: `eas build --profile production --platform ios`
+Upload: `eas submit --platform ios`
