@@ -188,13 +188,15 @@ export interface MinkeToken {
 	symbol: string;
 	address: string;
 	image: string;
-	balance: number;
+	balance: string;
 	balanceUSD: number;
 }
 
 export interface AccountBalance {
 	address: string;
-	balance: number;
+	balance: number; // total
+	depositedBalance: number; // deposited amount
+	walletBalance: number; // available in the wallet (not deposited)
 	tokens: MinkeToken[];
 }
 

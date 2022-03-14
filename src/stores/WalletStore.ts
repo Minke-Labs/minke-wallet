@@ -14,7 +14,9 @@ export interface WalletState {
 	walletId?: string | null;
 	balance?: {
 		eth?: BigNumber;
-		usd?: number;
+		usd?: number; // total
+		depositedBalance?: number; // deposits
+		walletBalance?: number; // total in the wallet (total - deposits)
 	};
 	transactions?: Array<Transaction>;
 }
@@ -31,11 +33,13 @@ export const fetchTokensAndBalances = async (privateKey: string, address: string
 	const blockchain = await selectedNetwork();
 	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
 	const eth = await walletObj.getBalance();
-	const { balance: balanceUSD } = await getTokenBalances(address);
+	const { balance: balanceUSD, walletBalance, depositedBalance } = await getTokenBalances(address);
 
 	const balance = {
 		eth,
-		usd: balanceUSD
+		usd: balanceUSD,
+		walletBalance,
+		depositedBalance
 	};
 
 	return { balance, network: blockchain };
