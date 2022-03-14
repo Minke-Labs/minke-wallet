@@ -3,6 +3,7 @@ import Text from './Text/Text';
 import Button from './Button/Button';
 import Icon from './Icon/Icon';
 import Token from './Token/Token';
+import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
 import ModalHeader from './ModalHeader/ModalHeader';
 import ModalReusables from './ModalReusables';
@@ -27,6 +28,7 @@ export {
 	WhiteButton,
 	Icon,
 	Token,
+	TokenAmountInput,
 	Modal,
 	ModalHeader,
 	ModalReusables,
