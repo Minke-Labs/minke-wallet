@@ -3,6 +3,7 @@ import { AccountBalance } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import coins from '@helpers/coins.json';
 import { network } from '@models/network';
+import { COVALENT_API_KEY } from '@env';
 import { BalanceApiResponse } from './covalent.types';
 
 const instance = axios.create({
@@ -14,7 +15,7 @@ const instance = axios.create({
 		format: 'JSON',
 		nft: false,
 		'no-nft-fetch': true,
-		key: ''
+		key: COVALENT_API_KEY
 	}
 });
 
