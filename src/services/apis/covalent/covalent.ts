@@ -15,7 +15,7 @@ const instance = axios.create({
 		format: 'JSON',
 		nft: false,
 		'no-nft-fetch': true,
-		key: COVALENT_API_KEY
+		key: COVALENT_API_KEY || process.env.COVALENT_API_KEY
 	}
 });
 
