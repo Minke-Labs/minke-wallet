@@ -3,9 +3,10 @@ import { View, TouchableOpacity } from 'react-native';
 import { Card, RadioButton } from 'react-native-paper';
 import { useTheme } from '@hooks';
 import { Text, Icon as IconImg, ActivityIndicator } from '@components';
-import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@src/model/wallet';
+import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
-import { ExchangeState, Gas, globalExchangeState } from '@src/stores/ExchangeStore';
+import { tokenBalanceFormat } from '@helpers/utilities';
+import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { makeStyles } from './ExchangeScreen.styles';
 
@@ -154,7 +155,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 					</View>
 					<View style={styles.alignRight}>
 						<Text type="span" weight="bold">
-							${(gasPrice * 41000 * 10 ** -9 * usdPrice).toString().match(/^-?\d+(?:\.\d{0,5})?/)}
+							${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}
 						</Text>
 						<Text type="span">Transaction Fee</Text>
 					</View>

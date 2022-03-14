@@ -27,7 +27,7 @@ const ValueBox: React.FC<ValueBoxProps> = ({ balance, title }) => (
 		<View style={styles.textContainer}>
 			<Text marginBottom={10}>Current value</Text>
 			<Text weight="medium" type="textLarge">
-				{numberFormat(Number(balance?.usd) || 0)}
+				{numberFormat(balance || 0)}
 			</Text>
 		</View>
 	</Background>

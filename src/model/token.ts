@@ -47,7 +47,7 @@ export const getTokenHistory = async (token = 'ethereum') => {
 };
 
 export const getTokenMarketCap = async (tokenName: string) => {
-	const baseURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false';
+	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenName}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
 	const mktCapArr = toJson.map((item: any) => ({ id: item.id, market_cap: item.market_cap }));
@@ -134,6 +134,7 @@ export interface ParaswapToken {
 	network: number;
 	allowance?: string; // available only when query user tokens
 }
+
 export interface TokenResponse {
 	tokens: Array<ParaswapToken>;
 }
@@ -178,4 +179,38 @@ export interface TransactionData {
 	to: string;
 	value: string;
 	error: string;
+}
+
+export interface MinkeToken {
+	id?: string;
+	decimals: number;
+	name: string;
+	symbol: string;
+	address: string;
+	image: string;
+	balance: number;
+	balanceUSD: number;
+}
+
+export interface AccountBalance {
+	address: string;
+	balance: number;
+	tokens: MinkeToken[];
+}
+
+export interface CovalentToken {
+	contract_decimals: number;
+	contract_name: string;
+	contract_ticker_symbol: string;
+	contract_address: string;
+	logo_url: string;
+	last_transferred_at: string;
+	type: string;
+	balance: string;
+	balance_24h: string;
+	quote_rate: number;
+	quote_rate_24h: number;
+	quote: number;
+	quote_24h: number;
+	nft_data: null;
 }

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useTheme } from '@hooks';
-import { coinParamFromSymbol } from '@helpers/utilities';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getTokenHistory, getTokenMarketCap } from '@models/token';
@@ -21,9 +20,9 @@ const AssetsScreen = ({ route }: Props) => {
 	const { coin } = route.params;
 
 	const fetchData = async () => {
-		const res = await getTokenHistory(coinParamFromSymbol({ symbol: coin.symbol }));
+		const res = await getTokenHistory(coin.id);
 		if (res.errors) {
-			const res = await getTokenHistory(coinParamFromSymbol({ symbol: coin.symbol, type: 'name' }));
+			const res = await getTokenHistory(coin.name);
 			if (res.errors) {
 				const res = await getTokenHistory(coin.symbol);
 				if (res.errors) setData(null);
@@ -37,9 +36,11 @@ const AssetsScreen = ({ route }: Props) => {
 	};
 
 	const fetchMarketCap = async () => {
-		const res = await getTokenMarketCap(coinParamFromSymbol({ symbol: coin.symbol }));
-		if (res.errors) setMarketCap(null);
-		else setMarketCap(res);
+		if (coin.id) {
+			const res = await getTokenMarketCap(coin.id);
+			if (res.errors) setMarketCap(null);
+			else setMarketCap(res);
+		} else setMarketCap(null);
 	};
 
 	useEffect(() => {

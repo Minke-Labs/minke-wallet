@@ -22,7 +22,8 @@
       "buildNumber": "24",
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.minkeapp.minkewallet"
     },
     "android": {
       "adaptiveIcon": {

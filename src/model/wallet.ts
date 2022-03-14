@@ -3,6 +3,7 @@ import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
+import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
@@ -20,8 +21,8 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 export const getProvider = async (network?: string) => {
 	const blockchain = network || (await selectedNetwork()).id;
 	return new providers.InfuraProvider(blockchain, {
-		projectId: process.env.INFURA_API_KEY,
-		projectSecret: process.env.INFURA_PROJECT_SECRET
+		projectId: INFURA_API_KEY || process.env.INFURA_API_KEY,
+		projectSecret: INFURA_PROJECT_SECRET || process.env.INFURA_PROJECT_SECRET
 	});
 };
 
@@ -228,7 +229,7 @@ export const getPriceHistory = async (date: string, tokenId = 'ethereum'): Promi
 	return result.json();
 };
 
-export const getWalletTokens = async (wallet: string): Promise<WalletTokensResponse> => {
+export const getZapperWalletTokens = async (wallet: string): Promise<ZapperWalletTokensResponse> => {
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const { zapperNetwork } = await selectedNetwork();
 	const baseURL = 'https://api.zapper.fi/v1/protocols/tokens/balances';
@@ -337,12 +338,12 @@ export interface EtherLastPriceResponse {
 	};
 }
 
-export interface WalletTokensResponse {
+export interface ZapperWalletTokensResponse {
 	[key: string]: {
 		products: [
 			{
 				label: string;
-				assets: [WalletToken];
+				assets: [ZapperToken];
 			}
 		];
 		meta: [
@@ -355,7 +356,7 @@ export interface WalletTokensResponse {
 	};
 }
 
-export interface WalletToken {
+export interface ZapperToken {
 	type: string;
 	network: string;
 	address: string;

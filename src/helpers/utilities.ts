@@ -10,16 +10,14 @@ export function convertEthToUsd(ethValue: BigNumber, ethInUsd: string, round = 2
 	return FixedNumber.from(formatUnits(usdInEth)).round(round).toString();
 }
 
-interface CoinParamFromSymbolProps {
+interface CoingeckoToken {
+	id: string;
 	symbol: string;
-	type?: string;
+	name: string;
 }
 
-export const coinParamFromSymbol = ({ symbol, type = 'id' }: CoinParamFromSymbolProps) => {
-	const filtered = coins.find((coin) => coin.symbol === symbol.toLowerCase());
-	const indexed = type as keyof typeof filtered;
-	return filtered![indexed];
-};
+export const coinFromSymbol = (symbol: string): CoingeckoToken =>
+	coins.find((coin) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
 
 export const numberFormat = (value: number, digits?: number) =>
 	new Intl.NumberFormat('en-US', {
@@ -27,6 +25,11 @@ export const numberFormat = (value: number, digits?: number) =>
 		currency: 'USD',
 		minimumFractionDigits: digits || 2
 	}).format(value);
+
+export const tokenBalanceFormat = (value: number | string, digits = 5) => {
+	const regex = new RegExp(`^-?\\d+(?:\\.\\d{0,${digits}})?`, 'gi');
+	return value.toString().match(regex);
+};
 
 export const addColorOpacity = (color: string, opacity: number): string => {
 	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);

@@ -4,31 +4,19 @@ import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Wallet } from 'ethers';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
-import {
-	Coin,
-	getAllWallets,
-	getPrivateKey,
-	getProvider,
-	MinkeTokenList,
-	Transaction,
-	MinkeWallet,
-	getWalletTokens,
-	saveAllWallets
-} from '@models/wallet';
+import { getAllWallets, getPrivateKey, getProvider, Transaction, MinkeWallet, saveAllWallets } from '@models/wallet';
+import { getTokenBalances } from '@src/services/apis';
 
 export interface WalletState {
-	// wallet: (privateKey: string) => Wallet;
 	privateKey: string;
 	network: Network;
 	address: string;
-	tokens?: MinkeTokenList;
 	walletId?: string | null;
 	balance?: {
 		eth?: BigNumber;
-		usd?: string;
+		usd?: number;
 	};
 	transactions?: Array<Transaction>;
-	allTokens: Array<Coin>;
 }
 
 export const emptyWallet = {
@@ -36,32 +24,21 @@ export const emptyWallet = {
 	address: '',
 	walletId: null,
 	network: defaultNetwork,
-	transactions: [],
-	allTokens: []
+	transactions: []
 };
 
 export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
 	const blockchain = await selectedNetwork();
 	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
 	const eth = await walletObj.getBalance();
-	const tokens: MinkeTokenList = {};
-	const walletTokens = await getWalletTokens(address);
+	const { balance: balanceUSD } = await getTokenBalances(address);
 
-	let balance;
-	if (walletTokens) {
-		const { meta } = walletTokens[address.toLowerCase()];
-		const { value: total = 0 } = find(meta, (m) => m.label === 'Total') || {};
+	const balance = {
+		eth,
+		usd: balanceUSD
+	};
 
-		const usd = total.toString().match(/^-?\d+(?:\.\d{0,2})?/);
-		balance = {
-			eth,
-			usd: usd ? usd[0] : '0'
-		};
-	} else {
-		balance = { usd: '0' };
-	}
-
-	return { tokens, balance, network: blockchain };
+	return { balance, network: blockchain };
 };
 
 export const setPrimaryWallet = async (wallet: MinkeWallet): Promise<MinkeWallet> => {

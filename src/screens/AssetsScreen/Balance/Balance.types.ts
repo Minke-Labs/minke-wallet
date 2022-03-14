@@ -1,7 +1,7 @@
-import { WalletToken } from '@models/wallet';
+import { MinkeToken } from '@models/token';
 
 interface BalanceProps {
-	coin: WalletToken;
+	coin: MinkeToken;
 }
 
 export type { BalanceProps };

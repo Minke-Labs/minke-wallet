@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import React, { useEffect, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { getProvider, getWalletTokens, WalletToken } from '@models/wallet';
+import { getProvider } from '@models/wallet';
 import { WelcomeLayout } from '@layouts';
 import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
@@ -10,7 +10,7 @@ import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
 import { Icon, Modal, Text } from '@components';
 import { Card } from 'react-native-paper';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useTokens } from '@hooks';
 import { network } from '@models/network';
 import { debounce } from 'lodash';
 import { Wallet } from 'ethers';
@@ -26,6 +26,7 @@ import { makeStyles } from './Deposit.styles';
 const Deposit = () => {
 	const navigation = useNavigation();
 	const { colors } = useTheme();
+	const { tokens } = useTokens();
 	const styles = makeStyles(colors);
 	const { address, privateKey } = globalWalletState().value;
 	const { market } = globalDepositState().value;
@@ -35,7 +36,6 @@ const Deposit = () => {
 	const [token] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
-	const [walletTokens, setWalletTokens] = React.useState<Array<WalletToken>>([]);
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 
@@ -44,17 +44,17 @@ const Deposit = () => {
 			if (!paraSwapToken) {
 				return 0;
 			}
-			const walletToken = walletTokens?.find(
+			const walletToken = tokens?.find(
 				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
 			);
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
 			if (isNativeToken && walletToken) {
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(walletToken.balance - gasPrice, 0);
+				return Math.max(+walletToken.balance - gasPrice, 0);
 			}
-			return walletToken?.balance || 0;
+			return walletToken ? +walletToken.balance : 0;
 		},
-		[walletTokens, nativeToken, gas]
+		[tokens, nativeToken, gas]
 	);
 
 	const updateAmount = (value: string) => {
@@ -112,13 +112,6 @@ const Deposit = () => {
 	};
 
 	useEffect(() => {
-		const getTokens = async () => {
-			const result = await getWalletTokens(address);
-			const { products } = result[address.toLowerCase()];
-			const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
-			setWalletTokens(tokens);
-		};
-
 		const loadNativeToken = async () => {
 			const {
 				nativeToken: { symbol: nativeTokenSymbol }
@@ -128,17 +121,16 @@ const Deposit = () => {
 		};
 
 		loadNativeToken();
-		getTokens();
 	}, []);
 
 	useEffect(() => {
-		if (token && walletTokens.length > 0) {
+		if (token && tokens && tokens.length > 0) {
 			const balance = balanceFrom(token);
 			setTokenBalance(balance.toString());
 		} else {
 			setTokenBalance('0');
 		}
-	}, [walletTokens, token]);
+	}, [tokens, token]);
 
 	return (
 		<>
