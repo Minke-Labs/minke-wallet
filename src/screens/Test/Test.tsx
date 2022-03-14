@@ -8,13 +8,7 @@ const Test = () => {
 	return (
 		<WelcomeLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				<Input
-					label="Label"
-					value={value}
-					onChangeText={setValue}
-					// isPassword
-					// error
-				/>
+				<Input label="label" value={value} onChangeText={setValue} small error isPassword />
 			</View>
 		</WelcomeLayout>
 	);

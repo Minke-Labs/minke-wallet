@@ -1,9 +1,9 @@
-import { WalletToken } from '@src/model/wallet';
+import { MinkeToken } from '@models/token';
 import { UserProps } from '../../SendModal.types';
 
 interface TransactionSelectFundsProps {
 	user: UserProps;
-	onSelected: (token: WalletToken) => void;
+	onSelected: (token: MinkeToken) => void;
 }
 
 export type { TransactionSelectFundsProps };

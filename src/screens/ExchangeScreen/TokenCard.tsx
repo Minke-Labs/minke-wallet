@@ -1,11 +1,11 @@
 /* eslint-disable no-useless-escape */
-/* eslint-disable prefer-regex-literals */
+
 import React, { useState, useEffect, RefObject } from 'react';
 import { TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from '@hooks';
 import { ParaswapToken } from '@models/token';
-import { Text, Icon, Token } from '@components';
+import { Text, Icon, Token, Input } from '@components';
 import { TokenType } from '@styles';
 import { makeStyles } from './ExchangeScreen.styles';
 
@@ -105,23 +105,14 @@ const TokenCard = ({
 						<Icon name="chevronRight" color="cta1" size={16} />
 					</View>
 				</TouchableOpacity>
-				<TextInput
+				<Input
 					keyboardType="numeric"
-					style={{
-						backgroundColor: colors.background2,
-						color: colors.text1,
-						borderRadius: 41,
-						borderColor: invalidAmount ? 'red' : '#D0D0D0',
-						borderStyle: 'solid',
-						borderWidth: 1,
-						textAlign: 'right',
-						paddingRight: 16,
-						display: token ? 'flex' : 'none',
-						flex: 1
-					}}
+					style={{ flex: 1 }}
+					error={invalidAmount as boolean}
 					value={amount}
 					ref={innerRef}
 					onChangeText={(text) => onChangeText(text)}
+					small
 				/>
 			</View>
 			{isMaxEnabled && (

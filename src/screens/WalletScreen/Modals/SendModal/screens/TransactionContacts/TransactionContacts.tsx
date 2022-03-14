@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Button, Text, TextInput } from '@components';
+import { Button, Text, Input } from '@components';
 import { useState } from '@hookstate/core';
 import { globalContactState } from '@src/stores/ContactStore';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -45,14 +45,15 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 				<Text weight="extraBold" type="h3" center marginBottom={24}>
 					Send to an address
 				</Text>
-				<TextInput
+				<Input
 					label="Address or ENS"
 					value={address}
 					onChangeText={(t: string) => setAddress(t)}
 					autoCorrect={false}
 					autoCompleteType="off"
 					autoCapitalize="none"
-					error={address && !validAddress}
+					error={address.length > 0 && !validAddress}
+					style={{ marginBottom: 24 }}
 				/>
 
 				<Button title="Send" disabled={!validAddress} onPress={onSendAddress} marginBottom={32} />

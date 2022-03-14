@@ -3,20 +3,20 @@ import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation } from '@hooks';
+import { useNavigation, useTheme } from '@hooks';
 import { numberFormat } from '@src/helpers/utilities';
-import { makeStyles } from './Accounts.styles';
 import Image from './Image/Image';
+import styles from './Accounts.styles';
 
 const Accounts = () => {
 	const navigation = useNavigation();
 	const state = useState(globalWalletState());
-	const styles = makeStyles();
+	const { colors } = useTheme();
 	return (
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
 				<Text style={styles.cardLabel}>Current value</Text>
-				<Text style={styles.cardBalance}>{numberFormat(Number(state.value.balance?.usd || '0'))}</Text>
+				<Text style={styles.cardBalance}>{numberFormat(state.value.balance?.usd || 0)}</Text>
 			</View>
 			<Card
 				onPress={() => navigation.navigate('WalletAssetsScreen')}
@@ -50,7 +50,7 @@ const Accounts = () => {
 					</View>
 				}
 			/>
-			{/* <Card
+			<Card
 				image={<Image alert icon="borrowStroke" />}
 				title="Debit"
 				subtitle="Open loans"
@@ -58,7 +58,19 @@ const Accounts = () => {
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
 				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<Text color="text7" type="a">
+						<View
+							style={{
+								borderRadius: 8,
+								backgroundColor: colors.background3,
+								paddingHorizontal: 8,
+								paddingVertical: 4
+							}}
+						>
+							<Text color="text2" type="span">
+								Coming soon
+							</Text>
+						</View>
+						{/* <Text color="text7" type="a">
 							Borrow
 						</Text>
 						<Icon
@@ -66,10 +78,10 @@ const Accounts = () => {
 							size={16}
 							color="text7"
 							style={{ transform: [{ rotate: '180deg' }] }}
-						/>
+						/> */}
 					</View>
 				}
-			/> */}
+			/>
 		</View>
 	);
 };

@@ -1,5 +1,5 @@
-module.exports = (api) => {
-	api.cache(true);
+module.exports = ({ cache }) => {
+	cache(true);
 	return {
 		presets: ['babel-preset-expo'],
 		plugins: [
@@ -26,7 +26,6 @@ module.exports = (api) => {
 					extensions: ['.js', '.jsx', '.ts', '.tsx', '.android.js', '.android.tsx', '.ios.js', '.ios.tsx'],
 					root: ['./src'],
 					alias: {
-						'@src': './src',
 						'@components': './src/components',
 						'@helpers': './src/helpers',
 						'@stores': './src/stores',
@@ -39,7 +38,8 @@ module.exports = (api) => {
 						'@routes': './src/routes',
 						'@layouts': './src/layouts',
 						'@images': './src/images',
-						'@hooks': './src/hooks'
+						'@hooks': './src/hooks',
+						'@src': './src'
 					}
 				}
 			]

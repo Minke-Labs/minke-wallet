@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getTokenBalances } from '@src/services/apis';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
-import { estimateGas, getWalletTokens } from './wallet';
+import { estimateGas } from './wallet';
 
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
@@ -104,9 +105,7 @@ export const usdCoin = async (): Promise<string> => {
 
 export const isAbleToDeposit = async (address: string): Promise<boolean> => {
 	const defaultUSDCoin = await usdCoin();
-	const result = await getWalletTokens(address);
-	const { products } = result[address.toLowerCase()];
-	const tokens = products.map((product) => product.assets.map((asset) => asset)).flat();
+	const { tokens } = await getTokenBalances(address);
 	const hasTheDefaultToken = !!tokens.find((t) => t.symbol === defaultUSDCoin);
 
 	if (hasTheDefaultToken) {

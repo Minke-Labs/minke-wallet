@@ -1,7 +1,7 @@
 import { GestureResponderEvent } from 'react-native';
 
 export interface AssetsPanelProps {
-	balance: string;
+	balance: number;
 	address: string;
 	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;

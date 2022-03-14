@@ -19,10 +19,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "24",
+      "buildNumber": "25",
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.minkeapp.minkewallet"
     },
     "android": {
       "adaptiveIcon": {

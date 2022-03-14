@@ -8,13 +8,13 @@ import { Text, Modal } from '@components';
 import { useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
-import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
-import { walletCreate, walletDelete, getTransactions, getTokenList, getAllWallets } from '@models/wallet';
-import { AddFunds } from '@containers';
+import { globalWalletState, walletState, emptyWallet, fetchTokensAndBalances } from '@stores/WalletStore';
+import { walletCreate, walletDelete, getTransactions, getAllWallets } from '@models/wallet';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { SendModal, ReceiveModal, SentModal } from './Modals';
 import { ResultProps } from './WalletScreen.types';
+import { AddFunds } from '@containers';
 
 const WalletScreen = () => {
 	const state = useState(globalWalletState());
@@ -55,22 +55,16 @@ const WalletScreen = () => {
 
 	const fetchTransactions = async () => {
 		setLoading(true);
-		const result = await getTransactions(state.value.address || '');
-		state.transactions.set(result);
+		const { address, privateKey } = state.value;
+		const transactions = await getTransactions(address || '');
+		const { balance } = await fetchTokensAndBalances(privateKey, address);
+		state.merge({ transactions, balance });
 		setLoading(false);
 		setLastTransationsFetch(new Date().getTime());
 	};
 
-	const fetchTokenList = async () => {
-		if (state.allTokens.length === 0) {
-			const result = await getTokenList();
-			state.allTokens.set(result);
-		}
-	};
-
 	useEffect(() => {
 		fetchTransactions();
-		fetchTokenList();
 	}, []);
 
 	useFocusEffect(() => {
@@ -127,7 +121,7 @@ const WalletScreen = () => {
 						onSave={() => navigation.navigate('SaveScreen')}
 						onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
 						onAddFunds={() => setAddFundsVisible(true)}
-						balance={balance?.usd || ''}
+						balance={balance?.usd || 0}
 						address={address}
 					/>
 					<ActionsPanel

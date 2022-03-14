@@ -5,7 +5,6 @@
 		"strict": true,
 		"baseUrl": "./",
 		"paths": {
-			"@src/*": ["src/*"],
 			"@components": ["src/components/index"],
 			"@helpers/*": ["src/helpers/*"],
 			"@stores/*": ["src/stores/*"],
@@ -18,7 +17,8 @@
 			"@layouts": ["src/layouts/index"],
 			"@containers": ["src/containers/index"],
 			"@images": ["src/images/index"],
-			"@hooks": ["src/hooks/index"]
+			"@hooks": ["src/hooks/index"],
+			"@src/*": ["src/*"]
 		}
 	},
 	"typeRoots": ["./src/types"]

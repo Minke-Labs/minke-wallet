@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { Text, Button } from '@components';
+import { Text, Button, Input } from '@components';
 import { useState } from '@hookstate/core';
-import TextInput from '@src/components/TextInput/TextInput';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { isAddress } from 'ethers/lib/utils';
 import { resolveENSAddress } from '@src/model/wallet';
@@ -45,15 +44,16 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 			<Text weight="extraBold" type="h3" marginBottom={32}>
 				Add Contact
 			</Text>
-			<TextInput
+			<Input
 				label="Name"
 				value={name}
 				onChangeText={(t) => setName(t)}
 				autoCompleteType="off"
 				error={name === ''}
+				style={{ marginBottom: 24 }}
 			/>
 
-			<TextInput
+			<Input
 				label="ENS or Wallet Address"
 				value={address}
 				onChangeText={(t) => setAddress(t)}
@@ -61,6 +61,7 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 				autoCompleteType="off"
 				autoCapitalize="none"
 				error={address === '' && ensAddress === ''}
+				style={{ marginBottom: 24 }}
 			/>
 
 			<Button title="Add Contact" onPress={onContactCreate} disabled={!(name && validAddress)} />

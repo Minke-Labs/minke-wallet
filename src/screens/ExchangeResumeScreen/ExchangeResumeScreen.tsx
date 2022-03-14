@@ -16,6 +16,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { WelcomeLayout } from '@layouts';
 import { TokenType } from '@styles';
 import { Icon, Modal, Text, Token, ActivityIndicator } from '@components';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import ProgressButton from '../../components/ProgressButton';
 import { RootStackParamList } from '../../routes/types.routes';
 import GasOption from '../ExchangeScreen/GasOption';
@@ -28,7 +29,7 @@ const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amoun
 		</View>
 		<View>
 			<Text type="p2" weight="extraBold" color="text2">
-				${usdAmount.match(/^-?\d+(?:\.\d{0,4})?/)}
+				${tokenBalanceFormat(usdAmount, 4)}
 			</Text>
 			<Text type="a" weight="medium" color="text2">
 				{amount} {token.symbol}
@@ -118,7 +119,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 		}
 
 		if (fromAmount && toAmount) {
-			return `${(+dest / +src).toString().match(/^-?\d+(?:\.\d{0,9})?/)} ${to.symbol} per ${from.symbol}`;
+			return `${tokenBalanceFormat(+dest / +src, 9)} ${to.symbol} per ${from.symbol}`;
 		}
 
 		return null;
@@ -285,10 +286,13 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 								</Text>
 								{priceQuote ? (
 									<Text type="p2" weight="extraBold" color="text2">
-										{formatUnits(
-											priceQuote.priceRoute.srcAmount,
-											priceQuote.priceRoute.srcDecimals
-										).match(/^-?\d+(?:\.\d{0,9})?/)}{' '}
+										{tokenBalanceFormat(
+											formatUnits(
+												priceQuote.priceRoute.srcAmount,
+												priceQuote.priceRoute.srcDecimals
+											),
+											9
+										)}{' '}
 										{from.symbol}
 									</Text>
 								) : (

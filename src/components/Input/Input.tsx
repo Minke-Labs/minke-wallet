@@ -32,14 +32,16 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		onSubmit,
 		multiline,
 		error,
+		small,
 		value = '',
 		onSelectionChange,
+		style,
 		...rest
 	},
 	ref
 ) => {
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const styles = makeStyles(colors, small!);
 
 	const [halfTop, setHalfTop] = useState(0);
 	const [isFocusedState, setIsFocused] = useState(false);
@@ -235,7 +237,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 
 	return (
 		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
-			<View style={{ flexDirection: 'row' }}>
+			<View style={{ flexDirection: 'row', ...(style as object) }}>
 				<Animated.View
 					style={[
 						{
@@ -252,19 +254,21 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							alignItems: 'center'
 						}}
 					>
-						<AnimatedText
-							onPress={setFocus}
-							style={[
-								labelStyle,
-								styles.label,
-								{
-									fontSize: fontSizeAnimated,
-									transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
-								}
-							]}
-						>
-							{label}
-						</AnimatedText>
+						{!small && (
+							<AnimatedText
+								onPress={setFocus}
+								style={[
+									labelStyle,
+									styles.label,
+									{
+										fontSize: fontSizeAnimated,
+										transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
+									}
+								]}
+							>
+								{label}
+							</AnimatedText>
+						)}
 
 						<TextInput
 							onSubmitEditing={onSubmitEditing}

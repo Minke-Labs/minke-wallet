@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
-import { numberFormat } from '@helpers/utilities';
+import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import Buttons from './Buttons/Buttons';
 import Selector from './Selector/Selector';
 import { BalanceProps } from './Balance.types';
@@ -21,7 +21,7 @@ const Balance: React.FC<BalanceProps> = ({ coin }) => {
 					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
 				</View>
 				<Text type="h2">
-					{active ? `${coin.balance.toFixed(2)} ${coin.symbol}` : `${numberFormat(coin.balanceUSD)}`}
+					{active ? `${tokenBalanceFormat(coin.balance)} ${coin.symbol}` : `${numberFormat(coin.balanceUSD)}`}
 				</Text>
 			</View>
 

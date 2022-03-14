@@ -3,7 +3,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
 import { Text, Token } from '@components';
-import { numberFormat, coinParamFromSymbol } from '@helpers/utilities';
+import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { CardProps } from './Card.types';
 import styles from './Card.styles';
 
@@ -16,11 +16,10 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => (
 		<Token name={token.symbol.toLowerCase() as TokenType} size={40} />
 		<View style={styles.titleContainer}>
 			<Text weight="bold" type="p2">
-				{coinParamFromSymbol({ symbol: token.symbol, type: 'name' })}
+				{token.name}
 			</Text>
 			<Text type="span" weight="bold">
-				{numberFormat(token.balanceUSD)} ({token.balance.toString().match(/^-?\d+(?:\.\d{0,9})?/)}{' '}
-				{token.symbol})
+				{numberFormat(token.balanceUSD)} ({tokenBalanceFormat(token.balance, 9)} {token.symbol})
 				<Text weight="regular" type="span">
 					{' '}
 					available

@@ -9,4 +9,5 @@ declare module '@env' {
 	export const WYRE_ACCOUNT_ID: string;
 	export const WYRE_TOKEN: string;
 	export const WYRE_TOKEN_TEST: string;
+	export const COVALENT_API_KEY: string;
 }

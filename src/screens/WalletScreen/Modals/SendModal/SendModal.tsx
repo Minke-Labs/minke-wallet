@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Icon, Text } from '@components';
 import { useFormProgress } from '@hooks';
-import { WalletToken } from '@src/model/wallet';
+import { MinkeToken } from '@models/token';
 import styles from './SendModal.styles';
 import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact } from './screens';
 import { SendModalProps, UserProps } from './SendModal.types';
@@ -10,7 +10,7 @@ import { SendModalProps, UserProps } from './SendModal.types';
 const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully, isVisible = false }) => {
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const [user, setUser] = useState<UserProps>(null!);
-	const [token, setToken] = useState<WalletToken>();
+	const [token, setToken] = useState<MinkeToken>();
 	const [addContactVisible, setAddContactVisible] = useState(false);
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully, isVi
 		setAddContactVisible(true);
 	};
 
-	const onTokenSelected = (coin: WalletToken) => {
+	const onTokenSelected = (coin: MinkeToken) => {
 		goForward();
 		setToken(coin);
 	};

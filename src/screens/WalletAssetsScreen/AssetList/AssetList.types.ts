@@ -1,5 +1,5 @@
-import { WalletToken } from '@models/wallet';
+import { MinkeToken } from '@models/token';
 
 export interface AssetListProps {
-	walletTokens: WalletToken[];
+	walletTokens: MinkeToken[];
 }
