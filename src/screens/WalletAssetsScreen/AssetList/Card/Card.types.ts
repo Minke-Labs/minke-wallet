@@ -4,7 +4,7 @@ export interface CardProps {
 	onPress: () => void;
 	coinName: string;
 	coinSymbol: TokenType;
-	walletBalance: number;
+	walletBalance: string;
 	walletBalanceUsd: number;
 	interest?: string;
 }

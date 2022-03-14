@@ -10,7 +10,7 @@ import styles from './WalletAssetsScreen.styles';
 const WalletAssetsScreen = () => {
 	const { colors } = useTheme();
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
-	const { tokens, balance } = useTokens();
+	const { tokens, walletBalance: balance } = useTokens();
 
 	return (
 		<>
