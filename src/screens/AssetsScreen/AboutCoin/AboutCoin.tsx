@@ -5,14 +5,22 @@ import { useTheme } from '@hooks';
 import styles from './AboutCoin.styles';
 import { AboutCoinProps } from './AboutCoin.types';
 
-const AboutCoin: React.FC<AboutCoinProps> = ({ name, data }) => {
+const AboutCoin: React.FC<AboutCoinProps> = ({
+	name,
+	data: {
+		description: { en }
+	}
+}) => {
 	const { colors } = useTheme();
+	if (!en) {
+		return null;
+	}
 	return (
 		<View style={[styles.container, { backgroundColor: colors.background2 }]}>
 			<Text weight="extraBold" marginBottom={12}>
 				About {name}
 			</Text>
-			<Text type="span">{data.description.en}</Text>
+			<Text type="span">{en}</Text>
 		</View>
 	);
 };
