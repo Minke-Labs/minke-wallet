@@ -8,7 +8,7 @@ const POINTS = 30;
 export const height = 263;
 export const { width } = Dimensions.get('window');
 
-export const buildGraph = (datapoints: DataPoints, label: string) => {
+export const buildGraph = (datapoints: DataPoints, label?: string) => {
 	const { length } = datapoints.prices;
 	const priceList = datapoints.prices.slice(0, Math.min(length, POINTS));
 

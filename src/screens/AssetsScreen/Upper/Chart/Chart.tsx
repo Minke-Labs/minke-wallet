@@ -12,10 +12,10 @@ const Chart: React.FC<ChartProps> = ({ tokenHistory, current, translation, previ
 
 	return (
 		<View style={{ flex: 1 }}>
-			<Header {...{ current, price, percChange, graphs }} />
+			<Header {...{ current, price, graphs }} />
 			<Main {...{ previous, current, transition, translation, percChange, graphs }} />
 			<Selection {...{ previous, current, transition, graphs }} />
-			<Changes {...{ current, graphs, percChange }} />
+			<Changes {...{ tokenHistory, current, graphs }} />
 		</View>
 	);
 };

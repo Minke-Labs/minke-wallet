@@ -7,9 +7,8 @@ import { useTheme } from '@hooks';
 import styles from './PercChange.styles';
 import { PercChangeProps } from './PercChange.types';
 
-const PercChange: React.FC<PercChangeProps> = ({ percChange, current, graphs }) => {
+const PercChange: React.FC<PercChangeProps> = ({ percChange, data }) => {
 	const { colors } = useTheme();
-	const data = useDerivedValue(() => graphs[current.value].data);
 	const animatedText = useDerivedValue(() => `${round(data.value.percentChange, 3)}%`);
 	const animatedTextStyle = useAnimatedStyle(() => ({
 		color: data.value.percentChange > 0 ? colors.alert3 : colors.alert1
@@ -18,8 +17,8 @@ const PercChange: React.FC<PercChangeProps> = ({ percChange, current, graphs }) 
 	return (
 		<View style={styles.container}>
 			<Icon
-				name={percChange > 0 ? 'iconUp' : 'iconDown'}
-				color={percChange > 0 ? 'alert3' : 'alert1'}
+				name={percChange ? 'iconUp' : 'iconDown'}
+				color={percChange ? 'alert3' : 'alert1'}
 				size={16}
 				style={{ marginRight: 4 }}
 			/>
