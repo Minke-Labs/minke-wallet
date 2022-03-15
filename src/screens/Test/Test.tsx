@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { Input } from '@components';
+import { Token } from '@components';
 import { WelcomeLayout } from '@layouts';
 
-const Test = () => {
-	const [value, setValue] = useState('');
-	return (
-		<WelcomeLayout>
-			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				<Input label="label" value={value} onChangeText={setValue} small error isPassword />
-			</View>
-		</WelcomeLayout>
-	);
-};
+const Test = () => (
+	<WelcomeLayout>
+		<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
+			<Token name="gmr" />
+		</View>
+	</WelcomeLayout>
+);
 
 export default Test;
