@@ -2,8 +2,7 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { getSeedPhrase } from '@models/wallet';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { backupSeedOnKeychain } from '@models/keychain';
+import { globalWalletState } from '@stores/WalletStore';
 import { WelcomeLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button, ScreenLoadingIndicator } from '@components';
@@ -12,26 +11,15 @@ import styles from './WalletCreatedScreen.styles';
 
 const WalletCreatedScreen = () => {
 	const navigation = useNavigation();
-
-	const backupManually = () => navigation.navigate('BackupScreen');
-	const onFinish = () => navigation.navigate('WalletScreen');
-
 	const walletState = useState(globalWalletState());
+	const backupManually = () => navigation.navigate('BackupScreen');
+	const backupOnKeychain = async () => {
+		navigation.navigate('BackupToICloudScreen');
+	};
+
 	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
 	const seed = useState(loadSeed);
 	if (seed.promised) return <ScreenLoadingIndicator />;
-
-	const backupOnKeychain = async () => {
-		const toBackup = seed.value || walletState.privateKey.value;
-		if (toBackup) {
-			const backedUp = await backupSeedOnKeychain(toBackup);
-			if (backedUp) {
-				onFinish();
-			} else {
-				backupManually();
-			}
-		}
-	};
 
 	return (
 		<WelcomeLayout center style={styles.container}>

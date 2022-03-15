@@ -3,9 +3,9 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
-import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain';
+import { searchForMinkeBackups } from '@models/keychain';
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
-import { globalWalletState } from '@src/stores/WalletStore';
+import { globalWalletState } from '@stores/WalletStore';
 import { backupImg } from '@images';
 import { useNavigation } from '@hooks';
 import styles from './BackupSettingsScreen.styles';
@@ -34,14 +34,7 @@ const BackupSettingsScreen = () => {
 	const toBackup = seed.value || walletState.privateKey.value;
 
 	const backupOnKeychain = async () => {
-		if (toBackup) {
-			const backedUp = await backupSeedOnKeychain(toBackup);
-			if (backedUp) {
-				loadBackups();
-			} else {
-				navigation.navigate('BackupScreen');
-			}
-		}
+		navigation.navigate('BackupToICloudScreen');
 	};
 
 	return (
@@ -58,7 +51,7 @@ const BackupSettingsScreen = () => {
 			</View>
 
 			<View style={styles.padding}>
-				<View style={{ width: '100%', marginBottom: 58 }}>
+				<View style={{ width: '100%', marginBottom: 32 }}>
 					<Text weight="extraBold" type="h3">
 						Backup
 					</Text>
@@ -88,7 +81,7 @@ const BackupSettingsScreen = () => {
 						<Text weight="medium" center marginBottom={40}>
 							Your keys your coin. Backup your wallet incase of loss.
 						</Text>
-						<Button title="Back up to iCloud Keychain" onPress={backupOnKeychain} iconRight="cloudStroke" />
+						<Button title="Back up to iCloud" onPress={backupOnKeychain} iconRight="cloudStroke" />
 					</>
 				)}
 			</View>

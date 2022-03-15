@@ -22,6 +22,7 @@ import {
 	DepositScreen,
 	USDCoinScreen,
 	DepositSuccessScreen,
+	BackupToICloudScreen,
 	Test
 } from '@screens';
 import { Icon } from '@components';
@@ -88,6 +89,7 @@ const Routes: React.FC = () => {
 
 				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
+				<Stack.Screen name="BackupToICloudScreen" component={BackupToICloudScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
