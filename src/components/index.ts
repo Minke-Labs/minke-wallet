@@ -17,6 +17,7 @@ import TransparentCard from './TransparentCard/TransparentCard';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
+import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
 import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
@@ -39,6 +40,7 @@ export {
 	Flag,
 	Card,
 	TransparentCard,
+	PercChange,
 	PaperTouchable,
 	ApplePayButton,
 	ScreenLoadingIndicator,
