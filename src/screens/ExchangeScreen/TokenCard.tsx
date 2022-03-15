@@ -51,11 +51,12 @@ const TokenCard = ({
 
 	useEffect(() => {
 		setAmount('');
+		setMaxModeEnabled(false);
 		if (updateQuotes) updateQuotes('');
 	}, [token]);
 
 	useEffect(() => {
-		if (updateQuotes && !(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
+		if (updateQuotes && amount && !(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
 			updateQuotes(amount);
 		}
 	}, [amount]);
@@ -65,7 +66,7 @@ const TokenCard = ({
 	}, [conversionAmount]);
 
 	useEffect(() => {
-		if (maxModeEnabled && !disableMax) {
+		if (maxModeEnabled && !disableMax && conversionAmount) {
 			onMaxPress();
 		}
 	}, [balance]);

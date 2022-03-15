@@ -70,7 +70,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
-		fromAmountRef.current?.focus();
+		// fromAmountRef.current?.focus();
 	};
 
 	const updateToToken = (token: ParaswapToken) => {
@@ -78,7 +78,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		setToConversionAmount(undefined);
 		exchange.to.set(token);
 		exchange.toAmount.set(undefined);
-		toAmountRef.current?.focus();
+		// toAmountRef.current?.focus();
 	};
 
 	interface PriceParams {
