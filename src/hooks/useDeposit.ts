@@ -14,17 +14,17 @@ const useDeposit = () => {
 			const defaultUSDCoin = await usdCoin();
 			const { tokens } = await getTokenBalances(address);
 			const hasTheDefaultToken = !!tokens.find((t) => t.symbol === defaultUSDCoin);
-
 			if (hasTheDefaultToken) {
 				setAbleToDeposit(true);
+				return;
 			}
 
 			const { symbol } = tokens.find((t) => depositStablecoins.includes(t.symbol)) || {};
 			if (symbol) {
 				await AsyncStorage.setItem(usdCoinSettingsKey, symbol);
 				setAbleToDeposit(true);
+				return;
 			}
-
 			setAbleToDeposit(false);
 		};
 		checkAbleToDeposit();
