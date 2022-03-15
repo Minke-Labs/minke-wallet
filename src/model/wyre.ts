@@ -1,7 +1,6 @@
 // @ts-expect-error
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
 import { get, split } from 'lodash';
-import { Network } from './network';
 import {
 	WYRE_MERCHANT_ID_TEST,
 	WYRE_MERCHANT_ID,
@@ -10,6 +9,7 @@ import {
 	WYRE_TOKEN,
 	WYRE_TOKEN_TEST
 } from '@env';
+import { Network } from './network';
 
 const SOURCE_CURRENCY_USD = 'USD';
 const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';
