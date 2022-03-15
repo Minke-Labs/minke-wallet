@@ -53,7 +53,7 @@ const Accounts = () => {
 			/>
 			<Card
 				image={<Image alert icon="borrowStroke" />}
-				title="Debit"
+				title="Debt"
 				subtitle="Open loans"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
