@@ -9,6 +9,7 @@ import { BoxProps } from './Box.types';
 export const Box: React.FC<BoxProps> = ({ data, current, graphs, name }) => {
 	const { colors } = useTheme();
 	const percChange = data.value.percentChange > 0;
+	const percZero = data.value.percentChange === 0;
 
 	const chooseColor = (pChange: number, c: ColorType) => {
 		if (pChange > 0) return c.alert3;
@@ -23,7 +24,7 @@ export const Box: React.FC<BoxProps> = ({ data, current, graphs, name }) => {
 			<Text type="span" marginBottom={8}>
 				{name}
 			</Text>
-			<PercChange {...{ percChange, data, current, graphs }} />
+			<PercChange {...{ percZero, percChange, data, current, graphs }} />
 		</View>
 	);
 };
