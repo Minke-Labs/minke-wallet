@@ -2,8 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { useDerivedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { round } from 'react-native-redash';
-import { Icon, AnimatedText } from '@components';
 import { useTheme } from '@hooks';
+import Icon from '../Icon/Icon';
+import AnimatedText from '../AnimatedText/AnimatedText';
 import styles from './PercChange.styles';
 import { PercChangeProps } from './PercChange.types';
 
