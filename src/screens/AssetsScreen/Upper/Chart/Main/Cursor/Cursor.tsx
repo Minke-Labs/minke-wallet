@@ -9,14 +9,12 @@ import Animated, {
 	withSpring
 } from 'react-native-reanimated';
 import { getYForX } from 'react-native-redash';
-import { useTheme } from '@hooks';
-// import { graphs } from './Graph.utils';
+import { addColorOpacity } from '@helpers/utilities';
 import { CURSOR } from './Cursor.utils';
 import { styles } from './Cursor.styles';
 import { CursorProps } from './Cursor.types';
 
-const Cursor: React.FC<CursorProps> = ({ index, translation, percChange, graphs }) => {
-	const { colors } = useTheme();
+const Cursor: React.FC<CursorProps> = ({ color, index, translation, graphs }) => {
 	const isActive = useSharedValue(false);
 	const onGestureEvent = useAnimatedGestureHandler({
 		onStart: () => {
@@ -43,23 +41,8 @@ const Cursor: React.FC<CursorProps> = ({ index, translation, percChange, graphs 
 		<View style={StyleSheet.absoluteFill}>
 			<PanGestureHandler {...{ onGestureEvent }}>
 				<Animated.View style={StyleSheet.absoluteFill}>
-					<Animated.View
-						style={[
-							styles.cursor,
-							style,
-							{
-								backgroundColor: percChange > 0 ? colors.graphic2 : colors.graphicRed2
-							}
-						]}
-					>
-						<View
-							style={[
-								styles.cursorBody,
-								{
-									backgroundColor: percChange > 0 ? colors.alert3 : colors.alert1
-								}
-							]}
-						/>
+					<Animated.View style={[styles.cursor, style, { backgroundColor: addColorOpacity(color, 0.2) }]}>
+						<View style={[styles.cursorBody, { backgroundColor: color }]} />
 					</Animated.View>
 				</Animated.View>
 			</PanGestureHandler>

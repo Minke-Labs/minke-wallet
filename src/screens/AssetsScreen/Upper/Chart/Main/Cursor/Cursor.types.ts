@@ -5,6 +5,6 @@ import { GraphIndex } from '../../Chart.types';
 export interface CursorProps {
 	index: Animated.SharedValue<GraphIndex>;
 	translation: Vector<Animated.SharedValue<number>>;
-	percChange: number;
 	graphs: any;
+	color: string;
 }

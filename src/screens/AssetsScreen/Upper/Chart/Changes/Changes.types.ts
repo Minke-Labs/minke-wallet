@@ -5,4 +5,5 @@ export interface ChangesProps {
 	graphs: any;
 	current: Animated.SharedValue<GraphIndex>;
 	tokenHistory: any;
+	color: string;
 }
