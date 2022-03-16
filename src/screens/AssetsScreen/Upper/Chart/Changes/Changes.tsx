@@ -1,19 +1,13 @@
 import React from 'react';
-import { useDerivedValue } from 'react-native-reanimated';
 import { View, ScrollView } from 'react-native';
 import { Text } from '@components';
 import styles from './Changes.styles';
 import { ChangesProps } from './Changes.types';
 import { Box } from './Box/Box';
+import { useChanges } from './Changes.hooks';
 
 const Changes: React.FC<ChangesProps> = ({ current, graphs }) => {
-	const hour = useDerivedValue(() => graphs[0].data);
-	const day = useDerivedValue(() => graphs[1].data);
-	const week = useDerivedValue(() => graphs[2].data);
-	const month = useDerivedValue(() => graphs[3].data);
-	const year = useDerivedValue(() => graphs[4].data);
-	const all = useDerivedValue(() => graphs[5].data);
-
+	const { hour, day, week, month, year, all } = useChanges(graphs);
 	return (
 		<View style={styles.container}>
 			<Text weight="extraBold" marginBottom={16}>
