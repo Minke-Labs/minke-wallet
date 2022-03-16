@@ -1,6 +1,6 @@
 import { BigNumber, FixedNumber } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
-import coins from './coins.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function convertEthToUsd(ethValue: BigNumber, ethInUsd: string, round = 2): string {
 	const formatedEthInUsd = Math.trunc((+ethInUsd * 100) / 100)
@@ -16,8 +16,11 @@ interface CoingeckoToken {
 	name: string;
 }
 
-export const coinFromSymbol = (symbol: string): CoingeckoToken =>
-	coins.find((coin) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
+export const coinFromSymbol = async (symbol: string): Promise<CoingeckoToken> => {
+	const coinList = await AsyncStorage.getItem('@listCoins');
+	const coins = JSON.parse(coinList!);
+	return coins.find((coin: any) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
+};
 
 export const numberFormat = (value: number, digits?: number) =>
 	new Intl.NumberFormat('en-US', {
