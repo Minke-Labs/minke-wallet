@@ -57,6 +57,7 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 						amount={amount}
 						setPresetAmount={setPresetAmount}
 						enableCustomAmount={enableCustomAmount}
+						onTopUpFinish={dismissCoin}
 					/>
 				)}
 				{currentStep === 2 && (

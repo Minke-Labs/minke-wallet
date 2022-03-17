@@ -20,6 +20,7 @@ export interface Networks {
 	matic: Network;
 	mumbai: Network;
 	ropsten: Network;
+	kovan: Network;
 }
 
 export const networks: Networks = {
@@ -71,6 +72,19 @@ export const networks: Networks = {
 		testnet: true,
 		etherscanURL: 'https://ropsten.etherscan.io/',
 		etherscanAPIURL: 'https://api-ropsten.etherscan.io/',
+		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
+		zapperNetwork: 'ethereum',
+		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+		transactionTimesEndpoint: true
+	},
+	kovan: {
+		chainId: 42,
+		name: 'Kovan',
+		id: 'kovan',
+		wyreSRN: 'ethereum',
+		testnet: true,
+		etherscanURL: 'https://kovan.etherscan.io/',
+		etherscanAPIURL: 'https://api-kovan.etherscan.io/',
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },

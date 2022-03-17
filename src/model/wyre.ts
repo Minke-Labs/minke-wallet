@@ -10,6 +10,7 @@ import {
 	WYRE_TOKEN_TEST
 } from '@env';
 import { Network } from './network';
+import { WyreReferenceInfo } from '@stores/TopUpStore';
 
 const SOURCE_CURRENCY_USD = 'USD';
 const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';
@@ -20,11 +21,10 @@ const WYRE_ENDPOINT = 'https://api.sendwyre.com';
 const wyreApi = {
 	post: async (url: string, data: any, headers?: any) => {
 		const requestOptions = {
-			method: 'POST',
+			method: 'post',
 			headers,
 			body: JSON.stringify(data)
 		};
-
 		const result = await fetch(url, requestOptions);
 		return result.json();
 	},
@@ -62,6 +62,7 @@ const getWyrePaymentDetails = (sourceAmount, destCurrency, networkFee, purchaseF
 });
 
 export const showApplePayRequest = async (
+	referenceInfo: WyreReferenceInfo,
 	destCurrency: any,
 	sourceAmountWithFees: any,
 	purchaseFee: any,
@@ -108,6 +109,7 @@ export const showApplePayRequest = async (
 		return paymentResponse;
 	} catch (error) {
 		console.error(error);
+		console.error({ referenceInfo });
 		return null;
 	}
 };
@@ -137,8 +139,6 @@ export const getWalletOrderQuotation = async (
 		Authorization: `Bearer ${wyreAuthToken}`
 	};
 	const response = await wyreApi.post(`${baseUrl}/v3/orders/quote/partner`, data, headers);
-	console.log({ data });
-	console.log({ response });
 	const purchaseFee = response?.fees[SOURCE_CURRENCY_USD];
 	return {
 		purchaseFee,
@@ -182,17 +182,18 @@ export const reserveWyreOrder = async (
 export const trackWyreOrder = async (referenceInfo: any, orderId: any, network: Network) => {
 	const baseUrl = getBaseUrl(network);
 	const response = await wyreApi.get(`${baseUrl}/v3/orders/${orderId}`);
-	const orderStatus = get(response, 'data.status');
-	const transferId = get(response, 'data.transferId');
-	return { data: response.data, orderStatus, transferId };
+	const orderStatus = get(response, 'status');
+	const transferId = get(response, 'transferId');
+	return { data: response, orderStatus, transferId };
 };
 
-export const trackWyreTransfer = async (referenceInfo: any, transferId: any, network: any) => {
+export const trackWyreTransfer = async (referenceInfo: any, transferId: any, network: Network) => {
 	const baseUrl = getBaseUrl(network);
 	const response = await wyreApi.get(`${baseUrl}/v2/transfer/${transferId}/track`);
-	const transferHash = get(response, 'data.blockchainNetworkTx');
-	const destAmount = get(response, 'data.destAmount');
-	const destCurrency = get(response, 'data.destCurrency');
+	console.log({ response });
+	const transferHash = get(response, 'blockchainNetworkTx');
+	const destAmount = get(response, 'destAmount');
+	const destCurrency = get(response, 'destCurrency');
 	return { destAmount, destCurrency, transferHash };
 };
 
@@ -214,7 +215,7 @@ const getAddressDetails = (addressInfo: any) => {
 };
 
 const createPayload = (
-	referenceId: any,
+	referenceInfo: WyreReferenceInfo,
 	paymentResponse: any,
 	amount: any,
 	accountAddress: any,
@@ -248,7 +249,7 @@ const createPayload = (
 				amount,
 				dest,
 				destCurrency,
-				referenceId,
+				referenceId: referenceInfo.referenceId,
 				referrerAccountId: partnerId,
 				reservationId,
 				sourceCurrency: SOURCE_CURRENCY_USD
@@ -270,7 +271,7 @@ const createPayload = (
 };
 
 export const getOrderId = async (
-	referenceInfo: any,
+	referenceInfo: WyreReferenceInfo,
 	paymentResponse: any,
 	amount: any,
 	accountAddress: any,
@@ -291,13 +292,35 @@ export const getOrderId = async (
 		const baseUrl = getBaseUrl(network);
 		console.log('url', `${baseUrl}/v3/apple-pay/process/partner`);
 		console.log(JSON.stringify(data, null, 4));
-		const response = await wyreApi.post(`${baseUrl}/v3/apple-pay/process/partner`, data);
+		const wyreAuthToken = network.testnet || true ? WYRE_TOKEN_TEST : WYRE_TOKEN;
+		const headers = {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${wyreAuthToken}`
+		};
+		console.log('about to process');
+		const response = await wyreApi.post(`${baseUrl}/v3/apple-pay/process/partner`, data, headers);
 		console.log({ response });
-		const orderId = get(response, 'data.id', null);
+		const orderId = get(response, 'id', null);
 
-		return { orderId };
+		if (orderId) {
+			return { orderId };
+		}
+
+		const { errorCode, message, type } = response;
+		return {
+			errorCategory: type,
+			errorCode,
+			errorMessage: message
+		};
 	} catch (error: any) {
-		console.error(error);
-		return {};
+		const {
+			data: { errorCode, message, type }
+		} = error;
+		return {
+			errorCategory: type,
+			errorCode,
+			errorMessage: message
+		};
 	}
 };

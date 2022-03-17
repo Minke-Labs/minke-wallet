@@ -7,21 +7,24 @@ import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
 import { TokenType } from '@styles';
 import { ICoin } from '@helpers/coins';
-import { useWyreApplePay } from '@hooks';
+import { useNavigation, useWyreApplePay } from '@hooks';
 
 interface ChooseQuantityModalProps {
 	coin: ICoin;
 	amount: number | undefined;
 	setPresetAmount: Function;
 	enableCustomAmount: () => void;
+	onTopUpFinish: () => void;
 }
 
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
 	amount = 100,
 	setPresetAmount,
-	enableCustomAmount
+	enableCustomAmount,
+	onTopUpFinish
 }) => {
+	const navigation = useNavigation();
 	const { name, symbol } = coin;
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const { address } = useState(globalWalletState()).value;
@@ -31,7 +34,13 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		setSnackbarVisible(true);
 	};
 
-	const { isPaymentComplete, onPurchase, orderCurrency, orderId } = useWyreApplePay();
+	const { isPaymentComplete, onPurchase, orderId } = useWyreApplePay();
+
+	if (isPaymentComplete && orderId) {
+		console.log('Payment is complete go to the page to track it', orderId);
+		navigation.navigate('TopUpWaitScreen');
+		onTopUpFinish();
+	}
 
 	return (
 		<>

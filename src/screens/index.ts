@@ -15,8 +15,8 @@ import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
-
 import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
+import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 
 import Test from './Test/Test';
 
@@ -39,5 +39,6 @@ export {
 	WalletScreen,
 	WelcomeScreen,
 	DepositSuccessScreen,
+	TopUpWaitScreen,
 	Test
 };

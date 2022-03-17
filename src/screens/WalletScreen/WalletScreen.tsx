@@ -10,11 +10,11 @@ import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { globalWalletState, walletState, emptyWallet, fetchTokensAndBalances } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getAllWallets } from '@models/wallet';
+import { AddFunds } from '@containers';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { SendModal, ReceiveModal, SentModal } from './Modals';
 import { ResultProps } from './WalletScreen.types';
-import { AddFunds } from '@containers';
 
 const WalletScreen = () => {
 	const state = useState(globalWalletState());
