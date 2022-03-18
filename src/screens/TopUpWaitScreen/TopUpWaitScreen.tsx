@@ -4,10 +4,13 @@ import { View } from 'react-native';
 import { ActivityIndicator, Button, Icon, Text } from '@components';
 import { useNavigation, useTheme, useWyreOrderStatus } from '@hooks';
 import { WYRE_ORDER_STATUS_TYPES } from '@models/wyre.types';
+import { useState } from '@hookstate/core';
+import { globalTopUpState, TopUpState } from '@stores/TopUpStore';
 import { makeStyles } from './TopUpWaitScreen.styles';
 
 const TopUpWaitScreen = () => {
 	const navigation = useNavigation();
+	const topUpState = useState(globalTopUpState());
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { status, transactionHash } = useWyreOrderStatus();
@@ -16,6 +19,11 @@ const TopUpWaitScreen = () => {
 	const checking = status === WYRE_ORDER_STATUS_TYPES.checking;
 	const processing = status === WYRE_ORDER_STATUS_TYPES.pending;
 	const success = status === WYRE_ORDER_STATUS_TYPES.success;
+
+	const onFinish = () => {
+		topUpState.set({} as TopUpState);
+		navigation.navigate('WalletScreen');
+	};
 
 	const Failed = useCallback(
 		() => (
@@ -26,7 +34,7 @@ const TopUpWaitScreen = () => {
 				<Text type="h3" weight="extraBold" center width={275} style={{ marginBottom: 40 }}>
 					Oh no! Something has gone wrong. Please try again later or contact the support
 				</Text>
-				<Button title="Try again" onPress={() => navigation.navigate('WalletScreen')} />
+				<Button title="Try again" onPress={onFinish} />
 			</View>
 		),
 		[isFailed]
@@ -57,7 +65,7 @@ const TopUpWaitScreen = () => {
 				<Text type="h3" weight="extraBold" center marginBottom={40} width={275}>
 					Your funds have been added to your wallet!
 				</Text>
-				<Button title="Done" onPress={() => navigation.navigate('WalletScreen')} />
+				<Button title="Done" onPress={onFinish} />
 			</View>
 		),
 		[success]

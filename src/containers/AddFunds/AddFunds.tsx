@@ -2,17 +2,18 @@ import React, { createRef, useEffect, useState } from 'react';
 import { View, SafeAreaView, TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
 import { ModalHeader } from '@components';
-import { useFormProgress } from '@hooks';
+import { useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
 import CoinSelectorModal from './CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal';
-import CustomAmountModal from './CustomAmountModal';
+import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
 
-interface AddFundsModalProps {
+interface AddFundsProps {
 	visible: boolean;
 	onDismiss: () => void;
 }
 
-const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismiss }) => {
+const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
+	const navigation = useNavigation();
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const [coin, setCoin] = useState<ICoin>(coins.ethereum);
 	const [amount, setAmount] = useState<number | undefined>(undefined);
@@ -40,6 +41,15 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 		onDismiss();
 	};
 
+	const { onPurchase, orderId } = useWyreApplePay();
+
+	useEffect(() => {
+		if (orderId) {
+			dismissCoin();
+			navigation.navigate('TopUpWaitScreen');
+		}
+	}, [orderId]);
+
 	useEffect(() => {
 		if (!visible) {
 			reset();
@@ -57,7 +67,7 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 						amount={amount}
 						setPresetAmount={setPresetAmount}
 						enableCustomAmount={enableCustomAmount}
-						onTopUpFinish={dismissCoin}
+						onPurchase={() => onPurchase({ currency: coin.symbol, value: amount })}
 					/>
 				)}
 				{currentStep === 2 && (
@@ -65,6 +75,7 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 						customAmount={customAmount}
 						setCustomAmount={setCustomAmount}
 						customAmountRef={customAmountRef}
+						onPurchase={() => onPurchase({ currency: coin.symbol, value: customAmount })}
 					/>
 				)}
 			</View>
@@ -72,4 +83,4 @@ const AddFundsModal: React.FC<AddFundsModalProps> = ({ visible = false, onDismis
 	);
 };
 
-export default AddFundsModal;
+export default AddFunds;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { useState } from '@hookstate/core';
@@ -7,24 +7,23 @@ import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
 import { TokenType } from '@styles';
 import { ICoin } from '@helpers/coins';
-import { useNavigation, useWyreApplePay } from '@hooks';
 
 interface ChooseQuantityModalProps {
 	coin: ICoin;
 	amount: number | undefined;
 	setPresetAmount: Function;
 	enableCustomAmount: () => void;
-	onTopUpFinish: () => void;
+	onPurchase: () => void;
 }
 
+const DEFAULT_VALUE = 100;
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
-	amount = 100,
+	amount,
 	setPresetAmount,
 	enableCustomAmount,
-	onTopUpFinish
+	onPurchase
 }) => {
-	const navigation = useNavigation();
 	const { name, symbol } = coin;
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const { address } = useState(globalWalletState()).value;
@@ -34,13 +33,9 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		setSnackbarVisible(true);
 	};
 
-	const { isPaymentComplete, onPurchase, orderId } = useWyreApplePay();
-
-	if (isPaymentComplete && orderId) {
-		console.log('Payment is complete go to the page to track it', orderId);
-		navigation.navigate('TopUpWaitScreen');
-		onTopUpFinish();
-	}
+	useEffect(() => {
+		setPresetAmount(DEFAULT_VALUE);
+	}, []);
 
 	return (
 		<>
@@ -73,9 +68,7 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					<Text type="a">Choose another amount</Text>
 				</PaperTouchable>
 
-				{amount > 0 && (
-					<ApplePayButton marginBottom={48} onPress={() => onPurchase({ currency: symbol, value: amount })} />
-				)}
+				<ApplePayButton marginBottom={48} onPress={onPurchase} disabled={amount! <= 0} />
 
 				<View
 					style={{
@@ -106,12 +99,14 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					Send from <Text weight="extraBold">coinbase</Text> or another exchange
 				</Text>
 
-				<PaperTouchable onPress={onCopyToClipboard}>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<Icon name="copyStroke" style={{ marginRight: 8 }} size={16} />
-						<Text>Copy address</Text>
-					</View>
-				</PaperTouchable>
+				<View style={{ marginBottom: 8 }}>
+					<PaperTouchable onPress={onCopyToClipboard}>
+						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+							<Icon name="copyStroke" style={{ marginRight: 8 }} size={16} />
+							<Text>Copy address</Text>
+						</View>
+					</PaperTouchable>
+				</View>
 			</View>
 
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
