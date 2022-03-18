@@ -66,11 +66,11 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 
 	const updateFromToken = (token: ParaswapToken) => {
 		setFromToken(token);
-		setFromTokenBalance(balanceFrom(token).toString());
+		setFromTokenBalance(balanceFrom(token).toFixed(token.decimals));
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
-		fromAmountRef.current?.focus();
+		// fromAmountRef.current?.focus();
 	};
 
 	const updateToToken = (token: ParaswapToken) => {
@@ -78,7 +78,7 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 		setToConversionAmount(undefined);
 		exchange.to.set(token);
 		exchange.toAmount.set(undefined);
-		toAmountRef.current?.focus();
+		// toAmountRef.current?.focus();
 	};
 
 	interface PriceParams {
@@ -256,8 +256,8 @@ const ExchangeScreen = ({ navigation }: NativeStackScreenProps<RootStackParamLis
 	}, [walletTokens]);
 
 	useEffect(() => {
-		setFromTokenBalance(balanceFrom(fromToken).toString());
-		setToTokenBalance(balanceFrom(toToken).toString());
+		setFromTokenBalance(balanceFrom(fromToken).toFixed(fromToken.decimals));
+		setToTokenBalance(balanceFrom(toToken).toFixed(toToken?.decimals));
 	}, [ownedTokens, exchange.gas.value]);
 
 	useEffect(() => {

@@ -126,7 +126,7 @@ const Deposit = () => {
 	useEffect(() => {
 		if (token && tokens && tokens.length > 0) {
 			const balance = balanceFrom(token);
-			setTokenBalance(balance.toString());
+			setTokenBalance(balance.toFixed(token.decimals));
 		} else {
 			setTokenBalance('0');
 		}

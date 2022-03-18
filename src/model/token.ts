@@ -46,6 +46,22 @@ export const getTokenHistory = async (token = 'ethereum') => {
 	return result.json();
 };
 
+export const getTokenData = async (token = 'ethereum') => {
+	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
+	const result = await fetch(
+		`${baseURL}${token.toLowerCase()}?localization=false&tickers=false&community_data=false&developer_data=false`
+	);
+	return result.json();
+};
+
+export const getTokenVolume = async (token: string) => {
+	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
+	const result = await fetch(
+		`${baseURL}${token.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`
+	);
+	return result.json();
+};
+
 export const getTokenMarketCap = async (tokenName: string) => {
 	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenName}`;
 	const result = await fetch(baseURL);
@@ -188,13 +204,15 @@ export interface MinkeToken {
 	symbol: string;
 	address: string;
 	image: string;
-	balance: number;
+	balance: string;
 	balanceUSD: number;
 }
 
 export interface AccountBalance {
 	address: string;
-	balance: number;
+	balance: number; // total
+	depositedBalance: number; // deposited amount
+	walletBalance: number; // available in the wallet (not deposited)
 	tokens: MinkeToken[];
 }
 

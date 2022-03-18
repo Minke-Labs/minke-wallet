@@ -1,5 +1,12 @@
+import Animated, { SharedValue } from 'react-native-reanimated';
+import { Vector } from 'react-native-redash';
+
 interface ChartProps {
-	data: any;
+	translation: Vector<Animated.SharedValue<number>>;
+	previous: SharedValue<GraphIndex>;
+	transition: SharedValue<number>;
+	current: SharedValue<GraphIndex>;
+	tokenHistory: any;
 }
 
 interface Amount {
@@ -42,13 +49,4 @@ interface Prices {
 
 type GraphIndex = 0 | 1 | 2 | 3 | 4 | 5;
 
-export {
-	ChartProps,
-	Amount,
-	PercentChange,
-	LatestPrice,
-	PriceList,
-	DataPoints,
-	Prices,
-	GraphIndex
-};
+export { ChartProps, Amount, PercentChange, LatestPrice, PriceList, DataPoints, Prices, GraphIndex };

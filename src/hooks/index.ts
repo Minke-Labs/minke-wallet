@@ -6,6 +6,7 @@ import useTimeout from './useTimeout';
 import useWyreApplePay from './useWyreApplePay';
 import useTokens from './useTokens';
 import useWyreOrderStatus from './useWyreOrderStatus';
+import useDeposit from './useDeposit';
 
 export {
 	useTheme,
@@ -15,5 +16,6 @@ export {
 	useTokens,
 	useTimeout,
 	useWyreApplePay,
-	useWyreOrderStatus
+	useWyreOrderStatus,
+	useDeposit
 };

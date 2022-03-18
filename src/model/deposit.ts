@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getTokenBalances } from '@src/services/apis';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { network as selectedNetwork } from './network';
@@ -9,6 +8,7 @@ import { estimateGas } from './wallet';
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
 export const depositStablecoins = ['USDC', 'DAI', 'USDT'];
+export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt'];
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const baseURL = `https://api.zapper.fi/v1/protocols/${protocol}/token-market-data`;
@@ -101,24 +101,6 @@ export const depositTransaction = async ({
 export const usdCoin = async (): Promise<string> => {
 	const coin = await AsyncStorage.getItem(usdCoinSettingsKey);
 	return coin || 'USDC';
-};
-
-export const isAbleToDeposit = async (address: string): Promise<boolean> => {
-	const defaultUSDCoin = await usdCoin();
-	const { tokens } = await getTokenBalances(address);
-	const hasTheDefaultToken = !!tokens.find((t) => t.symbol === defaultUSDCoin);
-
-	if (hasTheDefaultToken) {
-		return true;
-	}
-
-	const { symbol } = tokens.find((t) => depositStablecoins.includes(t.symbol)) || {};
-	if (symbol) {
-		await AsyncStorage.setItem(usdCoinSettingsKey, symbol);
-		return true;
-	}
-
-	return false;
 };
 
 export interface DepositTransaction {

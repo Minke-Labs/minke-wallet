@@ -10,13 +10,14 @@ import styles from './Accounts.styles';
 
 const Accounts = () => {
 	const navigation = useNavigation();
-	const state = useState(globalWalletState());
+	const { balance } = useState(globalWalletState()).value;
 	const { colors } = useTheme();
+
 	return (
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
 				<Text style={styles.cardLabel}>Current value</Text>
-				<Text style={styles.cardBalance}>{numberFormat(state.value.balance?.usd || 0)}</Text>
+				<Text style={styles.cardBalance}>{numberFormat(balance?.usd || 0)}</Text>
 			</View>
 			<Card
 				onPress={() => navigation.navigate('WalletAssetsScreen')}
@@ -28,7 +29,7 @@ const Accounts = () => {
 				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<Text weight="bold" style={{ fontSize: 16 }}>
-							{numberFormat(Number(state.value.balance?.usd || '0'))}
+							{numberFormat(balance?.walletBalance || 0)}
 						</Text>
 						<Icon name="arrowForwardStroke" size={16} color="text7" />
 					</View>
@@ -43,8 +44,8 @@ const Accounts = () => {
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}
 				right={
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<Text color="text7" type="a">
-							Deposit
+						<Text weight="bold" style={{ fontSize: 16 }}>
+							{numberFormat(balance?.depositedBalance || 0)}
 						</Text>
 						<Icon name="arrowForwardStroke" size={16} color="text7" />
 					</View>
@@ -52,7 +53,7 @@ const Accounts = () => {
 			/>
 			<Card
 				image={<Image alert icon="borrowStroke" />}
-				title="Debit"
+				title="Debt"
 				subtitle="Open loans"
 				titleStyle={{ fontSize: 16, fontWeight: '500' }}
 				subtitleStyle={{ fontSize: 12, fontWeight: '400' }}

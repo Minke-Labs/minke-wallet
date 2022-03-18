@@ -11,5 +11,9 @@ export default StyleSheet.create({
 	indicatorContainer: {
 		flexDirection: 'row',
 		alignItems: 'center'
+	},
+	animatedText: {
+		fontSize: 28,
+		lineHeight: 34
 	}
 });
