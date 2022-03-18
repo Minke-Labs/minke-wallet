@@ -9,8 +9,9 @@ import {
 	WYRE_TOKEN,
 	WYRE_TOKEN_TEST
 } from '@env';
-import { Network } from './network';
 import { WyreReferenceInfo } from '@stores/TopUpStore';
+import { Network } from './network';
+import { ApplePayResponse } from './wyre.types';
 
 const SOURCE_CURRENCY_USD = 'USD';
 const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';
@@ -35,7 +36,7 @@ const wyreApi = {
 	}
 };
 
-const getBaseUrl = ({ testnet }: Network) => (true ? WYRE_ENDPOINT_TEST : WYRE_ENDPOINT);
+const getBaseUrl = ({ testnet }: Network) => (testnet ? WYRE_ENDPOINT_TEST : WYRE_ENDPOINT);
 // @ts-expect-error
 const getWyrePaymentDetails = (sourceAmount, destCurrency, networkFee, purchaseFee, totalAmount) => ({
 	displayItems: [
@@ -68,11 +69,11 @@ export const showApplePayRequest = async (
 	purchaseFee: any,
 	sourceAmount: any,
 	network: Network
-) => {
+): Promise<ApplePayResponse> => {
 	const feeAmount = sourceAmountWithFees - sourceAmount;
 	const networkFee = feeAmount - purchaseFee;
 
-	const merchantIdentifier = network.testnet || true ? WYRE_MERCHANT_ID_TEST : WYRE_MERCHANT_ID;
+	const merchantIdentifier = network.testnet ? WYRE_MERCHANT_ID_TEST : WYRE_MERCHANT_ID;
 
 	const methodData = [
 		{
@@ -100,17 +101,15 @@ export const showApplePayRequest = async (
 		requestPayerPhone: true
 	};
 
-	console.log({ methodData });
-	console.log({ paymentDetails });
-	console.log({ paymentOptions });
 	const paymentRequest = new PaymentRequest(methodData, paymentDetails, paymentOptions);
 	try {
 		const paymentResponse = await paymentRequest.show();
-		return paymentResponse;
-	} catch (error) {
-		console.error(error);
-		console.error({ referenceInfo });
-		return null;
+		return { paymentResponse };
+	} catch ({ message }) {
+		if (message !== 'AbortError') {
+			return { error: { description: message as string } };
+		}
+		return { paymentResponse: null, error: undefined }; // AbortError (user closed the apple modal)
 	}
 };
 
@@ -120,7 +119,7 @@ export const getWalletOrderQuotation = async (
 	accountAddress: any,
 	network: Network
 ) => {
-	const partnerId = network.testnet || true ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
+	const partnerId = network.testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	const dest = `${network.wyreSRN}:${accountAddress}`;
 	const data = {
 		accountId: partnerId,
@@ -132,7 +131,7 @@ export const getWalletOrderQuotation = async (
 		walletType: 'APPLE_PAY'
 	};
 	const baseUrl = getBaseUrl(network);
-	const wyreAuthToken = network.testnet || true ? WYRE_TOKEN_TEST : WYRE_TOKEN;
+	const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
 	const headers = {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
@@ -153,7 +152,7 @@ export const reserveWyreOrder = async (
 	network: Network,
 	paymentMethod = null
 ) => {
-	const partnerId = network.testnet || true ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
+	const partnerId = network.testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	const dest = `${network.wyreSRN}:${accountAddress}`;
 	const data = {
 		amount,
@@ -168,7 +167,7 @@ export const reserveWyreOrder = async (
 	}
 
 	const baseUrl = getBaseUrl(network);
-	const wyreAuthToken = network.testnet || true ? WYRE_TOKEN_TEST : WYRE_TOKEN;
+	const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
 	const headers = {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
@@ -190,7 +189,6 @@ export const trackWyreOrder = async (referenceInfo: any, orderId: any, network: 
 export const trackWyreTransfer = async (referenceInfo: any, transferId: any, network: Network) => {
 	const baseUrl = getBaseUrl(network);
 	const response = await wyreApi.get(`${baseUrl}/v2/transfer/${transferId}/track`);
-	console.log({ response });
 	const transferHash = get(response, 'blockchainNetworkTx');
 	const destAmount = get(response, 'destAmount');
 	const destCurrency = get(response, 'destCurrency');
@@ -241,7 +239,7 @@ const createPayload = (
 		phoneNumber: shippingInfo.phoneNumber
 	};
 
-	const partnerId = testnet || true ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
+	const partnerId = testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	return {
 		partnerId,
 		payload: {
@@ -290,17 +288,13 @@ export const getOrderId = async (
 	);
 	try {
 		const baseUrl = getBaseUrl(network);
-		console.log('url', `${baseUrl}/v3/apple-pay/process/partner`);
-		console.log(JSON.stringify(data, null, 4));
-		const wyreAuthToken = network.testnet || true ? WYRE_TOKEN_TEST : WYRE_TOKEN;
+		const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
 		const headers = {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${wyreAuthToken}`
 		};
-		console.log('about to process');
 		const response = await wyreApi.post(`${baseUrl}/v3/apple-pay/process/partner`, data, headers);
-		console.log({ response });
 		const orderId = get(response, 'id', null);
 
 		if (orderId) {

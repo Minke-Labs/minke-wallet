@@ -11,15 +11,10 @@ let orderStatusHandle: null | ReturnType<typeof setTimeout> = null;
 let transferHashHandle: null | ReturnType<typeof setTimeout> = null;
 
 const useWyreOrderStatus = () => {
-	const { referenceInfo, currency, orderId, paymentResponse, sourceAmount } = useState(globalTopUpState()).value;
-	console.log('loading useWyreOrderStatus', orderId);
+	const { referenceInfo, orderId } = useState(globalTopUpState()).value;
 	const [status, setStatus] = React.useState<string | null>(null);
 	const [transfer, setTransfer] = React.useState<string | null>(null);
 	const [transactionHash, setTransactionHash] = React.useState<string | null>(null);
-	console.log({ status });
-	console.log({ transfer });
-	console.log({ orderStatusHandle });
-	console.log({ transactionHash });
 
 	const getOrderStatus = useCallback(
 		async (remainingTries = MAX_TRIES, remainingErrorTries = MAX_ERROR_TRIES) => {
@@ -32,11 +27,8 @@ const useWyreOrderStatus = () => {
 				const isFailed = orderStatus === WYRE_ORDER_STATUS_TYPES.failed;
 
 				if (isFailed) {
-					const { errorCategory, errorCode, errorMessage } = data;
+					// const { errorCategory, errorCode, errorMessage } = data;
 					console.error('error', data);
-					console.log({ errorCategory });
-					console.log({ errorCode });
-					console.log({ errorMessage });
 				}
 
 				if (transferId && !transfer) {
@@ -46,6 +38,7 @@ const useWyreOrderStatus = () => {
 				}
 			} catch (error) {
 				if (remainingErrorTries === 0) return;
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries, remainingErrorTries - 1), 5000);
 			}
 		},
@@ -58,12 +51,10 @@ const useWyreOrderStatus = () => {
 				if (remainingTries === 0) return;
 				const network = await selectedNetwork();
 				const { transferHash } = await trackWyreTransfer(referenceInfo, transfer, network);
-				console.log('Fetched the transfer hash', transferHash);
 				if (transferHash) {
 					setTransactionHash(transferHash);
 					getOrderStatus();
 				} else {
-					console.log('scheduling a new try', remainingTries - 1);
 					transferHashHandle = setTimeout(
 						() => getTransferHash(remainingTries - 1, remainingErrorTries),
 						1000
@@ -71,6 +62,7 @@ const useWyreOrderStatus = () => {
 				}
 			} catch (error) {
 				if (remainingErrorTries === 0) return;
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				transferHashHandle = setTimeout(() => getTransferHash(remainingTries, remainingErrorTries - 1), 5000);
 			}
 		},
