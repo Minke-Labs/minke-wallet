@@ -73,6 +73,7 @@ const WalletScreen = () => {
 				</ScrollView>
 			</TabLayout>
 
+			{/* MODALS MODALS */}
 			<ModalsImport
 				{...{
 					sendModalOpen,

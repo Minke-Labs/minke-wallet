@@ -1,25 +1,9 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, StyleSheet } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import { useTheme } from '@hooks';
-import TabSelector from './TabSelector';
-
-const styles = StyleSheet.create({
-	container: {
-		paddingHorizontal: 24
-	},
-	tabsContainer: {
-		flex: 1,
-		backgroundColor: '#fff',
-		padding: 10
-	}
-});
-
-interface TabLayoutProps {
-	left: React.ReactChild;
-	right: React.ReactChild;
-	leftTitle: string;
-	rightTitle: string;
-}
+import TabSelector from './TabSelector/TabSelector';
+import { styles } from './TabLayout.styles';
+import { TabLayoutProps } from './TabLayout.types';
 
 const TabLayout: React.FC<TabLayoutProps> = ({ children, left, right, leftTitle, rightTitle }) => {
 	const [selectedTab, setSelectedTab] = useState('transactions');
@@ -37,9 +21,9 @@ const TabLayout: React.FC<TabLayoutProps> = ({ children, left, right, leftTitle,
 				style={[
 					styles.tabsContainer,
 					{
-						...(selectedTab === 'transactions'
-							? { borderTopRightRadius: 24 }
-							: { borderTopLeftRadius: 24 }),
+						...(selectedTab === 'transactions' ?
+							{ borderTopRightRadius: 24 } :
+							{ borderTopLeftRadius: 24 }),
 						backgroundColor: colors.detail4
 					}
 				]}
