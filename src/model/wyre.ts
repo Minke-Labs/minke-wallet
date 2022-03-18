@@ -38,29 +38,35 @@ const wyreApi = {
 
 const getBaseUrl = ({ testnet }: Network) => (testnet ? WYRE_ENDPOINT_TEST : WYRE_ENDPOINT);
 // @ts-expect-error
-const getWyrePaymentDetails = (sourceAmount, destCurrency, networkFee, purchaseFee, totalAmount) => ({
-	displayItems: [
-		{
-			amount: { currency: SOURCE_CURRENCY_USD, value: sourceAmount },
-			label: destCurrency
-		},
-		{
-			amount: { currency: SOURCE_CURRENCY_USD, value: purchaseFee },
-			label: 'Purchase Fee'
-		},
-		{
+const getWyrePaymentDetails = (sourceAmount, destCurrency, networkFee, purchaseFee, totalAmount) => {
+	const items = {
+		displayItems: [
+			{
+				amount: { currency: SOURCE_CURRENCY_USD, value: sourceAmount },
+				label: destCurrency
+			},
+			{
+				amount: { currency: SOURCE_CURRENCY_USD, value: purchaseFee },
+				label: 'Purchase Fee'
+			}
+		],
+
+		id: 'minke-wyre',
+
+		total: {
+			amount: { currency: SOURCE_CURRENCY_USD, value: totalAmount },
+			label: 'Minke'
+		}
+	};
+
+	if (networkFee > 0) {
+		items.displayItems.push({
 			amount: { currency: SOURCE_CURRENCY_USD, value: networkFee },
 			label: 'Network Fee'
-		}
-	],
-
-	id: 'minke-wyre',
-
-	total: {
-		amount: { currency: SOURCE_CURRENCY_USD, value: totalAmount },
-		label: 'Minke'
+		});
 	}
-});
+	return items;
+};
 
 export const showApplePayRequest = async (
 	referenceInfo: WyreReferenceInfo,

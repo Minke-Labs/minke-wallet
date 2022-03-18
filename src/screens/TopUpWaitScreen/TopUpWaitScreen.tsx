@@ -34,7 +34,7 @@ const TopUpWaitScreen = () => {
 				<Text type="h3" weight="extraBold" center width={275} style={{ marginBottom: 40 }}>
 					Oh no! Something has gone wrong. Please try again later or contact the support
 				</Text>
-				<Button title="Try again" onPress={onFinish} />
+				<Button title="Ok, got it" onPress={onFinish} />
 			</View>
 		),
 		[isFailed]
