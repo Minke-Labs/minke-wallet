@@ -1,5 +1,4 @@
 import React from 'react';
-import { RefreshControl, ScrollView } from 'react-native';
 import { TabLayout } from '@layouts';
 import { useNavigation } from '@hooks';
 import { AssetsPanel, ActionsPanel, Header } from './components';
@@ -46,34 +45,32 @@ const WalletScreen = () => {
 					<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />
 				}
 				right={<Accounts />}
+				{...{
+					loading,
+					fetchTransactions
+				}}
 			>
-				<ScrollView
-					showsVerticalScrollIndicator={false}
-					refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
-				>
-					<Header onSettingsPress={onSettingsPress} />
-					<AssetsPanel
-						onSave={() => navigation.navigate('SaveScreen')}
-						onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
-						onAddFunds={() => setAddFundsVisible(true)}
-						balance={balance?.usd || 0}
-						address={address}
-					/>
-					<ActionsPanel
-						{...{
-							onCreateWallet,
-							onDeleteWallet,
-							onExchange,
-							onSwitchAccounts,
-							showReceive,
-							onCopyToClipboard
-						}}
-						setSendModalOpen={() => setSendModalOpen(true)}
-					/>
-				</ScrollView>
+				<Header onSettingsPress={onSettingsPress} />
+				<AssetsPanel
+					onSave={() => navigation.navigate('SaveScreen')}
+					onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
+					onAddFunds={() => setAddFundsVisible(true)}
+					balance={balance?.usd || 0}
+					address={address}
+				/>
+				<ActionsPanel
+					{...{
+						onCreateWallet,
+						onDeleteWallet,
+						onExchange,
+						onSwitchAccounts,
+						showReceive,
+						onCopyToClipboard
+					}}
+					setSendModalOpen={() => setSendModalOpen(true)}
+				/>
 			</TabLayout>
 
-			{/* MODALS MODALS */}
 			<ModalsImport
 				{...{
 					sendModalOpen,

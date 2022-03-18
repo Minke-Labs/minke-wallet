@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 24
 	},
 	tabsContainer: {
-		flex: 1,
 		backgroundColor: '#fff',
-		padding: 10
+		padding: 10,
+		height: '100%'
 	}
 });
