@@ -1,9 +1,9 @@
+/* eslint-disable operator-linebreak */
 import React, { useCallback } from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { ActivityIndicator, Button, Icon, Text } from '@components';
 import { useNavigation, useTheme, useWyreOrderStatus } from '@hooks';
 import { WYRE_ORDER_STATUS_TYPES } from '@models/wyre.types';
-import { topUpSuccess } from '@images';
 import { makeStyles } from './TopUpWaitScreen.styles';
 
 const TopUpWaitScreen = () => {
@@ -20,9 +20,11 @@ const TopUpWaitScreen = () => {
 	const Failed = useCallback(
 		() => (
 			<View>
-				<Icon name="errorStroke" color="alert1" style={{ alignSelf: 'center', marginBottom: 24 }} />
+				<View style={[styles.statusIcon, styles.failed]}>
+					<Icon name="closeStroke" color="alert1" size={32} />
+				</View>
 				<Text type="h3" weight="extraBold" center width={275} style={{ marginBottom: 40 }}>
-					Oh no! something has gone wrong. Please try again later or contact the support
+					Oh no! Something has gone wrong. Please try again later or contact the support
 				</Text>
 				<Button title="Try again" onPress={() => navigation.navigate('WalletScreen')} />
 			</View>
@@ -34,13 +36,13 @@ const TopUpWaitScreen = () => {
 			<View>
 				<ActivityIndicator size="large" style={{ marginBottom: 24 }} />
 				<Text type="h3" weight="extraBold" center width={275} marginBottom={24}>
-					Please wait while we are {checking ? 'checking' : 'processing'} your payment...
+					{transactionHash
+						? 'Almost there... this might take a minute...'
+						: `Please wait while we ${checking ? 'check' : 'process'} your payment...`}
 				</Text>
-				{transactionHash && (
-					<Text type="p" center width={275}>
-						Transaction: {transactionHash}
-					</Text>
-				)}
+				<Text type="p" center width={275}>
+					{transactionHash && `Transaction: ${transactionHash}`}
+				</Text>
 			</View>
 		),
 		[processing, checking, transactionHash]
@@ -49,9 +51,11 @@ const TopUpWaitScreen = () => {
 	const Success = useCallback(
 		() => (
 			<View>
-				<Image source={topUpSuccess} style={{ width: 400, height: 400, marginBottom: 16 }} />
-				<Text type="h3" weight="extraBold" center marginBottom={40}>
-					Payment processed. Your tokens are available!
+				<View style={[styles.statusIcon, styles.success]}>
+					<Icon name="checkColor" color="alert3" size={32} />
+				</View>
+				<Text type="h3" weight="extraBold" center marginBottom={40} width={275}>
+					Your funds have been added to your wallet!
 				</Text>
 				<Button title="Done" onPress={() => navigation.navigate('WalletScreen')} />
 			</View>

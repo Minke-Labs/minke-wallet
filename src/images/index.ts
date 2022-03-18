@@ -15,7 +15,6 @@ import bgSaveBackgroundDark from './bg-save-background-dark.png';
 import walletAssetBackImg from './wallet-asset-back.png';
 import walletAssetBackDarkImg from './wallet-asset-back-dark.png';
 import saveCongratsImg from './save-congrats-image.png';
-import topUpSuccess from './topup-success.png';
 
 export {
 	welcomeImg,
@@ -34,6 +33,5 @@ export {
 	backupImg,
 	walletAssetBackImg,
 	walletAssetBackDarkImg,
-	saveCongratsImg,
-	topUpSuccess
+	saveCongratsImg
 };
