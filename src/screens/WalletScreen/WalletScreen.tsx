@@ -18,17 +18,15 @@ import { ResultProps } from './WalletScreen.types';
 
 const WalletScreen = () => {
 	const state = useState(globalWalletState());
+	const navigation = useNavigation();
 	const [loading, setLoading] = React.useState(true);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
-	const navigation = useNavigation();
-
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const [sendModalFinished, setSendModalFinished] = React.useState(false);
 	const [sentObj, setSendObj] = React.useState<ResultProps>();
-	// const [comingSoonVisible, setComingSoonVisible] = React.useState(false);
 
 	const onDeleteWallet = () =>
 		Alert.alert('Are you sure?', '', [
