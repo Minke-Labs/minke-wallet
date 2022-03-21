@@ -9,21 +9,15 @@ import { paraswapTokens, ParaswapToken } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
+import { SearchTokensProps } from './SearchTokens.types';
 
-const SearchTokens = ({
+const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
 	onDismiss,
 	onTokenSelect,
 	ownedTokens = [],
 	showOnlyOwnedTokens,
 	selected
-}: {
-	visible: boolean;
-	onDismiss: any;
-	onTokenSelect: Function;
-	showOnlyOwnedTokens: boolean;
-	ownedTokens?: Array<string>;
-	selected?: Array<string | undefined>;
 }) => {
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
