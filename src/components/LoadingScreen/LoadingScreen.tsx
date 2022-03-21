@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, Modal } from 'react-native';
 import { useTheme } from '@hooks';
-import { Text } from '@components';
+import Text from '../Text/Text';
 import styles from './LoadingScreen.styles';
 import { LoadingScreenProps } from './LoadingScreen.types';
 
