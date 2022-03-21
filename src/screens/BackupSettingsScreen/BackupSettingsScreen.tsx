@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
 import { searchForMinkeBackups, backupSeedOnKeychain } from '@src/model/keychain';
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
@@ -45,7 +45,7 @@ const BackupSettingsScreen = () => {
 	};
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -92,7 +92,7 @@ const BackupSettingsScreen = () => {
 					</>
 				)}
 			</View>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { getProvider } from '@models/wallet';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
@@ -134,7 +134,7 @@ const Deposit = () => {
 
 	return (
 		<>
-			<WelcomeLayout>
+			<BasicLayout>
 				<View style={styles.header}>
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 						<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -167,7 +167,7 @@ const Deposit = () => {
 					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
 				</View>
 				<KeyboardSpacer />
-			</WelcomeLayout>
+			</BasicLayout>
 			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccessScreen')}>
 				<TransactionWaitModal
 					onDismiss={() => navigation.navigate('DepositSuccessScreen')}

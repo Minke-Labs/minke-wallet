@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Token } from '@components';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 
 const Test = () => (
-	<WelcomeLayout>
+	<BasicLayout>
 		<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
 			<Token name="busd" />
 		</View>
-	</WelcomeLayout>
+	</BasicLayout>
 );
 
 export default Test;

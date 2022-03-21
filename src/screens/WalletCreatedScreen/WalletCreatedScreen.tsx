@@ -4,7 +4,7 @@ import { useState } from '@hookstate/core';
 import { getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { backupSeedOnKeychain } from '@models/keychain';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button, ScreenLoadingIndicator } from '@components';
 import { useNavigation } from '@hooks';
@@ -34,7 +34,7 @@ const WalletCreatedScreen = () => {
 	};
 
 	return (
-		<WelcomeLayout center style={styles.container}>
+		<BasicLayout center style={styles.container}>
 			<Image source={walletCreatedImg} style={styles.image} />
 
 			<View style={styles.textContainer}>
@@ -55,7 +55,7 @@ const WalletCreatedScreen = () => {
 				/>
 				<Button title="Back up manually" mode="text" onPress={backupManually} />
 			</View>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 

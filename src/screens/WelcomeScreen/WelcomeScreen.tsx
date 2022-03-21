@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
 import { Text, Button, Modal, LoadingScreen } from '@components';
 import styles from './WelcomeScreen.styles';
@@ -12,7 +12,7 @@ const WelcomeScreen = () => {
 	const { isModalVisible, setModalVisible, onImportFinished, onCreateWallet, loading } = useWelcomeScreen();
 	return (
 		<>
-			<WelcomeLayout>
+			<BasicLayout>
 				<Background>
 					<View style={styles.container}>
 						<Image source={welcomeImg} style={styles.headerImage} />
@@ -39,7 +39,7 @@ const WelcomeScreen = () => {
 						</View>
 					</View>
 				</Background>
-			</WelcomeLayout>
+			</BasicLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
 				<ImportWalletModal onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />

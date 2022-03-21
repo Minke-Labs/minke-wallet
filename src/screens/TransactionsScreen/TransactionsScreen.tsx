@@ -3,7 +3,7 @@ import { View, ActivityIndicator } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { getTransactions, Transaction as TransactionProps } from '@models/wallet';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
 import HeaderContainer from './HeaderContainer/HeaderContainer';
@@ -59,14 +59,14 @@ const TransactionsScreen = () => {
 	};
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<HeaderContainer>
 				<Header />
 				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
 
 			<Body transactions={filteredTransactions(transactions)!} {...{ loadMoreTransactions, renderFooter }} />
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 

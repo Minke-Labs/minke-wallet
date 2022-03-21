@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@hooks';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { Network, networks, network as selectedNetwork, networkSettingsKey } from '@models/network';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Icon, Text } from '@components';
 import ListItem from './ListItem';
 import styles from './ChangeNetworkScreen.styles';
@@ -40,7 +40,7 @@ const ChangeNetworkScreen = () => {
 	}, []);
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -71,7 +71,7 @@ const ChangeNetworkScreen = () => {
 					keyExtractor={(item) => item.id}
 				/>
 			</View>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 

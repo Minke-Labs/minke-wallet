@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Text, Icon } from '@components';
 import { depositStablecoins as stablecoins, usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,7 +26,7 @@ const USDCoinScreen = () => {
 	}, []);
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -53,7 +53,7 @@ const USDCoinScreen = () => {
 					/>
 				</SafeAreaView>
 			</View>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 

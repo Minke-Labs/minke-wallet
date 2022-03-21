@@ -3,10 +3,10 @@ import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '@hooks';
 
-import styles from './WelcomeLayout.styles';
-import { WelcomeLayoutProps } from './WelcomeLayout.types';
+import styles from './BasicLayout.styles';
+import { BasicLayoutProps } from './BasicLayout.types';
 
-const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, center, style }) => {
+const WelcomeTemplate: React.FC<BasicLayoutProps> = ({ children, center, style }) => {
 	const { colors } = useTheme();
 	return (
 		<SafeAreaView
