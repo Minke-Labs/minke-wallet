@@ -19,8 +19,8 @@ import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import ProgressButton from '@src/components/ProgressButton';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import TokenCard from '../../ExchangeScreen/TokenCard';
-import GasSelector from '../../ExchangeScreen/GasSelector';
+import TokenCard from '../../ExchangeScreen/TokenCard/TokenCard';
+import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { makeStyles } from './Deposit.styles';
 
 const Deposit = () => {

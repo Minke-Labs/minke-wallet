@@ -30,8 +30,6 @@ const lightTheme = {
 
 	// Colors that aren't in tokens, but are used in the project.
 	brand4: '#0A2036',
-	alert3b: 'rgba(48, 192, 97, 0.15)',
-	alert3c: 'rgba(48, 192, 97, 0)',
 	alert4a: '#FABA18',
 
 	text8: '#FFFFFF',
@@ -39,12 +37,6 @@ const lightTheme = {
 	text10: '#F3D2BB',
 	text11: '#FFFFFF',
 	text12: '#006AA6',
-	graphic1: '#49d67855',
-	graphic2: '#acffc83e',
-	graphic3: '#ffffff4e',
-	graphicRed1: '#ee808073',
-	graphicRed2: 'rgba(192, 48, 48, 0.15)',
-	graphicRed3: 'rgba(192, 48, 48, 0)',
 	background5: '#FFFFFF'
 };
 
@@ -80,20 +72,12 @@ const darkTheme = {
 
 	// Colors that aren't in tokens, but are used in the project.
 	brand4: '#0A2036',
-	alert3b: 'rgba(172, 232, 185, 0.15)',
-	alert3c: 'rgba(172, 232, 185, 0)',
 	alert4a: '#FABA18',
 	text8: '#0A2138',
 	text9: '#FFFFFF',
 	text10: '#FFFFFF',
 	text11: '#FFFFFF',
 	text12: '#00B7CF',
-	graphic1: '#49d67855',
-	graphic2: 'rgba(172, 232, 185, 0.15)',
-	graphic3: 'rgba(172, 232, 185, 0)',
-	graphicRed1: '#C03030',
-	graphicRed2: 'rgba(192, 48, 48, 0.15)',
-	graphicRed3: 'rgba(192, 48, 48, 0)',
 	background5: '#22374C'
 };
 

@@ -19,7 +19,7 @@ import { Icon, Modal, Text, Token, ActivityIndicator } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import ProgressButton from '../../components/ProgressButton';
 import { RootStackParamList } from '../../routes/types.routes';
-import GasOption from '../ExchangeScreen/GasOption';
+import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import { makeStyles } from './ExchangeResume.styles';
 
 const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (

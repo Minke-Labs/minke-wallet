@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AccountBalance } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
-import coins from '@helpers/coins.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
 import { interestBearingTokens } from '@models/deposit';
@@ -28,8 +28,10 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 		data: { items: apiTokens }
 	}: BalanceApiResponse = response.data;
 
-	const curated = coins.map(({ symbol }) => symbol.toLowerCase());
-	const minkeTokens = convertTokens({ source: 'covalent', tokens: apiTokens });
+	const coinList = await AsyncStorage.getItem('@listCoins');
+	const coins = JSON.parse(coinList!);
+	const curated = coins.map(({ symbol }: { symbol: string }) => symbol.toLowerCase());
+	const minkeTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
 	let tokens = minkeTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
 	const interestTokens = tokens.filter((token) => interestBearingTokens.includes(token.symbol.toLowerCase()));
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));

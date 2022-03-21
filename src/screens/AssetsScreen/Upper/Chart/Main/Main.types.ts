@@ -7,6 +7,6 @@ export interface ChartProps {
 	transition: SharedValue<number>;
 	current: SharedValue<GraphIndex>;
 	translation: Vector<Animated.SharedValue<number>>;
-	percChange: number;
 	graphs: any;
+	color: string;
 }

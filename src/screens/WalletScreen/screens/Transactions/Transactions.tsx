@@ -1,6 +1,7 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useCallback } from 'react';
 import { Button, ActivityIndicator, Transaction } from '@components';
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { styles } from './Transactions.styles';
@@ -14,19 +15,15 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 	const Table = useCallback(() => {
 		if (transactions.length > 0) {
 			return (
-				<View>
-					<FlatList
-						keyExtractor={(item, idx) => `${item.hash}${item.value}${idx}`}
-						ListFooterComponent={<Button onPress={onSeeAllTransactions} mode="text" title="See all" />}
-						data={transactions}
-						showsVerticalScrollIndicator={false}
-						renderItem={({ item, index }) => {
-							if (item.value) {
-								return <Transaction transaction={item} key={`${item.hash}${item.value}${index}`} />;
-							}
-							return null;
-						}}
-					/>
+				<View style={{ height: '100%' }}>
+					{transactions.map((item: any, idx: number) => {
+						if (item.value) {
+							return <Transaction transaction={item} key={`${item.hash}${item.value}${idx}`} />;
+						}
+						return null;
+					})}
+
+					<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
 				</View>
 			);
 		}

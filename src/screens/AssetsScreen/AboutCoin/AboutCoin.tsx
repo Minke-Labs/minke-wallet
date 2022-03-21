@@ -15,12 +15,13 @@ const AboutCoin: React.FC<AboutCoinProps> = ({
 	if (!en) {
 		return null;
 	}
+
 	return (
 		<View style={[styles.container, { backgroundColor: colors.background2 }]}>
 			<Text weight="extraBold" marginBottom={12}>
 				About {name}
 			</Text>
-			<Text type="span">{en}</Text>
+			<Text type="span">{en.replaceAll('<[^>]*>', '')}</Text>
 		</View>
 	);
 };
