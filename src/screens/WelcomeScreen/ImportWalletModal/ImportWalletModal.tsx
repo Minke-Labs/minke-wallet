@@ -1,33 +1,13 @@
 import React from 'react';
-import { useState } from '@hookstate/core';
-import { View, Keyboard } from 'react-native';
-import { Text, Button, TextArea, ModalHeader, ActivityIndicator } from '@components';
+import { View } from 'react-native';
+import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { globalWalletState, walletState } from '@src/stores/WalletStore';
-import { restoreWalletByMnemonic } from '@src/model/wallet';
 import { styles } from './ImportWalletModal.styles';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
+import { useImportWalletModal } from './useImportWallet.hooks';
 
 const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss }) => {
-	const [text, setText] = React.useState('');
-	const [importing, setImporting] = React.useState(false);
-	const state = useState(globalWalletState());
-
-	const onImportWallet = async () => {
-		if (text.trim()) {
-			Keyboard.dismiss();
-			try {
-				setImporting(true);
-				const wallet = await restoreWalletByMnemonic(text.trim());
-				state.set(await walletState(wallet));
-				setImporting(false);
-				onImportFinished();
-			} catch (error) {
-				setImporting(false);
-				console.error('Invalid seed phrase or primary key');
-			}
-		}
-	};
+	const { text, setText, importing, onImportWallet } = useImportWalletModal({ onImportFinished });
 
 	return (
 		<View style={styles.container}>
@@ -45,7 +25,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 					/>
 				</View>
 				{importing ? (
-					<ActivityIndicator />
+					<LoadingScreen title="Creating wallet" />
 				) : (
 					<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
 				)}

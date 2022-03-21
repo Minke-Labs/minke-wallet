@@ -4,6 +4,49 @@ import { toBn } from 'evm-bn';
 import { network } from './network';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD', 'UST'];
+export const exchangebleTokens = [
+	'ETH',
+	'MATIC',
+	'USDT',
+	'USDC',
+	'BUSD',
+	'SHIB',
+	'WBTC',
+	'CRO',
+	'DAI',
+	'LINK',
+	'STETH',
+	'FTT',
+	'LEO',
+	'OKB',
+	'UNI',
+	'AXS',
+	'MANA',
+	'SAND',
+	'FRAX',
+	'GRT',
+	'GALA',
+	'MKR',
+	'AAVE',
+	'COMP',
+	'CEL',
+	'ENJ',
+	'AMP',
+	'NEXO',
+	'BAT',
+	'LRC',
+	'SNX',
+	'CRV',
+	'SUSHI',
+	'BAL',
+	'REN',
+	'KNC',
+	'YFI',
+	'RGT',
+	'BADGER',
+	'FARM',
+	'INST'
+];
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {
 	const { chainId } = await network();
@@ -56,9 +99,7 @@ export const getTokenData = async (token = 'ethereum') => {
 
 export const getTokenVolume = async (token: string) => {
 	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
-	const result = await fetch(
-		`${baseURL}${token.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`
-	);
+	const result = await fetch(`${baseURL}${token.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`);
 	return result.json();
 };
 

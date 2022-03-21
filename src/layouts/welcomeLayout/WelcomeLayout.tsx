@@ -4,11 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '@hooks';
 
 import styles from './WelcomeLayout.styles';
-
-interface WelcomeLayoutProps {
-	style?: any;
-	center?: boolean;
-}
+import { WelcomeLayoutProps } from './WelcomeLayout.types';
 
 const WelcomeTemplate: React.FC<WelcomeLayoutProps> = ({ children, center, style }) => {
 	const { colors } = useTheme();
