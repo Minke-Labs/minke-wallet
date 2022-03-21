@@ -5,7 +5,7 @@ import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token } from '@
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
-import { paraswapTokens, ParaswapToken } from '@models/token';
+import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
@@ -68,6 +68,10 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		filterTokens();
 	}, [selected]);
 
+	useEffect(() => {
+		console.log(filteredTokens);
+	}, [filteredTokens]);
+
 	const onSearch = (text: string) => {
 		setSearch(text);
 
@@ -78,6 +82,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			setFilteredTokens(filteredTokens);
 		}
 	};
+
+	const filterByExchangebleToken = () => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol));
 
 	if (!tokens || loading) {
 		return <ScreenLoadingIndicator />;
@@ -91,7 +97,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 				<FlatList
 					style={styles.list}
-					data={filteredTokens}
+					data={filterByExchangebleToken()}
 					keyExtractor={(token) => token.symbol}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
@@ -105,6 +111,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 						</TouchableOpacity>
 					)}
 				/>
+
 				{(filteredTokens || []).length === 0 && (
 					<View style={styles.tableContainer}>
 						<Image source={whale2Img} style={styles.image} />
