@@ -8,12 +8,19 @@ import { BasicLayoutProps } from './BasicLayout.types';
 
 interface BaseProps {
 	bg?: keyof ColorType;
+	center?: boolean;
 }
 
-const Base: React.FC<BaseProps> = ({ children, bg }) => {
+const Base: React.FC<BaseProps> = ({ children, bg, center }) => {
 	const { colors } = useTheme();
 	return (
-		<View style={{ flex: 1, backgroundColor: colors[bg!] }}>
+		<View
+			style={{
+				flex: 1,
+				backgroundColor: colors[bg!],
+				...(center && { alignItems: 'center' })
+			}}
+		>
 			{children}
 			<StatusBar />
 		</View>
@@ -31,16 +38,16 @@ const BasicLayout: React.FC<BasicLayoutProps> = ({
 
 	if (hideSafeAreaView) {
 		return (
-			<View style={[style || styles.container, { ...(center && { alignItems: 'center' }) }]}>
-				<Base bg={bg as keyof ColorType}>{children}</Base>
+			<View style={[style || styles.container]}>
+				<Base bg={bg as keyof ColorType} center={center}>{children}</Base>
 			</View>
 		);
 	}
 
 	return (
 		<View style={{ flex: 1, backgroundColor: colors[bg!] }}>
-			<SafeAreaView style={[style || styles.container, { ...(center && { alignItems: 'center' }) }]}>
-				<Base bg={bg as keyof ColorType}>{children}</Base>
+			<SafeAreaView style={[style || styles.container]}>
+				<Base bg={bg as keyof ColorType} center={center}>{children}</Base>
 			</SafeAreaView>
 		</View>
 	);
