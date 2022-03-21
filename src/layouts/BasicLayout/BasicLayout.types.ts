@@ -4,4 +4,5 @@ export interface BasicLayoutProps {
 	style?: any;
 	center?: boolean;
 	bg?: keyof ColorType;
+	hideSafeAreaView?: boolean;
 }
