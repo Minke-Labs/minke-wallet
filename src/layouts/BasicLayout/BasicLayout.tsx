@@ -6,14 +6,14 @@ import { useTheme } from '@hooks';
 import styles from './BasicLayout.styles';
 import { BasicLayoutProps } from './BasicLayout.types';
 
-const WelcomeTemplate: React.FC<BasicLayoutProps> = ({ children, center, style }) => {
+const BasicLayout: React.FC<BasicLayoutProps> = ({ children, center, style, bg = 'background1' }) => {
 	const { colors } = useTheme();
 	return (
 		<SafeAreaView
 			style={[
 				style || styles.container,
 				{
-					backgroundColor: colors.background1,
+					backgroundColor: colors[bg],
 					...(center && { alignItems: 'center' })
 				}
 			]}
@@ -24,4 +24,4 @@ const WelcomeTemplate: React.FC<BasicLayoutProps> = ({ children, center, style }
 	);
 };
 
-export default WelcomeTemplate;
+export default BasicLayout;
