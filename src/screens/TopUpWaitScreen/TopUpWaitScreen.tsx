@@ -13,7 +13,7 @@ const TopUpWaitScreen = () => {
 	const topUpState = useState(globalTopUpState());
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { status, transactionHash } = useWyreOrderStatus();
+	const { status, transactionHash, orderId } = useWyreOrderStatus();
 
 	const isFailed = status === WYRE_ORDER_STATUS_TYPES.failed;
 	const checking = status === WYRE_ORDER_STATUS_TYPES.checking;
@@ -31,9 +31,13 @@ const TopUpWaitScreen = () => {
 				<View style={[styles.statusIcon, styles.failed]}>
 					<Icon name="closeStroke" color="alert1" size={32} />
 				</View>
-				<Text type="h3" weight="extraBold" center width={275} style={{ marginBottom: 40 }}>
-					Oh no! Something has gone wrong. Please try again later or contact the support
+				<Text type="h3" weight="extraBold" center width={275} marginBottom={24}>
+					Oh no! Something has gone wrong. Please try again later or contact the support.
 				</Text>
+				<Text type="p" center width={275} marginBottom={40}>
+					Reference: {orderId}
+				</Text>
+
 				<Button title="Ok, got it" onPress={onFinish} />
 			</View>
 		),

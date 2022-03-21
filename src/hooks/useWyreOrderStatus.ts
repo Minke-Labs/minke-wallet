@@ -79,7 +79,7 @@ const useWyreOrderStatus = () => {
 		}
 	}, [transfer]);
 
-	return { status, transfer, transactionHash };
+	return { status, transfer, transactionHash, orderId };
 };
 
 export default useWyreOrderStatus;
