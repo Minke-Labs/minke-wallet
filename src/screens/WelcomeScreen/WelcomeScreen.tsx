@@ -1,35 +1,15 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { View, Image } from 'react-native';
-import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { welcomeImg } from '@images';
-import { walletCreate } from '@models/wallet';
-import { ActivityIndicator, Text, Button, Modal } from '@components';
-import { useNavigation } from '@hooks';
-import { globalWalletState, walletState } from '@stores/WalletStore';
+import { Text, Button, Modal, LoadingScreen } from '@components';
 import styles from './WelcomeScreen.styles';
 import ImportWalletModal from './ImportWalletModal/ImportWalletModal';
 import { Background } from './Background/Background';
+import { useWelcomeScreen } from './WelcomeScreen.hooks';
 
 const WelcomeScreen = () => {
-	const navigation = useNavigation();
-	const [isModalVisible, setModalVisible] = React.useState(false);
-	const [loading, setLoading] = React.useState(false);
-	const state = useState(globalWalletState());
-
-	const onImportFinished = () => {
-		setModalVisible(false);
-		navigation.navigate('WalletCreatedScreen');
-	};
-
-	const onCreateWallet = useCallback(async () => {
-		setLoading(true);
-		const newWallet = await walletCreate();
-		state.set(await walletState(newWallet));
-		setLoading(false);
-		navigation.navigate('WalletCreatedScreen');
-	}, [navigation]);
-
+	const { isModalVisible, setModalVisible, onImportFinished, onCreateWallet, loading } = useWelcomeScreen();
 	return (
 		<>
 			<WelcomeLayout>
@@ -49,7 +29,7 @@ const WelcomeScreen = () => {
 
 						<View style={styles.buttonContainer}>
 							{loading ? (
-								<ActivityIndicator />
+								<LoadingScreen title="Importing wallet" />
 							) : (
 								<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
 							)}

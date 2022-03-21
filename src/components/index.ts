@@ -11,6 +11,7 @@ import SearchInput from './SearchInput/SearchInput';
 import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
+import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
 import Card from './Card/Card';
 import TransparentCard from './TransparentCard/TransparentCard';
@@ -37,6 +38,7 @@ export {
 	SearchInput,
 	TextArea,
 	Input,
+	LoadingScreen,
 	Flag,
 	Card,
 	TransparentCard,
