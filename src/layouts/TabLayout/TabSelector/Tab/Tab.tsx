@@ -1,18 +1,13 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks';
 import { ColorType } from '@styles';
 import styles from './Tab.styles';
+import { TabProps } from './Tab.types';
 
 const chooseBg = (active: boolean, colors: ColorType) => ({
 	...{ backgroundColor: active ? colors.detail4 : colors.background1 }
 });
-
-interface TabProps {
-	active?: boolean;
-	side: string;
-	onTabSelect: Dispatch<SetStateAction<string>>;
-}
 
 const Tab: React.FC<TabProps> = ({ children, active, side, onTabSelect }) => {
 	const { colors } = useTheme();
