@@ -68,10 +68,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		filterTokens();
 	}, [selected]);
 
-	useEffect(() => {
-		console.log(filteredTokens);
-	}, [filteredTokens]);
-
 	const onSearch = (text: string) => {
 		setSearch(text);
 
