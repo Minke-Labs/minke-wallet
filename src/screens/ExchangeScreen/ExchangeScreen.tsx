@@ -8,9 +8,9 @@ import { debounce } from 'lodash';
 import { WelcomeLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
-import SearchTokens from './SearchTokens';
-import GasSelector from './GasSelector';
-import TokenCard from './TokenCard';
+import SearchTokens from './SearchTokens/SearchTokens';
+import GasSelector from './GasSelector/GasSelector';
+import TokenCard from './TokenCard/TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
@@ -135,6 +135,7 @@ const ExchangeScreen = () => {
 					)}
 				</View>
 			</WelcomeLayout>
+
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
 				<SearchTokens
 					visible={searchVisible}

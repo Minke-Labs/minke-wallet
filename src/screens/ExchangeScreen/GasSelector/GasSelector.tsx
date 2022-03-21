@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, SafeAreaView, ScrollView } from 'react-native';
 import { useTheme } from '@hooks';
-import GasOption from './GasOption';
-import { makeStyles } from './ExchangeScreen.styles';
+import GasOption from './GasOption/GasOption';
+import { makeStyles } from '../ExchangeScreen.styles';
 
 const GasSelector = () => {
 	const { colors } = useTheme();

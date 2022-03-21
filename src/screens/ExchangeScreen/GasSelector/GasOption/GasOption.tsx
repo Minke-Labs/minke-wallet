@@ -8,7 +8,7 @@ import { network } from '@models/network';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
-import { makeStyles } from './ExchangeScreen.styles';
+import { makeStyles } from '../../ExchangeScreen.styles';
 
 interface Wait {
 	normal: number;

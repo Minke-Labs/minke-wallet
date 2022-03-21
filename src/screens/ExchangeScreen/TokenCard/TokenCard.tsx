@@ -1,15 +1,12 @@
-/* eslint-disable no-useless-escape */
-
-import React, { useState, useEffect, RefObject } from 'react';
-import { TextInput, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useTheme } from '@hooks';
-import { ParaswapToken } from '@models/token';
 import { Text, Icon, Token, Input } from '@components';
 import { TokenType } from '@styles';
-import { makeStyles } from './ExchangeScreen.styles';
+import { TokenCardProps } from './TokenCard.types';
+import { useTokenCard } from './TokenCard.hooks';
 
-const TokenCard = ({
+const TokenCard: React.FC<TokenCardProps> = ({
 	token,
 	onPress,
 	balance,
@@ -17,62 +14,14 @@ const TokenCard = ({
 	disableMax = false,
 	updateQuotes,
 	conversionAmount = ''
-}: {
-	token: ParaswapToken | undefined;
-	onPress?: (() => void) | undefined;
-	balance: string;
-	innerRef?: RefObject<TextInput>;
-	disableMax?: boolean;
-	updateQuotes?: Function;
-	conversionAmount?: string;
 }) => {
-	const [amount, setAmount] = useState('');
-	// if enabled always set the max according to the balance
-	const [maxModeEnabled, setMaxModeEnabled] = useState(false);
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
-
-	const onChangeText = (value: string) => {
-		let lastValid = amount;
-		const validNumber = new RegExp(/^\d*\,?\d*$/); // for comma
-		if (validNumber.test(value)) {
-			lastValid = value;
-		} else {
-			lastValid = amount;
-		}
-		setAmount(lastValid);
-		setMaxModeEnabled(false);
-	};
-
-	const onMaxPress = () => {
-		setMaxModeEnabled(true);
-		setAmount(balance.replace(/\./g, ','));
-	};
-
-	useEffect(() => {
-		setAmount('');
-		setMaxModeEnabled(false);
-		if (updateQuotes) updateQuotes('');
-	}, [token]);
-
-	useEffect(() => {
-		if (updateQuotes && amount && !(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
-			updateQuotes(amount);
-		}
-	}, [amount]);
-
-	useEffect(() => {
-		setAmount(conversionAmount.replace(/\./g, ','));
-	}, [conversionAmount]);
-
-	useEffect(() => {
-		if (maxModeEnabled && !disableMax && conversionAmount) {
-			onMaxPress();
-		}
-	}, [balance]);
-
-	const isMaxEnabled = !disableMax && token && balance;
-	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/\,/g, '.');
+	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount, styles } = useTokenCard({
+		balance,
+		updateQuotes: updateQuotes!,
+		token: token!,
+		conversionAmount,
+		disableMax
+	});
 
 	if (!token) {
 		return (
