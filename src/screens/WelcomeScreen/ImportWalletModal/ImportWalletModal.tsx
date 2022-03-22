@@ -25,7 +25,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 					/>
 				</View>
 				{importing ? (
-					<LoadingScreen title="Creating wallet" />
+					<LoadingScreen title="Importing wallet" />
 				) : (
 					<Button disabled={!text.trim()} title="Import Wallet" onPress={onImportWallet} marginBottom={24} />
 				)}

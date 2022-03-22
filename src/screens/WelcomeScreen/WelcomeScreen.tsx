@@ -29,7 +29,7 @@ const WelcomeScreen = () => {
 
 						<View style={styles.buttonContainer}>
 							{loading ? (
-								<LoadingScreen title="Importing wallet" />
+								<LoadingScreen title="Creating wallet" />
 							) : (
 								<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
 							)}
