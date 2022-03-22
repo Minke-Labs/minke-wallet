@@ -9,7 +9,6 @@ import {
 	BackupScreen,
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
-	ContactCreateScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
 	SettingsScreen,
@@ -23,6 +22,7 @@ import {
 	USDCoinScreen,
 	DepositSuccessScreen,
 	BackupToICloudScreen,
+	TopUpWaitScreen,
 	Test
 } from '@screens';
 import { Icon } from '@components';
@@ -35,7 +35,6 @@ const Routes: React.FC = () => {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
-	// const initialScreen = 'Test';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
@@ -58,11 +57,6 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="BackupScreen" component={BackupScreen} />
 				<Stack.Screen name="BackupSettingsScreen" component={BackupSettingsScreen} />
 				<Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
-				<Stack.Screen
-					options={(props) => defaultOptions(props)}
-					name="ContactCreateScreen"
-					component={ContactCreateScreen}
-				/>
 				<Stack.Screen name="DepositScreen" component={DepositScreen} />
 				<Stack.Screen
 					name="ExchangeResumeScreen"
@@ -90,6 +84,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
 				<Stack.Screen name="BackupToICloudScreen" component={BackupToICloudScreen} />
+				<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

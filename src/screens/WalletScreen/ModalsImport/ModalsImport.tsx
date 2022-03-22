@@ -4,6 +4,7 @@ import { Text, Modal, ModalReusables } from '@components';
 import { SendModal, ReceiveModal, SentModal } from '../Modals';
 import { ResultProps } from '../WalletScreen.types';
 import { ModalsImportProps } from './ModalsImport.types';
+import { AddFunds } from '@containers';
 
 const ModalsImport: React.FC<ModalsImportProps> = ({
 	sendModalOpen,
@@ -25,7 +26,7 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 		</Snackbar>
 
 		<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-			<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
+			<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 		</Modal>
 
 		<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>

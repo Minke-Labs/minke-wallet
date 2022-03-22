@@ -3,7 +3,6 @@ import AssetsScreen from './AssetsScreen/AssetsScreen';
 import BackupScreen from './BackupScreen/BackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
-import ContactCreateScreen from './ContactCreateScreen/ContactCreateScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
@@ -17,6 +16,7 @@ import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
 import BackupToICloudScreen from './BackupToICloudScreen';
+import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 
 import Test from './Test/Test';
 
@@ -26,7 +26,6 @@ export {
 	BackupScreen,
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
-	ContactCreateScreen,
 	DepositScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
@@ -39,6 +38,7 @@ export {
 	WalletScreen,
 	WelcomeScreen,
 	DepositSuccessScreen,
-	Test,
-	BackupToICloudScreen
+	BackupToICloudScreen,
+	TopUpWaitScreen,
+	Test
 };

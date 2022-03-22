@@ -20,5 +20,6 @@
 			"@hooks": ["src/hooks/index"],
 			"@src/*": ["src/*"]
 		}
-	}
+	},
+	"typeRoots": ["./src/types"]
 }

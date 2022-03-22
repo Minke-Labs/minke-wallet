@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Icon, ScreenLoadingIndicator, Text } from '@components';
 import { useNavigation } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
@@ -28,7 +28,7 @@ const BackupScreen = () => {
 
 	return (
 		<>
-			<WelcomeLayout>
+			<BasicLayout>
 				<View style={styles.headerContainer}>
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 						<Icon name="arrowBackStroke" size={24} color="text7" />
@@ -59,7 +59,7 @@ const BackupScreen = () => {
 
 					<CopyButton onPress={onCopyToClipboard} />
 				</View>
-			</WelcomeLayout>
+			</BasicLayout>
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
 				<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
 			</Snackbar>

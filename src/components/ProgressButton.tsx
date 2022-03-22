@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useTheme } from '@src/hooks';
+import { Text } from '@components';
+import { useTheme } from '@hooks';
 
 const styles = StyleSheet.create({
 	startCounterButton: {

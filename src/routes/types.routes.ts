@@ -6,7 +6,6 @@ export type RootStackParamList = {
 	BackupScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeNetworkScreen: undefined;
-	ContactCreateScreen: undefined;
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
 	ExchangeScreen: undefined;
@@ -21,4 +20,6 @@ export type RootStackParamList = {
 	DepositSuccessScreen: undefined;
 	Test: undefined;
 	BackupToICloudScreen: { missingPassword: boolean };
+	OpenAave: undefined;
+	TopUpWaitScreen: undefined;
 };

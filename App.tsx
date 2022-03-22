@@ -1,3 +1,4 @@
+import 'expo-dev-client';
 import React from 'react';
 import { ThemeProvider } from '@contexts';
 import Routes from '@routes';

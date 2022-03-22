@@ -1,4 +1,4 @@
-import WelcomeLayout from './welcomeLayout/WelcomeLayout';
+import BasicLayout from './BasicLayout/BasicLayout';
 import TabLayout from './TabLayout/TabLayout';
 
-export { WelcomeLayout, TabLayout };
+export { BasicLayout, TabLayout };

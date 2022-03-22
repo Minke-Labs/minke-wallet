@@ -13,7 +13,7 @@ import { getProvider, smallWalletAddress } from '@models/wallet';
 import { Wallet, BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { globalWalletState } from '@stores/WalletStore';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { TokenType } from '@styles';
 import { Icon, Modal, Text, Token, ActivityIndicator } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
@@ -197,7 +197,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 	return (
 		<>
-			<WelcomeLayout>
+			<BasicLayout>
 				<View style={styles.exchangeResumeContainer}>
 					<View>
 						<TouchableOpacity
@@ -333,7 +333,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 					{priceQuote && (loading ? <ActivityIndicator /> : <ProgressButton onFinish={onFinish} />)}
 				</View>
-			</WelcomeLayout>
+			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>
 				<TransactionWaitModal
 					onDismiss={hideModal}

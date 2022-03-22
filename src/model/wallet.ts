@@ -51,12 +51,35 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 	await saveObject(key, val);
 };
 
+const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null | AllMinkeWallets> => {
+	if (allWallets) {
+		const toKeep: string[] = [];
+		const asArray: MinkeWallet[] = Object.values(allWallets);
+		for (const index in asArray) {
+			const { address, id } = asArray[index];
+			const primaryKey = await getPrivateKey(address);
+			if (primaryKey) {
+				toKeep.push(id);
+			}
+		}
+
+		const filtered = Object.fromEntries(Object.entries(allWallets).filter(([id, wallet]) => toKeep.includes(id)));
+		await saveAllWallets(filtered);
+		if (filtered) {
+			return filtered as AllMinkeWallets;
+		}
+		return null;
+	}
+	return null;
+};
+
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
 		const allWallets = await loadObject('minkeAllWallets');
 		if (allWallets) {
-			return allWallets as AllMinkeWallets;
+			return await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
 		}
+
 		return null;
 	} catch (error) {
 		console.error(error);
@@ -110,14 +133,12 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWall
 
 export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<MinkeWallet> => {
 	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
-
 	const existingWallets = (await getAllWallets()) || {};
 	const existingWallet = find(existingWallets, (w) => w.address === wallet.address);
-
 	if (!existingWallet || isEmpty(existingWallet)) {
 		return walletCreate(mnemonicOrPrivateKey);
 	}
-
+	await savePrivateKey(wallet.address, wallet.privateKey);
 	return existingWallet;
 };
 
@@ -273,11 +294,11 @@ export const smallWalletAddress = (address: string): string => {
 };
 
 export const imageSource = async (address: string): Promise<{ uri: string }> => {
-	let wallet = address;
+	let wallet;
 	if (address.includes('.')) {
 		wallet = await resolveENSAddress(address);
 	}
-	return { uri: makeBlockie(wallet) };
+	return { uri: makeBlockie(wallet || address) };
 };
 
 export const setWalletBackedUp = async (walletId: string, backupFile = '') => {

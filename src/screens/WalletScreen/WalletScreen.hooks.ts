@@ -21,7 +21,6 @@ export const useWalletScreen = () => {
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const [sendModalFinished, setSendModalFinished] = React.useState(false);
 	const [sentObj, setSendObj] = React.useState<ResultProps>();
-	// const [comingSoonVisible, setComingSoonVisible] = React.useState(false);
 
 	const onDeleteWallet = () =>
 		Alert.alert('Are you sure?', '', [

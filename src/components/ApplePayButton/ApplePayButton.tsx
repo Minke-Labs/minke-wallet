@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
-// import { useTheme } from '@hooks';
+import { useTheme } from '@hooks';
 import Text from '../Text/Text';
 
 const styles = StyleSheet.create({
@@ -17,27 +17,33 @@ const styles = StyleSheet.create({
 interface ApplePayButtonProps {
 	onPress?: (event: GestureResponderEvent) => void;
 	marginBottom?: number;
+	disabled?: boolean;
 }
 
-const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress, marginBottom }) => (
-	// const { colors } = useTheme();
-	<TouchableOpacity
-		onPress={onPress}
-		activeOpacity={0.6}
-		style={[
-			styles.container,
-			{
-				backgroundColor: '#000000',
-				marginBottom
-			}
-		]}
-	>
-		<Text color="text11" weight="medium">
-			Pay with{' '}
-			<Text color="text11" weight="extraBold">
-				 Pay
+const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress, marginBottom, disabled = false }) => {
+	const { colors } = useTheme();
+
+	return (
+		<TouchableOpacity
+			onPress={onPress}
+			disabled={disabled}
+			activeOpacity={0.6}
+			style={[
+				styles.container,
+				{
+					backgroundColor: disabled ? colors.detail2 : '#000000',
+					marginBottom
+				}
+			]}
+		>
+			<Text color="text11" weight="medium">
+				Pay with{' '}
+				<Text color="text11" weight="extraBold">
+					 Pay
+				</Text>
 			</Text>
-		</Text>
-	</TouchableOpacity>
-);
+		</TouchableOpacity>
+	);
+};
+
 export default ApplePayButton;
