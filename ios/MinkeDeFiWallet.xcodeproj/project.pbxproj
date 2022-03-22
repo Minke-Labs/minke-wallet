@@ -94,7 +94,6 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
-				D026526ABCFD4B74981D48E9 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Button, Icon, Input, Text } from '@components';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
@@ -35,7 +35,7 @@ const CreateBackupPassword = () => {
 	}, [onError, onSuccess, password, walletCloudBackup, walletId]);
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -70,7 +70,7 @@ const CreateBackupPassword = () => {
 					onPress={onConfirmBackup}
 				/>
 			</View>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 
