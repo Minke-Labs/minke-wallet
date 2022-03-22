@@ -10,6 +10,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
+import { NoTokens } from '@src/components/EmptyStates';
 
 const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
@@ -108,14 +109,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					)}
 				/>
 
-				{(filteredTokens || []).length === 0 && (
-					<View style={styles.tableContainer}>
-						<Image source={whale2Img} style={styles.image} />
-						<Text color="text4" weight="medium" marginBottom={16}>
-							No tokens here
-						</Text>
-					</View>
-				)}
+				{(filteredTokens || []).length === 0 && <NoTokens />}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

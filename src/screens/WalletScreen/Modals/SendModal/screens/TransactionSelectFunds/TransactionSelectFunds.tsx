@@ -5,7 +5,9 @@ import { imageSource } from '@models/wallet';
 import { useTokens } from '@hooks';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
+import { whale2Img } from '@images';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
+import { NoTokens } from '@src/components/EmptyStates';
 
 const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
 	const [image, setImage] = React.useState<{ uri: string }>();
@@ -33,8 +35,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				</Text>
 				?
 			</Text>
-
-			{tokens ? (
+			{tokens.length > 0 ? (
 				<FlatList
 					style={styles.tokensList}
 					keyExtractor={(item) => item.symbol}
@@ -42,7 +43,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
-				<ActivityIndicator />
+				<NoTokens />
 			)}
 		</View>
 	);
