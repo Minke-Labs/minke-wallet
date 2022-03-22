@@ -9,6 +9,7 @@ import useWyreOrderStatus from './useWyreOrderStatus';
 import useDeposit from './useDeposit';
 import useWalletCloudBackup from './useWalletCloudBackup';
 import iCloudBackup from './iCloudBackup';
+import useWallets from './useWallets';
 
 export {
 	useTheme,
@@ -21,5 +22,6 @@ export {
 	iCloudBackup,
 	useTimeout,
 	useWyreApplePay,
-	useWyreOrderStatus
+	useWyreOrderStatus,
+	useWallets
 };
