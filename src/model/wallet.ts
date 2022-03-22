@@ -127,7 +127,14 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWall
 	}
 
 	await savePrivateKey(wallet.address, wallet.privateKey);
-	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
+	const newWallet: MinkeWallet = {
+		id,
+		address: wallet.address,
+		name: '',
+		primary: false,
+		network: blockchain.id,
+		backedUp: false
+	};
 	return newWallet;
 };
 

@@ -17,7 +17,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 	const { walletId } = route.params;
 	const loadSeed = getSeedPhrase(walletId || '');
 	const seed = useState(loadSeed);
-	const { handleIcloudBackup } = iCloudBackup();
+	const { handleIcloudBackup } = iCloudBackup(walletId);
 	const { walletById } = useWallets();
 
 	const wallet: MinkeWallet | null = walletById(walletId);

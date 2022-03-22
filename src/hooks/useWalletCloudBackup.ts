@@ -62,7 +62,7 @@ const useWalletCloudBackup = () => {
 			return;
 		}
 
-		let fetchedPassword: string | null = password;
+		let fetchedPassword: string | null | undefined = password;
 		let wasPasswordFetched = false;
 		if (latestBackup && !password) {
 			// We have a backup but don't have the password, try fetching password
@@ -71,16 +71,13 @@ const useWalletCloudBackup = () => {
 			// So we delayed it to make sure the user can read before seeing the auth prompt
 			await delay(1500);
 			fetchedPassword = await fetchBackupPassword();
-			console.log('okay, fechtou a password', fetchedPassword);
 			// setIsWalletLoading(null);
 			await delay(300);
 			wasPasswordFetched = true;
 		}
 
 		// If we still can't get the password, handle password not found
-		console.log('Tem password');
 		if (!fetchedPassword) {
-			console.log('Tem password');
 			if (handlePasswordNotFound) handlePasswordNotFound();
 			return;
 		}
@@ -93,31 +90,23 @@ const useWalletCloudBackup = () => {
 		}
 
 		// We have the password and we need to add it to an existing backup
-		console.log('password fetched correctly');
-
 		let updatedBackupFile = null;
 		try {
 			if (!latestBackup) {
-				console.log(`backing up to ${cloudPlatform}`, wallets[walletId]);
 				updatedBackupFile = await backupWalletToCloud(fetchedPassword, wallets[walletId]);
 			} else {
-				console.log(`adding wallet to ${cloudPlatform} backup`, wallets[walletId]);
 				updatedBackupFile = await addWalletToCloudBackup(fetchedPassword, wallets[walletId], latestBackup);
 			}
 		} catch (e) {
 			const userError = getUserError(e);
 			if (onError) onError(userError);
-			console.log(`error while trying to backup wallet to ${cloudPlatform}`);
 			console.error(e);
 			return;
 		}
 
 		try {
-			console.log('backup completed!');
 			await setWalletBackedUp(walletId, updatedBackupFile);
-			// handle backup completerd
-			console.log('backup saved everywhere!');
-			if (onSuccess) onSuccess();
+			if (!!onSuccess) await onSuccess();
 		} catch (e) {
 			console.error('error while trying to save wallet backup state');
 			const userError = getUserError(new Error(CLOUD_BACKUP_ERRORS.WALLET_BACKUP_STATUS_UPDATE_FAILED));

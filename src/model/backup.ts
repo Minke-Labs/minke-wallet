@@ -1,10 +1,22 @@
 import { forEach } from 'lodash';
 import { Platform } from 'react-native';
-import { requestSharedWebCredentials } from 'react-native-keychain';
+import { requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
 import { encryptAndSaveDataToCloud, getDataFromCloud } from './cloudBackup';
 import { AllMinkeWallets, getPrivateKey, getSeedPhrase, MinkeWallet } from './wallet';
 
 type BackupPassword = string;
+
+// Attempts to save the password to decrypt the backup from the iCloud keychain
+export async function saveBackupPassword(password: BackupPassword): Promise<void> {
+	const ios = Platform.OS === 'ios';
+	try {
+		if (ios) {
+			await setSharedWebCredentials('minke.app', 'Backup Password', password);
+		}
+	} catch (e) {
+		console.log("Didn't save backup password on iCloud", e);
+	}
+}
 
 // Attempts to fetch the password to decrypt the backup from the iCloud keychain
 export const fetchBackupPassword = async (): Promise<null | BackupPassword> => {
@@ -60,9 +72,6 @@ export async function addWalletToCloudBackup(
 		...secrets
 	};
 
-	console.log({ backup });
-	console.log({ password });
-	console.log({ filename });
 	return encryptAndSaveDataToCloud(backup, password, filename);
 }
 

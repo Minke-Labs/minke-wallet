@@ -7,6 +7,7 @@ import { backupImg } from '@images';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import styles from './ConfirmBackupPassword.styles';
+import { saveBackupPassword } from '@models/backup';
 
 const CreateBackupPassword = () => {
 	const navigation = useNavigation();
@@ -22,7 +23,7 @@ const CreateBackupPassword = () => {
 	};
 
 	const onSuccess = async () => {
-		navigation.goBack();
+		navigation.navigate('BackupStatusScreen', { walletId: walletId || '' });
 	};
 
 	const onConfirmBackup = useCallback(async () => {
@@ -64,6 +65,7 @@ const CreateBackupPassword = () => {
 					autoCompleteType="off"
 					error={password !== undefined && (!password || password.length < 8)}
 					style={{ marginBottom: 32 }}
+					textContentType="password"
 				/>
 
 				<Button

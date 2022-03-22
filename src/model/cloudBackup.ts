@@ -38,11 +38,7 @@ export const encryptAndSaveDataToCloud = async (data: any, password: any, filena
 	const android = Platform.OS === 'android';
 	// Encrypt the data
 	try {
-		console.log({ data });
-		console.log({ password });
-		console.log({ filename });
 		const encryptedData = await encryptor.encrypt(password, JSON.stringify(data));
-		console.log({ encryptedData });
 		// Store it on the FS first
 		const path = `${RNFS.DocumentDirectoryPath}/${filename}`;
 		await RNFS.writeFile(path, encryptedData || '', 'utf8');
@@ -116,8 +112,6 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 			document = backups.files.find((file: any) => file.name === `${REMOTE_BACKUP_WALLET_DIR}/${filename}`);
 		}
 
-		console.log({ document });
-
 		if (!document) {
 			console.error('No backup found with that name!', filename);
 			const error = new Error(CLOUD_BACKUP_ERRORS.SPECIFIC_BACKUP_NOT_FOUND);
@@ -131,13 +125,10 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 
 	const encryptedData = await RNFS.readFile(document.path, 'utf8');
 
-	console.log({ encryptedData });
 	if (encryptedData) {
-		console.log('Got cloud document ', filename);
 		const backedUpDataStringified = await encryptor.decrypt(backupPassword, encryptedData);
 		if (backedUpDataStringified) {
 			const backedUpData = JSON.parse(backedUpDataStringified);
-			console.log({ backedUpData });
 			return backedUpData;
 		}
 		console.error('We couldnt decrypt the data');

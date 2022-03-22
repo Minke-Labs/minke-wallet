@@ -92,5 +92,7 @@
 				<string>com.minkeapp.minkewallet</string>
 			</dict>
 		</dict>
+		<key>NSFaceIDUsageDescription</key>
+		<string>Used to sign transactions and access wallet keys</string>
   </dict>
 </plist>

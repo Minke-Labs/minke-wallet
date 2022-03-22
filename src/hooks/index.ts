@@ -19,9 +19,9 @@ export {
 	useTokens,
 	useDeposit,
 	useWalletCloudBackup,
-	iCloudBackup,
 	useTimeout,
 	useWyreApplePay,
 	useWyreOrderStatus,
-	useWallets
+	useWallets,
+	iCloudBackup
 };
