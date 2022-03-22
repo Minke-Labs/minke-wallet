@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { useTheme } from '@hooks';
+import { BasicLayout } from '@layouts';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Balance from './Balance/Balance';
@@ -18,18 +19,20 @@ const AssetsScreen = ({ route }: Props) => {
 	const { tokenData, tokenVolume, marketCap } = useAssetsScreen(coin);
 
 	return (
-		<ScrollView style={[styles.container, { backgroundColor: colors.detail4 }]}>
-			<SafeAreaView>
-				<Upper {...{ coin }} />
-				<ScrollView style={[styles.bodyContainer, { backgroundColor: colors.background1 }]}>
-					<Balance {...{ coin }} />
-					{marketCap > 0 && tokenVolume && (
-						<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
-					)}
-					{tokenData && <AboutCoin data={tokenData} name={coin.name} />}
-				</ScrollView>
-			</SafeAreaView>
-		</ScrollView>
+		<BasicLayout hideSafeAreaView bg="detail4">
+			<ScrollView style={styles.container}>
+				<SafeAreaView>
+					<Upper {...{ coin }} />
+					<ScrollView style={[styles.bodyContainer, { backgroundColor: colors.background1 }]}>
+						<Balance {...{ coin }} />
+						{marketCap > 0 && tokenVolume && (
+							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
+						)}
+						{tokenData && <AboutCoin data={tokenData} name={coin.name} />}
+					</ScrollView>
+				</SafeAreaView>
+			</ScrollView>
+		</BasicLayout>
 	);
 };
 

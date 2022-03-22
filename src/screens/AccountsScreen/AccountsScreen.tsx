@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
 import { walletState, globalWalletState } from '@src/stores/WalletStore';
 import { useNavigation } from '@hooks';
@@ -31,7 +31,7 @@ const AccountsScreen = () => {
 	};
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -69,7 +69,7 @@ const AccountsScreen = () => {
 					onDismiss={() => setModalVisible(false)}
 				/>
 			</Modal>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 

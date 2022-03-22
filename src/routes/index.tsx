@@ -9,7 +9,6 @@ import {
 	BackupScreen,
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
-	ContactCreateScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
 	SettingsScreen,
@@ -57,11 +56,6 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="BackupScreen" component={BackupScreen} />
 				<Stack.Screen name="BackupSettingsScreen" component={BackupSettingsScreen} />
 				<Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
-				<Stack.Screen
-					options={(props) => defaultOptions(props)}
-					name="ContactCreateScreen"
-					component={ContactCreateScreen}
-				/>
 				<Stack.Screen name="DepositScreen" component={DepositScreen} />
 				<Stack.Screen
 					name="ExchangeResumeScreen"

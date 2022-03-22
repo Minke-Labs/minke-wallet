@@ -3,7 +3,6 @@ import AssetsScreen from './AssetsScreen/AssetsScreen';
 import BackupScreen from './BackupScreen/BackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
-import ContactCreateScreen from './ContactCreateScreen/ContactCreateScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
@@ -26,7 +25,6 @@ export {
 	BackupScreen,
 	BackupSettingsScreen,
 	ChangeNetworkScreen,
-	ContactCreateScreen,
 	DepositScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,

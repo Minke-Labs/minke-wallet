@@ -1,8 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useTokens } from '@hooks';
-import { Modal } from '@components';
 import { AddFunds } from '@containers';
+import { Modal } from '@components';
+import { BasicLayout } from '@layouts';
 import AssetList from './AssetList/AssetList';
 import ValueBox from './ValueBox/ValueBox';
 import AssetListEmpty from './AssetListEmpty/AssetListEmpty';
@@ -15,7 +16,7 @@ const WalletAssetsScreen = () => {
 
 	return (
 		<>
-			<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
+			<BasicLayout hideSafeAreaView bg="detail4">
 				<ValueBox {...{ balance }} />
 				<View style={[styles.assetListContainer, { backgroundColor: colors.background1 }]}>
 					{tokens && tokens.length > 0 ? (
@@ -24,7 +25,7 @@ const WalletAssetsScreen = () => {
 						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />
 					)}
 				</View>
-			</View>
+			</BasicLayout>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>

@@ -6,7 +6,6 @@ export type RootStackParamList = {
 	BackupScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeNetworkScreen: undefined;
-	ContactCreateScreen: undefined;
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
 	ExchangeScreen: undefined;

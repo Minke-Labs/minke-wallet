@@ -5,7 +5,7 @@ import { useTheme, useNavigation } from '@hooks';
 import { BigNumber as BN } from 'bignumber.js';
 import { fromBn } from 'evm-bn';
 import { debounce } from 'lodash';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import SearchTokens from './SearchTokens/SearchTokens';
@@ -74,7 +74,7 @@ const ExchangeScreen = () => {
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
 		<>
-			<WelcomeLayout>
+			<BasicLayout>
 				<View style={styles.header}>
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 						<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -134,7 +134,7 @@ const ExchangeScreen = () => {
 						<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
 					)}
 				</View>
-			</WelcomeLayout>
+			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
 				<SearchTokens

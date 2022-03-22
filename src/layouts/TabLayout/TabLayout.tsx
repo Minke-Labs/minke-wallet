@@ -4,6 +4,7 @@ import { useTheme } from '@hooks';
 import TabSelector from './TabSelector/TabSelector';
 import { styles } from './TabLayout.styles';
 import { TabLayoutProps } from './TabLayout.types';
+import BasicLayout from '../BasicLayout/BasicLayout';
 
 const TabLayout: React.FC<TabLayoutProps> = ({
 	loading,
@@ -18,16 +19,8 @@ const TabLayout: React.FC<TabLayoutProps> = ({
 	const { colors } = useTheme();
 
 	return (
-		<View
-			style={{
-				backgroundColor: colors.background1,
-				flex: 1
-			}}
-		>
+		<BasicLayout hideSafeAreaView>
 			<ScrollView
-				style={{
-					width: '100%'
-				}}
 				showsVerticalScrollIndicator={false}
 				refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
 			>
@@ -51,7 +44,7 @@ const TabLayout: React.FC<TabLayoutProps> = ({
 					{selectedTab === 'transactions' ? left : right}
 				</View>
 			</ScrollView>
-		</View>
+		</BasicLayout>
 	);
 };
 
