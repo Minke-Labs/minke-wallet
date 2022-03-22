@@ -43,7 +43,7 @@ const useWalletCloudBackup = () => {
 		handleNoLatestBackup?: () => void;
 		onError: (message: any) => void;
 		onSuccess?: () => Promise<void>;
-		password: string;
+		password?: string;
 		walletId: string;
 	}) => {
 		const wallets = (await getAllWallets()) || {};

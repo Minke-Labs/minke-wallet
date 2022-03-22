@@ -26,6 +26,10 @@ target 'MinkeDeFiWallet' do
   #   use_flipper!('Flipper' => '0.75.1', 'Flipper-Folly' => '2.5.3', 'Flipper-RSocket' => '1.3.1')
   # end
 
+  pod 'react-native-cloud-fs', :path => '../node_modules/react-native-cloud-fs'
+
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   post_install do |installer|
     react_native_post_install(installer)
 

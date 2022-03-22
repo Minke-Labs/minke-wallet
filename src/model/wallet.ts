@@ -4,6 +4,7 @@ import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
+import { backupUserDataIntoCloud } from '@models/cloudBackup';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
@@ -279,6 +280,25 @@ export const imageSource = async (address: string): Promise<{ uri: string }> => 
 	return { uri: makeBlockie(wallet) };
 };
 
+export const setWalletBackedUp = async (walletId: string, backupFile = '') => {
+	const allWallets = (await getAllWallets()) || {};
+	allWallets[walletId] = {
+		...allWallets[walletId],
+		backedUp: true,
+		backupDate: Date.now(),
+		backupFile
+	};
+
+	await saveAllWallets(allWallets);
+
+	try {
+		await backupUserDataIntoCloud(allWallets);
+	} catch (e) {
+		console.error(e);
+		throw e;
+	}
+};
+
 export interface MinkeTokenList {
 	[name: string]: {
 		contract: Contract;
@@ -292,6 +312,9 @@ export interface MinkeWallet {
 	name: string;
 	primary: boolean;
 	network: string;
+	backedUp: boolean;
+	backupDate?: number;
+	backupFile?: string;
 }
 
 export interface WalletAndMnemonic {

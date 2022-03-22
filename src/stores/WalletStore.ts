@@ -19,14 +19,16 @@ export interface WalletState {
 		walletBalance?: number; // total in the wallet (total - deposits)
 	};
 	transactions?: Array<Transaction>;
+	backedUp: boolean;
 }
 
-export const emptyWallet = {
+export const emptyWallet: WalletState = {
 	privateKey: '',
 	address: '',
 	walletId: null,
 	network: defaultNetwork,
-	transactions: []
+	transactions: [],
+	backedUp: false
 };
 
 export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
@@ -66,7 +68,14 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 
 		if (privateKey) {
 			return {
-				...{ privateKey, address: wallet.address, walletId: wallet.id, allTokens: [], transactions: [] },
+				...{
+					privateKey,
+					address: wallet.address,
+					walletId: wallet.id,
+					allTokens: [],
+					transactions: [],
+					backedUp: wallet.backedUp
+				},
 				...(await fetchTokensAndBalances(privateKey, wallet.address))
 			};
 		}

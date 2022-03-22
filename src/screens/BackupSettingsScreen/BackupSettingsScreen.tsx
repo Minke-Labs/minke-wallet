@@ -1,41 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { WelcomeLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
-import { searchForMinkeBackups } from '@models/keychain';
 import { smallWalletAddress, getSeedPhrase } from '@models/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import { backupImg } from '@images';
-import { useNavigation } from '@hooks';
+import { useNavigation, iCloudBackup } from '@hooks';
 import styles from './BackupSettingsScreen.styles';
 
 const BackupSettingsScreen = () => {
 	const navigation = useNavigation();
-
 	const state = useState(globalWalletState());
-	const { address } = state.value;
+	const { address, walletId, backedUp } = state.value;
 	const wallet = smallWalletAddress(address);
-	const [backups, setBackups] = React.useState<string[]>([]);
 
-	const loadBackups = async () => {
-		setBackups(await searchForMinkeBackups());
-	};
-
-	useEffect(() => {
-		loadBackups();
-	}, []);
-
-	const walletState = useState(globalWalletState());
-	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
+	const loadSeed = getSeedPhrase(walletId || '');
 	const seed = useState(loadSeed);
+	const { handleIcloudBackup } = iCloudBackup();
+
 	if (seed.promised) return <ScreenLoadingIndicator />;
-
-	const toBackup = seed.value || walletState.privateKey.value;
-
-	const backupOnKeychain = async () => {
-		navigation.navigate('BackupToICloudScreen');
-	};
 
 	return (
 		<WelcomeLayout>
@@ -60,7 +44,7 @@ const BackupSettingsScreen = () => {
 
 				<Image source={backupImg} style={styles.image} />
 
-				{backups.includes(toBackup) ? (
+				{backedUp ? (
 					<>
 						<Text weight="extraBold" type="h2" center marginBottom={24}>
 							Your Wallet is Backed Up!
@@ -69,9 +53,9 @@ const BackupSettingsScreen = () => {
 							If you lose this device you can recover your encrpyted wallet backup from iCloud. Remember
 							to activate the iCloud Keychain backup
 						</Text>
-						{seed.value ? (
+						{seed.value && (
 							<Button onPress={() => navigation.navigate('BackupScreen')} title="View Secret Phrase" />
-						) : null}
+						)}
 					</>
 				) : (
 					<>
@@ -81,7 +65,7 @@ const BackupSettingsScreen = () => {
 						<Text weight="medium" center marginBottom={40}>
 							Your keys your coin. Backup your wallet incase of loss.
 						</Text>
-						<Button title="Back up to iCloud" onPress={backupOnKeychain} iconRight="cloudStroke" />
+						<Button title="Back up to iCloud" onPress={handleIcloudBackup} iconRight="cloudStroke" />
 					</>
 				)}
 			</View>

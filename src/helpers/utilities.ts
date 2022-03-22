@@ -38,3 +38,9 @@ export const addColorOpacity = (color: string, opacity: number): string => {
 	const newOpacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
 	return color + newOpacity.toString(16).toUpperCase();
 };
+
+/**
+ * @desc Promise that will resolve after the ms interval
+ */
+// eslint-disable-next-line no-promise-executor-return
+export const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));

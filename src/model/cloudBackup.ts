@@ -38,7 +38,11 @@ export const encryptAndSaveDataToCloud = async (data: any, password: any, filena
 	const android = Platform.OS === 'android';
 	// Encrypt the data
 	try {
+		console.log({ data });
+		console.log({ password });
+		console.log({ filename });
 		const encryptedData = await encryptor.encrypt(password, JSON.stringify(data));
+		console.log({ encryptedData });
 		// Store it on the FS first
 		const path = `${RNFS.DocumentDirectoryPath}/${filename}`;
 		await RNFS.writeFile(path, encryptedData || '', 'utf8');
@@ -133,7 +137,7 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 		document = sortedBackups[0];
 	}
 
-	const encryptedData = ios ? await getICloudDocument(filename) : await getGoogleDriveDocument(document.id);
+	const encryptedData = await RNFS.readFile(document.path, 'utf8');
 
 	console.log({ encryptedData });
 	if (encryptedData) {
@@ -141,6 +145,7 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 		const backedUpDataStringified = await encryptor.decrypt(backupPassword, encryptedData);
 		if (backedUpDataStringified) {
 			const backedUpData = JSON.parse(backedUpDataStringified);
+			console.log({ backedUpData });
 			return backedUpData;
 		}
 		console.error('We couldnt decrypt the data');
