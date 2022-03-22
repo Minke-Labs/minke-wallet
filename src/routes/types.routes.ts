@@ -20,4 +20,5 @@ export type RootStackParamList = {
 	DepositSuccessScreen: undefined;
 	Test: undefined;
 	OpenAave: undefined;
+	TopUpWaitScreen: undefined;
 };

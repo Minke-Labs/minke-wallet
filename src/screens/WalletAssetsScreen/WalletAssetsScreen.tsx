@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useTokens } from '@hooks';
-import { Modal, ModalReusables } from '@components';
+import { AddFunds } from '@containers';
+import { Modal } from '@components';
 import { BasicLayout } from '@layouts';
 import AssetList from './AssetList/AssetList';
 import ValueBox from './ValueBox/ValueBox';
@@ -26,7 +27,7 @@ const WalletAssetsScreen = () => {
 				</View>
 			</BasicLayout>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<ModalReusables.ComingSoon onDismiss={() => setAddFundsVisible(false)} />
+				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
 		</>
 	);

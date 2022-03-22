@@ -58,7 +58,7 @@ const BackupSettingsScreen = () => {
 			</View>
 
 			<View style={styles.padding}>
-				<View style={{ width: '100%', marginBottom: 58 }}>
+				<View style={{ width: '100%', marginBottom: 32 }}>
 					<Text weight="extraBold" type="h3">
 						Backup
 					</Text>

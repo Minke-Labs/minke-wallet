@@ -27,6 +27,7 @@ const AccountsScreen = () => {
 
 	const onSelectWallet = async (wallet: MinkeWallet) => {
 		state.set(await walletState(wallet));
+		navigation.navigate('WalletScreen');
 	};
 
 	return (

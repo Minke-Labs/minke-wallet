@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
+import { useState } from '@hookstate/core';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
@@ -12,26 +13,34 @@ interface ChooseQuantityModalProps {
 	amount: number | undefined;
 	setPresetAmount: Function;
 	enableCustomAmount: () => void;
+	onPurchase: () => void;
 }
 
+const DEFAULT_VALUE = 100;
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
 	amount,
 	setPresetAmount,
-	enableCustomAmount
+	enableCustomAmount,
+	onPurchase
 }) => {
 	const { name, symbol } = coin;
-	const [snackbarVisible, setSnackbarVisible] = useState(false);
-	const wallet = globalWalletState();
+	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+	const { address } = useState(globalWalletState()).value;
 
 	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.address || '');
+		Clipboard.setString(address || '');
 		setSnackbarVisible(true);
 	};
+
+	useEffect(() => {
+		setPresetAmount(DEFAULT_VALUE);
+	}, []);
+
 	return (
 		<>
 			<View style={{ paddingHorizontal: 24 }}>
-				<View style={{ flexDirection: 'row', marginBottom: 8 }}>
+				<View style={{ flexDirection: 'row', marginBottom: 8, alignItems: 'center' }}>
 					<Token name={symbol.toLowerCase() as TokenType} size={40} />
 					<Text weight="extraBold" type="h3" style={{ marginLeft: 8 }}>
 						{name}
@@ -58,7 +67,8 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 				<PaperTouchable marginBottom={20} onPress={enableCustomAmount}>
 					<Text type="a">Choose another amount</Text>
 				</PaperTouchable>
-				<ApplePayButton marginBottom={48} />
+
+				<ApplePayButton marginBottom={48} onPress={onPurchase} disabled={amount! <= 0} />
 
 				<View
 					style={{
@@ -89,12 +99,14 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					Send from <Text weight="extraBold">coinbase</Text> or another exchange
 				</Text>
 
-				<PaperTouchable onPress={onCopyToClipboard}>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<Icon name="copyStroke" style={{ marginRight: 8 }} size={16} />
-						<Text>Copy address</Text>
-					</View>
-				</PaperTouchable>
+				<View style={{ marginBottom: 8 }}>
+					<PaperTouchable onPress={onCopyToClipboard}>
+						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+							<Icon name="copyStroke" style={{ marginRight: 8 }} size={16} />
+							<Text>Copy address</Text>
+						</View>
+					</PaperTouchable>
+				</View>
 			</View>
 
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>

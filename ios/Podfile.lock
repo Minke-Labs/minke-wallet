@@ -1,26 +1,26 @@
 PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - EXApplication (4.0.1):
+  - EXApplication (4.0.2):
     - ExpoModulesCore
   - EXBlur (11.0.0):
     - ExpoModulesCore
-  - EXClipboard (2.1.0):
+  - EXClipboard (2.1.1):
     - ExpoModulesCore
-  - EXConstants (13.0.1):
+  - EXConstants (13.0.2):
     - ExpoModulesCore
-  - EXErrorRecovery (3.0.4):
+  - EXErrorRecovery (3.0.5):
     - ExpoModulesCore
-  - EXFileSystem (13.1.2):
+  - EXFileSystem (13.1.4):
     - ExpoModulesCore
-  - EXFont (10.0.4):
+  - EXFont (10.0.5):
     - ExpoModulesCore
   - EXJSONUtils (0.2.1)
-  - EXKeepAwake (10.0.1):
+  - EXKeepAwake (10.0.2):
     - ExpoModulesCore
   - EXManifests (0.2.4):
     - EXJSONUtils
-  - Expo (44.0.5):
+  - Expo (44.0.6):
     - ExpoModulesCore
   - expo-dev-client (0.8.4):
     - EXManifests
@@ -91,12 +91,12 @@ PODS:
     - expo-dev-menu/SafeAreaView
   - ExpoLinearGradient (11.0.3):
     - ExpoModulesCore
-  - ExpoLocalization (12.0.0):
+  - ExpoLocalization (12.0.1):
     - ExpoModulesCore
-  - ExpoModulesCore (0.6.4):
+  - ExpoModulesCore (0.6.5):
     - React-Core
     - ReactCommon/turbomodule/core
-  - EXSecureStore (11.1.0):
+  - EXSecureStore (11.1.1):
     - ExpoModulesCore
   - EXSplashScreen (0.14.2):
     - ExpoModulesCore
@@ -304,7 +304,7 @@ PODS:
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
   - React-jsinspector (0.64.3)
-  - react-native-get-random-values (1.7.0):
+  - react-native-get-random-values (1.7.2):
     - React-Core
   - react-native-randombytes (3.6.1):
     - React-Core
@@ -376,17 +376,19 @@ PODS:
     - React-cxxreact (= 0.64.3)
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
+  - ReactNativePayments (1.1.8):
+    - React
   - RNCAsyncStorage (1.15.17):
     - React-Core
-  - RNDeviceInfo (8.4.0):
+  - RNDeviceInfo (8.5.0):
     - React-Core
-  - RNGestureHandler (2.1.1):
+  - RNGestureHandler (2.1.3):
     - React-Core
   - RNKeychain (6.2.0):
     - React
   - RNOS (1.2.6):
     - React
-  - RNReanimated (2.3.1):
+  - RNReanimated (2.3.3):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -419,7 +421,7 @@ PODS:
     - React-RCTImage
   - RNSVG (12.1.1):
     - React
-  - RNVectorIcons (9.0.0):
+  - RNVectorIcons (9.1.0):
     - React-Core
   - TcpSockets (3.3.2):
     - React
@@ -480,6 +482,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "ReactNativePayments (from `../node_modules/@rainbow-me/react-native-payments/lib/ios`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -601,6 +604,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  ReactNativePayments:
+    :path: "../node_modules/@rainbow-me/react-native-payments/lib/ios"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNDeviceInfo:
@@ -627,25 +632,25 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  EXApplication: bdc8dc27713235565da1029a34385229f31b8e08
+  EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXBlur: 82055865de17cf2cf797ff064c50fb59fcbe703f
-  EXClipboard: 4d6ee6f9572ef999fc323e4b99c8d180e041ad33
-  EXConstants: 6966f4fa7a22770dd240a66d029819ff94c748c9
-  EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
-  EXFileSystem: e8013deaa114cab168a6f53be956b9334c3d02cf
-  EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
+  EXClipboard: 8123fcda680538bb0e1f4e6511106553e52d3760
+  EXConstants: 88bf79622fbd9b476c96d8ec57fe97ca44fe8e3c
+  EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
+  EXFileSystem: 08a3033ac372b6346becf07839e1ccef26fb1058
+  EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
   EXJSONUtils: 5ee0d5cf76da70ad86f0be1a41cc70f47d69e06f
-  EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
+  EXKeepAwake: bf48d7f740a5cd2befed6cf9a49911d385c6c47d
   EXManifests: d3464cd2278f4a19cd80c1aa673231570b534c11
-  Expo: 337c72b7e9314e93023af79c875930db8e008275
+  Expo: 534e51e607aba8229293297da5585f4b26f50fa1
   expo-dev-client: 6856be1c9b8a098a23e1099abee01a9d66bc0fa4
   expo-dev-launcher: 875237591555e0258aa1f65442c9a557c5b61b40
   expo-dev-menu: 942ad845341d994c8dfb70c83cd840378b81650d
   expo-dev-menu-interface: 395d046704878e5de471a89102ddf361cbb7e52f
   ExpoLinearGradient: fd591c223c81f6779036ed4cef4deb20ecb87c50
-  ExpoLocalization: 83582a967db52987a8479490b056d5eb9fd70552
-  ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
-  EXSecureStore: fa0fdde1c81ceee2a3cb0519e649feae42767969
+  ExpoLocalization: 72b4524c167da6c4e2a0bbe09176ff8b2c4eddbe
+  ExpoModulesCore: 32c0ccb47f477d330ee93db72505380adf0de09a
+  EXSecureStore: b80c74c5ee29d0160c2aace3fd9a24a5edc20015
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
@@ -662,7 +667,7 @@ SPEC CHECKSUMS:
   React-jsi: a8b09c29521c798f1783348b37b511ba7b3dbeb3
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
-  react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
+  react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-udp: ff9d13e523f2b58e6bc5d4d32321ac60671b5dc9
@@ -678,15 +683,16 @@ SPEC CHECKSUMS:
   React-RCTVibration: c7f845861e79eae13dc1e8217a3cf47a3945b504
   React-runtimeexecutor: 493d9abb8b23c3f84e19ae221eeba92cadcb70dc
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
+  ReactNativePayments: a30d3b1197f6c4585efc8529a9a945a1c62e8ef3
   RNCAsyncStorage: 6bd5a7ba3dde1c3facba418aa273f449bdc5437a
-  RNDeviceInfo: 8a06046616c6b5c03787b04f265fa3b52b37c80b
-  RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
+  RNDeviceInfo: a674f06c5a5bd496aebb809cbc3be61cfd612a65
+  RNGestureHandler: e1099204721a17a89c81fcd1cc2e92143dc040fb
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNOS: 6f2f9a70895bbbfbdad7196abd952e7b01d45027
-  RNReanimated: 7f143675d94978c3555345d5bfa8ed6ae800c5d3
+  RNReanimated: 0e5ef4a7e4e79f84efbe5b40771c31044c51e7d0
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 

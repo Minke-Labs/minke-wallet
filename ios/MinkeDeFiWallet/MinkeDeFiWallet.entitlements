@@ -7,7 +7,9 @@
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
 		<string>merchant.minke.prod</string>
+		<string>merchant.minke.prod2</string>
 		<string>merchant.minke.test</string>
+		<string>merchant.minke.test2</string>
 	</array>
 </dict>
 </plist>

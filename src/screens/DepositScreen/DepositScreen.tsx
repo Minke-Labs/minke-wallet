@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, ScreenLoadingIndicator, ModalReusables } from '@components';
+import { Modal, ScreenLoadingIndicator } from '@components';
+import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
 import OpenAave from './OpenAave/OpenAave';
 import { NotAbleToSaveModal } from '../WalletScreen/Modals';
@@ -32,7 +33,7 @@ const DepositScreen = () => {
 					/>
 				</Modal>
 				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
-					<ModalReusables.ComingSoon onDismiss={dismissAddFunds} />
+					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
 				</Modal>
 			</>
 		);

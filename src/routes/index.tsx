@@ -21,6 +21,7 @@ import {
 	DepositScreen,
 	USDCoinScreen,
 	DepositSuccessScreen,
+	TopUpWaitScreen,
 	Test
 } from '@screens';
 import { Icon } from '@components';
@@ -33,7 +34,6 @@ const Routes: React.FC = () => {
 	const scheme = useColorScheme();
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
-	// const initialScreen = 'Test';
 
 	const defaultOptions = ({ navigation }: NativeStackScreenProps<RootStackParamList>) => ({
 		title: '',
@@ -82,6 +82,7 @@ const Routes: React.FC = () => {
 
 				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
+				<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
