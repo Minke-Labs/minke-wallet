@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import * as Linking from 'expo-linking';
-import { WelcomeLayout } from '@layouts';
+import { BasicLayout } from '@layouts';
 import { Icon, Text } from '@components';
 import { useTheme, useNavigation } from '@hooks';
 import styles from './SettingsScreen.styles';
@@ -17,7 +17,7 @@ const SettingsScreen = () => {
 	const { colors } = useTheme();
 
 	return (
-		<WelcomeLayout>
+		<BasicLayout>
 			<View style={styles.header}>
 				<TouchableOpacity activeOpacity={0.6} style={{ width: 24 }} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
@@ -38,7 +38,7 @@ const SettingsScreen = () => {
 					<SettingsOption label="Switch account" onPress={onAccounts} icon="avatarStroke" />
 				</ScrollView>
 			</View>
-		</WelcomeLayout>
+		</BasicLayout>
 	);
 };
 
