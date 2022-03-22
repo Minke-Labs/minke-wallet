@@ -6,7 +6,7 @@ import { BasicLayout } from '@layouts';
 const Test = () => (
 	<BasicLayout>
 		<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-			<Token name="busd" />
+			<Token name="cel" />
 		</View>
 	</BasicLayout>
 );
