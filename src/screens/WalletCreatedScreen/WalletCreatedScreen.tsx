@@ -21,7 +21,8 @@ const WalletCreatedScreen = () => {
 						Wallet created!
 					</Text>
 					<Text center color="text2" width={250}>
-						Your keys your coin. Backup your wallet incase of loss.
+						You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss
+						of funds.
 					</Text>
 				</View>
 

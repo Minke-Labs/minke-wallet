@@ -286,11 +286,11 @@ export const getTokenList = async (): Promise<Array<Coin>> => {
 	return result.json();
 };
 
-export const smallWalletAddress = (address: string): string => {
+export const smallWalletAddress = (address: string, length = 4): string => {
 	if (address.includes('.')) {
 		return address;
 	}
-	return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+	return `${address.substring(0, length)}..${address.substring(address.length - length)}`;
 };
 
 export const imageSource = async (address: string): Promise<{ uri: string }> => {

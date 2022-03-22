@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Button, Icon, Input, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { useNavigation, useWalletCloudBackup } from '@hooks';
+import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -14,6 +14,8 @@ const CreateBackupPassword = () => {
 	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
 	const walletCloudBackup = useWalletCloudBackup();
 	const { walletId } = useState(globalWalletState()).value;
+
+	const keyboardVisible = useKeyboard();
 
 	const isPasswordValid =
 		password && passwordConfirmation && password === passwordConfirmation && password.length >= 8;
@@ -44,9 +46,11 @@ const CreateBackupPassword = () => {
 				</TouchableOpacity>
 			</View>
 
-			<View style={styles.padding}>
-				<Image source={backupImg} style={styles.image} />
-			</View>
+			{!keyboardVisible && (
+				<View style={styles.padding}>
+					<Image source={backupImg} style={styles.image} />
+				</View>
+			)}
 			<View style={{ paddingHorizontal: 24 }}>
 				<Text type="h3" weight="extraBold" marginBottom={8}>
 					Choose a password

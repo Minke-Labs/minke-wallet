@@ -2,6 +2,7 @@ import AccountsScreen from './AccountsScreen/AccountsScreen';
 import AssetsScreen from './AssetsScreen/AssetsScreen';
 import BackupScreen from './BackupScreen/BackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
+import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
@@ -17,7 +18,6 @@ import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
 import BackupToICloudScreen from './BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
-
 import Test from './Test/Test';
 
 export {
@@ -25,6 +25,7 @@ export {
 	AssetsScreen,
 	BackupScreen,
 	BackupSettingsScreen,
+	BackupStatusScreen,
 	ChangeNetworkScreen,
 	DepositScreen,
 	ExchangeResumeScreen,

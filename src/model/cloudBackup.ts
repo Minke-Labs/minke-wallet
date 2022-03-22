@@ -88,14 +88,6 @@ export const encryptAndSaveDataToCloud = async (data: any, password: any, filena
 	}
 };
 
-function getICloudDocument(filename: any) {
-	return RNCloudFs.getIcloudDocument(filename);
-}
-
-function getGoogleDriveDocument(id: any) {
-	return RNCloudFs.getGoogleDriveDocument(id);
-}
-
 export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 	const android = Platform.OS === 'android';
 	const ios = Platform.OS === 'ios';
