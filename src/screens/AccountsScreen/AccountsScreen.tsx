@@ -51,6 +51,7 @@ const AccountsScreen = () => {
 					<FlatList
 						style={{ paddingTop: 24, paddingBottom: 24 }}
 						data={Object.values(wallets || {})}
+						showsVerticalScrollIndicator={false}
 						renderItem={({ item }) => (
 							<ListItem
 								label={item.address}

@@ -62,7 +62,6 @@ export async function addWalletToCloudBackup(
 ): Promise<null | boolean> {
 	const backup = await getDataFromCloud(password, filename);
 	const now = Date.now();
-
 	const secrets = await extractSecretsForWallet(wallet);
 
 	backup.updatedAt = now;

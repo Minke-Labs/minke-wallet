@@ -3,7 +3,7 @@ import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { BasicLayout } from '@layouts';
-import { Text, Icon, Modal } from '@components';
+import { Text, Icon } from '@components';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { useNavigation } from '@hooks';
 import ListItem from './ListItem';
@@ -43,9 +43,10 @@ const BackupSettingsScreen = () => {
 					<FlatList
 						style={{ paddingTop: 24, paddingBottom: 24 }}
 						data={Object.values(wallets || {})}
-						renderItem={({ item: { address, backedUp, id } }) => (
-							<ListItem label={address} backedUp={!!backedUp} onPress={() => onSelectWallet(id)} />
+						renderItem={({ item: { address: walletAddress, backedUp, id } }) => (
+							<ListItem label={walletAddress} backedUp={!!backedUp} onPress={() => onSelectWallet(id)} />
 						)}
+						showsVerticalScrollIndicator={false}
 						keyExtractor={(item) => item.id}
 					/>
 				</SafeAreaView>

@@ -1,26 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
-import { globalWalletState } from '@stores/WalletStore';
 import { backupImg } from '@images';
 import { useNavigation, iCloudBackup, useWallets } from '@hooks';
-import styles from './BackupStatusScreen.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
+import styles from './BackupStatusScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupStatusScreen'>;
 const BackupStatusScreen = ({ route }: Props) => {
 	const navigation = useNavigation();
-	const { walletId } = route.params;
+	const { walletId, finishedBackup } = route.params;
 	const loadSeed = getSeedPhrase(walletId || '');
 	const seed = useState(loadSeed);
 	const { handleIcloudBackup } = iCloudBackup(walletId);
-	const { walletById } = useWallets();
+	const { wallets } = useWallets();
 
-	const wallet: MinkeWallet | null = walletById(walletId);
+	const wallet: MinkeWallet = wallets[walletId];
 
 	if (seed.promised || !wallet) {
 		return <ScreenLoadingIndicator />;
@@ -50,7 +49,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 
 				<Image source={backupImg} style={styles.image} />
 
-				{backedUp ? (
+				{finishedBackup || backedUp ? (
 					<>
 						<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
 							Your Wallet is Backed Up!

@@ -4,17 +4,14 @@ import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
-import styles from './CreateBackupPassword.styles';
 import { saveBackupPassword } from '@models/backup';
+import styles from './CreateBackupPassword.styles';
 
-const CreateBackupPassword = () => {
+const CreateBackupPassword = ({ walletId }: { walletId: string }) => {
 	const navigation = useNavigation();
 	const [password, setPassword] = React.useState<string>();
 	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
 	const walletCloudBackup = useWalletCloudBackup();
-	const { walletId } = useState(globalWalletState()).value;
 
 	const keyboardVisible = useKeyboard();
 
@@ -26,7 +23,8 @@ const CreateBackupPassword = () => {
 	};
 
 	const onSuccess = async () => {
-		navigation.navigate('BackupStatusScreen', { walletId: walletId || '' });
+		if (password) await saveBackupPassword(password);
+		navigation.navigate('BackupStatusScreen', { walletId: walletId || '', finishedBackup: true });
 	};
 
 	const onConfirmBackup = useCallback(async () => {

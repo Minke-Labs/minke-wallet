@@ -6,13 +6,13 @@ import ConfirmBackupPassword from './ConfirmBackupPassword/ConfirmBackupPassword
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const BackupToICloudScreen = ({ route }: Props) => {
-	const { missingPassword } = route.params;
+	const { missingPassword, walletId } = route.params;
 
 	if (missingPassword) {
-		return <CreateBackupPassword />;
+		return <CreateBackupPassword walletId={walletId} />;
 	}
 
-	return <ConfirmBackupPassword />;
+	return <ConfirmBackupPassword walletId={walletId} />;
 };
 
 export default BackupToICloudScreen;

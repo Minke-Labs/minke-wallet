@@ -5,7 +5,7 @@ export type RootStackParamList = {
 	AssetsScreen: { coin: MinkeToken };
 	BackupScreen: undefined;
 	BackupSettingsScreen: undefined;
-	BackupStatusScreen: { walletId: string };
+	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };
 	ChangeNetworkScreen: undefined;
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
@@ -20,7 +20,7 @@ export type RootStackParamList = {
 	WelcomeScreen: undefined; // undefined because you aren't passing any params to the home screen
 	DepositSuccessScreen: undefined;
 	Test: undefined;
-	BackupToICloudScreen: { missingPassword: boolean };
+	BackupToICloudScreen: { missingPassword: boolean; walletId: string };
 	OpenAave: undefined;
 	TopUpWaitScreen: undefined;
 };

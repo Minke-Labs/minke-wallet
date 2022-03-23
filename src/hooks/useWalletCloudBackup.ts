@@ -4,14 +4,6 @@ import { delay } from '@helpers/utilities';
 import { values } from 'lodash';
 import { getAllWallets, setWalletBackedUp } from '@models/wallet';
 
-const walletLoadingStates = {
-	BACKING_UP_WALLET: 'Backing up...',
-	CREATING_WALLET: 'Creating wallet...',
-	FETCHING_PASSWORD: 'Fetching Password...',
-	IMPORTING_WALLET: 'Importing...',
-	RESTORING_WALLET: 'Restoring...'
-};
-
 export const cloudPlatform = 'iCloud';
 
 const getUserError = (e: any) => {
@@ -106,7 +98,7 @@ const useWalletCloudBackup = () => {
 
 		try {
 			await setWalletBackedUp(walletId, updatedBackupFile);
-			if (!!onSuccess) await onSuccess();
+			if (onSuccess) await onSuccess();
 		} catch (e) {
 			console.error('error while trying to save wallet backup state');
 			const userError = getUserError(new Error(CLOUD_BACKUP_ERRORS.WALLET_BACKUP_STATUS_UPDATE_FAILED));
