@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import { Button, Text, Icon, ScreenLoadingIndicator } from '@components';
+import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen } from '@components';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
 import { useNavigation, iCloudBackup, useWallets } from '@hooks';
@@ -16,7 +16,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 	const { walletId, finishedBackup } = route.params;
 	const loadSeed = getSeedPhrase(walletId || '');
 	const seed = useState(loadSeed);
-	const { handleIcloudBackup } = iCloudBackup(walletId);
+	const { handleIcloudBackup, isWalletLoading } = iCloudBackup(walletId);
 	const { wallets } = useWallets();
 
 	const wallet: MinkeWallet = wallets[walletId];
@@ -26,6 +26,10 @@ const BackupStatusScreen = ({ route }: Props) => {
 	}
 
 	const { address, backedUp } = wallet;
+
+	if (isWalletLoading) {
+		return <LoadingScreen title={isWalletLoading} />;
+	}
 
 	return (
 		<BasicLayout>

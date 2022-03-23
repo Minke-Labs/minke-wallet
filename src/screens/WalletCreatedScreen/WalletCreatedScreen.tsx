@@ -2,16 +2,18 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
-import { Text, Button, ScreenLoadingIndicator } from '@components';
+import { Text, Button, ScreenLoadingIndicator, LoadingScreen } from '@components';
+import { iCloudBackup } from '@hooks';
 import styles from './WalletCreatedScreen.styles';
 import { useWalletCreatedScreen } from './WalletCreatedScreen.hooks';
-import { iCloudBackup } from '@hooks';
 
 const WalletCreatedScreen = () => {
 	const { backupManually, seed, walletId } = useWalletCreatedScreen();
-	const { handleIcloudBackup } = iCloudBackup(walletId || '');
+	const { handleIcloudBackup, isWalletLoading } = iCloudBackup(walletId || '');
 
 	if (seed.promised) return <ScreenLoadingIndicator />;
+
+	if (isWalletLoading) return <LoadingScreen title={isWalletLoading} />;
 
 	return (
 		<BasicLayout>

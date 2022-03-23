@@ -3,8 +3,17 @@ import { addWalletToCloudBackup, backupWalletToCloud, fetchBackupPassword, findL
 import { delay } from '@helpers/utilities';
 import { values } from 'lodash';
 import { getAllWallets, setWalletBackedUp } from '@models/wallet';
+import { useState } from 'react';
 
 export const cloudPlatform = 'iCloud';
+
+const walletLoadingStates = {
+	BACKING_UP_WALLET: 'Backing up...',
+	CREATING_WALLET: 'Creating wallet...',
+	FETCHING_PASSWORD: 'Fetching Password...',
+	IMPORTING_WALLET: 'Importing...',
+	RESTORING_WALLET: 'Restoring...'
+};
 
 const getUserError = (e: any) => {
 	switch (e.message) {
@@ -23,6 +32,8 @@ const getUserError = (e: any) => {
 };
 
 const useWalletCloudBackup = () => {
+	const [isWalletLoading, setIsWalletLoading] = useState<string | null>();
+
 	const walletCloudBackup = async ({
 		handleNoLatestBackup,
 		handlePasswordNotFound,
@@ -58,12 +69,12 @@ const useWalletCloudBackup = () => {
 		let wasPasswordFetched = false;
 		if (latestBackup && !password) {
 			// We have a backup but don't have the password, try fetching password
-			// setIsWalletLoading(walletLoadingStates.FETCHING_PASSWORD);
+			setIsWalletLoading(walletLoadingStates.FETCHING_PASSWORD);
 			// We want to make it clear why are we requesting faceID twice
 			// So we delayed it to make sure the user can read before seeing the auth prompt
 			await delay(1500);
 			fetchedPassword = await fetchBackupPassword();
-			// setIsWalletLoading(null);
+			setIsWalletLoading(null);
 			await delay(300);
 			wasPasswordFetched = true;
 		}
@@ -74,7 +85,7 @@ const useWalletCloudBackup = () => {
 			return;
 		}
 
-		// setIsWalletLoading(walletLoadingStates.BACKING_UP_WALLET);
+		setIsWalletLoading(walletLoadingStates.BACKING_UP_WALLET);
 		// We want to make it clear why are we requesting faceID twice
 		// So we delayed it to make sure the user can read before seeing the auth prompt
 		if (wasPasswordFetched) {
@@ -90,6 +101,7 @@ const useWalletCloudBackup = () => {
 				updatedBackupFile = await addWalletToCloudBackup(fetchedPassword, wallets[walletId], latestBackup);
 			}
 		} catch (e) {
+			setIsWalletLoading(null);
 			const userError = getUserError(e);
 			if (onError) onError(userError);
 			console.error(e);
@@ -98,15 +110,17 @@ const useWalletCloudBackup = () => {
 
 		try {
 			await setWalletBackedUp(walletId, updatedBackupFile);
+			setIsWalletLoading(null);
 			if (onSuccess) await onSuccess();
 		} catch (e) {
+			setIsWalletLoading(null);
 			console.error('error while trying to save wallet backup state');
 			const userError = getUserError(new Error(CLOUD_BACKUP_ERRORS.WALLET_BACKUP_STATUS_UPDATE_FAILED));
 			if (onError) onError(userError);
 		}
 	};
 
-	return walletCloudBackup;
+	return { walletCloudBackup, isWalletLoading };
 };
 
 export default useWalletCloudBackup;

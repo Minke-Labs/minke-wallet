@@ -7,7 +7,7 @@ const iCloudBackup = (walletId: string) => {
 	const navigation = useNavigation();
 	const { walletById } = useWallets();
 	const { backedUp, address } = walletById(walletId) || {};
-	const walletCloudBackup = useWalletCloudBackup();
+	const { walletCloudBackup, isWalletLoading } = useWalletCloudBackup();
 
 	const handleNoLatestBackup = useCallback(() => {
 		navigation.navigate('BackupToICloudScreen', { missingPassword: true, walletId });
@@ -36,7 +36,7 @@ const iCloudBackup = (walletId: string) => {
 		});
 	}, [handleNoLatestBackup, handlePasswordNotFound, walletCloudBackup, walletId, backedUp, address]);
 
-	return { handleIcloudBackup };
+	return { handleIcloudBackup, isWalletLoading };
 };
 
 export default iCloudBackup;

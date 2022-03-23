@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button, Icon, Input, Text } from '@components';
+import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
@@ -11,7 +11,7 @@ const CreateBackupPassword = ({ walletId }: { walletId: string }) => {
 	const navigation = useNavigation();
 	const [password, setPassword] = React.useState<string>();
 	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
-	const walletCloudBackup = useWalletCloudBackup();
+	const { walletCloudBackup, isWalletLoading } = useWalletCloudBackup();
 
 	const keyboardVisible = useKeyboard();
 
@@ -36,6 +36,10 @@ const CreateBackupPassword = ({ walletId }: { walletId: string }) => {
 			walletId
 		});
 	}, [onError, onSuccess, password, walletCloudBackup, walletId]);
+
+	if (isWalletLoading) {
+		return <LoadingScreen title={isWalletLoading} />;
+	}
 
 	return (
 		<BasicLayout>
