@@ -1,10 +1,22 @@
-import { forEach } from 'lodash';
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
+import { allWalletsKey, privateKeyKey, seedPhraseKey } from '@src/utils/keychainConstants';
+import { endsWith, forEach } from 'lodash';
 import { Platform } from 'react-native';
-import { requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
+import { Options, requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
+import * as keychain from './keychain';
 import { encryptAndSaveDataToCloud, getDataFromCloud } from './cloudBackup';
-import { AllMinkeWallets, getPrivateKey, getSeedPhrase, MinkeWallet } from './wallet';
+import { AllMinkeWallets, getPrivateKey, getSeedPhrase, MinkeWallet, restoreWalletByMnemonic } from './wallet';
 
 type BackupPassword = string;
+
+interface BackedUpData {
+	[key: string]: string;
+}
+
+interface BackupUserData {
+	wallets: AllMinkeWallets;
+}
 
 // Attempts to save the password to decrypt the backup from the iCloud keychain
 export async function saveBackupPassword(password: BackupPassword): Promise<void> {
@@ -90,4 +102,95 @@ export const findLatestBackUp = (wallets: AllMinkeWallets): string | null => {
 	});
 
 	return filename;
+};
+
+async function restoreCurrentBackupIntoKeychain(backedUpData: BackedUpData): Promise<boolean> {
+	try {
+		// Access control config per each type of key
+		const privateAccessControlOptions = await keychain.getPrivateAccessControlOptions();
+
+		await Promise.all(
+			Object.keys(backedUpData).map(async (key) => {
+				const value = backedUpData[key];
+				let accessControl: Options = keychain.publicAccessControlOptions;
+				if (endsWith(key, seedPhraseKey) || endsWith(key, privateKeyKey)) {
+					accessControl = privateAccessControlOptions;
+				}
+				if (typeof value === 'string') {
+					return keychain.saveString(key, value, accessControl);
+				}
+				return keychain.saveObject(key, value, accessControl);
+			})
+		);
+
+		return true;
+	} catch (e) {
+		console.error('error in restoreBackupIntoKeychain');
+		return false;
+	}
+}
+
+const restoreSpecificBackupIntoKeychain = async (backedUpData: BackedUpData): Promise<boolean> => {
+	try {
+		// Re-import all the seeds (and / or pkeys) one by one
+		for (const key of Object.keys(backedUpData)) {
+			if (endsWith(key, seedPhraseKey)) {
+				const valueStr = backedUpData[key];
+				const { seedphrase } = JSON.parse(valueStr);
+				await restoreWalletByMnemonic(seedphrase);
+			}
+		}
+		return true;
+	} catch (e) {
+		console.error('error in restoreSpecificBackupIntoKeychain');
+		return false;
+	}
+};
+
+export const restoreCloudBackup = async (
+	password: BackupPassword,
+	userData: BackupUserData | null,
+	backupSelected: string | null
+): Promise<boolean> => {
+	// We support two flows
+	// Restoring from the welcome screen, which uses the userData to rebuild the wallet
+	// Restoring a specific backup from settings => Backup, which uses only the keys stored.
+
+	try {
+		const filename = backupSelected || (userData && findLatestBackUp(userData.wallets));
+		if (!filename) {
+			return false;
+		}
+		// 2- download that backup
+		// @ts-ignore
+		const data = await getDataFromCloud(password, filename);
+		if (!data) {
+			throw new Error('Invalid password');
+		}
+		const dataToRestore = {
+			...data.secrets
+		};
+
+		if (userData) {
+			// Restore only wallets that were backed up in cloud
+			// or wallets that are read-only
+			const walletsToRestore: AllMinkeWallets = {};
+			forEach(userData.wallets, (wallet) => {
+				if (wallet.backedUp && wallet.backupDate && wallet.backupFile) {
+					walletsToRestore[wallet.id] = wallet;
+				}
+			});
+
+			// All wallets
+			dataToRestore[allWalletsKey] = {
+				wallets: walletsToRestore
+			};
+			return restoreCurrentBackupIntoKeychain(dataToRestore);
+		} else {
+			return restoreSpecificBackupIntoKeychain(dataToRestore);
+		}
+	} catch (e) {
+		console.error('Error while restoring back up');
+		return false;
+	}
 };

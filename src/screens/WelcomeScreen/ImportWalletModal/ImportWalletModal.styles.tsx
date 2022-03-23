@@ -1,9 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
-		paddingHorizontal: 24
+		paddingHorizontal: 24,
+		minHeight: Dimensions.get('screen').height * 0.3
 	},
+	addWalletContainer: {
+		alignItems: 'center',
+		minHeight: Dimensions.get('screen').height * 0.4
+	},
+
 	textAreaContainer: {
 		width: '100%',
 		height: 110,

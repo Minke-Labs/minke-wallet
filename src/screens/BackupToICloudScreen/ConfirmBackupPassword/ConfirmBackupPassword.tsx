@@ -7,7 +7,7 @@ import { backupImg } from '@images';
 import { BackupToICloud } from '../BackupToICloudScreen.types';
 import styles from './ConfirmBackupPassword.styles';
 
-const ConfirmBackupPassword = ({ walletId, onError }: BackupToICloud) => {
+const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: BackupToICloud) => {
 	const navigation = useNavigation();
 	const [password, setPassword] = useState<string>();
 	const { isWalletLoading, walletCloudBackup } = useWalletCloudBackup();
@@ -19,15 +19,18 @@ const ConfirmBackupPassword = ({ walletId, onError }: BackupToICloud) => {
 		navigation.navigate('BackupStatusScreen', { walletId: walletId || '', finishedBackup: true });
 	};
 
-	const onConfirmBackup = useCallback(async () => {
-		if (!isPasswordValid || !walletId) return;
-		await walletCloudBackup({
-			onError,
-			onSuccess,
-			password,
-			walletId
-		});
-	}, [onError, onSuccess, password, walletCloudBackup, walletId]);
+	const onConfirm = useCallback(async () => {
+		if (!isPasswordValid || (!walletId && !restoreBackups)) return;
+		if (restoreBackups) {
+		} else {
+			await walletCloudBackup({
+				onError,
+				onSuccess,
+				password,
+				walletId
+			});
+		}
+	}, [onError, onSuccess, password, walletCloudBackup, walletId, restoreBackups]);
 
 	if (isWalletLoading) {
 		return <LoadingScreen title={isWalletLoading} />;
@@ -51,7 +54,8 @@ const ConfirmBackupPassword = ({ walletId, onError }: BackupToICloud) => {
 					Enter backup password
 				</Text>
 				<Text type="p2" weight="medium" color="text2" marginBottom={32}>
-					To add this wallet to your iCloud backup, enter your existing backup password
+					To {restoreBackups ? 'restore your wallets from' : 'add this wallet to'} your iCloud backup, enter
+					your existing backup password
 				</Text>
 
 				<Input
@@ -66,10 +70,10 @@ const ConfirmBackupPassword = ({ walletId, onError }: BackupToICloud) => {
 				/>
 
 				<Button
-					title="Confirm backup"
+					title={restoreBackups ? 'Confirm restore' : 'Confirm backup'}
 					iconRight="cloudStroke"
 					disabled={!isPasswordValid}
-					onPress={onConfirmBackup}
+					onPress={onConfirm}
 				/>
 			</View>
 		</BasicLayout>

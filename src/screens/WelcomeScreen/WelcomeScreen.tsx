@@ -42,7 +42,11 @@ const WelcomeScreen = () => {
 			</BasicLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportWalletModal onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
+				<ImportWalletModal
+					visible={isModalVisible}
+					onImportFinished={onImportFinished}
+					onDismiss={() => setModalVisible(false)}
+				/>
 			</Modal>
 		</>
 	);

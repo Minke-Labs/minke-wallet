@@ -66,6 +66,7 @@ const AccountsScreen = () => {
 			</View>
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
 				<ImportFlow
+					visible={isModalVisible}
 					onImportFinished={() => navigation.navigate('WalletScreen')}
 					onDismiss={() => setModalVisible(false)}
 				/>

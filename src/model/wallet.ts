@@ -8,7 +8,7 @@ import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { backupUserDataIntoCloud } from '@models/cloudBackup';
-import { seedPhraseKey, privateKeyKey } from '@src/utils/keychainConstants';
+import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@src/utils/keychainConstants';
 import * as keychain from './keychain';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -81,7 +81,7 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	await saveObject('minkeAllWallets', wallets, keychain.publicAccessControlOptions);
+	await saveObject(allWalletsKey, wallets, keychain.publicAccessControlOptions);
 };
 
 const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null | AllMinkeWallets> => {
@@ -109,7 +109,7 @@ const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null 
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
-		const allWallets = await loadObject('minkeAllWallets');
+		const allWallets = await loadObject(allWalletsKey);
 		if (allWallets) {
 			const wallets = await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
 			return wallets;
@@ -180,7 +180,7 @@ export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Pro
 	return existingWallet;
 };
 
-export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
+export const purgeWallets = () => deleteItemAsync(allWalletsKey);
 
 export const walletDelete = async (id: string): Promise<boolean> => {
 	const allWallets = (await getAllWallets()) || {};
