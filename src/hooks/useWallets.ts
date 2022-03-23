@@ -14,7 +14,7 @@ const useWallets = (): UseWallets => {
 			setWallets((await getAllWallets()) || {});
 		};
 		fetchWallets();
-	}, [setWallets]);
+	}, []);
 
 	const walletById = useCallback(
 		(id: string): MinkeWallet | null => {

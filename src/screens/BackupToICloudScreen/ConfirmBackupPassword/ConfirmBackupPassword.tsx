@@ -4,19 +4,16 @@ import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
+import { BackupToICloud } from '../BackupToICloudScreen.types';
 import styles from './ConfirmBackupPassword.styles';
 
-const ConfirmBackupPassword = ({ walletId }: { walletId: string }) => {
+const ConfirmBackupPassword = ({ walletId, onError }: BackupToICloud) => {
 	const navigation = useNavigation();
 	const [password, setPassword] = useState<string>();
 	const { isWalletLoading, walletCloudBackup } = useWalletCloudBackup();
 	const keyboardVisible = useKeyboard();
 
 	const isPasswordValid = password && password.length >= 8;
-
-	const onError = (message: any) => {
-		console.error(message);
-	};
 
 	const onSuccess = async () => {
 		navigation.navigate('BackupStatusScreen', { walletId: walletId || '', finishedBackup: true });

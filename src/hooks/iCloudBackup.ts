@@ -1,28 +1,31 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import useNavigation from './useNavigation';
 import useWalletCloudBackup from './useWalletCloudBackup';
 import useWallets from './useWallets';
 
 const iCloudBackup = (walletId: string) => {
 	const navigation = useNavigation();
+	const [backupError, setBackupError] = useState<string | undefined>();
 	const { walletById } = useWallets();
 	const { backedUp, address } = walletById(walletId) || {};
 	const { walletCloudBackup, isWalletLoading } = useWalletCloudBackup();
 
+	const onError = useCallback(
+		(message: string) => {
+			setBackupError(message);
+		},
+		[walletId, backedUp, address]
+	);
+
 	const handleNoLatestBackup = useCallback(() => {
+		setBackupError(undefined);
 		navigation.navigate('BackupToICloudScreen', { missingPassword: true, walletId });
 	}, [walletId, backedUp, address]);
 
 	const handlePasswordNotFound = useCallback(() => {
+		setBackupError(undefined);
 		navigation.navigate('BackupToICloudScreen', { missingPassword: false, walletId });
 	}, [walletId, backedUp, address]);
-
-	const onError = useCallback(
-		(message) => {
-			console.error('error', message);
-		},
-		[walletId, backedUp, address]
-	);
 
 	const handleIcloudBackup = useCallback(() => {
 		if (backedUp || !walletId) {
@@ -36,7 +39,7 @@ const iCloudBackup = (walletId: string) => {
 		});
 	}, [handleNoLatestBackup, handlePasswordNotFound, walletCloudBackup, walletId, backedUp, address]);
 
-	return { handleIcloudBackup, isWalletLoading };
+	return { handleIcloudBackup, isWalletLoading, backupError };
 };
 
 export default iCloudBackup;

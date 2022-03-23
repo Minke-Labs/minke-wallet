@@ -103,8 +103,8 @@ const useWalletCloudBackup = () => {
 		} catch (e) {
 			setIsWalletLoading(null);
 			const userError = getUserError(e);
-			if (onError) onError(userError);
 			console.error(e);
+			if (onError) onError(userError);
 			return;
 		}
 

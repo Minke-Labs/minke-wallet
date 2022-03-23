@@ -5,9 +5,10 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
 import { saveBackupPassword } from '@models/backup';
+import { BackupToICloud } from '../BackupToICloudScreen.types';
 import styles from './CreateBackupPassword.styles';
 
-const CreateBackupPassword = ({ walletId }: { walletId: string }) => {
+const CreateBackupPassword = ({ walletId, onError }: BackupToICloud) => {
 	const navigation = useNavigation();
 	const [password, setPassword] = React.useState<string>();
 	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
@@ -17,10 +18,6 @@ const CreateBackupPassword = ({ walletId }: { walletId: string }) => {
 
 	const isPasswordValid =
 		password && passwordConfirmation && password === passwordConfirmation && password.length >= 8;
-
-	const onError = (message: any) => {
-		console.error(message);
-	};
 
 	const onSuccess = async () => {
 		if (password) await saveBackupPassword(password);
