@@ -1,5 +1,5 @@
 import { getAddress } from 'ethers/lib/utils';
-import { loadObject, saveObject } from './keychain';
+import { loadObject, saveObject, publicAccessControlOptions } from './keychain';
 
 export const getAllContacts = async (): Promise<ContactItem[]> => {
 	const contacts = (await loadObject('minkeContacts')) || [];
@@ -7,7 +7,7 @@ export const getAllContacts = async (): Promise<ContactItem[]> => {
 };
 
 export const saveAllContacts = async (contacts: ContactItem[] = []) => {
-	await saveObject('minkeContacts', contacts);
+	await saveObject('minkeContacts', contacts, publicAccessControlOptions);
 };
 
 const formatAddress = (address: string): string => {

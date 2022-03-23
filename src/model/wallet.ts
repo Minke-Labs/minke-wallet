@@ -1,3 +1,6 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+import { Alert } from 'react-native';
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
@@ -5,17 +8,23 @@ import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { backupUserDataIntoCloud } from '@models/cloudBackup';
+import { seedPhraseKey, privateKeyKey } from '@src/utils/keychainConstants';
+import * as keychain from './keychain';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
+const authenticationPrompt = { authenticationPrompt: { title: 'Please authenticate' } };
+
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
-	const key = `${keychain_id}_minkeSeedPhrase`;
+	const key = `${keychain_id}_${seedPhraseKey}`;
 	const val = {
 		id: keychain_id,
 		seedPhrase
 	} as SeedPhraseData;
 
-	const save = await saveObject(key, val);
+	const privateAccessControlOptions = await keychain.getPrivateAccessControlOptions();
+
+	const save = await saveObject(key, val, privateAccessControlOptions);
 	return save;
 };
 
@@ -39,16 +48,40 @@ export const resolveENSAddress = async (ensAddress: string) => {
 	return name;
 };
 
-export const savePrivateKey = async (address: string, privateKey: null | string) => {
-	// const privateAccessControlOptions = await getPrivateAccessControlOptions();
+export const getPrivateKey = async (address: string): Promise<string | null> => {
+	const key = `${address}_${privateKeyKey}`;
 
-	const key = `${address}_minkePrivateKey`;
+	const pkey = (await loadObject(key, authenticationPrompt)) as PrivateKeyData | -2;
+
+	if (pkey === -2) {
+		Alert.alert(
+			'Error',
+			// eslint-disable-next-line max-len
+			'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris.'
+		);
+		return null;
+	}
+
+	if (pkey?.privateKey) {
+		return pkey.privateKey;
+	}
+	return null;
+};
+
+export const savePrivateKey = async (address: string, privateKey: null | string) => {
+	const key = `${address}_${privateKeyKey}`;
 	const val = {
 		address,
 		privateKey
 	};
 
-	await saveObject(key, val);
+	const privateAccessControlOptions = await keychain.getPrivateAccessControlOptions();
+
+	await saveObject(key, val, privateAccessControlOptions);
+};
+
+export const saveAllWallets = async (wallets: AllMinkeWallets) => {
+	await saveObject('minkeAllWallets', wallets, keychain.publicAccessControlOptions);
 };
 
 const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null | AllMinkeWallets> => {
@@ -57,13 +90,14 @@ const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null 
 		const asArray: MinkeWallet[] = Object.values(allWallets);
 		for (const index in asArray) {
 			const { address, id } = asArray[index];
+			// eslint-disable-next-line no-await-in-loop
 			const primaryKey = await getPrivateKey(address);
 			if (primaryKey) {
 				toKeep.push(id);
 			}
 		}
 
-		const filtered = Object.fromEntries(Object.entries(allWallets).filter(([id, wallet]) => toKeep.includes(id)));
+		const filtered = Object.fromEntries(Object.entries(allWallets).filter(([id]) => toKeep.includes(id)));
 		await saveAllWallets(filtered);
 		if (filtered) {
 			return filtered as AllMinkeWallets;
@@ -77,7 +111,8 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
 		const allWallets = await loadObject('minkeAllWallets');
 		if (allWallets) {
-			return await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
+			const wallets = await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
+			return wallets;
 		}
 
 		return null;
@@ -91,10 +126,6 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
-};
-
-export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	await saveObject('minkeAllWallets', wallets);
 };
 
 const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Promise<WalletAndMnemonic> => {
@@ -163,21 +194,21 @@ export const walletDelete = async (id: string): Promise<boolean> => {
 };
 
 export const getSeedPhrase = async (keychain_id: string): Promise<string | null> => {
-	const key = `${keychain_id}_minkeSeedPhrase`;
+	const key = `${keychain_id}_${seedPhraseKey}`;
 
-	const seedData = (await loadObject(key)) as SeedPhraseData;
+	const seedData = (await loadObject(key, authenticationPrompt)) as SeedPhraseData | -2;
+
+	if (seedData === -2) {
+		Alert.alert(
+			'Error',
+			// eslint-disable-next-line max-len
+			'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris'
+		);
+		return null;
+	}
+
 	if (seedData?.seedPhrase) {
 		return seedData.seedPhrase;
-	}
-	return null;
-};
-
-export const getPrivateKey = async (address: string): Promise<string | null> => {
-	const key = `${address}_minkePrivateKey`;
-
-	const pkey = (await loadObject(key)) as PrivateKeyData;
-	if (pkey?.privateKey) {
-		return pkey.privateKey;
 	}
 	return null;
 };
