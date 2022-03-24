@@ -14,7 +14,6 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 	const navigation = useNavigation();
 
 	const onICloudBackup = () => {
-		console.log('Marcos starting backup');
 		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
 	};
 

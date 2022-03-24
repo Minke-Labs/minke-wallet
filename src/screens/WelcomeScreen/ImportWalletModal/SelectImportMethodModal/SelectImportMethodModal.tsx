@@ -60,7 +60,7 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 						<Icon name="vaultStroke" size={24} color="text7" />
 					</View>
 					<Text weight="bold" type="p2" style={{ marginLeft: 16 }}>
-						Import with secret phrase (TEST)
+						Import with secret phrase
 					</Text>
 				</View>
 			</TouchableOpacity>

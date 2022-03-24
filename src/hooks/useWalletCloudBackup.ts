@@ -1,5 +1,10 @@
 import { CLOUD_BACKUP_ERRORS, isCloudBackupAvailable } from '@models/cloudBackup';
-import { addWalletToCloudBackup, backupWalletToCloud, fetchBackupPassword, findLatestBackUp } from '@models/backup';
+import {
+	addWalletToCloudBackup,
+	backupWalletToCloud,
+	fetchBackupPassword,
+	findLatestBackUpOnICloud
+} from '@models/backup';
 import { delay } from '@helpers/utilities';
 import { values } from 'lodash';
 import { getAllWallets, setWalletBackedUp } from '@models/wallet';
@@ -50,7 +55,7 @@ const useWalletCloudBackup = () => {
 		walletId: string;
 	}) => {
 		const wallets = (await getAllWallets()) || {};
-		const latestBackup = findLatestBackUp(wallets) || false;
+		const latestBackup = (await findLatestBackUpOnICloud()) || false;
 
 		const isAvailable = await isCloudBackupAvailable();
 		if (!isAvailable) {

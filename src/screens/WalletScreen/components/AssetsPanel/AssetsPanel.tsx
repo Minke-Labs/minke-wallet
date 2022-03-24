@@ -24,7 +24,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 						{numberFormat(balance || 0)}
 					</Text>
 				</View>
-				<View>{address && <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} />}</View>
+				<View>{!!address && <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} />}</View>
 			</TouchableOpacity>
 			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
 				<TouchableOpacity

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { Keyboard } from 'react-native';
 import useNavigation from './useNavigation';
 import useWalletCloudBackup from './useWalletCloudBackup';
 import useWallets from './useWallets';
@@ -12,6 +13,7 @@ const iCloudBackup = (walletId: string) => {
 
 	const onError = useCallback(
 		(message: string) => {
+			Keyboard.dismiss();
 			setBackupError(message);
 		},
 		[walletId, backedUp, address]

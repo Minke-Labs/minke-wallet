@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import React, { useState } from 'react';
 import { View, SafeAreaView, RefreshControl, ScrollView } from 'react-native';
 import { useTheme } from '@hooks';
@@ -34,9 +35,9 @@ const TabLayout: React.FC<TabLayoutProps> = ({
 					style={[
 						styles.tabsContainer,
 						{
-							...(selectedTab === 'transactions' ?
-								{ borderTopRightRadius: 24 } :
-								{ borderTopLeftRadius: 24 }),
+							...(selectedTab === 'transactions'
+								? { borderTopRightRadius: 24 }
+								: { borderTopLeftRadius: 24 }),
 							backgroundColor: colors.detail4
 						}
 					]}

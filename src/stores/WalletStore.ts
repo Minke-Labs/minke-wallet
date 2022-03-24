@@ -86,6 +86,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 	const wallets = await getAllWallets();
 	let wallet = find(wallets, (w: MinkeWallet) => w.primary);
 	if (wallets && !wallet) {
+		// eslint-disable-next-line prefer-destructuring
 		wallet = Object.values(wallets)[0];
 	}
 	return walletState(wallet as MinkeWallet);

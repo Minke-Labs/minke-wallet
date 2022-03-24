@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { useKeyboard, useNavigation, useWalletCloudBackup, useWallets } from '@hooks';
+import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
 import { restoreCloudBackup } from '@models/backup';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
@@ -12,8 +12,8 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 	const navigation = useNavigation();
 	const [password, setPassword] = useState<string>();
 	const { isWalletLoading, walletCloudBackup } = useWalletCloudBackup();
+	const [restoringBackuups, setRestoringBackups] = useState<string | null>();
 	const keyboardVisible = useKeyboard();
-	const { wallets } = useWallets();
 
 	const isPasswordValid = password && password.length >= 8;
 
@@ -24,11 +24,12 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 	const onConfirm = useCallback(async () => {
 		if (!isPasswordValid) return;
 		if (restoreBackups) {
-			console.log('restauring backuup');
-			const success = await restoreCloudBackup(password, wallets);
+			setRestoringBackups('Importing backups');
+			const success = await restoreCloudBackup(password);
+			setRestoringBackups(null);
 
 			if (success) {
-				console.log({ success });
+				navigation.navigate('WalletScreen');
 			} else {
 				onError('We could not restore your backups');
 			}
@@ -43,8 +44,8 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 		}
 	}, [onError, onSuccess, password, walletCloudBackup, walletId, restoreBackups]);
 
-	if (isWalletLoading) {
-		return <LoadingScreen title={isWalletLoading} />;
+	if (!!isWalletLoading || !!restoringBackuups) {
+		return <LoadingScreen title={isWalletLoading! || restoringBackuups!} />;
 	}
 
 	return (

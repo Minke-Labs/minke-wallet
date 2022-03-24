@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import { allWalletsKey, privateKeyKey, seedPhraseKey } from '@src/utils/keychainConstants';
+import { privateKeyKey, seedPhraseKey } from '@src/utils/keychainConstants';
 import { endsWith, forEach } from 'lodash';
 import { Platform } from 'react-native';
 import { Options, requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
@@ -12,10 +12,6 @@ type BackupPassword = string;
 
 interface BackedUpData {
 	[key: string]: string;
-}
-
-interface BackupUserData {
-	wallets: AllMinkeWallets;
 }
 
 // Attempts to save the password to decrypt the backup from the iCloud keychain
@@ -49,11 +45,15 @@ export const fetchBackupPassword = async (): Promise<null | BackupPassword> => {
 	}
 };
 
-async function extractSecretsForWallet(wallet: MinkeWallet) {
+async function extractSecretsForWallet({ id, address }: MinkeWallet) {
 	const secrets = {} as { [key: string]: string };
-	const secret = (await getSeedPhrase(wallet.id)) || (await getPrivateKey(wallet.address));
-	// @TODO: Marcos change here to accept both keys
-	if (secret) secrets[wallet.id] = secret;
+	let key = `${id}_${seedPhraseKey}`;
+	let secret = await getSeedPhrase(id);
+	if (!secret) {
+		secret = await getPrivateKey(address);
+		key = `${address}_${privateKeyKey}`;
+	}
+	if (secret) secrets[key] = secret;
 	return secrets;
 }
 
@@ -87,7 +87,8 @@ export async function addWalletToCloudBackup(
 	return encryptAndSaveDataToCloud(backup, password, filename);
 }
 
-export const findLatestBackUp = (wallets: AllMinkeWallets): string | null => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const findLatestBackUp = (wallets: AllMinkeWallets): string | null => {
 	let latestBackup: number | null = null;
 	let filename: string | null = null;
 
@@ -131,6 +132,7 @@ export const findLatestBackUpOnICloud = async (): Promise<string | null> => {
 	return filename;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function restoreCurrentBackupIntoKeychain(backedUpData: BackedUpData): Promise<boolean> {
 	try {
 		// Access control config per each type of key
@@ -161,12 +163,9 @@ const restoreSpecificBackupIntoKeychain = async (backedUpData: BackedUpData): Pr
 	try {
 		// Re-import all the seeds (and / or pkeys) one by one
 		for (const key of Object.keys(backedUpData)) {
-			console.log({ key });
-			if (endsWith(key, seedPhraseKey)) {
-				// @TODO: Marcos change here to accept seeds and pk
-				const valueStr = backedUpData[key];
-				const { seedphrase } = JSON.parse(valueStr);
-				await restoreWalletByMnemonic(seedphrase);
+			if (endsWith(key, seedPhraseKey) || endsWith(key, privateKeyKey)) {
+				const seedphrase = backedUpData[key];
+				await restoreWalletByMnemonic(seedphrase, backedUpData.filename);
 			}
 		}
 		return true;
@@ -176,51 +175,23 @@ const restoreSpecificBackupIntoKeychain = async (backedUpData: BackedUpData): Pr
 	}
 };
 
-export const restoreCloudBackup = async (
-	password: BackupPassword,
-	wallets: AllMinkeWallets | null
-): Promise<boolean> => {
+export const restoreCloudBackup = async (password: BackupPassword): Promise<boolean> => {
 	try {
-		let filename;
-		const userData = wallets && Object.values(wallets || []).length > 0;
-		if (userData) {
-			filename = findLatestBackUp(wallets);
-		} else {
-			filename = findLatestBackUpOnICloud();
-		}
+		const filename = await findLatestBackUpOnICloud();
 
 		if (!filename) {
 			return false;
 		}
 		// 2- download that backup
-		// @ts-ignore
 		const data = await getDataFromCloud(password, filename);
 		if (!data) {
 			throw new Error('Invalid password');
 		}
 		const dataToRestore = {
+			filename,
 			...data.secrets
 		};
 
-		if (userData) {
-			// Restore only wallets that were backed up in cloud
-			// or wallets that are read-only
-			const walletsToRestore: AllMinkeWallets = {};
-			forEach(wallets, (wallet) => {
-				if (wallet.backedUp && wallet.backupDate && wallet.backupFile) {
-					walletsToRestore[wallet.id] = wallet;
-				}
-			});
-
-			// All wallets
-			dataToRestore[allWalletsKey] = {
-				wallets: walletsToRestore
-			};
-
-			console.log({ dataToRestore });
-			return restoreCurrentBackupIntoKeychain(dataToRestore);
-		}
-		console.log({ dataToRestore });
 		return restoreSpecificBackupIntoKeychain(dataToRestore);
 	} catch (e) {
 		console.error('Error while restoring back up');

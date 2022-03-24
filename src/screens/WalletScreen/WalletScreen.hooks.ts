@@ -73,8 +73,8 @@ export const useWalletScreen = () => {
 		setCreatingWallet(true);
 		const newWallet = await walletCreate();
 		state.set(await walletState(newWallet));
-		navigation.navigate('WalletCreatedScreen');
 		setCreatingWallet(false);
+		navigation.navigate('WalletCreatedScreen');
 	}, [creatingWallet, navigation]);
 
 	const onExchange = () => navigation.navigate('ExchangeScreen');

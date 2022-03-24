@@ -70,6 +70,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 					autoCompleteType="off"
 					error={password !== undefined && (!password || password.length < 8)}
 					style={{ marginBottom: 24 }}
+					textContentType="password"
 				/>
 				<Input
 					label="Repeat password"
@@ -82,6 +83,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 						(!passwordConfirmation || passwordConfirmation.length < 8 || passwordConfirmation !== password)
 					}
 					style={{ marginBottom: 32 }}
+					textContentType="password"
 				/>
 
 				<Button

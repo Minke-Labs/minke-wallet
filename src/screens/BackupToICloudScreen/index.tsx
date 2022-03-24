@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Keyboard } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Modal, ModalReusables } from '@components';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -12,6 +13,7 @@ const BackupToICloudScreen = ({ route }: Props) => {
 
 	const onError = useCallback(
 		(message: string) => {
+			Keyboard.dismiss();
 			setError(message);
 		},
 		[walletId]

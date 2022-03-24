@@ -31,7 +31,17 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 		return <NoTransactionsYet {...{ onAddFunds }} />;
 	}, [transactions]);
 
-	return <View style={styles.container}>{loading ? <ActivityIndicator /> : <Table />}</View>;
+	return (
+		<View style={styles.container}>
+			{loading ? (
+				<View style={{ height: 400 }}>
+					<ActivityIndicator />
+				</View>
+			) : (
+				<Table />
+			)}
+		</View>
+	);
 };
 
 export default Transactions;

@@ -148,7 +148,7 @@ const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Pro
 };
 
 // @TODO - Create always from the same mnemonic if possible.
-export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWallet> => {
+export const walletCreate = async (mnemonicOrPrivateKey = '', backupFile = ''): Promise<MinkeWallet> => {
 	const blockchain = await selectedNetwork();
 	const { wallet, mnemonic } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 
@@ -164,17 +164,25 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWall
 		name: '',
 		primary: false,
 		network: blockchain.id,
-		backedUp: false
+		backedUp: !!backupFile,
+		backupFile
 	};
+
+	const allWallets = (await getAllWallets()) || {};
+	allWallets[newWallet.id] = newWallet;
+	await saveAllWallets(allWallets);
 	return newWallet;
 };
 
-export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<MinkeWallet> => {
+export const restoreWalletByMnemonic = async (
+	mnemonicOrPrivateKey: string,
+	backupFile?: string
+): Promise<MinkeWallet> => {
 	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 	const existingWallets = (await getAllWallets()) || {};
 	const existingWallet = find(existingWallets, (w) => w.address === wallet.address);
 	if (!existingWallet || isEmpty(existingWallet)) {
-		return walletCreate(mnemonicOrPrivateKey);
+		return walletCreate(mnemonicOrPrivateKey, backupFile);
 	}
 	await savePrivateKey(wallet.address, wallet.privateKey);
 	return existingWallet;
