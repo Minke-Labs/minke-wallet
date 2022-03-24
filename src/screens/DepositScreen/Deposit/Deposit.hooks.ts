@@ -5,12 +5,13 @@ import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
-import { useNavigation, useTokens } from '@hooks';
+import { useNavigation, useTokens, useAmplitude } from '@hooks';
 import { network } from '@models/network';
 import { Wallet } from 'ethers';
 import { useState } from '@hookstate/core';
 
 export const useDeposit = () => {
+	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { tokens } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
@@ -89,6 +90,11 @@ export const useDeposit = () => {
 				console.log('Deposit', hash);
 				await wait();
 				setTransactionHash(hash);
+				track('Deposit', {
+					token: token.symbol,
+					amount,
+					hash
+				});
 				navigation.navigate('DepositSuccessScreen');
 			} else {
 				console.error('Error depositing');
