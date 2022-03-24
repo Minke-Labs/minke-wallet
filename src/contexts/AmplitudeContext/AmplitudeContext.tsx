@@ -22,7 +22,10 @@ export const AmplitudeContext = createContext<any>(null);
 
 const AmplitudeProvider: React.FC = ({ children }) => {
 	const wallet = useState(globalWalletState());
-	const address = wallet.address.value;
+	const {
+		address,
+		network: { name: network }
+	} = wallet.value;
 
 	const [isInitialized, setIsInitialized] = React.useState(false);
 
@@ -37,7 +40,7 @@ const AmplitudeProvider: React.FC = ({ children }) => {
 		const properties = normalizeTrackingOptions(options) || {};
 
 		if (properties || address) {
-			await Amplitude.logEventWithPropertiesAsync(event, { address, ...properties });
+			await Amplitude.logEventWithPropertiesAsync(event, { address, network, ...properties });
 		} else await Amplitude.logEventAsync(event);
 	};
 
