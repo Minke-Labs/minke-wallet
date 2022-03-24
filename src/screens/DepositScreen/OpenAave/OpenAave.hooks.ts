@@ -4,13 +4,15 @@ import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
+import { useAmplitude } from '@hooks';
 
-export const useOpenAave = ({ onApprove }: { onApprove: () => void; }) => {
+export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const [loading, setLoading] = useState(false);
 	const { address, privateKey } = globalWalletState().value;
 	const {
 		market: { tokens }
 	} = globalDepositState().value;
+	const { track } = useAmplitude();
 
 	const onOpenAccount = async () => {
 		setLoading(true);
@@ -38,6 +40,8 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void; }) => {
 		const signedTx = await wallet.signTransaction(txDefaults);
 		const { hash, wait } = await provider.sendTransaction(signedTx as string);
 		if (hash) {
+			track('Opened AAVE Account', { hash });
+
 			await wait();
 			setLoading(false);
 			onApprove();
