@@ -2,7 +2,7 @@ import React, { createRef, useEffect, useState } from 'react';
 import { View, SafeAreaView, TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
 import { ModalHeader, ModalReusables } from '@components';
-import { useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
+import { useAmplitude, useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import CoinSelectorModal from './CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal';
@@ -21,10 +21,12 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	const [customAmount, setCustomAmount] = useState<number | null>(null);
 	const [wyreError, setWyreError] = useState<UseWyreApplePayError | null>();
 	const customAmountRef = createRef<TextInput>();
+	const { track } = useAmplitude();
 
 	const { onPurchase, orderId, error } = useWyreApplePay();
 
 	const selectCoin = (selectedCoin: ICoin) => {
+		track('Add Funds Modal - Token selected', selectCoin);
 		setCoin(selectedCoin);
 		goForward();
 	};
@@ -50,6 +52,11 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		dismissCoin();
 	};
 
+	const onApplePayPurchase = (value: number) => {
+		track('Started Apple Pay Payment', { currency: coin.symbol, value });
+		onPurchase({ currency: coin.symbol, value });
+	};
+
 	useEffect(() => {
 		if (orderId) {
 			dismissCoin();
@@ -67,6 +74,8 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		if (!visible) {
 			setWyreError(null);
 			reset();
+		} else {
+			track('Add Funds Modal Opened');
 		}
 	}, [visible]);
 
@@ -90,7 +99,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								amount={amount}
 								setPresetAmount={setPresetAmount}
 								enableCustomAmount={enableCustomAmount}
-								onPurchase={() => onPurchase({ currency: coin.symbol, value: amount || 100 })}
+								onPurchase={() => onApplePayPurchase(amount || 100)}
 							/>
 						)}
 						{currentStep === 2 && (
@@ -98,7 +107,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								customAmount={customAmount}
 								setCustomAmount={setCustomAmount}
 								customAmountRef={customAmountRef}
-								onPurchase={() => onPurchase({ currency: coin.symbol, value: customAmount || 100 })}
+								onPurchase={() => onApplePayPurchase(customAmount || 100)}
 							/>
 						)}
 					</>

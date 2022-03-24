@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
-import { useNavigation } from '@hooks';
+import { useAmplitude, useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet, fetchTokensAndBalances } from '@stores/WalletStore';
 import { walletCreate, walletDelete, getTransactions, getAllWallets } from '@models/wallet';
@@ -15,6 +15,7 @@ export const useWalletScreen = () => {
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 	const navigation = useNavigation();
+	const { track } = useAmplitude();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
@@ -46,6 +47,7 @@ export const useWalletScreen = () => {
 		]);
 
 	const fetchTransactions = async () => {
+		track('Wallet Screen Opened');
 		setLoading(true);
 		const { address, privateKey } = state.value;
 		const transactions = await getTransactions(address || '');

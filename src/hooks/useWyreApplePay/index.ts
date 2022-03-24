@@ -5,6 +5,7 @@ import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequ
 import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
 import useTimeout from '../useTimeout';
 import { OnPurchaseParams, UseWyreApplePay, UseWyreApplePayError } from './types';
+import useAmplitude from '../useAmplitude';
 
 export default function useWyreApplePay(): UseWyreApplePay {
 	const { address: accountAddress, network } = useState(globalWalletState()).value;
@@ -13,6 +14,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 	const [orderCurrency, setOrderCurrency] = React.useState<string | null>(null);
 	const [orderId, setOrderId] = React.useState(null);
 	const [error, setError] = React.useState<UseWyreApplePayError>();
+	const { track } = useAmplitude();
 
 	const [startPaymentCompleteTimeout] = useTimeout();
 
@@ -35,6 +37,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 				setError({ description: 'We were unable to reserve your purchase order. Please try again later.' });
 				return;
 			}
+			track('Created Wyre Reservation', reservationId);
 			const quotation = await getWalletOrderQuotation(value, currency, accountAddress, network);
 
 			if (!quotation) {
@@ -43,7 +46,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 				});
 				return;
 			}
-
+			track('Created Wyre Reservation', { quotation });
 			const { sourceAmountWithFees, purchaseFee } = quotation;
 
 			const { paymentResponse: applePayResponse, error: appleRequestError } = await showApplePayRequest(
@@ -58,6 +61,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 			setOrderCurrency(currency);
 
 			if (applePayResponse) {
+				track('Confirmed Apple Pay Payment');
 				const { orderId: id, errorMessage } = await getOrderId(
 					referenceInfo,
 					applePayResponse,
@@ -68,6 +72,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 					reservationId
 				);
 				if (id) {
+					track('Apple Pay Payment - Done', { id, currency, value });
 					topUpState.merge({
 						currency,
 						orderId: id,
@@ -79,6 +84,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 					setOrderId(id);
 					handlePaymentCallback();
 				} else {
+					track('Apple Pay Payment - Error', { errorMessage });
 					setError({
 						description: errorMessage
 					});

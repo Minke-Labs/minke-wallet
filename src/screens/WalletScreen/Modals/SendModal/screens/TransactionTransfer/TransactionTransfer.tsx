@@ -1,77 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Image } from 'react-native';
 import { Text, Token, Button, ActivityIndicator, TokenAmountInput } from '@components';
-import { useState } from '@hookstate/core';
 import { TokenType } from '@styles';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { network } from '@models/network';
 import {
-	estimateGas,
-	sendTransaction,
-	EstimateGasResponse,
-	resolveENSAddress,
-	imageSource,
 	smallWalletAddress
 } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
+import { useTransactionTransfer } from './TransactionTransfer.hooks';
 
-const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, onDismiss, sentSuccessfully }) => {
-	const state = useState(globalWalletState());
-	const [image, setImage] = React.useState<{ uri: string }>();
-	const [amount, onChangeAmount] = React.useState('');
-	const [number, onChangeNumber] = React.useState<Number>();
-	const [chainDefaultToken, setChainDefaultToken] = React.useState('');
-	const [sending, setSending] = React.useState(false);
-	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
-
-	useEffect(() => {
-		const fetchGasPrice = async () => {
-			const result = await estimateGas();
-			setGasPrice(result);
-			const {
-				nativeToken: { symbol }
-			} = await network();
-			setChainDefaultToken(symbol);
-		};
-
-		const fetchImage = async () => {
-			setImage(await imageSource(user.address));
-		};
-
-		fetchImage();
-		fetchGasPrice();
-	}, []);
-
-	const {
-		privateKey,
-		network: { id }
-	} = state.value;
-
-	const onSend = async () => {
-		if (gasPrice && chainDefaultToken) {
-			setSending(true);
-			const ens = user.address;
-			const to = (await resolveENSAddress(ens)) || ens;
-			const { wait, hash } = await sendTransaction(
-				privateKey,
-				to,
-				amount,
-				gasPrice.result.ProposeGasPrice,
-				id,
-				token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
-				token.decimals
-			);
-			await wait();
-			onDismiss();
-			sentSuccessfully({
-				symbol: token.symbol.toLowerCase(),
-				link: hash
-			});
-		}
-	};
+const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
+	const { image, amount, number, gasPrice, sending, onChangeAmount, onChangeNumber, onSend } = useTransactionTransfer(
+		{ token, user, ...props }
+	);
 
 	return (
 		<View style={styles.container}>
@@ -101,7 +44,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 				onAmountChange={onChangeAmount}
 				onNumberAmountChange={onChangeNumber}
 				visible={!!token}
-				isAmountValid={(number || 0) <= token.balance}
+				isAmountValid={(number || 0) <= Number(token.balance)}
 				autoFocus
 				style={styles.input}
 				placeholder="00.00"
@@ -119,7 +62,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ user, token, 
 				{sending ? (
 					<ActivityIndicator />
 				) : (
-					<Button title="Send" disabled={!number || number > token.balance} onPress={onSend} />
+					<Button title="Send" disabled={!number || number > Number(token.balance)} onPress={onSend} />
 				)}
 			</View>
 			<KeyboardSpacer />
