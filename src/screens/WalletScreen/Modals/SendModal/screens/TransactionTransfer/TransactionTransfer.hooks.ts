@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react';
 import { useState } from '@hookstate/core';
+import { useAmplitude } from '@hooks';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@models/network';
-import {
-	estimateGas,
-	sendTransaction,
-	EstimateGasResponse,
-	resolveENSAddress,
-	imageSource
-} from '@models/wallet';
+import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import { MinkeToken } from '@models/token';
 
@@ -25,8 +20,9 @@ interface UseTransactionTransferProps {
 }
 
 export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, token }: UseTransactionTransferProps) => {
+	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
-	const [image, setImage] = React.useState<{ uri: string; }>();
+	const [image, setImage] = React.useState<{ uri: string }>();
 	const [amount, onChangeAmount] = React.useState('');
 	const [number, onChangeNumber] = React.useState<Number>();
 	const [chainDefaultToken, setChainDefaultToken] = React.useState('');
@@ -52,7 +48,8 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 	}, []);
 
 	const {
-		privateKey, network: { id }
+		privateKey,
+		network: { id }
 	} = state.value;
 
 	const onSend = async () => {
@@ -74,6 +71,12 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 			sentSuccessfully({
 				symbol: token.symbol.toLowerCase(),
 				link: hash
+			});
+			track('Send', {
+				token: token.symbol,
+				amount,
+				to,
+				hash
 			});
 		}
 	};
