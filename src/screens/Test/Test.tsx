@@ -4,19 +4,21 @@ import { View } from 'react-native';
 import { useAmplitude } from '@hooks';
 import { Button } from '@components';
 import { BasicLayout } from '@layouts';
+import { AMPLITUDE_PROJECT_API } from '@env';
 
 const Test = () => {
-	const { track2 } = useAmplitude();
+	const { track } = useAmplitude();
 
 	const clickEvent = () => {
 		Amplitude.clearUserPropertiesAsync();
-		track2('CLICKED TEST EVENT AGAIN!', '0x375CC1b3574F3e5f0418D006bbADbcE5CFe13564');
+		console.log(AMPLITUDE_PROJECT_API);
+		track('testEvent', '0x165cd37b4c644c2921454429e7f9358d18a45e14');
+		console.log('Enviou');
 	};
 
 	return (
 		<BasicLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				{/* <Token name="busd" /> */}
 				<Button title="Amplitude Test" onPress={clickEvent} />
 			</View>
 		</BasicLayout>
