@@ -249,6 +249,7 @@ export const sendTransaction = async (
 	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 	const chainId = await wallet.getChainId();
+	const formattedAmount = amount.replace(',', '.');
 	const txDefaults = {
 		chainId,
 		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
@@ -263,13 +264,13 @@ export const sendTransaction = async (
 		// const signer = provider.getSigner(wallet.address)
 
 		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
-		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount, decimals));
+		tx = await erc20.populateTransaction.transfer(to, parseUnits(formattedAmount, decimals));
 		// tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseUnits(amount, decimals)
+			value: parseUnits(formattedAmount, decimals)
 		};
 	}
 

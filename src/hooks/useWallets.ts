@@ -1,13 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { AllMinkeWallets, getAllWallets, MinkeWallet } from '@models/wallet';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
 
 interface UseWallets {
 	wallets: AllMinkeWallets;
 	walletById: (id: string) => MinkeWallet | null;
+	address: string;
 }
 
 const useWallets = (): UseWallets => {
-	const [wallets, setWallets] = useState<AllMinkeWallets>({});
+	const [wallets, setWallets] = React.useState<AllMinkeWallets>({});
+	const { address } = useState(globalWalletState()).value;
 
 	useEffect(() => {
 		const fetchWallets = async () => {
@@ -24,7 +28,7 @@ const useWallets = (): UseWallets => {
 		[wallets]
 	);
 
-	return { wallets, walletById };
+	return { wallets, walletById, address };
 };
 
 export default useWallets;

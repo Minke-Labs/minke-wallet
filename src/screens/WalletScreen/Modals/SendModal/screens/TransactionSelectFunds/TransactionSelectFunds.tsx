@@ -34,7 +34,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				</Text>
 				?
 			</Text>
-			{tokens.length > 0 ? (
+			{tokens && tokens.length > 0 ? (
 				<FlatList
 					style={styles.tokensList}
 					keyExtractor={(item) => item.symbol}
