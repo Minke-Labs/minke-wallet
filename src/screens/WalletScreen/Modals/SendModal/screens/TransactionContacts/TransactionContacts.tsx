@@ -20,8 +20,6 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 	const { contactList } = state.value;
 	const keyboardVisible = useKeyboard();
 	const { wallets, address: selectedAddress } = useWallets();
-	console.log({ wallets });
-	console.log({ selectedAddress });
 	const availableAddresses = Object.values(wallets || []).filter((wallet) => wallet.address !== selectedAddress);
 
 	useEffect(() => {
