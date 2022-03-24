@@ -105,6 +105,32 @@ export const findLatestBackUp = (wallets: AllMinkeWallets): string | null => {
 	return filename;
 };
 
+export const findLatestBackUpOnICloud = async (): Promise<string | null> => {
+	const { files } = await fetchAllBackups();
+	const filteredFiles = files.filter((file: any) => file.name.indexOf('backup_') !== -1);
+	let latestBackup: number | null = null;
+	let filename: string | null = null;
+
+	forEach(filteredFiles, (file: any) => {
+		const timestamp = Number(
+			file.name
+				.replace('.backup_', '')
+				.replace('backup_', '')
+				.replace('.json', '')
+				.replace('.icloud', '')
+				.replace('minke.app/wallet-backups/', '')
+		);
+		// Check if there's a wallet backed up
+		// If there is one, let's grab the latest backup
+		if (!latestBackup || timestamp > latestBackup) {
+			filename = file.name;
+			latestBackup = timestamp;
+		}
+	});
+
+	return filename;
+};
+
 async function restoreCurrentBackupIntoKeychain(backedUpData: BackedUpData): Promise<boolean> {
 	try {
 		// Access control config per each type of key
@@ -160,10 +186,7 @@ export const restoreCloudBackup = async (
 		if (userData) {
 			filename = findLatestBackUp(wallets);
 		} else {
-			const { files } = await fetchAllBackups();
-			const filteredFiles = files.filter((file: any) => file.name.indexOf('backup_') !== -1);
-			console.log({ filteredFiles });
-			filename = findLatestBackUpOnICloud(filteredFiles);
+			filename = findLatestBackUpOnICloud();
 		}
 
 		if (!filename) {
