@@ -2,14 +2,13 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import { Text, Token, Button, ActivityIndicator, TokenAmountInput } from '@components';
 import { TokenType } from '@styles';
-import {
-	smallWalletAddress
-} from '@models/wallet';
+import { smallWalletAddress } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
 import { useTransactionTransfer } from './TransactionTransfer.hooks';
+import { decimalSeparator } from 'expo-localization';
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
 	const { image, amount, number, gasPrice, sending, onChangeAmount, onChangeNumber, onSend } = useTransactionTransfer(
@@ -47,7 +46,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				isAmountValid={(number || 0) <= Number(token.balance)}
 				autoFocus
 				style={styles.input}
-				placeholder="00.00"
+				placeholder={`00${decimalSeparator}00`}
 			/>
 			{gasPrice && (
 				<View style={{ marginBottom: 32 }}>

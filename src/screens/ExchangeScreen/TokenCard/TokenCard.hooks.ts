@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from '@hooks';
+import { decimalSeparator } from 'expo-localization';
 import { ParaswapToken } from '@models/token';
 import { makeStyles } from '../ExchangeScreen.styles';
 
@@ -20,7 +21,12 @@ export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, d
 
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
-		const validNumber = /^\d*,?\d*$/; // for comma
+		let validNumber;
+		if (decimalSeparator === ',') {
+			validNumber = /^\d*,?\d*$/; // for comma
+		} else {
+			validNumber = /^\d*\.?\d*$/; // for dot
+		}
 		if (validNumber.test(value)) {
 			lastValid = value;
 		} else {
@@ -32,7 +38,7 @@ export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, d
 
 	const onMaxPress = () => {
 		setMaxModeEnabled(true);
-		setAmount(balance.replace(/\./g, ','));
+		setAmount(balance.replace(/\./g, decimalSeparator));
 	};
 
 	useEffect(() => {
@@ -44,13 +50,17 @@ export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, d
 	}, [token]);
 
 	useEffect(() => {
-		if (updateQuotes && amount && !(conversionAmount && conversionAmount.replace(/\./g, ',') === amount)) {
+		if (
+			updateQuotes &&
+			amount &&
+			!(conversionAmount && conversionAmount.replace(/\./g, decimalSeparator) === amount)
+		) {
 			updateQuotes(amount);
 		}
 	}, [amount]);
 
 	useEffect(() => {
-		setAmount(conversionAmount.replace(/\./g, ','));
+		setAmount(conversionAmount.replace(/\./g, decimalSeparator));
 	}, [conversionAmount]);
 
 	useEffect(() => {
