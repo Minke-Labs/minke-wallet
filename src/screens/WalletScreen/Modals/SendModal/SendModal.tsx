@@ -1,38 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Icon, Text } from '@components';
-import { useFormProgress } from '@hooks';
-import { MinkeToken } from '@models/token';
 import styles from './SendModal.styles';
 import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact } from './screens';
-import { SendModalProps, UserProps } from './SendModal.types';
+import { SendModalProps } from './SendModal.types';
+import { useSendModal } from './SendModal.hooks';
 
 const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully, isVisible = false }) => {
-	const { currentStep, reset, goForward, goBack } = useFormProgress();
-	const [user, setUser] = useState<UserProps>(null!);
-	const [token, setToken] = useState<MinkeToken>();
-	const [addContactVisible, setAddContactVisible] = useState(false);
-
-	useEffect(() => {
-		if (!isVisible) {
-			reset();
-			setAddContactVisible(false);
-		}
-	}, [isVisible]);
-
-	const onUserSelected = (item: UserProps) => {
-		goForward();
-		setUser(item);
-		setAddContactVisible(true);
-	};
-
-	const onTokenSelected = (coin: MinkeToken) => {
-		goForward();
-		setToken(coin);
-	};
-
-	const onBack = () => (currentStep > 0 ? goBack() : onDismiss());
-	const onContactsBack = () => (addContactVisible ? setAddContactVisible(false) : onBack());
+	const {
+		currentStep,
+		user,
+		token,
+		addContactVisible,
+		setAddContactVisible,
+		onUserSelected,
+		onTokenSelected,
+		onContactsBack
+	} = useSendModal({ isVisible, onDismiss });
 
 	return (
 		<SafeAreaView>

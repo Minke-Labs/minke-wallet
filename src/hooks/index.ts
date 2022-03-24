@@ -1,3 +1,4 @@
+import useAmplitude from './useAmplitude';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
@@ -12,6 +13,7 @@ import iCloudBackup from './iCloudBackup';
 import useWallets from './useWallets';
 
 export {
+	useAmplitude,
 	useTheme,
 	useNavigation,
 	useFormProgress,

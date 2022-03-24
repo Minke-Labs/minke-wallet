@@ -1,6 +1,10 @@
 PODS:
+  - Amplitude (6.0.0)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
+  - EXAmplitude (11.1.1):
+    - Amplitude (~> 6.0.0)
+    - ExpoModulesCore
   - EXApplication (4.0.2):
     - ExpoModulesCore
   - EXBlur (11.0.0):
@@ -435,6 +439,7 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EXAmplitude (from `../node_modules/expo-analytics-amplitude/ios`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXBlur (from `../node_modules/expo-blur/ios`)
   - EXClipboard (from `../node_modules/expo-clipboard/ios`)
@@ -506,11 +511,14 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Amplitude
     - boost-for-react-native
 
 EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EXAmplitude:
+    :path: "../node_modules/expo-analytics-amplitude/ios"
   EXApplication:
     :path: "../node_modules/expo-application/ios"
   EXBlur:
@@ -645,8 +653,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Amplitude: cc34fcd8dfffc3470bc2e05f3a4abb0178f6d963
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
+  EXAmplitude: 114788f58379a84955bd712663be4767a4ae2f5c
   EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
   EXBlur: 82055865de17cf2cf797ff064c50fb59fcbe703f
   EXClipboard: 8123fcda680538bb0e1f4e6511106553e52d3760
