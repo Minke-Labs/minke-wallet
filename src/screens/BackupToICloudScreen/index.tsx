@@ -7,7 +7,7 @@ import ConfirmBackupPassword from './ConfirmBackupPassword/ConfirmBackupPassword
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const BackupToICloudScreen = ({ route }: Props) => {
-	const { missingPassword, walletId } = route.params;
+	const { missingPassword, walletId, restoreBackups = false } = route.params;
 	const [error, setError] = useState<string | undefined>();
 
 	const onError = useCallback(
@@ -22,10 +22,10 @@ const BackupToICloudScreen = ({ route }: Props) => {
 			{missingPassword ? (
 				<CreateBackupPassword walletId={walletId} onError={onError} />
 			) : (
-				<ConfirmBackupPassword walletId={walletId} onError={onError} />
+				<ConfirmBackupPassword walletId={walletId} onError={onError} restoreBackups={restoreBackups} />
 			)}
 			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
-				<ModalReusables.Error onDismiss={() => setError(undefined)} title="Backup error" description={error} />
+				<ModalReusables.Error onDismiss={() => setError(undefined)} description={error} />
 			</Modal>
 		</>
 	);

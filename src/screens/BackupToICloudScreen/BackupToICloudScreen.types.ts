@@ -1,5 +1,5 @@
-export interface BackupToICloud {
-	walletId: string;
+export interface BackupToICloudProps {
+	walletId?: string;
 	onError: (message: string) => void;
 	restoreBackups?: boolean;
 }

@@ -25,30 +25,31 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 			<Text weight="extraBold" type="h3" marginBottom={40}>
 				Import wallet
 			</Text>
-			{walletsBackedUp > 0 && (
-				<TouchableOpacity style={styles.container} onPress={onICloudBackup}>
-					<View style={styles.leftContainer}>
-						<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
-							<Icon name="backupStroke" size={24} color="text7" />
+			{walletsBackedUp > 0 ||
+				(true && (
+					<TouchableOpacity style={styles.container} onPress={onICloudBackup}>
+						<View style={styles.leftContainer}>
+							<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
+								<Icon name="backupStroke" size={24} color="text7" />
+							</View>
+							<View style={{ marginLeft: 16 }}>
+								<Text type="p2" weight="bold">
+									Restore from iCloud (CHECK)
+								</Text>
+								<Text type="a">
+									You have {walletsBackedUp} {walletsBackedUp > 1 ? 'wallets' : 'wallet'} backed up
+								</Text>
+							</View>
 						</View>
-						<View style={{ marginLeft: 16 }}>
-							<Text type="p2" weight="bold">
-								Restore from iCloud
-							</Text>
-							<Text type="a">
-								You have {walletsBackedUp} {walletsBackedUp > 1 ? 'wallets' : 'wallet'} backed up
-							</Text>
-						</View>
-					</View>
-				</TouchableOpacity>
-			)}
+					</TouchableOpacity>
+				))}
 			<TouchableOpacity style={styles.container} onPress={onImportWithSecret}>
 				<View style={styles.leftContainer}>
 					<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 						<Icon name="vaultStroke" size={24} color="text7" />
 					</View>
 					<Text weight="bold" type="p2" style={{ marginLeft: 16 }}>
-						Import with secret phrase
+						Import with secret phrase (CHECK)
 					</Text>
 				</View>
 			</TouchableOpacity>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useFormProgress } from '@hooks';
+import { useFormProgress, useNavigation } from '@hooks';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
 import { useImportWalletModal } from './useImportWallet.hooks';
 import SelectImportMethodModal from './SelectImportMethodModal/SelectImportMethodModal';
@@ -11,9 +11,11 @@ import { styles } from './ImportWalletModal.styles';
 const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss, visible }) => {
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const { text, setText, importing, onImportWallet } = useImportWalletModal({ onImportFinished });
+	const navigation = useNavigation();
 
 	const onICloudBackup = () => {
-		console.log('Marcos');
+		console.log('Marcos starting backup');
+		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
 	};
 
 	const onBack = () => {

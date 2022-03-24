@@ -145,3 +145,14 @@ export const backupUserDataIntoCloud = async (data: any) => {
 	const password = MINKE_MASTER_KEY;
 	return encryptAndSaveDataToCloud(data, password, filename);
 };
+
+export async function fetchAllBackups() {
+	const android = Platform.OS === 'android';
+	if (android) {
+		await RNCloudFs.loginIfNeeded();
+	}
+	return RNCloudFs.listFiles({
+		scope: 'hidden',
+		targetPath: REMOTE_BACKUP_WALLET_DIR
+	});
+}

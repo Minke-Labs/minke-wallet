@@ -2,16 +2,18 @@ import React, { useState, useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
+import { useKeyboard, useNavigation, useWalletCloudBackup, useWallets } from '@hooks';
 import { backupImg } from '@images';
-import { BackupToICloud } from '../BackupToICloudScreen.types';
+import { restoreCloudBackup } from '@models/backup';
+import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './ConfirmBackupPassword.styles';
 
-const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: BackupToICloud) => {
+const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: BackupToICloudProps) => {
 	const navigation = useNavigation();
 	const [password, setPassword] = useState<string>();
 	const { isWalletLoading, walletCloudBackup } = useWalletCloudBackup();
 	const keyboardVisible = useKeyboard();
+	const { wallets } = useWallets();
 
 	const isPasswordValid = password && password.length >= 8;
 
@@ -20,9 +22,18 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 	};
 
 	const onConfirm = useCallback(async () => {
-		if (!isPasswordValid || (!walletId && !restoreBackups)) return;
+		if (!isPasswordValid) return;
 		if (restoreBackups) {
+			console.log('restauring backuup');
+			const success = await restoreCloudBackup(password, wallets);
+
+			if (success) {
+				console.log({ success });
+			} else {
+				onError('We could not restore your backups');
+			}
 		} else {
+			if (!walletId) return;
 			await walletCloudBackup({
 				onError,
 				onSuccess,

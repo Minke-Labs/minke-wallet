@@ -5,7 +5,7 @@ import { endsWith, forEach } from 'lodash';
 import { Platform } from 'react-native';
 import { Options, requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
 import * as keychain from './keychain';
-import { encryptAndSaveDataToCloud, getDataFromCloud } from './cloudBackup';
+import { encryptAndSaveDataToCloud, fetchAllBackups, getDataFromCloud } from './cloudBackup';
 import { AllMinkeWallets, getPrivateKey, getSeedPhrase, MinkeWallet, restoreWalletByMnemonic } from './wallet';
 
 type BackupPassword = string;
@@ -52,6 +52,7 @@ export const fetchBackupPassword = async (): Promise<null | BackupPassword> => {
 async function extractSecretsForWallet(wallet: MinkeWallet) {
 	const secrets = {} as { [key: string]: string };
 	const secret = (await getSeedPhrase(wallet.id)) || (await getPrivateKey(wallet.address));
+	// @TODO: Marcos change here to accept both keys
 	if (secret) secrets[wallet.id] = secret;
 	return secrets;
 }
@@ -134,7 +135,9 @@ const restoreSpecificBackupIntoKeychain = async (backedUpData: BackedUpData): Pr
 	try {
 		// Re-import all the seeds (and / or pkeys) one by one
 		for (const key of Object.keys(backedUpData)) {
+			console.log({ key });
 			if (endsWith(key, seedPhraseKey)) {
+				// @TODO: Marcos change here to accept seeds and pk
 				const valueStr = backedUpData[key];
 				const { seedphrase } = JSON.parse(valueStr);
 				await restoreWalletByMnemonic(seedphrase);
@@ -149,15 +152,20 @@ const restoreSpecificBackupIntoKeychain = async (backedUpData: BackedUpData): Pr
 
 export const restoreCloudBackup = async (
 	password: BackupPassword,
-	userData: BackupUserData | null,
-	backupSelected: string | null
+	wallets: AllMinkeWallets | null
 ): Promise<boolean> => {
-	// We support two flows
-	// Restoring from the welcome screen, which uses the userData to rebuild the wallet
-	// Restoring a specific backup from settings => Backup, which uses only the keys stored.
-
 	try {
-		const filename = backupSelected || (userData && findLatestBackUp(userData.wallets));
+		let filename;
+		const userData = wallets && Object.values(wallets || []).length > 0;
+		if (userData) {
+			filename = findLatestBackUp(wallets);
+		} else {
+			const { files } = await fetchAllBackups();
+			const filteredFiles = files.filter((file: any) => file.name.indexOf('backup_') !== -1);
+			console.log({ filteredFiles });
+			filename = findLatestBackUpOnICloud(filteredFiles);
+		}
+
 		if (!filename) {
 			return false;
 		}
@@ -175,7 +183,7 @@ export const restoreCloudBackup = async (
 			// Restore only wallets that were backed up in cloud
 			// or wallets that are read-only
 			const walletsToRestore: AllMinkeWallets = {};
-			forEach(userData.wallets, (wallet) => {
+			forEach(wallets, (wallet) => {
 				if (wallet.backedUp && wallet.backupDate && wallet.backupFile) {
 					walletsToRestore[wallet.id] = wallet;
 				}
@@ -185,10 +193,12 @@ export const restoreCloudBackup = async (
 			dataToRestore[allWalletsKey] = {
 				wallets: walletsToRestore
 			};
+
+			console.log({ dataToRestore });
 			return restoreCurrentBackupIntoKeychain(dataToRestore);
-		} else {
-			return restoreSpecificBackupIntoKeychain(dataToRestore);
 		}
+		console.log({ dataToRestore });
+		return restoreSpecificBackupIntoKeychain(dataToRestore);
 	} catch (e) {
 		console.error('Error while restoring back up');
 		return false;
