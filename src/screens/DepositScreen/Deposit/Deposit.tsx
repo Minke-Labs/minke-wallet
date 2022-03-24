@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
 import { Icon, Modal, Text } from '@components';
 import { Card } from 'react-native-paper';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useAmplitude } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import ProgressButton from '@src/components/ProgressButton';
@@ -16,6 +16,7 @@ import { makeStyles } from './Deposit.styles';
 import { useDeposit } from './Deposit.hooks';
 
 const Deposit = () => {
+	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -31,6 +32,10 @@ const Deposit = () => {
 		enoughForGas,
 		market
 	} = useDeposit();
+
+	useEffect(() => {
+		track('Deposit Screen Opened');
+	}, []);
 
 	return (
 		<>
