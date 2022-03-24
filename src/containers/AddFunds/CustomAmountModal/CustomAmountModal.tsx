@@ -1,6 +1,7 @@
 import React, { RefObject } from 'react';
 import { TouchableOpacity, TextInput } from 'react-native';
 import { Text, ApplePayButton, Icon } from '@components';
+import { decimalSeparator as separator, digitGroupingSeparator as delimiter } from 'expo-localization';
 import CurrencyInput from 'react-native-currency-input';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useTheme } from '@hooks';
@@ -36,8 +37,8 @@ const CustomAmountModal: React.FC<CustomAmountModalProps> = ({
 				value={customAmount}
 				onChangeValue={setCustomAmount}
 				prefix="$"
-				delimiter=","
-				separator="."
+				delimiter={delimiter}
+				separator={separator}
 				precision={2}
 				maxValue={500}
 				ref={customAmountRef}
