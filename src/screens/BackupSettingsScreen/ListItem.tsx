@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, GestureResponderEvent, Image } from 'react-native';
 import { useTheme } from '@hooks';
-import { Icon, Text, Token } from '@components';
+import { Icon, Text } from '@components';
 import makeBlockie from 'ethereum-blockies-base64';
 
 const styles = StyleSheet.create({

@@ -57,7 +57,6 @@ const AccountsScreen = () => {
 								label={item.address}
 								selected={item.address === address}
 								onPress={() => onSelectWallet(item)}
-								token={item.network}
 							/>
 						)}
 						keyExtractor={(item) => item.id}
