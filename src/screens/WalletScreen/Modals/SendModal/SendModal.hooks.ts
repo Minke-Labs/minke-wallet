@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useFormProgress } from '@hooks';
+import { useAmplitude, useFormProgress } from '@hooks';
 import { MinkeToken } from '@models/token';
 import { UserProps } from './SendModal.types';
 
 export const useSendModal = ({ isVisible, onDismiss }: { isVisible: boolean; onDismiss: () => void; }) => {
+	const { track } = useAmplitude();
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const [user, setUser] = useState<UserProps>(null!);
 	const [token, setToken] = useState<MinkeToken>();
@@ -13,6 +14,8 @@ export const useSendModal = ({ isVisible, onDismiss }: { isVisible: boolean; onD
 		if (!isVisible) {
 			reset();
 			setAddContactVisible(false);
+		} else {
+			track('Send Modal Opened');
 		}
 	}, [isVisible]);
 
