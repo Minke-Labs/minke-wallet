@@ -90,7 +90,7 @@ export const useDeposit = () => {
 				console.log('Deposit', hash);
 				await wait();
 				setTransactionHash(hash);
-				track('Deposit', {
+				track('Deposited', {
 					token: token.symbol,
 					amount,
 					hash

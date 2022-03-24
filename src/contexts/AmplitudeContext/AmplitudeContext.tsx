@@ -51,11 +51,16 @@ const AmplitudeProvider: React.FC = ({ children }) => {
 		else await Amplitude.logEventAsync(event);
 	};
 
-	useEffect(() => {
-		identify(address);
-	}, []);
+	const track2 = async (event: string, walletAddress: string, options?: TrackingOptions) => {
+		const properties = normalizeTrackingOptions(options) || {};
+		await Amplitude.logEventWithPropertiesAsync(event, { address: walletAddress, ...properties });
+	};
 
-	const obj = useMemo(() => ({ identify, track }), [identify, track]);
+	// useEffect(() => {
+	// 	identify(address);
+	// }, []);
+
+	const obj = useMemo(() => ({ identify, track, track2 }), [identify, track, track2]);
 
 	return <AmplitudeContext.Provider value={obj}>{children}</AmplitudeContext.Provider>;
 };

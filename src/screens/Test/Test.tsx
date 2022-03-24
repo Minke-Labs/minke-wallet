@@ -1,15 +1,16 @@
 import React from 'react';
+import * as Amplitude from 'expo-analytics-amplitude';
 import { View } from 'react-native';
 import { useAmplitude } from '@hooks';
 import { Button } from '@components';
 import { BasicLayout } from '@layouts';
 
 const Test = () => {
-	const { track } = useAmplitude();
+	const { track2 } = useAmplitude();
 
 	const clickEvent = () => {
-		console.log('clicou!');
-		track('CLICASTE MAIS UMA VEZ!');
+		Amplitude.clearUserPropertiesAsync();
+		track2('CLICKED TEST EVENT AGAIN!', '0x375CC1b3574F3e5f0418D006bbADbcE5CFe13564');
 	};
 
 	return (
