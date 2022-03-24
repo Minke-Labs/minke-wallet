@@ -1,3 +1,4 @@
+import useAmplitude from './useAmplitude';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
@@ -9,6 +10,7 @@ import useWyreOrderStatus from './useWyreOrderStatus';
 import useDeposit from './useDeposit';
 
 export {
+	useAmplitude,
 	useTheme,
 	useNavigation,
 	useFormProgress,
