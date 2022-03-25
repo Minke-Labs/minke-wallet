@@ -8,7 +8,9 @@ import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { backupUserDataIntoCloud } from '@models/cloudBackup';
-import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@src/utils/keychainConstants';
+import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
+import { captureException } from '@sentry/react-native';
+import Logger from '@utils/logger';
 import * as keychain from './keychain';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -117,7 +119,8 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 
 		return null;
 	} catch (error) {
-		console.error(error);
+		Logger.error('Error getAllWallets');
+		captureException(error);
 		return null;
 	}
 };
@@ -308,7 +311,8 @@ export const getZapperWalletTokens = async (wallet: string): Promise<ZapperWalle
 		result = await response.json();
 		return result;
 	} catch (error) {
-		console.error('error', error); // temp until we fetch from the chain
+		Logger.error(`Error getZapperWalletTokens ${wallet}`);
+		captureException(error); // temp until we fetch from the chain
 	}
 	return result;
 };
@@ -362,7 +366,7 @@ export const setWalletBackedUp = async (walletId: string, backupFile = '') => {
 	try {
 		await backupUserDataIntoCloud(allWallets);
 	} catch (e) {
-		console.error(e);
+		Logger.error(e);
 		throw e;
 	}
 };

@@ -39,6 +39,7 @@ module.exports = ({ cache }) => {
 						'@layouts': './src/layouts',
 						'@images': './src/images',
 						'@hooks': './src/hooks',
+						'@utils': './src/utils',
 						'@src': './src'
 					}
 				}

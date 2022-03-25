@@ -18,6 +18,7 @@
 			"@containers": ["src/containers/index"],
 			"@images": ["src/images/index"],
 			"@hooks": ["src/hooks/index"],
+			"@utils/*": ["src/utils/*"],
 			"@src/*": ["src/*"]
 		}
 	},

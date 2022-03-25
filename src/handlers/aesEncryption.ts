@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable class-methods-use-this */
+import Logger from '@utils/logger';
 import { NativeModules, Platform } from 'react-native';
 
 const AesEncryption = NativeModules.Aes;
@@ -41,7 +42,7 @@ export default class AesEncryptor {
 			return JSON.stringify(result);
 			// eslint-disable-next-line no-empty
 		} catch (e) {
-			console.error(e);
+			Logger.error(e);
 		}
 	};
 

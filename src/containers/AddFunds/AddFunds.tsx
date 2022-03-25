@@ -26,7 +26,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	const { onPurchase, orderId, error } = useWyreApplePay();
 
 	const selectCoin = (selectedCoin: ICoin) => {
-		track('Add Funds Modal - Token selected', selectCoin);
+		track('Add Funds Modal - Token selected', selectedCoin);
 		setCoin(selectedCoin);
 		goForward();
 	};

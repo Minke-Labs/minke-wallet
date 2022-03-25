@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Text } from '@components';
 import { whale2Img } from '@images';
+import Text from '../Text/Text';
 import { styles } from './NoTokens.styles';
 
 const NoTokens = () => (

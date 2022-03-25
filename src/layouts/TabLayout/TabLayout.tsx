@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 import React, { useState } from 'react';
 import { View, SafeAreaView, RefreshControl, ScrollView } from 'react-native';
 import { useTheme } from '@hooks';

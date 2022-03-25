@@ -18,6 +18,7 @@
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
+    "@sentry/react-native": "^3.3.5",
     "@tradle/react-native-http": "^2.0.1",
     "@types/d3-scale": "^4.0.2",
     "@types/d3-shape": "^3.0.2",

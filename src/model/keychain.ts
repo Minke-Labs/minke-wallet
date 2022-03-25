@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 import { forEach, isNil } from 'lodash';
 import DeviceInfo from 'react-native-device-info';
 import {
@@ -17,6 +16,8 @@ import {
 	setInternetCredentials,
 	UserCredentials
 } from 'react-native-keychain';
+import Logger from '@utils/logger';
+import { captureException } from '@sentry/react-native';
 import { delay } from '../helpers/utilities';
 
 interface AnonymousKey {
@@ -36,14 +37,14 @@ export async function saveString(key: string, value: string, accessControlOption
 			await setInternetCredentials(key, key, value, accessControlOptions);
 			resolve();
 		} catch (e) {
-			console.error('Keychain write first attempt failed');
+			Logger.error('Keychain write first attempt failed');
 			await delay(1000);
 			try {
 				await setInternetCredentials(key, key, value, accessControlOptions);
 				resolve();
 				// eslint-disable-next-line @typescript-eslint/no-shadow
 			} catch (e) {
-				console.error('Keychain write second attempt failed');
+				Logger.error('Keychain write second attempt failed');
 				reject(e);
 			}
 		}
@@ -65,7 +66,7 @@ export async function loadString(key: string, options?: Options): Promise<null |
 		}
 		if (err.toString() === 'Error: The user name or passphrase you entered is not correct.') {
 			// Try reading from keychain once more
-			console.error('Keychain read first attempt failed');
+			Logger.error('Keychain read first attempt failed');
 			await delay(1000);
 			try {
 				const credentials = await getInternetCredentials(key, options);
@@ -79,12 +80,12 @@ export async function loadString(key: string, options?: Options): Promise<null |
 				if (err.toString() === 'Error: Wrapped error: User not authenticated') {
 					return -2;
 				}
-				console.error('Keychain read second attempt failed');
-				console.error(err);
+				Logger.error('Keychain read second attempt failed');
+				Logger.error(err);
 			}
 			return null;
 		}
-		console.error(err);
+		Logger.error(err);
 	}
 	return null;
 }
@@ -104,7 +105,8 @@ export async function loadObject(key: string, options?: Options): Promise<null |
 		const objectValue = JSON.parse(jsonValue);
 		return objectValue;
 	} catch (err) {
-		console.error(err);
+		Logger.error(`Keychain: loadObject ${key}`);
+		captureException(err);
 	}
 	return null;
 }
@@ -113,7 +115,7 @@ export async function remove(key: string): Promise<void> {
 	try {
 		await resetInternetCredentials(key);
 	} catch (err) {
-		console.error(err);
+		Logger.error(err);
 	}
 }
 
@@ -124,7 +126,7 @@ export async function loadAllKeys(): Promise<null | UserCredentials[]> {
 			return response.results;
 		}
 	} catch (err) {
-		console.error(err);
+		Logger.error(err);
 	}
 	return null;
 }
@@ -149,7 +151,7 @@ export async function loadAllKeysOnly(): Promise<null | string[]> {
 			return response.results;
 		}
 	} catch (err) {
-		console.error(err);
+		Logger.error(err);
 	}
 	return null;
 }
@@ -159,7 +161,7 @@ export async function hasKey(key: string): Promise<boolean | Result> {
 		const result = await hasInternetCredentials(key);
 		return result;
 	} catch (err) {
-		console.error(err);
+		Logger.error(err);
 	}
 	return false;
 }
@@ -171,7 +173,7 @@ export async function wipeKeychain(): Promise<void> {
 			await Promise.all(results?.map((result) => resetInternetCredentials(result.username)));
 		}
 	} catch (e) {
-		console.error(e);
+		Logger.error(e);
 	}
 }
 

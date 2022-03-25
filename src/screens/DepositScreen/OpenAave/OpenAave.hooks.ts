@@ -5,6 +5,7 @@ import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
 import { useAmplitude } from '@hooks';
+import Logger from '@utils/logger';
 
 export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 		const wallet = new Wallet(privateKey, provider);
 		const chainId = await wallet.getChainId();
 		const nonce = await provider.getTransactionCount(address, 'latest');
-		console.log('Approval API', transaction);
+		Logger.log(`Approval API ${JSON.stringify(transaction)}`);
 		const txDefaults = {
 			from,
 			to,
@@ -35,7 +36,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			chainId
 		};
 
-		console.log('Approval', txDefaults);
+		Logger.log(`Approval ${JSON.stringify(txDefaults)}`);
 
 		const signedTx = await wallet.signTransaction(txDefaults);
 		const { hash, wait } = await provider.sendTransaction(signedTx as string);
@@ -46,7 +47,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			setLoading(false);
 			onApprove();
 		} else {
-			console.error('Error approving');
+			Logger.error('Error approving');
 			setLoading(false);
 		}
 	};
