@@ -3,8 +3,7 @@ import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-import Logger from '@utils/logger';
-import Buttons from './Buttons/Buttons';
+// import Buttons from './Buttons/Buttons';
 import Selector from './Selector/Selector';
 import { BalanceProps } from './Balance.types';
 import styles from './Balance.styles';
@@ -25,7 +24,7 @@ const Balance: React.FC<BalanceProps> = ({ coin }) => {
 				</Text>
 			</View>
 
-			<Buttons onPress={() => Logger.log('PRESSED!')} />
+			{/* <Buttons onPress={() => console.log('PRESSED!')} /> */}
 		</View>
 	);
 };
