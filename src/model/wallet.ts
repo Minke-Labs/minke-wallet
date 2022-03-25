@@ -2,14 +2,15 @@
 /* eslint-disable no-restricted-syntax */
 import { Alert } from 'react-native';
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
-import * as Sentry from 'sentry-expo';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { backupUserDataIntoCloud } from '@models/cloudBackup';
-import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@src/utils/keychainConstants';
+import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
+import { captureException } from '@sentry/react-native';
+import Logger from '@utils/logger';
 import * as keychain from './keychain';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -118,7 +119,8 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 
 		return null;
 	} catch (error) {
-		Sentry.Native.captureException(error);
+		Logger.error('Error getAllWallets');
+		captureException(error);
 		return null;
 	}
 };
@@ -309,7 +311,8 @@ export const getZapperWalletTokens = async (wallet: string): Promise<ZapperWalle
 		result = await response.json();
 		return result;
 	} catch (error) {
-		Sentry.Native.captureException(error); // temp until we fetch from the chain
+		Logger.error(`Error getZapperWalletTokens ${wallet}`);
+		captureException(error); // temp until we fetch from the chain
 	}
 	return result;
 };
@@ -363,7 +366,7 @@ export const setWalletBackedUp = async (walletId: string, backupFile = '') => {
 	try {
 		await backupUserDataIntoCloud(allWallets);
 	} catch (e) {
-		console.error(e);
+		Logger.error(e);
 		throw e;
 	}
 };

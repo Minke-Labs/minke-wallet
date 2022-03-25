@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import * as Sentry from 'sentry-expo';
 import { approvalTransaction } from '@models/deposit';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
 import { useAmplitude } from '@hooks';
+import Logger from '@utils/logger';
 
 export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 		const wallet = new Wallet(privateKey, provider);
 		const chainId = await wallet.getChainId();
 		const nonce = await provider.getTransactionCount(address, 'latest');
-		Sentry.Native.captureMessage(`Approval API ${JSON.stringify(transaction)}`);
+		Logger.log(`Approval API ${JSON.stringify(transaction)}`);
 		const txDefaults = {
 			from,
 			to,
@@ -36,7 +36,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			chainId
 		};
 
-		Sentry.Native.captureMessage(`Approval ${JSON.stringify(txDefaults)}`);
+		Logger.log(`Approval ${JSON.stringify(txDefaults)}`);
 
 		const signedTx = await wallet.signTransaction(txDefaults);
 		const { hash, wait } = await provider.sendTransaction(signedTx as string);
@@ -47,7 +47,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			setLoading(false);
 			onApprove();
 		} else {
-			Sentry.Native.captureException('Error approving');
+			Logger.error('Error approving');
 			setLoading(false);
 		}
 	};

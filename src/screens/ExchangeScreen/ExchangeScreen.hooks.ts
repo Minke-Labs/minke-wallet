@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 import React, { useEffect, createRef, useCallback } from 'react';
-import * as Sentry from 'sentry-expo';
 import { TextInput, Keyboard } from 'react-native';
 import { useTokens, useNavigation } from '@hooks';
 import { useState, State } from '@hookstate/core';
@@ -8,6 +6,7 @@ import { BigNumber, utils } from 'ethers';
 import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens, ExchangeParams } from '@models/token';
 import { network } from '@models/network';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
+import Logger from '@utils/logger';
 
 export const useExchangeScreen = () => {
 	const navigation = useNavigation();
@@ -82,7 +81,7 @@ export const useExchangeScreen = () => {
 				priceRoute: { srcAmount, destAmount }
 			} = await getExchangePrice({ srcToken, srcDecimals, destToken, destDecimals, amount, side });
 			if (error) {
-				Sentry.Native.captureException(error); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+				Logger.error(`Load prices error: ${error}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 				Keyboard.dismiss();
 				setQuote(undefined);
 				setLoadingPrices(false);

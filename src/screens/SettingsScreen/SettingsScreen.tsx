@@ -11,6 +11,7 @@ const SettingsScreen = () => {
 	const navigation = useNavigation();
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
+	const onTest = () => navigation.navigate('Test');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
@@ -36,6 +37,7 @@ const SettingsScreen = () => {
 					<SettingsOption label="Contact Support" icon="helpStroke" onPress={onContactSupport} />
 					<View style={[styles.hr, { backgroundColor: colors.background2 }]} />
 					<SettingsOption label="Switch account" onPress={onAccounts} icon="avatarStroke" />
+					<SettingsOption label="Dev tests (please, dont use!)" onPress={onTest} icon="robotStroke" />
 				</ScrollView>
 			</View>
 		</BasicLayout>

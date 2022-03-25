@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import * as Sentry from 'sentry-expo';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
+import Logger from '@utils/logger';
 import Buttons from './Buttons/Buttons';
 import Selector from './Selector/Selector';
 import { BalanceProps } from './Balance.types';
@@ -25,7 +25,7 @@ const Balance: React.FC<BalanceProps> = ({ coin }) => {
 				</Text>
 			</View>
 
-			<Buttons onPress={() => Sentry.Native.captureMessage('PRESSED!')} />
+			<Buttons onPress={() => Logger.log('PRESSED!')} />
 		</View>
 	);
 };

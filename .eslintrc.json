@@ -55,7 +55,7 @@
 		"react/no-unstable-nested-components": ["error", { "allowAsProps": true }],
 		"implicit-arrow-linebreak": "off",
 		"react/require-default-props": "off",
-		"operator-linebreak": ["error", "after"],
+		"operator-linebreak": ["off"],
 		"react/jsx-wrap-multilines": "off"
 	}
 }

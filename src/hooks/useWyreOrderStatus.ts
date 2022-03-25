@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
-import * as Sentry from 'sentry-expo';
+import { captureException } from '@sentry/react-native';
 import { network as selectedNetwork } from '@models/network';
 import { globalTopUpState } from '@stores/TopUpStore';
 import { useState } from '@hookstate/core';
 import { WYRE_ORDER_STATUS_TYPES } from '@models/wyre.types';
 import { trackWyreOrder, trackWyreTransfer } from '@models/wyre';
+import Logger from '@utils/logger';
 
 const MAX_TRIES = 10 * 60;
 const MAX_ERROR_TRIES = 3;
@@ -28,8 +29,7 @@ const useWyreOrderStatus = () => {
 				const isFailed = orderStatus === WYRE_ORDER_STATUS_TYPES.failed;
 
 				if (isFailed) {
-					// const { errorCategory, errorCode, errorMessage } = data;
-					Sentry.Native.captureException(`error: ${data}`);
+					Logger.error(`get order status error: ${data}`);
 				}
 
 				if (transferId && !transfer) {
@@ -38,7 +38,7 @@ const useWyreOrderStatus = () => {
 					orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries - 1, remainingErrorTries), 1000);
 				}
 			} catch (error) {
-				Sentry.Native.captureException(error);
+				captureException(error);
 				if (remainingErrorTries === 0) return;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries, remainingErrorTries - 1), 5000);
@@ -63,7 +63,7 @@ const useWyreOrderStatus = () => {
 					);
 				}
 			} catch (error) {
-				Sentry.Native.captureException(error);
+				captureException(error);
 				if (remainingErrorTries === 0) return;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				transferHashHandle = setTimeout(() => getTransferHash(remainingTries, remainingErrorTries - 1), 5000);

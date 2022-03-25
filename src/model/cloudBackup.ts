@@ -1,6 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable operator-linebreak */
 // @ts-expect-error
 import RNCloudFs from 'react-native-cloud-fs';
 import { Platform } from 'react-native';
@@ -8,6 +7,7 @@ import AesEncryptor from '@src/handlers/aesEncryption';
 import RNFS from 'react-native-fs';
 import { sortBy } from 'lodash';
 import { MINKE_MASTER_KEY } from '@env';
+import Logger from '@utils/logger';
 
 const USERDATA_FILE = 'UserData.json';
 const REMOTE_BACKUP_WALLET_DIR = 'minke.app/wallet-backups';
@@ -71,7 +71,7 @@ export const encryptAndSaveDataToCloud = async (data: any, password: any, filena
 		);
 
 		if (!exists) {
-			console.error('Backup doesnt exist after completion');
+			Logger.error('Backup doesnt exist after completion');
 			const error = new Error(CLOUD_BACKUP_ERRORS.INTEGRITY_CHECK_FAILED);
 			throw error;
 		}
@@ -79,7 +79,7 @@ export const encryptAndSaveDataToCloud = async (data: any, password: any, filena
 		await RNFS.unlink(path);
 		return filename;
 	} catch (e) {
-		console.error('Error during encryptAndSaveDataToCloud', e);
+		Logger.error('Error during encryptAndSaveDataToCloud', e);
 		throw new Error(CLOUD_BACKUP_ERRORS.GENERAL_ERROR);
 	}
 };
@@ -98,7 +98,7 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 	});
 
 	if (!backups || !backups.files || !backups.files.length) {
-		console.error('No backups found');
+		Logger.error('No backups found');
 		const error = new Error(CLOUD_BACKUP_ERRORS.NO_BACKUPS_FOUND);
 		throw error;
 	}
@@ -113,7 +113,7 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 		}
 
 		if (!document) {
-			console.error('No backup found with that name!', filename);
+			Logger.error('No backup found with that name!', filename);
 			const error = new Error(CLOUD_BACKUP_ERRORS.SPECIFIC_BACKUP_NOT_FOUND);
 			throw error;
 		}
@@ -131,11 +131,11 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 			const backedUpData = JSON.parse(backedUpDataStringified);
 			return backedUpData;
 		}
-		console.error('We couldnt decrypt the data');
+		Logger.error('We couldnt decrypt the data');
 		const error = new Error(CLOUD_BACKUP_ERRORS.ERROR_DECRYPTING_DATA);
 		throw error;
 	}
-	console.error('We couldnt get the encrypted data');
+	Logger.error('We couldnt get the encrypted data');
 	const error = new Error(CLOUD_BACKUP_ERRORS.ERROR_GETTING_ENCRYPTED_DATA);
 	throw error;
 };

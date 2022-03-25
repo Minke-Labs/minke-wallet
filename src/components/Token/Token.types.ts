@@ -12,9 +12,3 @@ export interface ContentProps {
 	size: number;
 	tokenColor: string;
 }
-
-export interface ContentProps {
-	name: TokenType;
-	size: number;
-	tokenColor: string;
-}

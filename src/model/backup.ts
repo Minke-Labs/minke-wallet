@@ -1,9 +1,10 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import { privateKeyKey, seedPhraseKey } from '@src/utils/keychainConstants';
+import { privateKeyKey, seedPhraseKey } from '@utils/keychainConstants';
 import { endsWith, forEach } from 'lodash';
 import { Platform } from 'react-native';
 import { Options, requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
+import Logger from '@utils/logger';
 import * as keychain from './keychain';
 import { encryptAndSaveDataToCloud, fetchAllBackups, getDataFromCloud } from './cloudBackup';
 import { AllMinkeWallets, getPrivateKey, getSeedPhrase, MinkeWallet, restoreWalletByMnemonic } from './wallet';
@@ -22,7 +23,7 @@ export async function saveBackupPassword(password: BackupPassword): Promise<void
 			await setSharedWebCredentials('minke.app', 'Backup Password', password);
 		}
 	} catch (e) {
-		console.log("Didn't save backup password on iCloud", e);
+		Logger.log("Didn't save backup password on iCloud", e);
 	}
 }
 
@@ -40,7 +41,7 @@ export const fetchBackupPassword = async (): Promise<null | BackupPassword> => {
 		}
 		return null;
 	} catch (e) {
-		console.error(e);
+		Logger.error(e);
 		return null;
 	}
 };
@@ -154,7 +155,7 @@ async function restoreCurrentBackupIntoKeychain(backedUpData: BackedUpData): Pro
 
 		return true;
 	} catch (e) {
-		console.error('error in restoreBackupIntoKeychain');
+		Logger.error('error in restoreBackupIntoKeychain');
 		return false;
 	}
 }
@@ -170,7 +171,7 @@ const restoreSpecificBackupIntoKeychain = async (backedUpData: BackedUpData): Pr
 		}
 		return true;
 	} catch (e) {
-		console.error('error in restoreSpecificBackupIntoKeychain');
+		Logger.error('error in restoreSpecificBackupIntoKeychain');
 		return false;
 	}
 };
@@ -192,9 +193,9 @@ export const restoreCloudBackup = async (password: BackupPassword): Promise<bool
 			...data.secrets
 		};
 
-		return restoreSpecificBackupIntoKeychain(dataToRestore);
+		return await restoreSpecificBackupIntoKeychain(dataToRestore);
 	} catch (e) {
-		console.error('Error while restoring back up');
+		Logger.error('Error while restoring back up');
 		return false;
 	}
 };

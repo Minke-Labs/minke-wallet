@@ -9,6 +9,7 @@ import { delay } from '@helpers/utilities';
 import { values } from 'lodash';
 import { getAllWallets, setWalletBackedUp } from '@models/wallet';
 import { useState } from 'react';
+import Logger from '@utils/logger';
 
 export const cloudPlatform = 'iCloud';
 
@@ -108,7 +109,7 @@ const useWalletCloudBackup = () => {
 		} catch (e) {
 			setIsWalletLoading(null);
 			const userError = getUserError(e);
-			console.error(e);
+			Logger.error(e);
 			if (onError) onError(userError);
 			return;
 		}
@@ -119,8 +120,8 @@ const useWalletCloudBackup = () => {
 			if (onSuccess) await onSuccess();
 		} catch (e) {
 			setIsWalletLoading(null);
-			console.error('error while trying to save wallet backup state');
 			const userError = getUserError(new Error(CLOUD_BACKUP_ERRORS.WALLET_BACKUP_STATUS_UPDATE_FAILED));
+			Logger.error(userError);
 			if (onError) onError(userError);
 		}
 	};

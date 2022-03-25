@@ -2,16 +2,12 @@ import 'expo-dev-client';
 import React from 'react';
 import { ThemeProvider, AmplitudeProvider } from '@contexts';
 import Routes from '@routes';
-import { SENTRY_DSN } from '@env';
 import AppLoading from 'expo-app-loading';
-import * as Sentry from 'sentry-expo';
+import Logger from '@utils/logger';
+import * as Sentry from '@sentry/react-native';
 import { useApp } from './App.hooks';
 
-Sentry.init({
-	dsn: SENTRY_DSN || process.env.SENTRY_DSN,
-	enableInExpoDevelopment: true,
-	debug: true // Set it to `false` in production
-});
+Logger.initialize();
 
 const App = () => {
 	const { walletState, coinList, fontsLoaded } = useApp();
@@ -25,4 +21,5 @@ const App = () => {
 		</AmplitudeProvider>
 	);
 };
-export default App;
+
+export default Sentry.wrap(App);

@@ -1,56 +1,39 @@
 {
-  "expo": {
-    "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "minke",
-            "project": "minkeapp",
-            "authToken": "ffd5766e946a42a18f01effdf1f4ee9f7ce8c49bd5034911adc6493bca6e6aaf"
-          }
-        }
-      ]
-    },
-    "name": "Minke - DeFi Wallet",
-    "slug": "minke-wallet",
-    "owner": "minkelabs",
-    "version": "0.0.1",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0A2138"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "buildNumber": "32",
-      "config": {
-        "usesNonExemptEncryption": false
-      },
-      "bundleIdentifier": "com.minkeapp.minkewallet"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.minkeapp.minkewallet"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "description": "",
-    "userInterfaceStyle": "automatic",
-    "plugins": [
-      "sentry-expo"
-    ]
-  }
+	"expo": {
+		"name": "Minke - DeFi Wallet",
+		"slug": "minke-wallet",
+		"owner": "minkelabs",
+		"version": "0.0.1",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#0A2138"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"buildNumber": "32",
+			"config": {
+				"usesNonExemptEncryption": false
+			},
+			"bundleIdentifier": "com.minkeapp.minkewallet"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			},
+			"package": "com.minkeapp.minkewallet"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"description": "",
+		"userInterfaceStyle": "automatic"
+	}
 }

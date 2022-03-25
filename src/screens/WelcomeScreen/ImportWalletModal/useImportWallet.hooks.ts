@@ -1,11 +1,12 @@
 import React from 'react';
-import * as Sentry from 'sentry-expo';
+import { captureException } from '@sentry/react-native';
 import { useState } from '@hookstate/core';
 import { Keyboard } from 'react-native';
 import { globalWalletState, walletState } from '@src/stores/WalletStore';
 import { restoreWalletByMnemonic } from '@src/model/wallet';
+import Logger from '@utils/logger';
 
-export const useImportWalletModal = ({ onImportFinished }: { onImportFinished: () => void; }) => {
+export const useImportWalletModal = ({ onImportFinished }: { onImportFinished: () => void }) => {
 	const [text, setText] = React.useState('');
 	const [importing, setImporting] = React.useState(false);
 	const state = useState(globalWalletState());
@@ -21,7 +22,8 @@ export const useImportWalletModal = ({ onImportFinished }: { onImportFinished: (
 				onImportFinished();
 			} catch (error) {
 				setImporting(false);
-				Sentry.Native.captureException(`Invalid seed phrase or primary key: ${error}`);
+				Logger.error('Invalid seed phrase or primary key');
+				captureException(error);
 			}
 		}
 	};
