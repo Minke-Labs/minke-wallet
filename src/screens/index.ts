@@ -1,6 +1,6 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
 import AssetsScreen from './AssetsScreen/AssetsScreen';
-import BackupScreen from './BackupScreen/BackupScreen';
+import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
@@ -23,7 +23,7 @@ import Test from './Test/Test';
 export {
 	AccountsScreen,
 	AssetsScreen,
-	BackupScreen,
+	ManualBackupScreen,
 	BackupSettingsScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,

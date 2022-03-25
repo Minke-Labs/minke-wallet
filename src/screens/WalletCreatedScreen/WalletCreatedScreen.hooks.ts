@@ -5,7 +5,7 @@ import { useNavigation } from '@hooks';
 
 export const useWalletCreatedScreen = () => {
 	const navigation = useNavigation();
-	const backupManually = () => navigation.navigate('BackupScreen');
+	const backupManually = () => navigation.navigate('ManualBackupScreen');
 
 	const { walletId } = useState(globalWalletState()).value;
 	const loadSeed = getSeedPhrase(walletId || '');

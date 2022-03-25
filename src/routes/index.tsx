@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
 	AccountsScreen,
 	AssetsScreen,
-	BackupScreen,
+	ManualBackupScreen,
 	BackupSettingsScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,
@@ -39,7 +39,7 @@ const Routes: React.FC = () => {
 			<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AccountsScreen" component={AccountsScreen} />
 				<Stack.Screen name="AssetsScreen" component={AssetsScreen} />
-				<Stack.Screen name="BackupScreen" component={BackupScreen} />
+				<Stack.Screen name="ManualBackupScreen" component={ManualBackupScreen} />
 				<Stack.Screen name="BackupStatusScreen" component={BackupStatusScreen} />
 				<Stack.Screen name="BackupSettingsScreen" component={BackupSettingsScreen} />
 				<Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
