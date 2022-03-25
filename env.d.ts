@@ -11,4 +11,5 @@ declare module '@env' {
 	export const WYRE_TOKEN_TEST: string;
 	export const COVALENT_API_KEY: string;
 	export const AMPLITUDE_PROJECT_API: string;
+	export const SENTRY_DSN: string;
 }

@@ -1,5 +1,17 @@
 {
   "expo": {
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "your sentry organization's short name here",
+            "project": "your sentry project's name here",
+            "authToken": "your auth token here"
+          }
+        }
+      ]
+    },
     "name": "Minke - DeFi Wallet",
     "slug": "minke-wallet",
     "owner": "minkelabs",
@@ -36,6 +48,9 @@
       "favicon": "./assets/favicon.png"
     },
     "description": "",
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }
