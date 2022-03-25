@@ -5,9 +5,9 @@
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "your sentry organization's short name here",
-            "project": "your sentry project's name here",
-            "authToken": "your auth token here"
+            "organization": "minke",
+            "project": "minkeapp",
+            "authToken": "ffd5766e946a42a18f01effdf1f4ee9f7ce8c49bd5034911adc6493bca6e6aaf"
           }
         }
       ]
