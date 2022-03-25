@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import * as Sentry from 'sentry-expo';
 import { network as selectedNetwork } from '@models/network';
 import { globalTopUpState } from '@stores/TopUpStore';
 import { useState } from '@hookstate/core';
@@ -28,7 +29,7 @@ const useWyreOrderStatus = () => {
 
 				if (isFailed) {
 					// const { errorCategory, errorCode, errorMessage } = data;
-					console.error('error', data);
+					Sentry.Native.captureException(`error: ${data}`);
 				}
 
 				if (transferId && !transfer) {
@@ -37,6 +38,7 @@ const useWyreOrderStatus = () => {
 					orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries - 1, remainingErrorTries), 1000);
 				}
 			} catch (error) {
+				Sentry.Native.captureException(error);
 				if (remainingErrorTries === 0) return;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries, remainingErrorTries - 1), 5000);
@@ -61,6 +63,7 @@ const useWyreOrderStatus = () => {
 					);
 				}
 			} catch (error) {
+				Sentry.Native.captureException(error);
 				if (remainingErrorTries === 0) return;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				transferHashHandle = setTimeout(() => getTransferHash(remainingTries, remainingErrorTries - 1), 5000);

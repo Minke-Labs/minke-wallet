@@ -1,4 +1,5 @@
 import { Wallet, Contract, providers } from 'ethers';
+import * as Sentry from 'sentry-expo';
 import { signERC2612Permit } from 'eth-permit';
 import { erc20abi, getProvider } from './wallet';
 import { network } from './network';
@@ -120,7 +121,7 @@ export const approveSpending = async ({
 		const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 		return { permit: signedTx };
 	} catch (error) {
-		console.error('Error trying to sign', error);
+		Sentry.Native.captureException(`Error trying to sign - ${error}`);`); 
 		return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
 	}
 };

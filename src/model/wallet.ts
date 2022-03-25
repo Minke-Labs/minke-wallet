@@ -1,4 +1,5 @@
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
+import * as Sentry from 'sentry-expo';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
@@ -81,7 +82,7 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 
 		return null;
 	} catch (error) {
-		console.error(error);
+		Sentry.Native.captureException(error);
 		return null;
 	}
 };
@@ -260,7 +261,7 @@ export const getZapperWalletTokens = async (wallet: string): Promise<ZapperWalle
 		result = await response.json();
 		return result;
 	} catch (error) {
-		console.error('error', error); // temp until we fetch from the chain
+		Sentry.Native.captureException(error); // temp until we fetch from the chain
 	}
 	return result;
 };

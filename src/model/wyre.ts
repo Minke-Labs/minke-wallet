@@ -1,5 +1,6 @@
 // @ts-expect-error
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
+import * as Sentry from 'sentry-expo';
 import { get, split } from 'lodash';
 import {
 	WYRE_MERCHANT_ID_TEST,
@@ -112,6 +113,8 @@ export const showApplePayRequest = async (
 		const paymentResponse = await paymentRequest.show();
 		return { paymentResponse };
 	} catch ({ message }) {
+		Sentry.Native.captureException(message);
+
 		if (message !== 'AbortError') {
 			return { error: { description: message as string } };
 		}
@@ -314,6 +317,7 @@ export const getOrderId = async (
 			errorMessage: message
 		};
 	} catch (error: any) {
+		Sentry.Native.captureException(error);
 		const {
 			data: { errorCode, message, type }
 		} = error;

@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
+import * as Sentry from 'sentry-expo';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
@@ -25,7 +25,7 @@ const Balance: React.FC<BalanceProps> = ({ coin }) => {
 				</Text>
 			</View>
 
-			<Buttons onPress={() => console.log('PRESSED!')} />
+			<Buttons onPress={() => Sentry.Native.captureMessage('PRESSED!')} />
 		</View>
 	);
 };

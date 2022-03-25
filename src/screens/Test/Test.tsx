@@ -6,7 +6,6 @@ import { BasicLayout } from '@layouts';
 
 const Test = () => {
 	const clickEvent = () => {
-		console.log('CLICKED!');
 		Sentry.Native.captureMessage('CLICKED!');
 	};
 

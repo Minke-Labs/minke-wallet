@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import * as Sentry from 'sentry-expo';
 import { View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useTheme } from '@hooks';
@@ -86,7 +87,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			});
 
 			if (result.error) {
-				console.error(result.error);
+				Sentry.Native.captureException(result.error);
 			} else {
 				setPriceQuote(result);
 			}
@@ -172,7 +173,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 			if (result.error) {
 				setLoading(false);
-				console.error(result.error);
+				Sentry.Native.captureException(result.error);
 			} else if (wallet.value && gas) {
 				const provider = await getProvider();
 				const { chainId, data, from: src, gas: gasLimit, gasPrice, to: dest, value } = result;

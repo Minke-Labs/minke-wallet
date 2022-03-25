@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import * as Sentry from 'sentry-expo';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,7 +28,7 @@ const ChangeNetworkScreen = () => {
 			state.transactions.set(undefined);
 			navigation.navigate('WalletScreen');
 		} catch (e) {
-			console.error('Error saving settings');
+			Sentry.Native.captureException(`Error saving settings - ${e}`);
 		}
 	};
 

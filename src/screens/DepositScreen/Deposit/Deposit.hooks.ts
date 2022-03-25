@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
+import * as Sentry from 'sentry-expo';
 import { getProvider } from '@models/wallet';
 import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
@@ -64,7 +65,7 @@ export const useDeposit = () => {
 				interestBearingToken: market.address,
 				gweiValue
 			});
-			console.log('Deposit API', transaction);
+			Sentry.Native.captureMessage(`Deposit API ${JSON.stringify(transaction)}`);
 
 			const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
 
@@ -83,11 +84,11 @@ export const useDeposit = () => {
 				type: 2,
 				chainId
 			};
-			console.log('Deposit', txDefaults);
+			Sentry.Native.captureMessage(`Deposit ${JSON.stringify(txDefaults)}`);
 			const signedTx = await wallet.signTransaction(txDefaults);
 			const { hash, wait } = await provider.sendTransaction(signedTx as string);
 			if (hash) {
-				console.log('Deposit', hash);
+				Sentry.Native.captureMessage(`Deposit ${JSON.stringify(hash)}`);
 				await wait();
 				setTransactionHash(hash);
 				track('Deposited', {
@@ -97,7 +98,7 @@ export const useDeposit = () => {
 				});
 				navigation.navigate('DepositSuccessScreen');
 			} else {
-				console.error('Error depositing');
+				Sentry.Native.captureException('Error depositing');
 			}
 		}
 	};

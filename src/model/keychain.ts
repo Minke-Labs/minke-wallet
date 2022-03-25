@@ -1,4 +1,5 @@
 import { getItemAsync, SecureStoreOptions, setItemAsync, WHEN_UNLOCKED } from 'expo-secure-store';
+import * as Sentry from 'sentry-expo';
 
 export const publicAccessControlOptions: SecureStoreOptions = {
 	keychainAccessible: WHEN_UNLOCKED
@@ -20,7 +21,7 @@ export async function loadObject(key: string, options?: SecureStoreOptions): Pro
 	try {
 		return JSON.parse(jsonValue);
 	} catch (err) {
-		console.error(err);
+		Sentry.Native.captureException(err);
 	}
 	return null;
 }

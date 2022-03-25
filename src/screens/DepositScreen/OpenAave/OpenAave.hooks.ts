@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import * as Sentry from 'sentry-expo';
 import { approvalTransaction } from '@models/deposit';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
@@ -22,7 +23,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 		const wallet = new Wallet(privateKey, provider);
 		const chainId = await wallet.getChainId();
 		const nonce = await provider.getTransactionCount(address, 'latest');
-		console.log('Approval API', transaction);
+		Sentry.Native.captureMessage(`Approval API ${JSON.stringify(transaction)}`);
 		const txDefaults = {
 			from,
 			to,
@@ -35,7 +36,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			chainId
 		};
 
-		console.log('Approval', txDefaults);
+		Sentry.Native.captureMessage(`Approval ${JSON.stringify(txDefaults)}`);
 
 		const signedTx = await wallet.signTransaction(txDefaults);
 		const { hash, wait } = await provider.sendTransaction(signedTx as string);
@@ -46,7 +47,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			setLoading(false);
 			onApprove();
 		} else {
-			console.error('Error approving');
+			Sentry.Native.captureException('Error approving');
 			setLoading(false);
 		}
 	};
