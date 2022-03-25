@@ -20,7 +20,7 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 
 	return (
 		<>
-			<View style={{ paddingHorizontal: 24 }}>
+			<View>
 				<View style={{ flexDirection: 'row', marginBottom: 8, alignItems: 'center' }}>
 					<Token name={symbol.toLowerCase() as TokenType} size={40} />
 					<Text weight="extraBold" type="h3" style={{ marginLeft: 8 }}>
