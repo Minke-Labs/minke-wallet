@@ -15,7 +15,7 @@ const TopUpWaitScreen = () => {
 	return (
 		<View style={styles.container}>
 			{isFailed && <Failed {...{ orderId, onFinish }} />}
-			{(checking || processing) && <Processing {...{ transactionHash, checking }} />}
+			{(checking || processing) && <Processing {...{ transactionHash }} />}
 			{success && <Success {...{ onFinish }} />}
 		</View>
 	);
