@@ -9,6 +9,7 @@ import { useNavigation, useTokens, useAmplitude } from '@hooks';
 import { network } from '@models/network';
 import { Wallet } from 'ethers';
 import { useState } from '@hookstate/core';
+import { Keyboard } from 'react-native';
 
 export const useDeposit = () => {
 	const { track } = useAmplitude();
@@ -54,6 +55,7 @@ export const useDeposit = () => {
 	const canDeposit =
 		token && +tokenBalance > 0 && +amount > 0 && +tokenBalance >= +amount && enoughForGas && gweiValue > 0;
 	const onDeposit = async () => {
+		Keyboard.dismiss();
 		if (canDeposit) {
 			setWaitingTransaction(true);
 			const transaction = await depositTransaction({
