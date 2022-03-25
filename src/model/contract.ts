@@ -1,5 +1,7 @@
 import { Wallet, Contract, providers } from 'ethers';
+import { captureException } from '@sentry/react-native';
 import { signERC2612Permit } from 'eth-permit';
+import Logger from '@utils/logger';
 import { erc20abi, getProvider } from './wallet';
 import { network } from './network';
 import { ParaswapToken } from './token';
@@ -120,7 +122,8 @@ export const approveSpending = async ({
 		const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 		return { permit: signedTx };
 	} catch (error) {
-		console.error('Error trying to sign', error);
+		captureException(error);
+		Logger.error('Permit transaction error');
 		return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
 	}
 };

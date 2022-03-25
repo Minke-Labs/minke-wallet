@@ -9,10 +9,10 @@ import { walletCreate, walletDelete, getTransactions, getAllWallets } from '@mod
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
-	const wallet = globalWalletState();
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
+	const [creatingWallet, setCreatingWallet] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
@@ -72,10 +72,12 @@ export const useWalletScreen = () => {
 	});
 
 	const onCreateWallet = useCallback(async () => {
+		setCreatingWallet(true);
 		const newWallet = await walletCreate();
 		state.set(await walletState(newWallet));
+		setCreatingWallet(false);
 		navigation.navigate('WalletCreatedScreen');
-	}, [navigation]);
+	}, [creatingWallet, navigation]);
 
 	const onExchange = () => navigation.navigate('ExchangeScreen');
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
@@ -84,8 +86,11 @@ export const useWalletScreen = () => {
 
 	const hideReceive = () => setReceiveVisible(false);
 	const showReceive = () => setReceiveVisible(true);
+
+	const { address, balance } = state.value;
+
 	const onCopyToClipboard = () => {
-		Clipboard.setString(wallet.value.address || '');
+		Clipboard.setString(address || '');
 		setSnackbarVisible(true);
 	};
 
@@ -93,8 +98,6 @@ export const useWalletScreen = () => {
 		setSendModalFinished(true);
 		setSendObj(obj);
 	};
-
-	const { address, balance } = state.value;
 
 	return {
 		loading,
@@ -120,6 +123,7 @@ export const useWalletScreen = () => {
 		onSendFinished,
 		address,
 		balance,
-		fetchTransactions
+		fetchTransactions,
+		creatingWallet
 	};
 };

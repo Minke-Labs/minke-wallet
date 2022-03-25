@@ -23,6 +23,7 @@ import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
 import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
 import ProgressButton from './ProgressButton/ProgressButton';
+import EmptyStates from './EmptyStates';
 
 export {
 	ActivityIndicator,
@@ -49,5 +50,6 @@ export {
 	ScreenLoadingIndicator,
 	Transaction,
 	TransactionIcon,
-	ProgressButton
+	ProgressButton,
+	EmptyStates
 };

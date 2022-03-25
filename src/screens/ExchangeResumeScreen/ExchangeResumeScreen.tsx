@@ -16,6 +16,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { BasicLayout } from '@layouts';
 import { TokenType } from '@styles';
 import { Icon, Modal, Text, Token, ActivityIndicator, ProgressButton } from '@components';
+import Logger from '@utils/logger';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { RootStackParamList } from '../../routes/types.routes';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
@@ -85,7 +86,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 			});
 
 			if (result.error) {
-				console.error(result.error);
+				Logger.error(result.error);
 			} else {
 				setPriceQuote(result);
 			}
@@ -171,7 +172,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 			if (result.error) {
 				setLoading(false);
-				console.error(result.error);
+				Logger.error(result.error);
 			} else if (wallet.value && gas) {
 				const provider = await getProvider();
 				const { chainId, data, from: src, gas: gasLimit, gasPrice, to: dest, value } = result;

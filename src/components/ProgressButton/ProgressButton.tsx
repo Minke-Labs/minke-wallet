@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { Text } from '@components';
 import { styles } from './ProgressButton.styles';
 import { ProgressButtonProps } from './ProgressButton.types';
 import { useProgressButton } from './ProgressButton.hooks';
+import Text from '../Text/Text';
 
 const ProgressButton: React.FC<ProgressButtonProps> = ({ onFinish, title = 'Hold to Confirm', disabled = false }) => {
 	const { count, backgroundColor, startCounter, stopCounter, finishCounter } = useProgressButton({

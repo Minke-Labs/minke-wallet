@@ -34,12 +34,17 @@ const Button: React.FC<ButtonProps> = ({
 		onPress!();
 	};
 
+	const { borderColor, borderWidth } =
+		mode === 'outlined'
+			? { borderColor: color, borderWidth: 1 }
+			: { borderColor: undefined, borderWidth: undefined };
+
 	return (
 		<TouchableOpacity
 			activeOpacity={0.8}
 			disabled={disabled}
 			onPress={handlePress}
-			style={[styles.button, { backgroundColor: backgroundColor(), marginBottom }]}
+			style={[styles.button, { backgroundColor: backgroundColor(), borderColor, borderWidth, marginBottom }]}
 		>
 			{iconLeft && (
 				<Icon name={iconLeft} size={18} style={{ marginRight: 9.25 }} color={getKeyByValue(colors, color)} />

@@ -34,7 +34,11 @@ const WelcomeScreen = () => {
 								<Button title="Create Wallet" onPress={onCreateWallet} marginBottom={14} />
 							)}
 							{!loading && (
-								<Button title="Import Wallet" mode="text" onPress={() => setModalVisible(true)} />
+								<Button
+									title="Import or Restore Wallet"
+									mode="text"
+									onPress={() => setModalVisible(true)}
+								/>
 							)}
 						</View>
 					</View>
@@ -42,7 +46,11 @@ const WelcomeScreen = () => {
 			</BasicLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportWalletModal onImportFinished={onImportFinished} onDismiss={() => setModalVisible(false)} />
+				<ImportWalletModal
+					visible={isModalVisible}
+					onImportFinished={onImportFinished}
+					onDismiss={() => setModalVisible(false)}
+				/>
 			</Modal>
 		</>
 	);

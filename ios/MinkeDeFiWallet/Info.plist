@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>31</string>
+    <string>32</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSRequiresIPhoneOS</key>
@@ -80,5 +80,19 @@
     <string>Automatic</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
+    <key>NSUbiquitousContainers</key>
+    <dict>
+      <key>iCloud.com.minkeapp.minkewallet</key>
+      <dict>
+        <key>NSUbiquitousContainerIsDocumentScopePublic</key>
+        <true/>
+        <key>NSUbiquitousContainerSupportedFolderLevels</key>
+        <string>One</string>
+        <key>NSUbiquitousContainerName</key>
+        <string>com.minkeapp.minkewallet</string>
+      </dict>
+    </dict>
+    <key>NSFaceIDUsageDescription</key>
+    <string>Used to sign transactions and access wallet keys</string>
   </dict>
 </plist>

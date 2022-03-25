@@ -4,6 +4,8 @@ export default function useTimeout() {
 	const handle = useRef();
 
 	const start = useCallback((func, ms) => {
+		// @ts-ignore
+		// eslint-disable-next-line @typescript-eslint/no-implied-eval
 		handle.current = setTimeout(func, ms);
 	}, []);
 

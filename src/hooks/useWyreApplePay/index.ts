@@ -37,7 +37,8 @@ export default function useWyreApplePay(): UseWyreApplePay {
 				setError({ description: 'We were unable to reserve your purchase order. Please try again later.' });
 				return;
 			}
-			track('Created Wyre Reservation', reservationId);
+
+			track('Created Wyre Reservation', { id: reservationId });
 			const quotation = await getWalletOrderQuotation(value, currency, accountAddress, network);
 
 			if (!quotation) {
@@ -46,7 +47,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 				});
 				return;
 			}
-			track('Created Wyre Reservation', { quotation });
+			track('Created Wyre Quotation', quotation);
 			const { sourceAmountWithFees, purchaseFee } = quotation;
 
 			const { paymentResponse: applePayResponse, error: appleRequestError } = await showApplePayRequest(
