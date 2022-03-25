@@ -1,25 +1,38 @@
 import React from 'react';
-import * as Amplitude from 'expo-analytics-amplitude';
 import { View } from 'react-native';
-import { useAmplitude } from '@hooks';
 import { Button } from '@components';
 import { BasicLayout } from '@layouts';
-import { AMPLITUDE_PROJECT_API } from '@env';
+import Logger from '@utils/logger';
+import { captureException } from '@sentry/react-native';
+import { useNavigation } from '@hooks';
 
 const Test = () => {
-	const { track } = useAmplitude();
-
-	const clickEvent = () => {
-		Amplitude.clearUserPropertiesAsync();
-		console.log(AMPLITUDE_PROJECT_API);
-		track('testEvent', '0x165cd37b4c644c2921454429e7f9358d18a45e14');
-		console.log('Enviou');
+	const navigation = useNavigation();
+	const clickLog = () => {
+		Logger.log('Marcos and Romullo clickLog');
+	};
+	const clickError = () => {
+		Logger.error('Marcos and Romullo clickError');
+	};
+	const clickCapturedException = () => {
+		try {
+			throw new Error('Marcos and Romullo clickCapturedException');
+		} catch (error) {
+			captureException(error);
+		}
+	};
+	const clickException = () => {
+		throw new Error('Marcos and Romullo clickException');
 	};
 
 	return (
 		<BasicLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				<Button title="Amplitude Test" onPress={clickEvent} />
+				<Button title="Test log" onPress={clickLog} marginBottom={8} />
+				<Button title="Test error" onPress={clickError} marginBottom={8} />
+				<Button title="Test captured exception" onPress={clickCapturedException} marginBottom={8} />
+				<Button title="Test exception" onPress={clickException} marginBottom={8} />
+				<Button title="Back" onPress={() => navigation.goBack()} marginBottom={8} />
 			</View>
 		</BasicLayout>
 	);

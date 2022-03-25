@@ -3,12 +3,11 @@ import { useNavigation } from '@hooks';
 import { usdCoin } from '@src/model/deposit';
 
 interface UseNotAbleToSaveModalProps {
+	onDismiss: () => void;
 	onAddFunds: () => void;
 	visible: boolean;
-	onDismiss: () => void;
 }
-
-export const useNotAbleToSaveModal = ({ onAddFunds, visible, onDismiss }: UseNotAbleToSaveModalProps) => {
+export const useNotAbleToSaveModal = ({ onDismiss, onAddFunds, visible }: UseNotAbleToSaveModalProps) => {
 	const navigation = useNavigation();
 	const [defaultUSDCoin, setDefaultUSDCoin] = useState('');
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation } from '@hooks';
+import { LoadingScreen } from '@components';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { useWalletScreen } from './WalletScreen.hooks';
@@ -33,8 +34,13 @@ const WalletScreen = () => {
 		onSendFinished,
 		address,
 		balance,
-		fetchTransactions
+		fetchTransactions,
+		creatingWallet
 	} = useWalletScreen();
+
+	if (creatingWallet) {
+		return <LoadingScreen title="Creating wallet" />;
+	}
 
 	return (
 		<>

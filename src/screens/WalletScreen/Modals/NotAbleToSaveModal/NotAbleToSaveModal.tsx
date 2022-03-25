@@ -6,9 +6,9 @@ import { useNotAbleToSaveModal } from './NotAbleToSaveModal.hooks';
 
 const NotAbleToSaveModal: React.FC<NotAbleToSaveModalProps> = ({ onDismiss, onAddFunds, visible }) => {
 	const { defaultUSDCoin, goToExchange, onAddFundsPressed } = useNotAbleToSaveModal({
+		onDismiss,
 		onAddFunds,
-		visible,
-		onDismiss
+		visible
 	});
 
 	return (

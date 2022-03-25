@@ -5,12 +5,14 @@ import { TokenType } from '@styles';
 import { smallWalletAddress } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
+import { useKeyboard } from '@hooks';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
 import { useTransactionTransfer } from './TransactionTransfer.hooks';
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
+	const keyboardVisible = useKeyboard();
 	const { image, amount, number, gasPrice, sending, onChangeAmount, onChangeNumber, onSend } = useTransactionTransfer(
 		{ token, user, ...props }
 	);
@@ -18,10 +20,12 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 	return (
 		<View style={styles.container}>
 			<>
-				<View style={styles.imageContainer}>
-					<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
-					{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
-				</View>
+				{!keyboardVisible && (
+					<View style={styles.imageContainer}>
+						<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
+						{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
+					</View>
+				)}
 				<Text type="h3" weight="extraBold" marginBottom={32}>
 					How much{' '}
 					<Text color="text12" type="h3" weight="extraBold">
