@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Text, ModalHeader, PaperTouchable, Icon } from '@components';
-import { useNavigation } from '@hooks';
-import { usdCoin } from '@src/model/deposit';
 import { NotAbleToSaveModalProps } from './NotAbleToSaveModal.types';
+import { useNotAbleToSaveModal } from './NotAbleToSaveModal.hooks';
 
 const NotAbleToSaveModal: React.FC<NotAbleToSaveModalProps> = ({ onDismiss, onAddFunds, visible }) => {
-	const navigation = useNavigation();
-	const [defaultUSDCoin, setDefaultUSDCoin] = useState('');
-
-	const goToExchange = () => {
-		onDismiss();
-		navigation.navigate('ExchangeScreen');
-	};
-
-	const onAddFundsPressed = () => {
-		onAddFunds();
-	};
-
-	useEffect(() => {
-		const loadDefaultUSDCoin = async () => {
-			setDefaultUSDCoin(await usdCoin());
-		};
-		if (visible) loadDefaultUSDCoin();
-	}, [visible]);
+	const { defaultUSDCoin, goToExchange, onAddFundsPressed } = useNotAbleToSaveModal({
+		onDismiss,
+		onAddFunds,
+		visible
+	});
 
 	return (
 		<SafeAreaView>

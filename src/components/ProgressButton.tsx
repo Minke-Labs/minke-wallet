@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
 	},
 	startCounterButtonText: {
 		color: 'white',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		fontFamily: 'Inter_500Medium'
 	}
 });
 

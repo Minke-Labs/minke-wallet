@@ -7,6 +7,7 @@ import {
 	AssetsScreen,
 	BackupScreen,
 	BackupSettingsScreen,
+	BackupStatusScreen,
 	ChangeNetworkScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
@@ -20,6 +21,7 @@ import {
 	DepositScreen,
 	USDCoinScreen,
 	DepositSuccessScreen,
+	BackupToICloudScreen,
 	TopUpWaitScreen,
 	Test
 } from '@screens';
@@ -39,6 +41,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="AccountsScreen" component={AccountsScreen} />
 				<Stack.Screen name="AssetsScreen" component={AssetsScreen} />
 				<Stack.Screen name="BackupScreen" component={BackupScreen} />
+				<Stack.Screen name="BackupStatusScreen" component={BackupStatusScreen} />
 				<Stack.Screen name="BackupSettingsScreen" component={BackupSettingsScreen} />
 				<Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
 				<Stack.Screen name="DepositScreen" component={DepositScreen} />
@@ -54,6 +57,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
 				<Stack.Screen name="Test" component={Test} />
 				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
+				<Stack.Screen name="BackupToICloudScreen" component={BackupToICloudScreen} />
 				<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>

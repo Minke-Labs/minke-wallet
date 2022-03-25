@@ -102,7 +102,12 @@ export const useExchangeScreen = () => {
 
 	const updateFromQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/,/g, '.');
-		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+		if (
+			formatedValue &&
+			!formatedValue.endsWith('.') &&
+			!formatedValue.startsWith('.') &&
+			Number(formatedValue) > 0
+		) {
 			const newQuote = await loadPrices({ amount: formatedValue, side: 'SELL' });
 			setQuote(newQuote);
 			if (newQuote) {
@@ -119,7 +124,12 @@ export const useExchangeScreen = () => {
 
 	const updateToQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/,/g, '.');
-		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+		if (
+			formatedValue &&
+			!formatedValue.endsWith('.') &&
+			!formatedValue.startsWith('.') &&
+			Number(formatedValue) > 0
+		) {
 			const newQuote = await loadPrices({ amount: formatedValue, side: 'BUY' });
 			setQuote(newQuote);
 			if (newQuote) {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, Image } from 'react-native';
-import { Text, ActivityIndicator } from '@components';
+import { Text, EmptyStates } from '@components';
 import { imageSource } from '@models/wallet';
 import { useTokens } from '@hooks';
 import { styles } from './TransactionSelectFunds.styles';
@@ -21,7 +21,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 
 	return (
 		<View style={styles.container}>
-			{user.address && <Image source={image!} style={styles.image} />}
+			{!!user.address && <Image source={image!} style={styles.image} />}
 			<Text type="h3" weight="extraBold" marginBottom={32}>
 				Which{' '}
 				<Text color="text12" type="h3" weight="extraBold">
@@ -33,8 +33,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				</Text>
 				?
 			</Text>
-
-			{tokens ? (
+			{tokens && tokens.length > 0 ? (
 				<FlatList
 					style={styles.tokensList}
 					keyExtractor={(item) => item.symbol}
@@ -42,7 +41,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
-				<ActivityIndicator />
+				<EmptyStates.NoTokens />
 			)}
 		</View>
 	);

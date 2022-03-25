@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation } from '@hooks';
 import { BigNumber as BN } from 'bignumber.js';
@@ -75,65 +75,73 @@ const ExchangeScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<View style={styles.header}>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-						<Icon name="arrowBackStroke" color="text7" size={24} />
-					</TouchableOpacity>
-				</View>
-				<View style={styles.exchangeSection}>
-					<View style={styles.exchangeHeadlineRow}>
-						<Text type="h3" weight="extraBold">
-							Exchange
-						</Text>
-						<ExchangeSummary />
-					</View>
-					<Card style={styles.tokenCard}>
-						<TokenCard
-							token={fromToken}
-							onPress={showModalFrom}
-							balance={fromTokenBalance}
-							innerRef={fromAmountRef}
-							updateQuotes={debounce(updateFromQuotes, 500)}
-							conversionAmount={fromConversionAmount}
-						/>
-
-						<TouchableOpacity
-							style={styles.tokenCardDivisor}
-							onPress={directionSwap}
-							disabled={!canChangeDirections}
-						>
-							<View style={styles.tokenCardDivisorBackground}>
-								{loadingPrices ? (
-									<ActivityIndicator />
-								) : (
-									<Icon name="arrowDown" size={24} color={canChangeDirections ? 'cta1' : 'cta2'} />
-								)}
+				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+					<View style={{ flex: 1 }}>
+						<View style={styles.header}>
+							<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+								<Icon name="arrowBackStroke" color="text7" size={24} />
+							</TouchableOpacity>
+						</View>
+						<View style={styles.exchangeSection}>
+							<View style={styles.exchangeHeadlineRow}>
+								<Text type="h3" weight="extraBold">
+									Exchange
+								</Text>
+								<ExchangeSummary />
 							</View>
-						</TouchableOpacity>
+							<Card style={styles.tokenCard}>
+								<TokenCard
+									token={fromToken}
+									onPress={showModalFrom}
+									balance={fromTokenBalance}
+									innerRef={fromAmountRef}
+									updateQuotes={debounce(updateFromQuotes, 500)}
+									conversionAmount={fromConversionAmount}
+								/>
 
-						<TokenCard
-							token={toToken}
-							onPress={showModalTo}
-							balance={toTokenBalance}
-							innerRef={toAmountRef}
-							updateQuotes={debounce(updateToQuotes, 500)}
-							conversionAmount={toConversionAmount}
-							disableMax
-						/>
-					</Card>
-				</View>
+								<TouchableOpacity
+									style={styles.tokenCardDivisor}
+									onPress={directionSwap}
+									disabled={!canChangeDirections}
+								>
+									<View style={styles.tokenCardDivisorBackground}>
+										{loadingPrices ? (
+											<ActivityIndicator />
+										) : (
+											<Icon
+												name="arrowDown"
+												size={24}
+												color={canChangeDirections ? 'cta1' : 'cta2'}
+											/>
+										)}
+									</View>
+								</TouchableOpacity>
 
-				<GasSelector />
+								<TokenCard
+									token={toToken}
+									onPress={showModalTo}
+									balance={toTokenBalance}
+									innerRef={toAmountRef}
+									updateQuotes={debounce(updateToQuotes, 500)}
+									conversionAmount={toConversionAmount}
+									disableMax
+								/>
+							</Card>
+						</View>
 
-				<View style={[styles.exchangeSection, styles.exchangeButton]}>
-					{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}
+						<GasSelector />
 
-					{loadingPrices ? (
-						<ActivityIndicator />
-					) : (
-						<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
-					)}
-				</View>
+						<View style={[styles.exchangeSection, styles.exchangeButton]}>
+							{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}
+
+							{loadingPrices ? (
+								<ActivityIndicator />
+							) : (
+								<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
+							)}
+						</View>
+					</View>
+				</TouchableWithoutFeedback>
 			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>

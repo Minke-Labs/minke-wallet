@@ -4,7 +4,7 @@ import { IconType } from '@styles';
 import styles from './ActionsPanel.styles';
 import { Card } from './Card/Card';
 import { ActionsPanelProps } from './ActionsPanel.types';
-import { arr } from './ActionsPanel.utils';
+import { actions } from './ActionsPanel.utils';
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	setSendModalOpen,
@@ -40,7 +40,7 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 		<View style={styles.actionsPanelContainer}>
 			<FlatList
 				keyExtractor={(item, idx) => `${item.name}-${idx}`}
-				data={arr}
+				data={actions}
 				renderItem={({ item }) => (
 					<Card onPress={chooseFnc(item.name)} name={item.name} icon={item.icon as IconType} />
 				)}

@@ -8,6 +8,9 @@ import useWyreApplePay from './useWyreApplePay';
 import useTokens from './useTokens';
 import useWyreOrderStatus from './useWyreOrderStatus';
 import useDeposit from './useDeposit';
+import useWalletCloudBackup from './useWalletCloudBackup';
+import iCloudBackup from './iCloudBackup';
+import useWallets from './useWallets';
 
 export {
 	useAmplitude,
@@ -16,8 +19,11 @@ export {
 	useFormProgress,
 	useKeyboard,
 	useTokens,
+	useDeposit,
+	useWalletCloudBackup,
 	useTimeout,
 	useWyreApplePay,
 	useWyreOrderStatus,
-	useDeposit
+	useWallets,
+	iCloudBackup
 };
