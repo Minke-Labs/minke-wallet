@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, View } from 'react-native';
-import { whale2Img } from '@images';
-import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token } from '@components';
+import { FlatList, SafeAreaView, View } from 'react-native';
+// import { whale2Img } from '@images';
+import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
@@ -10,7 +10,6 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
-import { NoTokens } from '@src/components/EmptyStates';
 
 const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
@@ -109,7 +108,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					)}
 				/>
 
-				{(filteredTokens || []).length === 0 && <NoTokens />}
+				{(filteredTokens || []).length === 0 && <EmptyStates />}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

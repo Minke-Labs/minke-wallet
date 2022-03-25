@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, Image } from 'react-native';
-import { Text } from '@components';
+import { Text, EmptyStates } from '@components';
 import { imageSource } from '@models/wallet';
 import { useTokens } from '@hooks';
-import { NoTokens } from '@src/components/EmptyStates';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
@@ -42,7 +41,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
-				<NoTokens />
+				<EmptyStates />
 			)}
 		</View>
 	);

@@ -1,22 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Text } from '@components';
 import { whale2Img } from '@images';
-
-const styles = StyleSheet.create({
-	tableContainer: {
-		flex: 1,
-		alignItems: 'center',
-		paddingVertical: 14
-	},
-	image: {
-		width: 152,
-		height: 152
-	}
-});
+import { styles } from './EmptyStates.styles';
 
 const NoTokens = () => (
-	<View style={styles.tableContainer}>
+	<View style={styles.container}>
 		<Image source={whale2Img} style={styles.image} />
 		<Text color="text4" weight="medium" marginBottom={16}>
 			No tokens here
