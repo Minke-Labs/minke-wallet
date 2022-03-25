@@ -1,4 +1,8 @@
 rootProject.name = 'Minke - DeFi Wallet'
+include ':react-native-fs'
+project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
+include ':react-native-cloud-fs'
+project(':react-native-cloud-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-cloud-fs/android')
 
 apply from: new File(["node", "--print", "require.resolve('expo/package.json')"].execute(null, rootDir).text.trim(), "../scripts/autolinking.gradle");
 useExpoModules()

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { captureException } from '@sentry/react-native';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { useState } from '@hookstate/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,6 +7,7 @@ import { useNavigation } from '@hooks';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { Network, networks, network as selectedNetwork, networkSettingsKey } from '@models/network';
 import { BasicLayout } from '@layouts';
+import Logger from '@utils/logger';
 import { Icon, Text } from '@components';
 import ListItem from './ListItem';
 import styles from './ChangeNetworkScreen.styles';
@@ -27,7 +29,8 @@ const ChangeNetworkScreen = () => {
 			state.transactions.set(undefined);
 			navigation.navigate('WalletScreen');
 		} catch (e) {
-			console.error('Error saving settings');
+			Logger.error('Error saving settings');
+			captureException(e);
 		}
 	};
 

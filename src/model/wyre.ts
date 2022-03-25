@@ -1,5 +1,6 @@
 // @ts-expect-error
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
+import { captureException } from '@sentry/react-native';
 import { get, split } from 'lodash';
 import {
 	WYRE_MERCHANT_ID_TEST,
@@ -111,9 +112,11 @@ export const showApplePayRequest = async (
 	try {
 		const paymentResponse = await paymentRequest.show();
 		return { paymentResponse };
-	} catch ({ message }) {
-		if (message !== 'AbortError') {
-			return { error: { description: message as string } };
+	} catch (error: any) {
+		captureException(error);
+
+		if (error.message !== 'AbortError') {
+			return { error: { description: error.message as string } };
 		}
 		return { paymentResponse: null, error: undefined }; // AbortError (user closed the apple modal)
 	}
@@ -314,6 +317,7 @@ export const getOrderId = async (
 			errorMessage: message
 		};
 	} catch (error: any) {
+		captureException(error);
 		const {
 			data: { errorCode, message, type }
 		} = error;

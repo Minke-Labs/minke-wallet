@@ -9,6 +9,7 @@ import { useNavigation, useTokens, useAmplitude } from '@hooks';
 import { network } from '@models/network';
 import { Wallet } from 'ethers';
 import { useState } from '@hookstate/core';
+import Logger from '@utils/logger';
 
 export const useDeposit = () => {
 	const { track } = useAmplitude();
@@ -64,7 +65,7 @@ export const useDeposit = () => {
 				interestBearingToken: market.address,
 				gweiValue
 			});
-			console.log('Deposit API', transaction);
+			Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
 
 			const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
 
@@ -83,11 +84,11 @@ export const useDeposit = () => {
 				type: 2,
 				chainId
 			};
-			console.log('Deposit', txDefaults);
+			Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
 			const signedTx = await wallet.signTransaction(txDefaults);
 			const { hash, wait } = await provider.sendTransaction(signedTx as string);
 			if (hash) {
-				console.log('Deposit', hash);
+				Logger.log(`Deposit ${JSON.stringify(hash)}`);
 				await wait();
 				setTransactionHash(hash);
 				track('Deposited', {
@@ -97,7 +98,7 @@ export const useDeposit = () => {
 				});
 				navigation.navigate('DepositSuccessScreen');
 			} else {
-				console.error('Error depositing');
+				Logger.error('Error depositing');
 			}
 		}
 	};

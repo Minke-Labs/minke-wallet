@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, SafeAreaView, View } from 'react-native';
-import { whale2Img } from '@images';
-import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token } from '@components';
+import { FlatList, SafeAreaView, View } from 'react-native';
+// import { whale2Img } from '@images';
+import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
@@ -108,14 +108,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					)}
 				/>
 
-				{(filteredTokens || []).length === 0 && (
-					<View style={styles.tableContainer}>
-						<Image source={whale2Img} style={styles.image} />
-						<Text color="text4" weight="medium" marginBottom={16}>
-							No tokens here
-						</Text>
-					</View>
-				)}
+				{(filteredTokens || []).length === 0 && <EmptyStates.NoTokens />}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

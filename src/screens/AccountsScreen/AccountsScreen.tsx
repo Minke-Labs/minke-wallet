@@ -8,7 +8,7 @@ import { walletState, globalWalletState } from '@src/stores/WalletStore';
 import { useNavigation } from '@hooks';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem';
-import ImportFlow from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
+import ImportWalletModal from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
 
 const AccountsScreen = () => {
 	const navigation = useNavigation();
@@ -38,7 +38,7 @@ const AccountsScreen = () => {
 				</TouchableOpacity>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => setModalVisible(true)}>
 					<Text weight="medium" color="text7" type="a">
-						Import
+						Import or Restore
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -51,12 +51,12 @@ const AccountsScreen = () => {
 					<FlatList
 						style={{ paddingTop: 24, paddingBottom: 24 }}
 						data={Object.values(wallets || {})}
+						showsVerticalScrollIndicator={false}
 						renderItem={({ item }) => (
 							<ListItem
 								label={item.address}
 								selected={item.address === address}
 								onPress={() => onSelectWallet(item)}
-								token={item.network}
 							/>
 						)}
 						keyExtractor={(item) => item.id}
@@ -64,8 +64,9 @@ const AccountsScreen = () => {
 				</SafeAreaView>
 			</View>
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportFlow
-					onImportFinished={() => navigation.navigate('WalletScreen')}
+				<ImportWalletModal
+					visible={isModalVisible}
+					onImportFinished={() => navigation.navigate('WalletCreatedScreen')}
 					onDismiss={() => setModalVisible(false)}
 				/>
 			</Modal>

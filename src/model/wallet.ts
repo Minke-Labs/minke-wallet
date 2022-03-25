@@ -1,20 +1,32 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+import { Alert } from 'react-native';
 import { BigNumberish, Contract, providers, Wallet } from 'ethers';
 import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
 import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
+import { backupUserDataIntoCloud } from '@models/cloudBackup';
+import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
+import { captureException } from '@sentry/react-native';
+import Logger from '@utils/logger';
+import * as keychain from './keychain';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
+const authenticationPrompt = { authenticationPrompt: { title: 'Please authenticate' } };
+
 export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWallet['id']): Promise<void> => {
-	const key = `${keychain_id}_minkeSeedPhrase`;
+	const key = `${keychain_id}_${seedPhraseKey}`;
 	const val = {
 		id: keychain_id,
 		seedPhrase
 	} as SeedPhraseData;
 
-	const save = await saveObject(key, val);
+	const privateAccessControlOptions = await keychain.getPrivateAccessControlOptions();
+
+	const save = await saveObject(key, val, privateAccessControlOptions);
 	return save;
 };
 
@@ -38,16 +50,40 @@ export const resolveENSAddress = async (ensAddress: string) => {
 	return name;
 };
 
-export const savePrivateKey = async (address: string, privateKey: null | string) => {
-	// const privateAccessControlOptions = await getPrivateAccessControlOptions();
+export const getPrivateKey = async (address: string): Promise<string | null> => {
+	const key = `${address}_${privateKeyKey}`;
 
-	const key = `${address}_minkePrivateKey`;
+	const pkey = (await loadObject(key, authenticationPrompt)) as PrivateKeyData | -2;
+
+	if (pkey === -2) {
+		Alert.alert(
+			'Error',
+			// eslint-disable-next-line max-len
+			'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris.'
+		);
+		return null;
+	}
+
+	if (pkey?.privateKey) {
+		return pkey.privateKey;
+	}
+	return null;
+};
+
+export const savePrivateKey = async (address: string, privateKey: null | string) => {
+	const key = `${address}_${privateKeyKey}`;
 	const val = {
 		address,
 		privateKey
 	};
 
-	await saveObject(key, val);
+	const privateAccessControlOptions = await keychain.getPrivateAccessControlOptions();
+
+	await saveObject(key, val, privateAccessControlOptions);
+};
+
+export const saveAllWallets = async (wallets: AllMinkeWallets) => {
+	await saveObject(allWalletsKey, wallets, keychain.publicAccessControlOptions);
 };
 
 const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null | AllMinkeWallets> => {
@@ -56,13 +92,14 @@ const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null 
 		const asArray: MinkeWallet[] = Object.values(allWallets);
 		for (const index in asArray) {
 			const { address, id } = asArray[index];
+			// eslint-disable-next-line no-await-in-loop
 			const primaryKey = await getPrivateKey(address);
 			if (primaryKey) {
 				toKeep.push(id);
 			}
 		}
 
-		const filtered = Object.fromEntries(Object.entries(allWallets).filter(([id, wallet]) => toKeep.includes(id)));
+		const filtered = Object.fromEntries(Object.entries(allWallets).filter(([id]) => toKeep.includes(id)));
 		await saveAllWallets(filtered);
 		if (filtered) {
 			return filtered as AllMinkeWallets;
@@ -74,14 +111,16 @@ const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null 
 
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
-		const allWallets = await loadObject('minkeAllWallets');
+		const allWallets = await loadObject(allWalletsKey);
 		if (allWallets) {
-			return await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
+			const wallets = await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
+			return wallets;
 		}
 
 		return null;
 	} catch (error) {
-		console.error(error);
+		Logger.error('Error getAllWallets');
+		captureException(error);
 		return null;
 	}
 };
@@ -90,10 +129,6 @@ export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
 	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
-};
-
-export const saveAllWallets = async (wallets: AllMinkeWallets) => {
-	await saveObject('minkeAllWallets', wallets);
 };
 
 const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Promise<WalletAndMnemonic> => {
@@ -116,7 +151,7 @@ const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Pro
 };
 
 // @TODO - Create always from the same mnemonic if possible.
-export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWallet> => {
+export const walletCreate = async (mnemonicOrPrivateKey = '', backupFile = ''): Promise<MinkeWallet> => {
 	const blockchain = await selectedNetwork();
 	const { wallet, mnemonic } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 
@@ -126,22 +161,37 @@ export const walletCreate = async (mnemonicOrPrivateKey = ''): Promise<MinkeWall
 	}
 
 	await savePrivateKey(wallet.address, wallet.privateKey);
-	const newWallet: MinkeWallet = { id, address: wallet.address, name: '', primary: false, network: blockchain.id };
+	const newWallet: MinkeWallet = {
+		id,
+		address: wallet.address,
+		name: '',
+		primary: false,
+		network: blockchain.id,
+		backedUp: !!backupFile,
+		backupFile
+	};
+
+	const allWallets = (await getAllWallets()) || {};
+	allWallets[newWallet.id] = newWallet;
+	await saveAllWallets(allWallets);
 	return newWallet;
 };
 
-export const restoreWalletByMnemonic = async (mnemonicOrPrivateKey: string): Promise<MinkeWallet> => {
+export const restoreWalletByMnemonic = async (
+	mnemonicOrPrivateKey: string,
+	backupFile?: string
+): Promise<MinkeWallet> => {
 	const { wallet } = await getWalletFromMnemonicOrPrivateKey(mnemonicOrPrivateKey);
 	const existingWallets = (await getAllWallets()) || {};
 	const existingWallet = find(existingWallets, (w) => w.address === wallet.address);
 	if (!existingWallet || isEmpty(existingWallet)) {
-		return walletCreate(mnemonicOrPrivateKey);
+		return walletCreate(mnemonicOrPrivateKey, backupFile);
 	}
 	await savePrivateKey(wallet.address, wallet.privateKey);
 	return existingWallet;
 };
 
-export const purgeWallets = () => deleteItemAsync('minkeAllWallets');
+export const purgeWallets = () => deleteItemAsync(allWalletsKey);
 
 export const walletDelete = async (id: string): Promise<boolean> => {
 	const allWallets = (await getAllWallets()) || {};
@@ -155,21 +205,21 @@ export const walletDelete = async (id: string): Promise<boolean> => {
 };
 
 export const getSeedPhrase = async (keychain_id: string): Promise<string | null> => {
-	const key = `${keychain_id}_minkeSeedPhrase`;
+	const key = `${keychain_id}_${seedPhraseKey}`;
 
-	const seedData = (await loadObject(key)) as SeedPhraseData;
+	const seedData = (await loadObject(key, authenticationPrompt)) as SeedPhraseData | -2;
+
+	if (seedData === -2) {
+		Alert.alert(
+			'Error',
+			// eslint-disable-next-line max-len
+			'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris'
+		);
+		return null;
+	}
+
 	if (seedData?.seedPhrase) {
 		return seedData.seedPhrase;
-	}
-	return null;
-};
-
-export const getPrivateKey = async (address: string): Promise<string | null> => {
-	const key = `${address}_minkePrivateKey`;
-
-	const pkey = (await loadObject(key)) as PrivateKeyData;
-	if (pkey?.privateKey) {
-		return pkey.privateKey;
 	}
 	return null;
 };
@@ -202,6 +252,7 @@ export const sendTransaction = async (
 	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 	const chainId = await wallet.getChainId();
+	const formattedAmount = amount.replace(',', '.');
 	const txDefaults = {
 		chainId,
 		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
@@ -216,13 +267,13 @@ export const sendTransaction = async (
 		// const signer = provider.getSigner(wallet.address)
 
 		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
-		tx = await erc20.populateTransaction.transfer(to, parseUnits(amount, decimals));
+		tx = await erc20.populateTransaction.transfer(to, parseUnits(formattedAmount, decimals));
 		// tx.gasPrice = await wallet.provider.estimateGas(tx);
 		// tx.gasLimit = 41000
 		// erc20.deployTransaction()
 	} else {
 		tx = {
-			value: parseUnits(amount, decimals)
+			value: parseUnits(formattedAmount, decimals)
 		};
 	}
 
@@ -260,7 +311,8 @@ export const getZapperWalletTokens = async (wallet: string): Promise<ZapperWalle
 		result = await response.json();
 		return result;
 	} catch (error) {
-		console.error('error', error); // temp until we fetch from the chain
+		Logger.error(`Error getZapperWalletTokens ${wallet}`);
+		captureException(error); // temp until we fetch from the chain
 	}
 	return result;
 };
@@ -285,11 +337,11 @@ export const getTokenList = async (): Promise<Array<Coin>> => {
 	return result.json();
 };
 
-export const smallWalletAddress = (address: string): string => {
+export const smallWalletAddress = (address: string, length = 4): string => {
 	if (address.includes('.')) {
 		return address;
 	}
-	return `${address.substring(0, 4)}..${address.substring(address.length - 4)}`;
+	return `${address.substring(0, length)}..${address.substring(address.length - length)}`;
 };
 
 export const imageSource = async (address: string): Promise<{ uri: string }> => {
@@ -298,6 +350,25 @@ export const imageSource = async (address: string): Promise<{ uri: string }> => 
 		wallet = await resolveENSAddress(address);
 	}
 	return { uri: makeBlockie(wallet || address) };
+};
+
+export const setWalletBackedUp = async (walletId: string, backupFile = '') => {
+	const allWallets = (await getAllWallets()) || {};
+	allWallets[walletId] = {
+		...allWallets[walletId],
+		backedUp: true,
+		backupDate: Date.now(),
+		backupFile
+	};
+
+	await saveAllWallets(allWallets);
+
+	try {
+		await backupUserDataIntoCloud(allWallets);
+	} catch (e) {
+		Logger.error(e);
+		throw e;
+	}
 };
 
 export interface MinkeTokenList {
@@ -313,6 +384,9 @@ export interface MinkeWallet {
 	name: string;
 	primary: boolean;
 	network: string;
+	backedUp: boolean;
+	backupDate?: number;
+	backupFile?: string;
 }
 
 export interface WalletAndMnemonic {

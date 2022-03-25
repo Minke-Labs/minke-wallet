@@ -1,10 +1,10 @@
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
-import { Text, Modal, ModalReusables } from '@components';
+import { Text, Modal } from '@components';
+import { AddFunds } from '@containers';
 import { SendModal, ReceiveModal, SentModal } from '../Modals';
 import { ResultProps } from '../WalletScreen.types';
 import { ModalsImportProps } from './ModalsImport.types';
-import { AddFunds } from '@containers';
 
 const ModalsImport: React.FC<ModalsImportProps> = ({
 	sendModalOpen,

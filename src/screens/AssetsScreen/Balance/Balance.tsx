@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
