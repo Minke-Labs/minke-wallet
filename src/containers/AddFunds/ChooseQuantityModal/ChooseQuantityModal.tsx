@@ -1,22 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { useState } from '@hookstate/core';
-import * as Clipboard from 'expo-clipboard';
-import { globalWalletState } from '@stores/WalletStore';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
 import { TokenType } from '@styles';
-import { ICoin } from '@helpers/coins';
+import { ChooseQuantityModalProps } from './ChooseQuantityModal.types';
+import { useChooseQuantityModal } from './ChooseQuantityModal.hooks';
 
-interface ChooseQuantityModalProps {
-	coin: ICoin;
-	amount: number | undefined;
-	setPresetAmount: Function;
-	enableCustomAmount: () => void;
-	onPurchase: () => void;
-}
-
-const DEFAULT_VALUE = 100;
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
 	amount,
@@ -24,18 +13,10 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	enableCustomAmount,
 	onPurchase
 }) => {
-	const { name, symbol } = coin;
-	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
-	const { address } = useState(globalWalletState()).value;
-
-	const onCopyToClipboard = () => {
-		Clipboard.setString(address || '');
-		setSnackbarVisible(true);
-	};
-
-	useEffect(() => {
-		setPresetAmount(DEFAULT_VALUE);
-	}, []);
+	const { name, symbol, onCopyToClipboard, snackbarVisible, setSnackbarVisible } = useChooseQuantityModal({
+		coin,
+		setPresetAmount
+	});
 
 	return (
 		<>

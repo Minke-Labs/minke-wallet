@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Linking, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { Icon, Text, Button, TransparentCard, ActivityIndicator } from '@components';
-import { useNavigation } from '@hooks';
+import { useAmplitude, useNavigation } from '@hooks';
 import { BasicLayout } from '@layouts';
 import styles from './OpenAave.styles';
 import { Background } from './Background/Background';
 import { useOpenAave } from './OpenAave.hooks';
 
 const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
+	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { loading, onOpenAccount } = useOpenAave({ onApprove });
+
+	useEffect(() => {
+		track('OpenAave Screen Opened');
+	}, []);
 
 	return (
 		<BasicLayout hideSafeAreaView>

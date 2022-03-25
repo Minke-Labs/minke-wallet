@@ -4,7 +4,7 @@ import { network } from '@models/network';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 // import { coins } from '@helpers/coins';
-import CoinCard from './CoinCard';
+import CoinCard from './CoinCard/CoinCard';
 
 const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 	const {
