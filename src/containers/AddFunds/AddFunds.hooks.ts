@@ -29,6 +29,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 
 	const setPresetAmount = (value: number) => {
 		setAmount(value);
+		track('Add Funds Modal - Amount selected', { value });
 		setCustomAmount(null);
 	};
 
