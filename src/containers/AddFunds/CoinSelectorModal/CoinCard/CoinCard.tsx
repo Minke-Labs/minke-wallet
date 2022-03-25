@@ -1,38 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Token, Icon, Text } from '@components';
 import { TokenType } from '@styles';
 import { useTheme } from '@hooks';
-import { ICoin } from '@helpers/coins';
-
-const styles = StyleSheet.create({
-	container: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		paddingHorizontal: 16,
-		height: 69,
-		shadowOffset: {
-			width: 0,
-			height: 1
-		},
-		shadowOpacity: 0.08,
-		shadowColor: '#000',
-		borderRadius: 16,
-		marginBottom: 8
-	},
-	content: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		width: '100%'
-	}
-});
-
-interface CoinCardProps {
-	coin: ICoin;
-	onSelect: Function;
-}
+import { styles } from './CoinCard.styles';
+import { CoinCardProps } from './CoinCard.types';
 
 const CoinCard: React.FC<CoinCardProps> = ({ coin, onSelect }) => {
 	const { name, symbol } = coin;

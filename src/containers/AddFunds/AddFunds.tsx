@@ -4,7 +4,7 @@ import { ICoin, coins } from '@helpers/coins';
 import { ModalHeader, ModalReusables } from '@components';
 import { useAmplitude, useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
-import CoinSelectorModal from './CoinSelectorModal';
+import CoinSelectorModal from './CoinSelectorModal/CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
 
