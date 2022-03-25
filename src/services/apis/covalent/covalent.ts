@@ -1,7 +1,8 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Logger from '@utils/logger';
 import { AccountBalance } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
 import { interestBearingTokens } from '@models/deposit';
@@ -22,11 +23,11 @@ const instance = axios.create({
 
 export const getTokenBalances = async (address: string): Promise<AccountBalance> => {
 	const { chainId: networkId } = await network();
-	const response = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
-
+	const { status, data } = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
+	if (status !== 200) Logger.sentry('Balances API failed');
 	const {
 		data: { items: apiTokens }
-	}: BalanceApiResponse = response.data;
+	}: BalanceApiResponse = data;
 
 	const coinList = await AsyncStorage.getItem('@listCoins');
 	const coins = JSON.parse(coinList!);
