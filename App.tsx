@@ -16,6 +16,7 @@ Sentry.init({
 const App = () => {
 	const { walletState, coinList, fontsLoaded } = useApp();
 	if (!coinList || !fontsLoaded || walletState.promised) return <AppLoading />;
+
 	return (
 		<AmplitudeProvider>
 			<ThemeProvider>

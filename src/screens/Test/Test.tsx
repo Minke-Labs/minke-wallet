@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Sentry from 'sentry-expo';
 import { View } from 'react-native';
 import { Button } from '@components';
 import { BasicLayout } from '@layouts';
@@ -6,6 +7,7 @@ import { BasicLayout } from '@layouts';
 const Test = () => {
 	const clickEvent = () => {
 		console.log('CLICKED!');
+		Sentry.Native.captureMessage('CLICKED!');
 	};
 
 	return (
