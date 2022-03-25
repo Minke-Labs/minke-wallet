@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useTheme } from '@hooks';
+import { useAuthentication, useTheme } from '@hooks';
 import { useState } from '@hookstate/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
@@ -49,6 +49,7 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	const [intervalId, setIntervalId] = React.useState<NodeJS.Timer>();
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const { colors } = useTheme();
+	const { showAuthenticationPrompt } = useAuthentication();
 	const styles = makeStyles(colors);
 
 	const showModal = () => setVisible(true);
@@ -126,7 +127,8 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 	};
 
 	const exchangeName = priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange;
-	const onFinish = async () => {
+
+	const onSuccess = async () => {
 		if (priceQuote?.priceRoute) {
 			setLoading(true);
 			showModal();
@@ -331,7 +333,12 @@ const ExchangeResumeScreen = ({ navigation }: NativeStackScreenProps<RootStackPa
 
 					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
-					{priceQuote && (loading ? <ActivityIndicator /> : <ProgressButton onFinish={onFinish} />)}
+					{priceQuote &&
+						(loading ? (
+							<ActivityIndicator />
+						) : (
+							<ProgressButton onFinish={() => showAuthenticationPrompt({ onSuccess })} />
+						))}
 				</View>
 			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>

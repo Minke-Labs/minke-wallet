@@ -11,6 +11,7 @@ import useDeposit from './useDeposit';
 import useWalletCloudBackup from './useWalletCloudBackup';
 import iCloudBackup from './iCloudBackup';
 import useWallets from './useWallets';
+import useAuthentication from './useAuthentication';
 
 export {
 	useAmplitude,
@@ -25,5 +26,6 @@ export {
 	useWyreApplePay,
 	useWyreOrderStatus,
 	useWallets,
-	iCloudBackup
+	iCloudBackup,
+	useAuthentication
 };

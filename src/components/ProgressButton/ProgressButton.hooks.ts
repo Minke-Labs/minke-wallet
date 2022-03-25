@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from '@hooks';
+import { Keyboard } from 'react-native';
 
 interface UseProgressButtonProps {
 	onFinish: () => void;
@@ -30,6 +31,7 @@ export const useProgressButton = ({ onFinish, disabled }: UseProgressButtonProps
 
 	const finishCounter = () => {
 		resetInterval();
+		Keyboard.dismiss();
 		onFinish();
 	};
 
