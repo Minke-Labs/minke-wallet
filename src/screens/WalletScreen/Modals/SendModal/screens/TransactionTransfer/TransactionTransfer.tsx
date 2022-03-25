@@ -4,11 +4,11 @@ import { Text, Token, Button, ActivityIndicator, TokenAmountInput } from '@compo
 import { TokenType } from '@styles';
 import { smallWalletAddress } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { decimalSeparator } from 'expo-localization';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
 import { useTransactionTransfer } from './TransactionTransfer.hooks';
-import { decimalSeparator } from 'expo-localization';
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
 	const { image, amount, number, gasPrice, sending, onChangeAmount, onChangeNumber, onSend } = useTransactionTransfer(
