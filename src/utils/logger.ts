@@ -30,6 +30,7 @@ const safelyStringifyWithFormat = (data: any) => {
 
 const Logger = {
 	initialize() {
+		if (__DEV__) return;
 		Sentry.init({
 			dsn: SENTRY_DSN || process.env.SENTRY_DSN,
 			debug: __DEV__
