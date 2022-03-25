@@ -1,5 +1,4 @@
 import { IconType } from '@styles';
-import { GestureResponderEvent } from 'react-native';
 
 interface ButtonProps {
 	title: string;
@@ -8,7 +7,7 @@ interface ButtonProps {
 	disabled?: boolean;
 	mode?: string;
 	marginBottom?: number;
-	onPress?: (event: GestureResponderEvent) => void;
+	onPress?: () => void;
 }
 
 export type { ButtonProps };

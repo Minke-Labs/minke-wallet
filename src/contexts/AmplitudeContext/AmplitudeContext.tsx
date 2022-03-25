@@ -30,13 +30,15 @@ const AmplitudeProvider: React.FC = ({ children }) => {
 	const [isInitialized, setIsInitialized] = React.useState(false);
 
 	const initialize = async () => {
-		if (isInitialized) return;
+		if (isInitialized || __DEV__) return;
 		await Amplitude.initializeAsync(apiKey!);
 		setIsInitialized(true);
 	};
 
 	const track = async (event: string, options?: TrackingOptions) => {
 		initialize();
+		if (!isInitialized) return;
+
 		const properties = normalizeTrackingOptions(options) || {};
 
 		if (properties || address) {
@@ -44,7 +46,7 @@ const AmplitudeProvider: React.FC = ({ children }) => {
 		} else await Amplitude.logEventAsync(event);
 	};
 
-	const obj = useMemo(() => ({ track }), [track]);
+	const obj = useMemo(() => ({ track }), [track, isInitialized]);
 
 	return <AmplitudeContext.Provider value={obj}>{children}</AmplitudeContext.Provider>;
 };

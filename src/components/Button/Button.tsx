@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '@hooks';
 import { ColorType } from '@styles';
-import { TouchableOpacity } from 'react-native';
+import { Keyboard, TouchableOpacity } from 'react-native';
 
 import { styles } from './Button.styles';
 import { ButtonProps } from './Button.types';
@@ -29,6 +29,11 @@ const Button: React.FC<ButtonProps> = ({
 		return 'transparent';
 	};
 
+	const handlePress = () => {
+		Keyboard.dismiss();
+		onPress!();
+	};
+
 	const { borderColor, borderWidth } =
 		mode === 'outlined'
 			? { borderColor: color, borderWidth: 1 }
@@ -38,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
 		<TouchableOpacity
 			activeOpacity={0.8}
 			disabled={disabled}
-			onPress={onPress}
+			onPress={handlePress}
 			style={[styles.button, { backgroundColor: backgroundColor(), borderColor, borderWidth, marginBottom }]}
 		>
 			{iconLeft && (
