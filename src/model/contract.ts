@@ -121,7 +121,7 @@ export const approveSpending = async ({
 		const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 		return { permit: signedTx };
 	} catch (error) {
-		Sentry.Native.captureException(`Error trying to sign - ${error}`);`); 
+		Sentry.Native.captureException(`Error trying to sign - ${error}`);
 		return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
 	}
 };
