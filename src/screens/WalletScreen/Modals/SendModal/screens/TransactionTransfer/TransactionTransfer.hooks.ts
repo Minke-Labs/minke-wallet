@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import { useAmplitude } from '@hooks';
+import { useAmplitude, useAuthentication } from '@hooks';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@models/network';
 import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
@@ -28,6 +28,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 	const [chainDefaultToken, setChainDefaultToken] = React.useState('');
 	const [sending, setSending] = React.useState(false);
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
+	const { showAuthenticationPrompt } = useAuthentication();
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {
@@ -52,33 +53,37 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 		network: { id }
 	} = state.value;
 
-	const onSend = async () => {
-		if (gasPrice && chainDefaultToken) {
-			setSending(true);
-			const ens = user.address;
-			const to = (await resolveENSAddress(ens)) || ens;
-			const { wait, hash } = await sendTransaction(
-				privateKey,
-				to,
-				amount,
-				gasPrice.result.ProposeGasPrice,
-				id,
-				token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
-				token.decimals
-			);
-			await wait();
-			onDismiss();
-			sentSuccessfully({
-				symbol: token.symbol.toLowerCase(),
-				link: hash
-			});
-			track('Send', {
-				token: token.symbol,
-				amount,
-				to,
-				hash
-			});
-		}
+	const onSend = () => {
+		showAuthenticationPrompt({
+			onSuccess: async () => {
+				if (gasPrice && chainDefaultToken) {
+					setSending(true);
+					const ens = user.address;
+					const to = (await resolveENSAddress(ens)) || ens;
+					const { wait, hash } = await sendTransaction(
+						privateKey,
+						to,
+						amount,
+						gasPrice.result.ProposeGasPrice,
+						id,
+						token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
+						token.decimals
+					);
+					await wait();
+					onDismiss();
+					sentSuccessfully({
+						symbol: token.symbol.toLowerCase(),
+						link: hash
+					});
+					track('Send', {
+						token: token.symbol,
+						amount,
+						to,
+						hash
+					});
+				}
+			}
+		});
 	};
 
 	return {
