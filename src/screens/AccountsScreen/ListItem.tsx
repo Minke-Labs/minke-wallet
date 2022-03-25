@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, GestureResponderEvent, Image } from 'react-native';
 import { useTheme } from '@hooks';
-import { Icon, Text, Token } from '@components';
-import { TokenType } from '@styles';
+import { Icon, Text } from '@components';
+import makeBlockie from 'ethereum-blockies-base64';
 
 const styles = StyleSheet.create({
 	container: {
@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
 	tag: {
 		paddingHorizontal: 8,
 		borderRadius: 14
+	},
+	image: {
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		marginRight: 16
 	}
 });
 
@@ -28,10 +34,9 @@ interface ListItemProps {
 	onPress: (event: GestureResponderEvent) => void;
 	label: string;
 	selected: boolean;
-	token?: string;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ label, selected, onPress, token }) => {
+const ListItem: React.FC<ListItemProps> = ({ label, selected, onPress }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity
@@ -40,7 +45,7 @@ const ListItem: React.FC<ListItemProps> = ({ label, selected, onPress, token }) 
 			disabled={selected}
 		>
 			<View style={styles.leftContainer}>
-				<Token outline={selected} name={token?.toLowerCase() as TokenType} size={32} />
+				<Image source={{ uri: makeBlockie(label) }} style={styles.image} />
 				<Text type="a" style={{ marginLeft: 8, fontSize: 12 }} weight={selected ? 'bold' : 'medium'}>
 					{label}
 				</Text>

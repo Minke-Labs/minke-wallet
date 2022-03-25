@@ -19,14 +19,16 @@ export interface WalletState {
 		walletBalance?: number; // total in the wallet (total - deposits)
 	};
 	transactions?: Array<Transaction>;
+	backedUp: boolean;
 }
 
-export const emptyWallet = {
+export const emptyWallet: WalletState = {
 	privateKey: '',
 	address: '',
 	walletId: null,
 	network: defaultNetwork,
-	transactions: []
+	transactions: [],
+	backedUp: false
 };
 
 export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
@@ -65,7 +67,14 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 		const privateKey = await getPrivateKey(wallet.address);
 		if (privateKey) {
 			return {
-				...{ privateKey, address: wallet.address, walletId: wallet.id, allTokens: [], transactions: [] },
+				...{
+					privateKey,
+					address: wallet.address,
+					walletId: wallet.id,
+					allTokens: [],
+					transactions: [],
+					backedUp: wallet.backedUp
+				},
 				...(await fetchTokensAndBalances(privateKey, wallet.address))
 			};
 		}
@@ -77,6 +86,7 @@ const initializeWallet = async (): Promise<WalletState> => {
 	const wallets = await getAllWallets();
 	let wallet = find(wallets, (w: MinkeWallet) => w.primary);
 	if (wallets && !wallet) {
+		// eslint-disable-next-line prefer-destructuring
 		wallet = Object.values(wallets)[0];
 	}
 	return walletState(wallet as MinkeWallet);
