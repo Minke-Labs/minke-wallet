@@ -94,7 +94,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					)}
 					{seed.value && (
 						<Button
-							onPress={() => navigation.navigate('ManualBackupScreen')}
+							onPress={() => navigation.navigate('ManualBackupScreen', { walletId })}
 							title="View Secret Phrase"
 							mode="outlined"
 						/>

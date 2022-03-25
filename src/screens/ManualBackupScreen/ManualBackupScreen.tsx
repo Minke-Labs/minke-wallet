@@ -5,19 +5,21 @@ import { Icon, ScreenLoadingIndicator, Text } from '@components';
 import { useNavigation } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
-import { globalWalletState } from '@stores/WalletStore';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import Card from './Card';
 import CopyButton from './CopyButton';
 import styles from './ManualBackupScreen.styles';
 
-const ManualBackupScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
+const ManualBackupScreen = ({ route }: Props) => {
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();
 	const onFinish = () => navigation.navigate('WalletScreen');
-	const walletState = useState(globalWalletState());
-	const loadSeed = getSeedPhrase(walletState.value.walletId || '');
+	const { walletId } = route.params;
+	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
 	if (seed.promised) return <ScreenLoadingIndicator />;
 
