@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ title, idx }) => {
 		<View style={styles.container}>
 			<View style={[styles.tag, { backgroundColor: colors.background4 }]}>
 				<Text weight="medium" type="p" color="text7">
-					{idx + 1}
+					{idx}
 				</Text>
 			</View>
 			<Text>{title}</Text>
