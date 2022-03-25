@@ -22,7 +22,7 @@ import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
 import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
-import EmptyStates from './EmptyStates/EmptyStates';
+import EmptyStates from './EmptyStates';
 
 export {
 	ActivityIndicator,

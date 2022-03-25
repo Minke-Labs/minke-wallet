@@ -41,7 +41,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
 				/>
 			) : (
-				<EmptyStates />
+				<EmptyStates.NoTokens />
 			)}
 		</View>
 	);

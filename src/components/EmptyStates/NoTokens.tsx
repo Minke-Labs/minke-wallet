@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import { Text } from '@components';
 import { whale2Img } from '@images';
-import { styles } from './EmptyStates.styles';
+import { styles } from './NoTokens.styles';
 
 const NoTokens = () => (
 	<View style={styles.container}>

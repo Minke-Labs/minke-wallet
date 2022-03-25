@@ -108,7 +108,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					)}
 				/>
 
-				{(filteredTokens || []).length === 0 && <EmptyStates />}
+				{(filteredTokens || []).length === 0 && <EmptyStates.NoTokens />}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>
