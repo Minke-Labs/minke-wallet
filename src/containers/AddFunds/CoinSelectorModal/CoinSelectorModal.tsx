@@ -3,13 +3,12 @@ import { Text } from '@components';
 import { network } from '@models/network';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-// import { coins } from '@helpers/coins';
 import CoinCard from './CoinCard/CoinCard';
 
 const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 	const {
-		network: { nativeToken: token }
-	} = useState(globalWalletState());
+		network: { nativeToken: token, topUpToken }
+	} = useState(globalWalletState()).value;
 	const [nativeToken, setNativeToken] = React.useState<{ symbol: string; name: string }>();
 	useEffect(() => {
 		const fetchDefaultToken = async () => {
@@ -18,7 +17,7 @@ const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 		};
 
 		fetchDefaultToken();
-	}, [token.value]);
+	}, [token]);
 
 	return (
 		<>
@@ -37,14 +36,16 @@ const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 				/>
 			)}
 
-			<CoinCard
-				coin={{
-					symbol: 'USDC',
-					image: 'usdc',
-					name: 'USDC'
-				}}
-				onSelect={onSelect}
-			/>
+			{topUpToken && (
+				<CoinCard
+					coin={{
+						symbol: topUpToken.symbol,
+						image: topUpToken.symbol.toLowerCase(),
+						name: topUpToken.name
+					}}
+					onSelect={onSelect}
+				/>
+			)}
 		</>
 	);
 };

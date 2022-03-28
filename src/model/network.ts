@@ -11,6 +11,7 @@ export interface Network {
 	gasURL?: string;
 	zapperNetwork: string;
 	nativeToken: { symbol: string; name: string };
+	topUpToken: { symbol: string; name: string };
 	transactionTimesEndpoint: boolean;
 	wyreSRN: string;
 }
@@ -35,6 +36,7 @@ export const networks: Networks = {
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true
 	},
 	matic: {
@@ -48,6 +50,7 @@ export const networks: Networks = {
 		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		zapperNetwork: 'polygon',
 		nativeToken: { symbol: 'MATIC', name: 'Matic' },
+		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
 		transactionTimesEndpoint: false
 	},
 	mumbai: {
@@ -62,6 +65,7 @@ export const networks: Networks = {
 		gasURL: 'https://api.polygonscan.com/',
 		zapperNetwork: 'polygon',
 		nativeToken: { symbol: 'MATIC', name: 'Matic' },
+		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
 		transactionTimesEndpoint: false
 	},
 	ropsten: {
@@ -75,6 +79,7 @@ export const networks: Networks = {
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true
 	},
 	kovan: {
@@ -88,6 +93,7 @@ export const networks: Networks = {
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true
 	}
 };
