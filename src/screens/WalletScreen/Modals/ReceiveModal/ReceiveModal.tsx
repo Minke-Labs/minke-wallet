@@ -1,29 +1,13 @@
-import React, { useEffect } from 'react';
-import { View, Share, SafeAreaView } from 'react-native';
-import { useState } from '@hookstate/core';
+import React from 'react';
+import { View, SafeAreaView } from 'react-native';
 import { Text, WhiteButton, ModalHeader, ActivityIndicator } from '@components';
-import { getENSAddress } from '@models/wallet';
-import { globalWalletState } from '@stores/WalletStore';
 import QRCode from 'react-native-qrcode-svg';
 import { ReceiveModalProps } from './ReceiveModal.types';
 import styles from './ReceiveModal.styles';
+import { useReceiveModal } from './ReceiveModal.hooks';
 
 const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
-	const wallet = useState(globalWalletState());
-	const [ensName, setEnsName] = React.useState<string | null>();
-
-	const address = wallet.value.address || '';
-	const onShare = async () => {
-		await Share.share({ message: address });
-	};
-
-	useEffect(() => {
-		const fetchENSAddress = async () => {
-			const name = await getENSAddress(address);
-			setEnsName(name);
-		};
-		fetchENSAddress();
-	}, []);
+	const { address, ensName, onShare } = useReceiveModal();
 
 	if (!address) {
 		return <ActivityIndicator />;

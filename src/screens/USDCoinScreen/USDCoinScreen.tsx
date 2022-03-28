@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Text, Icon } from '@components';
-import { depositStablecoins as stablecoins, usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@hooks';
+import { depositStablecoins as stablecoins } from '@models/deposit';
 import styles from './USDCoinScreen.styles';
-import ListItem from './ListItem';
+import ListItem from './ListItem/ListItem';
+import { useUSDCoinScreen } from './USDCoinScreen.hooks';
 
 const USDCoinScreen = () => {
-	const navigation = useNavigation();
-	const [usdCoin, setUsdCoin] = useState('');
-
-	const onSelectCoin = async (token: string) => {
-		await AsyncStorage.setItem(usdCoinSettingsKey, token);
-		setUsdCoin(token);
-	};
-
-	useEffect(() => {
-		const fetchSelectedCoin = async () => {
-			setUsdCoin(await selectedUSDCoin());
-		};
-
-		fetchSelectedCoin();
-	}, []);
+	const { usdCoin, onSelectCoin, navigation } = useUSDCoinScreen();
 
 	return (
 		<BasicLayout>
