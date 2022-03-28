@@ -1,45 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, Text, Input } from '@components';
-import { useState } from '@hookstate/core';
-import { globalContactState } from '@src/stores/ContactStore';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { isAddress } from 'ethers/lib/utils';
-import { resolveENSAddress, smallWalletAddress } from '@models/wallet';
-import { useKeyboard, useWallets } from '@hooks';
+import { smallWalletAddress } from '@models/wallet';
 import { ContactItem } from '../../components';
 import { TransactionContactsProps } from './TransactionContacts.types';
 import styles from './TransactionContacts.styles';
 import { NoContactsYet } from './NoContactsYet/NoContactsYet';
+import { useTransactionContacts } from './TransactionContacts.hooks';
 
 // @TODO: Marcos accept address with a bad format
 const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected }) => {
-	const [address, setAddress] = React.useState('');
-	const [ensAddress, setEnsAddress] = React.useState<string>();
-	const state = useState(globalContactState());
-	const { contactList } = state.value;
-	const keyboardVisible = useKeyboard();
-	const { wallets, address: selectedAddress } = useWallets();
-	const availableAddresses = Object.values(wallets || []).filter((wallet) => wallet.address !== selectedAddress);
-
-	useEffect(() => {
-		const lookForENS = async () => {
-			if (address && address.includes('.')) {
-				setEnsAddress((await resolveENSAddress(address)) || undefined);
-			} else {
-				setEnsAddress(undefined);
-			}
-		};
-		lookForENS();
-	}, [address]);
-
-	const validAddress = !!address && (isAddress(address) || isAddress(ensAddress || ''));
-
-	const onSendAddress = () => {
-		if (validAddress) {
-			onSelected({ name: address, address });
-		}
-	};
+	const { contactList, address, setAddress, keyboardVisible, availableAddresses, validAddress, onSendAddress } =
+		useTransactionContacts({ onSelected });
 
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
