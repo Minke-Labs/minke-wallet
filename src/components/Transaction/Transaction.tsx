@@ -68,7 +68,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 			right={
 				<Text style={{ fontSize: 12 }}>
 					{value && Math.trunc(Number(formatUnits(value, tokenDecimal))) > 0
-						? formatUnits(value, tokenDecimal)
+						? truncate(formatUnits(value, tokenDecimal), 2)
 						: truncate(formatUnits(value, tokenDecimal), 6)}{' '}
 					{tokenSymbol || token}
 				</Text>

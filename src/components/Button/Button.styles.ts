@@ -8,8 +8,7 @@ export const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		maxHeight: Dimensions.get('screen').height * 0.8,
-		flexDirection: 'row',
-		width: '100%'
+		flexDirection: 'row'
 	},
 	smallContainer: {
 		flexDirection: 'row',
