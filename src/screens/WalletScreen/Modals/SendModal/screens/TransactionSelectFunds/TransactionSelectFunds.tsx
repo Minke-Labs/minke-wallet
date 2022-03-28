@@ -1,23 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, FlatList, Image } from 'react-native';
 import { Text, EmptyStates } from '@components';
-import { imageSource } from '@models/wallet';
-import { useTokens } from '@hooks';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
+import { useTransactionSelectFunds } from './TransactionSelectFunds.hooks';
 
 const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
-	const [image, setImage] = React.useState<{ uri: string }>();
-	const { tokens } = useTokens();
-
-	useEffect(() => {
-		const fetchImage = async () => {
-			setImage(await imageSource(user.address));
-		};
-
-		fetchImage();
-	}, []);
+	const { image, tokens } = useTransactionSelectFunds({ user });
 
 	return (
 		<View style={styles.container}>
