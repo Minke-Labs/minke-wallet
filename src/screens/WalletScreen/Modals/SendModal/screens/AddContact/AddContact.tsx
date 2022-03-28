@@ -19,7 +19,8 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 	useEffect(() => {
 		const lookForENS = async () => {
 			if (address && address.includes('.')) {
-				setEnsAddress(await resolveENSAddress(address));
+				const resolvedAddress = await resolveENSAddress(address);
+				setEnsAddress(resolvedAddress!);
 			} else {
 				setEnsAddress(undefined);
 			}
