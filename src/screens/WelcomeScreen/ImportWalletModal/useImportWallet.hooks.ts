@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { captureException } from '@sentry/react-native';
 import { useState } from '@hookstate/core';
+import { useFormProgress, useNavigation } from '@hooks';
 import { Keyboard } from 'react-native';
 import { globalWalletState, walletState } from '@src/stores/WalletStore';
 import { restoreWalletByMnemonic } from '@src/model/wallet';
 import Logger from '@utils/logger';
 
-export const useImportWalletModal = ({ onImportFinished }: { onImportFinished: () => void }) => {
+interface UseImportWalletModalProps {
+	onImportFinished: () => void;
+	visible: boolean;
+	onDismiss: () => void;
+}
+
+export const useImportWalletModal = ({ onImportFinished, visible, onDismiss }: UseImportWalletModalProps) => {
+	const { currentStep, reset, goForward, goBack } = useFormProgress();
+	const navigation = useNavigation();
+
 	const [text, setText] = React.useState('');
 	const [importing, setImporting] = React.useState(false);
 	const state = useState(globalWalletState());
@@ -28,10 +38,32 @@ export const useImportWalletModal = ({ onImportFinished }: { onImportFinished: (
 		}
 	};
 
+	const onICloudBackup = () => {
+		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
+	};
+
+	const onBack = () => {
+		if (currentStep === 0) {
+			onDismiss();
+		} else {
+			goBack();
+		}
+	};
+
+	useEffect(() => {
+		if (!visible) {
+			reset();
+		}
+	}, [visible]);
+
 	return {
 		text,
 		setText,
 		importing,
-		onImportWallet
+		onImportWallet,
+		onBack,
+		currentStep,
+		goForward,
+		onICloudBackup
 	};
 };
