@@ -8,7 +8,9 @@
     "postinstall": "./scripts/postinstall.sh"
   },
   "dependencies": {
+    "@aave/protocol-js": "^4.3.0",
     "@apollo/client": "3.2.4",
+    "@biconomy/mexa": "^2.0.31",
     "@ethersproject/shims": "^5.4.0",
     "@ethersproject/wallet": "^5.4.0",
     "@expo-google-fonts/inter": "^0.2.0",

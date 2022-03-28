@@ -8,6 +8,7 @@ import { CoinCardProps } from './CoinCard.types';
 
 const CoinCard: React.FC<CoinCardProps> = ({ coin, onSelect }) => {
 	const { name, symbol } = coin;
+	console.log(coin);
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity
