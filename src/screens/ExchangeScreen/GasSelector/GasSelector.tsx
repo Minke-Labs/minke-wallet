@@ -17,8 +17,8 @@ const GasSelector = () => {
 				showsHorizontalScrollIndicator={false}
 			>
 				<View style={styles.scrollviewHorizontalContent}>
-					<GasOption type="normal" />
 					<GasOption type="fast" />
+					<GasOption type="normal" />
 				</View>
 			</ScrollView>
 		</SafeAreaView>
