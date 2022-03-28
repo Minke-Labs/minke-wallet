@@ -1,34 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { Text, Icon } from '@components';
-import { useTheme, useWallets } from '@hooks';
 import { TouchableOpacity, View } from 'react-native';
-import { findLatestBackUpOnICloud } from '@models/backup';
-import { forEach } from 'lodash';
 import { SelectImportMethodModalProps } from './SelectImportMethodModal.types';
 import styles from './SelectImportMethodModal.styles';
+import { useSelectImportMethodModal } from './SelectImportMethodModal.hooks';
 
 const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectImportMethodModalProps) => {
-	const { colors } = useTheme();
-	const { wallets } = useWallets();
-	const [latestBackup, setLatestBackup] = useState<string | null>();
-
-	useEffect(() => {
-		const fetchBackupsFiles = async () => {
-			setLatestBackup(await findLatestBackUpOnICloud());
-		};
-
-		fetchBackupsFiles();
-	}, []);
-
-	const walletsBackedUp = useMemo(() => {
-		let count = 0;
-		forEach(wallets, (wallet) => {
-			if (wallet.backedUp) {
-				count += 1;
-			}
-		});
-		return count;
-	}, [wallets]);
+	const { colors, latestBackup, walletsBackedUp } = useSelectImportMethodModal();
 
 	return (
 		<>
