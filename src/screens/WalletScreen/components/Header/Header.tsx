@@ -1,32 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon, ScreenLoadingIndicator } from '@components';
-import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useState } from '@hookstate/core';
 import styles from './Header.styles';
 import { HeaderProps } from './Header.types';
+import { useHeader } from './Header.hooks';
 
 const Header: React.FC<HeaderProps> = ({ onSettingsPress }) => {
-	const [ensName, setEnsName] = React.useState<string | null>('');
-	const state = useState(globalWalletState());
-	const { address } = state.value;
-
-	useEffect(() => {
-		const fetchENSAddress = async () => {
-			const name = await getENSAddress(address);
-			setEnsName(name);
-		};
-
-		fetchENSAddress();
-	}, []);
-
-	const accountName = () => {
-		if (ensName) {
-			return ensName;
-		}
-		return smallWalletAddress(address);
-	};
+	const { accountName, state } = useHeader();
 
 	if (state.promised) return <ScreenLoadingIndicator />;
 
