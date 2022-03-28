@@ -22,13 +22,13 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		<>
 			<View>
 				<View style={{ flexDirection: 'row', marginBottom: 8, alignItems: 'center' }}>
-					<Token name={symbol.toLowerCase() as TokenType} size={40} />
+					<Token name={coin.image.toLowerCase() as TokenType} size={40} />
 					<Text weight="extraBold" type="h3" style={{ marginLeft: 8 }}>
 						{name}
 					</Text>
 				</View>
 				<Text marginBottom={20}>
-					Buy some {coin.symbol} with <Text weight="extraBold">Apple Pay</Text> to start using Minke:
+					Buy some {symbol} with <Text weight="extraBold">Apple Pay</Text> to start using Minke:
 				</Text>
 				<FlatList
 					style={{ marginBottom: 20 }}
