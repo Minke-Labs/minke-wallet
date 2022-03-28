@@ -1,64 +1,16 @@
-import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
-import { smallWalletAddress, getENSAddress } from '@models/wallet';
-import { searchContact } from '@models/contact';
+import React from 'react';
 import { formatUnits } from 'ethers/lib/utils';
 import { format } from 'date-fns';
-import * as Linking from 'expo-linking';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { network } from '@src/model/network';
 import Text from '../Text/Text';
 import Card from '../Card/Card';
 import TransactionIcon from '../TransactionIcon/TransactionIcon';
 import { truncate } from './Transaction.utils';
 import { TransactionProps } from './Transaction.types';
+import { useTransaction } from './Transaction.hooks';
 
 const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
-	const wallet = useState(globalWalletState());
-	const address = wallet.address.value;
-	const { from, to, timeStamp, isError, value, tokenSymbol, tokenDecimal = '18', hash } = transaction;
-	const received = to.toLowerCase() === address.toLowerCase();
-	const source = received ? from : to;
-	const timestamp = new Date(+timeStamp * 1000);
-	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
-	const [token, setToken] = React.useState('');
-
-	useEffect(() => {
-		let mounted = true;
-		const formatAddress = async () => {
-			const contact = await searchContact(source);
-			if (contact?.name) {
-				setFormattedSource(contact.name);
-			} else {
-				const ens = await getENSAddress(source);
-				if (ens) {
-					const ensContact = await searchContact(ens);
-					setFormattedSource(ensContact?.name || ens);
-				} else {
-					setFormattedSource(smallWalletAddress(source));
-				}
-			}
-		};
-
-		const fetchDefaultToken = async () => {
-			const {
-				nativeToken: { symbol: nativeTokenSymbol }
-			} = await network();
-			if (mounted) {
-				setToken(nativeTokenSymbol);
-			}
-		};
-
-		fetchDefaultToken();
-		formatAddress();
-		// eslint-disable-next-line no-return-assign
-		return () => (mounted = false);
-	}, []);
-
-	const openTransaction = async () => {
-		const { etherscanURL } = await network();
-		Linking.openURL(`${etherscanURL}/tx/${hash}`);
-	};
+	const { received, timestamp, formattedSource, value, tokenDecimal, tokenSymbol, token, isError, openTransaction } =
+		useTransaction({ transaction });
 
 	return (
 		<Card
