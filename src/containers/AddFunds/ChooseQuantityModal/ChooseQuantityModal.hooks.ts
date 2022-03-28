@@ -12,7 +12,11 @@ interface UseChooseQuantityModalProps {
 }
 
 export const useChooseQuantityModal = ({ coin, setPresetAmount }: UseChooseQuantityModalProps) => {
-	const { name, symbol } = coin;
+	const { name, symbol: coinSymbol } = coin;
+	let symbol = coinSymbol;
+	if (symbol === 'MUSDC') {
+		symbol = 'USDC';
+	}
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const { address } = useState(globalWalletState()).value;
 

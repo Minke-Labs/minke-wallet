@@ -40,9 +40,10 @@ const CoinSelector: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 				<CoinCard
 					coin={{
 						symbol: topUpToken.symbol,
-						image: topUpToken.symbol.toLowerCase(),
+						image: topUpToken.name.toLowerCase(),
 						name: topUpToken.name
 					}}
+					description="USDC"
 					onSelect={onSelect}
 				/>
 			)}
