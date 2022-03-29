@@ -155,7 +155,7 @@ export interface AaveBalances {
 	};
 }
 
-interface AaveAsset {
+export interface AaveAsset {
 	type: string;
 	address: string;
 	network: string;

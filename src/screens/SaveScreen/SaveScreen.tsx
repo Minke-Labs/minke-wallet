@@ -10,7 +10,7 @@ import { Background } from './Background/Background';
 import { useSaveScreen } from './SaveScreen.hooks';
 
 const SaveScreen = () => {
-	const { address, aaveBalances, aaveMarket } = useSaveScreen();
+	const { address, aaveBalances, aaveMarket, onWithdraw } = useSaveScreen();
 	if (!aaveBalances) return <ScreenLoadingIndicator />;
 	const { products = [], meta } = aaveBalances[address.toLowerCase()];
 	const lending = products.find((p) => p.label === 'Lending');
@@ -26,7 +26,7 @@ const SaveScreen = () => {
 				</Background>
 			</SafeAreaView>
 
-			<Body {...{ lending }} />
+			<Body {...{ lending, onWithdraw }} />
 		</BasicLayout>
 	);
 };

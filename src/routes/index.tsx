@@ -23,6 +23,7 @@ import {
 	DepositSuccessScreen,
 	BackupToICloudScreen,
 	TopUpWaitScreen,
+	WithdrawScreen,
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
@@ -58,6 +59,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
 				<Stack.Screen name="BackupToICloudScreen" component={BackupToICloudScreen} />
 				<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
+				<Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
