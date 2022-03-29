@@ -18,7 +18,6 @@ import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
 import BackupToICloudScreen from './BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
-import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import Test from './Test/Test';
 
 export {
@@ -42,6 +41,5 @@ export {
 	DepositSuccessScreen,
 	BackupToICloudScreen,
 	TopUpWaitScreen,
-	WithdrawScreen,
 	Test
 };

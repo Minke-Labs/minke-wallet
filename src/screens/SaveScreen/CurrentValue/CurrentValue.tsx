@@ -31,20 +31,12 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 					</View>
 				)}
 			</BlurView>
-			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-				<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('WithdrawScreen')}>
-					<Icon name="minusStroke" color="cta1" size={20} />
-					<Text marginBottom={4} style={{ marginLeft: 8 }}>
-						Withdraw
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('DepositScreen')}>
-					<Icon name="saveStroke" color="cta1" size={20} />
-					<Text marginBottom={4} style={{ marginLeft: 8 }}>
-						Deposit
-					</Text>
-				</TouchableOpacity>
-			</View>
+			<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('DepositScreen')}>
+				<Icon name="saveStroke" color="cta1" size={20} />
+				<Text marginBottom={4} style={{ marginLeft: 8 }}>
+					Deposit
+				</Text>
+			</TouchableOpacity>
 		</View>
 	);
 };
