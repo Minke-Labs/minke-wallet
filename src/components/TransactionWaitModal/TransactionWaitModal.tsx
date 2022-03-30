@@ -3,13 +3,13 @@ import React from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTheme } from '@hooks';
-import { ParaswapToken } from '@models/token';
 import { network } from '@models/network';
 import { smallWalletAddress } from '@src/model/wallet';
 import { ModalHeader, Text, Icon, ActivityIndicator } from '@components';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './TransactionWaitModal.styles';
 import Token from '../Token/Token';
+import { TransactionWaitModalProps } from './TransactionWaitModal.types';
 
 const TransactionWaitModal = ({
 	onDismiss,
@@ -18,14 +18,7 @@ const TransactionWaitModal = ({
 	transactionHash,
 	deposit = false,
 	withdraw = false
-}: {
-	onDismiss: () => void;
-	fromToken: ParaswapToken;
-	toToken: ParaswapToken;
-	transactionHash: string;
-	deposit?: boolean;
-	withdraw?: boolean;
-}) => {
+}: TransactionWaitModalProps) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
