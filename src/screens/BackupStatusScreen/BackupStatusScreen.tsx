@@ -5,7 +5,7 @@ import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
-import { useNavigation, iCloudBackup, useWallets } from '@hooks';
+import { useNavigation, iCloudBackup, useWallets, useAuthentication } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { walletState, globalWalletState } from '@src/stores/WalletStore';
@@ -61,6 +61,8 @@ const BackupStatusScreen = ({ route }: Props) => {
 
 	const { handleIcloudBackup, isWalletLoading, backupError } = iCloudBackup(walletId);
 
+	const { showAuthenticationPrompt } = useAuthentication();
+
 	useEffect(() => {
 		setError(backupError);
 	}, [backupError]);
@@ -113,7 +115,13 @@ const BackupStatusScreen = ({ route }: Props) => {
 					)}
 					{seed.value && (
 						<Button
-							onPress={() => navigation.navigate('ManualBackupScreen', { walletId })}
+							onPress={
+								() =>
+									showAuthenticationPrompt({
+										onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
+									})
+								// eslint-disable-next-line react/jsx-curly-newline
+							}
 							title="View Secret Phrase"
 							mode="outlined"
 						/>
