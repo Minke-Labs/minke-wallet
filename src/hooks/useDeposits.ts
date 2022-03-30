@@ -14,8 +14,8 @@ const useDeposits = () => {
 
 				if (lending) {
 					const lala: MinkeToken[] = lending.assets.map((asset) => {
-						const { address, tokens: coins } = asset;
-						const { balance, balanceUSD, decimals, symbol } = coins[0];
+						const { address: interestBearingAddress, tokens: coins } = asset;
+						const { balance, balanceUSD, decimals, symbol, address } = coins[0];
 						return {
 							address,
 							balance: balance.toString(),
@@ -23,7 +23,8 @@ const useDeposits = () => {
 							decimals,
 							symbol,
 							name: symbol,
-							image: symbol
+							image: symbol,
+							interestBearingAddress
 						};
 					});
 					setTokens(lala);

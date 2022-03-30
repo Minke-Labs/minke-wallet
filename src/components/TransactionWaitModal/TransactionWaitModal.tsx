@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -15,13 +16,15 @@ const TransactionWaitModal = ({
 	fromToken,
 	toToken,
 	transactionHash,
-	deposit = false
+	deposit = false,
+	withdraw = false
 }: {
 	onDismiss: () => void;
 	fromToken: ParaswapToken;
 	toToken: ParaswapToken;
 	transactionHash: string;
 	deposit?: boolean;
+	withdraw?: boolean;
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -50,20 +53,24 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="p2" weight="medium" color="text3">
-					{deposit ? 'Depositing' : 'Exchanging'}{' '}
+					{deposit ? 'Depositing' : withdraw ? 'Withdrawing' : 'Exchanging'}{' '}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
 					{fromToken.symbol}
 				</Text>
-				<Text type="p2" weight="medium" color="text3">
-					{' '}
-					{deposit ? 'in' : 'for'}{' '}
-				</Text>
-				<Text type="p2" weight="extraBold" color="text3">
-					{' '}
-					{toToken.symbol}
-				</Text>
+				{!withdraw && (
+					<>
+						<Text type="p2" weight="medium" color="text3">
+							{' '}
+							{deposit ? 'in' : 'for'}{' '}
+						</Text>
+						<Text type="p2" weight="extraBold" color="text3">
+							{' '}
+							{toToken.symbol}
+						</Text>
+					</>
+				)}
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="a" weight="medium" color="text3">

@@ -10,6 +10,7 @@ import Logger from '@utils/logger';
 import { getProvider } from '@models/wallet';
 import { Wallet } from 'ethers';
 import { globalWalletState } from '@stores/WalletStore';
+import { withdrawTransaction } from '@models/withdraw';
 
 const useWithdrawScreen = () => {
 	const [searchVisible, setSearchVisible] = React.useState(false);
@@ -41,7 +42,7 @@ const useWithdrawScreen = () => {
 
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/,/g, '.');
-		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
 			setAmount(formatedValue);
 		}
 	};
@@ -79,12 +80,16 @@ const useWithdrawScreen = () => {
 				Keyboard.dismiss();
 				if (canWithdraw) {
 					setWaitingTransaction(true);
-					const transaction = await depositTransaction({
+					const { interestBearingAddress = '' } =
+						tokens!.find((t) => t.symbol.toLowerCase() === token.symbol.toLowerCase()) || {};
+
+					const transaction = await withdrawTransaction({
 						address,
+						privateKey,
 						amount,
-						token: token.address,
+						toTokenAddress: token.address,
 						decimals: token.decimals,
-						interestBearingToken: market.address,
+						interestBearingToken: interestBearingAddress,
 						gweiValue
 					});
 					Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
@@ -118,7 +123,7 @@ const useWithdrawScreen = () => {
 							amount,
 							hash
 						});
-						navigation.navigate('DepositSuccessScreen');
+						navigation.navigate('SaveScreen');
 					} else {
 						Logger.error('Error depositing');
 					}
@@ -160,6 +165,8 @@ const useWithdrawScreen = () => {
 		updateAmount,
 		onTokenSelect,
 		onWithdraw,
+		transactionHash,
+		waitingTransaction,
 		tokens
 	};
 };

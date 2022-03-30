@@ -48,7 +48,7 @@ export const useDeposit = () => {
 
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/,/g, '.');
-		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
 			setAmount(formatedValue);
 		}
 	};

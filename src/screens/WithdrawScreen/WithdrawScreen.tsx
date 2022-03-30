@@ -6,6 +6,8 @@ import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useTheme } from '@hooks';
 import { debounce } from 'lodash';
+import { tokenBalanceFormat } from '@helpers/utilities';
+import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import GasSelector from '../ExchangeScreen/GasSelector/GasSelector';
 import TokenCard from '../ExchangeScreen/TokenCard/TokenCard';
 import { makeStyles } from './WithdrawScreen.styles';
@@ -29,6 +31,8 @@ const WithdrawScreen = () => {
 		canWithdraw,
 		onTokenSelect,
 		onWithdraw,
+		waitingTransaction,
+		transactionHash,
 		tokens
 	} = useWithdrawScreen();
 
@@ -49,7 +53,7 @@ const WithdrawScreen = () => {
 							<Text type="a" weight="regular" color="text3">
 								Balance:{' '}
 								<Text type="a" weight="extraBold" color="text3">
-									{tokenBalance} {token.symbol}
+									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
 								</Text>
 							</Text>
 						)}
@@ -81,6 +85,17 @@ const WithdrawScreen = () => {
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
+			</Modal>
+			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('SaveScreen')}>
+				{token && (
+					<TransactionWaitModal
+						onDismiss={() => navigation.navigate('SaveScreen')}
+						fromToken={token!}
+						toToken={token!}
+						transactionHash={transactionHash}
+						withdraw
+					/>
+				)}
 			</Modal>
 		</>
 	);
