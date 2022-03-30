@@ -68,6 +68,8 @@ export const approvalTransaction = async (
 	let tokenAmount;
 	if (amount && decimals) {
 		tokenAmount = `&amount=${formatUnits(toBn(amount, decimals), 'wei')}`;
+	} else {
+		tokenAmount = '';
 	}
 	const addresses = `ownerAddress=${address}&sellTokenAddress=${token}`;
 	const result = await fetch(
@@ -166,7 +168,7 @@ export interface AaveBalances {
 	};
 }
 
-interface AaveAsset {
+export interface AaveAsset {
 	type: string;
 	address: string;
 	network: string;
