@@ -5,6 +5,7 @@ import Logger from '@utils/logger';
 import { erc20abi, getProvider } from './wallet';
 import { network } from './network';
 import { ParaswapToken } from './token';
+import { interestBearingTokens } from './deposit';
 
 interface ContractAbiResponse {
 	message: string;
@@ -26,7 +27,61 @@ interface ContractApproval {
 	approvalTransaction?: providers.TransactionResponse;
 }
 
-export const onChainApproval = async ({
+export const depositTest = async ({
+	privateKey,
+	token,
+	interestBearingToken,
+	amount,
+	contractAddress,
+	minAmount,
+	gasPrice
+}: {
+	privateKey: string;
+	token: string;
+	interestBearingToken: string;
+	amount: string;
+	contractAddress: string;
+	minAmount: string;
+	gasPrice: number;
+}): Promise<ContractApproval> => {
+	const provider = await getProvider();
+	const wallet = new Wallet(privateKey, provider);
+	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
+
+	const txDefaults = {
+		from: await wallet.getAddress(),
+		type: 2,
+		chainId: await wallet.getChainId(),
+		gasLimit: 1000000,
+		maxFeePerGas: gasPrice.toString(),
+		maxPriorityFeePerGas: gasPrice.toString(),
+		nonce
+	};
+
+	const erc20 = new Contract(
+		contractAddress,
+		[
+			// eslint-disable-next-line max-len
+			'function ZapIn(address fromToken, uint256 amountIn, address aToken, uint256 minATokens, address swapTarget, bytes calldata swapData, address affiliate) external payable returns (uint256 aTokensRec)'
+		],
+		wallet
+	);
+	console.log('até aqui tá bonito');
+	const tx = await erc20.populateTransaction.ZapIn(
+		token,
+		amount,
+		interestBearingToken,
+		minAmount,
+		'0x0000000000000000000000000000000000000000',
+		'0x00',
+		'0x3CE37278de6388532C3949ce4e886F365B14fB56'
+	);
+	console.log('transaction', { ...tx, ...txDefaults });
+	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
+	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
+};
+
+const onChainApproval = async ({
 	privateKey,
 	amount,
 	contractAddress,
@@ -59,6 +114,7 @@ export const onChainApproval = async ({
 		wallet
 	);
 	const tx = await erc20.populateTransaction.approve(spender, amount);
+	console.log('transaction', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
 };

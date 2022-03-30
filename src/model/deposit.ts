@@ -91,6 +91,7 @@ export const depositTransaction = async ({
 	const slippage = '&slippagePercentage=0.05';
 	const network = `&network=${zapperNetwork}&api_key=${apiKey}${gas}`;
 	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
+	console.log(`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`);
 	const result = await fetch(
 		`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`
 	);

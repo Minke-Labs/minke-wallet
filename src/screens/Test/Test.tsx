@@ -7,7 +7,10 @@ import { getProvider } from '@models/wallet';
 import { Biconomy } from '@biconomy/mexa';
 import { ethers, Wallet } from 'ethers';
 import { globalWalletState } from '@stores/WalletStore';
-import { parseUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { approvalTransaction, depositTransaction } from '@models/deposit';
+import { approveSpending, depositTest } from '@models/contract';
+import { toBn } from 'evm-bn';
 
 const Test = () => {
 	const test = async () => {
@@ -18,49 +21,107 @@ const Test = () => {
 		} = globalWalletState().value;
 
 		const url = 'https://polygon-mainnet.g.alchemy.com/v2/oCWOrhTijsp7Ir1Qm9If2xxWgNa_YIcV';
-		const provider = new ethers.providers.JsonRpcProvider(url);
-		const biconomy = new Biconomy(provider, {
+		const walletProvider = new ethers.providers.JsonRpcProvider(url);
+		const biconomy = new Biconomy(walletProvider, {
 			apiKey: 'fny6DM1HC.2dd130ac-5d62-4907-af68-17568cb95634',
 			debug: true
 		});
+		const provider = new ethers.providers.Web3Provider(biconomy);
 
 		biconomy
 			.onEvent(biconomy.READY, async () => {
-				const ethersProvider = new ethers.providers.Web3Provider(biconomy);
-				const wallet = new Wallet(privateKey, ethersProvider);
-				const txBuilder = new TxBuilderV2(Network.polygon, provider);
-				const lendingPool = txBuilder.getLendingPool(Market.Proto);
+				const token = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'; // USDC
+				const interestBearingToken = '0x1a13f4ca1d028320a707d99520abfefca3998b7f'; // amUSDC
+				const decimals = 6;
+				const amount = formatUnits(toBn('0.01', decimals), 'wei');
+				const minAmount = formatUnits(toBn('0.001', decimals), 'wei');
+				const spender = '0x21cd021e578532e2d55bcb1105d1766be1f1736a';
+				const gweiValue = 50 * 1000000000;
 
-				const reserve = '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063'; // DAI, not amDAI
-				const amount = '0.01';
-				// Initialize your dapp here like getting user accounts etc
-				const result: EthereumTransactionTypeExtended[] = await lendingPool.deposit({
-					user: address,
-					reserve,
+				const {
+					approvalTransaction: { hash: approvalHash, wait: approvalWait }
+				} = await approveSpending({
+					userAddress: address,
 					amount,
-					onBehalfOf: '0x5f5e3148532d1682866131a1971bb74a92d96376'
+					contractAddress: token,
+					privateKey,
+					spender,
+					gasPrice: gweiValue
 				});
-				const { tx } = result[0];
-				const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
-				let txDefaults = {};
-				try {
-					txDefaults = await tx();
-				} catch ({ transaction }) {
-					txDefaults = transaction;
-				}
+				console.log('allowed: ', approvalHash);
+				await approvalWait();
+				console.log('finished approval');
 
-				delete txDefaults.accessList;
-				// const gasParams = {
-				// 	gasPrice: parseUnits('60', 'gwei'),
-				// 	gasLimit: 5000000
-				// };
-				const transaction = { nonce, chainId, ...txDefaults };
-				const signedTx = await wallet.signTransaction(transaction);
-				const hash = await ethersProvider.sendTransaction(signedTx as string);
-				if (hash) {
-					console.log(hash);
-					console.log('finished');
-				}
+				const abi = [
+					// eslint-disable-next-line max-len
+					'function ZapIn(address fromToken, uint256 amountIn, address aToken, uint256 minATokens, address swapTarget, bytes calldata swapData, address affiliate) external payable returns (uint256 aTokensRec)'
+				];
+
+				// Initialize Constants
+				const contract = new ethers.Contract(spender, abi, biconomy.getSignerByAddress(address));
+
+				const contractInterface = new ethers.utils.Interface(abi);
+
+				const userAddress = address;
+
+				// Create your target method signature.. here we are calling setQuote() method of our contract
+				const { data } = await contract.populateTransaction.ZapIn(
+					token,
+					amount,
+					interestBearingToken,
+					minAmount,
+					'0x0000000000000000000000000000000000000000',
+					'0x00',
+					'0x3CE37278de6388532C3949ce4e886F365B14fB56'
+				);
+				const lala = biconomy.getEthersProvider();
+
+				const gasLimit = await lala.estimateGas({
+					to: spender,
+					from: userAddress,
+					data
+				});
+
+				console.log('Gas limit : ', gasLimit);
+
+				const txParams = {
+					data,
+					to: spender,
+					from: userAddress,
+					gasLimit, // optional
+					signatureType: 'EIP712_SIGN'
+				};
+
+				// as ethers does not allow providing custom options while sending transaction
+				const tx = await lala.send('eth_sendTransaction', [txParams]);
+				console.log('Transaction hash : ', tx);
+
+				// event emitter methods
+				lala.once(tx, (transaction) => {
+					// Emitted when the transaction has been mined
+					// show success message
+					console.log(transaction);
+					// do something with transaction hash
+				});
+
+				// const txDefaults = await depositTransaction({
+				// 	address,
+				// 	amount,
+				// 	decimals,
+				// 	gweiValue,
+				// 	interestBearingToken,
+				// 	token
+				// });
+
+				// console.log(txDefaults);
+
+				// const transaction = { nonce, chainId, ...txDefaults };
+				// const signedTx = await wallet.signTransaction(transaction);
+				// const hash = await ethersProvider.sendTransaction(signedTx as string);
+				// if (hash) {
+				// 	console.log(hash);
+				// 	console.log('finished');
+				// }
 			})
 			.onEvent(biconomy.ERROR, (error: any, message: any) => {
 				console.log('Error');
