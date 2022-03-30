@@ -8,10 +8,47 @@ import { backupImg } from '@images';
 import { useNavigation, iCloudBackup, useWallets } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
+import { walletState, globalWalletState } from '@src/stores/WalletStore';
+
 import styles from './BackupStatusScreen.styles';
+
+const BackedUp: React.FC<{ address: string }> = ({ address }) => (
+	<>
+		<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
+			Your Wallet is Backed Up!
+		</Text>
+		<Text type="p" weight="regular" center marginBottom={48}>
+			{smallWalletAddress(address, 9)}
+		</Text>
+		<Text weight="medium" center marginBottom={40}>
+			If you lose this device you can recover your encrpyted wallet backup from iCloud.
+		</Text>
+	</>
+);
+
+const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }> = ({
+	address,
+	handleIcloudBackup
+}) => (
+	<>
+		<Text weight="extraBold" type="h2" center marginBottom={24} width={275} color="alert1">
+			Your Wallet is not Backed Up!
+		</Text>
+		<Text type="p" weight="regular" center marginBottom={48}>
+			{smallWalletAddress(address, 9)}
+		</Text>
+		<Text weight="medium" center marginBottom={40}>
+			Your keys your coin. Backup your wallet incase of loss.
+		</Text>
+		<Button title="Back up to iCloud" onPress={handleIcloudBackup} iconRight="cloudStroke" marginBottom={24} />
+	</>
+);
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupStatusScreen'>;
 const BackupStatusScreen = ({ route }: Props) => {
+	const state = useState(globalWalletState());
+	const { address: addressState } = state.value;
+
 	const navigation = useNavigation();
 	const { walletId, finishedBackup } = route.params;
 	const [error, setError] = React.useState<string | undefined>();
@@ -38,6 +75,11 @@ const BackupStatusScreen = ({ route }: Props) => {
 		return <LoadingScreen title={isWalletLoading} />;
 	}
 
+	const onSelectWallet = async (walletIn: MinkeWallet) => {
+		state.set(await walletState(walletIn));
+		navigation.navigate('WalletScreen');
+	};
+
 	return (
 		<>
 			<BasicLayout>
@@ -62,35 +104,12 @@ const BackupStatusScreen = ({ route }: Props) => {
 					<Image source={backupImg} style={styles.image} />
 
 					{finishedBackup || backedUp ? (
-						<>
-							<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
-								Your Wallet is Backed Up!
-							</Text>
-							<Text type="p" weight="regular" center marginBottom={48}>
-								{smallWalletAddress(address, 9)}
-							</Text>
-							<Text weight="medium" center marginBottom={40}>
-								If you lose this device you can recover your encrpyted wallet backup from iCloud.
-							</Text>
-						</>
+						<BackedUp {...{ address }} />
 					) : (
-						<>
-							<Text weight="extraBold" type="h2" center marginBottom={24} width={275} color="alert1">
-								Your Wallet is not Backed Up!
-							</Text>
-							<Text type="p" weight="regular" center marginBottom={48}>
-								{smallWalletAddress(address, 9)}
-							</Text>
-							<Text weight="medium" center marginBottom={40}>
-								Your keys your coin. Backup your wallet incase of loss.
-							</Text>
-							<Button
-								title="Back up to iCloud"
-								onPress={handleIcloudBackup}
-								iconRight="cloudStroke"
-								marginBottom={24}
-							/>
-						</>
+						<NotBackedUp {...{ address, handleIcloudBackup }} />
+					)}
+					{address !== addressState && (
+						<Button title="Go to Wallet" marginBottom={21} onPress={() => onSelectWallet(wallet)} />
 					)}
 					{seed.value && (
 						<Button
@@ -101,6 +120,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					)}
 				</View>
 			</BasicLayout>
+
 			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
 				<ModalReusables.Error onDismiss={() => setError(undefined)} title="Backup error" description={error} />
 			</Modal>
