@@ -125,7 +125,7 @@ const useWithdrawScreen = () => {
 						});
 						navigation.navigate('SaveScreen');
 					} else {
-						Logger.error('Error depositing');
+						Logger.error('Error withdrawing');
 					}
 				}
 			}
