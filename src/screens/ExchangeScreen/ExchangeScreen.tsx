@@ -6,7 +6,7 @@ import { BigNumber as BN } from 'bignumber.js';
 import { fromBn } from 'evm-bn';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import { Text, Button, Icon, Modal, ActivityIndicator } from '@components';
+import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import SearchTokens from './SearchTokens/SearchTokens';
 import GasSelector from './GasSelector/GasSelector';
@@ -43,7 +43,9 @@ const ExchangeScreen = () => {
 		updateToQuotes,
 		enoughForGas,
 		ownedTokens,
-		quote
+		quote,
+		error,
+		setError
 	} = useExchangeScreen();
 
 	const ExchangeSummary = useCallback(() => {
@@ -69,7 +71,7 @@ const ExchangeScreen = () => {
 			);
 		}
 		return null;
-	}, [quote]);
+	}, [quote, error]);
 
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
@@ -153,6 +155,9 @@ const ExchangeScreen = () => {
 					showOnlyOwnedTokens={showOnlyOwnedTokens}
 					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
 				/>
+			</Modal>
+			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
 			</Modal>
 		</>
 	);

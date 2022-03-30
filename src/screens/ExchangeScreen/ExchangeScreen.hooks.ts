@@ -22,6 +22,7 @@ export const useExchangeScreen = () => {
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
 	const [ownedTokens, setOwnedTokens] = React.useState<string[]>();
+	const [error, setError] = React.useState('');
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
@@ -76,17 +77,24 @@ export const useExchangeScreen = () => {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
 			const { address: destToken, decimals: destDecimals } = toToken;
-			const {
-				error,
-				priceRoute: { srcAmount, destAmount }
-			} = await getExchangePrice({ srcToken, srcDecimals, destToken, destDecimals, amount, side });
-			if (error) {
-				Logger.error(`Load prices error: ${error}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+			const { error: apiError, priceRoute } = await getExchangePrice({
+				srcToken,
+				srcDecimals,
+				destToken,
+				destDecimals,
+				amount,
+				side
+			});
+			if (apiError) {
+				Logger.error(`Load prices error: ${apiError}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 				Keyboard.dismiss();
 				setQuote(undefined);
 				setLoadingPrices(false);
+				setError(apiError);
 				return undefined;
 			}
+
+			const { srcAmount, destAmount } = priceRoute;
 
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
@@ -283,6 +291,8 @@ export const useExchangeScreen = () => {
 		updateToQuotes,
 		enoughForGas,
 		ownedTokens,
-		quote
+		quote,
+		error,
+		setError
 	};
 };
