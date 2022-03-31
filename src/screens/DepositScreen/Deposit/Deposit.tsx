@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, ProgressButton } from '@components';
+import { Icon, Modal, Text, ProgressButton, TokenCard } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation, useAmplitude } from '@hooks';
 import { debounce } from 'lodash';
@@ -10,7 +10,6 @@ import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { tokenBalanceFormat } from '@helpers/utilities';
-import TokenCard from '../../ExchangeScreen/TokenCard/TokenCard';
 import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
 import { makeStyles } from './Deposit.styles';
@@ -73,6 +72,7 @@ const Deposit = () => {
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>
+
 			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('DepositSuccessScreen')}>
 				<TransactionWaitModal
 					onDismiss={() => navigation.navigate('DepositSuccessScreen')}

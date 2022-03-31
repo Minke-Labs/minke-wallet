@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useTheme } from '@hooks';
 import { decimalSeparator } from 'expo-localization';
 import { ParaswapToken } from '@models/token';
-import { makeStyles } from '../ExchangeScreen.styles';
 
 interface UseTokenCardProps {
 	token: ParaswapToken;
@@ -16,8 +14,6 @@ export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, d
 	const [amount, setAmount] = useState('');
 	// if enabled always set the max according to the balance
 	const [maxModeEnabled, setMaxModeEnabled] = useState(false);
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
@@ -73,7 +69,6 @@ export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, d
 		onChangeText,
 		onMaxPress,
 		isMaxEnabled,
-		invalidAmount,
-		styles
+		invalidAmount
 	};
 };
