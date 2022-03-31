@@ -50,11 +50,7 @@ export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, d
 	}, [token]);
 
 	useEffect(() => {
-		if (
-			updateQuotes &&
-			amount &&
-			!(conversionAmount && conversionAmount.replace(/\./g, decimalSeparator) === amount)
-		) {
+		if (updateQuotes && !(conversionAmount && conversionAmount.replace(/\./g, decimalSeparator) === amount)) {
 			updateQuotes(amount);
 		}
 	}, [amount]);

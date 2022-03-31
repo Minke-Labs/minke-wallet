@@ -9,10 +9,11 @@ import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import TokenCard from '../../ExchangeScreen/TokenCard/TokenCard';
 import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
-import { makeStyles } from './Deposit.styles';
 import { useDeposit } from './Deposit.hooks';
+import { makeStyles } from './Deposit.styles';
 
 const Deposit = () => {
 	const { track } = useAmplitude();
@@ -53,7 +54,7 @@ const Deposit = () => {
 							<Text type="a" weight="regular" color="text3">
 								Balance:{' '}
 								<Text type="a" weight="extraBold" color="text3">
-									{tokenBalance} {token.symbol}
+									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
 								</Text>
 							</Text>
 						</View>

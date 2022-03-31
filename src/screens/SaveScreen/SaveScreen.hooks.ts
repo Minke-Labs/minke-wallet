@@ -10,8 +10,7 @@ export const useSaveScreen = () => {
 	const [aaveBalances, setAaveBalances] = React.useState<AaveBalances>();
 	const depositState = useState(globalDepositState());
 	const { address } = globalWalletState().value;
-	// mainnet const address = '0xff32e57ceed15c2e07e03984bba66c220c06b13a';
-	// const address = '0x14bebdc546fdc6f01eb216effefa27f43c1c2a2f';
+
 	const getAaveMarket = async () => {
 		const markets = await fetchAaveMarketData();
 		const defaultMarket = markets.find((m) => m.tokens[0].symbol === selectedUSDCoin);

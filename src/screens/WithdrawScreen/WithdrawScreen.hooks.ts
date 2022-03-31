@@ -1,39 +1,58 @@
-import React, { useEffect, useCallback } from 'react';
-import { getProvider } from '@models/wallet';
-import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
-import { globalWalletState } from '@stores/WalletStore';
-import { globalDepositState } from '@stores/DepositStore';
-import { globalExchangeState } from '@stores/ExchangeStore';
-import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
-import { useNavigation, useTokens, useAmplitude, useAuthentication } from '@hooks';
-import { network } from '@models/network';
-import { Wallet } from 'ethers';
-import { useState } from '@hookstate/core';
+import React, { useCallback, useEffect } from 'react';
 import { Keyboard } from 'react-native';
+import { useState } from '@hookstate/core';
+import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
+import { globalExchangeState } from '@stores/ExchangeStore';
+import { network } from '@models/network';
+import useDeposits from '@src/hooks/useDeposits';
+import { useAmplitude, useAuthentication, useNavigation, useTokens } from '@hooks';
 import Logger from '@utils/logger';
+import { getProvider } from '@models/wallet';
+import { Wallet } from 'ethers';
+import { globalWalletState } from '@stores/WalletStore';
+import { withdrawTransaction } from '@models/withdraw';
 
-export const useDeposit = () => {
-	const { track } = useAmplitude();
-	const navigation = useNavigation();
-	const { tokens } = useTokens();
-	const { address, privateKey } = globalWalletState().value;
-	const { market } = globalDepositState().value;
-	const { gas } = useState(globalExchangeState()).value;
-	const { gweiValue = 0 } = gas || {};
-	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
-	const [token] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
+const useWithdrawScreen = () => {
+	const [searchVisible, setSearchVisible] = React.useState(false);
+	const [token, setToken] = React.useState<ParaswapToken>();
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
+	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
+	const { gas } = useState(globalExchangeState()).value;
+	const { gweiValue = 0 } = gas || {};
+	const { tokens } = useDeposits();
+	const { tokens: balances } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const { showAuthenticationPrompt } = useAuthentication();
+	const navigation = useNavigation();
+	const { track } = useAmplitude();
+
+	const { address, privateKey } = globalWalletState().value;
+
+	const showModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(true);
+	};
+
+	const hideModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(false);
+	};
+
+	const updateAmount = (value: string) => {
+		const formatedValue = value.replace(/,/g, '.');
+		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
+			setAmount(formatedValue);
+		}
+	};
 
 	const balanceFrom = useCallback(
-		(paraSwapToken: ParaswapToken | undefined): number => {
+		(paraSwapToken: ParaswapToken | undefined, native = false): number => {
 			if (!paraSwapToken) {
 				return 0;
 			}
-			const walletToken = tokens?.find(
+			const walletToken = (native ? balances : tokens)?.find(
 				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
 			);
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
@@ -43,35 +62,37 @@ export const useDeposit = () => {
 			}
 			return walletToken ? +walletToken.balance : 0;
 		},
-		[tokens, nativeToken, gas]
+		[balances, tokens, nativeToken, gas]
 	);
 
-	const updateAmount = (value: string) => {
-		const formatedValue = value.replace(/,/g, '.');
-		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
-			setAmount(formatedValue);
-		}
+	const onTokenSelect = (selectedToken: ParaswapToken) => {
+		hideModal();
+		setToken(selectedToken);
 	};
 
-	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
-	const canDeposit =
+	const enoughForGas = nativeToken && balanceFrom(nativeToken, true) > 0;
+	const canWithdraw =
 		token && +tokenBalance > 0 && +amount > 0 && +tokenBalance >= +amount && enoughForGas && gweiValue > 0;
 
-	const onDeposit = () => {
+	const onWithdraw = () => {
 		showAuthenticationPrompt({
 			onSuccess: async () => {
 				Keyboard.dismiss();
-				if (canDeposit) {
+				if (canWithdraw) {
 					setWaitingTransaction(true);
-					const transaction = await depositTransaction({
+					const { interestBearingAddress = '' } =
+						tokens!.find((t) => t.symbol.toLowerCase() === token.symbol.toLowerCase()) || {};
+
+					const transaction = await withdrawTransaction({
 						address,
+						privateKey,
 						amount,
-						token: token.address,
+						toTokenAddress: token.address,
 						decimals: token.decimals,
-						interestBearingToken: market.address,
+						interestBearingToken: interestBearingAddress,
 						gweiValue
 					});
-					Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
+					Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
 
 					const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
 
@@ -90,21 +111,21 @@ export const useDeposit = () => {
 						type: 2,
 						chainId
 					};
-					Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
+					Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);
 					const signedTx = await wallet.signTransaction(txDefaults);
 					const { hash, wait } = await provider.sendTransaction(signedTx as string);
 					if (hash) {
-						Logger.log(`Deposit ${JSON.stringify(hash)}`);
+						Logger.log(`Withdraw ${JSON.stringify(hash)}`);
 						await wait();
 						setTransactionHash(hash);
-						track('Deposited', {
+						track('Withdraw done', {
 							token: token.symbol,
 							amount,
 							hash
 						});
-						navigation.navigate('DepositSuccessScreen');
+						navigation.navigate('SaveScreen');
 					} else {
-						Logger.error('Error depositing');
+						Logger.error('Error withdrawing');
 					}
 				}
 			}
@@ -133,15 +154,21 @@ export const useDeposit = () => {
 	}, [tokens, token]);
 
 	return {
+		searchVisible,
 		token,
 		tokenBalance,
-		updateAmount,
-		canDeposit,
-		onDeposit,
-		waitingTransaction,
-		transactionHash,
 		nativeToken,
+		canWithdraw,
 		enoughForGas,
-		market
+		showModal,
+		hideModal,
+		updateAmount,
+		onTokenSelect,
+		onWithdraw,
+		transactionHash,
+		waitingTransaction,
+		tokens
 	};
 };
+
+export default useWithdrawScreen;
