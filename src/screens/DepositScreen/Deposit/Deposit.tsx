@@ -60,7 +60,12 @@ const Deposit = () => {
 					)}
 
 					<Card style={styles.tokenCard}>
-						<TokenCard token={token} balance={tokenBalance} updateQuotes={debounce(updateAmount, 500)} />
+						<TokenCard
+							notTouchable
+							token={token}
+							balance={tokenBalance}
+							updateQuotes={debounce(updateAmount, 500)}
+						/>
 					</Card>
 
 					<GasSelector />

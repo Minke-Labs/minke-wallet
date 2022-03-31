@@ -15,7 +15,8 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	innerRef,
 	disableMax = false,
 	updateQuotes,
-	conversionAmount = ''
+	conversionAmount = '',
+	notTouchable = false
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -30,7 +31,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
 	if (!token) {
 		return (
-			<TouchableOpacity onPress={onPress}>
+			<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 				<View style={styles.tokenCardWrap}>
 					<View style={styles.tokenCardCoinContent}>
 						<View style={styles.selectTokenRow}>
@@ -49,7 +50,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	return (
 		<View style={styles.tokenCardWrap}>
 			<View style={styles.tokenCardCoinContent}>
-				<TouchableOpacity onPress={onPress}>
+				<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 					<View style={styles.tokenCardCoin}>
 						<View style={styles.tokenImageContainer}>
 							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={34} glow />
