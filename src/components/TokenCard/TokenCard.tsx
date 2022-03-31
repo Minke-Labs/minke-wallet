@@ -1,12 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, Icon, Token, Input } from '@components';
 import { TokenType } from '@styles';
 import { useTheme } from '@hooks';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
+import Token from '../Token/Token';
+import Input from '../Input/Input';
 
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
