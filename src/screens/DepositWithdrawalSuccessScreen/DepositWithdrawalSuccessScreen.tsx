@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, ImageBackground, useColorScheme } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import { Text, Button } from '@components';
 import { useTheme, useNavigation } from '@hooks';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { makeStyles } from './DepositWithdrawalSuccessScreen.styles';
 
-const DepositWithdrawalSuccessScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'DepositWithdrawalSuccessScreen'>;
+const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
+	const { type } = route.params;
+
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
@@ -23,7 +28,9 @@ const DepositWithdrawalSuccessScreen = () => {
 						Congrats!
 					</Text>
 					<Text type="p2" color="text3" marginBottom={32} style={styles.textCenter}>
-						You&apos;ve made your deposit!
+						{type === 'deposit'
+							? 'You&apos;ve made your deposit!'
+							: 'You&apos;ve withdrawed successfully!'}
 					</Text>
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>

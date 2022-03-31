@@ -123,7 +123,7 @@ const useWithdrawScreen = () => {
 							amount,
 							hash
 						});
-						navigation.navigate('SaveScreen');
+						navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 					} else {
 						Logger.error('Error withdrawing');
 					}
