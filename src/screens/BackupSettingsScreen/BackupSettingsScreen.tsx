@@ -1,36 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
-import { useState } from '@hookstate/core';
-import { getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { BasicLayout } from '@layouts';
 import { Text, Icon } from '@components';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useNavigation } from '@hooks';
-import ListItem from './ListItem';
+import ListItem from './ListItem/ListItem';
 import styles from './BackupSettingsScreen.styles';
+import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
 
 const BackupSettingsScreen = () => {
-	const navigation = useNavigation();
-
-	const state = useState(globalWalletState());
-	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
-	const { address } = state.value;
-
-	useEffect(() => {
-		const fetchWallets = async () => {
-			setWallets(await getAllWallets());
-		};
-		fetchWallets();
-	}, [address]);
-
-	const onSelectWallet = async (walletId: string) => {
-		navigation.navigate('BackupStatusScreen', { walletId });
-	};
+	const { wallets, goBack, onSelectWallet } = useBackupSettingsScreen();
 
 	return (
 		<BasicLayout>
 			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
 			</View>

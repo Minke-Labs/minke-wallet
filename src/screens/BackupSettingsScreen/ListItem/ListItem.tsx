@@ -1,40 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, GestureResponderEvent, Image } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { useTheme } from '@hooks';
 import { Icon, Text } from '@components';
 import makeBlockie from 'ethereum-blockies-base64';
-
-const styles = StyleSheet.create({
-	container: {
-		height: 64,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		borderBottomWidth: 1,
-		borderStyle: 'solid'
-	},
-	leftContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		width: '70%'
-	},
-	tag: {
-		paddingHorizontal: 8,
-		borderRadius: 14
-	},
-	avatar: {
-		width: 40,
-		height: 40,
-		borderRadius: 20,
-		marginRight: 16
-	}
-});
-
-interface ListItemProps {
-	onPress: (event: GestureResponderEvent) => void;
-	label: string;
-	backedUp: boolean;
-}
+import { styles } from './ListItem.styles';
+import { ListItemProps } from './ListItem.types';
 
 const ListItem: React.FC<ListItemProps> = ({ label, backedUp, onPress }) => {
 	const { colors } = useTheme();
