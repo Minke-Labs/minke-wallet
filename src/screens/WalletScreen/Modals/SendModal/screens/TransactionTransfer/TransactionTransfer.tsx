@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import { Text, Token, Button, ActivityIndicator, TokenAmountInput } from '@components';
 import { TokenType } from '@styles';
-import { smallWalletAddress } from '@models/wallet';
+// import { smallWalletAddress } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard } from '@hooks';
@@ -31,11 +31,11 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					<Text color="text12" type="h3" weight="extraBold">
 						{token.symbol}
 					</Text>{' '}
-					do you want to send to
-					<Text color="text12" type="h3" weight="extraBold">
+					do you want to send
+					{/* <Text color="text12" type="h3" weight="extraBold">
 						{' '}
 						{user.name || smallWalletAddress(user.address)}
-					</Text>
+					</Text> */}
 					?
 				</Text>
 			</>
