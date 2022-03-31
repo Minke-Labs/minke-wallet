@@ -28,9 +28,7 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 						Congrats!
 					</Text>
 					<Text type="p2" color="text3" marginBottom={32} style={styles.textCenter}>
-						{type === 'deposit'
-							? 'You&apos;ve made your deposit!'
-							: 'You&apos;ve withdrawed successfully!'}
+						{type === 'deposit' ? "You've made your deposit!" : "You've withdrawed successfully!"}
 					</Text>
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>
