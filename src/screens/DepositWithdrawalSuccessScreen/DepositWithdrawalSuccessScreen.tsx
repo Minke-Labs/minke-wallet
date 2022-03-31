@@ -3,9 +3,9 @@ import { View, ImageBackground, useColorScheme } from 'react-native';
 import { Text, Button } from '@components';
 import { useTheme, useNavigation } from '@hooks';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
-import { makeStyles } from './DepositSuccessScreen.styles';
+import { makeStyles } from './DepositWithdrawalSuccessScreen.styles';
 
-const DepositSuccessScreen = () => {
+const DepositWithdrawalSuccessScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
@@ -35,4 +35,4 @@ const DepositSuccessScreen = () => {
 	);
 };
 
-export default DepositSuccessScreen;
+export default DepositWithdrawalSuccessScreen;
