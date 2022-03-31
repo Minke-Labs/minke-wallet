@@ -80,10 +80,10 @@ const Deposit = () => {
 
 			<Modal
 				isVisible={waitingTransaction}
-				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen')}
+				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
 				<TransactionWaitModal
-					onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen')}
+					onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 					fromToken={token}
 					toToken={{ img: market.appImageUrl, symbol: 'Aave' } as ParaswapToken}
 					transactionHash={transactionHash}
