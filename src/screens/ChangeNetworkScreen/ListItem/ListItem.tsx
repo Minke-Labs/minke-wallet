@@ -1,36 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks';
 import { Icon, Text, Token } from '@components';
 import { TokenType } from '@styles';
-
-const styles = StyleSheet.create({
-	container: {
-		height: 64,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		borderBottomWidth: 1,
-		borderStyle: 'solid'
-	},
-	leftContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		width: '50%'
-	},
-	tag: {
-		paddingHorizontal: 8,
-		borderRadius: 14
-	}
-});
-
-interface ListItemProps {
-	onPress: (event: GestureResponderEvent) => void;
-	label: string;
-	selected: boolean;
-	token: string;
-	testnet: boolean;
-}
+import { styles } from './ListItem.styles';
+import { ListItemProps } from './ListItem.types';
 
 const ListItem: React.FC<ListItemProps> = ({ label, selected, onPress, token, testnet }) => {
 	const { colors } = useTheme();
