@@ -3,9 +3,10 @@ import { TextInput, Keyboard } from 'react-native';
 import { useTokens, useNavigation, useNativeToken } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
-import { ParaswapToken, Quote, getExchangePrice, ExchangeParams } from '@models/token';
+import { ParaswapToken, Quote, getExchangePrice, ExchangeParams, nativeTokens, NativeTokens } from '@models/token';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import Logger from '@utils/logger';
+import { network } from '@models/network';
 
 export const useExchangeScreen = () => {
 	const { nativeToken } = useNativeToken();
@@ -223,6 +224,19 @@ export const useExchangeScreen = () => {
 		setFromTokenBalance(balanceFrom(fromToken).toFixed(fromToken.decimals));
 		setToTokenBalance(balanceFrom(toToken).toFixed(toToken?.decimals));
 	}, [ownedTokens, exchange.gas.value]);
+
+	useEffect(() => {
+		const loadNativeToken = async () => {
+			const {
+				nativeToken: { symbol: nativeTokenSymbol }
+			} = await network();
+			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
+			setFromToken(native);
+		};
+
+		exchange.set({} as ExchangeState);
+		loadNativeToken();
+	}, []);
 
 	useEffect(() => {
 		if (fromToken && toToken) {
