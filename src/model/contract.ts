@@ -66,7 +66,6 @@ export const depositTest = async ({
 		],
 		wallet
 	);
-	console.log('até aqui tá bonito');
 	const tx = await erc20.populateTransaction.ZapIn(
 		token,
 		amount,
@@ -76,7 +75,6 @@ export const depositTest = async ({
 		'0x00',
 		'0x3CE37278de6388532C3949ce4e886F365B14fB56'
 	);
-	console.log('transaction', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
 };
@@ -114,7 +112,6 @@ const onChainApproval = async ({
 		wallet
 	);
 	const tx = await erc20.populateTransaction.approve(spender, amount);
-	console.log('transaction', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
 };
