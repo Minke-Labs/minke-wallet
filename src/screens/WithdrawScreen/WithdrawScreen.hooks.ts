@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
-import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
+import { ParaswapToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { network } from '@models/network';
 import useDeposits from '@src/hooks/useDeposits';
-import { useAmplitude, useAuthentication, useNavigation, useTokens } from '@hooks';
+import { useAmplitude, useAuthentication, useNavigation, useTokens, useNativeToken } from '@hooks';
 import Logger from '@utils/logger';
 import { getProvider } from '@models/wallet';
 import { Wallet } from 'ethers';
@@ -13,11 +12,11 @@ import { globalWalletState } from '@stores/WalletStore';
 import { withdrawTransaction } from '@models/withdraw';
 
 const useWithdrawScreen = () => {
+	const { nativeToken } = useNativeToken();
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [token, setToken] = React.useState<ParaswapToken>();
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
-	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
 	const { tokens } = useDeposits();
@@ -131,18 +130,6 @@ const useWithdrawScreen = () => {
 			}
 		});
 	};
-
-	useEffect(() => {
-		const loadNativeToken = async () => {
-			const {
-				nativeToken: { symbol: nativeTokenSymbol }
-			} = await network();
-			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
-			setNativeToken(native);
-		};
-
-		loadNativeToken();
-	}, []);
 
 	useEffect(() => {
 		if (token && tokens && tokens.length > 0) {
