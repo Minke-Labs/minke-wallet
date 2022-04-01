@@ -8,7 +8,6 @@ import { actions } from './ActionsPanel.utils';
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	setSendModalOpen,
-	onCreateWallet,
 	onDeleteWallet,
 	onExchange,
 	onSwitchAccounts,
@@ -25,8 +24,6 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 				return showReceive;
 			case 'Copy address':
 				return onCopyToClipboard;
-			case 'New wallet':
-				return onCreateWallet;
 			case 'Switch accounts':
 				return onSwitchAccounts;
 			case 'Delete wallet':

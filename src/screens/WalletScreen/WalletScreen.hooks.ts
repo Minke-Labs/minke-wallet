@@ -1,18 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
 import { useAmplitude, useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet, fetchTokensAndBalances } from '@stores/WalletStore';
-import { walletCreate, walletDelete, getTransactions, getAllWallets } from '@models/wallet';
+import { walletDelete, getTransactions, getAllWallets } from '@models/wallet';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
-	const [creatingWallet, setCreatingWallet] = React.useState(false);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
@@ -71,14 +70,6 @@ export const useWalletScreen = () => {
 		}
 	});
 
-	const onCreateWallet = useCallback(async () => {
-		setCreatingWallet(true);
-		const newWallet = await walletCreate();
-		state.set(await walletState(newWallet));
-		setCreatingWallet(false);
-		navigation.navigate('WalletCreatedScreen');
-	}, [creatingWallet, navigation]);
-
 	const onExchange = () => navigation.navigate('ExchangeScreen');
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
 	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
@@ -112,7 +103,6 @@ export const useWalletScreen = () => {
 		setSendModalFinished,
 		sentObj,
 		onDeleteWallet,
-		onCreateWallet,
 		onExchange,
 		onSettingsPress,
 		onSwitchAccounts,
@@ -123,7 +113,6 @@ export const useWalletScreen = () => {
 		onSendFinished,
 		address,
 		balance,
-		fetchTransactions,
-		creatingWallet
+		fetchTransactions
 	};
 };

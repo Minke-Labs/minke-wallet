@@ -3,7 +3,6 @@ import { IconType } from '@styles';
 
 interface ActionsPanelProps {
 	setSendModalOpen: () => void;
-	onCreateWallet: (event: GestureResponderEvent) => void;
 	onDeleteWallet: (event: GestureResponderEvent) => void;
 	onExchange: (event: GestureResponderEvent) => void;
 	onSwitchAccounts: (event: GestureResponderEvent) => void;
