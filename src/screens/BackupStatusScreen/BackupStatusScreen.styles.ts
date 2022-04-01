@@ -8,7 +8,7 @@ export default StyleSheet.create({
 	image: {
 		width: 253,
 		height: 237,
-		marginBottom: 48
+		marginBottom: 24
 	},
 
 	header: {
