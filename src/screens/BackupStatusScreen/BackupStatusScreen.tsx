@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
@@ -96,7 +96,12 @@ const BackupStatusScreen = ({ route }: Props) => {
 					</TouchableOpacity>
 				</View>
 
-				<View style={styles.padding}>
+				<ScrollView
+					style={styles.padding}
+					contentContainerStyle={{
+						alignItems: 'center'
+					}}
+				>
 					<View style={{ width: '100%', marginBottom: 32 }}>
 						<Text weight="extraBold" type="h3">
 							Backup
@@ -126,7 +131,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 							mode="outlined"
 						/>
 					)}
-				</View>
+				</ScrollView>
 			</BasicLayout>
 
 			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
