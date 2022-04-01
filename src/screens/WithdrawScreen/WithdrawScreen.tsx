@@ -1,7 +1,7 @@
 import React from 'react';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Card } from 'react-native-paper';
-import { Icon, Modal, ProgressButton, Text } from '@components';
+import { Icon, Modal, ProgressButton, Text, TokenCard } from '@components';
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useTheme } from '@hooks';
@@ -9,7 +9,6 @@ import { debounce } from 'lodash';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import GasSelector from '../ExchangeScreen/GasSelector/GasSelector';
-import TokenCard from '../ExchangeScreen/TokenCard/TokenCard';
 import { makeStyles } from './WithdrawScreen.styles';
 import Warning from '../ExchangeScreen/Warning/Warning';
 import SearchTokens from '../ExchangeScreen/SearchTokens/SearchTokens';

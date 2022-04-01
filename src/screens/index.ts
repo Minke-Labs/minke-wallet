@@ -5,6 +5,7 @@ import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
+import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
@@ -15,7 +16,6 @@ import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
-import DepositSuccessScreen from './DepositScreen/DepositSuccess/DepositSuccessScreen';
 import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
@@ -29,6 +29,7 @@ export {
 	BackupStatusScreen,
 	ChangeNetworkScreen,
 	DepositScreen,
+	DepositWithdrawalSuccessScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
 	SaveScreen,
@@ -39,7 +40,6 @@ export {
 	WalletCreatedScreen,
 	WalletScreen,
 	WelcomeScreen,
-	DepositSuccessScreen,
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,

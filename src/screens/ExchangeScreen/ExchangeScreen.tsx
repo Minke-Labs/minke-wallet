@@ -10,7 +10,7 @@ import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@c
 import { tokenBalanceFormat } from '@helpers/utilities';
 import SearchTokens from './SearchTokens/SearchTokens';
 import GasSelector from './GasSelector/GasSelector';
-import TokenCard from './TokenCard/TokenCard';
+import TokenCard from '../../components/TokenCard/TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';

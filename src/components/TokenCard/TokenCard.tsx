@@ -1,10 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, Icon, Token, Input } from '@components';
 import { TokenType } from '@styles';
+import { useTheme } from '@hooks';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
+import { makeStyles } from './TokenCard.styles';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
+import Token from '../Token/Token';
+import Input from '../Input/Input';
 
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
@@ -13,9 +18,13 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	innerRef,
 	disableMax = false,
 	updateQuotes,
-	conversionAmount = ''
+	conversionAmount = '',
+	notTouchable = false
 }) => {
-	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount, styles } = useTokenCard({
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
+
+	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
 		balance,
 		updateQuotes: updateQuotes!,
 		token: token!,
@@ -25,7 +34,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
 	if (!token) {
 		return (
-			<TouchableOpacity onPress={onPress}>
+			<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 				<View style={styles.tokenCardWrap}>
 					<View style={styles.tokenCardCoinContent}>
 						<View style={styles.selectTokenRow}>
@@ -44,7 +53,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	return (
 		<View style={styles.tokenCardWrap}>
 			<View style={styles.tokenCardCoinContent}>
-				<TouchableOpacity onPress={onPress}>
+				<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 					<View style={styles.tokenCardCoin}>
 						<View style={styles.tokenImageContainer}>
 							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={34} glow />

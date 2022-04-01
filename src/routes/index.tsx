@@ -20,7 +20,7 @@ import {
 	SaveScreen,
 	DepositScreen,
 	USDCoinScreen,
-	DepositSuccessScreen,
+	DepositWithdrawalSuccessScreen,
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
@@ -56,7 +56,7 @@ const Routes: React.FC = () => {
 				<Stack.Screen name="WalletScreen" component={WalletScreen} />
 				<Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
 				<Stack.Screen name="Test" component={Test} />
-				<Stack.Screen name="DepositSuccessScreen" component={DepositSuccessScreen} />
+				<Stack.Screen name="DepositWithdrawalSuccessScreen" component={DepositWithdrawalSuccessScreen} />
 				<Stack.Screen name="BackupToICloudScreen" component={BackupToICloudScreen} />
 				<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
 				<Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />

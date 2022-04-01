@@ -10,4 +10,5 @@ export interface TokenCardProps {
 	disableMax?: boolean;
 	updateQuotes?: Function;
 	conversionAmount?: string;
+	notTouchable?: boolean;
 }

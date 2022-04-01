@@ -102,7 +102,7 @@ export const useDeposit = () => {
 							amount,
 							hash
 						});
-						navigation.navigate('DepositSuccessScreen');
+						navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 					} else {
 						Logger.error('Error depositing');
 					}
