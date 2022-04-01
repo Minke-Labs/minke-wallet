@@ -1,7 +1,6 @@
 import React from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation } from '@hooks';
-import { LoadingScreen } from '@components';
 import { AssetsPanel, ActionsPanel, Header } from './components';
 import { Transactions, Accounts } from './screens';
 import { useWalletScreen } from './WalletScreen.hooks';
@@ -23,7 +22,6 @@ const WalletScreen = () => {
 		setSendModalFinished,
 		sentObj,
 		onDeleteWallet,
-		onCreateWallet,
 		onExchange,
 		onSettingsPress,
 		onSwitchAccounts,
@@ -34,13 +32,8 @@ const WalletScreen = () => {
 		onSendFinished,
 		address,
 		balance,
-		fetchTransactions,
-		creatingWallet
+		fetchTransactions
 	} = useWalletScreen();
-
-	if (creatingWallet) {
-		return <LoadingScreen title="Creating wallet" />;
-	}
 
 	return (
 		<>
@@ -66,7 +59,6 @@ const WalletScreen = () => {
 				/>
 				<ActionsPanel
 					{...{
-						onCreateWallet,
 						onDeleteWallet,
 						onExchange,
 						onSwitchAccounts,
