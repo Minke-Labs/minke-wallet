@@ -1,30 +1,9 @@
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
-
-const styles = StyleSheet.create({
-	container: {
-		height: 40,
-		marginBottom: 16,
-		flexDirection: 'row',
-		width: '50%',
-		alignItems: 'center'
-	},
-	tag: {
-		height: 40,
-		width: 40,
-		borderRadius: 12,
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginRight: 12
-	}
-});
-
-interface CardProps {
-	title: string;
-	idx: number;
-}
+import { styles } from './Card.styles';
+import { CardProps } from './Card.types';
 
 const Card: React.FC<CardProps> = ({ title, idx }) => {
 	const { colors } = useTheme();

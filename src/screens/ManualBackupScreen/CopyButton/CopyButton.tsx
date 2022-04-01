@@ -1,28 +1,9 @@
-import { StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Text, Icon } from '@components';
 import { useTheme } from '@hooks';
-
-const styles = StyleSheet.create({
-	container: {
-		flexDirection: 'row',
-		height: 60,
-		width: '100%',
-		shadowColor: '#000',
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 16,
-		shadowOffset: {
-			width: 0,
-			height: 1
-		},
-		shadowOpacity: 0.08
-	}
-});
-
-interface ButtonProps {
-	onPress?: (event: GestureResponderEvent) => void;
-}
+import { styles } from './CopyButton.styles';
+import { ButtonProps } from './CopyButton.types';
 
 const CopyButton: React.FC<ButtonProps> = ({ onPress }) => {
 	const { colors } = useTheme();

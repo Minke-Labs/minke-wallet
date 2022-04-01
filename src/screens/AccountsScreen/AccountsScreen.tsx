@@ -1,39 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
-import { useState } from '@hookstate/core';
-import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { BasicLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
-import { walletState, globalWalletState } from '@src/stores/WalletStore';
-import { useNavigation } from '@hooks';
 import styles from './AccountsScreen.styles';
-import ListItem from './ListItem';
+import ListItem from './ListItem/ListItem';
 import ImportWalletModal from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
+import { useAccountsScreen } from './AccountsScreen.hooks';
 
 const AccountsScreen = () => {
-	const navigation = useNavigation();
-
-	const state = useState(globalWalletState());
-	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
-	const [isModalVisible, setModalVisible] = React.useState(false);
-	const { address } = state.value;
-
-	useEffect(() => {
-		const fetchWallets = async () => {
-			setWallets(await getAllWallets());
-		};
-		fetchWallets();
-	}, [address]);
-
-	const onSelectWallet = async (wallet: MinkeWallet) => {
-		state.set(await walletState(wallet));
-		navigation.navigate('WalletScreen');
-	};
+	const {
+		address,
+		wallets,
+		goBack,
+		onImportFinished,
+		onSelectWallet,
+		isModalVisible,
+		setModalVisible
+	} = useAccountsScreen();
 
 	return (
 		<BasicLayout>
 			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => setModalVisible(true)}>
@@ -66,7 +54,7 @@ const AccountsScreen = () => {
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
 				<ImportWalletModal
 					visible={isModalVisible}
-					onImportFinished={() => navigation.navigate('WalletCreatedScreen')}
+					onImportFinished={onImportFinished}
 					onDismiss={() => setModalVisible(false)}
 				/>
 			</Modal>

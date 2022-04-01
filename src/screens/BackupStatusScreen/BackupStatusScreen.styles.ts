@@ -2,14 +2,13 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	padding: {
-		paddingHorizontal: 24,
-		alignItems: 'center'
+		paddingHorizontal: 24
 	},
 
 	image: {
 		width: 253,
 		height: 237,
-		marginBottom: 48
+		marginBottom: 24
 	},
 
 	header: {
