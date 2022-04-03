@@ -8,6 +8,7 @@ import { BodyProps } from './Body.types';
 const Body: React.FC<BodyProps> = ({ transactions, loadMoreTransactions, renderFooter }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+
 	return (
 		<View style={styles.container}>
 			<FlatList
