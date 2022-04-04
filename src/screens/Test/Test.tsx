@@ -14,7 +14,6 @@ const Test = () => {
 
 	const test = async () => {
 		if (biconomy.status !== biconomy.READY) return;
-		console.log('calling test');
 		const token = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'; // USDC
 		const interestBearingToken = '0x1a13F4Ca1d028320A707D99520AbFefca3998b7F'; // amUSDC
 		const decimals = 6;
@@ -22,18 +21,15 @@ const Test = () => {
 		const minAmount = formatUnits(toBn('0.001', decimals), 'wei');
 		const depositContract = '0x467ebee3755455a5f2be81ca50b738d7a375f56a';
 		const gasPrice = '40';
-		console.log('ready');
-		const hash = await gaslessApproval({
+		await gaslessApproval({
 			address,
 			privateKey,
 			contract: token,
 			spender: depositContract,
 			biconomy
 		});
-		console.log('finished approval', hash);
-		return;
 
-		const depositHash = await gaslessDeposit({
+		await gaslessDeposit({
 			address,
 			amount,
 			biconomy,
@@ -44,8 +40,6 @@ const Test = () => {
 			privateKey,
 			token
 		});
-
-		console.log('finished deposit', depositHash);
 	};
 
 	return (

@@ -3,6 +3,7 @@ import { Interface, parseUnits } from 'ethers/lib/utils';
 import { signTypedData, SignTypedDataVersion } from '@metamask/eth-sig-util';
 import utf8 from 'utf8';
 import Logger from '@utils/logger';
+import { captureException } from '@sentry/react-native';
 
 const NONCES_FN = '0x7ecebe00';
 const NAME_FN = '0x06fdde03';
@@ -16,18 +17,19 @@ export const hexToUtf8 = (hex: string) => {
 
 	let str = '';
 	let code = 0;
-	hex = hex.replace(/^0x/i, '');
+	let hexadecimal = hex;
+	hexadecimal = hexadecimal.replace(/^0x/i, '');
 
 	// remove 00 padding from either side
-	hex = hex.replace(/^(?:00)*/, '');
-	hex = hex.split('').reverse().join('');
-	hex = hex.replace(/^(?:00)*/, '');
-	hex = hex.split('').reverse().join('');
+	hexadecimal = hexadecimal.replace(/^(?:00)*/, '');
+	hexadecimal = hexadecimal.split('').reverse().join('');
+	hexadecimal = hexadecimal.replace(/^(?:00)*/, '');
+	hexadecimal = hexadecimal.split('').reverse().join('');
 
-	const l = hex.length;
+	const l = hexadecimal.length;
 
 	for (let i = 0; i < l; i += 2) {
-		code = parseInt(hex.substr(i, 2), 16);
+		code = parseInt(hexadecimal.substr(i, 2), 16);
 		// if (code !== 0) {
 		str += String.fromCharCode(code);
 		// }
@@ -55,13 +57,13 @@ const getSignatureParameters = (signature: string) => {
 	}
 	const r = signature.slice(0, 66);
 	const s = '0x'.concat(signature.slice(66, 130));
-	let v = '0x'.concat(signature.slice(130, 132));
-	v = ethers.BigNumber.from(v).toNumber();
-	if (![27, 28].includes(v)) v += 27;
+	const v = '0x'.concat(signature.slice(130, 132));
+	let numericV = ethers.BigNumber.from(v).toNumber();
+	if (![27, 28].includes(numericV)) numericV += 27;
 	return {
 		r,
 		s,
-		v
+		v: numericV
 	};
 };
 
@@ -135,7 +137,7 @@ export const gaslessApproval = async ({
 
 	// Create your target method signature.. here we are calling approve() method of our contract
 	const functionSignature = contractInterface.encodeFunctionData('approve', [spender, tokenAmount]);
-	const message = {};
+	const message: { nonce?: number; from?: string; functionSignature?: string } = {};
 	let nonce;
 	try {
 		// eslint-disable-next-line radix
@@ -166,6 +168,7 @@ export const gaslessApproval = async ({
 
 	const signature = signTypedData({
 		privateKey: Buffer.from(pk, 'hex'),
+		// @ts-ignore
 		data: dataToSign,
 		version: SignTypedDataVersion.V3
 	});
@@ -183,14 +186,14 @@ export const gaslessApproval = async ({
 	let transactionHash;
 	try {
 		await provider.sendTransaction(tx);
-	} catch (error) {
+	} catch (error: any) {
 		// Ethers check the hash from user's signed tx and hash returned from Biconomy
 		// Both hash are expected to be different as biconomy send the transaction from its relayers
 		if (error.returnedHash && error.expectedHash) {
-			console.log('Transaction hash : ', error.returnedHash);
 			transactionHash = error.returnedHash;
 		} else {
-			console.error(error);
+			captureException(error);
+			Logger.error('Error on gasless approval transaction');
 		}
 	}
 
