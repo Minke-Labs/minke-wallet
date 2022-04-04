@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
-import { estimateGas } from './wallet';
+import { erc20abi, estimateGas, getProvider } from './wallet';
 
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
@@ -38,15 +39,12 @@ export const aaveDeposits = async (address: string): Promise<AaveBalances> => {
 	return result.json();
 };
 
-export const approvalState = async (address: string, token: string): Promise<ApprovalState> => {
-	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/approval-state`;
-	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
-	const { zapperNetwork } = await selectedNetwork();
-	const result = await fetch(
-		`${baseURL}?ownerAddress=${address}&sellTokenAddress=${token}&network=${zapperNetwork}&api_key=${apiKey}`
-	);
+export const approvalState = async (owner: string, token: string, spender: string): Promise<ApprovalState> => {
+	const contract = new Contract(token, erc20abi, await getProvider());
+	const amount: BigNumber = await contract.balanceOf(owner);
+	const allowance: BigNumber = await contract.allowance(owner, spender);
 
-	return result.json();
+	return { isApproved: allowance.gte(amount) };
 };
 
 export const approvalTransaction = async (address: string, token: string): Promise<ApprovalTransaction> => {
@@ -91,7 +89,6 @@ export const depositTransaction = async ({
 	const slippage = '&slippagePercentage=0.05';
 	const network = `&network=${zapperNetwork}&api_key=${apiKey}${gas}`;
 	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
-	console.log(`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`);
 	const result = await fetch(
 		`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`
 	);
@@ -130,12 +127,7 @@ export interface ApprovalTransaction {
 }
 
 export interface ApprovalState {
-	spenderAddress: string;
-	tokenAddress: string;
-	ownerAddress: string;
-	allowance: string;
-	amount: string;
-	isApproved: false;
+	isApproved: boolean;
 }
 
 export interface AaveBalances {

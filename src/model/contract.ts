@@ -5,7 +5,7 @@ import Logger from '@utils/logger';
 import { erc20abi, getProvider } from './wallet';
 import { network } from './network';
 import { ParaswapToken } from './token';
-import { interestBearingTokens } from './deposit';
+import { approvalState } from './deposit';
 
 interface ContractAbiResponse {
 	message: string;
@@ -139,8 +139,8 @@ export const approveSpending = async ({
 	spender: string;
 	gasPrice: number;
 }): Promise<ContractApproval> => {
-	const approved = await getAllowance(userAddress, contractAddress); // @TODO - query the blockchain instead
-	if (approved >= +amount) {
+	const { isApproved } = await approvalState(userAddress, contractAddress, spender);
+	if (isApproved) {
 		return {};
 	}
 	return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });

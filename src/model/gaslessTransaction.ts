@@ -111,10 +111,11 @@ export const gaslessApproval = async ({
 	privateKey: string;
 	contract: string;
 	spender: string;
-	amount: string;
+	amount?: string | undefined;
 	biconomy: any;
 }) => {
 	const abi = [
+		'function balanceOf(address owner) view returns (uint256)',
 		'function approve(address spender, uint256 amount) external returns (bool)',
 		'function getNonce(address user) public view returns (uint256 nonce)',
 		// eslint-disable-next-line max-len
@@ -122,11 +123,16 @@ export const gaslessApproval = async ({
 	];
 	const provider = biconomy.getEthersProvider();
 	const token = new ethers.Contract(contract, abi, provider);
+	let tokenAmount = amount;
+	if (!amount) {
+		tokenAmount = await token.balanceOf(address);
+	}
+
 	const contractInterface = new Interface(abi);
 	const wallet = new Wallet(privateKey, provider);
 
 	// Create your target method signature.. here we are calling approve() method of our contract
-	const functionSignature = contractInterface.encodeFunctionData('approve', [spender, amount]);
+	const functionSignature = contractInterface.encodeFunctionData('approve', [spender, tokenAmount]);
 	const message = {};
 	let nonce;
 	try {
@@ -162,13 +168,14 @@ export const gaslessApproval = async ({
 		version: SignTypedDataVersion.V3
 	});
 
-	// const signature = sigUtil.signTypedMessage(new Buffer.from(pk, 'hex'), { data: dataToSign }, 'V3');
 	const { r, s, v } = getSignatureParameters(signature);
 	const rawTx = {
 		to: contract,
 		data: contractInterface.encodeFunctionData('executeMetaTransaction', [address, functionSignature, r, s, v]),
 		from: address
 	};
+
+	Logger.log('Gasless approval transaction', rawTx);
 	const tx = await wallet.signTransaction(rawTx);
 
 	let transactionHash;
@@ -187,12 +194,13 @@ export const gaslessApproval = async ({
 
 	if (transactionHash) {
 		await provider.waitForTransaction(transactionHash);
+		Logger.log('Gasless approval transaction - done', transactionHash);
 		return transactionHash;
 	}
 
-	console.log('Sending normal transaction');
-	const { wait, hash } = await token.approve(spender, amount);
-	console.log('Transaction hash : ', hash);
+	Logger.log('Normal approval transaction started');
+	const { wait, hash } = await token.approve(spender, tokenAmount);
+	Logger.log('Normal approval transaction - done', transactionHash);
 	await wait();
 	return hash;
 };
@@ -211,7 +219,7 @@ export const gaslessDeposit = async ({
 	address: string;
 	privateKey: string;
 	token: string;
-	amount: string;
+	amount: string; // in WEI
 	interestBearingToken: string;
 	minAmount: string;
 	depositContract: string;
@@ -271,7 +279,6 @@ export const gaslessDeposit = async ({
 	// send signed transaction with ethers
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
-	console.log('Waiting for onChain confirmation', txHash);
 	await provider.waitForTransaction(txHash);
 	return txHash;
 };
