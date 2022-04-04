@@ -17,7 +17,7 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"buildNumber": "36",
+			"buildNumber": "37",
 			"config": {
 				"usesNonExemptEncryption": false
 			},

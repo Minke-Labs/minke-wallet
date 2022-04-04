@@ -56,7 +56,13 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	}, []);
 
 	const openTransaction = async () => {
-		Alert.alert('View on Polygonscan?', '', [
+		const { name } = await network();
+		const nets = ['Ethereum', 'Ropsten', 'Kovan'];
+		const getNetwork = () => {
+			if (nets.includes(name)) return 'Etherscan';
+			return 'Polygonscan';
+		};
+		Alert.alert(`View on ${getNetwork()}?`, '', [
 			{
 				text: 'Cancel',
 				style: 'cancel'

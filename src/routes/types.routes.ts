@@ -18,9 +18,10 @@ export type RootStackParamList = {
 	WalletCreatedScreen: undefined;
 	WalletScreen: undefined;
 	WelcomeScreen: undefined; // undefined because you aren't passing any params to the home screen
-	DepositSuccessScreen: undefined;
-	Test: undefined;
+	DepositWithdrawalSuccessScreen: { type: 'deposit' | 'withdrawal' };
 	BackupToICloudScreen: { missingPassword: boolean; walletId?: string | undefined; restoreBackups?: boolean };
 	OpenAave: undefined;
 	TopUpWaitScreen: undefined;
+	WithdrawScreen: undefined;
+	Test: undefined;
 };

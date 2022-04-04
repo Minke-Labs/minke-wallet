@@ -1,28 +1,24 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTheme } from '@hooks';
-import { ParaswapToken } from '@models/token';
 import { network } from '@models/network';
 import { smallWalletAddress } from '@src/model/wallet';
 import { ModalHeader, Text, Icon, ActivityIndicator } from '@components';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './TransactionWaitModal.styles';
 import Token from '../Token/Token';
+import { TransactionWaitModalProps } from './TransactionWaitModal.types';
 
 const TransactionWaitModal = ({
 	onDismiss,
 	fromToken,
 	toToken,
 	transactionHash,
-	deposit = false
-}: {
-	onDismiss: () => void;
-	fromToken: ParaswapToken;
-	toToken: ParaswapToken;
-	transactionHash: string;
-	deposit?: boolean;
-}) => {
+	deposit = false,
+	withdraw = false
+}: TransactionWaitModalProps) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
@@ -50,20 +46,24 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="p2" weight="medium" color="text3">
-					{deposit ? 'Depositing' : 'Exchanging'}{' '}
+					{deposit ? 'Depositing' : withdraw ? 'Withdrawing' : 'Exchanging'}{' '}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
 					{fromToken.symbol}
 				</Text>
-				<Text type="p2" weight="medium" color="text3">
-					{' '}
-					{deposit ? 'in' : 'for'}{' '}
-				</Text>
-				<Text type="p2" weight="extraBold" color="text3">
-					{' '}
-					{toToken.symbol}
-				</Text>
+				{!withdraw && (
+					<>
+						<Text type="p2" weight="medium" color="text3">
+							{' '}
+							{deposit ? 'in' : 'for'}{' '}
+						</Text>
+						<Text type="p2" weight="extraBold" color="text3">
+							{' '}
+							{toToken.symbol}
+						</Text>
+					</>
+				)}
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="a" weight="medium" color="text3">

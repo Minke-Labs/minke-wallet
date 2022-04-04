@@ -1,12 +1,11 @@
 import React, { useEffect, useCallback } from 'react';
 import { getProvider } from '@models/wallet';
-import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
+import { ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
-import { useNavigation, useTokens, useAmplitude, useAuthentication, useBiconomy } from '@hooks';
-import { network } from '@models/network';
+import { useNavigation, useTokens, useAmplitude, useAuthentication, useBiconomy, useNativeToken } from '@hooks';
 import { Wallet } from 'ethers';
 import { useState } from '@hookstate/core';
 import { Keyboard } from 'react-native';
@@ -17,6 +16,7 @@ import { formatUnits } from 'ethers/lib/utils';
 
 export const useDeposit = () => {
 	const biconomy = useBiconomy();
+	const { nativeToken } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { tokens } = useTokens();
@@ -24,7 +24,6 @@ export const useDeposit = () => {
 	const { market } = globalDepositState().value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
 	const [token] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
@@ -53,7 +52,7 @@ export const useDeposit = () => {
 
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/,/g, '.');
-		if (formatedValue && !formatedValue.endsWith('.') && !formatedValue.startsWith('.')) {
+		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
 			setAmount(formatedValue);
 		}
 	};
@@ -95,7 +94,7 @@ export const useDeposit = () => {
 								hash,
 								gasless: true
 							});
-							navigation.navigate('DepositSuccessScreen');
+							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 						} else {
 							Logger.error('Error depositing');
 						}
@@ -140,7 +139,7 @@ export const useDeposit = () => {
 								hash,
 								gasless: false
 							});
-							navigation.navigate('DepositSuccessScreen');
+							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 						} else {
 							Logger.error('Error depositing');
 						}
@@ -149,18 +148,6 @@ export const useDeposit = () => {
 			}
 		});
 	};
-
-	useEffect(() => {
-		const loadNativeToken = async () => {
-			const {
-				nativeToken: { symbol: nativeTokenSymbol }
-			} = await network();
-			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
-			setNativeToken(native);
-		};
-
-		loadNativeToken();
-	}, []);
 
 	useEffect(() => {
 		if (token && tokens && tokens.length > 0) {

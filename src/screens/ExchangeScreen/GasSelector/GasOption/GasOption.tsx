@@ -43,11 +43,11 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 			gasValue = slow;
 		}
 		setGasPrice(+gasValue);
-		if (!exchange.gas.value && type === 'normal') {
+		if (!exchange.gas.value && type === 'fast') {
 			exchange.gas.set({
-				type: 'normal',
-				gweiValue: +normal,
-				wait: defaultWait.normal
+				type: 'fast',
+				gweiValue: +fast,
+				wait: defaultWait.fast
 			} as Gas);
 		}
 		if (usd) {

@@ -1,18 +1,18 @@
 import React, { useEffect, createRef, useCallback } from 'react';
 import { TextInput, Keyboard } from 'react-native';
-import { useTokens, useNavigation } from '@hooks';
+import { useTokens, useNavigation, useNativeToken } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
-import { ParaswapToken, Quote, getExchangePrice, nativeTokens, NativeTokens, ExchangeParams } from '@models/token';
-import { network } from '@models/network';
+import { ParaswapToken, Quote, getExchangePrice, ExchangeParams, nativeTokens, NativeTokens } from '@models/token';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import Logger from '@utils/logger';
+import { network } from '@models/network';
 
 export const useExchangeScreen = () => {
+	const { nativeToken } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const [nativeToken, setNativeToken] = React.useState<ParaswapToken>();
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
@@ -22,6 +22,7 @@ export const useExchangeScreen = () => {
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
 	const [ownedTokens, setOwnedTokens] = React.useState<string[]>();
+	const [error, setError] = React.useState('');
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
@@ -76,17 +77,24 @@ export const useExchangeScreen = () => {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
 			const { address: destToken, decimals: destDecimals } = toToken;
-			const {
-				error,
-				priceRoute: { srcAmount, destAmount }
-			} = await getExchangePrice({ srcToken, srcDecimals, destToken, destDecimals, amount, side });
-			if (error) {
-				Logger.error(`Load prices error: ${error}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+			const { error: apiError, priceRoute } = await getExchangePrice({
+				srcToken,
+				srcDecimals,
+				destToken,
+				destDecimals,
+				amount,
+				side
+			});
+			if (apiError) {
+				Logger.error(`Load prices error: ${apiError}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 				Keyboard.dismiss();
 				setQuote(undefined);
 				setLoadingPrices(false);
+				setError(apiError);
 				return undefined;
 			}
+
+			const { srcAmount, destAmount } = priceRoute;
 
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
@@ -207,20 +215,6 @@ export const useExchangeScreen = () => {
 	};
 
 	useEffect(() => {
-		const loadNativeToken = async () => {
-			const {
-				nativeToken: { symbol: nativeTokenSymbol }
-			} = await network();
-			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
-			setFromToken(native);
-			setNativeToken(native);
-		};
-
-		exchange.set({} as ExchangeState);
-		loadNativeToken();
-	}, []);
-
-	useEffect(() => {
 		if (walletTokens) {
 			setOwnedTokens(walletTokens.map(({ symbol }) => symbol.toLowerCase()));
 		}
@@ -230,6 +224,19 @@ export const useExchangeScreen = () => {
 		setFromTokenBalance(balanceFrom(fromToken).toFixed(fromToken.decimals));
 		setToTokenBalance(balanceFrom(toToken).toFixed(toToken?.decimals));
 	}, [ownedTokens, exchange.gas.value]);
+
+	useEffect(() => {
+		const loadNativeToken = async () => {
+			const {
+				nativeToken: { symbol: nativeTokenSymbol }
+			} = await network();
+			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
+			setFromToken(native);
+		};
+
+		exchange.set({} as ExchangeState);
+		loadNativeToken();
+	}, []);
 
 	useEffect(() => {
 		if (fromToken && toToken) {
@@ -283,6 +290,8 @@ export const useExchangeScreen = () => {
 		updateToQuotes,
 		enoughForGas,
 		ownedTokens,
-		quote
+		quote,
+		error,
+		setError
 	};
 };

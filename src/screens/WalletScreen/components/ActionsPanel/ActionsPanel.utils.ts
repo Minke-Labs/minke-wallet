@@ -7,7 +7,6 @@ const actions = [
 ];
 
 if (__DEV__) {
-	actions.push({ name: 'New wallet', icon: 'walletStroke' });
 	actions.push({ name: 'Delete wallet', icon: 'closeStroke' });
 }
 

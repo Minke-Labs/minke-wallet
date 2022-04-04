@@ -9,8 +9,8 @@ import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import Card from './Card';
-import CopyButton from './CopyButton';
+import Card from './Card/Card';
+import CopyButton from './CopyButton/CopyButton';
 import styles from './ManualBackupScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;

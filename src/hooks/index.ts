@@ -13,6 +13,7 @@ import iCloudBackup from './iCloudBackup';
 import useWallets from './useWallets';
 import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
+import useNativeToken from './useNativeToken';
 
 export {
 	useAmplitude,
@@ -29,5 +30,6 @@ export {
 	useWallets,
 	iCloudBackup,
 	useAuthentication,
-	useBiconomy
+	useBiconomy,
+	useNativeToken
 };

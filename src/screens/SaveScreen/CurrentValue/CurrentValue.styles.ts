@@ -31,7 +31,7 @@ export const makeStyles = (colors: ColorType) =>
 			flexDirection: 'row',
 			justifyContent: 'center',
 			alignItems: 'center',
-			width: '100%',
+			width: '50%',
 			paddingTop: 16,
 			paddingRight: 32,
 			paddingBottom: 16,
