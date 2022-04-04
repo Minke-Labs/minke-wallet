@@ -12,6 +12,7 @@ import useWalletCloudBackup from './useWalletCloudBackup';
 import iCloudBackup from './iCloudBackup';
 import useWallets from './useWallets';
 import useAuthentication from './useAuthentication';
+import useBiconomy from './useBiconomy';
 
 export {
 	useAmplitude,
@@ -27,5 +28,6 @@ export {
 	useWyreOrderStatus,
 	useWallets,
 	iCloudBackup,
-	useAuthentication
+	useAuthentication,
+	useBiconomy
 };

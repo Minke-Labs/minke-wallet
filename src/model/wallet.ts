@@ -227,6 +227,7 @@ export const getSeedPhrase = async (keychain_id: string): Promise<string | null>
 export const erc20abi = [
 	// Read-Only Functions
 	'function balanceOf(address owner) view returns (uint256)',
+	'function allowance(address owner, address spender) external view returns (uint256)',
 	'function decimals() view returns (uint8)',
 	'function symbol() view returns (string)',
 

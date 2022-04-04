@@ -5,14 +5,18 @@ import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
-import { useNavigation, useTokens, useAmplitude, useAuthentication } from '@hooks';
+import { useNavigation, useTokens, useAmplitude, useAuthentication, useBiconomy } from '@hooks';
 import { network } from '@models/network';
 import { Wallet } from 'ethers';
 import { useState } from '@hookstate/core';
 import { Keyboard } from 'react-native';
 import Logger from '@utils/logger';
+import { aaveDepositContract, gaslessDeposit } from '@models/gaslessTransaction';
+import { toBn } from 'evm-bn';
+import { formatUnits } from 'ethers/lib/utils';
 
 export const useDeposit = () => {
+	const biconomy = useBiconomy();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { tokens } = useTokens();
@@ -27,6 +31,7 @@ export const useDeposit = () => {
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const { showAuthenticationPrompt } = useAuthentication();
+	const gaslessEnabled = !!biconomy;
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {

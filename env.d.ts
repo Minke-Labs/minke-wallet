@@ -12,4 +12,6 @@ declare module '@env' {
 	export const MINKE_MASTER_KEY: string;
 	export const AMPLITUDE_PROJECT_API: string;
 	export const SENTRY_DSN: string;
+	export const ALCHEMY_API_URL_POLYGON_MAINNET: string;
+	export const BICONOMY_API_KEY_POLYGON_MAINNET: string;
 }
