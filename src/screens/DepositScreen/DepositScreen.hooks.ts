@@ -3,6 +3,7 @@ import { approvalState } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { useDeposit, useNavigation } from '@hooks';
+import { aaveDepositContract } from '@models/gaslessTransaction';
 
 export const useDepositScreen = () => {
 	const navigation = useNavigation();
@@ -19,7 +20,7 @@ export const useDepositScreen = () => {
 	useEffect(() => {
 		const loadApproved = async () => {
 			if (tokens[0]) {
-				const { isApproved } = await approvalState(address, tokens[0].address);
+				const { isApproved } = await approvalState(address, tokens[0].address, aaveDepositContract);
 				setApproved(isApproved);
 			}
 		};

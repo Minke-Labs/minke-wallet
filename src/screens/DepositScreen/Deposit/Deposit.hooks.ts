@@ -58,9 +58,14 @@ export const useDeposit = () => {
 		}
 	};
 
-	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
+	const enoughForGas = gaslessEnabled || (nativeToken && balanceFrom(nativeToken) > 0);
 	const canDeposit =
-		token && +tokenBalance > 0 && +amount > 0 && +tokenBalance >= +amount && enoughForGas && gweiValue > 0;
+		token &&
+		+tokenBalance > 0 &&
+		+amount > 0 &&
+		+tokenBalance >= +amount &&
+		enoughForGas &&
+		(gaslessEnabled || gweiValue > 0); // if gasless we dont need a gwei value
 
 	const onDeposit = () => {
 		showAuthenticationPrompt({
@@ -68,48 +73,77 @@ export const useDeposit = () => {
 				Keyboard.dismiss();
 				if (canDeposit) {
 					setWaitingTransaction(true);
-					const transaction = await depositTransaction({
-						address,
-						amount,
-						token: token.address,
-						decimals: token.decimals,
-						interestBearingToken: market.address,
-						gweiValue
-					});
-					Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
 
-					const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
-
-					const provider = await getProvider();
-					const wallet = new Wallet(privateKey, provider);
-					const chainId = await wallet.getChainId();
-					const nonce = await provider.getTransactionCount(address, 'latest');
-					const txDefaults = {
-						from,
-						to,
-						data,
-						nonce,
-						gasLimit,
-						maxFeePerGas,
-						maxPriorityFeePerGas,
-						type: 2,
-						chainId
-					};
-					Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
-					const signedTx = await wallet.signTransaction(txDefaults);
-					const { hash, wait } = await provider.sendTransaction(signedTx as string);
-					if (hash) {
-						Logger.log(`Deposit ${JSON.stringify(hash)}`);
-						await wait();
-						setTransactionHash(hash);
-						track('Deposited', {
-							token: token.symbol,
-							amount,
-							hash
+					if (gaslessEnabled) {
+						const hash = await gaslessDeposit({
+							address,
+							privateKey,
+							amount: formatUnits(toBn(amount, token.decimals), 'wei'),
+							minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
+							biconomy,
+							depositContract: aaveDepositContract,
+							gasPrice: gweiValue.toString(),
+							interestBearingToken: market.address,
+							token: token.address
 						});
-						navigation.navigate('DepositSuccessScreen');
+						if (hash) {
+							Logger.log(`Gasless deposit ${JSON.stringify(hash)}`);
+							setTransactionHash(hash);
+							track('Deposited', {
+								token: token.symbol,
+								amount,
+								hash,
+								gasless: true
+							});
+							navigation.navigate('DepositSuccessScreen');
+						} else {
+							Logger.error('Error depositing');
+						}
 					} else {
-						Logger.error('Error depositing');
+						const transaction = await depositTransaction({
+							address,
+							amount,
+							token: token.address,
+							decimals: token.decimals,
+							interestBearingToken: market.address,
+							gweiValue
+						});
+						Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
+
+						const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
+
+						const provider = await getProvider();
+						const wallet = new Wallet(privateKey, provider);
+						const chainId = await wallet.getChainId();
+						const nonce = await provider.getTransactionCount(address, 'latest');
+						const txDefaults = {
+							from,
+							to,
+							data,
+							nonce,
+							gasLimit,
+							maxFeePerGas,
+							maxPriorityFeePerGas,
+							type: 2,
+							chainId
+						};
+						Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
+						const signedTx = await wallet.signTransaction(txDefaults);
+						const { hash, wait } = await provider.sendTransaction(signedTx as string);
+						if (hash) {
+							Logger.log(`Deposit ${JSON.stringify(hash)}`);
+							await wait();
+							setTransactionHash(hash);
+							track('Deposited', {
+								token: token.symbol,
+								amount,
+								hash,
+								gasless: false
+							});
+							navigation.navigate('DepositSuccessScreen');
+						} else {
+							Logger.error('Error depositing');
+						}
 					}
 				}
 			}
@@ -147,6 +181,7 @@ export const useDeposit = () => {
 		transactionHash,
 		nativeToken,
 		enoughForGas,
-		market
+		market,
+		gaslessEnabled
 	};
 };

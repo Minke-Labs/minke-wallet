@@ -1,12 +1,14 @@
-import * as sigUtil from 'eth-sig-util';
 import { Wallet, ethers } from 'ethers';
 import { Interface, parseUnits } from 'ethers/lib/utils';
 import { signTypedData, SignTypedDataVersion } from '@metamask/eth-sig-util';
 import utf8 from 'utf8';
+import Logger from '@utils/logger';
 
 const NONCES_FN = '0x7ecebe00';
 const NAME_FN = '0x06fdde03';
 const zeros = (numZeros: number) => ''.padEnd(numZeros, '0');
+
+export const aaveDepositContract = '0x467ebee3755455a5f2be81ca50b738d7a375f56a';
 
 export const hexToUtf8 = (hex: string) => {
 	// if (!isHexStrict(hex))
