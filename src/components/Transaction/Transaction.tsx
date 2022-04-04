@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
-import Card from './Card/Card';
+import CardTransaction from './CardTransaction/CardTransaction';
 import { TransactionProps } from './Transaction.types';
 import { useTransaction } from './Transaction.hooks';
 
@@ -9,7 +9,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 		useTransaction({ transaction });
 
 	return (
-		<Card
+		<CardTransaction
 			title={format(timestamp, 'MM/dd/yyyy hh:mm aa')}
 			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
 			onPress={openTransaction}

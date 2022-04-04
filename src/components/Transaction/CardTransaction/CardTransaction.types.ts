@@ -1,6 +1,6 @@
 import { GestureResponderEvent } from 'react-native';
 
-export interface CardProps {
+export interface CardTransactionProps {
 	failed: boolean;
 	title: string;
 	token: string;

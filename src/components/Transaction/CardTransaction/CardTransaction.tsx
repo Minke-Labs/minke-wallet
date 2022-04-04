@@ -4,10 +4,10 @@ import { formatUnits } from 'ethers/lib/utils';
 import { truncate } from '../Transaction.utils';
 import Text from '../../Text/Text';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
-import { CardProps } from './Card.types';
-import { styles } from './styles';
+import { CardTransactionProps } from './CardTransaction.types';
+import { styles } from './CardTransaction.styles';
 
-const Card: React.FC<CardProps> = ({
+const CardTransaction: React.FC<CardTransactionProps> = ({
 	title,
 	subtitle,
 	received,
@@ -52,4 +52,4 @@ const Card: React.FC<CardProps> = ({
 	</TouchableOpacity>
 );
 
-export default Card;
+export default CardTransaction;
