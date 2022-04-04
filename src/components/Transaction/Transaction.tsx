@@ -14,6 +14,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
 			onPress={openTransaction}
 			failed={isError === '1'}
+			pending
 			{...{ value, token, tokenDecimal, received, tokenSymbol }}
 		/>
 	);

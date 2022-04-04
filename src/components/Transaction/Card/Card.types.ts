@@ -6,6 +6,7 @@ export interface CardProps {
 	token: string;
 	subtitle: string;
 	received: boolean;
+	pending: boolean;
 	value: any;
 	tokenDecimal: any;
 	tokenSymbol: any;

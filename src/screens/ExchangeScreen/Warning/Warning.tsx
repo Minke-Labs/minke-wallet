@@ -6,7 +6,7 @@ import { styles } from './Warning.styles';
 const Warning = ({ label }: { label: string }) => (
 	<View style={styles.container}>
 		<View style={styles.iconContainer}>
-			<Icon name="alertStroke" color="alert4a" size={32} />
+			<Icon name="alertStroke" color="alert6" size={32} />
 		</View>
 		<Text type="a" style={styles.text}>
 			{label}

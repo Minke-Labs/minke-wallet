@@ -16,20 +16,28 @@ const Card: React.FC<CardProps> = ({
 	tokenDecimal,
 	tokenSymbol,
 	failed,
+	pending,
 	onPress,
 	marginBottom = 32
 }) => (
 	<TouchableOpacity activeOpacity={0.6} style={[styles.container, { marginBottom }]} {...{ onPress }}>
 		<View style={[styles.leftContainer]}>
-			<TransactionIcon {...{ received, failed }} pending={false} />
+			<TransactionIcon {...{ received, failed, pending }} />
 			<View style={styles.titleContainer}>
-				{!failed ? (
-					<Text type="span">{title}</Text>
-				) : (
+				{!failed && !pending && <Text type="span">{title}</Text>}
+
+				{failed && (
 					<Text type="span" color="alert1">
 						Failed
 					</Text>
 				)}
+
+				{pending && !failed && (
+					<Text type="span" color="pending">
+						Pending
+					</Text>
+				)}
+
 				<Text type="p2" weight="medium">
 					{subtitle}
 				</Text>
