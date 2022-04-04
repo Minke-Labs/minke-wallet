@@ -16,10 +16,9 @@ const TransactionIcon: React.FC<TransactionIconProps> = ({ received, failed }) =
 			]}
 		>
 			<Icon
-				name="arrowStroke"
+				name={received ? 'arrowDown' : 'arrowUp'}
 				color={received ? 'alert3' : 'text3'}
 				size={20}
-				style={{ ...(received && { transform: [{ rotate: '180deg' }] }) }}
 			/>
 			{ failed && <View style={styles.inner} /> }
 		</View>
