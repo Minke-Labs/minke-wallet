@@ -20,10 +20,16 @@ const Card: React.FC<CardProps> = ({
 	marginBottom = 32
 }) => (
 	<TouchableOpacity activeOpacity={0.6} style={[styles.container, { marginBottom }]} {...{ onPress }}>
-		<View style={[styles.leftContainer, { opacity: failed ? 0.3 : 1 }]}>
-			<TransactionIcon {...{ received }} failed />
+		<View style={[styles.leftContainer]}>
+			<TransactionIcon {...{ received, failed }} pending={false} />
 			<View style={styles.titleContainer}>
-				<Text type="span">{title}</Text>
+				{!failed ? (
+					<Text type="span">{title}</Text>
+				) : (
+					<Text type="span" color="alert1">
+						Failed
+					</Text>
+				)}
 				<Text type="p2" weight="medium">
 					{subtitle}
 				</Text>

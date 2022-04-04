@@ -1,5 +1,6 @@
 interface TransactionIconProps {
 	received: boolean;
+	pending: boolean;
 	failed: boolean;
 }
 
