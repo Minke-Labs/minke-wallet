@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
-import CardTransaction from './CardTransaction/CardTransaction';
+import { CardTransaction } from '@components';
 import { TransactionProps } from './Transaction.types';
 import { useTransaction } from './Transaction.hooks';
 
@@ -14,7 +14,6 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
 			onPress={openTransaction}
 			failed={isError === '1'}
-			pending={false}
 			{...{ value, token, tokenDecimal, received, tokenSymbol }}
 		/>
 	);

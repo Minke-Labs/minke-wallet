@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useCallback } from 'react';
-import { Button, ActivityIndicator, Transaction } from '@components';
+import { Button, ActivityIndicator, Transaction, CardTransaction } from '@components';
 import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -16,12 +16,12 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 		if (transactions.length > 0) {
 			return (
 				<View style={{ height: '100%' }}>
-					{transactions.map((item: any, idx: number) => {
-						if (item.value) {
-							return <Transaction transaction={item} key={`${item.hash}${item.value}${idx}`} />;
-						}
-						return null;
-					})}
+					<CardTransaction subtitle="alguma coisa" pending />
+
+					{transactions.map(
+						(item: any, idx: number) =>
+							item.value && <Transaction transaction={item} key={`${item.hash}${item.value}${idx}`} />
+					)}
 
 					<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
 				</View>
