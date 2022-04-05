@@ -32,7 +32,8 @@ const WithdrawScreen = () => {
 		onWithdraw,
 		waitingTransaction,
 		transactionHash,
-		tokens
+		tokens,
+		gaslessEnabled
 	} = useWithdrawScreen();
 
 	return (
@@ -65,8 +66,9 @@ const WithdrawScreen = () => {
 							updateQuotes={debounce(updateAmount, 500)}
 						/>
 					</Card>
-
-					<GasSelector />
+					<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
+						<GasSelector />
+					</View>
 				</View>
 
 				<View style={styles.withdrawButton}>

@@ -5,11 +5,46 @@ import utf8 from 'utf8';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 
+interface ERC2612PermitMessage {
+	owner: string;
+	spender: string;
+	value: number | string;
+	nonce: number | string;
+	deadline: number | string;
+}
+
 const NONCES_FN = '0x7ecebe00';
 const NAME_FN = '0x06fdde03';
 const zeros = (numZeros: number) => ''.padEnd(numZeros, '0');
 
-export const aaveDepositContract = '0x467ebee3755455a5f2be81ca50b738d7a375f56a';
+export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a';
+
+const EIP712Domain = [
+	{ name: 'name', type: 'string' },
+	{ name: 'version', type: 'string' },
+	{ name: 'chainId', type: 'uint256' },
+	{ name: 'verifyingContract', type: 'address' }
+];
+
+const createTypedERC2612Data = (message: ERC2612PermitMessage, domain: ChainDomain) => {
+	const typedData = {
+		types: {
+			EIP712Domain,
+			Permit: [
+				{ name: 'owner', type: 'address' },
+				{ name: 'spender', type: 'address' },
+				{ name: 'value', type: 'uint256' },
+				{ name: 'nonce', type: 'uint256' },
+				{ name: 'deadline', type: 'uint256' }
+			]
+		},
+		primaryType: 'Permit',
+		domain,
+		message
+	};
+
+	return typedData;
+};
 
 export const hexToUtf8 = (hex: string) => {
 	// if (!isHexStrict(hex))
@@ -74,6 +109,13 @@ interface Domain {
 	salt: string;
 }
 
+interface ChainDomain {
+	name: string;
+	version: string;
+	chainId: number;
+	verifyingContract: string;
+}
+
 export const call = (provider: any, to: string, data: string) =>
 	provider.send('eth_call', [
 		{
@@ -100,6 +142,19 @@ const getDomain = async (provider: any, token: string | Domain): Promise<Domain>
 	const salt = ethers.utils.hexZeroPad(ethers.BigNumber.from(chainId).toHexString(), 32);
 
 	const domain: Domain = { name, version: '1', salt, verifyingContract: tokenAddress };
+	return domain;
+};
+
+const getChainDomain = async (provider: any, token: string | ChainDomain): Promise<ChainDomain> => {
+	if (typeof token !== 'string') {
+		return token as ChainDomain;
+	}
+
+	const tokenAddress = token as string;
+
+	const [name, chainId] = await Promise.all([getTokenName(provider, tokenAddress), getChainId(provider)]);
+
+	const domain: ChainDomain = { name, version: '1', chainId, verifyingContract: tokenAddress };
 	return domain;
 };
 
@@ -282,6 +337,102 @@ export const gaslessDeposit = async ({
 
 	const provider = biconomy.getEthersProvider();
 	// send signed transaction with ethers
+	// promise resolves to transaction hash
+	const txHash = await provider.send('eth_sendRawTransaction', [data]);
+	// await provider.waitForTransaction(txHash);
+	return txHash;
+};
+
+export const gaslessWithdraw = async ({
+	address,
+	privateKey,
+	token,
+	amount,
+	interestBearingToken,
+	minAmount,
+	depositContract,
+	gasPrice,
+	biconomy
+}: {
+	address: string;
+	privateKey: string;
+	token: string;
+	amount: string; // in WEI
+	interestBearingToken: string;
+	minAmount: string;
+	depositContract: string;
+	gasPrice: string;
+	biconomy: any;
+}) => {
+	const provider = biconomy.getEthersProvider();
+	// send signed transaction with ethers
+	const userSigner = new ethers.Wallet(privateKey, provider);
+
+	const message: ERC2612PermitMessage = {
+		owner: address,
+		spender: depositContract,
+		value: '79228162514260000000000000000',
+		nonce: 0,
+		deadline: '0xf000000000000000000000000000000000000000000000000000000000000000'
+	};
+
+	const domain = await getChainDomain(provider, interestBearingToken);
+	const typeData = createTypedERC2612Data(message, domain);
+	console.log({ typeData });
+	const { EIP712Domain: unused, ...types } = typeData.types;
+	// eslint-disable-next-line no-underscore-dangle
+	const rawSignature = await userSigner._signTypedData(typeData.domain, types, typeData.message);
+
+	console.log({ rawSignature });
+
+	const abi = [
+		// eslint-disable-next-line max-len
+		'function ZapOutWithPermit(address fromToken, uint256 amountIn, address toToken, uint256 minToTokens, bytes calldata permitSig, address swapTarget, bytes calldata swapData, address affiliate) external returns (uint256)'
+	];
+
+	const contractInterface = new ethers.utils.Interface(abi);
+
+	// Create your target method signature.. here we are calling setQuote() method of our contract
+	const functionSignature = contractInterface.encodeFunctionData('ZapOutWithPermit', [
+		interestBearingToken,
+		amount,
+		token,
+		minAmount,
+		rawSignature,
+		'0x0000000000000000000000000000000000000000',
+		'0x00',
+		'0x667fc4b1edc5ff96f45bc382cbfb60b51647948d'
+	]);
+
+	const rawTx = {
+		to: depositContract,
+		data: functionSignature,
+		from: address,
+		gasLimit: 900000,
+		gasPrice: parseUnits(gasPrice, 'gwei')
+	};
+
+	const signedTx = await userSigner.signTransaction(rawTx);
+	// should get user message to sign for EIP712 or personal signature types
+	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
+
+	let pk = privateKey;
+	if (privateKey.startsWith('0x')) {
+		pk = pk.substring(2);
+	}
+	const signature = signTypedData({
+		privateKey: Buffer.from(pk, 'hex'),
+		data: forwardData.eip712Format,
+		version: SignTypedDataVersion.V3
+	});
+
+	const data = {
+		signature,
+		forwardRequest: forwardData.request,
+		rawTransaction: signedTx,
+		signatureType: biconomy.EIP712_SIGN
+	};
+
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	// await provider.waitForTransaction(txHash);
