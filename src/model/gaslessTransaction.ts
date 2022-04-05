@@ -198,7 +198,7 @@ export const gaslessApproval = async ({
 	}
 
 	if (transactionHash) {
-		await provider.waitForTransaction(transactionHash);
+		// await provider.waitForTransaction(transactionHash);
 		Logger.log('Gasless approval transaction - done', transactionHash);
 		return transactionHash;
 	}
@@ -284,6 +284,6 @@ export const gaslessDeposit = async ({
 	// send signed transaction with ethers
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
-	await provider.waitForTransaction(txHash);
+	// await provider.waitForTransaction(txHash);
 	return txHash;
 };
