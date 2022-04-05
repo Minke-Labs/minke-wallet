@@ -44,12 +44,12 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 
 			<TokenAmountInput
 				amount={amount}
+				symbol={token.symbol}
 				onAmountChange={onChangeAmount}
 				onNumberAmountChange={onChangeNumber}
 				visible={!!token}
 				isAmountValid={(number || 0) <= Number(token.balance)}
 				autoFocus
-				style={styles.input}
 				placeholder={`00${decimalSeparator}00`}
 			/>
 			{gasPrice && (
