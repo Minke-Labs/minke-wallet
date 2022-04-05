@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { approvalState } from '@models/deposit';
+import { approvalState, zapperApprovalState } from '@models/deposit';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
-import { useDeposit, useNavigation } from '@hooks';
+import { useBiconomy, useDeposit, useNavigation } from '@hooks';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 
 export const useDepositScreen = () => {
+	const { gaslessEnabled } = useBiconomy();
 	const navigation = useNavigation();
 	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
 	const [notAbleToSaveVisible, setNotAbleToSaveVisible] = React.useState(true);
@@ -20,7 +21,9 @@ export const useDepositScreen = () => {
 	useEffect(() => {
 		const loadApproved = async () => {
 			if (tokens[0]) {
-				const { isApproved } = await approvalState(address, tokens[0].address, aaveDepositContract);
+				const { isApproved } = gaslessEnabled
+					? await approvalState(address, tokens[0].address, aaveDepositContract)
+					: await zapperApprovalState(address, tokens[0].address);
 				setApproved(isApproved);
 			}
 		};

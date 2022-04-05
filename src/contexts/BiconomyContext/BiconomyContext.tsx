@@ -14,6 +14,7 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	} = wallet.value;
 
 	const [biconomyClient, setBiconomyClient] = React.useState<any | null>();
+	const [status, setStatus] = React.useState('');
 
 	const initialize = () => {
 		if (biconomyClient !== undefined) return;
@@ -24,6 +25,15 @@ const BiconomyProvider: React.FC = ({ children }) => {
 				debug: __DEV__
 			});
 			setBiconomyClient(biconomy);
+			biconomy
+				.onEvent(biconomy.READY, () => {
+					setBiconomyClient(biconomy);
+					setStatus(biconomy.READY);
+				})
+				.onEvent(biconomy.ERROR, () => {
+					setBiconomyClient(null);
+					setStatus(biconomy.ERROR);
+				});
 		} else {
 			setBiconomyClient(null);
 		}
@@ -33,7 +43,13 @@ const BiconomyProvider: React.FC = ({ children }) => {
 		initialize();
 	}, []);
 
-	const obj = useMemo(() => biconomyClient, [biconomyClient, biconomyAPIKey]);
+	const obj = useMemo(
+		() => ({
+			biconomy: biconomyClient,
+			gaslessEnabled: !!biconomyClient && biconomyClient.status === biconomyClient.READY
+		}),
+		[biconomyClient, status, biconomyAPIKey]
+	);
 
 	return <BiconomyContext.Provider value={obj}>{children}</BiconomyContext.Provider>;
 };

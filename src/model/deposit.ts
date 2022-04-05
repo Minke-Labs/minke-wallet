@@ -47,6 +47,17 @@ export const approvalState = async (owner: string, token: string, spender: strin
 	return { isApproved: allowance.gte(amount) };
 };
 
+export const zapperApprovalState = async (address: string, token: string): Promise<ApprovalState> => {
+	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/approval-state`;
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const { zapperNetwork } = await selectedNetwork();
+	const result = await fetch(
+		`${baseURL}?ownerAddress=${address}&sellTokenAddress=${token}&network=${zapperNetwork}&api_key=${apiKey}`
+	);
+
+	return result.json();
+};
+
 export const approvalTransaction = async (
 	address: string,
 	token: string,

@@ -9,7 +9,7 @@ import { gaslessApproval, gaslessDeposit } from '@models/gaslessTransaction';
 import useBiconomy from '@src/hooks/useBiconomy';
 
 const Test = () => {
-	const biconomy = useBiconomy();
+	const { biconomy } = useBiconomy();
 	const { privateKey, address } = globalWalletState().value;
 
 	const test = async () => {

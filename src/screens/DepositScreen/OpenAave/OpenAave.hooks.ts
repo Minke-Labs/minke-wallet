@@ -9,26 +9,21 @@ import Logger from '@utils/logger';
 import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
 
 export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
-	const biconomy = useBiconomy();
+	const { biconomy, gaslessEnabled } = useBiconomy();
 	const [loading, setLoading] = useState(false);
-	const {
-		address,
-		privateKey,
-		network: { biconomyAPIKey }
-	} = globalWalletState().value;
+	const { address, privateKey } = globalWalletState().value;
 	const {
 		market: { tokens }
 	} = globalDepositState().value;
 	const { track } = useAmplitude();
 	const { showAuthenticationPrompt } = useAuthentication();
-	const gaslessApprovalEnabled = !!biconomyAPIKey;
 
 	const onOpenAccount = () => {
 		showAuthenticationPrompt({
 			onSuccess: async () => {
 				setLoading(true);
 
-				if (gaslessApprovalEnabled) {
+				if (gaslessEnabled) {
 					if (biconomy.status !== biconomy.READY) return;
 					const hash = await gaslessApproval({
 						address,
@@ -87,6 +82,6 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	return {
 		loading,
 		onOpenAccount,
-		gaslessApprovalEnabled
+		gaslessEnabled
 	};
 };

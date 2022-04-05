@@ -2,10 +2,9 @@ import Logger from '@utils/logger';
 import { Wallet } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
-import { approvalState, approvalTransaction } from './deposit';
+import { approvalTransaction, zapperApprovalState } from './deposit';
 import { getProvider } from './wallet';
 import { network as selectedNetwork } from './network';
-import { aaveDepositContract } from './gaslessTransaction';
 
 const protocol = 'aave-v2';
 
@@ -63,7 +62,7 @@ export const withdrawTransaction = async ({
 	amount: string;
 	gweiValue: number;
 }) => {
-	const { isApproved } = await approvalState(address, interestBearingToken, aaveDepositContract);
+	const { isApproved } = await zapperApprovalState(address, interestBearingToken);
 
 	if (!isApproved) {
 		await approvalWithdrawTransaction(address, amount, decimals, interestBearingToken, privateKey);

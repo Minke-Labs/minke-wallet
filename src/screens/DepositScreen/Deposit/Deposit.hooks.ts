@@ -15,7 +15,7 @@ import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 
 export const useDeposit = () => {
-	const biconomy = useBiconomy();
+	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { nativeToken } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
@@ -30,7 +30,6 @@ export const useDeposit = () => {
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const { showAuthenticationPrompt } = useAuthentication();
-	const gaslessEnabled = !!biconomy;
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {
