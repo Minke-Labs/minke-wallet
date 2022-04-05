@@ -16,7 +16,7 @@ const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactio
 		if (transactions.length > 0) {
 			return (
 				<View style={{ height: '100%' }}>
-					<CardTransaction subtitle="alguma coisa" pending />
+					<CardTransaction subtitle="Some pending tx" pending />
 
 					{transactions.map(
 						(item: any, idx: number) =>
