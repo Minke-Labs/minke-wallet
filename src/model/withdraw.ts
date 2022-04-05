@@ -5,6 +5,7 @@ import { toBn } from 'evm-bn';
 import { approvalState, approvalTransaction } from './deposit';
 import { getProvider } from './wallet';
 import { network as selectedNetwork } from './network';
+import { aaveDepositContract } from './gaslessTransaction';
 
 const protocol = 'aave-v2';
 
@@ -62,7 +63,7 @@ export const withdrawTransaction = async ({
 	amount: string;
 	gweiValue: number;
 }) => {
-	const { isApproved } = await approvalState(address, interestBearingToken);
+	const { isApproved } = await approvalState(address, interestBearingToken, aaveDepositContract);
 
 	if (!isApproved) {
 		await approvalWithdrawTransaction(address, amount, decimals, interestBearingToken, privateKey);
