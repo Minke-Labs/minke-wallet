@@ -86,13 +86,13 @@ const useWithdrawScreen = () => {
 		showAuthenticationPrompt({
 			onSuccess: async () => {
 				Keyboard.dismiss();
-				if (canWithdraw) {
+				if (canWithdraw && token) {
 					setWaitingTransaction(true);
 					const { interestBearingAddress = '' } =
 						tokens!.find((t) => t.symbol.toLowerCase() === token.symbol.toLowerCase()) || {};
 
 					if (gaslessEnabled) {
-						await gaslessWithdraw({
+						const hash = await gaslessWithdraw({
 							address,
 							privateKey,
 							amount: formatUnits(toBn(amount, token.decimals), 'wei'),
@@ -103,6 +103,20 @@ const useWithdrawScreen = () => {
 							token: token.address,
 							biconomy
 						});
+
+						if (hash) {
+							Logger.log(`Withdraw gasless ${JSON.stringify(hash)}`);
+							setTransactionHash(hash);
+							track('Withdraw done', {
+								token: token.symbol,
+								amount,
+								hash,
+								gasless: true
+							});
+							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
+						} else {
+							Logger.error('Error withdrawing');
+						}
 					} else {
 						const transaction = await withdrawTransaction({
 							address,
@@ -142,7 +156,8 @@ const useWithdrawScreen = () => {
 							track('Withdraw done', {
 								token: token.symbol,
 								amount,
-								hash
+								hash,
+								gasless: false
 							});
 							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 						} else {
