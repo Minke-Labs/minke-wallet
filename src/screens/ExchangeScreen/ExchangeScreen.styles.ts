@@ -68,5 +68,24 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		gasSelectorCardGasOption: {
 			marginRight: 16
+		},
+		tokenCard: {
+			borderRadius: 16,
+			marginTop: 16,
+			backgroundColor: colors.background2
+		},
+		tokenCardDivisor: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderBottomWidth: 1,
+			borderColor: colors.background1,
+			marginTop: 24,
+			marginBottom: 24
+		},
+		tokenCardDivisorBackground: {
+			borderRadius: 50,
+			padding: 8,
+			backgroundColor: colors.background1,
+			position: 'absolute'
 		}
 	});
