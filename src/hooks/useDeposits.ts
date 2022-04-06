@@ -37,7 +37,7 @@ const useDeposits = () => {
 		};
 
 		loadTokens();
-	}, [aaveBalances]);
+	}, [aaveBalances, interestTokens]);
 
 	return { tokens };
 };
