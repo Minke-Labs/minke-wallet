@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
-import { CardTransaction } from '@components';
+import CardTransaction from '../CardTransaction/CardTransaction';
 import { TransactionProps } from './Transaction.types';
 import { useTransaction } from './Transaction.hooks';
 
