@@ -24,7 +24,6 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 				setLoading(true);
 
 				if (gaslessEnabled) {
-					if (biconomy.status !== biconomy.READY) return;
 					const hash = await gaslessApproval({
 						address,
 						privateKey,
@@ -56,7 +55,7 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 						maxFeePerGas,
 						maxPriorityFeePerGas,
 						type: 2,
-						gasLimit: 100000,
+						gasLimit: 500000,
 						chainId
 					};
 
