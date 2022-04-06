@@ -1,8 +1,9 @@
-import { Wallet, ethers } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
+import { Wallet, ethers, BigNumber } from 'ethers';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
+import { toBn } from 'evm-bn';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 
@@ -23,13 +24,17 @@ export const gaslessApproval = async ({
 }) => {
 	const abi = [
 		'function balanceOf(address owner) view returns (uint256)',
-		'function approve(address spender, uint256 amount) external returns (bool)'
+		'function approve(address spender, uint256 amount) external returns (bool)',
+		'function decimals() view returns (uint256)'
 	];
 	const provider = biconomy.getEthersProvider();
 	const token = new ethers.Contract(contract, abi, provider);
 	let tokenAmount = amount;
 	if (!amount) {
-		tokenAmount = await token.balanceOf(address);
+		const balance: BigNumber = await token.balanceOf(address);
+		const decimals = await token.decimals();
+		// @ts-ignore
+		tokenAmount = balance.mul(toBn('2', decimals));
 	}
 
 	const wallet = new Wallet(privateKey, provider);
