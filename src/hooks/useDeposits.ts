@@ -13,7 +13,7 @@ const useDeposits = () => {
 				const lending = products.find((p) => p.label === 'Lending');
 
 				if (lending) {
-					const lala: MinkeToken[] = lending.assets.map((asset) => {
+					const minkeTokens: MinkeToken[] = lending.assets.map((asset) => {
 						const { address: interestBearingAddress, tokens: coins } = asset;
 						const { balance, balanceUSD, decimals, symbol, address } = coins[0];
 						return {
@@ -27,7 +27,7 @@ const useDeposits = () => {
 							interestBearingAddress
 						};
 					});
-					setTokens(lala);
+					setTokens(minkeTokens);
 				}
 			}
 		};

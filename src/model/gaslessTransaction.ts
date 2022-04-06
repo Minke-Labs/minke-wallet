@@ -143,7 +143,6 @@ export const gaslessDeposit = async ({
 	// send signed transaction with ethers
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
-	// await provider.waitForTransaction(txHash);
 	return txHash;
 };
 
@@ -221,6 +220,5 @@ export const gaslessWithdraw = async ({
 
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
-	// await provider.waitForTransaction(txHash);
 	return txHash;
 };

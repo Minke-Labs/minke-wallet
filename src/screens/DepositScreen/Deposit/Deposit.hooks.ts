@@ -93,6 +93,7 @@ export const useDeposit = () => {
 								hash,
 								gasless: true
 							});
+							await biconomy.getEthersProvider().waitForTransaction(hash);
 							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 						} else {
 							Logger.error('Error depositing');

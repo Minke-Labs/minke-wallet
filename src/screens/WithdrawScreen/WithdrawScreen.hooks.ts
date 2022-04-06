@@ -113,6 +113,8 @@ const useWithdrawScreen = () => {
 								hash,
 								gasless: true
 							});
+							await biconomy.getEthersProvider().waitForTransaction(hash);
+
 							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 						} else {
 							Logger.error('Error withdrawing');
