@@ -28,18 +28,18 @@ const CardTransaction: React.FC<CardTransactionProps> = ({
 				{!failed && !pending && <Text type="span">{title}</Text>}
 
 				{failed && (
-					<Text type="span" color="alert1">
+					<Text type="span" color="alert1" weight="bold">
 						Failed
 					</Text>
 				)}
 
 				{pending && !failed && (
-					<Text type="span" color="pending">
+					<Text type="span" color="text3" weight="bold">
 						Pending
 					</Text>
 				)}
 
-				<Text type="p2" weight="medium">
+				<Text type="p2" weight="medium" color="text4">
 					{subtitle}
 				</Text>
 			</View>
