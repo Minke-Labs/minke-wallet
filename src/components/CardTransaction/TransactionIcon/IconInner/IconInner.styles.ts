@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 0,
 		right: 0,
-		backgroundColor: 'white',
 		width: 14,
 		height: 14,
 		borderRadius: 7,

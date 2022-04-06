@@ -1,12 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTheme } from '@hooks';
 import Icon from '../../../Icon/Icon';
 import { styles } from './IconInner.styles';
 import { IconInnerProps } from './IconInner.types';
 
-const Base: React.FC = ({ children }) => <View style={styles.base}>{children}</View>;
+const Base: React.FC = ({ children }) => {
+	const { colors } = useTheme();
+	return <View style={[styles.base, { backgroundColor: colors.background2 }]}>{children}</View>;
+};
 
-// TODO: Add the righ icons when the design is ready.
 const IconInner: React.FC<IconInnerProps> = ({ pending, failed }) => {
 	if (pending && !failed) {
 		return (
