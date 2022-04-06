@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import { useAmplitude, useAuthentication } from '@hooks';
+import { useAmplitude, useAuthentication, useTransactions } from '@hooks';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@models/network';
-import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
+import {
+	estimateGas,
+	sendTransaction,
+	EstimateGasResponse,
+	resolveENSAddress,
+	imageSource,
+	smallWalletAddress
+} from '@models/wallet';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import { MinkeToken } from '@models/token';
 
@@ -29,6 +36,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 	const [sending, setSending] = React.useState(false);
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
 	const { showAuthenticationPrompt } = useAuthentication();
+	const { setPending, setPendingName } = useTransactions();
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {
@@ -75,6 +83,10 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						symbol: token.symbol.toLowerCase(),
 						link: hash
 					});
+					// Pending transaction...
+					setPending(true);
+					setPendingName(smallWalletAddress(ens));
+					//
 					track('Send', {
 						token: token.symbol,
 						amount,

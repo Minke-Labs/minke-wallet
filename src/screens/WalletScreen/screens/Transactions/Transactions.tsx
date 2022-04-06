@@ -4,6 +4,7 @@ import { Button, ActivityIndicator, Transaction, CardTransaction } from '@compon
 import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
+import { useTransactions } from '@hooks';
 import { styles } from './Transactions.styles';
 import { TransactionsProps } from './Transactions.types';
 import { NoTransactionsYet } from './NoTransactionsYet/NoTransactionsYet';
@@ -11,12 +12,13 @@ import { NoTransactionsYet } from './NoTransactionsYet/NoTransactionsYet';
 const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
 	const wallet = useState(globalWalletState());
 	const { transactions = [] } = wallet.value;
+	const { pending, pendingName } = useTransactions();
 
 	const Table = useCallback(() => {
 		if (transactions.length > 0) {
 			return (
 				<View style={{ height: '100%' }}>
-					<CardTransaction subtitle="To jreyes.eth" pending />
+					{pending && <CardTransaction subtitle={pendingName} pending />}
 
 					{transactions.map(
 						(item: any, idx: number) =>

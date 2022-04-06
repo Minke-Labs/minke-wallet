@@ -27,10 +27,7 @@ export const Content: React.FC<ContentProps> = ({
 			rightTitle="Accounts"
 			left={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			right={<Accounts />}
-			{...{
-				loading,
-				fetchTransactions
-			}}
+			{...{ loading, fetchTransactions }}
 		>
 			<Header onSettingsPress={onSettingsPress} />
 			<AssetsPanel
