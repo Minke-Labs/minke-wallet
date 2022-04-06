@@ -14,20 +14,20 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
-	const [pending, setPending] = React.useState(false);
+	const [pending, setPending] = React.useState(true);
 	const [pendingName, setPendingName] = React.useState('');
+	const [transactions, setTransactions] = React.useState<any[]>([]);
 
 	const fetchTransactions = async () => {
 		track('Wallet Screen Opened');
 		setLoading(true);
 		const { address, privateKey } = state.value;
-		const transactions = await getTransactions(address || '');
+		const tx = await getTransactions(address || '');
 		const { balance } = await fetchTokensAndBalances(privateKey, address);
-		state.merge({ transactions, balance });
+		state.merge({ transactions: tx, balance });
+		setTransactions(tx);
 		setLoading(false);
 		setLastTransationsFetch(new Date().getTime());
-		setPending(false);
-		setPendingName('');
 	};
 
 	useEffect(() => {
@@ -44,14 +44,18 @@ const TransactionsProvider: React.FC = ({ children }) => {
 		}
 	});
 
-	// useEffect(() => {
-	// console.log('PENDING: ', pending);
-	// console.log('PENDING NAME: ', pendingName);
-	// }, [pending, pendingName]);
-
 	return (
 		<TransactionsContext.Provider
-			value={{ pending, setPending, pendingName, setPendingName, testing, loading, fetchTransactions }}
+			value={{
+				transactions,
+				pending,
+				setPending,
+				pendingName,
+				setPendingName,
+				testing,
+				loading,
+				fetchTransactions
+			}}
 		>
 			{children}
 		</TransactionsContext.Provider>

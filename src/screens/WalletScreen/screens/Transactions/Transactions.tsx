@@ -2,17 +2,13 @@
 import React, { useCallback } from 'react';
 import { Button, ActivityIndicator, Transaction, CardTransaction } from '@components';
 import { View } from 'react-native';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { useTransactions } from '@hooks';
 import { styles } from './Transactions.styles';
 import { TransactionsProps } from './Transactions.types';
 import { NoTransactionsYet } from './NoTransactionsYet/NoTransactionsYet';
 
 const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
-	const wallet = useState(globalWalletState());
-	const { transactions = [] } = wallet.value;
-	const { pending, pendingName } = useTransactions();
+	const { pending, pendingName, transactions } = useTransactions();
 
 	const Table = useCallback(() => {
 		if (transactions.length > 0) {
