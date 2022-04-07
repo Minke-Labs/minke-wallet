@@ -1,45 +1,19 @@
-/* eslint-disable react/no-array-index-key */
-import React, { useCallback } from 'react';
-import { Button, ActivityIndicator, Transaction, CardTransaction } from '@components';
+import React from 'react';
+import { ActivityIndicator } from '@components';
 import { View } from 'react-native';
-import { useTransactions } from '@hooks';
 import { styles } from './Transactions.styles';
 import { TransactionsProps } from './Transactions.types';
-import { NoTransactionsYet } from './NoTransactionsYet/NoTransactionsYet';
+import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
-const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
-	const { pending, pendingName, transactions } = useTransactions();
-
-	const Table = useCallback(() => {
-		if (transactions.length > 0) {
-			return (
-				<View style={{ height: '100%' }}>
-					{pending && <CardTransaction subtitle={pendingName} pending />}
-
-					{transactions.map(
-						(item: any, idx: number) =>
-							item.value && <Transaction transaction={item} key={`${item.hash}${item.value}${idx}`} />
-					)}
-
-					<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
-				</View>
-			);
-		}
-
-		return <NoTransactionsYet {...{ onAddFunds }} />;
-	}, [transactions]);
-
-	return (
-		<View style={styles.container}>
-			{loading ? (
-				<View style={{ height: 400 }}>
-					<ActivityIndicator />
-				</View>
-			) : (
-				<Table />
-			)}
-		</View>
-	);
-};
-
+const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => (
+	<View style={styles.container}>
+		{loading ? (
+			<View style={{ height: 400 }}>
+				<ActivityIndicator />
+			</View>
+		) : (
+			<TransactionsTable {...{ onAddFunds, onSeeAllTransactions }} />
+		)}
+	</View>
+);
 export default Transactions;
