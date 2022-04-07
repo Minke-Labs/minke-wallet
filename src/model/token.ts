@@ -258,6 +258,7 @@ export interface AccountBalance {
 	depositedBalance: number; // deposited amount
 	walletBalance: number; // available in the wallet (not deposited)
 	tokens: MinkeToken[];
+	interestTokens: MinkeToken[];
 }
 
 export interface CovalentToken {

@@ -1,5 +1,5 @@
-import { AaveBalances } from '@models/deposit';
+import { MinkeToken } from '@models/token';
 
 export interface BodyProps {
-	lending: AaveBalances['products']['products'][0];
+	interestTokens: MinkeToken[];
 }

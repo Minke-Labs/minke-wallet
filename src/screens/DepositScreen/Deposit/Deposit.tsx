@@ -29,7 +29,8 @@ const Deposit = () => {
 		transactionHash,
 		nativeToken,
 		enoughForGas,
-		market
+		market,
+		gaslessEnabled
 	} = useDeposit();
 
 	useEffect(() => {
@@ -68,7 +69,9 @@ const Deposit = () => {
 						/>
 					</Card>
 
-					<GasSelector />
+					<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
+						<GasSelector />
+					</View>
 				</View>
 
 				<View style={styles.depositButton}>

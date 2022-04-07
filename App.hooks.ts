@@ -9,7 +9,6 @@ import {
 	useFonts
 } from '@expo-google-fonts/inter';
 import { getTokenList } from '@models/wallet';
-
 import { globalWalletState } from './src/stores/WalletStore';
 
 export const useApp = () => {

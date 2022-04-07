@@ -227,6 +227,7 @@ export const getSeedPhrase = async (keychain_id: string): Promise<string | null>
 export const erc20abi = [
 	// Read-Only Functions
 	'function balanceOf(address owner) view returns (uint256)',
+	'function allowance(address owner, address spender) external view returns (uint256)',
 	'function decimals() view returns (uint8)',
 	'function symbol() view returns (string)',
 
@@ -234,7 +235,7 @@ export const erc20abi = [
 	'function transfer(address to, uint amount) returns (bool)',
 	'function approve(address spender, uint256 amount) external returns (bool)',
 	// eslint-disable-next-line max-len
-	'function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external',
+	'function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external',
 
 	// Events
 	'event Transfer(address indexed from, address indexed to, uint amount)'
