@@ -464,32 +464,15 @@ export interface ZapperToken {
 }
 
 export interface Transaction {
-	accessList: string;
-	blockHash: string;
-	blockNumber: string;
-	chainId: string;
-	confirmations: string;
-	data: string;
 	from: string;
-	gasLimit: string;
-	gasPrice: string;
 	hash: string;
-	nonce: string;
 	timeStamp: string;
 	to: string;
-	transactionIndex: string;
-	type: string;
 	value: string;
-	contractAddress: string;
-	cumulativeGasUsed: string;
-	gas: string;
-	gasUsed: string;
-	input: string;
 	isError: string;
-	txreceipt_status: string;
-	tokenName: string;
 	tokenSymbol: string;
 	tokenDecimal: string;
+	pending: boolean;
 }
 
 export interface TransactionResponse {

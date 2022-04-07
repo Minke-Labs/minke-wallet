@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Button, Transaction, CardTransaction } from '@components';
+import { Button, Transaction } from '@components';
 import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -13,21 +13,12 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds
 	const wallet = useState(globalWalletState());
 	const { transactions = [] } = wallet.value;
 	const { pendingTransactions } = useTransactions();
+	const allTransactions = [...pendingTransactions, ...transactions];
 
-	if (transactions.length > 0) {
+	if (allTransactions.length > 0) {
 		return (
 			<View style={styles.container}>
-				{pendingTransactions.map((tx: any, idx: number) => (
-					<CardTransaction
-						key={idx}
-						subtitle={tx.pendingName}
-						value={tx.amount}
-						tokenSymbol={tx.symbol}
-						pending
-					/>
-				))}
-
-				{transactions.map(
+				{allTransactions.map(
 					(item: any, idx: number) =>
 						item.value && <Transaction transaction={item} key={`${item.hash}${item.value}${idx}`} />
 				)}

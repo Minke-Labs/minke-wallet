@@ -5,8 +5,18 @@ import { TransactionProps } from './Transaction.types';
 import { useTransaction } from './Transaction.hooks';
 
 const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
-	const { received, timestamp, formattedSource, value, tokenDecimal, tokenSymbol, token, isError, openTransaction } =
-		useTransaction({ transaction });
+	const {
+		received,
+		timestamp,
+		formattedSource,
+		value,
+		tokenDecimal,
+		tokenSymbol,
+		token,
+		isError,
+		pending,
+		openTransaction
+	} = useTransaction({ transaction });
 
 	return (
 		<CardTransaction
@@ -14,7 +24,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
 			onPress={openTransaction}
 			failed={isError === '1'}
-			{...{ value, token, tokenDecimal, received, tokenSymbol }}
+			{...{ value, token, tokenDecimal, received, pending, tokenSymbol }}
 		/>
 	);
 };

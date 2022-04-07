@@ -3,6 +3,7 @@ import { useState } from '@hookstate/core';
 import { useAmplitude, useAuthentication, useTransactions } from '@hooks';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@models/network';
+import { convertTransactionResponse } from '@models/transaction';
 import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import { MinkeToken } from '@models/token';
@@ -61,7 +62,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 					setSending(true);
 					const ens = user.address;
 					const to = (await resolveENSAddress(ens)) || ens;
-					const { wait, hash } = await sendTransaction(
+					const transaction = await sendTransaction(
 						privateKey,
 						to,
 						amount,
@@ -70,6 +71,8 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
 						token.decimals
 					);
+					const { wait, hash } = transaction;
+
 					await wait();
 					onDismiss();
 					sentSuccessfully({
@@ -77,7 +80,9 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						link: hash
 					});
 					// Pending transaction...
-					addPendingTransaction(ens, amount, token.symbol);
+					addPendingTransaction(
+						convertTransactionResponse(transaction, amount, token.symbol, token.decimals)
+					);
 					//
 					track('Send', {
 						token: token.symbol,
