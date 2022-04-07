@@ -1,58 +1,69 @@
 import React from 'react';
-import { TextInput } from 'react-native';
-import { decimalSeparator } from 'expo-localization';
+import { TextInput, View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
 import { TokenAmountInputProps } from './TokenAmountInput.types';
+import styles from './TokenAmountInput.styles';
+import { useTokenAmountInput } from './TokenAmountInput.hooks';
 
 const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 	amount,
+	symbol,
 	onAmountChange,
 	onNumberAmountChange,
 	innerRef,
-	style,
 	placeholder,
+	onMaxPress,
+	onTypeChange,
 	visible = true,
 	isAmountValid = true,
 	autoFocus = false
 }) => {
 	const { colors } = useTheme();
-	const onChangeText = (value: string) => {
-		let lastValid = amount;
-		let validNumber;
-		if (decimalSeparator === ',') {
-			validNumber = /^\d*,?\d*$/; // for comma
-		} else {
-			validNumber = /^\d*\.?\d*$/; // for dot
-		}
-
-		if (validNumber.test(value)) {
-			lastValid = value;
-		} else {
-			lastValid = amount;
-		}
-		onAmountChange(lastValid);
-		if (onNumberAmountChange) {
-			onNumberAmountChange(Number(lastValid.replace(new RegExp(`\\${decimalSeparator}`), '.')));
-		}
-	};
+	const { onChangeText, showSymbol, setShowSymbol } = useTokenAmountInput({
+		amount,
+		onAmountChange,
+		onNumberAmountChange,
+		onTypeChange
+	});
 
 	return (
-		<TextInput
-			keyboardType="numeric"
-			style={[
-				style,
-				{
-					borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1,
-					display: visible ? 'flex' : 'none',
-					color: colors.text1
-				}
-			]}
-			value={amount}
-			ref={innerRef}
-			placeholder={placeholder}
-			onChangeText={(text) => onChangeText(text)}
-			autoFocus={autoFocus}
-		/>
+		<View style={styles.container}>
+			<View style={[styles.inputContainer, { borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1 }]}>
+				<TextInput
+					keyboardType="numeric"
+					style={[
+						styles.input,
+						{
+							display: visible ? 'flex' : 'none',
+							color: colors.text1
+						}
+					]}
+					value={amount}
+					ref={innerRef}
+					placeholder={placeholder}
+					onChangeText={(text) => onChangeText(text)}
+					autoFocus={autoFocus}
+				/>
+				<Text type="a" weight="bold">
+					{showSymbol ? symbol : 'USD'}
+				</Text>
+			</View>
+			<View style={styles.buttonsContainer}>
+				<TouchableOpacity onPress={() => !!onMaxPress && onMaxPress(showSymbol)}>
+					<Text type="a" weight="medium" color="text7" style={{ marginRight: 12 }}>
+						Send max
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.touchable} onPress={() => setShowSymbol(!showSymbol)}>
+					<Icon name="tradeStroke" color="text7" size={16} style={{ marginRight: 4 }} />
+					<Text type="a" color="text7" weight="medium">
+						{!showSymbol ? symbol : 'USD'}
+					</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
 	);
 };
 
