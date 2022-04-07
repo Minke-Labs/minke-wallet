@@ -13,9 +13,19 @@ import { useTransactionTransfer } from './TransactionTransfer.hooks';
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
 	const keyboardVisible = useKeyboard();
-	const { image, amount, number, gasPrice, sending, onChangeAmount, onChangeNumber, onSend } = useTransactionTransfer(
-		{ token, user, ...props }
-	);
+	const {
+		image,
+		amount,
+		number,
+		gasPrice,
+		sending,
+		onChangeAmount,
+		onChangeNumber,
+		onSend,
+		onMaxPress,
+		onTypeChange,
+		amountType
+	} = useTransactionTransfer({ token, user, ...props });
 
 	return (
 		<View style={styles.container}>
@@ -29,7 +39,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				<Text type="h3" weight="extraBold" marginBottom={32}>
 					How much{' '}
 					<Text color="text12" type="h3" weight="extraBold">
-						{token.symbol}
+						{amountType === 'token' ? token.symbol : 'USD'}
 					</Text>{' '}
 					do you want to send
 					{/* <Text color="text12" type="h3" weight="extraBold">
@@ -48,9 +58,11 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				onAmountChange={onChangeAmount}
 				onNumberAmountChange={onChangeNumber}
 				visible={!!token}
-				isAmountValid={(number || 0) <= Number(token.balance)}
+				isAmountValid={(number || 0) <= (amountType === 'token' ? Number(token.balance) : token.balanceUSD)}
 				autoFocus
-				placeholder={`00${decimalSeparator}00`}
+				placeholder={amountType === 'fiat' ? `$00${decimalSeparator}00` : `0${decimalSeparator}00`}
+				onMaxPress={onMaxPress}
+				onTypeChange={onTypeChange}
 			/>
 			{gasPrice && (
 				<View style={{ marginBottom: 32 }}>
@@ -65,7 +77,13 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				{sending ? (
 					<ActivityIndicator />
 				) : (
-					<Button title="Send" disabled={!number || number > Number(token.balance)} onPress={onSend} />
+					<Button
+						title="Send"
+						disabled={
+							!number || number > (amountType === 'token' ? Number(token.balance) : token.balanceUSD)
+						}
+						onPress={onSend}
+					/>
 				)}
 			</View>
 			<KeyboardSpacer />

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks';
-import { Text, Icon } from '@components';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
 import { TokenAmountInputProps } from './TokenAmountInput.types';
 import styles from './TokenAmountInput.styles';
 import { useTokenAmountInput } from './TokenAmountInput.hooks';
@@ -13,13 +14,19 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 	onNumberAmountChange,
 	innerRef,
 	placeholder,
+	onMaxPress,
+	onTypeChange,
 	visible = true,
 	isAmountValid = true,
 	autoFocus = false
 }) => {
-	const [toggleSymbol, setToggleSymbol] = useState(false);
 	const { colors } = useTheme();
-	const { onChangeText } = useTokenAmountInput({ amount, onAmountChange, onNumberAmountChange });
+	const { onChangeText, showSymbol, setShowSymbol } = useTokenAmountInput({
+		amount,
+		onAmountChange,
+		onNumberAmountChange,
+		onTypeChange
+	});
 
 	return (
 		<View style={styles.container}>
@@ -40,19 +47,19 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 					autoFocus={autoFocus}
 				/>
 				<Text type="a" weight="bold">
-					{!toggleSymbol ? symbol : 'USD'}
+					{showSymbol ? symbol : 'USD'}
 				</Text>
 			</View>
 			<View style={styles.buttonsContainer}>
-				<TouchableOpacity onPress={() => console.log('SEND MAX!')}>
+				<TouchableOpacity onPress={() => !!onMaxPress && onMaxPress(showSymbol)}>
 					<Text type="a" weight="medium" color="text7" style={{ marginRight: 12 }}>
 						Send max
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.touchable} onPress={() => setToggleSymbol(!toggleSymbol)}>
+				<TouchableOpacity style={styles.touchable} onPress={() => setShowSymbol(!showSymbol)}>
 					<Icon name="tradeStroke" color="text7" size={16} style={{ marginRight: 4 }} />
 					<Text type="a" color="text7" weight="medium">
-						{toggleSymbol ? symbol : 'USD'}
+						{!showSymbol ? symbol : 'USD'}
 					</Text>
 				</TouchableOpacity>
 			</View>

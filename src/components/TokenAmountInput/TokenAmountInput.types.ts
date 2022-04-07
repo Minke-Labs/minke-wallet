@@ -11,4 +11,6 @@ export interface TokenAmountInputProps {
 	innerRef?: RefObject<TextInput>;
 	placeholder?: string;
 	autoFocus?: boolean;
+	onMaxPress?: (tokenValue?: boolean) => void;
+	onTypeChange?: (tokenValue: boolean) => void; // token or USD selected?
 }

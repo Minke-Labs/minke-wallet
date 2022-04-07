@@ -1,12 +1,21 @@
 import { decimalSeparator } from 'expo-localization';
+import { useEffect, useState } from 'react';
 
 interface UseTokenAmountInputProps {
 	amount: string;
 	onAmountChange: (amount: string) => void;
 	onNumberAmountChange: ((amount: number) => void) | undefined;
+	onTypeChange: ((tokenValue: boolean) => void) | undefined;
 }
 
-export const useTokenAmountInput = ({ amount, onAmountChange, onNumberAmountChange }: UseTokenAmountInputProps) => {
+export const useTokenAmountInput = ({
+	amount,
+	onAmountChange,
+	onNumberAmountChange,
+	onTypeChange
+}: UseTokenAmountInputProps) => {
+	const [showSymbol, setShowSymbol] = useState(true);
+
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
 		let validNumber;
@@ -27,5 +36,9 @@ export const useTokenAmountInput = ({ amount, onAmountChange, onNumberAmountChan
 		}
 	};
 
-	return { onChangeText };
+	useEffect(() => {
+		if (onTypeChange) onTypeChange(showSymbol);
+	}, [showSymbol]);
+
+	return { onChangeText, showSymbol, setShowSymbol };
 };

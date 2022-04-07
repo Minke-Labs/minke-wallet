@@ -6,6 +6,7 @@ import { network } from '@models/network';
 import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import { MinkeToken } from '@models/token';
+import { decimalSeparator } from 'expo-localization';
 
 interface UserProps {
 	name: string;
@@ -28,6 +29,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 	const [chainDefaultToken, setChainDefaultToken] = React.useState('');
 	const [sending, setSending] = React.useState(false);
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
+	const [amountType, setAmountType] = React.useState<'fiat' | 'token'>('fiat');
 	const { showAuthenticationPrompt } = useAuthentication();
 
 	useEffect(() => {
@@ -56,14 +58,21 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 	const onSend = () => {
 		showAuthenticationPrompt({
 			onSuccess: async () => {
-				if (gasPrice && chainDefaultToken) {
+				if (gasPrice && chainDefaultToken && number) {
 					setSending(true);
+					let tokenAmount = number;
+
+					if (amountType === 'fiat') {
+						// @ts-ignore
+						tokenAmount = (Number(token.balance) * number) / token.balanceUSD;
+					}
+
 					const ens = user.address;
 					const to = (await resolveENSAddress(ens)) || ens;
 					const { wait, hash } = await sendTransaction(
 						privateKey,
 						to,
-						amount,
+						tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'),
 						gasPrice.result.ProposeGasPrice,
 						id,
 						token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
@@ -77,7 +86,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 					});
 					track('Send', {
 						token: token.symbol,
-						amount,
+						tokenAmount,
 						to,
 						hash
 					});
@@ -86,14 +95,33 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 		});
 	};
 
+	const onMaxPress = (tokenValue = true) => {
+		if (tokenValue) {
+			onChangeAmount(token.balance);
+			onChangeNumber(Number(token.balance));
+		} else {
+			onChangeAmount(token.balanceUSD.toString());
+			onChangeNumber(token.balanceUSD);
+		}
+	};
+
+	const onTypeChange = (tokenValue: boolean) => {
+		setAmountType(tokenValue ? 'token' : 'fiat');
+		onChangeAmount('');
+		onChangeNumber(undefined);
+	};
+
 	return {
 		image,
 		amount,
 		number,
 		gasPrice,
 		sending,
+		amountType,
 		onChangeAmount,
 		onChangeNumber,
-		onSend
+		onSend,
+		onMaxPress,
+		onTypeChange
 	};
 };
