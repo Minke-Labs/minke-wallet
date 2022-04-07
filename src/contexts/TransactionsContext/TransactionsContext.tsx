@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useState } from '@hookstate/core';
 import { getTransactions, Transaction } from '@models/wallet';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
-import useAmplitude from '../../hooks/useAmplitude';
+import { filterPendingTransactions } from '@models/transaction';
 
 interface TransactionContextProps {
 	loading: boolean;
@@ -14,20 +14,18 @@ interface TransactionContextProps {
 export const TransactionsContext = React.createContext<TransactionContextProps>({} as TransactionContextProps);
 
 const TransactionsProvider: React.FC = ({ children }) => {
-	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [pendingTransactions, setPendingTransactions] = React.useState<Transaction[]>([]);
 
 	const fetchTransactions = async () => {
-		track('Wallet Screen Opened'); // @TODO: Remove it from here
 		setLoading(true);
 		const { address, privateKey } = state.value;
 		const transactions = await getTransactions(address || '');
 		const { balance } = await fetchTokensAndBalances(privateKey, address);
 		state.merge({ transactions, balance });
 		setLoading(false);
-		setPendingTransactions([]);
+		setPendingTransactions(filterPendingTransactions(pendingTransactions, transactions));
 	};
 
 	useEffect(() => {

@@ -21,3 +21,12 @@ export const convertTransactionResponse = (
 		pending
 	} as Transaction;
 };
+
+export const filterPendingTransactions = (
+	pendingTransactions: Transaction[],
+	apiTransactions: Transaction[]
+): Transaction[] => {
+	const hashes = apiTransactions.map(({ hash }) => hash);
+
+	return pendingTransactions.filter(({ hash }) => !hashes.includes(hash));
+};
