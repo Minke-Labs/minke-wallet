@@ -44,13 +44,15 @@ const CardTransaction: React.FC<CardTransactionProps> = ({
 				</Text>
 			</View>
 		</View>
-		{!pending && (
+		{!pending ? (
 			<Text type="span">
 				{value && Math.trunc(Number(formatUnits(value, tokenDecimal))) > 0
 					? truncate(formatUnits(value, tokenDecimal), 2)
 					: truncate(formatUnits(value, tokenDecimal), 6)}{' '}
 				{tokenSymbol || token}
 			</Text>
+		) : (
+			<Text type="span">{value}{' '}{tokenSymbol}</Text>
 		)}
 	</TouchableOpacity>
 );
