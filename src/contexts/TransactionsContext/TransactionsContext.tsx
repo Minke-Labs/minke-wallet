@@ -3,6 +3,7 @@ import { useState } from '@hookstate/core';
 import { getTransactions, Transaction } from '@models/wallet';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface TransactionContextProps {
 	loading: boolean;
@@ -17,6 +18,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [pendingTransactions, setPendingTransactions] = React.useState<Transaction[]>([]);
+	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 
 	const fetchTransactions = async () => {
 		setLoading(true);
@@ -26,11 +28,22 @@ const TransactionsProvider: React.FC = ({ children }) => {
 		state.merge({ transactions, balance });
 		setLoading(false);
 		setPendingTransactions(filterPendingTransactions(pendingTransactions, transactions));
+		setLastTransationsFetch(new Date().getTime());
 	};
 
 	useEffect(() => {
 		fetchTransactions();
 	}, []);
+
+	useFocusEffect(() => {
+		if (
+			!loading &&
+			((lastTransactionsFetch && new Date().getTime() - lastTransactionsFetch > 10000) ||
+				state.transactions.value === undefined)
+		) {
+			fetchTransactions();
+		}
+	});
 
 	const addPendingTransaction = (transaction: Transaction) => {
 		setPendingTransactions([transaction, ...pendingTransactions]);
