@@ -97,10 +97,10 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 
 	const onMaxPress = (tokenValue = true) => {
 		if (tokenValue) {
-			onChangeAmount(token.balance);
+			onChangeAmount(token.balance.replace(new RegExp(`\\${decimalSeparator}`), '.'));
 			onChangeNumber(Number(token.balance));
 		} else {
-			onChangeAmount(token.balanceUSD.toString());
+			onChangeAmount(token.balanceUSD.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'));
 			onChangeNumber(token.balanceUSD);
 		}
 	};
