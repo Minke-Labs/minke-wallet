@@ -1,19 +1,18 @@
 import React from 'react';
 import { ActivityIndicator } from '@components';
 import { View } from 'react-native';
-import { styles } from './Transactions.styles';
 import { TransactionsProps } from './Transactions.types';
 import { TransactionsTable } from './TransactionsTable/TransactionsTable';
 
-const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => (
-	<View style={styles.container}>
-		{loading ? (
-			<View style={{ height: 400 }}>
+const Transactions: React.FC<TransactionsProps> = ({ loading, onSeeAllTransactions, onAddFunds }) => {
+	if (loading) {
+		return (
+			<View style={{ paddingTop: 24 }}>
 				<ActivityIndicator />
 			</View>
-		) : (
-			<TransactionsTable {...{ onAddFunds, onSeeAllTransactions }} />
-		)}
-	</View>
-);
+		);
+	}
+
+	return <TransactionsTable {...{ onAddFunds, onSeeAllTransactions }} />;
+};
 export default Transactions;

@@ -7,6 +7,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { useTransactions } from '@hooks';
 import { NoTransactionsYet } from '../NoTransactionsYet/NoTransactionsYet';
 import { TransactionsTableProps } from './TransactionsTable.types';
+import styles  from './TransactionsTable.styles'
 
 export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds, onSeeAllTransactions }) => {
 	const wallet = useState(globalWalletState());
@@ -15,7 +16,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds
 
 	if (transactions.length > 0) {
 		return (
-			<View style={{ height: '100%' }}>
+			<View style={styles.container}>
 				{pending && <CardTransaction subtitle={pendingName} pending />}
 
 				{transactions.map(
