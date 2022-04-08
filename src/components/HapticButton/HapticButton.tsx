@@ -25,7 +25,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({
 				{stage === 0 && (
 					<>
 						<Icon name="crossHairStroke" size={18} style={{ marginRight: 14 }} color="text11" />
-						<Text weight="medium" color="text11">
+						<Text weight="bold" color="text11">
 							Hold to Deposit
 						</Text>
 					</>
@@ -34,7 +34,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({
 				{stage === 1 && (
 					<>
 						<Ring />
-						<Text weight="medium" color="text11" style={{ marginLeft: 14 }}>
+						<Text weight="bold" color="text11" style={{ marginLeft: 14 }}>
 							Authorizing...
 						</Text>
 					</>

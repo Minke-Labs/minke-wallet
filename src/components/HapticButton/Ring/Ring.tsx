@@ -8,15 +8,17 @@ import Animated, {
 } from 'react-native-reanimated';
 import { styles } from './Ring.styles';
 
+const timing = { duration: 900 };
+
 const Ring = () => {
 	const ring = useSharedValue(0);
 
 	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [{ scale: interpolate(ring.value, [0, 1], [0, 1]) }]
+		transform: [{ scale: interpolate(ring.value, [0, 1], [0.5, 1]) }]
 	}));
 
 	useEffect(() => {
-		ring.value = withRepeat(withTiming(1, { duration: 900 }), -1, false);
+		ring.value = withRepeat(withTiming(1, timing), -1, false);
 	}, []);
 
 	return <Animated.View style={[styles.ring, animatedStyle]} />;
