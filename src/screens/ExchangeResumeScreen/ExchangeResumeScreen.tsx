@@ -186,6 +186,8 @@ const ExchangeResumeScreen = () => {
 
 					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
+					<View style={{ marginBottom: 32 }} />
+
 					{priceQuote &&
 						(loading ? (
 							<ActivityIndicator />
