@@ -3,7 +3,6 @@ import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 	interpolate,
-	withRepeat,
 	withTiming
 } from 'react-native-reanimated';
 import { styles } from './Ring.styles';
@@ -18,7 +17,7 @@ const Ring = () => {
 	}));
 
 	useEffect(() => {
-		ring.value = withRepeat(withTiming(1, timing), -1, false);
+		ring.value = withTiming(1, timing);
 	}, []);
 
 	return <Animated.View style={[styles.ring, animatedStyle]} />;
