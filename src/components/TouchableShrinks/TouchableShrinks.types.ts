@@ -1,5 +1,7 @@
 export interface TouchableShrinksProps {
-	shrinks?: number;
-	disabled?: boolean;
+	shrinks: number;
+	disabled: boolean;
 	onPress: () => void;
+	onPressIn: () => void;
+	onPressOut: () => void;
 }

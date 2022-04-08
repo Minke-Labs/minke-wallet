@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { useTheme } from '@hooks';
+import { useTheme, useAuthentication } from '@hooks';
 import { View } from 'react-native';
 
 import { styles } from './HapticButton.styles';
@@ -11,16 +11,34 @@ import Ring from './Ring/Ring';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 
-const HapticButton: React.FC<HapticButtonProps> = ({
-	disabled = false,
-	marginBottom = 0,
-	onPress
-}) => {
-	const [stage, setStage] = useState(1);
+const { showAuthenticationPrompt } = useAuthentication();
+
+const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, marginBottom = 0, onPress }) => {
+	const [stage, setStage] = useState(0);
 	const { colors } = useTheme();
 
+	const onPressIn = () => {
+		setStage(1);
+	};
+
+	const onPressOut = () => {
+		showAuthenticationPrompt({
+			onSuccess: () => {
+				onPress();
+				setStage(0);
+			}
+		});
+	};
+
 	return (
-		<TouchableShrinks {...{ disabled, onPress, marginBottom }}>
+		<TouchableShrinks
+			{...{
+				disabled,
+				onPressIn,
+				onPressOut,
+				marginBottom
+			}}
+		>
 			<View style={[styles.button, { backgroundColor: colors.cta1, marginBottom }]}>
 				{stage === 0 && (
 					<>

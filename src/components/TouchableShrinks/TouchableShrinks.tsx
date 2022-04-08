@@ -12,11 +12,13 @@ import { TouchableShrinksProps } from './TouchableShrinks.types';
 
 const timing = { duration: 50 };
 
-const TouchableShrinks: React.FC<TouchableShrinksProps> = ({
+const TouchableShrinks: React.FC<Partial<TouchableShrinksProps>> = ({
 	onPress,
 	children,
 	shrinks = 0.98,
-	disabled = false
+	disabled = false,
+	onPressIn,
+	onPressOut
 }) => {
 	const pressed = useSharedValue(false);
 
@@ -34,9 +36,11 @@ const TouchableShrinks: React.FC<TouchableShrinksProps> = ({
 		<TouchableWithoutFeedback
 			onPressIn={() => {
 				pressed.value = true;
+				if (onPressIn) onPressIn();
 			}}
 			onPressOut={() => {
 				pressed.value = false;
+				if (onPressOut) onPressOut();
 			}}
 			{...{ onPress, disabled }}
 		>
