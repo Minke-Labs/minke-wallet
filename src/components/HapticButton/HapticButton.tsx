@@ -21,7 +21,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({
 
 	return (
 		<TouchableShrinks {...{ disabled, onPress, marginBottom }}>
-			<View style={[styles.button, { backgroundColor: colors.cta1, marginBottom }]} {...{ disabled }}>
+			<View style={[styles.button, { backgroundColor: colors.cta1, marginBottom }]}>
 				{stage === 0 && (
 					<>
 						<Icon name="crossHairStroke" size={18} style={{ marginRight: 14 }} color="text11" />
