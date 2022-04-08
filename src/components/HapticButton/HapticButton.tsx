@@ -39,7 +39,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, marginBot
 				marginBottom
 			}}
 		>
-			<View style={[styles.button, { backgroundColor: colors.cta1, marginBottom }]}>
+			<View style={[styles.button, { backgroundColor: disabled ? colors.detail2 : colors.cta1, marginBottom }]}>
 				{stage === 0 && (
 					<>
 						<Icon name="crossHairStroke" size={18} style={{ marginRight: 14 }} color="text11" />
