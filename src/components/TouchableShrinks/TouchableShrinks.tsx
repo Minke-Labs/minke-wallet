@@ -12,7 +12,12 @@ import { TouchableShrinksProps } from './TouchableShrinks.types';
 
 const timing = { duration: 50 };
 
-const TouchableShrinks: React.FC<TouchableShrinksProps> = ({ onPress, children, shrinks = 0.98, disabled = false }) => {
+const TouchableShrinks: React.FC<TouchableShrinksProps> = ({
+	onPress,
+	children,
+	shrinks = 0.98,
+	disabled = false
+}) => {
 	const pressed = useSharedValue(false);
 
 	const progress = useDerivedValue(() => (pressed.value ? withTiming(1, timing) : withTiming(0, timing)));

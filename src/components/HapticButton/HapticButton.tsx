@@ -18,7 +18,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({
 	const { colors } = useTheme();
 
 	return (
-		<TouchableShrinks {...{ disabled, onPress }}>
+		<TouchableShrinks {...{ disabled, onPress, marginBottom }}>
 			<View style={[styles.button, { backgroundColor: colors.cta1, marginBottom }]} {...{ disabled }}>
 				{iconLeft && <Icon name="crossHairStroke" size={18} style={{ marginRight: 14 }} color="text11" />}
 				<Text weight="medium" color="text11">
