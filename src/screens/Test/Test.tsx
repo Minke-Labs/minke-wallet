@@ -9,7 +9,7 @@ const Test = () => {
 	return (
 		<BasicLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				<HapticButton onPress={test} marginBottom={8} />
+				<HapticButton onPress={test} marginBottom={48} />
 			</View>
 		</BasicLayout>
 	);
