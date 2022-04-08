@@ -1,7 +1,7 @@
 import React from 'react';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Card } from 'react-native-paper';
-import { Icon, Modal, ProgressButton, Text, TokenCard } from '@components';
+import { Icon, Modal, HapticButton, Text, TokenCard } from '@components';
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useTheme } from '@hooks';
@@ -73,7 +73,7 @@ const WithdrawScreen = () => {
 
 				<View style={styles.withdrawButton}>
 					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<ProgressButton title="Hold to Withdraw" disabled={!canWithdraw} onFinish={onWithdraw} />
+					<HapticButton disabled={!canWithdraw} onPress={onWithdraw} />
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>
