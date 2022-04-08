@@ -69,6 +69,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 					</SafeAreaView>
 					<View style={{ bottom: 34 }}>
 						<HapticButton
+							title="Open Account"
 							marginBottom={16}
 							onPress={onOpenAccount}
 							disabled={loading}

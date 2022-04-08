@@ -189,11 +189,7 @@ const ExchangeResumeScreen = () => {
 					<View style={{ marginBottom: 32 }} />
 
 					{priceQuote &&
-						(loading ? (
-							<ActivityIndicator />
-						) : (
-							<HapticButton onPress={onSuccess} />
-						))}
+						(loading ? <ActivityIndicator /> : <HapticButton title="Exchange" onPress={onSuccess} />)}
 				</View>
 			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>

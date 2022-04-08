@@ -76,7 +76,7 @@ const Deposit = () => {
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<HapticButton disabled={!canDeposit} onPress={onDeposit} />
+					<HapticButton title="Deposit" disabled={!canDeposit} onPress={onDeposit} />
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>

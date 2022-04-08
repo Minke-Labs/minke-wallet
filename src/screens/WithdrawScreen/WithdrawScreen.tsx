@@ -73,7 +73,7 @@ const WithdrawScreen = () => {
 
 				<View style={styles.withdrawButton}>
 					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<HapticButton disabled={!canWithdraw} onPress={onWithdraw} />
+					<HapticButton title="Withdraw" disabled={!canWithdraw} onPress={onWithdraw} />
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>

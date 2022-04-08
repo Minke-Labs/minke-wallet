@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useTheme, useAuthentication } from '@hooks';
 import { View } from 'react-native';
@@ -13,7 +12,7 @@ import Icon from '../Icon/Icon';
 
 const { showAuthenticationPrompt } = useAuthentication();
 
-const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, marginBottom = 0, onPress }) => {
+const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, title, marginBottom = 0, onPress }) => {
 	const [stage, setStage] = useState(0);
 	const { colors } = useTheme();
 
@@ -44,7 +43,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, marginBot
 					<>
 						<Icon name="crossHairStroke" size={18} style={{ marginRight: 14 }} color="text11" />
 						<Text weight="bold" color="text11">
-							Hold to Deposit
+							Hold to {title}
 						</Text>
 					</>
 				)}
