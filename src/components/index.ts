@@ -16,7 +16,9 @@ import Flag from './Flag/Flag';
 import Card from './Card/Card';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
+import HapticButton from './HapticButton/HapticButton';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
+import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
 import PercChange from './PercChange/PercChange';
@@ -40,6 +42,8 @@ export {
 	ModalReusables,
 	SearchInput,
 	TextArea,
+	HapticButton,
+	TouchableShrinks,
 	Input,
 	LoadingScreen,
 	Flag,

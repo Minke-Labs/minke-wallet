@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from '@hookstate/core';
+// import { useState } from '@hookstate/core';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
@@ -27,14 +27,14 @@ import {
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
-import { globalWalletState } from '../stores/WalletStore';
+// import { globalWalletState } from '../stores/WalletStore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Routes: React.FC = () => {
-	const walletState = useState(globalWalletState());
-	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
-	// const initialScreen = 'Test';
+	// const walletState = useState(globalWalletState());
+	// const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
+	const initialScreen = 'Test';
 
 	return (
 		<NavigationContainer>
