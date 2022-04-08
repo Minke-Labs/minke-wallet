@@ -1,5 +1,4 @@
 import React from 'react';
-import { TransactionsProvider } from '@contexts';
 import { useWalletScreen } from './WalletScreen.hooks';
 import ModalsImport from './ModalsImport/ModalsImport';
 import { Content } from './Content/Content';
@@ -30,7 +29,7 @@ const WalletScreen = () => {
 	} = useWalletScreen();
 
 	return (
-		<TransactionsProvider>
+		<>
 			<Content
 				{...{
 					onDeleteWallet,
@@ -63,7 +62,7 @@ const WalletScreen = () => {
 					onSendFinished
 				}}
 			/>
-		</TransactionsProvider>
+		</>
 	);
 };
 
