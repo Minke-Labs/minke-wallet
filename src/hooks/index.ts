@@ -2,7 +2,7 @@ import useAmplitude from './useAmplitude';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
-import useFetchCurrentNetwork from './useFetchCurrentNetwork';
+import useNetwork from './useNetwork';
 import useKeyboard from './useKeyboard';
 import useTimeout from './useTimeout';
 import useWyreApplePay from './useWyreApplePay';
@@ -21,7 +21,7 @@ export {
 	useTheme,
 	useNavigation,
 	useFormProgress,
-	useFetchCurrentNetwork,
+	useNetwork,
 	useKeyboard,
 	useTokens,
 	useDeposit,

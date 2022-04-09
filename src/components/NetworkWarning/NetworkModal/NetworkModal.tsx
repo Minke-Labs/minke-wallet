@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
-import { useFetchCurrentNetwork } from '@hooks';
+import { useNetwork } from '@hooks';
 import Modal from '../../Modal/Modal';
 import Token from '../../Token/Token';
 import Text from '../../Text/Text';
@@ -10,7 +10,7 @@ import { NetworkModalProps } from './NetworkModal.types';
 import styles from './NetworkModal.styles';
 
 const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => {
-	const network = useFetchCurrentNetwork();
+	const { network } = useNetwork();
 
 	return (
 		<Modal {...{ isVisible, onDismiss }}>

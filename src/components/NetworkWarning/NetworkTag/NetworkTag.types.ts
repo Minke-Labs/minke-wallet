@@ -1,3 +1,4 @@
 export interface NetworkTagProps {
-	onPress: () => void;
+	onPress?: () => void;
+	disableInfo?: boolean;
 }

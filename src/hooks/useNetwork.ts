@@ -1,27 +1,26 @@
 import React, { useEffect } from 'react';
-import { captureException } from '@sentry/react-native';
 import { useState } from '@hookstate/core';
+import { captureException } from '@sentry/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@hooks';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { Network, network as selectedNetwork, networkSettingsKey } from '@models/network';
 import Logger from '@utils/logger';
+import useNavigation from './useNavigation';
 
-export const useChangeNetworkScreen = () => {
+const useFetchCurrentNetwork = () => {
 	const navigation = useNavigation();
+	const [network, setConnectedNetwork] = React.useState<Network>();
 
 	const state = useState(globalWalletState());
 	const { privateKey, address } = state.value;
-	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
 
-	const goBack = () => navigation.goBack();
-
-	const selectNetwork = async (network: Network) => {
+	const selectNetwork = async (ntw: Network) => {
 		try {
-			await AsyncStorage.setItem(networkSettingsKey, network.id);
-			setConnectedNetwork(network);
+			await AsyncStorage.setItem(networkSettingsKey, ntw.id);
+			await AsyncStorage.setItem('@current:network', JSON.stringify(ntw));
+			setConnectedNetwork(ntw);
 			const { balance } = await fetchTokensAndBalances(privateKey, address);
-			state.network.set(network);
+			state.network.set(ntw);
 			state.balance.set(balance);
 			state.transactions.set(undefined);
 			navigation.navigate('WalletScreen');
@@ -39,9 +38,19 @@ export const useChangeNetworkScreen = () => {
 		fetchNetwork();
 	}, []);
 
+	useEffect(() => {
+		const fetchNetwork = async () => {
+			const res = await AsyncStorage.getItem('@current:network');
+			const parsedRes = JSON.parse(res!);
+			setConnectedNetwork(parsedRes);
+		};
+		fetchNetwork();
+	}, [network]);
+
 	return {
-		connectedNetwork,
-		selectNetwork,
-		goBack
+		network,
+		selectNetwork
 	};
 };
+
+export default useFetchCurrentNetwork;

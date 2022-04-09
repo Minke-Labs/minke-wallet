@@ -2,13 +2,15 @@ import React from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { networks } from '@models/network';
 import { BasicLayout } from '@layouts';
+import { useNavigation, useNetwork } from '@hooks';
 import { Icon, Text } from '@components';
 import ListItem from './ListItem/ListItem';
 import styles from './ChangeNetworkScreen.styles';
-import { useChangeNetworkScreen } from './ChangeNetworkScreen.hooks';
 
 const ChangeNetworkScreen = () => {
-	const { connectedNetwork, selectNetwork, goBack } = useChangeNetworkScreen();
+	const navigation = useNavigation();
+	const goBack = () => navigation.goBack();
+	const { selectNetwork, network } = useNetwork();
 
 	return (
 		<BasicLayout>
@@ -34,7 +36,7 @@ const ChangeNetworkScreen = () => {
 						<ListItem
 							label={item.name}
 							onPress={() => selectNetwork(item)}
-							selected={item.id === connectedNetwork?.id}
+							selected={item.id === network?.id}
 							token={item.nativeToken.symbol}
 							testnet={item.testnet}
 						/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, SafeAreaView } from 'react-native';
-import { Text, WhiteButton, ModalHeader, ActivityIndicator } from '@components';
+import { Text, WhiteButton, ModalHeader, ActivityIndicator, NetworkWarning } from '@components';
 import QRCode from 'react-native-qrcode-svg';
 import { ReceiveModalProps } from './ReceiveModal.types';
 import styles from './ReceiveModal.styles';
@@ -34,6 +34,9 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					)}
 					<Text>{address}</Text>
 				</View>
+
+				<NetworkWarning.Tag disableInfo />
+
 				<WhiteButton title="Share" icon="shareStroke" onPress={onShare} />
 			</View>
 		</SafeAreaView>
