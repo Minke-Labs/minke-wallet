@@ -120,13 +120,10 @@ const BackupStatusScreen = ({ route }: Props) => {
 					)}
 					{seed.value && (
 						<Button
-							onPress={
-								() =>
-									showAuthenticationPrompt({
-										onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
-									})
-								// eslint-disable-next-line react/jsx-curly-newline
-							}
+							onPress={() =>
+								showAuthenticationPrompt({
+									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
+								})}
 							title="View Secret Phrase"
 							mode="outlined"
 						/>
