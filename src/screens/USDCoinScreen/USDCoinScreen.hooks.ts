@@ -7,6 +7,8 @@ export const useUSDCoinScreen = () => {
 	const navigation = useNavigation();
 	const [usdCoin, setUsdCoin] = useState('');
 
+	const goBack = () => navigation.goBack();
+
 	const onSelectCoin = async (token: string) => {
 		await AsyncStorage.setItem(usdCoinSettingsKey, token);
 		setUsdCoin(token);
@@ -23,6 +25,6 @@ export const useUSDCoinScreen = () => {
 	return {
 		usdCoin,
 		onSelectCoin,
-		navigation
+		goBack
 	};
 };

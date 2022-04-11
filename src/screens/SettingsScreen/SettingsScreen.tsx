@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import * as Linking from 'expo-linking';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import { Icon, Text, LoadingScreen } from '@components';
+import { LoadingScreen, SettingsHeader } from '@components';
 import { useTheme, useNavigation } from '@hooks';
 import { walletCreate } from '@models/wallet';
 import { globalWalletState, walletState } from '@stores/WalletStore';
@@ -15,6 +15,8 @@ const SettingsScreen = () => {
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const [creatingWallet, setCreatingWallet] = React.useState(false);
+
+	const goBack = () => navigation.goBack();
 
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onChangeCurrency = () => navigation.navigate('ChangeCurrencyScreen');
@@ -37,17 +39,9 @@ const SettingsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} style={{ width: 24 }} onPress={() => navigation.goBack()}>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</TouchableOpacity>
-			</View>
+			<SettingsHeader title="Settings" onPress={goBack} done={false} />
 
 			<View style={styles.container}>
-				<Text type="h3" weight="extraBold" marginBottom={40}>
-					Settings
-				</Text>
-
 				<ScrollView>
 					<SettingsOption label="Backup" icon="backupStroke" onPress={onBackup} />
 					<SettingsOption label="Currency" icon="currencyStroke" onPress={onChangeCurrency} />
