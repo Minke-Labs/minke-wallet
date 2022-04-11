@@ -3,12 +3,13 @@ import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState } from '@stores/WalletStore';
 import { createTransaction, ExchangeRoute, getExchangePrice } from '@models/token';
-import { useAuthentication, useNavigation, useTheme } from '@hooks';
+import { useAuthentication, useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { approveSpending } from '@models/contract';
 import { getProvider } from '@models/wallet';
+import { convertTransactionResponse } from '@models/transaction';
 import { BigNumber, Wallet } from 'ethers';
 import { makeStyles } from './ExchangeResume.styles';
 
@@ -27,6 +28,7 @@ const useExchangeResumeScreen = () => {
 	const { colors } = useTheme();
 	const { showAuthenticationPrompt } = useAuthentication();
 	const styles = makeStyles(colors);
+	const { addPendingTransaction } = useTransactions();
 
 	const showModal = () => setVisible(true);
 	const hideModal = () => {
@@ -170,7 +172,15 @@ const useExchangeResumeScreen = () => {
 				};
 				const walletObject = new Wallet(wallet.privateKey.value, provider);
 				const signedTx = await walletObject.signTransaction(txDefaults);
-				const { hash } = await provider.sendTransaction(signedTx as string);
+				const transaction = await provider.sendTransaction(signedTx as string);
+				const converted = convertTransactionResponse(
+					transaction,
+					to.symbol,
+					formatUnits(destAmount, destDecimals),
+					destDecimals
+				);
+				addPendingTransaction(converted);
+				const { hash } = transaction;
 				setTransactionHash(hash);
 			}
 		}

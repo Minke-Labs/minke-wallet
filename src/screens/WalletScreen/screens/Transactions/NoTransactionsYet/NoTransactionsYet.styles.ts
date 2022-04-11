@@ -1,13 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
 	container: {
-		flex: 1,
-		height: '100%',
-		paddingHorizontal: 14,
-		paddingTop: 14
-	},
-	tableContainer: {
 		flex: 1,
 		alignItems: 'center',
 		paddingVertical: 14

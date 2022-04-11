@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useState } from '@hookstate/core';
-import { smallWalletAddress, getENSAddress } from '@models/wallet';
+import { smallWalletAddress, getENSAddress, Transaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@src/model/network';
 
 interface UseTransactionProps {
-	transaction: any;
+	transaction: Transaction;
 }
 
 export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	const wallet = useState(globalWalletState());
 	const address = wallet.address.value;
-	const { from, to, timeStamp, isError, value, tokenSymbol, tokenDecimal = '18', hash } = transaction;
+	const { from, to, timeStamp, isError, value, tokenSymbol, tokenDecimal = '18', hash, pending } = transaction;
 	const received = to.toLowerCase() === address.toLowerCase();
 	const source = received ? from : to;
 	const timestamp = new Date(+timeStamp * 1000);
@@ -86,6 +86,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		tokenSymbol,
 		token,
 		isError,
+		pending,
 		openTransaction
 	};
 };

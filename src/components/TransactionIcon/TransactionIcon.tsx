@@ -20,7 +20,7 @@ const TransactionIcon: React.FC<TransactionIconProps> = ({ received }) => {
 				}
 			]}
 		>
-			<Icon name="arrowStroke" color={received ? 'alert3' : 'text3'} size={20} />
+			<Icon name="arrowUp" color={received ? 'alert3' : 'text3'} size={20} />
 		</View>
 	);
 };
