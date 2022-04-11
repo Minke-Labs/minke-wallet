@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, ProgressButton, TokenCard } from '@components';
+import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation, useAmplitude } from '@hooks';
 import { debounce } from 'lodash';
@@ -76,7 +76,7 @@ const Deposit = () => {
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
+					<HapticButton title="Deposit" disabled={!canDeposit} onPress={onDeposit} />
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>

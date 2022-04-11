@@ -3,7 +3,7 @@ import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState } from '@stores/WalletStore';
 import { createTransaction, ExchangeRoute, getExchangePrice } from '@models/token';
-import { useAuthentication, useNavigation, useTheme, useTransactions } from '@hooks';
+import { useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
 import { tokenBalanceFormat } from '@helpers/utilities';
@@ -26,7 +26,6 @@ const useExchangeResumeScreen = () => {
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [error, setError] = React.useState('');
 	const { colors } = useTheme();
-	const { showAuthenticationPrompt } = useAuthentication();
 	const styles = makeStyles(colors);
 	const { addPendingTransaction } = useTransactions();
 
@@ -203,7 +202,6 @@ const useExchangeResumeScreen = () => {
 		transactionHash,
 		error,
 		setError,
-		showAuthenticationPrompt,
 		onSuccess
 	};
 };

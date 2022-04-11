@@ -8,7 +8,7 @@ import { smallWalletAddress } from '@models/wallet';
 import { formatUnits } from 'ethers/lib/utils';
 import { BasicLayout } from '@layouts';
 import { TokenType } from '@styles';
-import { Icon, Modal, Text, Token, ActivityIndicator, ProgressButton, ModalReusables } from '@components';
+import { Icon, Modal, Text, Token, ActivityIndicator, HapticButton, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
@@ -48,7 +48,6 @@ const ExchangeResumeScreen = () => {
 		transactionHash,
 		error,
 		setError,
-		showAuthenticationPrompt,
 		onSuccess
 	} = useExchangeResumeScreen();
 	return (
@@ -187,12 +186,10 @@ const ExchangeResumeScreen = () => {
 
 					{exchange.value.gas && <GasOption type={gas.type} disabled />}
 
+					<View style={{ marginBottom: 32 }} />
+
 					{priceQuote &&
-						(loading ? (
-							<ActivityIndicator />
-						) : (
-							<ProgressButton onFinish={() => showAuthenticationPrompt({ onSuccess })} />
-						))}
+						(loading ? <ActivityIndicator /> : <HapticButton title="Exchange" onPress={onSuccess} />)}
 				</View>
 			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>
