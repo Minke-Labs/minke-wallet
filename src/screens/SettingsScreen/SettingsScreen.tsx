@@ -16,10 +16,11 @@ const SettingsScreen = () => {
 	const { colors } = useTheme();
 	const [creatingWallet, setCreatingWallet] = React.useState(false);
 
+	const onBackup = () => navigation.navigate('BackupSettingsScreen');
+	const onChangeCurrency = () => navigation.navigate('ChangeCurrencyScreen');
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
-	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
 
 	const onCreateWallet = useCallback(async () => {
@@ -49,6 +50,7 @@ const SettingsScreen = () => {
 
 				<ScrollView>
 					<SettingsOption label="Backup" icon="backupStroke" onPress={onBackup} />
+					<SettingsOption label="Currency" icon="currencyStroke" onPress={onChangeCurrency} />
 					<SettingsOption label="Network" icon="networkStroke" onPress={onChangeNetwork} />
 					<SettingsOption label="New Wallet" icon="walletStroke" onPress={onCreateWallet} />
 					<SettingsOption label="US Dollar coin" icon="dollarStroke" onPress={onDollarSettings} />

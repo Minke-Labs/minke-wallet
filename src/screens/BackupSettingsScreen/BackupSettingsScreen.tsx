@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Text, Icon } from '@components';
+import { SettingsHeader } from '@components';
 import ListItem from './ListItem/ListItem';
 import styles from './BackupSettingsScreen.styles';
 import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
@@ -11,16 +11,9 @@ const BackupSettingsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</TouchableOpacity>
-			</View>
+			<SettingsHeader title="Backup" onPress={goBack} done={false} />
 
 			<View style={styles.container}>
-				<Text weight="extraBold" type="h3">
-					Backup Accounts
-				</Text>
 				<SafeAreaView>
 					<FlatList
 						style={{ paddingTop: 24, paddingBottom: 24 }}
