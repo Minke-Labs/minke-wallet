@@ -1,35 +1,39 @@
 import React, { useEffect, useCallback } from 'react';
+import { Keyboard } from 'react-native';
+import { useState } from '@hookstate/core';
 import { getProvider } from '@models/wallet';
 import { ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
+import { aaveMarketTokenToParaswapToken, depositTransaction, usdCoinSettingsKey } from '@models/deposit';
 import { useNavigation, useTokens, useAmplitude, useBiconomy, useNativeToken, useTransactions } from '@hooks';
 import { Wallet } from 'ethers';
-import { useState } from '@hookstate/core';
-import { Keyboard } from 'react-native';
 import Logger from '@utils/logger';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { aaveDepositContract, gaslessDeposit } from '@models/gaslessTransaction';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import { convertTransactionResponse } from '@models/transaction';
+import { useSaveScreen } from '@src/screens/SaveScreen/SaveScreen.hooks';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { nativeToken } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { tokens } = useTokens();
+	const { depositableTokens: tokens } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
-	const { market } = globalDepositState().value;
+	const { market } = useState(globalDepositState()).value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const [token] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
+	const [token, setToken] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
+	const [searchVisible, setSearchVisible] = React.useState(false);
+	const { setSelectedUSDCoin } = useSaveScreen();
 	const { addPendingTransaction } = useTransactions();
 
 	const balanceFrom = useCallback(
@@ -159,6 +163,23 @@ export const useDeposit = () => {
 		}
 	};
 
+	const showModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(true);
+	};
+
+	const hideModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(false);
+	};
+
+	const onTokenSelect = async (selectedToken: ParaswapToken) => {
+		hideModal();
+		setToken(selectedToken);
+		await AsyncStorage.setItem(usdCoinSettingsKey, selectedToken.symbol);
+		setSelectedUSDCoin(selectedToken.symbol);
+	};
+
 	useEffect(() => {
 		if (token && tokens && tokens.length > 0) {
 			const balance = balanceFrom(token);
@@ -167,6 +188,12 @@ export const useDeposit = () => {
 			setTokenBalance('0');
 		}
 	}, [tokens, token]);
+
+	useEffect(() => {
+		if (market.tokens[0].symbol !== token.symbol) {
+			setToken(aaveMarketTokenToParaswapToken(market));
+		}
+	}, [market]);
 
 	return {
 		token,
@@ -179,6 +206,11 @@ export const useDeposit = () => {
 		nativeToken,
 		enoughForGas,
 		market,
-		gaslessEnabled
+		gaslessEnabled,
+		searchVisible,
+		hideModal,
+		showModal,
+		onTokenSelect,
+		tokens
 	};
 };

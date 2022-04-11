@@ -4,6 +4,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { useBiconomy, useDeposit, useNavigation } from '@hooks';
 import { aaveDepositContract } from '@models/gaslessTransaction';
+import { useState } from '@hookstate/core';
 
 export const useDepositScreen = () => {
 	const { gaslessEnabled } = useBiconomy();
@@ -12,8 +13,8 @@ export const useDepositScreen = () => {
 	const [notAbleToSaveVisible, setNotAbleToSaveVisible] = React.useState(true);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const {
-		market: { tokens = [] }
-	} = globalDepositState().value;
+		market: { tokens = [], address: marketAddress }
+	} = useState(globalDepositState()).value;
 	const { address } = globalWalletState().value;
 
 	const { ableToDeposit } = useDeposit();
@@ -28,7 +29,7 @@ export const useDepositScreen = () => {
 			}
 		};
 		loadApproved();
-	}, []);
+	}, [marketAddress]);
 
 	const notAbleToSaveDismiss = () => {
 		setNotAbleToSaveVisible(false);
