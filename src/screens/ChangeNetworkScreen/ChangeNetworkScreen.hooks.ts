@@ -21,9 +21,7 @@ export const useChangeNetworkScreen = () => {
 			await AsyncStorage.setItem(networkSettingsKey, network.id);
 			setConnectedNetwork(network);
 			const { balance } = await fetchTokensAndBalances(privateKey, address);
-			state.network.set(network);
-			state.balance.set(balance);
-			state.transactions.set(undefined);
+			state.merge({ network, balance, transactions: undefined });
 			navigation.navigate('WalletScreen');
 		} catch (e) {
 			Logger.error('Error saving settings');

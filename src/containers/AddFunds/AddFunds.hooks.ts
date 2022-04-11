@@ -1,7 +1,7 @@
-import { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
-import { useAmplitude, useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
+import { useAmplitude, useBiconomy, useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 
 interface UseAddFundsProps {
@@ -12,12 +12,13 @@ interface UseAddFundsProps {
 export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const navigation = useNavigation();
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
-	const [coin, setCoin] = useState<ICoin>(coins.ethereum);
-	const [amount, setAmount] = useState<number | undefined>(undefined);
-	const [customAmount, setCustomAmount] = useState<number | null>(null);
-	const [wyreError, setWyreError] = useState<UseWyreApplePayError | null>();
+	const [coin, setCoin] = React.useState<ICoin>(coins.usdc);
+	const [amount, setAmount] = React.useState<number | undefined>(undefined);
+	const [customAmount, setCustomAmount] = React.useState<number | null>(null);
+	const [wyreError, setWyreError] = React.useState<UseWyreApplePayError | null>();
 	const customAmountRef = createRef<TextInput>();
 	const { track } = useAmplitude();
+	const { gaslessEnabled } = useBiconomy();
 
 	const { onPurchase, orderId, error } = useWyreApplePay();
 
@@ -81,10 +82,11 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		amount,
 		customAmount,
 		customAmountRef,
-		currentStep,
-		goBack,
+		currentStep: gaslessEnabled ? currentStep + 1 : currentStep,
 		wyreError,
 		error,
+		gaslessEnabled,
+		goBack,
 		dismissError,
 		selectCoin,
 		dismissCoin,
