@@ -10,7 +10,7 @@ import { useOpenAave } from './OpenAave.hooks';
 const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { loading, onOpenAccount } = useOpenAave({ onApprove });
+	const { loading, onOpenAccount, gaslessEnabled } = useOpenAave({ onApprove });
 
 	useEffect(() => {
 		track('OpenAave Screen Opened');
@@ -75,9 +75,11 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 							onPress={onOpenAccount}
 							disabled={loading}
 						/>
-						<Text type="span" color="text2" style={{ textAlign: 'center' }}>
-							This transaction will cost a few cents.
-						</Text>
+						{!gaslessEnabled && (
+							<Text type="span" color="text2" style={{ textAlign: 'center' }}>
+								This transaction will cost a few cents.
+							</Text>
+						)}
 					</View>
 					{loading && (
 						<View style={styles.loadingBox}>

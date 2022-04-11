@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ALCHEMY_API_URL_POLYGON_MAINNET, BICONOMY_API_KEY_POLYGON_MAINNET } from '@env';
 
 export interface Network {
 	chainId: number;
@@ -14,6 +15,8 @@ export interface Network {
 	topUpToken: { symbol: string; name: string };
 	transactionTimesEndpoint: boolean;
 	wyreSRN: string;
+	jsonRpcProvider?: string;
+	biconomyAPIKey?: string;
 }
 
 export interface Networks {
@@ -50,8 +53,10 @@ export const networks: Networks = {
 		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
 		zapperNetwork: 'polygon',
 		nativeToken: { symbol: 'MATIC', name: 'Matic' },
-		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
-		transactionTimesEndpoint: false
+		transactionTimesEndpoint: false,
+		jsonRpcProvider: ALCHEMY_API_URL_POLYGON_MAINNET || process.env.ALCHEMY_API_URL_POLYGON_MAINNET,
+		biconomyAPIKey: BICONOMY_API_KEY_POLYGON_MAINNET || process.env.BICONOMY_API_KEY_POLYGON_MAINNET,
+		topUpToken: { symbol: 'MUSDC', name: 'USDC' }
 	},
 	mumbai: {
 		chainId: 80001,

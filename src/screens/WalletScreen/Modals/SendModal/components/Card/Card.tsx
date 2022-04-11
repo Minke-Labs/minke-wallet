@@ -3,7 +3,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
 import { Text, Token } from '@components';
-import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import { CardProps } from './Card.types';
 import styles from './Card.styles';
 
@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => (
 				{token.name}
 			</Text>
 			<Text type="span" weight="bold">
-				{numberFormat(token.balanceUSD)} ({tokenBalanceFormat(token.balance, 9)} {token.symbol})
+				${tokenBalanceFormat(token.balanceUSD, 2)} ({tokenBalanceFormat(token.balance, 9)} {token.symbol})
 				<Text weight="regular" type="span">
 					{' '}
 					available
