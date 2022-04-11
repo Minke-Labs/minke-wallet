@@ -1,5 +1,5 @@
 export const coins = {
-	ethereum: { name: 'Ethereum', symbol: 'ETH', image: require('../../assets/eth.png') }
+	usdc: { name: 'USDC', symbol: 'MUSDC', image: 'usdc' }
 };
 
 export interface ICoin {
