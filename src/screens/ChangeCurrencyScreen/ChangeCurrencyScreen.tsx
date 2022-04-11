@@ -9,7 +9,7 @@ import { currencies } from './ChangeCurrencyScreen.utils';
 
 const ChangeCurrencyScreen = () => {
 	const [current, setCurrent] = useState('unitedStates');
-	const [filtered, setFiltered] = useState<any>();
+	const [filtered, setFiltered] = useState<any>(currencies);
 	const [search, setSearch] = useState('');
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
