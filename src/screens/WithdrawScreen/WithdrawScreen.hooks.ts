@@ -4,7 +4,7 @@ import { useState } from '@hookstate/core';
 import { ParaswapToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import useDeposits from '@src/hooks/useDeposits';
-import { useAmplitude, useNavigation, useTokens, useNativeToken, useBiconomy } from '@hooks';
+import { useAmplitude, useNavigation, useTokens, useNativeToken, useBiconomy, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { getProvider } from '@models/wallet';
 import { Wallet } from 'ethers';
@@ -13,6 +13,7 @@ import { withdrawTransaction } from '@models/withdraw';
 import { aaveDepositContract, gaslessWithdraw } from '@models/gaslessTransaction';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import { convertTransactionResponse } from '@models/transaction';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -29,7 +30,7 @@ const useWithdrawScreen = () => {
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
-
+	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
 
 	const showModal = () => {
@@ -110,7 +111,19 @@ const useWithdrawScreen = () => {
 						hash,
 						gasless: true
 					});
-					await biconomy.getEthersProvider().waitForTransaction(hash);
+
+					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
+					addPendingTransaction({
+						from,
+						to,
+						tokenDecimal: token.decimals.toString(),
+						hash,
+						isError: status === 0 ? '1' : '0',
+						pending: true,
+						timeStamp: new Date().getTime().toString(),
+						tokenSymbol: token.symbol,
+						value: amount
+					});
 
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 				} else {
@@ -147,7 +160,10 @@ const useWithdrawScreen = () => {
 				};
 				Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);
 				const signedTx = await wallet.signTransaction(txDefaults);
-				const { hash, wait } = await provider.sendTransaction(signedTx as string);
+				const tx = await provider.sendTransaction(signedTx as string);
+				const { hash, wait } = tx;
+				addPendingTransaction(convertTransactionResponse(tx, amount, token.symbol, token.decimals));
+
 				if (hash) {
 					Logger.log(`Withdraw ${JSON.stringify(hash)}`);
 					await wait();

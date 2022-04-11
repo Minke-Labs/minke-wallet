@@ -1,6 +1,7 @@
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
 import Button from './Button/Button';
+import CardTransaction from './CardTransaction/CardTransaction';
 import Icon from './Icon/Icon';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
@@ -34,6 +35,7 @@ export {
 	AnimatedText,
 	Button,
 	WhiteButton,
+	CardTransaction,
 	Icon,
 	Token,
 	TokenAmountInput,

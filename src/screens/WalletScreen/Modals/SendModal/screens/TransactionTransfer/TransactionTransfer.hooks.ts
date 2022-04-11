@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import { useAmplitude, useAuthentication } from '@hooks';
+import { useAmplitude, useAuthentication, useTransactions } from '@hooks';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@models/network';
+import { convertTransactionResponse } from '@models/transaction';
 import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import { MinkeToken } from '@models/token';
@@ -31,6 +32,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
 	const [amountType, setAmountType] = React.useState<'fiat' | 'token'>('fiat');
 	const { showAuthenticationPrompt } = useAuthentication();
+	const { addPendingTransaction } = useTransactions();
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {
@@ -69,7 +71,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 
 					const ens = user.address;
 					const to = (await resolveENSAddress(ens)) || ens;
-					const { wait, hash } = await sendTransaction(
+					const transaction = await sendTransaction(
 						privateKey,
 						to,
 						tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'),
@@ -78,12 +80,19 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
 						token.decimals
 					);
+					const { wait, hash } = transaction;
+
 					await wait();
 					onDismiss();
 					sentSuccessfully({
 						symbol: token.symbol.toLowerCase(),
 						link: hash
 					});
+					// Pending transaction...
+					addPendingTransaction(
+						convertTransactionResponse(transaction, amount, token.symbol, token.decimals)
+					);
+					//
 					track('Send', {
 						token: token.symbol,
 						tokenAmount,

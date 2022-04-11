@@ -1,16 +1,10 @@
 import React from 'react';
-import { TabLayout } from '@layouts';
-import { useNavigation } from '@hooks';
-import { AssetsPanel, ActionsPanel, Header } from './components';
-import { Transactions, Accounts } from './screens';
 import { useWalletScreen } from './WalletScreen.hooks';
 import ModalsImport from './ModalsImport/ModalsImport';
+import { Content } from './Content/Content';
 
 const WalletScreen = () => {
-	const navigation = useNavigation();
-
 	const {
-		loading,
 		sendModalOpen,
 		setSendModalOpen,
 		receiveVisible,
@@ -31,43 +25,26 @@ const WalletScreen = () => {
 		onCopyToClipboard,
 		onSendFinished,
 		address,
-		balance,
-		fetchTransactions
+		balance
 	} = useWalletScreen();
 
 	return (
 		<>
-			<TabLayout
-				leftTitle="Transactions"
-				rightTitle="Accounts"
-				left={
-					<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />
-				}
-				right={<Accounts />}
+			<Content
 				{...{
-					loading,
-					fetchTransactions
+					onDeleteWallet,
+					onExchange,
+					onSettingsPress,
+					onSwitchAccounts,
+					onSeeAllTransactions,
+					onCopyToClipboard,
+					showReceive,
+					address,
+					balance,
+					setAddFundsVisible,
+					setSendModalOpen
 				}}
-			>
-				<Header onSettingsPress={onSettingsPress} />
-				<AssetsPanel
-					onSave={() => navigation.navigate('SaveScreen')}
-					onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
-					onAddFunds={() => setAddFundsVisible(true)}
-					balance={balance?.usd || 0}
-					address={address}
-				/>
-				<ActionsPanel
-					{...{
-						onDeleteWallet,
-						onExchange,
-						onSwitchAccounts,
-						showReceive,
-						onCopyToClipboard
-					}}
-					setSendModalOpen={() => setSendModalOpen(true)}
-				/>
-			</TabLayout>
+			/>
 
 			<ModalsImport
 				{...{

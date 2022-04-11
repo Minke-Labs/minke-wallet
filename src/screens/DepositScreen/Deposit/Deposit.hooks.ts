@@ -5,7 +5,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
-import { useNavigation, useTokens, useAmplitude, useBiconomy, useNativeToken } from '@hooks';
+import { useNavigation, useTokens, useAmplitude, useBiconomy, useNativeToken, useTransactions } from '@hooks';
 import { Wallet } from 'ethers';
 import { useState } from '@hookstate/core';
 import { Keyboard } from 'react-native';
@@ -13,6 +13,7 @@ import Logger from '@utils/logger';
 import { aaveDepositContract, gaslessDeposit } from '@models/gaslessTransaction';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
+import { convertTransactionResponse } from '@models/transaction';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -29,6 +30,7 @@ export const useDeposit = () => {
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
+	const { addPendingTransaction } = useTransactions();
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {
@@ -90,7 +92,18 @@ export const useDeposit = () => {
 						hash,
 						gasless: true
 					});
-					await biconomy.getEthersProvider().waitForTransaction(hash);
+					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
+					addPendingTransaction({
+						from,
+						to,
+						tokenDecimal: token.decimals.toString(),
+						hash,
+						isError: status === 0 ? '1' : '0',
+						pending: true,
+						timeStamp: new Date().getTime().toString(),
+						tokenSymbol: token.symbol,
+						value: amount
+					});
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 				} else {
 					Logger.error('Error depositing');
@@ -125,11 +138,13 @@ export const useDeposit = () => {
 				};
 				Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
 				const signedTx = await wallet.signTransaction(txDefaults);
-				const { hash, wait } = await provider.sendTransaction(signedTx as string);
+				const tx = await provider.sendTransaction(signedTx as string);
+				const { hash, wait } = tx;
 				if (hash) {
 					Logger.log(`Deposit ${JSON.stringify(hash)}`);
 					await wait();
 					setTransactionHash(hash);
+					addPendingTransaction(convertTransactionResponse(tx, amount, token.symbol, token.decimals));
 					track('Deposited', {
 						token: token.symbol,
 						amount,
