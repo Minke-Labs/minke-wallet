@@ -173,20 +173,14 @@ const useExchangeResumeScreen = () => {
 				const walletObject = new Wallet(wallet.privateKey.value, provider);
 				const signedTx = await walletObject.signTransaction(txDefaults);
 				const transaction = await provider.sendTransaction(signedTx as string);
-				console.log({ transaction });
-				console.log('to.symbol', to.symbol);
-				console.log('formatUnits', formatUnits(destAmount, destDecimals));
-				console.log('destDecimals', destDecimals);
 				const converted = convertTransactionResponse(
 					transaction,
 					to.symbol,
 					formatUnits(destAmount, destDecimals),
 					destDecimals
 				);
-				console.log({ converted });
 				addPendingTransaction(converted);
 				const { hash } = transaction;
-				console.log({ hash });
 				setTransactionHash(hash);
 			}
 		}
