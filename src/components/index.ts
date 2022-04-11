@@ -19,6 +19,7 @@ import TokenCard from './TokenCard/TokenCard';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
+import SettingsHeader from './SettingsHeader/SettingsHeader';
 import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
@@ -37,6 +38,7 @@ export {
 	TokenAmountInput,
 	Modal,
 	ModalHeader,
+	SettingsHeader,
 	ModalReusables,
 	SearchInput,
 	TextArea,
