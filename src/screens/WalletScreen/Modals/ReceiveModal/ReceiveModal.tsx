@@ -35,7 +35,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					<Text>{address}</Text>
 				</View>
 
-				<NetworkWarning.Tag disableInfo />
+				<NetworkWarning.Tag />
 
 				<WhiteButton title="Share" icon="shareStroke" onPress={onShare} />
 			</View>

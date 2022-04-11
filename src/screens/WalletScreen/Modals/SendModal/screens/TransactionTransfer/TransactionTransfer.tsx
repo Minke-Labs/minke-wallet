@@ -69,7 +69,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				</View>
 			)}
 
-			<NetworkWarning.Tag disableInfo />
+			<NetworkWarning.Tag />
 
 			<View style={{ marginBottom: 8, marginTop: 48 }}>
 				{sending ? (
