@@ -4,7 +4,6 @@ export default StyleSheet.create({
 	container: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'center',
 		width: '100%'
 	},
 	left: {

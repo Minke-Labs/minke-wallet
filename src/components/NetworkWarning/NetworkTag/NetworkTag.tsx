@@ -12,7 +12,7 @@ const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, disableInfo }) => {
 	const { network } = useNetwork();
 
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, { justifyContent: disableInfo ? 'center' : 'space-between' }]}>
 			<View style={styles.left}>
 				<Token size={16} name={network?.id as TokenType} />
 				<Text type="span" style={{ marginLeft: 8 }}>
