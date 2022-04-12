@@ -42,6 +42,7 @@ export const useSaveScreen = () => {
 	return {
 		address,
 		aaveBalances,
-		aaveMarket
+		aaveMarket,
+		setSelectedUSDCoin
 	};
 };

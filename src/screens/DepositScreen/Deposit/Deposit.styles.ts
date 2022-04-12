@@ -23,10 +23,16 @@ export const makeStyles = (colors: ColorType) =>
 			marginTop: 16,
 			backgroundColor: colors.background2
 		},
-
 		depositButton: {
 			paddingHorizontal: 24,
 			marginTop: 'auto',
 			marginBottom: 16
+		},
+		interestContainer: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			paddingVertical: 4,
+			paddingHorizontal: 12,
+			marginTop: 16
 		}
 	});
