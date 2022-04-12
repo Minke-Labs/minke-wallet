@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme, useAuthentication } from '@hooks';
-import { View } from 'react-native';
+import { View, Vibration } from 'react-native';
 
 import { styles } from './HapticButton.styles';
 import { HapticButtonProps } from './HapticButton.types';
@@ -18,6 +18,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, title, ma
 
 	const onPressIn = () => {
 		setStage(1);
+		Vibration.vibrate(60);
 	};
 
 	const onPressOut = () => {
@@ -41,7 +42,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, title, ma
 			<View style={[styles.button, { backgroundColor: disabled ? colors.detail2 : colors.cta1, marginBottom }]}>
 				{stage === 0 && (
 					<>
-						<Icon name="crossHairStroke" size={18} style={{ marginRight: 14 }} color="text11" />
+						<Icon name="faceIdStroke" size={18} style={{ marginRight: 14 }} color="text11" />
 						<Text weight="bold" color="text11">
 							Hold to {title}
 						</Text>
