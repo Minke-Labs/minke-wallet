@@ -4,7 +4,7 @@ import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
-import { useAmplitude, useAuthentication, useBiconomy } from '@hooks';
+import { useAmplitude, useBiconomy } from '@hooks';
 import Logger from '@utils/logger';
 import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
 
@@ -16,66 +16,61 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 		market: { tokens }
 	} = globalDepositState().value;
 	const { track } = useAmplitude();
-	const { showAuthenticationPrompt } = useAuthentication();
 
-	const onOpenAccount = () => {
-		showAuthenticationPrompt({
-			onSuccess: async () => {
-				setLoading(true);
+	const onOpenAccount = async () => {
+		setLoading(true);
 
-				if (gaslessEnabled) {
-					const hash = await gaslessApproval({
-						address,
-						privateKey,
-						biconomy,
-						contract: tokens[0].address,
-						spender: aaveDepositContract
-					});
-					if (hash) {
-						track('Opened AAVE Account', { hash, gasless: true });
-						setLoading(false);
-						onApprove();
-					} else {
-						Logger.error('Error approving');
-						setLoading(false);
-					}
-				} else {
-					const transaction = await approvalTransaction(address, tokens[0].address);
-					const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
-					const provider = await getProvider();
-					const wallet = new Wallet(privateKey, provider);
-					const chainId = await wallet.getChainId();
-					const nonce = await provider.getTransactionCount(address, 'latest');
-					Logger.log(`Approval API ${JSON.stringify(transaction)}`);
-					const txDefaults = {
-						from,
-						to,
-						data,
-						nonce,
-						maxFeePerGas,
-						maxPriorityFeePerGas,
-						type: 2,
-						gasLimit: 500000,
-						chainId
-					};
-
-					Logger.log(`Approval ${JSON.stringify(txDefaults)}`);
-
-					const signedTx = await wallet.signTransaction(txDefaults);
-					const { hash, wait } = await provider.sendTransaction(signedTx as string);
-					if (hash) {
-						track('Opened AAVE Account', { hash, gasless: false });
-
-						await wait();
-						setLoading(false);
-						onApprove();
-					} else {
-						Logger.error('Error approving');
-						setLoading(false);
-					}
-				}
+		if (gaslessEnabled) {
+			const hash = await gaslessApproval({
+				address,
+				privateKey,
+				biconomy,
+				contract: tokens[0].address,
+				spender: aaveDepositContract
+			});
+			if (hash) {
+				track('Opened AAVE Account', { hash, gasless: true });
+				setLoading(false);
+				onApprove();
+			} else {
+				Logger.error('Error approving');
+				setLoading(false);
 			}
-		});
+		} else {
+			const transaction = await approvalTransaction(address, tokens[0].address);
+			const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
+			const provider = await getProvider();
+			const wallet = new Wallet(privateKey, provider);
+			const chainId = await wallet.getChainId();
+			const nonce = await provider.getTransactionCount(address, 'latest');
+			Logger.log(`Approval API ${JSON.stringify(transaction)}`);
+			const txDefaults = {
+				from,
+				to,
+				data,
+				nonce,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
+				type: 2,
+				gasLimit: 500000,
+				chainId
+			};
+
+			Logger.log(`Approval ${JSON.stringify(txDefaults)}`);
+
+			const signedTx = await wallet.signTransaction(txDefaults);
+			const { hash, wait } = await provider.sendTransaction(signedTx as string);
+			if (hash) {
+				track('Opened AAVE Account', { hash, gasless: false });
+
+				await wait();
+				setLoading(false);
+				onApprove();
+			} else {
+				Logger.error('Error approving');
+				setLoading(false);
+			}
+		}
 	};
 
 	return {

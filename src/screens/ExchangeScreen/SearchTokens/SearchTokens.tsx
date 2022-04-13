@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-// import { whale2Img } from '@images';
 import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
 import { useTheme } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -89,8 +88,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
-				<SearchInput {...{ search, onSearch }} />
-
+				<SearchInput marginBottom={24} placeholder="Search token" {...{ search, onSearch }} />
 				<FlatList
 					style={styles.list}
 					data={filterByExchangebleToken()}

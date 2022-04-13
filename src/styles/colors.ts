@@ -4,6 +4,7 @@ const lightTheme = {
 	alert3: '#30C061',
 	alert4: '#EEFAF1',
 	alert5: '#1867FA',
+	alert6: '#FABA18',
 
 	background1: '#F2EAE1',
 	background2: '#FAF7F3',
@@ -30,7 +31,8 @@ const lightTheme = {
 
 	// Colors that aren't in tokens, but are used in the project.
 	brand4: '#0A2036',
-	alert4a: '#FABA18',
+
+	pending: '#A07404',
 
 	text8: '#FFFFFF',
 	text9: '#4E5E6F',
@@ -46,6 +48,7 @@ const darkTheme = {
 	alert3: '#ACE8B9',
 	alert4: '#355260',
 	alert5: '#6798F2',
+	alert6: '#FABA18',
 
 	background1: '#0A2138',
 	background2: '#22374C',
@@ -72,7 +75,9 @@ const darkTheme = {
 
 	// Colors that aren't in tokens, but are used in the project.
 	brand4: '#0A2036',
-	alert4a: '#FABA18',
+
+	pending: '#FABA18',
+
 	text8: '#0A2138',
 	text9: '#FFFFFF',
 	text10: '#FFFFFF',

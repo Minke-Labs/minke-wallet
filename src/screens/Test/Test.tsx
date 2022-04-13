@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
+import { HapticButton } from '@components';
 import { BasicLayout } from '@layouts';
-import { NetworkWarning } from '@components';
 
 const Test = () => {
-	const [isModalVisible, setModalVisible] = useState(false);
+	const test = () => null;
 
 	return (
-		<>
-			<BasicLayout>
-				<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-					<NetworkWarning.Tag onPress={() => setModalVisible(true)} />
-				</View>
-			</BasicLayout>
-			<NetworkWarning.Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)} />
-		</>
+		<BasicLayout>
+			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
+				<HapticButton title="Test" onPress={test} marginBottom={48} />
+			</View>
+		</BasicLayout>
 	);
 };
 

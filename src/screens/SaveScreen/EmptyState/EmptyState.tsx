@@ -41,19 +41,21 @@ const EmptyState = () => {
 						Let&apos;s make your first deposit?
 					</Text>
 
-					<View style={styles.linearGradientContainer}>
-						<LinearGradient
-							start={{ x: 0, y: 0.75 }}
-							end={{ x: 1, y: 0.25 }}
-							colors={['#30C061', '#30C08C']}
-							style={styles.linearGradient}
-						>
-							<Icon name="iconUp" color="text11" size={16} style={styles.greenButtonIcon} />
-							<Text weight="bold" type="a" color="text11" style={{ lineHeight: 25 }}>
-								{(market.supplyApy * 100).toFixed(2)}% interest p.a.
-							</Text>
-						</LinearGradient>
-					</View>
+					{market && (
+						<View style={styles.linearGradientContainer}>
+							<LinearGradient
+								start={{ x: 0, y: 0.75 }}
+								end={{ x: 1, y: 0.25 }}
+								colors={['#30C061', '#30C08C']}
+								style={styles.linearGradient}
+							>
+								<Icon name="iconUp" color="text11" size={16} style={styles.greenButtonIcon} />
+								<Text weight="bold" type="a" color="text11" style={{ lineHeight: 25 }}>
+									{(market.supplyApy * 100).toFixed(2)}% interest p.a.
+								</Text>
+							</LinearGradient>
+						</View>
+					)}
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 58 }}>
 						<Button

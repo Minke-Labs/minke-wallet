@@ -8,7 +8,8 @@ export default StyleSheet.create({
 	},
 
 	container: {
-		paddingHorizontal: 24
+		paddingHorizontal: 24,
+		marginTop: 24
 	},
 
 	headline: {

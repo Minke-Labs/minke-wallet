@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, ProgressButton, TokenCard } from '@components';
+import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation, useAmplitude } from '@hooks';
 import { debounce } from 'lodash';
@@ -10,6 +10,7 @@ import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { tokenBalanceFormat } from '@helpers/utilities';
+import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens';
 import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
 import { makeStyles } from './Deposit.styles';
@@ -20,6 +21,7 @@ const Deposit = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const {
+		tokens,
 		token,
 		tokenBalance,
 		updateAmount,
@@ -30,7 +32,11 @@ const Deposit = () => {
 		nativeToken,
 		enoughForGas,
 		market,
-		gaslessEnabled
+		gaslessEnabled,
+		searchVisible,
+		hideModal,
+		showModal,
+		onTokenSelect
 	} = useDeposit();
 
 	useEffect(() => {
@@ -62,7 +68,7 @@ const Deposit = () => {
 
 					<Card style={styles.tokenCard}>
 						<TokenCard
-							notTouchable
+							onPress={showModal}
 							token={token}
 							balance={tokenBalance}
 							updateQuotes={debounce(updateAmount, 500)}
@@ -72,14 +78,33 @@ const Deposit = () => {
 					<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
 						<GasSelector />
 					</View>
+
+					{market && (
+						<View style={styles.interestContainer}>
+							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
+							<Text weight="medium" type="a" color="alert3">
+								{(market.supplyApy * 100).toFixed(2)}% interest p.a.
+							</Text>
+						</View>
+					)}
 				</View>
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<ProgressButton title="Hold to Deposit" disabled={!canDeposit} onFinish={onDeposit} />
+					<HapticButton title="Deposit" disabled={!canDeposit} onPress={onDeposit} />
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>
+			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+				<SearchTokens
+					visible={searchVisible}
+					onDismiss={hideModal}
+					onTokenSelect={onTokenSelect}
+					ownedTokens={tokens?.map((t) => t.symbol.toLowerCase())}
+					showOnlyOwnedTokens
+					selected={[token?.symbol.toLowerCase()]}
+				/>
+			</Modal>
 
 			<Modal
 				isVisible={waitingTransaction}

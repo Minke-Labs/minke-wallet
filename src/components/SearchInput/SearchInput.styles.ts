@@ -8,9 +8,9 @@ export const makeStyles = (colors: ColorType) =>
 			flexDirection: 'row',
 			justifyContent: 'center',
 			alignItems: 'center',
-			marginBottom: 40,
 			backgroundColor: colors.background2,
-			borderRadius: 41
+			borderRadius: 41,
+			maxHeight: 40
 		},
 		icon: {
 			marginLeft: 16,

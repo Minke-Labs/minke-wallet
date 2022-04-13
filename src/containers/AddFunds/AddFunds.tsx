@@ -16,6 +16,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		currentStep,
 		wyreError,
 		error,
+		gaslessEnabled,
 		selectCoin,
 		dismissError,
 		goBack,
@@ -28,7 +29,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 
 	return (
 		<SafeAreaView>
-			<ModalHeader onBack={currentStep > 0 ? goBack : undefined} onDismiss={dismissCoin} />
+			<ModalHeader onBack={currentStep > 0 && !gaslessEnabled ? goBack : undefined} onDismiss={dismissCoin} />
 			<View style={{ paddingHorizontal: 24 }}>
 				{wyreError && error ? (
 					<ModalReusables.Error
@@ -39,7 +40,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					/>
 				) : (
 					<>
-						{currentStep === 0 && <CoinSelectorModal onSelect={selectCoin} />}
+						{currentStep === 0 && !gaslessEnabled && <CoinSelectorModal onSelect={selectCoin} />}
 						{currentStep === 1 && (
 							<ChooseQuantityModal
 								coin={coin}

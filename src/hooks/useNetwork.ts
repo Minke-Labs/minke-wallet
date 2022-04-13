@@ -14,14 +14,12 @@ const useNetwork = () => {
 	const state = useState(globalWalletState());
 	const { privateKey, address } = state.value;
 
-	const selectNetwork = async (ntw: Network) => {
+	const selectNetwork = async (network: Network) => {
 		try {
-			await AsyncStorage.setItem(networkSettingsKey, ntw.id);
-			setConnectedNetwork(ntw);
+			await AsyncStorage.setItem(networkSettingsKey, network.id);
+			setConnectedNetwork(network);
 			const { balance } = await fetchTokensAndBalances(privateKey, address);
-			state.network.set(ntw);
-			state.balance.set(balance);
-			state.transactions.set(undefined);
+			state.merge({ network, balance, transactions: undefined });
 			navigation.navigate('WalletScreen');
 		} catch (e) {
 			Logger.error('Error saving settings');

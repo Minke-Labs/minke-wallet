@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { networks } from '@models/network';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useNetwork } from '@hooks';
-import { Icon, Text } from '@components';
+import { SettingsHeader } from '@components';
 import ListItem from './ListItem/ListItem';
 import styles from './ChangeNetworkScreen.styles';
 
@@ -14,22 +14,9 @@ const ChangeNetworkScreen = () => {
 
 	return (
 		<BasicLayout>
-			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
-					<Text weight="medium" color="text7" type="a">
-						Done
-					</Text>
-				</TouchableOpacity>
-			</View>
+			<SettingsHeader title="Network" onPress={goBack} />
 
 			<View style={styles.padding}>
-				<Text weight="extraBold" type="h3" marginBottom={28}>
-					Network
-				</Text>
-
 				<FlatList
 					data={Object.values(networks)}
 					renderItem={({ item }) => (
