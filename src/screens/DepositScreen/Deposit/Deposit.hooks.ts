@@ -1,35 +1,40 @@
 import React, { useEffect, useCallback } from 'react';
+import { Keyboard } from 'react-native';
+import { useState } from '@hookstate/core';
 import { getProvider } from '@models/wallet';
 import { ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { aaveMarketTokenToParaswapToken, depositTransaction } from '@models/deposit';
-import { useNavigation, useTokens, useAmplitude, useAuthentication, useBiconomy, useNativeToken } from '@hooks';
+import { aaveMarketTokenToParaswapToken, depositTransaction, usdCoinSettingsKey } from '@models/deposit';
+import { useNavigation, useTokens, useAmplitude, useBiconomy, useNativeToken, useTransactions } from '@hooks';
 import { Wallet } from 'ethers';
-import { useState } from '@hookstate/core';
-import { Keyboard } from 'react-native';
 import Logger from '@utils/logger';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { aaveDepositContract, gaslessDeposit } from '@models/gaslessTransaction';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
+import { convertTransactionResponse } from '@models/transaction';
+import { useSaveScreen } from '@src/screens/SaveScreen/SaveScreen.hooks';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { nativeToken } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { tokens } = useTokens();
+	const { depositableTokens: tokens } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
-	const { market } = globalDepositState().value;
+	const { market } = useState(globalDepositState()).value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const [token] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
+	const [token, setToken] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
-	const { showAuthenticationPrompt } = useAuthentication();
+	const [searchVisible, setSearchVisible] = React.useState(false);
+	const { setSelectedUSDCoin } = useSaveScreen();
+	const { addPendingTransaction } = useTransactions();
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {
@@ -65,88 +70,114 @@ export const useDeposit = () => {
 		enoughForGas &&
 		(gaslessEnabled || gweiValue > 0); // if gasless we dont need a gwei value
 
-	const onDeposit = () => {
-		showAuthenticationPrompt({
-			onSuccess: async () => {
-				Keyboard.dismiss();
-				if (canDeposit) {
-					setWaitingTransaction(true);
+	const onDeposit = async () => {
+		Keyboard.dismiss();
+		if (canDeposit) {
+			setWaitingTransaction(true);
 
-					if (gaslessEnabled) {
-						const hash = await gaslessDeposit({
-							address,
-							privateKey,
-							amount: formatUnits(toBn(amount, token.decimals), 'wei'),
-							minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
-							biconomy,
-							depositContract: aaveDepositContract,
-							gasPrice: gweiValue.toString(),
-							interestBearingToken: market.address,
-							token: token.address
-						});
-						if (hash) {
-							Logger.log(`Gasless deposit ${JSON.stringify(hash)}`);
-							setTransactionHash(hash);
-							track('Deposited', {
-								token: token.symbol,
-								amount,
-								hash,
-								gasless: true
-							});
-							await biconomy.getEthersProvider().waitForTransaction(hash);
-							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
-						} else {
-							Logger.error('Error depositing');
-						}
-					} else {
-						const transaction = await depositTransaction({
-							address,
-							amount,
-							token: token.address,
-							decimals: token.decimals,
-							interestBearingToken: market.address,
-							gweiValue
-						});
-						Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
+			if (gaslessEnabled) {
+				const hash = await gaslessDeposit({
+					address,
+					privateKey,
+					amount: formatUnits(toBn(amount, token.decimals), 'wei'),
+					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
+					biconomy,
+					depositContract: aaveDepositContract,
+					gasPrice: gweiValue.toString(),
+					interestBearingToken: market.address,
+					token: token.address
+				});
+				if (hash) {
+					Logger.log(`Gasless deposit ${JSON.stringify(hash)}`);
+					setTransactionHash(hash);
+					track('Deposited', {
+						token: token.symbol,
+						amount,
+						hash,
+						gasless: true
+					});
+					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
+					addPendingTransaction({
+						from,
+						to,
+						tokenDecimal: token.decimals.toString(),
+						hash,
+						isError: status === 0 ? '1' : '0',
+						pending: true,
+						timeStamp: new Date().getTime().toString(),
+						tokenSymbol: token.symbol,
+						value: amount
+					});
+					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
+				} else {
+					Logger.error('Error depositing');
+				}
+			} else {
+				const transaction = await depositTransaction({
+					address,
+					amount,
+					token: token.address,
+					decimals: token.decimals,
+					interestBearingToken: market.address,
+					gweiValue
+				});
+				Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
 
-						const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
+				const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
 
-						const provider = await getProvider();
-						const wallet = new Wallet(privateKey, provider);
-						const chainId = await wallet.getChainId();
-						const nonce = await provider.getTransactionCount(address, 'latest');
-						const txDefaults = {
-							from,
-							to,
-							data,
-							nonce,
-							gasLimit,
-							maxFeePerGas,
-							maxPriorityFeePerGas,
-							type: 2,
-							chainId
-						};
-						Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
-						const signedTx = await wallet.signTransaction(txDefaults);
-						const { hash, wait } = await provider.sendTransaction(signedTx as string);
-						if (hash) {
-							Logger.log(`Deposit ${JSON.stringify(hash)}`);
-							await wait();
-							setTransactionHash(hash);
-							track('Deposited', {
-								token: token.symbol,
-								amount,
-								hash,
-								gasless: false
-							});
-							navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
-						} else {
-							Logger.error('Error depositing');
-						}
-					}
+				const provider = await getProvider();
+				const wallet = new Wallet(privateKey, provider);
+				const chainId = await wallet.getChainId();
+				const nonce = await provider.getTransactionCount(address, 'latest');
+				const txDefaults = {
+					from,
+					to,
+					data,
+					nonce,
+					gasLimit,
+					maxFeePerGas,
+					maxPriorityFeePerGas,
+					type: 2,
+					chainId
+				};
+				Logger.log(`Deposit ${JSON.stringify(txDefaults)}`);
+				const signedTx = await wallet.signTransaction(txDefaults);
+				const tx = await provider.sendTransaction(signedTx as string);
+				const { hash, wait } = tx;
+				if (hash) {
+					Logger.log(`Deposit ${JSON.stringify(hash)}`);
+					await wait();
+					setTransactionHash(hash);
+					addPendingTransaction(convertTransactionResponse(tx, amount, token.symbol, token.decimals));
+					track('Deposited', {
+						token: token.symbol,
+						amount,
+						hash,
+						gasless: false
+					});
+					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
+				} else {
+					Logger.error('Error depositing');
 				}
 			}
-		});
+		}
+	};
+
+	const showModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(true);
+	};
+
+	const hideModal = () => {
+		Keyboard.dismiss();
+		setSearchVisible(false);
+	};
+
+	const onTokenSelect = async (selectedToken: ParaswapToken) => {
+		hideModal();
+		setToken(selectedToken);
+		await AsyncStorage.setItem(usdCoinSettingsKey, selectedToken.symbol);
+		setSelectedUSDCoin(selectedToken.symbol);
 	};
 
 	useEffect(() => {
@@ -157,6 +188,12 @@ export const useDeposit = () => {
 			setTokenBalance('0');
 		}
 	}, [tokens, token]);
+
+	useEffect(() => {
+		if (market.tokens[0].symbol !== token.symbol) {
+			setToken(aaveMarketTokenToParaswapToken(market));
+		}
+	}, [market]);
 
 	return {
 		token,
@@ -169,6 +206,11 @@ export const useDeposit = () => {
 		nativeToken,
 		enoughForGas,
 		market,
-		gaslessEnabled
+		gaslessEnabled,
+		searchVisible,
+		hideModal,
+		showModal,
+		onTokenSelect,
+		tokens
 	};
 };

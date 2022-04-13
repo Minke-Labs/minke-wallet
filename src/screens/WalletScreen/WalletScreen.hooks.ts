@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 import { useState } from '@hookstate/core';
 import { useAmplitude, useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
-import { globalWalletState, walletState, emptyWallet, fetchTokensAndBalances } from '@stores/WalletStore';
-import { walletDelete, getTransactions, getAllWallets } from '@models/wallet';
+import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import { walletDelete, getAllWallets } from '@models/wallet';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
-	const state = useState(globalWalletState());
-	const [loading, setLoading] = React.useState(true);
-	const [sendModalOpen, setSendModalOpen] = React.useState(false);
-	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
-	const navigation = useNavigation();
 	const { track } = useAmplitude();
+	const state = useState(globalWalletState());
+	const [sendModalOpen, setSendModalOpen] = React.useState(false);
+	const navigation = useNavigation();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
@@ -45,31 +42,6 @@ export const useWalletScreen = () => {
 			}
 		]);
 
-	const fetchTransactions = async () => {
-		track('Wallet Screen Opened');
-		setLoading(true);
-		const { address, privateKey } = state.value;
-		const transactions = await getTransactions(address || '');
-		const { balance } = await fetchTokensAndBalances(privateKey, address);
-		state.merge({ transactions, balance });
-		setLoading(false);
-		setLastTransationsFetch(new Date().getTime());
-	};
-
-	useEffect(() => {
-		fetchTransactions();
-	}, []);
-
-	useFocusEffect(() => {
-		if (
-			!loading &&
-			((lastTransactionsFetch && new Date().getTime() - lastTransactionsFetch > 10000) ||
-				state.transactions.value === undefined)
-		) {
-			fetchTransactions();
-		}
-	});
-
 	const onExchange = () => navigation.navigate('ExchangeScreen');
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
 	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
@@ -90,8 +62,11 @@ export const useWalletScreen = () => {
 		setSendObj(obj);
 	};
 
+	useEffect(() => {
+		track('Wallet Screen Opened');
+	}, []);
+
 	return {
-		loading,
 		sendModalOpen,
 		setSendModalOpen,
 		receiveVisible,
@@ -112,7 +87,6 @@ export const useWalletScreen = () => {
 		onCopyToClipboard,
 		onSendFinished,
 		address,
-		balance,
-		fetchTransactions
+		balance
 	};
 };

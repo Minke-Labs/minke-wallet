@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Linking, TouchableOpacity, View, SafeAreaView } from 'react-native';
-import { Icon, Text, Button, TransparentCard, ActivityIndicator } from '@components';
+import { Icon, Text, HapticButton, TransparentCard, ActivityIndicator } from '@components';
 import { useAmplitude, useNavigation } from '@hooks';
 import { BasicLayout } from '@layouts';
 import styles from './OpenAave.styles';
@@ -68,9 +68,8 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 						</View>
 					</SafeAreaView>
 					<View style={{ bottom: 34 }}>
-						<Button
-							iconRight="arrowRight"
-							title={loading ? 'Opening your account' : 'Open account'}
+						<HapticButton
+							title="Open Account"
 							marginBottom={16}
 							onPress={onOpenAccount}
 							disabled={loading}

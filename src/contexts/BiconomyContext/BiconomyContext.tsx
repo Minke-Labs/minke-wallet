@@ -40,8 +40,13 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	};
 
 	useEffect(() => {
-		initialize();
-	}, []);
+		if (biconomyAPIKey) {
+			initialize();
+		} else {
+			setBiconomyClient(undefined);
+			setStatus('');
+		}
+	}, [biconomyAPIKey]);
 
 	const obj = useMemo(
 		() => ({
