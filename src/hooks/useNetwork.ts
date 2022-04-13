@@ -7,9 +7,9 @@ import { Network, network as selectedNetwork, networkSettingsKey } from '@models
 import Logger from '@utils/logger';
 import useNavigation from './useNavigation';
 
-const useFetchCurrentNetwork = () => {
+const useNetwork = () => {
 	const navigation = useNavigation();
-	const [network, setConnectedNetwork] = React.useState<Network>();
+	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
 
 	const state = useState(globalWalletState());
 	const { privateKey, address } = state.value;
@@ -17,7 +17,6 @@ const useFetchCurrentNetwork = () => {
 	const selectNetwork = async (ntw: Network) => {
 		try {
 			await AsyncStorage.setItem(networkSettingsKey, ntw.id);
-			await AsyncStorage.setItem('@current:network', JSON.stringify(ntw));
 			setConnectedNetwork(ntw);
 			const { balance } = await fetchTokensAndBalances(privateKey, address);
 			state.network.set(ntw);
@@ -38,19 +37,10 @@ const useFetchCurrentNetwork = () => {
 		fetchNetwork();
 	}, []);
 
-	useEffect(() => {
-		const fetchNetwork = async () => {
-			const res = await AsyncStorage.getItem('@current:network');
-			const parsedRes = JSON.parse(res!);
-			setConnectedNetwork(parsedRes);
-		};
-		fetchNetwork();
-	}, [network]);
-
 	return {
-		network,
+		network: connectedNetwork,
 		selectNetwork
 	};
 };
 
-export default useFetchCurrentNetwork;
+export default useNetwork;
