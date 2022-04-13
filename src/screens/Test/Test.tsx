@@ -1,15 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { View } from 'react-native';
-import { HapticButton } from '@components';
+import { OnrampButton } from '@components';
 import { BasicLayout } from '@layouts';
 
 const Test = () => {
-	const test = () => console.log('PRESSED!!!!!');
+	const test = () => null;
 
 	return (
 		<BasicLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				<HapticButton title="Test" onPress={test} marginBottom={48} />
+				<OnrampButton />
 			</View>
 		</BasicLayout>
 	);

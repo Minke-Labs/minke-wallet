@@ -15,6 +15,7 @@ import Input from './Input/Input';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
 import Card from './Card/Card';
+import OnrampButton from './OnrampButton/OnrampButton';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import HapticButton from './HapticButton/HapticButton';
@@ -50,6 +51,7 @@ export {
 	TouchableShrinks,
 	Input,
 	LoadingScreen,
+	OnrampButton,
 	Flag,
 	Card,
 	TransparentCard,
