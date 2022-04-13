@@ -4,7 +4,7 @@ import { HapticButton } from '@components';
 import { BasicLayout } from '@layouts';
 
 const Test = () => {
-	const test = () => console.log('PRESSED!!!!!');
+	const test = () => null;
 
 	return (
 		<BasicLayout>

@@ -14,6 +14,7 @@ export default StyleSheet.create({
 		borderRadius: 16,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginBottom: 24
+		marginBottom: 24,
+		marginTop: 20
 	}
 });

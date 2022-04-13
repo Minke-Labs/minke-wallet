@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react';
-import { captureException } from '@sentry/react-native';
 import { useState } from '@hookstate/core';
+import { captureException } from '@sentry/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@hooks';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { Network, network as selectedNetwork, networkSettingsKey } from '@models/network';
 import Logger from '@utils/logger';
+import useNavigation from './useNavigation';
 
-export const useChangeNetworkScreen = () => {
+const useNetwork = () => {
 	const navigation = useNavigation();
+	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
 
 	const state = useState(globalWalletState());
 	const { privateKey, address } = state.value;
-	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
-
-	const goBack = () => navigation.goBack();
 
 	const selectNetwork = async (network: Network) => {
 		try {
@@ -38,8 +36,9 @@ export const useChangeNetworkScreen = () => {
 	}, []);
 
 	return {
-		connectedNetwork,
-		selectNetwork,
-		goBack
+		network: connectedNetwork,
+		selectNetwork
 	};
 };
+
+export default useNetwork;

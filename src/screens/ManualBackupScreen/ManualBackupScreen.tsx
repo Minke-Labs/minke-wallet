@@ -12,6 +12,7 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import Card from './Card/Card';
 import CopyButton from './CopyButton/CopyButton';
 import styles from './ManualBackupScreen.styles';
+import Warning from './Warning/Warning';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const ManualBackupScreen = ({ route }: Props) => {
@@ -58,6 +59,8 @@ const ManualBackupScreen = ({ route }: Props) => {
 						numColumns={2}
 						style={{ flexGrow: 0, marginBottom: 24 }}
 					/>
+
+					<Warning />
 
 					<CopyButton onPress={onCopyToClipboard} />
 				</View>

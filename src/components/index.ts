@@ -6,6 +6,7 @@ import Icon from './Icon/Icon';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
+import NetworkWarning from './NetworkWarning';
 import ModalHeader from './ModalHeader/ModalHeader';
 import ModalReusables from './ModalReusables';
 import SearchInput from './SearchInput/SearchInput';
@@ -49,6 +50,7 @@ export {
 	HapticButton,
 	TouchableShrinks,
 	Input,
+	NetworkWarning,
 	LoadingScreen,
 	Flag,
 	Card,
