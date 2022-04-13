@@ -179,8 +179,10 @@ const useExchangeResumeScreen = () => {
 					destDecimals
 				);
 				addPendingTransaction(converted);
-				const { hash } = transaction;
+				const { hash, wait } = transaction;
 				setTransactionHash(hash);
+				await wait();
+				navigation.navigate('WalletScreen');
 			}
 		}
 	};

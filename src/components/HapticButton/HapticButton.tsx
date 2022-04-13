@@ -44,7 +44,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, title, ma
 					<>
 						<Icon name="faceIdStroke" size={18} style={{ marginRight: 14 }} color="text11" />
 						<Text weight="bold" color="text11">
-							Hold to {title}
+							{title}
 						</Text>
 					</>
 				)}

@@ -140,7 +140,7 @@ const ExchangeScreen = () => {
 							{loadingPrices ? (
 								<ActivityIndicator />
 							) : (
-								<Button title="Exchange" onPress={goToExchangeResume} disabled={!canSwap()} />
+								<Button title="Review" onPress={goToExchangeResume} disabled={!canSwap()} />
 							)}
 							<KeyboardSpacer />
 						</View>
