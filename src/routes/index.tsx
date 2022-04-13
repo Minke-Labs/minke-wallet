@@ -10,6 +10,7 @@ import {
 	BackupSettingsScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,
+	ChangeCurrencyScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
 	SettingsScreen,
@@ -47,6 +48,7 @@ const Routes: React.FC = () => {
 					<Stack.Screen name="BackupStatusScreen" component={BackupStatusScreen} />
 					<Stack.Screen name="BackupSettingsScreen" component={BackupSettingsScreen} />
 					<Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
+					<Stack.Screen name="ChangeCurrencyScreen" component={ChangeCurrencyScreen} />
 					<Stack.Screen name="DepositScreen" component={DepositScreen} />
 					<Stack.Screen name="ExchangeResumeScreen" component={ExchangeResumeScreen} />
 					<Stack.Screen name="ExchangeScreen" component={ExchangeScreen} />
