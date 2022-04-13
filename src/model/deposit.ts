@@ -40,6 +40,9 @@ export const aaveDeposits = async (address: string): Promise<AaveBalances> => {
 };
 
 export const approvalState = async (owner: string, token: string, spender: string): Promise<ApprovalState> => {
+	if (token === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE') {
+		return { isApproved: true };
+	}
 	const contract = new Contract(token, erc20abi, await getProvider());
 	const amount: BigNumber = await contract.balanceOf(owner);
 	const allowance: BigNumber = await contract.allowance(owner, spender);

@@ -142,12 +142,13 @@ export const createTransaction = async ({
 		body: JSON.stringify({
 			srcToken,
 			destToken,
-			srcAmount,
+			srcAmount: side === 'BUY' ? undefined : srcAmount,
 			priceRoute,
 			userAddress,
-			destAmount,
+			destAmount: side === 'SELL' ? undefined : destAmount,
 			side,
 			permit,
+			slippage: 30, // 3% (0.3 * 100 = 30)
 			eip1559: true
 		})
 	};

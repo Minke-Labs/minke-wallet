@@ -116,14 +116,6 @@ const onChainApproval = async ({
 	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
 };
 
-export const getAllowance = async (address: string, contract: string): Promise<number> => {
-	const { chainId } = await network();
-	const result = await fetch(`https://apiv5.paraswap.io/users/tokens/${chainId}/${address}`);
-	const { tokens }: UserTokens = await result.json();
-	const token = tokens.find((t) => t.address.toLowerCase() === contract.toLowerCase());
-	return +(token?.allowance || 0);
-};
-
 export const approveSpending = async ({
 	userAddress,
 	privateKey,
