@@ -8,8 +8,8 @@ const Warning = () => {
 	const { colors } = useTheme();
 
 	return (
-		<View style={[styles.container, { borderColor: colors.alert4a, backgroundColor: colors.background4 }]}>
-			<Icon name="attention" size={24} color="alert4a" style={{ marginRight: 8 }} />
+		<View style={[styles.container, { borderColor: colors.alert6, backgroundColor: colors.background4 }]}>
+			<Icon name="attention" size={24} color="alert6" style={{ marginRight: 8 }} />
 			<View style={{ justifyContent: 'space-between' }}>
 				<Text type="span" weight="bold">
 					Minke will never ask for these words
