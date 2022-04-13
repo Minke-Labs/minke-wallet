@@ -15,7 +15,6 @@ import TokenCard from '../../components/TokenCard/TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const ExchangeScreen = () => {
 	const navigation = useNavigation();
