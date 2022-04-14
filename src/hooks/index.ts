@@ -7,6 +7,7 @@ import useTimeout from './useTimeout';
 import useTransactions from './useTransactions';
 import useWyreApplePay from './useWyreApplePay';
 import useTokens from './useTokens';
+import useLocation from './useLocation';
 import useWyreOrderStatus from './useWyreOrderStatus';
 import useDeposit from './useDeposit';
 import useWalletCloudBackup from './useWalletCloudBackup';
@@ -25,6 +26,7 @@ export {
 	useTokens,
 	useTransactions,
 	useDeposit,
+	useLocation,
 	useWalletCloudBackup,
 	useTimeout,
 	useWyreApplePay,

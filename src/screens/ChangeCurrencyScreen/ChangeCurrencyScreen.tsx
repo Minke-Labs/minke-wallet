@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { SettingsHeader, SearchInput } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation } from '@hooks';
+import { useNavigation, useLocation } from '@hooks';
 import { FlagType } from '@styles';
 import { ItemCurrency } from './ItemCurrency/ItemCurrency';
 import { currencies } from './ChangeCurrencyScreen.utils';
 
 const ChangeCurrencyScreen = () => {
-	const [current, setCurrent] = useState('unitedStates');
 	const [filtered, setFiltered] = useState<any>(currencies);
 	const [search, setSearch] = useState('');
+	const { location, setLocation } = useLocation();
+
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 
@@ -38,9 +39,9 @@ const ChangeCurrencyScreen = () => {
 							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => (
 								<ItemCurrency
-									onPress={() => setCurrent(item.flag)}
+									onPress={() => setLocation(item.flag)}
 									flag={item.flag as FlagType}
-									active={item.flag === current}
+									active={item.flag === location}
 									currencyName={item.currencyName}
 								/>
 							)}

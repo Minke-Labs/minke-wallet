@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
+import { Token, Text, PaperTouchable, ApplePayButton, Icon, OnrampButton } from '@components';
 import { TokenType } from '@styles';
 import { ChooseQuantityModalProps } from './ChooseQuantityModal.types';
 import { useChooseQuantityModal } from './ChooseQuantityModal.hooks';
@@ -49,7 +49,8 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					<Text type="a">Choose another amount</Text>
 				</PaperTouchable>
 
-				<ApplePayButton marginBottom={48} onPress={onPurchase} disabled={amount! <= 0} />
+				<ApplePayButton marginBottom={16} onPress={onPurchase} disabled={amount! <= 0} />
+				<OnrampButton marginBottom={16} />
 
 				<View
 					style={{

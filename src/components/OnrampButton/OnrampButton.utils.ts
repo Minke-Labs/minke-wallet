@@ -1,38 +1,32 @@
-import { PayId, Interac, Ideal, FasterPayments, Sepa } from './images';
+import { PayId, Interac, FasterPayments, Sepa } from './images';
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
-		case 'Australia':
+		case 'australia':
 			return {
 				backgroundColor: '#FFFFFF',
 				fontColor: '#0A2138',
 				image: PayId
 			};
-		case 'UK':
+		case 'unitedKingdom':
 			return {
 				backgroundColor: '#FFFFFF',
 				fontColor: '#0A2138',
 				image: FasterPayments
 			};
-		case 'Canada':
+		case 'canada':
 			return {
 				backgroundColor: '#FFB92A',
 				fontColor: '#0A2138',
 				image: Interac
 			};
-		case 'EU':
+		case 'europeanUnion':
 			return {
 				backgroundColor: '#004899',
 				fontColor: '#FFFFFF',
 				image: Sepa
 			};
-		case 'Unknown':
-			return {
-				backgroundColor: '#CC0066',
-				fontColor: '#FFFFFF',
-				image: Ideal
-			};
 		default:
-			return {};
+			return null;
 	}
 };
