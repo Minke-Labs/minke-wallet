@@ -3,6 +3,7 @@ import { parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
+import { getProvider } from './wallet';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 
@@ -27,7 +28,7 @@ export const gaslessApproval = async ({
 		'function decimals() view returns (uint256)'
 	];
 	const provider = biconomy.getEthersProvider();
-	const token = new ethers.Contract(contract, abi, provider);
+	let token = new ethers.Contract(contract, abi, provider);
 	let tokenAmount = amount;
 	if (!amount) {
 		const balance: BigNumber = await token.balanceOf(address);
@@ -35,7 +36,7 @@ export const gaslessApproval = async ({
 		tokenAmount = balance.mul(BigNumber.from(10));
 	}
 
-	const wallet = new Wallet(privateKey, provider);
+	let wallet = new Wallet(privateKey, provider);
 
 	const rawTx = {
 		to: contract,
@@ -74,9 +75,12 @@ export const gaslessApproval = async ({
 	}
 
 	Logger.log('Normal approval transaction started');
+	// @TODO: Marcos: create a method to approve: check if its already approved, try gasless, normal
+	wallet = new Wallet(privateKey, await getProvider());
+	token = new ethers.Contract(contract, abi, wallet);
 	const { wait, hash } = await token.approve(spender, tokenAmount);
 	Logger.log('Normal approval transaction - done', transactionHash);
-	await wait();
+	await wait(6);
 	return hash;
 };
 
@@ -237,8 +241,7 @@ export const gaslessExchange = async ({
 	gasPrice,
 	biconomy,
 	swapTarget,
-	swapData,
-	value
+	swapData
 }: {
 	address: string;
 	privateKey: string;
@@ -251,7 +254,6 @@ export const gaslessExchange = async ({
 	biconomy: any;
 	swapTarget: string;
 	swapData: any;
-	value: string;
 }) => {
 	const abi = [
 		// eslint-disable-next-line max-len
@@ -276,8 +278,7 @@ export const gaslessExchange = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 5000000,
-		gasPrice: parseUnits(gasPrice, 'gwei'),
-		value: BigNumber.from(value)
+		gasPrice: parseUnits(gasPrice, 'gwei')
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);
@@ -290,8 +291,7 @@ export const gaslessExchange = async ({
 		signature,
 		forwardRequest: forwardData.request,
 		rawTransaction: signedTx,
-		signatureType: biconomy.EIP712_SIGN,
-		value: BigNumber.from(value)
+		signatureType: biconomy.EIP712_SIGN
 	};
 
 	const provider = biconomy.getEthersProvider();

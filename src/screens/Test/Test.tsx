@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import { Button } from '@components';
+import { Button, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import * as qs from 'qs';
 import { gaslessApproval, gaslessExchange } from '@models/gaslessTransaction';
@@ -10,17 +10,17 @@ import { globalWalletState } from '@stores/WalletStore';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import { approvalState } from '@models/deposit';
-import { BigNumber } from 'ethers';
 
 const Test = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { address, privateKey } = useState(globalWalletState()).value;
-	const depositContract = '0xd616992995D4cD4Df0f1Fa2bF3E6Ac7efB6f9017'; // change;
+	const depositContract = '0x0d03D7b41D967DBea44ff0dab932d45E41d2dda3'; // change;
 
 	const params = {
-		sell: 'MATIC',
-		buy: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
-		amount: formatUnits(toBn('0.01', 18), 'wei'),
+		// sell: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063', // DAI
+		sell: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6', // WBTC
+		buy: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174', // USDC
+		amount: formatUnits(toBn('0.00000054', 8), 'wei'),
 		minAmount: formatUnits(toBn('0.001', 6), 'wei')
 	};
 
@@ -58,14 +58,16 @@ const Test = () => {
 			sellToken: params.sell.toLowerCase(),
 			buyToken: params.buy.toLowerCase(),
 			sellAmount: params.amount,
-			takerAddress: address.toLowerCase()
+			takerAddress: address.toLowerCase(),
+			skipValidation: true
 		};
 		const url = `https://polygon.api.0x.org/swap/v1/quote?${qs.stringify(quoteParams)}`;
+		console.log({ quoteParams });
 		const quoteTransaction = await (await fetch(url)).json();
 		console.log({ quoteTransaction });
 		const { sellTokenAddress, sellAmount, buyTokenAddress, to, value, data } = quoteTransaction;
 
-		if (buyTokenAddress) {
+		if (value === '0' && gaslessEnabled) {
 			const hash = await gaslessExchange({
 				address,
 				amount: sellAmount,
@@ -77,16 +79,17 @@ const Test = () => {
 				swapData: data,
 				token: sellTokenAddress,
 				toToken: buyTokenAddress,
-				swapTarget: to,
-				value
+				swapTarget: to
 			});
 			console.log('finished', hash);
+		} else {
+			console.log('Need to manually do the transaction with gas');
 		}
 	}, [gaslessEnabled, biconomy, address, privateKey]);
 
 	const test = async () => {
 		console.log('started');
-		// await approve();
+		await approve();
 		console.log('approved');
 		await quote();
 		console.log('done');
@@ -96,6 +99,7 @@ const Test = () => {
 		<BasicLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
 				<Button title="Test" onPress={test} marginBottom={48} />
+				{!!gaslessEnabled && <Text>GASLESS</Text>}
 			</View>
 		</BasicLayout>
 	);
