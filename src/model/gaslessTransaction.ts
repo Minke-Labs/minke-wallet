@@ -3,7 +3,6 @@ import { parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
-import { toBn } from 'evm-bn';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 
@@ -32,9 +31,8 @@ export const gaslessApproval = async ({
 	let tokenAmount = amount;
 	if (!amount) {
 		const balance: BigNumber = await token.balanceOf(address);
-		const decimals = await token.decimals();
 		// @ts-ignore
-		tokenAmount = balance.mul(toBn('2', decimals));
+		tokenAmount = balance.mul(BigNumber.from(10));
 	}
 
 	const wallet = new Wallet(privateKey, provider);
@@ -223,6 +221,81 @@ export const gaslessWithdraw = async ({
 		signatureType: biconomy.EIP712_SIGN
 	};
 
+	// promise resolves to transaction hash
+	const txHash = await provider.send('eth_sendRawTransaction', [data]);
+	return txHash;
+};
+
+export const gaslessExchange = async ({
+	address,
+	privateKey,
+	token,
+	amount,
+	toToken,
+	minAmount,
+	depositContract,
+	gasPrice,
+	biconomy,
+	swapTarget,
+	swapData,
+	value
+}: {
+	address: string;
+	privateKey: string;
+	token: string;
+	amount: string; // in the token decimals
+	toToken: string;
+	minAmount: string;
+	depositContract: string;
+	gasPrice: string;
+	biconomy: any;
+	swapTarget: string;
+	swapData: any;
+	value: string;
+}) => {
+	const abi = [
+		// eslint-disable-next-line max-len
+		'function ZapIn(address fromToken, address toToken, uint256 amountIn, uint256 minTokens, address swapTarget, bytes calldata swapData) external payable returns (uint256)'
+	];
+
+	const contractInterface = new ethers.utils.Interface(abi);
+
+	const userSigner = new ethers.Wallet(privateKey);
+
+	const functionSignature = contractInterface.encodeFunctionData('ZapIn', [
+		token,
+		toToken,
+		amount,
+		minAmount,
+		swapTarget,
+		swapData
+	]);
+
+	const rawTx = {
+		to: depositContract,
+		data: functionSignature,
+		from: address,
+		gasLimit: 5000000,
+		gasPrice: parseUnits(gasPrice, 'gwei'),
+		value: BigNumber.from(value)
+	};
+
+	const signedTx = await userSigner.signTransaction(rawTx);
+	// should get user message to sign for EIP712 or personal signature types
+	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
+
+	const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
+
+	const data = {
+		signature,
+		forwardRequest: forwardData.request,
+		rawTransaction: signedTx,
+		signatureType: biconomy.EIP712_SIGN,
+		value: BigNumber.from(value)
+	};
+
+	const provider = biconomy.getEthersProvider();
+	// send signed transaction with ethers
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;
