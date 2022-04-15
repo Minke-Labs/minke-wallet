@@ -23,6 +23,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		dismissCoin,
 		setPresetAmount,
 		onApplePayPurchase,
+		onOnrampPurchase,
 		enableCustomAmount,
 		setCustomAmount
 	} = useAddFunds({ visible, onDismiss });
@@ -48,6 +49,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								setPresetAmount={setPresetAmount}
 								enableCustomAmount={enableCustomAmount}
 								onPurchase={() => onApplePayPurchase(amount || 100)}
+								onOnramp={() => onOnrampPurchase(amount || 100)}
 							/>
 						)}
 						{currentStep === 2 && (

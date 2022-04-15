@@ -55,6 +55,10 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		onPurchase({ currency: coin.symbol, value });
 	};
 
+	const onOnrampPurchase = (value: number) => {
+		console.log('PRESSED!!! ', value);
+	};
+
 	useEffect(() => {
 		if (orderId) {
 			dismissCoin();
@@ -91,6 +95,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		selectCoin,
 		dismissCoin,
 		onApplePayPurchase,
+		onOnrampPurchase,
 		setPresetAmount,
 		enableCustomAmount,
 		setCustomAmount

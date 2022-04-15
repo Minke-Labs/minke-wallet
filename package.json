@@ -100,6 +100,7 @@
     "react-native-udp": "^2.7.0",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
+    "react-native-webview": "11.15.0",
     "readable-stream": "^3.6.0",
     "rn-nodeify": "^10.3.0",
     "stream-browserify": "^3.0.0",
