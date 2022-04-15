@@ -1,20 +1,6 @@
-import { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useContext } from 'react';
+import { LocationContext } from '../contexts/LocationContext/LocationContext';
 
-const defaultLocation = 'unitedStates';
-
-const useLocation = () => {
-	const [location, setLocation] = useState(defaultLocation);
-
-	const setGlobalLocation = (val: string) => {
-		AsyncStorage.setItem('@location', val);
-		setLocation(val);
-	};
-
-	return {
-		location,
-		setLocation: setGlobalLocation
-	};
-};
+const useLocation = () => useContext(LocationContext);
 
 export default useLocation;
