@@ -1,9 +1,17 @@
 import React, { createContext, useMemo, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const LocationContext = createContext<any>('');
+interface LocationContextProps {
+	location: string;
+	setLocation: (location: string) => void;
+}
 
-const defaultLocation = 'unitedStates';
+const mock = {
+	location: 'unitedStates',
+	setLocation: () => {}
+};
+
+export const LocationContext = createContext<LocationContextProps>(mock);
 
 const LocationProvider: React.FC = ({ children }) => {
 	const [location, setLocation] = useState('');
@@ -11,7 +19,7 @@ const LocationProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchLocation = async () => {
 			const storedLocation = await AsyncStorage.getItem('@location');
-			setLocation(storedLocation || defaultLocation);
+			setLocation(storedLocation || mock.location);
 		};
 		fetchLocation();
 	}, []);
