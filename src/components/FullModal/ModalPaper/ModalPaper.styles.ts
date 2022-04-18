@@ -1,12 +1,12 @@
-import { View, Dimensions } from 'react-native';
-import React from 'react';
+import { StyleSheet, Dimensions } from 'react-native';
 
-const ModalPaper: React.FC = ({ children }) => (
-	<View style={{
+export default StyleSheet.create({
+	container: {
 		margin: 20,
 		backgroundColor: 'white',
 		borderRadius: 20,
-		padding: 5,
+		paddingVertical: 12,
+		paddingHorizontal: 5,
 		alignItems: 'center',
 		shadowColor: '#000',
 		shadowOffset: {
@@ -18,10 +18,9 @@ const ModalPaper: React.FC = ({ children }) => (
 		height: Dimensions.get('screen').height * 0.9,
 		width: Dimensions.get('screen').width * 0.95,
 		overflow: 'hidden'
-	}}
-	>
-		{children}
-	</View>
-);
-
-export default ModalPaper;
+	},
+	content: {
+		height: '100%',
+		width: '100%'
+	}
+});

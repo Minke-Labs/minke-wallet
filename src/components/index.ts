@@ -6,6 +6,7 @@ import Icon from './Icon/Icon';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
+import FullModal from './FullModal/FullModal';
 import ModalHeader from './ModalHeader/ModalHeader';
 import ModalReusables from './ModalReusables';
 import SearchInput from './SearchInput/SearchInput';
@@ -42,6 +43,7 @@ export {
 	Token,
 	TokenAmountInput,
 	Modal,
+	FullModal,
 	ModalHeader,
 	SettingsHeader,
 	ModalReusables,

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, Pressable } from 'react-native';
-import { OnrampButton, Text } from '@components';
+import { View } from 'react-native';
+import { OnrampButton, FullModal } from '@components';
 import { BasicLayout } from '@layouts';
 import { WebView } from 'react-native-webview';
-import OnrampModal from './OnrampModal/OnrampModal';
 
 const Test = () => {
 	const [visible, setVisible] = useState(false);
@@ -13,24 +12,12 @@ const Test = () => {
 		<BasicLayout>
 			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
 				<OnrampButton onPress={handleGo} />
-
-				<OnrampModal
+				<FullModal
 					visible={visible}
-					onRequestClose={() => setVisible(false)}
+					onClose={() => setVisible(false)}
 				>
-					<Pressable onPress={() => setVisible(false)}>
-						<Text>Close</Text>
-					</Pressable>
-					<View style={{
-						height: '100%',
-						width: '100%'
-					}}
-					>
-						<WebView
-							source={{ uri: 'https://www.minke.app' }}
-						/>
-					</View>
-				</OnrampModal>
+					<WebView source={{ uri: 'https://www.minke.app' }} />
+				</FullModal>
 			</View>
 		</BasicLayout>
 	);
