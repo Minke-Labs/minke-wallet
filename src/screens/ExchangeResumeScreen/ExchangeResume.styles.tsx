@@ -13,7 +13,8 @@ export const makeStyles = (colors: ColorType) =>
 		exchangeResumeContainer: {
 			paddingLeft: 24,
 			paddingRight: 24,
-			marginTop: 8
+			marginTop: 8,
+			flex: 1
 		},
 		exchangeResume: {
 			flexDirection: 'row',

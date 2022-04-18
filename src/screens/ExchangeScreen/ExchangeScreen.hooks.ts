@@ -78,14 +78,14 @@ export const useExchangeScreen = () => {
 	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
 		if (fromToken && toToken) {
 			setLoadingPrices(true);
-			const { address: srcToken, decimals: fromTokenDecimals } = fromToken;
-			const { address: destToken, decimals: toTokenDecimals } = toToken;
+			const { address: srcToken, decimals: srcDecimals } = fromToken;
+			const { address: destToken, decimals: destDecimals } = toToken;
 			const { reason, message, buyAmount, sellAmount, value } = await getExchangePrice({
 				address: wallet.address.value,
 				srcToken,
 				destToken,
-				fromTokenDecimals,
-				toTokenDecimals,
+				srcDecimals,
+				destDecimals,
 				amount,
 				side
 			});

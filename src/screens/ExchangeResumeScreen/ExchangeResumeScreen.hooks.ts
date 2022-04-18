@@ -6,7 +6,7 @@ import { createTransaction, ExchangeRoute, getExchangePrice } from '@models/toke
 import { useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
-import { tokenBalanceFormat } from '@helpers/utilities';
+import { coinFromSymbol, tokenBalanceFormat } from '@helpers/utilities';
 import { approveSpending } from '@models/contract';
 import { getProvider } from '@models/wallet';
 import { convertTransactionResponse } from '@models/transaction';
@@ -25,6 +25,8 @@ const useExchangeResumeScreen = () => {
 	const [intervalId, setIntervalId] = React.useState<NodeJS.Timer>();
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [error, setError] = React.useState('');
+	const [fromFiatPrice, setFromFiatPrice] = React.useState<number>();
+	const [toFiatPrice, setToFiatPrice] = React.useState<number>();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { addPendingTransaction } = useTransactions();
@@ -55,31 +57,54 @@ const useExchangeResumeScreen = () => {
 			const { address: destToken, decimals: destDecimals } = to;
 			const { direction = 'from' } = lastConversion || {};
 			const result = await getExchangePrice({
+				address: wallet.address.value,
 				srcToken,
 				srcDecimals,
 				destToken,
 				destDecimals,
 				amount: (direction === 'to' ? toAmount : fromAmount) || '',
-				side: direction === 'to' ? 'BUY' : 'SELL'
+				side: direction === 'to' ? 'BUY' : 'SELL',
+				quote: true
 			});
 
-			if (result.error) {
-				Logger.error(result.error);
+			if (result.message || result.reason) {
+				Logger.error(result.message || result.reason);
 			} else {
 				setPriceQuote(result);
 			}
 		}
 	};
 
+	const loadFiatPrices = async () => {
+		const { id: fromId } = await coinFromSymbol(from.symbol);
+		const { id: toId } = await coinFromSymbol(to.symbol);
+
+		const result = await fetch(
+			`https://api.coingecko.com/api/v3/simple/price?ids=${fromId},${toId}&vs_currencies=usd`
+		);
+
+		const quotes = await result.json();
+
+		if (quotes[fromId]?.usd) {
+			setFromFiatPrice(quotes[fromId].usd * +(fromAmount || 1));
+		}
+
+		if (quotes[toId]?.usd) {
+			setToFiatPrice(quotes[toId].usd * +(toAmount || 1));
+		}
+	};
+
 	useEffect(() => {
 		resetInterval();
 		loadPrices();
+		loadFiatPrices();
 		startCounter();
 	}, []);
 
 	useEffect(() => {
 		if (count === 0) {
 			loadPrices();
+			loadFiatPrices();
 		}
 	}, [count]);
 
@@ -87,26 +112,19 @@ const useExchangeResumeScreen = () => {
 		setCount(45);
 	}, [priceQuote]);
 
-	const exchangeSummary = () => {
-		let src = fromAmount || 1;
-		let dest = toAmount || 1;
-		if (priceQuote) {
-			const { srcAmount, destAmount, srcDecimals, destDecimals } = priceQuote.priceRoute;
-			src = formatUnits(srcAmount, srcDecimals);
-			dest = formatUnits(destAmount, destDecimals);
-		}
-
-		if (fromAmount && toAmount) {
-			return `${tokenBalanceFormat(+dest / +src, 9)} ${to.symbol} per ${from.symbol}`;
+	const exchangeSummary = useCallback(() => {
+		const { sellTokenToEthRate, buyTokenToEthRate } = priceQuote || {};
+		if (sellTokenToEthRate && buyTokenToEthRate) {
+			return `${tokenBalanceFormat(+buyTokenToEthRate / +sellTokenToEthRate, 9)} ${to.symbol} per ${from.symbol}`;
 		}
 
 		return null;
-	};
+	}, [priceQuote, to, from]);
 
-	const exchangeName = priceQuote?.priceRoute.bestRoute[0].swaps[0].swapExchanges[0].exchange;
+	const exchangeName = priceQuote?.orders[0].source;
 
 	const onSuccess = async () => {
-		if (priceQuote?.priceRoute) {
+		if (priceQuote) {
 			setLoading(true);
 			setError('');
 			showModal();
@@ -203,7 +221,9 @@ const useExchangeResumeScreen = () => {
 		transactionHash,
 		error,
 		setError,
-		onSuccess
+		onSuccess,
+		fromFiatPrice,
+		toFiatPrice
 	};
 };
 

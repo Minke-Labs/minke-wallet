@@ -17,8 +17,7 @@ export const makeStyles = (colors: ColorType) =>
 			alignItems: 'flex-end'
 		},
 		exchangeSection: {
-			paddingLeft: 24,
-			paddingRight: 24
+			paddingHorizontal: 24
 		},
 		exchangeButton: {
 			marginTop: 'auto',

@@ -59,10 +59,11 @@ export interface ExchangeParams {
 	address: string;
 	srcToken: string;
 	destToken: string;
-	fromTokenDecimals: number;
-	toTokenDecimals: number;
+	srcDecimals: number;
+	destDecimals: number;
 	side: 'SELL' | 'BUY';
 	amount: string;
+	quote?: boolean; // price or quote request
 }
 
 interface QuoteParams {
@@ -80,8 +81,9 @@ export const getExchangePrice = async ({
 	destToken,
 	side,
 	amount,
-	fromTokenDecimals,
-	toTokenDecimals
+	srcDecimals,
+	destDecimals,
+	quote = false
 }: ExchangeParams): Promise<ExchangeRoute> => {
 	const { apiUrl0x } = await network();
 	const quoteParams: QuoteParams = {
@@ -92,12 +94,12 @@ export const getExchangePrice = async ({
 	};
 
 	if (side === 'SELL') {
-		quoteParams.sellAmount = formatUnits(toBn(amount, fromTokenDecimals), 'wei');
+		quoteParams.sellAmount = formatUnits(toBn(amount, srcDecimals), 'wei');
 	} else {
-		quoteParams.buyAmount = formatUnits(toBn(amount, toTokenDecimals), 'wei');
+		quoteParams.buyAmount = formatUnits(toBn(amount, destDecimals), 'wei');
 	}
 
-	const url = `${apiUrl0x}swap/v1/price?${qs.stringify(quoteParams)}`;
+	const url = `${apiUrl0x}swap/v1/${quote ? 'quote' : 'price'}?${qs.stringify(quoteParams)}`;
 	const result = await fetch(url);
 	return result.json();
 };
@@ -264,6 +266,8 @@ export interface ExchangeRoute {
 	sellTokenAddress: string;
 	sellTokenToEthRate: string;
 	value: string;
+	orders: [{ source: string }];
+	guaranteedPrice?: string;
 }
 
 export interface Quote {

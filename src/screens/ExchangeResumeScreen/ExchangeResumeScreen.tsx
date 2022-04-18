@@ -4,24 +4,35 @@ import { Card } from 'react-native-paper';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import { Svg, Path } from 'react-native-svg';
 import { ParaswapToken } from '@models/token';
-import { smallWalletAddress } from '@models/wallet';
-import { formatUnits } from 'ethers/lib/utils';
 import { BasicLayout } from '@layouts';
 import { TokenType } from '@styles';
 import { Icon, Modal, Text, Token, ActivityIndicator, HapticButton, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
+import { formatUnits } from 'ethers/lib/utils';
 
-const TokenDetail = ({ token, amount, usdAmount }: { token: ParaswapToken; amount: string; usdAmount: string }) => (
+const TokenDetail = ({
+	token,
+	amount,
+	usdAmount
+}: {
+	token: ParaswapToken;
+	amount: string;
+	usdAmount: number | undefined;
+}) => (
 	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
 		<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
 			<Token size={34} name={token.symbol.toLowerCase() as TokenType} glow />
 		</View>
 		<View>
-			<Text type="p2" weight="extraBold" color="text2">
-				${tokenBalanceFormat(usdAmount, 4)}
-			</Text>
+			{usdAmount ? (
+				<Text type="p2" weight="extraBold" color="text2">
+					${tokenBalanceFormat(usdAmount, 4)}
+				</Text>
+			) : (
+				<ActivityIndicator />
+			)}
 			<Text type="a" weight="medium" color="text2">
 				{amount} {token.symbol}
 			</Text>
@@ -48,7 +59,9 @@ const ExchangeResumeScreen = () => {
 		transactionHash,
 		error,
 		setError,
-		onSuccess
+		onSuccess,
+		fromFiatPrice,
+		toFiatPrice
 	} = useExchangeResumeScreen();
 
 	return (
@@ -72,8 +85,8 @@ const ExchangeResumeScreen = () => {
 						{priceQuote ? (
 							<TokenDetail
 								token={from}
-								amount={formatUnits(priceQuote.priceRoute.srcAmount, priceQuote.priceRoute.srcDecimals)}
-								usdAmount={priceQuote?.priceRoute.srcUSD}
+								amount={formatUnits(priceQuote.sellAmount, from.decimals)}
+								usdAmount={fromFiatPrice}
 							/>
 						) : (
 							<ActivityIndicator size={24} />
@@ -103,11 +116,8 @@ const ExchangeResumeScreen = () => {
 						{priceQuote ? (
 							<TokenDetail
 								token={to}
-								amount={formatUnits(
-									priceQuote.priceRoute.destAmount,
-									priceQuote.priceRoute.destDecimals
-								)}
-								usdAmount={priceQuote?.priceRoute.destUSD}
+								amount={formatUnits(priceQuote.buyAmount, to.decimals)}
+								usdAmount={toFiatPrice}
 							/>
 						) : (
 							<ActivityIndicator size={24} />
@@ -138,39 +148,10 @@ const ExchangeResumeScreen = () => {
 						<Card.Content>
 							<View style={(styles.summaryRow, styles.marginBottom)}>
 								<Text type="a" weight="medium" color="text3">
-									Maximum sold
-								</Text>
-								{priceQuote ? (
-									<Text type="p2" weight="extraBold" color="text2">
-										{tokenBalanceFormat(
-											formatUnits(
-												priceQuote.priceRoute.srcAmount,
-												priceQuote.priceRoute.srcDecimals
-											),
-											9
-										)}{' '}
-										{from.symbol}
-									</Text>
-								) : (
-									<ActivityIndicator size={24} />
-								)}
-							</View>
-
-							<View style={(styles.summaryRow, styles.marginBottom)}>
-								<Text type="a" weight="medium" color="text3">
 									Rate
 								</Text>
 								<Text type="p2" weight="extraBold" color="text2">
 									{exchangeSummary()}
-								</Text>
-							</View>
-
-							<View style={(styles.summaryRow, styles.marginBottom)}>
-								<Text type="a" weight="medium" color="text3">
-									{to.symbol} contract
-								</Text>
-								<Text type="p2" weight="extraBold" color="text2">
-									{smallWalletAddress(to.address)}
 								</Text>
 							</View>
 
@@ -189,8 +170,15 @@ const ExchangeResumeScreen = () => {
 
 					<View style={{ marginBottom: 32 }} />
 
-					{priceQuote &&
-						(loading ? <ActivityIndicator /> : <HapticButton title="Exchange" onPress={onSuccess} />)}
+					<View
+						style={{
+							marginTop: 'auto',
+							marginBottom: 16
+						}}
+					>
+						{priceQuote &&
+							(loading ? <ActivityIndicator /> : <HapticButton title="Exchange" onPress={onSuccess} />)}
+					</View>
 				</View>
 			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>
