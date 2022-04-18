@@ -17,6 +17,7 @@ export interface Network {
 	wyreSRN: string;
 	jsonRpcProvider?: string;
 	biconomyAPIKey?: string;
+	apiUrl0x?: string;
 }
 
 export interface Networks {
@@ -40,7 +41,8 @@ export const networks: Networks = {
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
-		transactionTimesEndpoint: true
+		transactionTimesEndpoint: true,
+		apiUrl0x: 'https://api.0x.org/'
 	},
 	matic: {
 		chainId: 137,
@@ -56,7 +58,8 @@ export const networks: Networks = {
 		transactionTimesEndpoint: false,
 		jsonRpcProvider: ALCHEMY_API_URL_POLYGON_MAINNET || process.env.ALCHEMY_API_URL_POLYGON_MAINNET,
 		biconomyAPIKey: BICONOMY_API_KEY_POLYGON_MAINNET || process.env.BICONOMY_API_KEY_POLYGON_MAINNET,
-		topUpToken: { symbol: 'MUSDC', name: 'USDC' }
+		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
+		apiUrl0x: 'https://polygon.api.0x.org/'
 	},
 	mumbai: {
 		chainId: 80001,

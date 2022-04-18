@@ -7,11 +7,13 @@ import { ParaswapToken, Quote, getExchangePrice, ExchangeParams, nativeTokens, N
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import Logger from '@utils/logger';
 import { network } from '@models/network';
+import { globalWalletState, WalletState } from '@stores/WalletStore';
 
 export const useExchangeScreen = () => {
 	const { nativeToken } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
+	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
@@ -75,30 +77,30 @@ export const useExchangeScreen = () => {
 	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
 		if (fromToken && toToken) {
 			setLoadingPrices(true);
-			const { address: srcToken, decimals: srcDecimals } = fromToken;
-			const { address: destToken, decimals: destDecimals } = toToken;
-			const { error: apiError, priceRoute } = await getExchangePrice({
+			const { address: srcToken, decimals: fromTokenDecimals } = fromToken;
+			const { address: destToken, decimals: toTokenDecimals } = toToken;
+			const { reason, message, buyAmount, sellAmount } = await getExchangePrice({
+				address: wallet.address.value,
 				srcToken,
-				srcDecimals,
 				destToken,
-				destDecimals,
+				fromTokenDecimals,
+				toTokenDecimals,
 				amount,
 				side
 			});
-			if (apiError) {
-				Logger.error(`Load prices error: ${apiError}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+
+			if (message || reason) {
+				Logger.error(`Load prices error: ${message || reason}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 				Keyboard.dismiss();
 				setQuote(undefined);
 				setLoadingPrices(false);
-				setError(apiError);
+				setError(message || reason || '');
 				return undefined;
 			}
 
-			const { srcAmount, destAmount } = priceRoute;
-
 			const newQuote = {
-				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
-				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
+				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
+				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) }
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);

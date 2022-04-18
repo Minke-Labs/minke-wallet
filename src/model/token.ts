@@ -1,6 +1,7 @@
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import * as qs from 'qs';
 import { network } from './network';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD', 'UST'];
@@ -55,31 +56,49 @@ export const paraswapTokens = async (): Promise<TokenResponse> => {
 };
 
 export interface ExchangeParams {
+	address: string;
 	srcToken: string;
-	srcDecimals: number;
 	destToken: string;
-	destDecimals: number;
+	fromTokenDecimals: number;
+	toTokenDecimals: number;
 	side: 'SELL' | 'BUY';
 	amount: string;
 }
 
+interface QuoteParams {
+	sellToken: string;
+	buyToken: string;
+	sellAmount?: string;
+	buyAmount?: string;
+	takerAddress: string;
+	skipValidation: boolean;
+}
+
 export const getExchangePrice = async ({
+	address,
 	srcToken,
-	srcDecimals,
 	destToken,
-	destDecimals,
 	side,
-	amount
+	amount,
+	fromTokenDecimals,
+	toTokenDecimals
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { chainId } = await network();
-	const baseURL = 'https://apiv5.paraswap.io/prices';
-	const sourceParams = `srcToken=${srcToken}&srcDecimals=${srcDecimals}`;
-	const destParams = `destToken=${destToken}&destDecimals=${destDecimals}`;
-	const decimals = side === 'SELL' ? srcDecimals : destDecimals;
-	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
-	const result = await fetch(
-		`${baseURL}?${sourceParams}&${destParams}&side=${side}&amount=${tokenAmount}&network=${chainId}`
-	);
+	const { apiUrl0x } = await network();
+	const quoteParams: QuoteParams = {
+		sellToken: srcToken.toLowerCase(),
+		buyToken: destToken.toLowerCase(),
+		takerAddress: address.toLowerCase(),
+		skipValidation: true
+	};
+
+	if (side === 'SELL') {
+		quoteParams.sellAmount = formatUnits(toBn(amount, fromTokenDecimals), 'wei');
+	} else {
+		quoteParams.buyAmount = formatUnits(toBn(amount, toTokenDecimals), 'wei');
+	}
+
+	const url = `${apiUrl0x}swap/v1/price?${qs.stringify(quoteParams)}`;
+	const result = await fetch(url);
 	return result.json();
 };
 
@@ -218,9 +237,33 @@ export interface PriceRoute {
 	side: string;
 }
 
+interface ExchangeError {
+	code: string;
+	field: string;
+	reason: string;
+}
+
 export interface ExchangeRoute {
-	priceRoute: PriceRoute;
-	error: string;
+	message?: string;
+	code?: number;
+	reason?: string;
+	validationErrors?: ExchangeError[]; // error fields
+	allowanceTarget: string;
+	buyAmount: string;
+	buyTokenAddress: string;
+	buyTokenToEthRate: string;
+	chainId: number;
+	estimatedGas: string;
+	estimatedPriceImpact: string;
+	gas: string;
+	gasPrice: string;
+	minimumProtocolFee: string;
+	price: string;
+	protocolFee: string;
+	sellAmount: string;
+	sellTokenAddress: string;
+	sellTokenToEthRate: string;
+	value: string;
 }
 
 export interface Quote {
