@@ -3,7 +3,7 @@ import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState } from '@stores/WalletStore';
 import { createTransaction, ExchangeRoute, getExchangePrice } from '@models/token';
-import { useNavigation, useTheme, useTransactions } from '@hooks';
+import { useBiconomy, useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
 import { coinFromSymbol, tokenBalanceFormat } from '@helpers/utilities';
@@ -30,6 +30,8 @@ const useExchangeResumeScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { addPendingTransaction } = useTransactions();
+	const { gaslessEnabled } = useBiconomy();
+	const gasless = gaslessEnabled && priceQuote && BigNumber.from(priceQuote.value).isZero();
 
 	const showModal = () => setVisible(true);
 	const hideModal = () => {
@@ -223,7 +225,8 @@ const useExchangeResumeScreen = () => {
 		setError,
 		onSuccess,
 		fromFiatPrice,
-		toFiatPrice
+		toFiatPrice,
+		gasless
 	};
 };
 

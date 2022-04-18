@@ -8,9 +8,9 @@ import { BasicLayout } from '@layouts';
 import { TokenType } from '@styles';
 import { Icon, Modal, Text, Token, ActivityIndicator, HapticButton, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
+import { formatUnits } from 'ethers/lib/utils';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
-import { formatUnits } from 'ethers/lib/utils';
 
 const TokenDetail = ({
 	token,
@@ -61,7 +61,8 @@ const ExchangeResumeScreen = () => {
 		setError,
 		onSuccess,
 		fromFiatPrice,
-		toFiatPrice
+		toFiatPrice,
+		gasless
 	} = useExchangeResumeScreen();
 
 	return (
@@ -166,7 +167,9 @@ const ExchangeResumeScreen = () => {
 						</Card.Content>
 					</Card>
 
-					{exchange.value.gas && <GasOption type={gas.type} disabled />}
+					<View style={{ display: gasless ? 'none' : 'flex' }}>
+						{exchange.value.gas && <GasOption type={gas.type} disabled />}
+					</View>
 
 					<View style={{ marginBottom: 32 }} />
 
