@@ -124,7 +124,7 @@ const useExchangeResumeScreen = () => {
 
 			const { gweiValue = 30 } = exchange.gas.value || {};
 
-			const { permit, approvalTransaction } = await approveSpending({
+			const { transaction: approvalTransaction } = await approveSpending({
 				userAddress: wallet.address.value,
 				amount: srcAmount,
 				privateKey: wallet.privateKey.value,
@@ -145,7 +145,6 @@ const useExchangeResumeScreen = () => {
 				destAmount,
 				priceRoute,
 				userAddress: wallet.value.address || '',
-				permit,
 				gasPrice: gweiValue ? +gweiValue * 1000000000 : undefined,
 				side
 			});

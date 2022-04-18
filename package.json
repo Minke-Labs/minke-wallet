@@ -38,7 +38,6 @@
     "date-fns": "^2.28.0",
     "dns.js": "^1.0.1",
     "domain-browser": "^1.2.0",
-    "eth-permit": "^0.2.1",
     "ethereum-blockies-base64": "^1.0.2",
     "ethereumjs-util": "^7.1.1",
     "ethers": "^5.4.7",

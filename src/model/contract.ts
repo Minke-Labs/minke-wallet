@@ -1,16 +1,17 @@
-import { Wallet, Contract, providers } from 'ethers';
-import { captureException } from '@sentry/react-native';
-import { signERC2612Permit } from 'eth-permit';
-import Logger from '@utils/logger';
-import { erc20abi, getProvider } from './wallet';
+import { Wallet, Contract, providers, BigNumber } from 'ethers';
+import { getProvider } from './wallet';
 import { network } from './network';
-import { ParaswapToken } from './token';
 import { approvalState } from './deposit';
 
 interface ContractAbiResponse {
 	message: string;
 	result: string;
 	status: string;
+}
+
+interface ContractApproval {
+	isApproved?: boolean;
+	transaction?: providers.TransactionResponse;
 }
 
 export const getAbi = async (address: string): Promise<ContractAbiResponse> => {
@@ -21,13 +22,7 @@ export const getAbi = async (address: string): Promise<ContractAbiResponse> => {
 	return result.json();
 };
 
-interface ContractApproval {
-	permit?: string; // signed tx to be sent to ParaSwap
-	// if the contract does not support permit we do a normal approval
-	approvalTransaction?: providers.TransactionResponse;
-}
-
-const onChainApproval = async ({
+export const onChainApproval = async ({
 	privateKey,
 	amount,
 	contractAddress,
@@ -35,7 +30,7 @@ const onChainApproval = async ({
 	gasPrice
 }: {
 	privateKey: string;
-	amount: string;
+	amount?: string;
 	contractAddress: string;
 	spender: string;
 	gasPrice: number;
@@ -45,7 +40,6 @@ const onChainApproval = async ({
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
 	const txDefaults = {
-		// from: await wallet.getAddress(),
 		type: 2,
 		chainId: await wallet.getChainId(),
 		gasLimit: 100000,
@@ -56,12 +50,23 @@ const onChainApproval = async ({
 
 	const erc20 = new Contract(
 		contractAddress,
-		['function approve(address spender, uint256 amount) external returns (bool)'],
+		[
+			'function approve(address spender, uint256 amount) external returns (bool)',
+			'function balanceOf(address owner) view returns (uint256)'
+		],
 		wallet
 	);
-	const tx = await erc20.populateTransaction.approve(spender, amount);
+
+	let tokenAmount = amount;
+	if (!amount) {
+		const balance: BigNumber = await erc20.balanceOf(wallet.address);
+		// @ts-ignore
+		tokenAmount = balance.mul(BigNumber.from(10));
+	}
+	const tx = await erc20.populateTransaction.approve(spender, tokenAmount);
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
-	return { approvalTransaction: await wallet.provider.sendTransaction(signedTx as string) };
+	const transaction = await wallet.provider.sendTransaction(signedTx as string);
+	return { transaction };
 };
 
 export const approveSpending = async ({
@@ -81,46 +86,7 @@ export const approveSpending = async ({
 }): Promise<ContractApproval> => {
 	const { isApproved } = await approvalState(userAddress, contractAddress, spender);
 	if (isApproved) {
-		return {};
+		return { isApproved };
 	}
 	return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
-
-	const wallet = new Wallet(
-		privateKey,
-		new providers.JsonRpcProvider('https://polygon-mainnet.infura.io/v3/83f8ae2f577f4b8b9f2db515d2273d17') // @TODO
-	);
-	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
-	const senderAddress = await wallet.getAddress();
-
-	const txDefaults = {
-		from: senderAddress,
-		type: 2,
-		chainId: await wallet.getChainId(),
-		nonce
-	};
-
-	const erc20 = new Contract(contractAddress, erc20abi, wallet);
-	const { deadline, v, r, s } = await signERC2612Permit(
-		wallet,
-		contractAddress,
-		senderAddress,
-		spender,
-		amount,
-		undefined,
-		nonce
-	);
-
-	try {
-		const tx = await erc20.populateTransaction.permit(senderAddress, spender, amount, deadline, v, r, s);
-		const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
-		return { permit: signedTx };
-	} catch (error) {
-		captureException(error);
-		Logger.error('Permit transaction error');
-		return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
-	}
 };
-
-interface UserTokens {
-	tokens: [ParaswapToken];
-}

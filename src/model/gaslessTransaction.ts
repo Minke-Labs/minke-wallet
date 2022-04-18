@@ -3,7 +3,6 @@ import { parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
-import { getProvider } from './wallet';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 
@@ -21,14 +20,14 @@ export const gaslessApproval = async ({
 	spender: string;
 	amount?: string | undefined;
 	biconomy: any;
-}) => {
+}): Promise<string | null> => {
 	const abi = [
 		'function balanceOf(address owner) view returns (uint256)',
 		'function approve(address spender, uint256 amount) external returns (bool)',
 		'function decimals() view returns (uint256)'
 	];
 	const provider = biconomy.getEthersProvider();
-	let token = new ethers.Contract(contract, abi, provider);
+	const token = new ethers.Contract(contract, abi, provider);
 	let tokenAmount = amount;
 	if (!amount) {
 		const balance: BigNumber = await token.balanceOf(address);
@@ -36,7 +35,7 @@ export const gaslessApproval = async ({
 		tokenAmount = balance.mul(BigNumber.from(10));
 	}
 
-	let wallet = new Wallet(privateKey, provider);
+	const wallet = new Wallet(privateKey, provider);
 
 	const rawTx = {
 		to: contract,
@@ -74,14 +73,7 @@ export const gaslessApproval = async ({
 		return transactionHash;
 	}
 
-	Logger.log('Normal approval transaction started');
-	// @TODO: Marcos: create a method to approve: check if its already approved, try gasless, normal
-	wallet = new Wallet(privateKey, await getProvider());
-	token = new ethers.Contract(contract, abi, wallet);
-	const { wait, hash } = await token.approve(spender, tokenAmount);
-	Logger.log('Normal approval transaction - done', transactionHash);
-	await wait(6);
-	return hash;
+	return null;
 };
 
 export const gaslessDeposit = async ({
