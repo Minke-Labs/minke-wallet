@@ -14,7 +14,7 @@ const mock = {
 export const LocationContext = createContext<LocationContextProps>(mock);
 
 const LocationProvider: React.FC = ({ children }) => {
-	const [location, setLocation] = useState('');
+	const [location, setLocation] = useState(mock.location);
 
 	useEffect(() => {
 		const fetchLocation = async () => {

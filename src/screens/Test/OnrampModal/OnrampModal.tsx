@@ -1,7 +1,7 @@
 import { Modal } from 'react-native';
 import React from 'react';
 import { ModalBackground } from './ModalBackground';
-import { ModalPaper } from './ModalPaper';
+import ModalPaper from './ModalPaper';
 import { OnrampModalProps } from './OnrampModal.types';
 
 const OnrampModal: React.FC<OnrampModalProps> = ({ children, visible, onRequestClose }) => (

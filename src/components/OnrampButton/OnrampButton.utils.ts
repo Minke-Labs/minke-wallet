@@ -27,6 +27,9 @@ export const chooseLocation = (loc: string) => {
 				image: Sepa
 			};
 		default:
-			return null;
+			return { // testing
+				backgroundColor: 'orangered',
+				fontColor: '#FFFFFF'
+			};
 	}
 };
