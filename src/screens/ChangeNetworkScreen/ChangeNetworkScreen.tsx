@@ -18,7 +18,7 @@ const ChangeNetworkScreen = () => {
 
 			<View style={styles.padding}>
 				<FlatList
-					data={Object.values(networks)}
+					data={Object.values(networks).filter(({ testnet }) => __DEV__ || !testnet)}
 					renderItem={({ item }) => (
 						<ListItem
 							label={item.name}
