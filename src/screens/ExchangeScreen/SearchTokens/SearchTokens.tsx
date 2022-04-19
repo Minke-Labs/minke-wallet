@@ -29,14 +29,20 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
 		let selectedTokens: ParaswapToken[] = [];
 		if (showOnlyOwnedTokens) {
-			const filter = _.filter(allTokens, (token) => ownedTokens.includes(token.symbol.toLocaleLowerCase()));
+			const filter = _.filter(
+				allTokens,
+				({ symbol }) => !!symbol && ownedTokens.includes(symbol.toLocaleLowerCase())
+			);
 			selectedTokens = filter;
 		} else {
 			selectedTokens = allTokens;
 		}
 
 		if (selected && selected.length > 0) {
-			const filter = _.filter(selectedTokens, (token) => !selected.includes(token.symbol.toLocaleLowerCase()));
+			const filter = _.filter(
+				selectedTokens,
+				({ symbol }) => !!symbol && !selected.includes(symbol.toLocaleLowerCase())
+			);
 			setFilteredTokens(filter);
 		} else {
 			setFilteredTokens(selectedTokens);

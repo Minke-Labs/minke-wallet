@@ -79,7 +79,7 @@ export const approveSpending = async ({
 }: {
 	userAddress: string;
 	privateKey: string;
-	amount: string;
+	amount?: string;
 	contractAddress: string;
 	spender: string;
 	gasPrice: number;

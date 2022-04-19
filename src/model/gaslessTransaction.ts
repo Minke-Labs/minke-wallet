@@ -5,6 +5,8 @@ import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
+// @TODO: Marcos (deploy a new contract)
+export const exchangeContract = '0x0d03D7b41D967DBea44ff0dab932d45E41d2dda3'; // Polygon
 
 export const gaslessApproval = async ({
 	address,
@@ -114,7 +116,7 @@ export const gaslessDeposit = async ({
 		minAmount,
 		'0x0000000000000000000000000000000000000000',
 		'0x00',
-		'0x667fc4b1edc5ff96f45bc382cbfb60b51647948d'
+		'0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'
 	]);
 
 	const rawTx = {

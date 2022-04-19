@@ -72,6 +72,9 @@ interface QuoteParams {
 	sellAmount?: string;
 	buyAmount?: string;
 	takerAddress: string;
+	feeRecipient: string;
+	affiliateAddress: string;
+	buyTokenPercentageFee: number;
 	skipValidation: boolean;
 }
 
@@ -90,6 +93,9 @@ export const getExchangePrice = async ({
 		sellToken: srcToken.toLowerCase(),
 		buyToken: destToken.toLowerCase(),
 		takerAddress: address.toLowerCase(),
+		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
+		buyTokenPercentageFee: 0.005,
+		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		skipValidation: true
 	};
 
@@ -268,6 +274,8 @@ export interface ExchangeRoute {
 	value: string;
 	orders: [{ source: string }];
 	guaranteedPrice?: string;
+	data?: string;
+	to?: string;
 }
 
 export interface Quote {

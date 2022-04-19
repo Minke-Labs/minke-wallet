@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState } from '@stores/WalletStore';
-import { createTransaction, ExchangeRoute, getExchangePrice } from '@models/token';
+import { ExchangeRoute, getExchangePrice } from '@models/token';
 import { useBiconomy, useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
@@ -11,6 +11,8 @@ import { approveSpending } from '@models/contract';
 import { getProvider } from '@models/wallet';
 import { convertTransactionResponse } from '@models/transaction';
 import { BigNumber, Wallet } from 'ethers';
+import { approvalState } from '@models/deposit';
+import { exchangeContract, gaslessApproval, gaslessExchange } from '@models/gaslessTransaction';
 import { makeStyles } from './ExchangeResume.styles';
 
 const useExchangeResumeScreen = () => {
@@ -21,6 +23,7 @@ const useExchangeResumeScreen = () => {
 	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
 	const [loading, setLoading] = React.useState(false); // creating transaction
 	const [visible, setVisible] = React.useState(false);
+	const [gasless, setGasless] = React.useState(false);
 	const [count, setCount] = React.useState(45);
 	const [intervalId, setIntervalId] = React.useState<NodeJS.Timer>();
 	const [transactionHash, setTransactionHash] = React.useState('');
@@ -30,8 +33,7 @@ const useExchangeResumeScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { addPendingTransaction } = useTransactions();
-	const { gaslessEnabled } = useBiconomy();
-	const gasless = gaslessEnabled && priceQuote && BigNumber.from(priceQuote.value).isZero();
+	const { gaslessEnabled, biconomy } = useBiconomy();
 
 	const showModal = () => setVisible(true);
 	const hideModal = () => {
@@ -114,6 +116,10 @@ const useExchangeResumeScreen = () => {
 		setCount(45);
 	}, [priceQuote]);
 
+	useEffect(() => {
+		setGasless(gaslessEnabled && priceQuote && BigNumber.from(priceQuote.value).isZero());
+	}, [gaslessEnabled, priceQuote]);
+
 	const exchangeSummary = useCallback(() => {
 		const { sellTokenToEthRate, buyTokenToEthRate } = priceQuote || {};
 		if (sellTokenToEthRate && buyTokenToEthRate) {
@@ -130,77 +136,108 @@ const useExchangeResumeScreen = () => {
 			setLoading(true);
 			setError('');
 			showModal();
-			const { priceRoute } = priceQuote;
+
 			const {
-				srcToken,
-				srcDecimals,
-				destToken,
-				destDecimals,
-				srcAmount,
-				destAmount,
-				tokenTransferProxy: spender,
-				side
-			} = priceRoute;
+				allowanceTarget,
+				sellTokenAddress,
+				sellAmount,
+				buyAmount,
+				buyTokenAddress,
+				gasPrice,
+				gas: gasLimit,
+				to: toAddress,
+				value,
+				data,
+				chainId
+			} = priceQuote;
 
-			const { gweiValue = 30 } = exchange.gas.value || {};
+			const { address, privateKey } = wallet.value;
 
-			const { transaction: approvalTransaction } = await approveSpending({
-				userAddress: wallet.address.value,
-				amount: srcAmount,
-				privateKey: wallet.privateKey.value,
-				contractAddress: srcToken,
-				spender,
-				gasPrice: +gweiValue * 1000000000
-			});
-			if (approvalTransaction) {
-				await approvalTransaction.wait();
-			}
+			if (gasless) {
+				const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract);
 
-			const result = await createTransaction({
-				srcToken,
-				srcDecimals,
-				destToken,
-				destDecimals,
-				srcAmount,
-				destAmount,
-				priceRoute,
-				userAddress: wallet.value.address || '',
-				gasPrice: gweiValue ? +gweiValue * 1000000000 : undefined,
-				side
-			});
+				if (!isApproved) {
+					const tx = await gaslessApproval({
+						address,
+						biconomy,
+						contract: sellTokenAddress,
+						privateKey,
+						spender: exchangeContract
+					});
 
-			if (result.error) {
-				setLoading(false);
-				setVisible(false);
-				setError(result.error);
-				Logger.error(result.error);
-			} else if (wallet.value && gas) {
+					await biconomy.getEthersProvider().waitForTransaction(tx, 3);
+				}
+
+				const hash = await gaslessExchange({
+					address,
+					amount: sellAmount,
+					minAmount: buyAmount,
+					biconomy,
+					depositContract: exchangeContract,
+					gasPrice,
+					privateKey,
+					swapData: data,
+					token: sellTokenAddress,
+					toToken: buyTokenAddress,
+					swapTarget: toAddress!
+				});
+				setTransactionHash(hash);
+				const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash, 3);
+				addPendingTransaction({
+					from: src,
+					to: address,
+					tokenDecimal: to.decimals.toString(),
+					hash,
+					isError: status === 0 ? '1' : '0',
+					pending: true,
+					timeStamp: new Date().getTime().toString(),
+					tokenSymbol: to.symbol,
+					value
+				});
+
+				navigation.navigate('WalletScreen');
+			} else {
+				const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
+				const { gweiValue = 30 } = exchange.gas.value || {};
+
+				if (!isApproved) {
+					const { transaction: approvalTransaction } = await approveSpending({
+						userAddress: address,
+						privateKey,
+						contractAddress: sellTokenAddress,
+						spender: allowanceTarget,
+						gasPrice: +gweiValue * 1000000000
+					});
+					if (approvalTransaction) {
+						await approvalTransaction.wait(3);
+					}
+				}
+
 				const provider = await getProvider();
-				const { chainId, data, from: src, gas: gasLimit, gasPrice, to: dest, value } = result;
-				const nonce = await provider.getTransactionCount(wallet.value.address, 'latest');
+				const nonce = await provider.getTransactionCount(address, 'latest');
 				const txDefaults = {
 					chainId,
 					data,
-					from: src,
 					gasPrice: BigNumber.from(gasPrice),
-					gasLimit: +gasLimit,
+					gasLimit: Math.max(500000, +gasLimit),
 					nonce,
-					to: dest,
+					to: toAddress,
 					value: BigNumber.from(value)
 				};
+
 				const walletObject = new Wallet(wallet.privateKey.value, provider);
 				const signedTx = await walletObject.signTransaction(txDefaults);
 				const transaction = await provider.sendTransaction(signedTx as string);
 				const converted = convertTransactionResponse(
 					transaction,
 					to.symbol,
-					formatUnits(destAmount, destDecimals),
-					destDecimals
+					formatUnits(buyAmount, to.decimals),
+					to.decimals
 				);
 				addPendingTransaction(converted);
 				const { hash, wait } = transaction;
 				setTransactionHash(hash);
-				await wait();
+				await wait(3);
 				navigation.navigate('WalletScreen');
 			}
 		}

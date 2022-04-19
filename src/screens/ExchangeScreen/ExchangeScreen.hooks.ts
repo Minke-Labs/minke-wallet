@@ -18,6 +18,7 @@ export const useExchangeScreen = () => {
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
+	const [gasless, setGasless] = React.useState(false);
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
 	const [toTokenBalance, setToTokenBalance] = React.useState('0');
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
@@ -32,7 +33,6 @@ export const useExchangeScreen = () => {
 	const toAmountRef = createRef<TextInput>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens: walletTokens } = useTokens();
-	const gasless: boolean = gaslessEnabled && quote && quote.noValue;
 
 	const balanceFrom = useCallback(
 		(token: ParaswapToken | undefined): number => {
@@ -256,6 +256,10 @@ export const useExchangeScreen = () => {
 			}
 		}
 	}, [toToken, fromToken]);
+
+	useEffect(() => {
+		setGasless(gaslessEnabled && quote && quote.noValue);
+	}, [gaslessEnabled, quote]);
 
 	const enoughForGas = gasless || (nativeToken && balanceFrom(nativeToken) > 0);
 

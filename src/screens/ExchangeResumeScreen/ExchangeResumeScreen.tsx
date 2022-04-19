@@ -167,7 +167,7 @@ const ExchangeResumeScreen = () => {
 						</Card.Content>
 					</Card>
 
-					<View style={{ display: gasless ? 'none' : 'flex' }}>
+					<View style={{ display: gasless || loading ? 'none' : 'flex' }}>
 						{exchange.value.gas && <GasOption type={gas.type} disabled />}
 					</View>
 
