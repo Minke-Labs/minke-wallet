@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, useColorScheme } from 'react-native';
 import { useTheme, useNavigation } from '@hooks';
-import { numberFormat } from '@src/helpers/utilities';
+import { tokenBalanceFormat } from '@src/helpers/utilities';
 import { Text, Icon } from '@components';
 import { BlurView } from 'expo-blur';
 import { makeStyles } from './CurrentValue.styles';
@@ -20,7 +20,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 					Current deposits
 				</Text>
 				<Text type="textLarge" weight="medium" marginBottom={14}>
-					{numberFormat(Number(depositsBalance))}
+					${tokenBalanceFormat(depositsBalance, 2)}
 				</Text>
 				{aaveMarket && (
 					<View style={styles.interestContainer}>
