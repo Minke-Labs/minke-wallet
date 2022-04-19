@@ -10,7 +10,7 @@ import { currencies } from './ChangeCurrencyScreen.utils';
 const ChangeCurrencyScreen = () => {
 	const [filtered, setFiltered] = useState<any>(currencies);
 	const [search, setSearch] = useState('');
-	const { location, setLocation } = useLocation();
+	const { countryCode, setCountryCode } = useLocation();
 
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
@@ -39,9 +39,9 @@ const ChangeCurrencyScreen = () => {
 							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => (
 								<ItemCurrency
-									onPress={() => setLocation(item.flag)}
+									onPress={() => setCountryCode(item.iso)}
 									flag={item.flag as FlagType}
-									active={item.flag === location}
+									active={item.iso === countryCode}
 									currencyName={item.currencyName}
 								/>
 							)}

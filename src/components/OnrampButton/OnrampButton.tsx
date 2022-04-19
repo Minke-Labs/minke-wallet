@@ -6,9 +6,9 @@ import { chooseLocation } from './OnrampButton.utils';
 import { OnrampButtonProps } from './OnrampButton.types';
 
 const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, marginBottom = 0, disabled = false }) => {
-	const { location } = useLocation();
+	const { countryCode } = useLocation();
 
-	if (!chooseLocation(location)) return null;
+	if (!chooseLocation(countryCode!)) return null;
 
 	return (
 		<TouchableOpacity
@@ -16,7 +16,7 @@ const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, marginBottom = 0, 
 			style={[
 				styles.container,
 				{
-					backgroundColor: chooseLocation(location)?.backgroundColor,
+					backgroundColor: chooseLocation(countryCode!)?.backgroundColor,
 					marginBottom
 				}
 			]}
@@ -25,12 +25,12 @@ const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, marginBottom = 0, 
 			<Text
 				style={[
 					styles.text,
-					{ color: chooseLocation(location)?.fontColor }
+					{ color: chooseLocation(countryCode!)?.fontColor }
 				]}
 			>
 				Pay With
 			</Text>
-			<Image source={chooseLocation(location)?.image} style={styles.image} />
+			<Image source={chooseLocation(countryCode!)?.image} style={styles.image} />
 		</TouchableOpacity>
 	);
 };

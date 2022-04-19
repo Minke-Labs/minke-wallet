@@ -1,41 +1,53 @@
 import React, { createContext, useMemo, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-interface LocationContextProps {
-	location: string;
-	setLocation: (location: string) => void;
-}
-
-const mock = {
-	location: 'unitedStates',
-	setLocation: () => {}
-};
+import * as Location from 'expo-location';
+import { LocationContextProps } from './LocationContext.types';
+import { mock } from './LocationContext.styles';
 
 export const LocationContext = createContext<LocationContextProps>(mock);
 
 const LocationProvider: React.FC = ({ children }) => {
-	const [location, setLocation] = useState(mock.location);
+	const [errorMsg, setErrorMsg] = useState<string>();
+	const [countryCode, setCountryCode] = useState<string | null>('');
+
+	useEffect(() => {
+		(async () => {
+			const { status } = await Location.requestForegroundPermissionsAsync();
+			if (status !== 'granted') {
+				setErrorMsg('Permission to access location was denied');
+				return;
+			}
+
+			const coords = await Location.getCurrentPositionAsync({});
+			const countryObj = await Location.reverseGeocodeAsync(coords.coords);
+			setCountryCode(countryObj[0].isoCountryCode);
+		})();
+	}, []);
 
 	useEffect(() => {
 		const fetchLocation = async () => {
 			const storedLocation = await AsyncStorage.getItem('@location');
-			setLocation(storedLocation || mock.location);
+			setCountryCode(storedLocation || mock.countryCode);
 		};
 		fetchLocation();
 	}, []);
 
 	useEffect(() => {
 		const storeLocation = async () => {
-			await AsyncStorage.setItem('@location', location);
+			await AsyncStorage.setItem('@location', countryCode!);
 		};
 		storeLocation();
-	}, [location]);
+	}, [countryCode]);
 
-	const saveLocation = async (val: string) => setLocation(val);
+	const saveLocation = async (val: string) => setCountryCode(val);
 
 	const providerObj = useMemo(
-		() => ({ location, setLocation: saveLocation }),
-		[location]
+		() => ({
+			countryCode,
+			setCountryCode: saveLocation,
+			errorMsg
+		}),
+		[countryCode]
 	);
 
 	return <LocationContext.Provider value={providerObj}>{children}</LocationContext.Provider>;

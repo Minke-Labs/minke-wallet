@@ -16,7 +16,10 @@ const Test = () => {
 					visible={visible}
 					onClose={() => setVisible(false)}
 				>
-					<WebView source={{ uri: 'https://www.minke.app' }} />
+					<WebView
+						source={{ uri: 'https://www.minke.app' }}
+						sharedCookiesEnabled
+					/>
 				</FullModal>
 			</View>
 		</BasicLayout>

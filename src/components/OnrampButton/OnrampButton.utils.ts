@@ -2,25 +2,25 @@ import { PayId, Interac, FasterPayments, Sepa } from './images';
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
-		case 'australia':
+		case 'AU':
 			return {
 				backgroundColor: '#FFFFFF',
 				fontColor: '#0A2138',
 				image: PayId
 			};
-		case 'unitedKingdom':
+		case 'UK':
 			return {
 				backgroundColor: '#FFFFFF',
 				fontColor: '#0A2138',
 				image: FasterPayments
 			};
-		case 'canada':
+		case 'CA':
 			return {
 				backgroundColor: '#FFB92A',
 				fontColor: '#0A2138',
 				image: Interac
 			};
-		case 'europeanUnion':
+		case 'EU':
 			return {
 				backgroundColor: '#004899',
 				fontColor: '#FFFFFF',
