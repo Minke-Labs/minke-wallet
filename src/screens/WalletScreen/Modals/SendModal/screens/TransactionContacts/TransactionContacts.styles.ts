@@ -6,6 +6,6 @@ export default StyleSheet.create({
 		paddingHorizontal: 20
 	},
 	contactsList: {
-		maxHeight: Dimensions.get('screen').height * 0.5
+		maxHeight: Dimensions.get('screen').height * 0.4
 	}
 });
