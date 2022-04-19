@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
 import { useTheme } from '@hooks';
@@ -84,7 +84,10 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		}
 	};
 
-	const filterByExchangebleToken = () => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol));
+	const filterByExchangebleToken = useCallback(
+		() => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol)),
+		[filteredTokens, exchangebleTokens]
+	);
 
 	if (!tokens || loading) {
 		return <ScreenLoadingIndicator />;
