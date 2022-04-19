@@ -12,6 +12,7 @@ interface UseAddFundsProps {
 export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const navigation = useNavigation();
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
+	const [banxaModalVisible, setBanxaModalVisible] = React.useState(false);
 	const [coin, setCoin] = React.useState<ICoin>(coins.usdc);
 	const [amount, setAmount] = React.useState<number | undefined>(undefined);
 	const [customAmount, setCustomAmount] = React.useState<number | null>(null);
@@ -57,6 +58,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 
 	const onOnrampPurchase = (value: number) => {
 		console.log('PRESSED!!! ', value);
+		setBanxaModalVisible(true);
 	};
 
 	useEffect(() => {
@@ -98,6 +100,8 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		onOnrampPurchase,
 		setPresetAmount,
 		enableCustomAmount,
-		setCustomAmount
+		setCustomAmount,
+		banxaModalVisible,
+		setBanxaModalVisible
 	};
 };

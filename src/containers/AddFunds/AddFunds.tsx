@@ -1,6 +1,7 @@
 import React from 'react';
+import { WebView } from 'react-native-webview';
 import { View, SafeAreaView } from 'react-native';
-import { ModalHeader, ModalReusables } from '@components';
+import { ModalHeader, ModalReusables, FullModal } from '@components';
 import CoinSelectorModal from './CoinSelectorModal/CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal/ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
@@ -25,7 +26,9 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		onApplePayPurchase,
 		onOnrampPurchase,
 		enableCustomAmount,
-		setCustomAmount
+		setCustomAmount,
+		banxaModalVisible,
+		setBanxaModalVisible
 	} = useAddFunds({ visible, onDismiss });
 
 	return (
@@ -63,6 +66,15 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					</>
 				)}
 			</View>
+			<FullModal
+				visible={banxaModalVisible}
+				onClose={() => setBanxaModalVisible(false)}
+			>
+				<WebView
+					source={{ uri: 'https://www.minke.app' }}
+					sharedCookiesEnabled
+				/>
+			</FullModal>
 		</SafeAreaView>
 	);
 };
