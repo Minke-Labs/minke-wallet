@@ -1,21 +1,24 @@
 import React, { useEffect, createRef, useCallback } from 'react';
 import { TextInput, Keyboard } from 'react-native';
-import { useTokens, useNavigation, useNativeToken } from '@hooks';
+import { useTokens, useNavigation, useNativeToken, useBiconomy } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
 import { ParaswapToken, Quote, getExchangePrice, ExchangeParams, nativeTokens, NativeTokens } from '@models/token';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import Logger from '@utils/logger';
 import { network } from '@models/network';
+import { globalWalletState, WalletState } from '@stores/WalletStore';
 
 export const useExchangeScreen = () => {
 	const { nativeToken } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
+	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [fromToken, setFromToken] = React.useState<ParaswapToken>({} as ParaswapToken);
 	const [toToken, setToToken] = React.useState<ParaswapToken>();
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
+	const [gasless, setGasless] = React.useState(false);
 	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
 	const [toTokenBalance, setToTokenBalance] = React.useState('0');
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
@@ -28,7 +31,7 @@ export const useExchangeScreen = () => {
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
-
+	const { gaslessEnabled } = useBiconomy();
 	const { tokens: walletTokens } = useTokens();
 
 	const balanceFrom = useCallback(
@@ -40,7 +43,7 @@ export const useExchangeScreen = () => {
 				(owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase()
 			);
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
-			if (isNativeToken && walletToken) {
+			if (isNativeToken && walletToken && !gasless) {
 				const { gweiValue } = exchange.gas.value || {};
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
 				return Math.max(+walletToken.balance - gasPrice, 0);
@@ -77,28 +80,29 @@ export const useExchangeScreen = () => {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
 			const { address: destToken, decimals: destDecimals } = toToken;
-			const { error: apiError, priceRoute } = await getExchangePrice({
+			const { reason, message, buyAmount, sellAmount, value } = await getExchangePrice({
+				address: wallet.address.value,
 				srcToken,
-				srcDecimals,
 				destToken,
+				srcDecimals,
 				destDecimals,
 				amount,
 				side
 			});
-			if (apiError) {
-				Logger.error(`Load prices error: ${apiError}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+
+			if (message || reason) {
+				Logger.error(`Load prices error: ${message || reason}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
 				Keyboard.dismiss();
 				setQuote(undefined);
 				setLoadingPrices(false);
-				setError(apiError);
+				setError(message || reason || '');
 				return undefined;
 			}
 
-			const { srcAmount, destAmount } = priceRoute;
-
 			const newQuote = {
-				from: { [fromToken.symbol]: BigNumber.from(srcAmount) },
-				to: { [toToken?.symbol || '']: BigNumber.from(destAmount) }
+				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
+				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) },
+				noValue: BigNumber.from(value).isZero()
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);
@@ -253,7 +257,11 @@ export const useExchangeScreen = () => {
 		}
 	}, [toToken, fromToken]);
 
-	const enoughForGas = nativeToken && balanceFrom(nativeToken) > 0;
+	useEffect(() => {
+		setGasless(gaslessEnabled && quote && quote.noValue);
+	}, [gaslessEnabled, quote]);
+
+	const enoughForGas = gasless || (nativeToken && balanceFrom(nativeToken) > 0);
 
 	const canSwap = () =>
 		quote &&
@@ -292,6 +300,7 @@ export const useExchangeScreen = () => {
 		ownedTokens,
 		quote,
 		error,
-		setError
+		setError,
+		gasless
 	};
 };

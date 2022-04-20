@@ -3,9 +3,9 @@ import { parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
-import { toBn } from 'evm-bn';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
+export const exchangeContract = '0x4A766Db163506b3C6f492339941B9Ede20a5C4B0'; // Polygon
 
 export const gaslessApproval = async ({
 	address,
@@ -21,7 +21,7 @@ export const gaslessApproval = async ({
 	spender: string;
 	amount?: string | undefined;
 	biconomy: any;
-}) => {
+}): Promise<string | null> => {
 	const abi = [
 		'function balanceOf(address owner) view returns (uint256)',
 		'function approve(address spender, uint256 amount) external returns (bool)',
@@ -32,9 +32,8 @@ export const gaslessApproval = async ({
 	let tokenAmount = amount;
 	if (!amount) {
 		const balance: BigNumber = await token.balanceOf(address);
-		const decimals = await token.decimals();
 		// @ts-ignore
-		tokenAmount = balance.mul(toBn('2', decimals));
+		tokenAmount = balance.mul(BigNumber.from(10));
 	}
 
 	const wallet = new Wallet(privateKey, provider);
@@ -75,11 +74,7 @@ export const gaslessApproval = async ({
 		return transactionHash;
 	}
 
-	Logger.log('Normal approval transaction started');
-	const { wait, hash } = await token.approve(spender, tokenAmount);
-	Logger.log('Normal approval transaction - done', transactionHash);
-	await wait();
-	return hash;
+	return null;
 };
 
 export const gaslessDeposit = async ({
@@ -120,7 +115,7 @@ export const gaslessDeposit = async ({
 		minAmount,
 		'0x0000000000000000000000000000000000000000',
 		'0x00',
-		'0x667fc4b1edc5ff96f45bc382cbfb60b51647948d'
+		'0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'
 	]);
 
 	const rawTx = {
@@ -223,6 +218,77 @@ export const gaslessWithdraw = async ({
 		signatureType: biconomy.EIP712_SIGN
 	};
 
+	// promise resolves to transaction hash
+	const txHash = await provider.send('eth_sendRawTransaction', [data]);
+	return txHash;
+};
+
+export const gaslessExchange = async ({
+	address,
+	privateKey,
+	token,
+	amount,
+	toToken,
+	minAmount,
+	depositContract,
+	gasPrice,
+	biconomy,
+	swapTarget,
+	swapData
+}: {
+	address: string;
+	privateKey: string;
+	token: string;
+	amount: string; // in the token decimals
+	toToken: string;
+	minAmount: string;
+	depositContract: string;
+	gasPrice: string;
+	biconomy: any;
+	swapTarget: string;
+	swapData: any;
+}) => {
+	const abi = [
+		// eslint-disable-next-line max-len
+		'function ZapIn(address fromToken, address toToken, uint256 amountIn, uint256 minTokens, address swapTarget, bytes calldata swapData) external payable returns (uint256)'
+	];
+
+	const contractInterface = new ethers.utils.Interface(abi);
+
+	const userSigner = new ethers.Wallet(privateKey);
+
+	const functionSignature = contractInterface.encodeFunctionData('ZapIn', [
+		token,
+		toToken,
+		amount,
+		minAmount,
+		swapTarget,
+		swapData
+	]);
+
+	const rawTx = {
+		to: depositContract,
+		data: functionSignature,
+		from: address,
+		gasLimit: 5000000,
+		gasPrice: parseUnits(gasPrice, 'gwei')
+	};
+
+	const signedTx = await userSigner.signTransaction(rawTx);
+	// should get user message to sign for EIP712 or personal signature types
+	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
+
+	const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
+
+	const data = {
+		signature,
+		forwardRequest: forwardData.request,
+		rawTransaction: signedTx,
+		signatureType: biconomy.EIP712_SIGN
+	};
+
+	const provider = biconomy.getEthersProvider();
+	// send signed transaction with ethers
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;

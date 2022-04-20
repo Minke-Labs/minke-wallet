@@ -9,6 +9,7 @@ import {
 	useFonts
 } from '@expo-google-fonts/inter';
 import { getTokenList } from '@models/wallet';
+import Logger from '@utils/logger';
 import { globalWalletState } from './src/stores/WalletStore';
 
 export const useApp = () => {
@@ -24,9 +25,14 @@ export const useApp = () => {
 
 	useEffect(() => {
 		const getCoinList = async () => {
-			const data = await getTokenList();
-			setCoinList(data);
-			AsyncStorage.setItem('@listCoins', JSON.stringify(data));
+			try {
+				const data = await getTokenList();
+				setCoinList(data);
+				AsyncStorage.setItem('@listCoins', JSON.stringify(data));
+			} catch {
+				Logger.error('Error loading tokens from coingecko');
+				setCoinList([]);
+			}
 		};
 		getCoinList();
 	}, []);

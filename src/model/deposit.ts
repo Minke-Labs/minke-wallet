@@ -40,7 +40,12 @@ export const aaveDeposits = async (address: string): Promise<AaveBalances> => {
 };
 
 export const approvalState = async (owner: string, token: string, spender: string): Promise<ApprovalState> => {
-	if (token === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE') {
+	if (
+		[
+			'0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase(),
+			'0x0000000000000000000000000000000000000000'
+		].includes(token.toLowerCase())
+	) {
 		return { isApproved: true };
 	}
 	const contract = new Contract(token, erc20abi, await getProvider());

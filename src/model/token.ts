@@ -1,6 +1,7 @@
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import * as qs from 'qs';
 import { network } from './network';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD', 'UST'];
@@ -9,43 +10,20 @@ export const exchangebleTokens = [
 	'MATIC',
 	'USDT',
 	'USDC',
-	'BUSD',
-	'SHIB',
 	'WBTC',
 	'CRO',
 	'DAI',
 	'LINK',
-	'STETH',
-	'FTT',
-	'LEO',
-	'OKB',
 	'UNI',
-	'AXS',
 	'MANA',
-	'SAND',
 	'FRAX',
-	'GRT',
-	'GALA',
-	'MKR',
 	'AAVE',
 	'COMP',
 	'CEL',
-	'ENJ',
-	'AMP',
-	'NEXO',
-	'BAT',
-	'LRC',
-	'SNX',
 	'CRV',
 	'SUSHI',
 	'BAL',
-	'REN',
-	'KNC',
-	'YFI',
-	'RGT',
-	'BADGER',
-	'FARM',
-	'INST'
+	'YFI'
 ];
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {
@@ -55,31 +33,57 @@ export const paraswapTokens = async (): Promise<TokenResponse> => {
 };
 
 export interface ExchangeParams {
+	address: string;
 	srcToken: string;
-	srcDecimals: number;
 	destToken: string;
+	srcDecimals: number;
 	destDecimals: number;
 	side: 'SELL' | 'BUY';
 	amount: string;
+	quote?: boolean; // price or quote request
+}
+
+interface QuoteParams {
+	sellToken: string;
+	buyToken: string;
+	sellAmount?: string;
+	buyAmount?: string;
+	takerAddress: string;
+	feeRecipient: string;
+	affiliateAddress: string;
+	buyTokenPercentageFee: number;
+	skipValidation: boolean;
 }
 
 export const getExchangePrice = async ({
+	address,
 	srcToken,
-	srcDecimals,
 	destToken,
-	destDecimals,
 	side,
-	amount
+	amount,
+	srcDecimals,
+	destDecimals,
+	quote = false
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { chainId } = await network();
-	const baseURL = 'https://apiv5.paraswap.io/prices';
-	const sourceParams = `srcToken=${srcToken}&srcDecimals=${srcDecimals}`;
-	const destParams = `destToken=${destToken}&destDecimals=${destDecimals}`;
-	const decimals = side === 'SELL' ? srcDecimals : destDecimals;
-	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
-	const result = await fetch(
-		`${baseURL}?${sourceParams}&${destParams}&side=${side}&amount=${tokenAmount}&network=${chainId}`
-	);
+	const { apiUrl0x } = await network();
+	const quoteParams: QuoteParams = {
+		sellToken: srcToken.toLowerCase(),
+		buyToken: destToken.toLowerCase(),
+		takerAddress: address.toLowerCase(),
+		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
+		buyTokenPercentageFee: 0.005,
+		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
+		skipValidation: true
+	};
+
+	if (side === 'SELL') {
+		quoteParams.sellAmount = formatUnits(toBn(amount, srcDecimals), 'wei');
+	} else {
+		quoteParams.buyAmount = formatUnits(toBn(amount, destDecimals), 'wei');
+	}
+
+	const url = `${apiUrl0x}swap/v1/${quote ? 'quote' : 'price'}?${qs.stringify(quoteParams)}`;
+	const result = await fetch(url);
 	return result.json();
 };
 
@@ -218,14 +222,43 @@ export interface PriceRoute {
 	side: string;
 }
 
+interface ExchangeError {
+	code: string;
+	field: string;
+	reason: string;
+}
+
 export interface ExchangeRoute {
-	priceRoute: PriceRoute;
-	error: string;
+	message?: string;
+	code?: number;
+	reason?: string;
+	validationErrors?: ExchangeError[]; // error fields
+	allowanceTarget: string;
+	buyAmount: string;
+	buyTokenAddress: string;
+	buyTokenToEthRate: string;
+	chainId: number;
+	estimatedGas: string;
+	estimatedPriceImpact: string;
+	gas: string;
+	gasPrice: string;
+	minimumProtocolFee: string;
+	price: string;
+	protocolFee: string;
+	sellAmount: string;
+	sellTokenAddress: string;
+	sellTokenToEthRate: string;
+	value: string;
+	orders: [{ source: string }];
+	guaranteedPrice?: string;
+	data?: string;
+	to?: string;
 }
 
 export interface Quote {
 	from: { [fromSymbol: string]: BigNumber };
 	to: { [toSymbol: string]: BigNumber };
+	noValue: boolean; // holds if an exchange will need a msg.value (native token is the source)
 }
 
 export interface TransactionData {
