@@ -14,7 +14,7 @@ export const Success: React.FC<SuccessProps> = ({ onFinish }) => {
 				<Icon name="checkColor" color="alert3" size={32} />
 			</View>
 			<Text type="h3" weight="extraBold" center marginBottom={40} width={275}>
-				Your funds have been added to your wallet!
+				Your funds are being deposited into your wallet...
 			</Text>
 			<Button title="Done" onPress={onFinish} />
 		</View>

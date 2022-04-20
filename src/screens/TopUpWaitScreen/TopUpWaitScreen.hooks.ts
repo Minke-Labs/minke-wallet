@@ -1,11 +1,15 @@
-import { useNavigation, useWyreOrderStatus } from '@hooks';
+import { useEffect } from 'react';
+import { useNavigation, useTransactions, useWyreOrderStatus } from '@hooks';
 import { WYRE_ORDER_STATUS_TYPES } from '@models/wyre.types';
 import { useState } from '@hookstate/core';
 import { globalTopUpState, TopUpState } from '@stores/TopUpStore';
+import { globalWalletState } from '@stores/WalletStore';
 
 export const useTopUpWaitScreen = () => {
 	const navigation = useNavigation();
 	const topUpState = useState(globalTopUpState());
+	const { address } = useState(globalWalletState()).value;
+	const { addPendingTransaction } = useTransactions();
 
 	const { status, transactionHash, orderId } = useWyreOrderStatus();
 
@@ -18,6 +22,29 @@ export const useTopUpWaitScreen = () => {
 		topUpState.set({} as TopUpState);
 		navigation.navigate('WalletScreen');
 	};
+
+	useEffect(() => {
+		const addTransaction = async (hash: string) => {
+			const { sourceAmount } = topUpState.value;
+			addPendingTransaction({
+				type: 'topup',
+				hash,
+				isError: '0',
+				pending: true,
+				timeStamp: new Date().getTime().toString(),
+				value: sourceAmount,
+				to: address,
+				from: address,
+				tokenDecimal: '18',
+				tokenSymbol: 'USD'
+			});
+			onFinish();
+		};
+
+		if (transactionHash && !isFailed) {
+			addTransaction(transactionHash);
+		}
+	}, [transactionHash]);
 
 	return {
 		isFailed,

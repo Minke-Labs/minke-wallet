@@ -7,6 +7,7 @@ export interface CardTransactionProps {
 	subtitle: string;
 	received?: boolean;
 	pending?: boolean;
+	topUp?: boolean;
 	value?: any;
 	tokenDecimal?: any;
 	tokenSymbol?: any;

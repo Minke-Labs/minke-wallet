@@ -87,6 +87,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		token,
 		isError,
 		pending,
-		openTransaction
+		openTransaction,
+		topUp: transaction.type === 'topup'
 	};
 };
