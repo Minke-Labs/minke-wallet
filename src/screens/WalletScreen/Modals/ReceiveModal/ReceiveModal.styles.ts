@@ -16,6 +16,6 @@ export default StyleSheet.create({
 	},
 	textContainer: {
 		alignItems: 'center',
-		marginBottom: 30
+		marginBottom: 24
 	}
 });

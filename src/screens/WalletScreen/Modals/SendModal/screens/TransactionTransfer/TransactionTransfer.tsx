@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Text, Token, Button, ActivityIndicator, TokenAmountInput } from '@components';
+import { Text, Token, Button, ActivityIndicator, TokenAmountInput, NetworkWarning } from '@components';
 import { TokenType } from '@styles';
-// import { smallWalletAddress } from '@models/wallet';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard } from '@hooks';
@@ -41,12 +40,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					<Text color="text12" type="h3" weight="extraBold">
 						{amountType === 'token' ? token.symbol : 'USD'}
 					</Text>{' '}
-					do you want to send
-					{/* <Text color="text12" type="h3" weight="extraBold">
-						{' '}
-						{user.name || smallWalletAddress(user.address)}
-					</Text> */}
-					?
+					do you want to send?
 				</Text>
 			</>
 
@@ -64,8 +58,9 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				onMaxPress={onMaxPress}
 				onTypeChange={onTypeChange}
 			/>
+
 			{gasPrice && (
-				<View style={{ marginBottom: 32 }}>
+				<View style={{ marginBottom: 24 }}>
 					<GasPriceLine
 						label="Normal"
 						gas={+gasPrice.result.ProposeGasPrice}
@@ -73,7 +68,10 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					/>
 				</View>
 			)}
-			<View style={{ marginBottom: 8 }}>
+
+			<NetworkWarning.Tag />
+
+			<View style={{ marginBottom: 8, marginTop: 48 }}>
 				{sending ? (
 					<ActivityIndicator />
 				) : (

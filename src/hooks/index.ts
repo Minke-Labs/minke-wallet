@@ -2,6 +2,7 @@ import useAmplitude from './useAmplitude';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
+import useNetwork from './useNetwork';
 import useKeyboard from './useKeyboard';
 import useTimeout from './useTimeout';
 import useTransactions from './useTransactions';
@@ -22,6 +23,7 @@ export {
 	useTheme,
 	useNavigation,
 	useFormProgress,
+	useNetwork,
 	useKeyboard,
 	useTokens,
 	useTransactions,
