@@ -14,7 +14,7 @@ import { approvalState } from '@models/deposit';
 const Test = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { address, privateKey } = useState(globalWalletState()).value;
-	const depositContract = '0x0d03D7b41D967DBea44ff0dab932d45E41d2dda3'; // change;
+	const depositContract = '0x4A766Db163506b3C6f492339941B9Ede20a5C4B0'; // change;
 
 	const params = {
 		// sell: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063', // DAI

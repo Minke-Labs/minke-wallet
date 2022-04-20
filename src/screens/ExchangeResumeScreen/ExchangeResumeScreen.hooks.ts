@@ -3,7 +3,7 @@ import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeRoute, getExchangePrice } from '@models/token';
-import { useBiconomy, useNavigation, useTheme, useTransactions } from '@hooks';
+import { useAmplitude, useBiconomy, useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
 import { coinFromSymbol, tokenBalanceFormat } from '@helpers/utilities';
@@ -33,6 +33,7 @@ const useExchangeResumeScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { addPendingTransaction } = useTransactions();
+	const { track } = useAmplitude();
 	const { gaslessEnabled, biconomy } = useBiconomy();
 
 	const showModal = () => setVisible(true);
@@ -165,6 +166,8 @@ const useExchangeResumeScreen = () => {
 						spender: exchangeContract
 					});
 
+					track('Approved for exchange', { to: to.symbol, from: from.symbol, gasless: true });
+
 					await biconomy.getEthersProvider().waitForTransaction(tx, 3);
 				}
 
@@ -183,6 +186,7 @@ const useExchangeResumeScreen = () => {
 				});
 				setTransactionHash(hash);
 				const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash, 3);
+				track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
 				addPendingTransaction({
 					from: src,
 					to: address,
@@ -209,6 +213,7 @@ const useExchangeResumeScreen = () => {
 						gasPrice: +gweiValue * 1000000000
 					});
 					if (approvalTransaction) {
+						track('Approved for exchange', { to: to.symbol, from: from.symbol, gasless: false });
 						await approvalTransaction.wait(3);
 					}
 				}
@@ -236,6 +241,7 @@ const useExchangeResumeScreen = () => {
 				);
 				addPendingTransaction(converted);
 				const { hash, wait } = transaction;
+				track('Exchanged', { to: to.symbol, from: from.symbol, gasless: false, hash });
 				setTransactionHash(hash);
 				await wait(3);
 				navigation.navigate('WalletScreen');
