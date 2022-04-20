@@ -18,12 +18,13 @@ const CardTransaction: React.FC<CardTransactionProps> = ({
 	received = false,
 	failed = false,
 	pending = false,
+	topUp = false,
 	onPress,
 	marginBottom = 32
 }) => (
 	<TouchableOpacity activeOpacity={0.6} style={[styles.container, { marginBottom }]} {...{ onPress }}>
 		<View style={[styles.leftContainer]}>
-			<TransactionIcon {...{ received, failed, pending }} />
+			<TransactionIcon {...{ received, failed, pending, topUp }} />
 			<View style={styles.titleContainer}>
 				{!failed && !pending && <Text type="span">{title}</Text>}
 
@@ -52,7 +53,9 @@ const CardTransaction: React.FC<CardTransactionProps> = ({
 				{tokenSymbol || token}
 			</Text>
 		) : (
-			<Text type="span">{value}{' '}{tokenSymbol}</Text>
+			<Text type="span">
+				{value} {tokenSymbol}
+			</Text>
 		)}
 	</TouchableOpacity>
 );

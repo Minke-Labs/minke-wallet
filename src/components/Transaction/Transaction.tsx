@@ -15,16 +15,17 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 		token,
 		isError,
 		pending,
-		openTransaction
+		openTransaction,
+		topUp
 	} = useTransaction({ transaction });
 
 	return (
 		<CardTransaction
 			title={format(timestamp, 'MM/dd/yyyy hh:mm aa')}
-			subtitle={`${received ? 'From' : 'To'}: ${formattedSource}`}
+			subtitle={topUp ? 'Adding via Apple Pay' : `${received ? 'From' : 'To'}: ${formattedSource}`}
 			onPress={openTransaction}
 			failed={isError === '1'}
-			{...{ value, token, tokenDecimal, received, pending, tokenSymbol }}
+			{...{ value, token, tokenDecimal, received, pending, tokenSymbol, topUp }}
 		/>
 	);
 };

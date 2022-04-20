@@ -465,6 +465,7 @@ export interface ZapperToken {
 }
 
 export interface Transaction {
+	type?: 'topup' | undefined;
 	from: string;
 	hash: string;
 	timeStamp: string;
