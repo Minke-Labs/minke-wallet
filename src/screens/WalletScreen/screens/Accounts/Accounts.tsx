@@ -5,14 +5,14 @@ import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
 import { useNavigation, useTheme } from '@hooks';
 import { IconType } from '@styles';
-import { numberFormat } from '@src/helpers/utilities';
+import { numberFormat, tokenBalanceFormat } from '@src/helpers/utilities';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
-const Right: React.FC<{ balanceType: number }> = ({ balanceType }) => (
+const Right: React.FC<{ balanceType: number; token?: boolean }> = ({ balanceType, token = false }) => (
 	<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 		<Text weight="bold" type="p2">
-			{numberFormat(balanceType || 0)}
+			{token ? `$${tokenBalanceFormat(balanceType, 2)}` : numberFormat(balanceType || 0)}
 		</Text>
 		<Icon name="arrowForwardStroke" size={16} color="text7" />
 	</View>
@@ -56,7 +56,7 @@ const Accounts = () => {
 				subtitle: 'Funds deposited in savings',
 				image: 'vaultStroke',
 				onPress: () => navigation.navigate('SaveScreen'),
-				right: <Right balanceType={balance?.depositedBalance || 0} />
+				right: <Right balanceType={balance?.depositedBalance || 0} token />
 			},
 			{
 				title: 'Borrowing',
