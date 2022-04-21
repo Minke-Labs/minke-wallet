@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { useTheme, useAuthentication } from '@hooks';
-import { View, Vibration } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 import { styles } from './HapticButton.styles';
 import { HapticButtonProps } from './HapticButton.types';
@@ -18,7 +19,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, title, ma
 
 	const onPressIn = () => {
 		setStage(1);
-		Vibration.vibrate(60);
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 	};
 
 	const onPressOut = () => {
