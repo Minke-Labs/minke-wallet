@@ -6,6 +6,7 @@ import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 export const exchangeContract = '0x4A766Db163506b3C6f492339941B9Ede20a5C4B0'; // Polygon
+export const sendContract = '0x70e38dedc805330286a305966241abecc41c2438'; // Polygon
 
 export const gaslessApproval = async ({
 	address,
@@ -289,6 +290,60 @@ export const gaslessExchange = async ({
 
 	const provider = biconomy.getEthersProvider();
 	// send signed transaction with ethers
+	// promise resolves to transaction hash
+	const txHash = await provider.send('eth_sendRawTransaction', [data]);
+	return txHash;
+};
+
+export const gaslessSend = async ({
+	address,
+	privateKey,
+	token,
+	amount,
+	to,
+	gasPrice,
+	biconomy
+}: {
+	address: string;
+	privateKey: string;
+	token: string;
+	amount: string; // in WEI
+	to: string;
+	gasPrice: string;
+	biconomy: any;
+}) => {
+	const provider = biconomy.getEthersProvider();
+	// send signed transaction with ethers
+	const userSigner = new ethers.Wallet(privateKey, provider);
+
+	const abi = ['function transferERC20Token(address token, address to, uint256 amount) external'];
+
+	const contractInterface = new ethers.utils.Interface(abi);
+
+	// Create your target method signature.. here we are calling setQuote() method of our contract
+	const functionSignature = contractInterface.encodeFunctionData('transferERC20Token', [token, to, amount]);
+
+	const rawTx = {
+		to: sendContract,
+		data: functionSignature,
+		from: address,
+		gasLimit: 500000,
+		gasPrice: parseUnits(gasPrice, 'gwei')
+	};
+
+	const signedTx = await userSigner.signTransaction(rawTx);
+	// should get user message to sign for EIP712 or personal signature types
+	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
+
+	const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
+
+	const data = {
+		signature,
+		forwardRequest: forwardData.request,
+		rawTransaction: signedTx,
+		signatureType: biconomy.EIP712_SIGN
+	};
+
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;

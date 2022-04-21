@@ -22,7 +22,8 @@ const BiconomyProvider: React.FC = ({ children }) => {
 			const alchemy = new providers.JsonRpcProvider(jsonRpcProvider);
 			const biconomy = new Biconomy(alchemy, {
 				apiKey: biconomyAPIKey,
-				debug: __DEV__
+				debug: __DEV__,
+				strict: false
 			});
 			setBiconomyClient(biconomy);
 			biconomy
