@@ -62,7 +62,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				onTypeChange={onTypeChange}
 			/>
 
-			{!gasless && gasPrice && !keyboardVisible && (
+			{!gasless && gasPrice && (
 				<View style={{ marginBottom: 24 }}>
 					<GasPriceLine
 						label="Normal"
@@ -72,9 +72,9 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				</View>
 			)}
 
-			{!keyboardVisible && !enoughGas && <Warning label="Not enough balance for gas" />}
+			{!enoughGas && <Warning label="Not enough balance for gas" />}
 
-			{!keyboardVisible && <NetworkWarning.Tag />}
+			<NetworkWarning.Tag />
 
 			<View style={{ marginBottom: 8, marginTop: 24 }}>
 				{sending ? (
