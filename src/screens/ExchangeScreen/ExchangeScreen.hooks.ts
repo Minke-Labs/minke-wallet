@@ -35,27 +35,29 @@ export const useExchangeScreen = () => {
 	const { tokens: walletTokens } = useTokens();
 
 	const balanceFrom = useCallback(
-		(token: ParaswapToken | undefined): number => {
+		(token: ParaswapToken | undefined): string => {
 			if (!token) {
-				return 0;
+				return '0';
 			}
 			const walletToken = walletTokens?.find(
 				(owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase()
 			);
+
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
 			if (isNativeToken && walletToken && !gasless) {
 				const { gweiValue } = exchange.gas.value || {};
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(+walletToken.balance - gasPrice, 0);
+				return Math.max(+walletToken.balance - gasPrice, 0).toString();
 			}
-			return walletToken ? +walletToken.balance : 0;
+
+			return walletToken?.balance || '0';
 		},
 		[exchange.gas.value, walletTokens, nativeToken]
 	);
 
 	const updateFromToken = (token: ParaswapToken) => {
 		setFromToken(token);
-		setFromTokenBalance(balanceFrom(token).toFixed(token.decimals));
+		setFromTokenBalance(balanceFrom(token));
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
@@ -225,8 +227,8 @@ export const useExchangeScreen = () => {
 	}, [walletTokens]);
 
 	useEffect(() => {
-		setFromTokenBalance(balanceFrom(fromToken).toFixed(fromToken.decimals));
-		setToTokenBalance(balanceFrom(toToken).toFixed(toToken?.decimals));
+		setFromTokenBalance(balanceFrom(fromToken));
+		setToTokenBalance(balanceFrom(toToken));
 	}, [ownedTokens, exchange.gas.value]);
 
 	useEffect(() => {
@@ -261,7 +263,7 @@ export const useExchangeScreen = () => {
 		setGasless(gaslessEnabled && quote && quote.noValue);
 	}, [gaslessEnabled, quote]);
 
-	const enoughForGas = gasless || (nativeToken && balanceFrom(nativeToken) > 0);
+	const enoughForGas = gasless || (nativeToken && +balanceFrom(nativeToken) > 0);
 
 	const canSwap = () =>
 		quote &&
@@ -270,7 +272,7 @@ export const useExchangeScreen = () => {
 		exchange.value.fromAmount &&
 		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
-		balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0) &&
+		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0) &&
 		!loadingPrices &&
 		enoughForGas;
 
