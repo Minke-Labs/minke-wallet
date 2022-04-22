@@ -101,7 +101,7 @@ export const useDeposit = () => {
 						from,
 						destination: to,
 						hash,
-						txSuccessful: status !== 1,
+						txSuccessful: status === 1,
 						pending: true,
 						timeStamp: new Date().getTime().toString(),
 						direction: 'outgoing',

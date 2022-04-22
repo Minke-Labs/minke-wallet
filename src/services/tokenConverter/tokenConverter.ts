@@ -31,7 +31,7 @@ const convertTokens = async ({ source, tokens }: TokensConverterParams): Promise
 		const converted = await convertToken({ source, token });
 		convertedTokens.push(converted);
 	}
-	return convertedTokens.filter((token) => token.balanceUSD > 0);
+	return convertedTokens;
 };
 
 export { convertToken, convertTokens };

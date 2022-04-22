@@ -86,6 +86,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 
 					const ens = user.address;
 					const to = (await resolveENSAddress(ens)) || ens;
+					const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
 
 					if (gasless) {
 						const { isApproved } = await approvalState(address, token.address, sendContract);
@@ -103,7 +104,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 
 							await biconomy.getEthersProvider().waitForTransaction(tx, 1);
 						}
-						const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
+
 						const hash = await gaslessSend({
 							biconomy,
 							address,
@@ -159,7 +160,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						addPendingTransaction(
 							convertTransactionResponse({
 								transaction,
-								amount,
+								amount: amountToSend,
 								direction: 'outgoing',
 								symbol: token.symbol
 							})
