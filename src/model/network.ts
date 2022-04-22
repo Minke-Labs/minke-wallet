@@ -1,5 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ALCHEMY_API_URL_POLYGON_MAINNET, BICONOMY_API_KEY_POLYGON_MAINNET } from '@env';
+import {
+	ALCHEMY_API_URL_POLYGON_MAINNET,
+	BICONOMY_API_KEY_POLYGON_MAINNET,
+	ALCHEMY_API_KEY_ETHEREUM,
+	ALCHEMY_API_KEY_MATIC,
+	ALCHEMY_API_KEY_ROPSTEN,
+	ALCHEMY_API_KEY_KOVAN
+} from '@env';
 
 export interface Network {
 	chainId: number;
@@ -15,6 +22,7 @@ export interface Network {
 	topUpToken: { symbol: string; name: string };
 	transactionTimesEndpoint: boolean;
 	wyreSRN: string;
+	alchemyAPIKey: string;
 	jsonRpcProvider?: string;
 	biconomyAPIKey?: string;
 	apiUrl0x?: string;
@@ -23,7 +31,6 @@ export interface Network {
 export interface Networks {
 	mainnet: Network;
 	matic: Network;
-	mumbai: Network;
 	ropsten: Network;
 	kovan: Network;
 }
@@ -42,7 +49,8 @@ export const networks: Networks = {
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true,
-		apiUrl0x: 'https://api.0x.org/'
+		apiUrl0x: 'https://api.0x.org/',
+		alchemyAPIKey: (ALCHEMY_API_KEY_ETHEREUM || process.env.ALCHEMY_API_KEY_ETHEREUM)!
 	},
 	matic: {
 		chainId: 137,
@@ -59,22 +67,8 @@ export const networks: Networks = {
 		jsonRpcProvider: ALCHEMY_API_URL_POLYGON_MAINNET || process.env.ALCHEMY_API_URL_POLYGON_MAINNET,
 		biconomyAPIKey: BICONOMY_API_KEY_POLYGON_MAINNET || process.env.BICONOMY_API_KEY_POLYGON_MAINNET,
 		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
-		apiUrl0x: 'https://polygon.api.0x.org/'
-	},
-	mumbai: {
-		chainId: 80001,
-		name: 'Polygon Test',
-		id: 'maticmum',
-		wyreSRN: 'matic',
-		testnet: true,
-		etherscanURL: 'https://mumbai.polygonscan.com/',
-		etherscanAPIURL: 'https://api-testnet.polygonscan.com/',
-		etherscanAPIKey: 'ETKTPMXNC3VEPFQY9D3UZCS47IGQH7FDS7',
-		gasURL: 'https://api.polygonscan.com/',
-		zapperNetwork: 'polygon',
-		nativeToken: { symbol: 'MATIC', name: 'Matic' },
-		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
-		transactionTimesEndpoint: false
+		apiUrl0x: 'https://polygon.api.0x.org/',
+		alchemyAPIKey: (ALCHEMY_API_KEY_MATIC || process.env.ALCHEMY_API_KEY_MATIC)!
 	},
 	ropsten: {
 		chainId: 3,
@@ -88,7 +82,8 @@ export const networks: Networks = {
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
-		transactionTimesEndpoint: true
+		transactionTimesEndpoint: true,
+		alchemyAPIKey: (ALCHEMY_API_KEY_ROPSTEN || process.env.ALCHEMY_API_KEY_ROPSTEN)!
 	},
 	kovan: {
 		chainId: 42,
@@ -102,7 +97,8 @@ export const networks: Networks = {
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
-		transactionTimesEndpoint: true
+		transactionTimesEndpoint: true,
+		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!
 	}
 };
 

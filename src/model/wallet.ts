@@ -6,14 +6,13 @@ import { find, isEmpty } from 'lodash';
 import { isValidMnemonic, parseUnits } from 'ethers/lib/utils';
 import makeBlockie from 'ethereum-blockies-base64';
 import { deleteItemAsync } from 'expo-secure-store';
-import { INFURA_API_KEY, INFURA_PROJECT_SECRET } from '@env';
 import { backupUserDataIntoCloud } from '@models/cloudBackup';
 import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
 import { captureException } from '@sentry/react-native';
 import Logger from '@utils/logger';
 import * as qs from 'qs';
 import * as keychain from './keychain';
-import { network as selectedNetwork, networks } from './network';
+import { network as selectedNetwork, Networks, networks } from './network';
 import { loadObject, saveObject } from './keychain';
 
 const authenticationPrompt = { authenticationPrompt: { title: 'Please authenticate' } };
@@ -33,10 +32,8 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 
 export const getProvider = async (network?: string) => {
 	const blockchain = network || (await selectedNetwork()).id;
-	return new providers.InfuraProvider(blockchain, {
-		projectId: INFURA_API_KEY || process.env.INFURA_API_KEY,
-		projectSecret: INFURA_PROJECT_SECRET || process.env.INFURA_PROJECT_SECRET
-	});
+	const { alchemyAPIKey } = networks[blockchain as keyof Networks];
+	return new providers.AlchemyProvider(blockchain, alchemyAPIKey);
 };
 
 export const getENSAddress = async (address: string) => {
