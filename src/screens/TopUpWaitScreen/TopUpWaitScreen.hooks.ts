@@ -27,16 +27,16 @@ export const useTopUpWaitScreen = () => {
 		const addTransaction = async (hash: string) => {
 			const { sourceAmount } = topUpState.value;
 			addPendingTransaction({
-				type: 'topup',
+				topUp: true,
 				hash,
-				isError: '0',
+				txSuccessful: true,
 				pending: true,
 				timeStamp: new Date().getTime().toString(),
-				value: sourceAmount,
-				to: address,
+				amount: sourceAmount,
+				destination: address,
 				from: address,
-				tokenDecimal: '18',
-				tokenSymbol: 'USD'
+				direction: 'incoming',
+				symbol: 'USD'
 			});
 			onFinish();
 		};

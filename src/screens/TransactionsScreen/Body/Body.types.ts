@@ -1,7 +1,6 @@
-import { Transaction as TransactionProps } from '@models/wallet';
+import { ZapperTransaction } from '@models/wallet';
 
 export interface BodyProps {
-	transactions: TransactionProps[];
-	loadMoreTransactions: any;
+	transactions: ZapperTransaction[];
 	renderFooter: any;
 }

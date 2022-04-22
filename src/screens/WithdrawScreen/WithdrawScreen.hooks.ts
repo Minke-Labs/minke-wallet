@@ -115,14 +115,14 @@ const useWithdrawScreen = () => {
 					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
 					addPendingTransaction({
 						from,
-						to,
-						tokenDecimal: token.decimals.toString(),
+						destination: to,
+						symbol: token.symbol,
 						hash,
-						isError: status === 0 ? '1' : '0',
+						txSuccessful: status === 1,
 						pending: true,
 						timeStamp: new Date().getTime().toString(),
-						tokenSymbol: token.symbol,
-						value: amount
+						amount,
+						direction: 'incoming'
 					});
 
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
@@ -162,7 +162,9 @@ const useWithdrawScreen = () => {
 				const signedTx = await wallet.signTransaction(txDefaults);
 				const tx = await provider.sendTransaction(signedTx as string);
 				const { hash, wait } = tx;
-				addPendingTransaction(convertTransactionResponse(tx, amount, token.symbol, token.decimals));
+				addPendingTransaction(
+					convertTransactionResponse({ transaction: tx, amount, direction: 'incoming', symbol: token.symbol })
+				);
 
 				if (hash) {
 					Logger.log(`Withdraw ${JSON.stringify(hash)}`);

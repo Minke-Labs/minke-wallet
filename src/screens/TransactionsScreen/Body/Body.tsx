@@ -5,7 +5,7 @@ import { Transaction } from '@components';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
 
-const Body: React.FC<BodyProps> = ({ transactions, loadMoreTransactions, renderFooter }) => {
+const Body: React.FC<BodyProps> = ({ transactions, renderFooter }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
@@ -15,9 +15,7 @@ const Body: React.FC<BodyProps> = ({ transactions, loadMoreTransactions, renderF
 				style={{ marginTop: 24, marginBottom: 24 }}
 				data={transactions}
 				renderItem={({ item }) => <Transaction transaction={item} />}
-				keyExtractor={(transaction, index) => `${transaction.hash}${transaction.value}${index}`}
-				onEndReached={loadMoreTransactions}
-				onEndReachedThreshold={0.5}
+				keyExtractor={({ hash }) => hash}
 				ListFooterComponent={renderFooter}
 			/>
 		</View>

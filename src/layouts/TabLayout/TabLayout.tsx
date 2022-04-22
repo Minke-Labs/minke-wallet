@@ -22,7 +22,7 @@ const TabLayout: React.FC<TabLayoutProps> = ({
 		<BasicLayout hideSafeAreaView>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
-				refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchTransactions} />}
+				refreshControl={<RefreshControl refreshing={false} onRefresh={fetchTransactions} />}
 			>
 				<SafeAreaView>
 					<View style={styles.container}>

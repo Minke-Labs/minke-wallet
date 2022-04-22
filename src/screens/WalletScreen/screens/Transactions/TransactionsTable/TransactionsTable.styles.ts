@@ -5,5 +5,9 @@ export default StyleSheet.create({
 		height: '100%',
 		paddingHorizontal: 14,
 		paddingTop: 14
+	},
+	section: {
+		marginBottom: 32,
+		borderBottomWidth: 1
 	}
 });

@@ -128,14 +128,14 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						});
 						addPendingTransaction({
 							from: src,
-							to,
-							tokenDecimal: token.decimals.toString(),
+							destination: to,
 							hash,
-							isError: status === 0 ? '1' : '0',
+							txSuccessful: status === 1,
 							pending: true,
 							timeStamp: new Date().getTime().toString(),
-							tokenSymbol: token.symbol,
-							value: '0'
+							amount: amountToSend,
+							direction: 'outgoing',
+							symbol: token.symbol
 						});
 					} else {
 						const transaction = await sendTransaction(
@@ -157,7 +157,12 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						});
 						// Pending transaction...
 						addPendingTransaction(
-							convertTransactionResponse(transaction, amount, token.symbol, token.decimals)
+							convertTransactionResponse({
+								transaction,
+								amount,
+								direction: 'outgoing',
+								symbol: token.symbol
+							})
 						);
 
 						track('Sent', {

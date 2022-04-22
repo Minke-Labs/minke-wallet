@@ -163,20 +163,22 @@ export interface ApprovalState {
 }
 
 export interface AaveBalances {
-	[key: string]: {
-		products: [
-			{
-				label: string;
-				assets: [AaveAsset];
-			}
-		];
-		meta: [
-			{
-				label: string;
-				value: number;
-				type: string;
-			}
-		];
+	balances: {
+		[key: string]: {
+			products: [
+				{
+					label: string;
+					assets: [AaveAsset];
+				}
+			];
+			meta: [
+				{
+					label: string;
+					value: number;
+					type: string;
+				}
+			];
+		};
 	};
 }
 
