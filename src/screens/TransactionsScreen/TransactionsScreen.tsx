@@ -8,24 +8,20 @@ import Body from './Body/Body';
 import { useTransactionsScreen } from './TransactionsScreen.hooks';
 
 const TransactionsScreen = () => {
-	const { transactions, active, setActive, loadMoreTransactions, refreshing } = useTransactionsScreen();
+	const { transactions, active, setActive } = useTransactionsScreen();
 
-	const renderFooter = () => {
-		if (!refreshing) return null;
-
-		return (
-			<View
-				style={{
-					position: 'relative',
-					paddingVertical: 20,
-					marginTop: 10,
-					marginBottom: 10
-				}}
-			>
-				<ActivityIndicator animating size="large" />
-			</View>
-		);
-	};
+	const renderFooter = () => (
+		<View
+			style={{
+				position: 'relative',
+				paddingVertical: 20,
+				marginTop: 10,
+				marginBottom: 10
+			}}
+		>
+			<ActivityIndicator animating size="large" />
+		</View>
+	);
 
 	return (
 		<BasicLayout>
@@ -34,7 +30,7 @@ const TransactionsScreen = () => {
 				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
 
-			<Body transactions={transactions} {...{ loadMoreTransactions, renderFooter }} />
+			<Body transactions={transactions} {...{ renderFooter }} />
 		</BasicLayout>
 	);
 };

@@ -11,6 +11,7 @@ import { backupUserDataIntoCloud } from '@models/cloudBackup';
 import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
 import { captureException } from '@sentry/react-native';
 import Logger from '@utils/logger';
+import * as qs from 'qs';
 import * as keychain from './keychain';
 import { network as selectedNetwork, networks } from './network';
 import { loadObject, saveObject } from './keychain';
@@ -302,22 +303,6 @@ export const getPriceHistory = async (date: string, tokenId = 'ethereum'): Promi
 	return result.json();
 };
 
-export const getZapperWalletTokens = async (wallet: string): Promise<ZapperWalletTokensResponse> => {
-	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
-	const { zapperNetwork } = await selectedNetwork();
-	const baseURL = 'https://api.zapper.fi/v1/protocols/tokens/balances';
-	const response = await fetch(`${baseURL}?api_key=${apiKey}&addresses[]=${wallet}&network=${zapperNetwork}`);
-	let result;
-	try {
-		result = await response.json();
-		return result;
-	} catch (error) {
-		Logger.error(`Error getZapperWalletTokens ${wallet}`);
-		captureException(error); // temp until we fetch from the chain
-	}
-	return result;
-};
-
 export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {
 	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
 	const baseUrl = `${etherscanAPIURL}api?module=account&action=txlist&address=`;
@@ -331,6 +316,21 @@ export const getTransactions = async (address: string, page = 1, offset = 5): Pr
 
 	const all = [...erc20, ...normal];
 	return all.sort((a, b) => +b.timeStamp - +a.timeStamp);
+};
+
+export const getZapperTransactions = async (address: string): Promise<ZapperTransactionResponse> => {
+	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const { zapperNetwork } = await selectedNetwork();
+	const baseURL = 'https://api.zapper.fi/v1/transactions';
+	const params = {
+		address: address.toLowerCase(),
+		addresses: [address.toLowerCase()],
+		network: zapperNetwork,
+		api_key: apiKey
+	};
+	const response = await fetch(`${baseURL}?${qs.stringify(params)}`);
+
+	return response.json();
 };
 
 export const getTokenList = async (): Promise<Array<Coin>> => {
@@ -509,4 +509,29 @@ export interface EstimateConfirmationTime {
 	status: string;
 	message: string;
 	result: string;
+}
+
+export interface ZapperTransactionResponse {
+	data: ZapperTransaction[];
+}
+
+export interface ZapperSubtransaction {
+	type: 'incoming' | 'outgoing';
+	symbol: string;
+	amount: number;
+}
+
+export interface ZapperTransaction {
+	hash: string;
+	direction: 'incoming' | 'outgoing' | 'exchange';
+	timeStamp: string;
+	symbol: string;
+	amount: string;
+	from: string;
+	destination: string;
+	txSuccessful: boolean;
+	subTransactions?: ZapperSubtransaction[]; // important when its an exchange
+	name?: string;
+	pending?: boolean;
+	topUp?: boolean;
 }

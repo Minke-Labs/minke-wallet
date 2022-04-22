@@ -1,28 +1,43 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/indent */
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
-import { useState } from '@hookstate/core';
-import { smallWalletAddress, getENSAddress, Transaction } from '@models/wallet';
+import { format } from 'date-fns';
+import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
-import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@src/model/network';
+import { truncate } from './Transaction.utils';
 
 interface UseTransactionProps {
-	transaction: Transaction;
+	transaction: ZapperTransaction;
 }
 
 export const useTransaction = ({ transaction }: UseTransactionProps) => {
-	const wallet = useState(globalWalletState());
-	const address = wallet.address.value;
-	const { from, to, timeStamp, isError, value, tokenSymbol, tokenDecimal = '18', hash, pending } = transaction;
-	const received = to.toLowerCase() === address.toLowerCase();
-	const source = received ? from : to;
+	const {
+		from,
+		timeStamp,
+		hash,
+		direction,
+		amount,
+		txSuccessful,
+		symbol,
+		destination,
+		subTransactions = [],
+		pending = false,
+		topUp = false
+	} = transaction;
+	const received = direction === 'incoming';
+	const exchange = direction === 'exchange';
+
+	// subTransactions
+	const sourceToken = subTransactions.find(({ type }) => type === 'outgoing');
+	const toToken = subTransactions.find(({ type }) => type === 'incoming');
+	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
 	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
-	const [token, setToken] = React.useState('');
 
 	useEffect(() => {
-		let mounted = true;
 		const formatAddress = async () => {
 			const contact = await searchContact(source);
 			if (contact?.name) {
@@ -37,22 +52,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 				}
 			}
 		};
-
-		const fetchDefaultToken = async () => {
-			const {
-				nativeToken: { symbol: nativeTokenSymbol }
-			} = await network();
-			if (mounted) {
-				setToken(nativeTokenSymbol);
-			}
-		};
-
-		fetchDefaultToken();
 		formatAddress();
-
-		return () => {
-			mounted = false;
-		};
 	}, []);
 
 	const openTransaction = async () => {
@@ -77,17 +77,22 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		]);
 	};
 
+	const subtitle = topUp
+		? 'Adding via Apple Pay'
+		: exchange
+		? `Swap ${sourceToken?.symbol} to ${toToken?.symbol}`
+		: `${received ? 'From' : 'To'}: ${formattedSource}`;
+
 	return {
 		received,
-		timestamp,
-		formattedSource,
-		value,
-		tokenDecimal,
-		tokenSymbol,
-		token,
-		isError,
+		value: truncate((exchange ? toToken?.amount : amount)!, 6),
+		token: exchange ? toToken?.symbol : symbol,
+		failed: !txSuccessful,
 		pending,
-		openTransaction,
-		topUp: transaction.type === 'topup'
+		topUp,
+		title: format(timestamp, "h'h'mm aaa"),
+		subtitle,
+		exchange,
+		openTransaction
 	};
 };

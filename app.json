@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "48",
+      "buildNumber": "50",
       "config": {
         "usesNonExemptEncryption": false
       },

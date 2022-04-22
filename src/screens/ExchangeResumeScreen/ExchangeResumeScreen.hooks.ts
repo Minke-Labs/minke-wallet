@@ -5,7 +5,6 @@ import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeRoute, getExchangePrice } from '@models/token';
 import { useAmplitude, useBiconomy, useNavigation, useTheme, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
-import { formatUnits } from 'ethers/lib/utils';
 import { coinFromSymbol, tokenBalanceFormat } from '@helpers/utilities';
 import { approveSpending } from '@models/contract';
 import { getProvider } from '@models/wallet';
@@ -189,14 +188,18 @@ const useExchangeResumeScreen = () => {
 				track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
 				addPendingTransaction({
 					from: src,
-					to: address,
-					tokenDecimal: to.decimals.toString(),
+					destination: address,
 					hash,
-					isError: status === 0 ? '1' : '0',
+					txSuccessful: status === 1,
 					pending: true,
 					timeStamp: new Date().getTime().toString(),
-					tokenSymbol: to.symbol,
-					value
+					amount: toAmount!,
+					direction: 'exchange',
+					symbol: to.symbol,
+					subTransactions: [
+						{ type: 'outgoing', symbol: from.symbol, amount: +fromAmount! },
+						{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
+					]
 				});
 
 				navigation.navigate('WalletScreen');
@@ -229,16 +232,19 @@ const useExchangeResumeScreen = () => {
 					to: toAddress,
 					value: BigNumber.from(value)
 				};
-
 				const walletObject = new Wallet(wallet.privateKey.value, provider);
 				const signedTx = await walletObject.signTransaction(txDefaults);
 				const transaction = await provider.sendTransaction(signedTx as string);
-				const converted = convertTransactionResponse(
+				const converted = convertTransactionResponse({
 					transaction,
-					to.symbol,
-					formatUnits(buyAmount, to.decimals),
-					to.decimals
-				);
+					amount: toAmount!,
+					direction: 'exchange',
+					symbol: to.symbol,
+					subTransactions: [
+						{ type: 'outgoing', symbol: from.symbol, amount: +fromAmount! },
+						{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
+					]
+				});
 				addPendingTransaction(converted);
 				const { hash, wait } = transaction;
 				track('Exchanged', { to: to.symbol, from: from.symbol, gasless: false, hash });

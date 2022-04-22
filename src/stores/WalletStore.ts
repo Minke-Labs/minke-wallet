@@ -4,7 +4,14 @@ import { createState } from '@hookstate/core';
 import { find } from 'lodash';
 import { BigNumber, Wallet } from 'ethers';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
-import { getAllWallets, getPrivateKey, getProvider, Transaction, MinkeWallet, saveAllWallets } from '@models/wallet';
+import {
+	getAllWallets,
+	getPrivateKey,
+	getProvider,
+	MinkeWallet,
+	saveAllWallets,
+	ZapperTransaction
+} from '@models/wallet';
 import { getTokenBalances } from '@src/services/apis';
 
 export interface WalletState {
@@ -18,7 +25,7 @@ export interface WalletState {
 		depositedBalance?: number; // deposits
 		walletBalance?: number; // total in the wallet (total - deposits)
 	};
-	transactions?: Array<Transaction>;
+	transactions?: Array<ZapperTransaction>;
 	backedUp: boolean;
 }
 

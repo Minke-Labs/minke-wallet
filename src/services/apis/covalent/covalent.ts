@@ -32,10 +32,11 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const coinList = await AsyncStorage.getItem('@listCoins');
 	const coins = JSON.parse(coinList!);
 	const curated = coins.map(({ symbol }: { symbol: string }) => symbol.toLowerCase());
-	const minkeTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
-	let tokens = minkeTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	const interestTokens = tokens.filter((token) => interestBearingTokens.includes(token.symbol.toLowerCase()));
-	const depositableTokens = tokens.filter((token) => depositStablecoins.includes(token.symbol));
+	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
+
+	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
+	const interestTokens = allTokens.filter((token) => interestBearingTokens.includes(token.symbol.toLowerCase()));
+	const depositableTokens = allTokens.filter((token) => depositStablecoins.includes(token.symbol));
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
 	const walletBalance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const depositedBalance = interestTokens.map(({ balance }) => Number(balance)).reduce((a, b) => a + b, 0);
