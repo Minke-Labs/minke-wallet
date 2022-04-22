@@ -49,6 +49,10 @@ const BiconomyProvider: React.FC = ({ children }) => {
 		}
 	}, [biconomyAPIKey]);
 
+	const canSubmitTransaction = async (address: string): Promise<boolean> => {
+		return !!address;
+	};
+
 	const obj = useMemo(
 		() => ({
 			biconomy: biconomyClient,
