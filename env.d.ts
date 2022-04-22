@@ -14,4 +14,8 @@ declare module '@env' {
 	export const SENTRY_DSN: string;
 	export const ALCHEMY_API_URL_POLYGON_MAINNET: string;
 	export const BICONOMY_API_KEY_POLYGON_MAINNET: string;
+	export const ALCHEMY_API_KEY_ETHEREUM: string;
+	export const ALCHEMY_API_KEY_MATIC: string;
+	export const ALCHEMY_API_KEY_ROPSTEN: string;
+	export const ALCHEMY_API_KEY_KOVAN: string;
 }
