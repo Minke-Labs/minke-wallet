@@ -17,7 +17,7 @@ export const useWalletScreen = () => {
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const [sendModalFinished, setSendModalFinished] = React.useState(false);
-	const [sentObj, setSendObj] = React.useState<ResultProps>();
+	const [sentTransaction, setSentTransaction] = React.useState<ResultProps>();
 
 	const onDeleteWallet = () =>
 		Alert.alert('Are you sure?', '', [
@@ -59,7 +59,7 @@ export const useWalletScreen = () => {
 
 	const onSendFinished = (obj: ResultProps) => {
 		setSendModalFinished(true);
-		setSendObj(obj);
+		setSentTransaction(obj);
 	};
 
 	useEffect(() => {
@@ -76,7 +76,7 @@ export const useWalletScreen = () => {
 		setSnackbarVisible,
 		sendModalFinished,
 		setSendModalFinished,
-		sentObj,
+		sentTransaction,
 		onDeleteWallet,
 		onExchange,
 		onSettingsPress,

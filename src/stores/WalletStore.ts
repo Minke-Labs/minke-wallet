@@ -2,16 +2,8 @@
 /* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
 import { find } from 'lodash';
-import { BigNumber, Wallet } from 'ethers';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
-import {
-	getAllWallets,
-	getPrivateKey,
-	getProvider,
-	MinkeWallet,
-	saveAllWallets,
-	ZapperTransaction
-} from '@models/wallet';
+import { getAllWallets, getPrivateKey, MinkeWallet, saveAllWallets, ZapperTransaction } from '@models/wallet';
 import { getTokenBalances } from '@src/services/apis';
 
 export interface WalletState {
@@ -20,7 +12,6 @@ export interface WalletState {
 	address: string;
 	walletId?: string | null;
 	balance?: {
-		eth?: BigNumber;
 		usd?: number; // total
 		depositedBalance?: number; // deposits
 		walletBalance?: number; // total in the wallet (total - deposits)
@@ -40,12 +31,9 @@ export const emptyWallet: WalletState = {
 
 export const fetchTokensAndBalances = async (privateKey: string, address: string) => {
 	const blockchain = await selectedNetwork();
-	const walletObj = new Wallet(privateKey, await getProvider(blockchain.id));
-	const eth = await walletObj.getBalance();
 	const { balance: balanceUSD, walletBalance, depositedBalance } = await getTokenBalances(address);
 
 	const balance = {
-		eth,
 		usd: balanceUSD,
 		walletBalance,
 		depositedBalance
