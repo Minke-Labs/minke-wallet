@@ -1,6 +1,8 @@
+import { ParaswapToken } from '@models/token';
+
 type ResultProps = {
-	link: string;
-	symbol: string;
+	hash: string;
+	token: ParaswapToken;
 };
 
 export type { ResultProps };

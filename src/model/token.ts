@@ -193,8 +193,7 @@ export interface ParaswapToken {
 	address: string;
 	decimals: number;
 	img: string;
-	network: number;
-	allowance?: string; // available only when query user tokens
+	network?: number;
 }
 
 export interface TokenResponse {
