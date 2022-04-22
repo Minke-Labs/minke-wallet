@@ -21,7 +21,6 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	const canSubmitGaslessTransaction = async () => {
 		if (biconomyAPIKey && address) {
 			try {
-				console.log('Fetching status for address', address);
 				const { allowed } = await (
 					await fetch(`https://api.biconomy.io/api/v1/dapp/checkLimits?userAddress=${address}`, {
 						headers: {
