@@ -6,15 +6,7 @@ import { styles } from './TabLayout.styles';
 import { TabLayoutProps } from './TabLayout.types';
 import BasicLayout from '../BasicLayout/BasicLayout';
 
-const TabLayout: React.FC<TabLayoutProps> = ({
-	loading,
-	fetchTransactions,
-	children,
-	left,
-	right,
-	leftTitle,
-	rightTitle
-}) => {
+const TabLayout: React.FC<TabLayoutProps> = ({ fetchTransactions, children, left, right, leftTitle, rightTitle }) => {
 	const [selectedTab, setSelectedTab] = useState('transactions');
 	const { colors } = useTheme();
 

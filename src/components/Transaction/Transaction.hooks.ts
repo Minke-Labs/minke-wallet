@@ -95,6 +95,4 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		exchange,
 		openTransaction
 	};
-
-	// { received, title, value, token, failed, pending, openTransaction, topUp, subtitle }
 };
