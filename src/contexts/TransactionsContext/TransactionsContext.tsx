@@ -23,7 +23,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const fetchTransactions = async () => {
 		setLoading(true);
 		const { address, privateKey } = state.value;
-		const { data: transactions } = await getZapperTransactions(address!);
+		const { data: transactions = [] } = await getZapperTransactions(address!);
 		const { balance } = await fetchTokensAndBalances(privateKey, address);
 		state.merge({ transactions, balance });
 		setLoading(false);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
@@ -60,12 +61,26 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalColumn}>
 				<Text type="h3" weight="extraBold" color="text1">
-					Processing Transaction
+					{mined ? 'Transaction done' : 'Processing Transaction'}
 				</Text>
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="p2" weight="medium" color="text3">
-					{sent ? 'Sending' : deposit ? 'Depositing' : withdraw ? 'Withdrawing' : 'Exchanging'}{' '}
+					{mined
+						? sent
+							? 'Sent'
+							: deposit
+							? 'Deposited'
+							: withdraw
+							? 'Withdrew'
+							: 'Exchanged'
+						: sent
+						? 'Sending'
+						: deposit
+						? 'Depositing'
+						: withdraw
+						? 'Withdrawing'
+						: 'Exchanging'}{' '}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}

@@ -11,7 +11,7 @@ export interface ModalsImportProps {
 	setSnackbarVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	sendModalFinished: boolean;
 	setSendModalFinished: React.Dispatch<React.SetStateAction<boolean>>;
-	sentObj: ResultProps | undefined;
+	sentTransaction: ResultProps | undefined;
 	hideReceive: () => void;
 	onSendFinished: (obj: ResultProps) => void;
 }

@@ -88,6 +88,17 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 					const to = (await resolveENSAddress(ens)) || ens;
 					const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
 
+					onDismiss();
+					sentSuccessfully({
+						token: {
+							address: token.address,
+							decimals: token.decimals,
+							img: token.symbol,
+							symbol: token.symbol
+						},
+						hash: ''
+					});
+
 					if (gasless) {
 						const { isApproved } = await approvalState(address, token.address, sendContract);
 
@@ -116,11 +127,6 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						});
 
 						const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash);
-						onDismiss();
-						sentSuccessfully({
-							symbol: token.symbol.toLowerCase(),
-							link: hash
-						});
 						track('Sent', {
 							token: token.symbol,
 							tokenAmount,
@@ -151,10 +157,14 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						const { wait, hash } = transaction;
 
 						await wait();
-						onDismiss();
 						sentSuccessfully({
-							symbol: token.symbol.toLowerCase(),
-							link: hash
+							token: {
+								address: token.address,
+								decimals: token.decimals,
+								img: token.symbol,
+								symbol: token.symbol
+							},
+							hash
 						});
 						// Pending transaction...
 						addPendingTransaction(
