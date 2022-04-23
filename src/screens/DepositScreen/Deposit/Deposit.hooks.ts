@@ -22,7 +22,7 @@ export const useDeposit = () => {
 	const { nativeToken } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { depositableTokens: tokens } = useTokens();
+	const { depositableTokens: tokens, tokens: allTokens } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
 	const { market } = useState(globalDepositState()).value;
 	const { gas } = useState(globalExchangeState()).value;
@@ -41,7 +41,7 @@ export const useDeposit = () => {
 			if (!paraSwapToken) {
 				return 0;
 			}
-			const walletToken = tokens?.find(
+			const walletToken = allTokens?.find(
 				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
 			);
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
@@ -51,7 +51,7 @@ export const useDeposit = () => {
 			}
 			return walletToken ? +walletToken.balance : 0;
 		},
-		[tokens, nativeToken, gas]
+		[tokens, allTokens, nativeToken, gas]
 	);
 
 	const updateAmount = (value: string) => {
@@ -99,14 +99,14 @@ export const useDeposit = () => {
 					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
 					addPendingTransaction({
 						from,
-						to,
-						tokenDecimal: token.decimals.toString(),
+						destination: to,
 						hash,
-						isError: status === 0 ? '1' : '0',
+						txSuccessful: status === 1,
 						pending: true,
 						timeStamp: new Date().getTime().toString(),
-						tokenSymbol: token.symbol,
-						value: amount
+						direction: 'outgoing',
+						amount,
+						symbol: token.symbol
 					});
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 				} else {
@@ -148,7 +148,14 @@ export const useDeposit = () => {
 					Logger.log(`Deposit ${JSON.stringify(hash)}`);
 					await wait();
 					setTransactionHash(hash);
-					addPendingTransaction(convertTransactionResponse(tx, amount, token.symbol, token.decimals));
+					addPendingTransaction(
+						convertTransactionResponse({
+							transaction: tx,
+							amount,
+							direction: 'outgoing',
+							symbol: token.symbol
+						})
+					);
 					track('Deposited', {
 						token: token.symbol,
 						amount,

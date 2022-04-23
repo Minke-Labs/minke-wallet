@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Text, Token, Button, ActivityIndicator, TokenAmountInput, NetworkWarning } from '@components';
+import { Text, Token, ActivityIndicator, TokenAmountInput, NetworkWarning, HapticButton } from '@components';
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard } from '@hooks';
+import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
@@ -23,7 +24,9 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 		onSend,
 		onMaxPress,
 		onTypeChange,
-		amountType
+		amountType,
+		gasless,
+		enoughGas
 	} = useTransactionTransfer({ token, user, ...props });
 
 	return (
@@ -59,7 +62,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				onTypeChange={onTypeChange}
 			/>
 
-			{gasPrice && (
+			{!gasless && gasPrice && (
 				<View style={{ marginBottom: 24 }}>
 					<GasPriceLine
 						label="Normal"
@@ -69,16 +72,20 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				</View>
 			)}
 
+			{!enoughGas && <Warning label="Not enough balance for gas" />}
+
 			<NetworkWarning.Tag />
 
-			<View style={{ marginBottom: 8, marginTop: 48 }}>
+			<View style={{ marginBottom: 8, marginTop: 24 }}>
 				{sending ? (
 					<ActivityIndicator />
 				) : (
-					<Button
+					<HapticButton
 						title="Send"
 						disabled={
-							!number || number > (amountType === 'token' ? Number(token.balance) : token.balanceUSD)
+							!enoughGas ||
+							!number ||
+							number > (amountType === 'token' ? Number(token.balance) : token.balanceUSD)
 						}
 						onPress={onSend}
 					/>

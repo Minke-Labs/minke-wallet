@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
-import Icon from '../../../Icon/Icon';
+import Icon from '../../Icon/Icon';
 import { styles } from './IconInner.styles';
 import { IconInnerProps } from './IconInner.types';
 

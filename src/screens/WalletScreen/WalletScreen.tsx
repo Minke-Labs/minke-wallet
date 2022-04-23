@@ -14,7 +14,7 @@ const WalletScreen = () => {
 		setSnackbarVisible,
 		sendModalFinished,
 		setSendModalFinished,
-		sentObj,
+		sentTransaction,
 		onDeleteWallet,
 		onExchange,
 		onSettingsPress,
@@ -57,7 +57,7 @@ const WalletScreen = () => {
 					setSnackbarVisible,
 					sendModalFinished,
 					setSendModalFinished,
-					sentObj,
+					sentTransaction,
 					hideReceive,
 					onSendFinished
 				}}

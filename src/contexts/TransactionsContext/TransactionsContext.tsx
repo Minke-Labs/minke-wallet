@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
 import { useState } from '@hookstate/core';
-import { getTransactions, Transaction } from '@models/wallet';
+import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
 import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
 import { useFocusEffect } from '@react-navigation/native';
 
 interface TransactionContextProps {
 	loading: boolean;
-	pendingTransactions: Transaction[];
+	pendingTransactions: ZapperTransaction[];
 	fetchTransactions: () => void;
-	addPendingTransaction: (transaction: Transaction) => void;
+	addPendingTransaction: (transaction: ZapperTransaction) => void;
 }
 
 export const TransactionsContext = React.createContext<TransactionContextProps>({} as TransactionContextProps);
@@ -17,13 +17,13 @@ export const TransactionsContext = React.createContext<TransactionContextProps>(
 const TransactionsProvider: React.FC = ({ children }) => {
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
-	const [pendingTransactions, setPendingTransactions] = React.useState<Transaction[]>([]);
+	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 
 	const fetchTransactions = async () => {
 		setLoading(true);
 		const { address, privateKey } = state.value;
-		const transactions = await getTransactions(address || '');
+		const { data: transactions = [] } = await getZapperTransactions(address!);
 		const { balance } = await fetchTokensAndBalances(privateKey, address);
 		state.merge({ transactions, balance });
 		setLoading(false);
@@ -45,7 +45,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 		}
 	});
 
-	const addPendingTransaction = (transaction: Transaction) => {
+	const addPendingTransaction = (transaction: ZapperTransaction) => {
 		setPendingTransactions([transaction, ...pendingTransactions]);
 	};
 

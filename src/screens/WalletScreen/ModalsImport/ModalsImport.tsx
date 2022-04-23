@@ -2,7 +2,8 @@ import React from 'react';
 import { Snackbar } from 'react-native-paper';
 import { Text, Modal } from '@components';
 import { AddFunds } from '@containers';
-import { SendModal, ReceiveModal, SentModal } from '../Modals';
+import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import { SendModal, ReceiveModal } from '../Modals';
 import { ResultProps } from '../WalletScreen.types';
 import { ModalsImportProps } from './ModalsImport.types';
 
@@ -16,7 +17,7 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 	setSnackbarVisible,
 	sendModalFinished,
 	setSendModalFinished,
-	sentObj,
+	sentTransaction,
 	hideReceive,
 	onSendFinished
 }) => (
@@ -42,7 +43,14 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 		</Modal>
 
 		<Modal isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>
-			<SentModal sentObj={sentObj} onDismiss={() => setSendModalFinished(false)} />
+			{sentTransaction && (
+				<TransactionWaitModal
+					transactionHash={sentTransaction.hash}
+					fromToken={sentTransaction.token}
+					onDismiss={() => setSendModalFinished(false)}
+					sent
+				/>
+			)}
 		</Modal>
 	</>
 );

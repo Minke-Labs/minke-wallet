@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
 import { useTheme } from '@hooks';
@@ -29,14 +29,20 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
 		let selectedTokens: ParaswapToken[] = [];
 		if (showOnlyOwnedTokens) {
-			const filter = _.filter(allTokens, (token) => ownedTokens.includes(token.symbol.toLocaleLowerCase()));
+			const filter = _.filter(
+				allTokens,
+				({ symbol }) => !!symbol && ownedTokens.includes(symbol.toLocaleLowerCase())
+			);
 			selectedTokens = filter;
 		} else {
 			selectedTokens = allTokens;
 		}
 
 		if (selected && selected.length > 0) {
-			const filter = _.filter(selectedTokens, (token) => !selected.includes(token.symbol.toLocaleLowerCase()));
+			const filter = _.filter(
+				selectedTokens,
+				({ symbol }) => !!symbol && !selected.includes(symbol.toLocaleLowerCase())
+			);
 			setFilteredTokens(filter);
 		} else {
 			setFilteredTokens(selectedTokens);
@@ -78,7 +84,10 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		}
 	};
 
-	const filterByExchangebleToken = () => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol));
+	const filterByExchangebleToken = useCallback(
+		() => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol)),
+		[filteredTokens, exchangebleTokens]
+	);
 
 	if (!tokens || loading) {
 		return <ScreenLoadingIndicator />;

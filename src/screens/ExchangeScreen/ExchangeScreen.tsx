@@ -46,7 +46,8 @@ const ExchangeScreen = () => {
 		ownedTokens,
 		quote,
 		error,
-		setError
+		setError,
+		gasless
 	} = useExchangeScreen();
 
 	const ExchangeSummary = useCallback(() => {
@@ -132,7 +133,9 @@ const ExchangeScreen = () => {
 							</Card>
 						</View>
 
-						<GasSelector />
+						<View style={{ display: gasless ? 'none' : 'flex' }}>
+							<GasSelector />
+						</View>
 
 						<View style={[styles.exchangeSection, styles.exchangeButton]}>
 							{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}

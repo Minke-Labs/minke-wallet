@@ -10,8 +10,8 @@ const useDeposits = () => {
 
 	useEffect(() => {
 		const loadTokens = async () => {
-			if (aaveBalances) {
-				const { products = [] } = aaveBalances[walletAddress.toLowerCase()];
+			if (aaveBalances && aaveBalances.balances) {
+				const { products = [] } = aaveBalances.balances[walletAddress.toLowerCase()];
 				const lending = products.find((p) => p.label === 'Lending');
 				const deposits = interestTokens.map((t) => t.symbol);
 

@@ -1,5 +1,5 @@
-import { Transaction as ITransaction } from '@models/wallet';
+import { ZapperTransaction } from '@models/wallet';
 
 export interface TransactionProps {
-	transaction: ITransaction;
+	transaction: ZapperTransaction;
 }
