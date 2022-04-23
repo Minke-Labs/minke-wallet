@@ -57,7 +57,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	};
 
 	const onOnrampPurchase = (value: number) => {
-		console.log('PRESSED!!! ', value);
+		console.log('ONRAMP PRESSED!!! ', value);
 		setBanxaModalVisible(true);
 	};
 
