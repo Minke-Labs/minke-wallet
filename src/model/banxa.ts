@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import axios from 'axios';
+
 import * as qs from 'qs';
 import crypto from 'crypto';
 import { BANXA_ENDPOINT_URL, BANXA_KEY, BANXA_SECRET } from '@env';
@@ -14,14 +15,30 @@ interface QuoteParams {
 	amount: number;
 }
 
-interface SendGetRequest {
+interface SendRequest {
 	query: string;
-	method: string;
-	params?: QuoteParams;
+	params?: QuoteParams | OrderParams;
+}
+interface SendPostRequest {
+	query: string;
+	params?: OrderParams;
 }
 
 interface GetPrices {
 	params: QuoteParams;
+}
+
+interface OrderParams {
+	account_reference: string;
+	source: string;
+	source_amount: string;
+	target: string;
+	wallet_address: string;
+	return_url_on_success: string;
+}
+
+interface MakeOrder {
+	params: OrderParams;
 }
 
 const generateHmac = ({ data, nonce }: GenerateHmac) => {
@@ -32,19 +49,17 @@ const generateHmac = ({ data, nonce }: GenerateHmac) => {
 	return `${key}:${localSignature}:${nonce}`;
 };
 
-const sendGetRequest = async ({ query, method, params }: SendGetRequest) => {
+const sendGetRequest = async ({ query, params }: SendRequest) => {
+	const nonce = Date.now();
+	const quoteParams = qs.stringify(params) ?? '';
 	const hostname = BANXA_ENDPOINT_URL || process.env.BANXA_ENDPOINT_URL;
 
-	const nonce = Date.now();
-	const quoteParams = qs.stringify(params);
-
-	const data = `${method}\n${query}?${quoteParams}\n${nonce}`;
+	const data = `GET\n${query}?${quoteParams}\n${nonce}`;
 
 	const hmac = generateHmac({ data, nonce });
 	const options = {
 		hostname,
 		path: query,
-		method,
 		headers: {
 			'Content-Type': 'application/json',
 			accept: 'application/json',
@@ -52,22 +67,44 @@ const sendGetRequest = async ({ query, method, params }: SendGetRequest) => {
 		}
 	};
 
-	const res = await fetch(`https://${hostname}${query}?${quoteParams}`, options);
-	const resData = await res.json();
-	return resData.data;
+	const res = await axios.get(`https://${hostname}${query}?${quoteParams}`, options);
+	return res.data;
+};
+
+export const sendPostRequest = async ({ query, params }: SendPostRequest) => {
+	const nonce = Date.now();
+	const hostname = BANXA_ENDPOINT_URL || process.env.BANXA_ENDPOINT_URL;
+
+	const data = `POST\n${query}\n${nonce}\n${JSON.stringify(params)}`;
+
+	const hmac = generateHmac({ data, nonce });
+
+	const options = {
+		headers: {
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+			Authorization: `Bearer ${hmac}`
+		}
+	};
+
+	const res = await axios.post(`https://${hostname}${query}`, { ...params }, options);
+	return res;
 };
 
 export const getPaymentMethods = async () => {
 	const query = '/api/payment-methods';
-	const method = 'GET';
-	const res = await sendGetRequest({ query, method });
+	const res = await sendGetRequest({ query });
 	return res;
 };
 
 export const getPrices = async ({ params }: GetPrices) => {
 	const query = '/api/prices';
-	const method = 'GET';
-
-	const res = await sendGetRequest({ query, method, params });
+	const res = await sendGetRequest({ query, params });
 	return res;
+};
+
+export const makeOrder = async ({ params }: MakeOrder) => {
+	const query = '/api/orders';
+	const res = await sendPostRequest({ query, params });
+	return res.data.data.order.checkout_url;
 };
