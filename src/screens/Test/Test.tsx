@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { OnrampButton, FullModal } from '@components';
 import { makeOrder } from '@models/banxa';
+import { useLocation } from '@hooks';
 import { BasicLayout } from '@layouts';
 import { WebView } from 'react-native-webview';
 
 const Test = () => {
+	const { countryCode, locationCurrency } = useLocation();
 	const [visible, setVisible] = useState(false);
 	const [orderLink, setOrderLink] = useState('');
 	const handleGo = async () => {
@@ -19,7 +21,7 @@ const Test = () => {
 
 		const params = {
 			account_reference: 'xxxxxxxxxx',
-			source: 'CAD',
+			source: locationCurrency,
 			target: 'USDC',
 			source_amount: '100',
 			return_url_on_success: '#',

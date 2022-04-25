@@ -1,8 +1,11 @@
 import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
-import { useAmplitude, useBiconomy, useFormProgress, useNavigation, useWyreApplePay } from '@hooks';
+import { useAmplitude, useBiconomy, useFormProgress, useLocation, useNavigation, useWyreApplePay } from '@hooks';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
+import { makeOrder } from '@models/banxa';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { useState } from '@hookstate/core';
 
 interface UseAddFundsProps {
 	onDismiss: () => void;
@@ -20,6 +23,10 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const customAmountRef = createRef<TextInput>();
 	const { track } = useAmplitude();
 	const { gaslessEnabled } = useBiconomy();
+	const { locationCurrency } = useLocation();
+	const [orderLink, setOrderLink] = React.useState('');
+	const state = useState(globalWalletState());
+	const { address } = state.value;
 
 	const { onPurchase, orderId, error } = useWyreApplePay();
 
@@ -56,8 +63,18 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		onPurchase({ currency: coin.symbol, value });
 	};
 
-	const onOnrampPurchase = (value: number) => {
-		console.log('ONRAMP PRESSED!!! ', value);
+	const onOnrampPurchase = async (value: number) => {
+		const params = {
+			account_reference: address,
+			source: locationCurrency,
+			target: coin.name.toUpperCase(),
+			source_amount: String(value),
+			return_url_on_success: '#',
+			wallet_address: address
+		};
+
+		const url = await makeOrder({ params });
+		setOrderLink(url);
 		setBanxaModalVisible(true);
 	};
 
@@ -92,6 +109,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		wyreError,
 		error,
 		gaslessEnabled,
+		orderLink,
 		goBack,
 		dismissError,
 		selectCoin,

@@ -18,6 +18,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		wyreError,
 		error,
 		gaslessEnabled,
+		orderLink,
 		selectCoin,
 		dismissError,
 		goBack,
@@ -71,7 +72,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 				onClose={() => setBanxaModalVisible(false)}
 			>
 				<WebView
-					source={{ uri: 'https://www.minke.app' }}
+					source={{ uri: orderLink }}
 					sharedCookiesEnabled
 				/>
 			</FullModal>

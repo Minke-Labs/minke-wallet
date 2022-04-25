@@ -1,16 +1,14 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
-// import { useLocation } from '@hooks';
+import { useLocation } from '@hooks';
 import styles from './OnrampButton.styles';
 import { chooseLocation } from './OnrampButton.utils';
 import { OnrampButtonProps } from './OnrampButton.types';
 
 const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, marginBottom = 0, disabled = false }) => {
-	// const { countryCode } = useLocation();
+	const { countryCode } = useLocation();
 
-	// if (!chooseLocation(countryCode!)) return null;
-
-	const countryCode = 'CA';
+	if (!chooseLocation(countryCode!)) return null;
 
 	return (
 		<TouchableOpacity

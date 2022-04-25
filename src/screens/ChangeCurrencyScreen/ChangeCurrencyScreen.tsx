@@ -5,12 +5,11 @@ import { BasicLayout } from '@layouts';
 import { useNavigation, useLocation } from '@hooks';
 import { FlagType } from '@styles';
 import { ItemCurrency } from './ItemCurrency/ItemCurrency';
-import { currencies } from './ChangeCurrencyScreen.utils';
 
 const ChangeCurrencyScreen = () => {
+	const { countryCode, setCountryCode, currencies } = useLocation();
 	const [filtered, setFiltered] = useState<any>(currencies);
 	const [search, setSearch] = useState('');
-	const { countryCode, setCountryCode } = useLocation();
 
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
