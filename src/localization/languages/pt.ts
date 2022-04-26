@@ -150,5 +150,18 @@ export default {
 				'Não conseguimos acessar o seu backup neste momento. Por favor, tente novamente mais tarde',
 			GENERIC_ERROR: 'Ocorreu um erro durante o backup. Código de erro: %{code}'
 		}
+	},
+	ManualBackupScreen: {
+		done: 'Pronto',
+		recovery_phrase: 'Frase de recuperação',
+		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
+		address_copied: 'Endereço copiado!',
+		Warning: {
+			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
+			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
+		}
+	},
+	CopyButton: {
+		copy_to_clipboard: 'Copiar para área de transferência'
 	}
 };

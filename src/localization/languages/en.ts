@@ -149,5 +149,18 @@ export default {
 			ERROR_GETTING_ENCRYPTED_DATA: "We couldn't access your backup at this time. Please try again later.",
 			GENERIC_ERROR: 'Error while trying to backup. Error code: %{code}'
 		}
+	},
+	ManualBackupScreen: {
+		done: 'Done',
+		recovery_phrase: 'Recovery phrase',
+		write_this_down: 'Write this down on paper or save it in your password manager.',
+		address_copied: 'Address copied!',
+		Warning: {
+			minke_will_never_ask: 'Minke will never ask for these words',
+			anyone_who_has_these: 'Anyone who has these can access your wallet!'
+		}
+	},
+	CopyButton: {
+		copy_to_clipboard: 'Copy to clipboard'
 	}
 };
