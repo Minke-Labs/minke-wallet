@@ -50,5 +50,19 @@ export default {
 		Card: {
 			your_wallet_balance: 'Seu saldo'
 		}
+	},
+	SettingsScreen: {
+		title: 'Configurações',
+		creating_wallet: 'Criando carteira',
+		backup: 'Cópia de segurança',
+		currency: 'Moeda',
+		network: 'Rede',
+		new_wallet: 'Nova carteira',
+		usd_coin: 'Moeda USD',
+		contact_support: 'Contactar suporte',
+		switch_account: 'Trocar conta'
+	},
+	LoadingScreen: {
+		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
 	}
 };

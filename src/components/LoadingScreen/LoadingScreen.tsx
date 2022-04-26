@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, Modal } from 'react-native';
 import { useTheme } from '@hooks';
+import i18n from '@localization';
 import Text from '../Text/Text';
 import styles from './LoadingScreen.styles';
 import { LoadingScreenProps } from './LoadingScreen.types';
@@ -16,7 +17,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ title }) => {
 						{title}
 					</Text>
 					<Text type="p2" center>
-						This can take a few seconds...
+						{i18n.t('LoadingScreen.this_can_take_a_few_seconds')}
 					</Text>
 				</View>
 			</View>

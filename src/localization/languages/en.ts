@@ -50,5 +50,18 @@ export default {
 		Card: {
 			your_wallet_balance: 'Your wallet balance'
 		}
+	},
+	SettingsScreen: {
+		title: 'Settings',
+		creating_wallet: 'Creating wallet',
+		backup: 'Backup',
+		network: 'Network',
+		new_wallet: 'New wallet',
+		usd_coin: 'US Dollar coin',
+		contact_support: 'Contact Support',
+		switch_account: 'Switch account'
+	},
+	LoadingScreen: {
+		this_can_take_a_few_seconds: 'This can take a few seconds'
 	}
 };
