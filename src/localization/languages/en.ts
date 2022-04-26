@@ -120,5 +120,34 @@ export default {
 		all: 'All',
 		sent: 'Sent',
 		received: 'Received'
+	},
+	BackupSettingsScreen: {
+		title: 'Backup'
+	},
+	BackupStatusScreen: {
+		your_wallet_is_backed_up: 'Your Wallet is Backed Up!',
+		if_you_lose: 'If you lose this device you can recover your encrypted wallet backup from iCloud.',
+		your_wallet_is_not_backed_up: 'Your Wallet is not Backed Up!',
+		your_keys_your_coins: 'Your keys your coins. Backup your wallet incase of loss.',
+		back_up_to_icloud: 'Back up to iCloud',
+		backup: 'Backup',
+		done: 'Done',
+		go_to_wallet: 'Go to Wallet',
+		view_secret_phrase: 'View Secret Phrase',
+		backup_error: 'Backup error'
+	},
+	iCloudBackup: {
+		BACKING_UP_WALLET: 'Backing up...',
+		CREATING_WALLET: 'Creating wallet...',
+		FETCHING_PASSWORD: 'Fetching Password...',
+		IMPORTING_WALLET: 'Importing...',
+		RESTORING_WALLET: 'Restoring...',
+		errors: {
+			KEYCHAIN_ACCESS_ERROR: 'You need to authenticate to proceed with the Backup process',
+			ERROR_DECRYPTING_DATA: 'Incorrect password! Please try again.',
+			NO_BACKUPS_FOUND: "We couldn't find your previous backup!",
+			ERROR_GETTING_ENCRYPTED_DATA: "We couldn't access your backup at this time. Please try again later.",
+			GENERIC_ERROR: 'Error while trying to backup. Error code: %{code}'
+		}
 	}
 };

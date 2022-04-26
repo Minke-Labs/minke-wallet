@@ -54,7 +54,7 @@ export default {
 	SettingsScreen: {
 		title: 'Configurações',
 		creating_wallet: 'Criando carteira',
-		backup: 'Cópia de segurança',
+		backup: 'Backup',
 		currency: 'Moeda',
 		network: 'Rede',
 		new_wallet: 'Nova carteira',
@@ -120,5 +120,35 @@ export default {
 		all: 'Todas',
 		sent: 'Enviadas',
 		received: 'Recebidas'
+	},
+	BackupSettingsScreen: {
+		title: 'Backup'
+	},
+	BackupStatusScreen: {
+		your_wallet_is_backed_up: 'Sua carteira tem backup!',
+		if_you_lose: 'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no iCloud.',
+		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
+		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
+		back_up_to_icloud: 'Backup no iCloud',
+		backup: 'Backup',
+		done: 'Pronto',
+		go_to_wallet: 'Ir para a carteira',
+		view_secret_phrase: 'Ver Frase Secreta',
+		backup_error: 'Erro no backup'
+	},
+	iCloudBackup: {
+		BACKING_UP_WALLET: 'Fazendo backup...',
+		CREATING_WALLET: 'Criando carteira...',
+		FETCHING_PASSWORD: 'Recuperando senha...',
+		IMPORTING_WALLET: 'Importando...',
+		RESTORING_WALLET: 'Restaurando...',
+		errors: {
+			KEYCHAIN_ACCESS_ERROR: 'Você precisa autenticar para continuar o processo de backup',
+			ERROR_DECRYPTING_DATA: 'Senha incorreta! Por favor, tente novamente.',
+			NO_BACKUPS_FOUND: 'Não conseguimos encontrar um backup anterior.',
+			ERROR_GETTING_ENCRYPTED_DATA:
+				'Não conseguimos acessar o seu backup neste momento. Por favor, tente novamente mais tarde',
+			GENERIC_ERROR: 'Ocorreu um erro durante o backup. Código de erro: %{code}'
+		}
 	}
 };
