@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks';
 import { Text } from '@components';
 import Animated from 'react-native-reanimated';
+import i18n from '@localization';
 import { makeStyles } from './Selector.styles';
 import { SelectorProps } from './Selector.types';
 import { useSelector } from './Selector.hooks';
@@ -15,7 +16,11 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
 	return (
 		<View style={styles.container}>
 			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
-			{['All', 'Sent', 'Received'].map((item, index) => (
+			{[
+				i18n.t('TransactionsScreen.all'),
+				i18n.t('TransactionsScreen.sent'),
+				i18n.t('TransactionsScreen.received')
+			].map((item, index) => (
 				<TouchableOpacity
 					key={item}
 					onPress={() => {

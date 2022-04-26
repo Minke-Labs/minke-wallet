@@ -114,5 +114,11 @@ export default {
 		borrowing: 'Borrowing',
 		open_loans: 'Open loans',
 		coming_soon: 'Coming soon'
+	},
+	TransactionsScreen: {
+		transactions: 'Transactions',
+		all: 'All',
+		sent: 'Sent',
+		received: 'Received'
 	}
 };

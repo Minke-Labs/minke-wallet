@@ -114,5 +114,11 @@ export default {
 		borrowing: 'Empréstimos',
 		open_loans: 'Empréstimos em aberto',
 		coming_soon: 'Em breve'
+	},
+	TransactionsScreen: {
+		transactions: 'Transações',
+		all: 'Todas',
+		sent: 'Enviadas',
+		received: 'Recebidas'
 	}
 };
