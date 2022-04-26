@@ -7,13 +7,13 @@ import { TransactionsTableProps } from './TransactionsTable.types';
 import styles from './TransactionsTable.styles';
 
 export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds, onSeeAllTransactions }) => {
-	const { transactions, hasTransactions } = useTransactions();
+	const { homeTransactions, hasTransactions } = useTransactions();
 
 	if (hasTransactions) {
 		return (
 			<View style={styles.container}>
-				{transactions.map(({ data, title }) => (
-					<TransactionPeriod data={data} title={title} key={title} />
+				{homeTransactions.map(({ data, title }) => (
+					<TransactionPeriod data={data.slice(0, 10)} title={title} key={title} />
 				))}
 
 				<Button onPress={onSeeAllTransactions} mode="text" title="See all" />

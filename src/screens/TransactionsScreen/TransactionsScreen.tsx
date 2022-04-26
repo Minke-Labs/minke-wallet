@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { TransactionPeriod } from '@components';
 import { useTheme } from '@hooks';
@@ -20,12 +20,13 @@ const TransactionsScreen = () => {
 				<Header />
 				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
-
-			<View style={styles.container}>
-				{transactions.map(({ data, title }) => (
-					<TransactionPeriod data={data} title={title} key={title} />
-				))}
-			</View>
+			<ScrollView>
+				<SafeAreaView style={styles.container}>
+					{transactions.map(({ data, title }) => (
+						<TransactionPeriod data={data} title={title} key={title} />
+					))}
+				</SafeAreaView>
+			</ScrollView>
 		</BasicLayout>
 	);
 };

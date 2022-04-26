@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@hooks';
-import { Text } from '@components';
 import { TransactionPeriod as ITransactionPeriod } from '@src/contexts/TransactionsContext/TransactionsContext';
+import Text from '../Text/Text';
 import Transaction from '../Transaction/Transaction';
 
 const styles = StyleSheet.create({
 	section: {
+		marginTop: 8,
 		marginBottom: 32,
 		borderBottomWidth: 1
 	}

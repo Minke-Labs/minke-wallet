@@ -21,6 +21,7 @@ export interface TransactionPeriod {
 interface TransactionContextProps {
 	loading: boolean;
 	transactions: TransactionPeriod[];
+	homeTransactions: TransactionPeriod[];
 	hasTransactions: boolean;
 	fetchTransactions: () => void;
 	addPendingTransaction: (transaction: ZapperTransaction) => void;
@@ -85,8 +86,15 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	};
 
 	const transactionsByDate = groupBy(allTransactions, groupTransactionByDate);
+	const homeTransactionsByDate = groupBy(allTransactions.slice(0, 10), groupTransactionByDate);
+
 	const sectionedTransactions = Object.keys(transactionsByDate).map((section) => ({
 		data: transactionsByDate[section],
+		title: section
+	}));
+
+	const homeTransactions = Object.keys(homeTransactionsByDate).map((section) => ({
+		data: homeTransactionsByDate[section],
 		title: section
 	}));
 
@@ -94,6 +102,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 		() => ({
 			loading,
 			transactions: sectionedTransactions,
+			homeTransactions,
 			hasTransactions: allTransactions.length > 0,
 			fetchTransactions,
 			addPendingTransaction
