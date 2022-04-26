@@ -16,7 +16,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AssetsScreen'>;
 const AssetsScreen = ({ route }: Props) => {
 	const { colors } = useTheme();
 	const { coin } = route.params;
-	const { tokenData, tokenVolume, marketCap } = useAssetsScreen(coin);
+	const { description, tokenVolume, marketCap } = useAssetsScreen(coin);
 
 	return (
 		<BasicLayout hideSafeAreaView bg="detail4">
@@ -28,7 +28,7 @@ const AssetsScreen = ({ route }: Props) => {
 						{marketCap > 0 && tokenVolume && (
 							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
 						)}
-						{tokenData && <AboutCoin data={tokenData} name={coin.name} />}
+						{description && <AboutCoin description={description} name={coin.name} />}
 					</ScrollView>
 				</SafeAreaView>
 			</ScrollView>

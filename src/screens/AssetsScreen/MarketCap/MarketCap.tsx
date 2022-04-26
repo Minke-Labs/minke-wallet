@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
+import i18n from '@localization';
 import { MarketCapProps } from './MarketCap.types';
 import styles from './MarketCap.styles';
 
@@ -13,7 +14,7 @@ const MarketCap: React.FC<MarketCapProps> = ({ marketCap, tokenVolume }) => {
 		<View style={[styles.container, { backgroundColor: colors.background2 }]}>
 			<View style={styles.box}>
 				<Text marginBottom={8} color="text4" type="p2">
-					MarketCap
+					{i18n.t('AssetsScreen.MarketCap.market_cap')}
 				</Text>
 				<Text weight="bold" type="h3" marginBottom={16}>
 					{numberFormat(marketCap)}
@@ -22,7 +23,7 @@ const MarketCap: React.FC<MarketCapProps> = ({ marketCap, tokenVolume }) => {
 			<View style={{ height: 1, backgroundColor: colors.background1 }} />
 			<View style={styles.box}>
 				<Text marginBottom={8} color="text4" type="p2">
-					Volume (1D)
+					{i18n.t('AssetsScreen.MarketCap.volume')}
 				</Text>
 				<Text weight="bold" type="h3" marginBottom={16}>
 					{numberFormat(lastVolume)}

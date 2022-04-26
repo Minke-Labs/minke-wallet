@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from 'react';
+import i18n from '@localization';
 import { getTokenMarketCap, getTokenData, getTokenVolume, MinkeToken } from '@models/token';
 
 export const useAssetsScreen = (coin: MinkeToken) => {
@@ -54,7 +55,7 @@ export const useAssetsScreen = (coin: MinkeToken) => {
 	}, []);
 
 	return {
-		tokenData,
+		description: tokenData?.description[i18n.currentLocale()] || tokenData?.description.en,
 		tokenVolume,
 		marketCap
 	};

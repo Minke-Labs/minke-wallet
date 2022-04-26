@@ -4,9 +4,10 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { View, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
 // import { graphs } from './Graph.utils';
+import i18n from '@localization';
 import { GraphIndex } from '../Chart.types';
-import { styles } from './Selection.styles';
 import { SelectionProps } from './Selection.types';
+import { styles } from './Selection.styles';
 
 const { width } = Dimensions.get('window');
 
@@ -18,7 +19,6 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition, gr
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
 		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.11)) }]
 	}));
-
 	return (
 		<View style={styles.container}>
 			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
@@ -42,7 +42,7 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition, gr
 								color={item.value === using ? 'text6' : 'text9'}
 								weight={item.value === using ? 'bold' : 'regular'}
 							>
-								{item.label}
+								{i18n.t(`AssetsScreen.Chart.${item.label}`)}
 							</Text>
 						</Animated.View>
 					</TouchableWithoutFeedback>
