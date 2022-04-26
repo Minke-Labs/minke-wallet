@@ -36,5 +36,19 @@ export default {
 			'1Y': '1A',
 			All: 'Total'
 		}
+	},
+	WalletAssetsScreen: {
+		header: 'Carteira',
+		asset_header: 'Ativo',
+		ValueBox: {
+			current_value: 'Valor atual'
+		},
+		Selector: {
+			all_coins: 'Todas as moedas',
+			stable_coins: 'Moedas estáveis'
+		},
+		Card: {
+			your_wallet_balance: 'Seu saldo'
+		}
 	}
 };
