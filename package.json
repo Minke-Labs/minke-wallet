@@ -60,6 +60,7 @@
     "expo-status-bar": "~1.2.0",
     "global": "^4.4.0",
     "https-browserify": "0.0.1",
+    "i18n-js": "^3.9.2",
     "lodash": "^4.17.21",
     "main": "^1000.0.1",
     "metro": "^0.67.0",
@@ -112,6 +113,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@types/i18n-js": "^3.8.2",
     "@types/lodash": "^4.14.175",
     "@types/qs": "^6.9.7",
     "@types/react": "~17.0.21",
