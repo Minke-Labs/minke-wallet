@@ -1,28 +1,13 @@
 import React, { createContext, useMemo, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Location from 'expo-location';
+import * as Localization from 'expo-localization';
 import { LocationContextProps } from './LocationContext.types';
 import { mock, currencies, currencyByIso } from './LocationContext.utils';
 
 export const LocationContext = createContext<LocationContextProps>(mock);
 
 const LocationProvider: React.FC = ({ children }) => {
-	const [errorMsg, setErrorMsg] = useState<string>();
-	const [countryCode, setCountryCode] = useState<string | null>('');
-
-	useEffect(() => {
-		(async () => {
-			const { status } = await Location.requestForegroundPermissionsAsync();
-			if (status !== 'granted') {
-				setErrorMsg('Permission to access location was denied');
-				return;
-			}
-
-			const coords = await Location.getCurrentPositionAsync({});
-			const countryObj = await Location.reverseGeocodeAsync(coords.coords);
-			setCountryCode(countryObj[0].isoCountryCode);
-		})();
-	}, []);
+	const [countryCode, setCountryCode] = useState<string | null>(Localization.region);
 
 	useEffect(() => {
 		const fetchLocation = async () => {
@@ -47,9 +32,8 @@ const LocationProvider: React.FC = ({ children }) => {
 		() => ({
 			countryCode,
 			setCountryCode: saveLocation,
-			errorMsg,
 			currencies,
-			locationCurrency: locationCurrency!.currency
+			locationCurrency: locationCurrency?.currency ?? mock.currencies[0].currency
 		}),
 		[countryCode]
 	);
