@@ -1,27 +1,18 @@
 import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
+import { TransactionPeriod } from '@components';
+import { useTheme } from '@hooks';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
 import HeaderContainer from './HeaderContainer/HeaderContainer';
-import Body from './Body/Body';
 import { useTransactionsScreen } from './TransactionsScreen.hooks';
+import { makeStyles } from './TransactionsScreen.styles';
 
 const TransactionsScreen = () => {
 	const { transactions, active, setActive } = useTransactionsScreen();
-
-	const renderFooter = () => (
-		<View
-			style={{
-				position: 'relative',
-				paddingVertical: 20,
-				marginTop: 10,
-				marginBottom: 10
-			}}
-		>
-			<ActivityIndicator animating size="large" />
-		</View>
-	);
+	const { colors } = useTheme();
+	const styles = makeStyles(colors);
 
 	return (
 		<BasicLayout>
@@ -30,7 +21,11 @@ const TransactionsScreen = () => {
 				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
 
-			<Body transactions={transactions} {...{ renderFooter }} />
+			<View style={styles.container}>
+				{transactions.map(({ data, title }) => (
+					<TransactionPeriod data={data} title={title} key={title} />
+				))}
+			</View>
 		</BasicLayout>
 	);
 };

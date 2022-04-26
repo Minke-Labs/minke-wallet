@@ -1,20 +1,24 @@
 import React from 'react';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { ZapperTransaction } from '@models/wallet';
+import { useTransactions } from '@hooks';
+import { TransactionPeriod } from '@src/contexts/TransactionsContext/TransactionsContext';
 
 export const useTransactionsScreen = () => {
 	const [active, setActive] = React.useState(0);
+	const { transactions } = useTransactions();
 
-	const wallet = useState(globalWalletState());
-	const { transactions = [] } = wallet.value;
-
-	const filteredTransactions = (txs: ZapperTransaction[]) => {
+	const filteredTransactions = (txs: TransactionPeriod[]): TransactionPeriod[] => {
 		if (active === 1) {
-			return txs.filter((tx: ZapperTransaction) => tx.direction === 'outgoing');
+			return txs.map(({ data, title }) => ({
+				title,
+				data: data.filter((tx: ZapperTransaction) => tx.direction === 'outgoing')
+			}));
 		}
 		if (active === 2) {
-			return txs.filter((tx: ZapperTransaction) => tx.direction === 'incoming');
+			return txs.map(({ data, title }) => ({
+				title,
+				data: data.filter((tx: ZapperTransaction) => tx.direction === 'incoming')
+			}));
 		}
 		return txs;
 	};
