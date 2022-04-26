@@ -13,7 +13,7 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds
 		return (
 			<View style={styles.container}>
 				{homeTransactions.map(({ data, title }) => (
-					<TransactionPeriod data={data.slice(0, 10)} title={title} key={title} />
+					<TransactionPeriod data={data} title={title} key={title} />
 				))}
 
 				<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
