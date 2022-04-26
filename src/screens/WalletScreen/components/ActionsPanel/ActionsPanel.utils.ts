@@ -1,13 +1,14 @@
+import i18n from '@localization';
+
 const actions = [
-	{ name: 'Send', icon: 'sendStroke' },
-	{ name: 'Exchange', icon: 'exchangeStroke' },
-	{ name: 'Receive', icon: 'receiveStroke' },
-	{ name: 'Copy address', icon: 'copyStroke' }
-	// { name: 'Switch accounts', icon: 'avatarStroke' },
+	{ name: i18n.t('WalletScreen.ActionPanel.send'), icon: 'sendStroke' },
+	{ name: i18n.t('WalletScreen.ActionPanel.exchange'), icon: 'exchangeStroke' },
+	{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receiveStroke' },
+	{ name: i18n.t('WalletScreen.ActionPanel.copy_address'), icon: 'copyStroke' }
 ];
 
 if (__DEV__) {
-	actions.push({ name: 'Delete wallet', icon: 'closeStroke' });
+	actions.push({ name: i18n.t('WalletScreen.ActionPanel.delete_wallet'), icon: 'closeStroke' });
 }
 
 export { actions };

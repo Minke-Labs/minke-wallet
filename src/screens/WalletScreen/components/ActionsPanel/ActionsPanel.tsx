@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { IconType } from '@styles';
+import i18n from '@localization';
 import styles from './ActionsPanel.styles';
 import { Card } from './Card/Card';
 import { ActionsPanelProps } from './ActionsPanel.types';
@@ -16,17 +17,17 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 }) => {
 	const chooseFnc = (name: string) => {
 		switch (name) {
-			case 'Send':
+			case i18n.t('WalletScreen.ActionPanel.send'):
 				return setSendModalOpen;
-			case 'Exchange':
+			case i18n.t('WalletScreen.ActionPanel.exchange'):
 				return onExchange;
-			case 'Receive':
+			case i18n.t('WalletScreen.ActionPanel.receive'):
 				return showReceive;
-			case 'Copy address':
+			case i18n.t('WalletScreen.ActionPanel.copy_address'):
 				return onCopyToClipboard;
-			case 'Switch accounts':
+			case i18n.t('WalletScreen.ActionPanel.switch_accounts'):
 				return onSwitchAccounts;
-			case 'Delete wallet':
+			case i18n.t('WalletScreen.ActionPanel.delete_wallet'):
 				return onDeleteWallet;
 			default:
 				return () => {};

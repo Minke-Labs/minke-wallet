@@ -4,6 +4,7 @@ import { useState } from '@hookstate/core';
 import { useAmplitude, useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import i18n from '@localization';
 import { walletDelete, getAllWallets } from '@models/wallet';
 import { ResultProps } from './WalletScreen.types';
 
@@ -20,9 +21,9 @@ export const useWalletScreen = () => {
 	const [sentTransaction, setSentTransaction] = React.useState<ResultProps>();
 
 	const onDeleteWallet = () =>
-		Alert.alert('Are you sure?', '', [
+		Alert.alert(i18n.t('WalletScreen.ActionPanel.are_you_sure'), '', [
 			{
-				text: 'Cancel',
+				text: i18n.t('WalletScreen.ActionPanel.cancel'),
 				style: 'cancel'
 			},
 			{

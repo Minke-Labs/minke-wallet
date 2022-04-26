@@ -12,6 +12,7 @@ import {
 	todayTimestamp,
 	yesterdayTimestamp
 } from '@src/components/Transaction/Transaction.utils';
+import i18n from '@localization';
 import { NoTransactionsYet } from '../NoTransactionsYet/NoTransactionsYet';
 import { TransactionsTableProps } from './TransactionsTable.types';
 import styles from './TransactionsTable.styles';
@@ -26,9 +27,9 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds
 	const groupTransactionByDate = ({ timeStamp }: { timeStamp: string }) => {
 		const ts = parseInt(timeStamp, 10) * 1000;
 
-		if (ts > todayTimestamp) return 'Today';
-		if (ts > yesterdayTimestamp) return 'Yesterday';
-		if (ts > thisMonthTimestamp) return 'This Month';
+		if (ts > todayTimestamp) return i18n.t('WalletScreen.TransactionsTable.today');
+		if (ts > yesterdayTimestamp) return i18n.t('WalletScreen.TransactionsTable.yesterday');
+		if (ts > thisMonthTimestamp) return i18n.t('WalletScreen.TransactionsTable.this_month');
 
 		return format(ts, `MMMM${ts > thisYearTimestamp ? '' : ' yyyy'}`);
 	};
@@ -53,7 +54,11 @@ export const TransactionsTable: React.FC<TransactionsTableProps> = ({ onAddFunds
 					</View>
 				))}
 
-				<Button onPress={onSeeAllTransactions} mode="text" title="See all" />
+				<Button
+					onPress={onSeeAllTransactions}
+					mode="text"
+					title={i18n.t('WalletScreen.TransactionsTable.see_all')}
+				/>
 			</View>
 		);
 	}

@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
+import i18n from '@localization';
 import { network } from '@src/model/network';
 import { truncate } from './Transaction.utils';
 
@@ -35,7 +36,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	const toToken = subTransactions.find(({ type }) => type === 'incoming');
 	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
-	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
+	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, 6));
 
 	useEffect(() => {
 		const formatAddress = async () => {
@@ -48,7 +49,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 					const ensContact = await searchContact(ens);
 					setFormattedSource(ensContact?.name || ens);
 				} else {
-					setFormattedSource(smallWalletAddress(source));
+					setFormattedSource(smallWalletAddress(source, 6));
 				}
 			}
 		};
@@ -62,9 +63,9 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 			if (nets.includes(name)) return 'Etherscan';
 			return 'Polygonscan';
 		};
-		Alert.alert(`View on ${getNetwork()}?`, '', [
+		Alert.alert(`${i18n.t('Transaction.view_on')} ${getNetwork()}?`, '', [
 			{
-				text: 'Cancel',
+				text: i18n.t('Transaction.cancel'),
 				style: 'cancel'
 			},
 			{
@@ -78,10 +79,10 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	};
 
 	const subtitle = topUp
-		? 'Adding via Apple Pay'
+		? i18n.t('Transaction.adding_via_apple_pay')
 		: exchange
-		? `Swap ${sourceToken?.symbol} to ${toToken?.symbol}`
-		: `${received ? 'From' : 'To'}: ${formattedSource}`;
+		? i18n.t('Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
+		: `${received ? i18n.t('Transaction.from') : i18n.t('Transaction.to')}: ${formattedSource}`;
 
 	return {
 		received,

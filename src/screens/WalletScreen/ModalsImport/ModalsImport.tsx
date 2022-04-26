@@ -3,6 +3,7 @@ import { Snackbar } from 'react-native-paper';
 import { Text, Modal } from '@components';
 import { AddFunds } from '@containers';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import i18n from '@localization';
 import { SendModal, ReceiveModal } from '../Modals';
 import { ResultProps } from '../WalletScreen.types';
 import { ModalsImportProps } from './ModalsImport.types';
@@ -23,7 +24,7 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 }) => (
 	<>
 		<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-			<Text color="text11">Address copied!</Text>
+			<Text color="text11">{i18n.t('WalletScreen.ModalsImport.address_copied')}</Text>
 		</Snackbar>
 
 		<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>

@@ -64,5 +64,55 @@ export default {
 	},
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
+	},
+	WalletScreen: {
+		Content: {
+			transactions: 'Transações',
+			accounts: 'Contas'
+		},
+		Header: {
+			welcome: 'Olá'
+		},
+		AssetsPanel: {
+			your_total_assets: 'Seus ativos',
+			add_funds: 'Adicionar Fundos',
+			save: 'Investir'
+		},
+		ActionPanel: {
+			send: 'Enviar',
+			exchange: 'Câmbio',
+			receive: 'Receber',
+			copy_address: 'Copiar endereço',
+			delete_wallet: 'Apagar carteira',
+			are_you_sure: 'Você tem certeza?',
+			cancel: 'Cancelar'
+		},
+		ModalsImport: {
+			address_copied: 'Endereço copiado!'
+		},
+		TransactionsTable: {
+			today: 'Hoje',
+			yesterday: 'Ontem',
+			this_month: 'Nesse mês',
+			see_all: 'Ver todas'
+		}
+	},
+	Transaction: {
+		failed: 'Falhou',
+		view_on: 'Ver em',
+		cancel: 'Cancelar',
+		adding_via_apple_pay: 'Adicionando via Apple Pay',
+		swap: 'Câmbio %{source} para %{dest}',
+		from: 'De',
+		to: 'Para'
+	},
+	Accounts: {
+		wallet: 'Carteira',
+		available_funds_in_your_wallet: 'Fundos na sua carteira',
+		savings: 'Investimentos',
+		funds_deposited_in_savings: 'Fundos investidos',
+		borrowing: 'Empréstimos',
+		open_loans: 'Empréstimos em aberto',
+		coming_soon: 'Em breve'
 	}
 };

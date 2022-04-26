@@ -55,6 +55,7 @@ export default {
 		title: 'Settings',
 		creating_wallet: 'Creating wallet',
 		backup: 'Backup',
+		currency: 'Currency',
 		network: 'Network',
 		new_wallet: 'New wallet',
 		usd_coin: 'US Dollar coin',
@@ -63,5 +64,55 @@ export default {
 	},
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'This can take a few seconds'
+	},
+	WalletScreen: {
+		Content: {
+			transactions: 'Transactions',
+			accounts: 'Accounts'
+		},
+		Header: {
+			welcome: 'Welcome'
+		},
+		AssetsPanel: {
+			your_total_assets: 'Your total assets',
+			add_funds: 'Add Funds',
+			save: 'Save'
+		},
+		ActionPanel: {
+			send: 'Send',
+			exchange: 'Exchange',
+			receive: 'Receive',
+			copy_address: 'Copy address',
+			delete_wallet: 'Delete wallet',
+			are_you_sure: 'Are you sure?',
+			cancel: 'Cancel'
+		},
+		ModalsImport: {
+			address_copied: 'Address copied!'
+		},
+		TransactionsTable: {
+			today: 'Today',
+			yesterday: 'Yesterday',
+			this_month: 'This Month',
+			see_all: 'See all'
+		}
+	},
+	Transaction: {
+		failed: 'Failed',
+		view_on: 'View on',
+		cancel: 'Cancel',
+		adding_via_apple_pay: 'Adding via Apple Pay',
+		swap: 'Swap %{source} to %{dest}',
+		from: 'Received from',
+		to: 'Sent to'
+	},
+	Accounts: {
+		wallet: 'Wallet',
+		available_funds_in_your_wallet: 'Available funds in your wallet',
+		savings: 'Savings',
+		funds_deposited_in_savings: 'Funds deposited in savings',
+		borrowing: 'Borrowing',
+		open_loans: 'Open loans',
+		coming_soon: 'Coming soon'
 	}
 };

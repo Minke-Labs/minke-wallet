@@ -5,14 +5,15 @@ import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
 import { useNavigation, useTheme } from '@hooks';
 import { IconType } from '@styles';
-import { numberFormat, tokenBalanceFormat } from '@src/helpers/utilities';
+import { numberFormat } from '@src/helpers/utilities';
+import i18n from '@localization';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
-const Right: React.FC<{ balanceType: number; token?: boolean }> = ({ balanceType, token = false }) => (
+const Right: React.FC<{ balanceType: number }> = ({ balanceType }) => (
 	<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 		<Text weight="bold" type="p2">
-			{token ? `$${tokenBalanceFormat(balanceType, 2)}` : numberFormat(balanceType || 0)}
+			{numberFormat(balanceType || 0)}
 		</Text>
 		<Icon name="arrowForwardStroke" size={16} color="text7" />
 	</View>
@@ -31,7 +32,7 @@ const ComingSoonTag = () => {
 				}}
 			>
 				<Text color="text2" type="span">
-					Coming soon
+					{i18n.t('Accounts.coming_soon')}
 				</Text>
 			</View>
 		</View>
@@ -45,22 +46,22 @@ const Accounts = () => {
 	const cardArr = useMemo(
 		() => [
 			{
-				title: 'Wallet',
-				subtitle: 'Available funds in your wallet',
+				title: i18n.t('Accounts.wallet'),
+				subtitle: i18n.t('Accounts.available_funds_in_your_wallet'),
 				image: 'wallet2Stroke',
 				onPress: () => navigation.navigate('WalletAssetsScreen'),
 				right: <Right balanceType={balance?.walletBalance || 0} />
 			},
 			{
-				title: 'Savings',
-				subtitle: 'Funds deposited in savings',
+				title: i18n.t('Accounts.savings'),
+				subtitle: i18n.t('Accounts.funds_deposited_in_savings'),
 				image: 'vaultStroke',
 				onPress: () => navigation.navigate('SaveScreen'),
-				right: <Right balanceType={balance?.depositedBalance || 0} token />
+				right: <Right balanceType={balance?.depositedBalance || 0} />
 			},
 			{
-				title: 'Borrowing',
-				subtitle: 'Open loans',
+				title: i18n.t('Accounts.borrowing'),
+				subtitle: i18n.t('Accounts.open_loans'),
 				image: 'borrowStroke',
 				onPress: () => null,
 				right: <ComingSoonTag />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions } from '@hooks';
+import i18n from '@localization';
 import { AssetsPanel, ActionsPanel, Header } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
@@ -23,8 +24,8 @@ export const Content: React.FC<ContentProps> = ({
 
 	return (
 		<TabLayout
-			leftTitle="Transactions"
-			rightTitle="Accounts"
+			leftTitle={i18n.t('WalletScreen.Content.transactions')}
+			rightTitle={i18n.t('WalletScreen.Content.accounts')}
 			left={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			right={<Accounts />}
 			{...{ loading, fetchTransactions }}
