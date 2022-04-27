@@ -18,4 +18,5 @@ declare module '@env' {
 	export const ALCHEMY_API_KEY_MATIC: string;
 	export const ALCHEMY_API_KEY_ROPSTEN: string;
 	export const ALCHEMY_API_KEY_KOVAN: string;
+	export const APPS_FLYER_DEV_KEY: string;
 }
