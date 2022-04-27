@@ -20,7 +20,7 @@ export const convertTransactionResponse = ({
 	return {
 		from,
 		destination: to!,
-		timeStamp: (timestamp || new Date().getTime()).toString(),
+		timeStamp: (timestamp || new Date().getTime() / 1000).toString(),
 		txSuccessful: pending || !!blockHash,
 		hash,
 		pending,

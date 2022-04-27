@@ -192,7 +192,7 @@ const useExchangeResumeScreen = () => {
 					hash,
 					txSuccessful: status === 1,
 					pending: true,
-					timeStamp: new Date().getTime().toString(),
+					timeStamp: (new Date().getTime() / 1000).toString(),
 					amount: toAmount!,
 					direction: 'exchange',
 					symbol: to.symbol,
