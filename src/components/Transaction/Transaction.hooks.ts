@@ -90,7 +90,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		failed: !txSuccessful,
 		pending,
 		topUp,
-		title: format(timestamp, "h'h'mm aaa"),
+		title: format(timestamp, 'h:mm aaa'),
 		subtitle,
 		exchange,
 		openTransaction
