@@ -166,14 +166,12 @@ export const ether: ParaswapToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	img: 'https://img.paraswap.network/ETH.png',
 	network: 1
 };
 
 export const matic: ParaswapToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	img: 'https://img.paraswap.network/MATIC.png',
 	network: 137,
 	symbol: 'MATIC'
 };
@@ -192,7 +190,6 @@ export interface ParaswapToken {
 	symbol: string;
 	address: string;
 	decimals: number;
-	img: string;
 	network?: number;
 }
 

@@ -4,7 +4,15 @@ import { useState } from '@hookstate/core';
 import { ParaswapToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import useDeposits from '@src/hooks/useDeposits';
-import { useAmplitude, useNavigation, useTokens, useNativeToken, useBiconomy, useTransactions } from '@hooks';
+import {
+	useAmplitude,
+	useNavigation,
+	useTokens,
+	useNativeToken,
+	useBiconomy,
+	useTransactions,
+	useDeposit
+} from '@hooks';
 import Logger from '@utils/logger';
 import { getProvider } from '@models/wallet';
 import { Wallet } from 'ethers';
@@ -32,6 +40,7 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
+	const { defaultToken } = useDeposit();
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -192,6 +201,12 @@ const useWithdrawScreen = () => {
 			setTokenBalance('0');
 		}
 	}, [tokens, token]);
+
+	useEffect(() => {
+		if (!!defaultToken && !token) {
+			setToken(defaultToken);
+		}
+	}, [defaultToken]);
 
 	return {
 		searchVisible,

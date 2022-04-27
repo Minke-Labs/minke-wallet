@@ -6,7 +6,7 @@ import useTokens from './useTokens';
 const useDeposits = () => {
 	const [tokens, setTokens] = React.useState<MinkeToken[]>();
 	const { address: walletAddress, aaveBalances } = useSaveScreen();
-	const { interestTokens } = useTokens();
+	const { interestTokens = [] } = useTokens();
 
 	useEffect(() => {
 		const loadTokens = async () => {
