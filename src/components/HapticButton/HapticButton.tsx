@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { useTheme, useAuthentication } from '@hooks';
 import * as Haptics from 'expo-haptics';
 
@@ -23,6 +23,7 @@ const HapticButton: React.FC<HapticButtonProps> = ({ disabled = false, title, ma
 	};
 
 	const onPressOut = () => {
+		Keyboard.dismiss();
 		showAuthenticationPrompt({
 			onSuccess: () => {
 				onPress();
