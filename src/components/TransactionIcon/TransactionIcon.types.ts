@@ -4,6 +4,8 @@ interface TransactionIconProps {
 	failed: boolean;
 	topUp: boolean;
 	exchange: boolean;
+	deposit: boolean;
+	withdraw: boolean;
 }
 
 export type { TransactionIconProps };

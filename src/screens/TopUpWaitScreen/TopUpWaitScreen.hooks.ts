@@ -31,7 +31,7 @@ export const useTopUpWaitScreen = () => {
 				hash,
 				txSuccessful: true,
 				pending: true,
-				timeStamp: new Date().getTime().toString(),
+				timeStamp: (new Date().getTime() / 1000).toString(),
 				amount: sourceAmount,
 				destination: address,
 				from: address,

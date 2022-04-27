@@ -21,12 +21,11 @@ export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 };
 
 export const aaveMarketTokenToParaswapToken = ({ tokens }: AaveMarket): ParaswapToken => {
-	const { address, decimals, symbol, tokenImageUrl, network } = tokens[0];
+	const { address, decimals, symbol, network } = tokens[0];
 	return {
 		address,
 		decimals,
 		symbol,
-		img: tokenImageUrl,
 		network: +network
 	};
 };
