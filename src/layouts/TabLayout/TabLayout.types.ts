@@ -5,6 +5,6 @@ export interface TabLayoutProps {
 	right: React.ReactChild;
 	leftTitle: string;
 	rightTitle: string;
-	fetchTransactions: () => Promise<void>;
+	fetchTransactions: () => void;
 	loading: boolean;
 }

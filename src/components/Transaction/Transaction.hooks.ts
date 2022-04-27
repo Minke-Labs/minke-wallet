@@ -86,7 +86,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	return {
 		received,
 		value: truncate((exchange ? toToken?.amount : amount)!, 6),
-		token: exchange ? toToken?.symbol : symbol,
+		token: exchange ? toToken?.symbol : (received ? toToken?.symbol : sourceToken?.symbol) || symbol,
 		failed: !txSuccessful,
 		pending,
 		topUp,
