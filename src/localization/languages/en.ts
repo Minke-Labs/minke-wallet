@@ -69,6 +69,11 @@ export default {
 	ChangeCurrencyScreen: {
 		header_title: 'Change Currency'
 	},
+	ChangeNetworkScreen: {
+		ListItem: {
+			test_network: 'test network'
+		}
+	},
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		asset_header: 'Asset',
