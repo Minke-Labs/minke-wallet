@@ -86,6 +86,13 @@ export default {
 		you_deposited: 'Você fez o seu depósito!',
 		you_withdrawed: 'Você retirou com sucesso!'
 	},
+	ExchangeResumeScreen: {
+		exchange_resume: 'Resumo da Troca',
+		rate_fixed_for: 'Taxa fixa para:',
+		rate: 'Taxa',
+		swapping_via: 'Trocando via'
+	},
+
 	WalletAssetsScreen: {
 		header: 'Carteira',
 		asset_header: 'Ativo',
@@ -209,7 +216,8 @@ export default {
 			backup_to_icloud: 'Faça o Backup no iCloud',
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',
-			done: 'Feito'
+			done: 'Feito',
+			exchange: 'Permuta'
 		},
 		ModalReusables: {
 			Error: {

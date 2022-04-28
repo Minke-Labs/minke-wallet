@@ -3,42 +3,13 @@ import { View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import { Svg, Path } from 'react-native-svg';
-import { ParaswapToken } from '@models/token';
 import { BasicLayout } from '@layouts';
-import { TokenType } from '@styles';
-import { Icon, Modal, Text, Token, ActivityIndicator, HapticButton, ModalReusables } from '@components';
-import { tokenBalanceFormat } from '@helpers/utilities';
+import { Icon, Modal, Text, ActivityIndicator, HapticButton, ModalReusables } from '@components';
+import i18n from '@localization';
 import { formatUnits } from 'ethers/lib/utils';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
-
-const TokenDetail = ({
-	token,
-	amount,
-	usdAmount
-}: {
-	token: ParaswapToken;
-	amount: string;
-	usdAmount: number | undefined;
-}) => (
-	<View style={{ flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', padding: 16 }}>
-		<View style={{ borderRadius: 50, borderWidth: 2, borderColor: 'rgba(98, 126, 234, 0.2)', marginRight: 8 }}>
-			<Token size={34} name={token.symbol.toLowerCase() as TokenType} glow />
-		</View>
-		<View>
-			{usdAmount ? (
-				<Text type="p2" weight="extraBold" color="text2">
-					${tokenBalanceFormat(usdAmount, 4)}
-				</Text>
-			) : (
-				<ActivityIndicator />
-			)}
-			<Text type="a" weight="medium" color="text2">
-				{amount} {token.symbol}
-			</Text>
-		</View>
-	</View>
-);
+import { TokenDetail } from './TokenDetail/TokenDetail';
 
 const ExchangeResumeScreen = () => {
 	const {
@@ -77,7 +48,7 @@ const ExchangeResumeScreen = () => {
 						>
 							<Icon name="arrowBackStroke" color="text7" size={24} />
 							<Text type="h3" weight="extraBold">
-								Exchange Resume
+								{i18n.t('ExchangeResumeScreen.exchange_resume')}
 							</Text>
 						</TouchableOpacity>
 					</View>
@@ -128,7 +99,7 @@ const ExchangeResumeScreen = () => {
 							<View style={styles.exchangeResumeRateFixedContainer}>
 								<View style={styles.exchangeResumeRateFixedLabel}>
 									<Text type="span" color="text2">
-										Rate fixed for:
+										{i18n.t('ExchangeResumeScreen.rate_fixed_for')}
 									</Text>
 								</View>
 								<View style={styles.exchangeResumeRateFixed}>
@@ -149,7 +120,7 @@ const ExchangeResumeScreen = () => {
 						<Card.Content>
 							<View style={(styles.summaryRow, styles.marginBottom)}>
 								<Text type="a" weight="medium" color="text3">
-									Rate
+									{i18n.t('ExchangeResumeScreen.rate')}
 								</Text>
 								<Text type="p2" weight="extraBold" color="text2">
 									{exchangeSummary()}
@@ -158,7 +129,7 @@ const ExchangeResumeScreen = () => {
 
 							<View style={styles.summaryRow}>
 								<Text type="a" weight="medium" color="text3">
-									Swapping via
+									{i18n.t('ExchangeResumeScreen.swapping_via')}
 								</Text>
 								<Text type="p2" weight="extraBold" color="text2">
 									{exchangeName}
@@ -173,14 +144,14 @@ const ExchangeResumeScreen = () => {
 
 					<View style={{ marginBottom: 32 }} />
 
-					<View
-						style={{
-							marginTop: 'auto',
-							marginBottom: 16
-						}}
-					>
+					<View style={{ marginTop: 'auto', marginBottom: 16 }}>
 						{priceQuote &&
-							(loading ? <ActivityIndicator /> : <HapticButton title="Exchange" onPress={onSuccess} />)}
+							(loading ?
+								<ActivityIndicator /> :
+								<HapticButton
+									title={i18n.t('Components.Buttons.exchange')}
+									onPress={onSuccess}
+								/>)}
 					</View>
 				</View>
 			</BasicLayout>

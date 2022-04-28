@@ -87,6 +87,13 @@ export default {
 		you_deposited: 'You\'ve made your deposit!',
 		you_withdrawed: 'You\'ve withdrawed successfully!'
 	},
+	ExchangeResumeScreen: {
+		exchange_resume: 'Exchange Resume',
+		rate_fixed_for: 'Rate fixed for:',
+		rate: 'Rate',
+		swapping_via: 'Swapping via'
+	},
+
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		asset_header: 'Asset',
@@ -209,7 +216,8 @@ export default {
 			backup_to_icloud: 'Back up to iCloud',
 			confirm_restore: 'Confirm restore',
 			confirm_backup: 'Confirm backup',
-			done: 'Done'
+			done: 'Done',
+			exchange: 'Exchange'
 		},
 		ModalReusables: {
 			Error: {
