@@ -152,6 +152,15 @@ export default {
 			funds_being_deposited: 'Your funds are being deposited into your wallet...'
 		}
 	},
+	TransactionsScreen: {
+		transactions: 'Transactions',
+		all: 'All',
+		sent: 'Sent',
+		received: 'Received'
+	},
+	USDCoinScreen: {
+		usd_asset: 'USD Asset'
+	},
 
 	WalletAssetsScreen: {
 		header: 'Wallet',
@@ -219,12 +228,6 @@ export default {
 		borrowing: 'Borrowing',
 		open_loans: 'Open loans',
 		coming_soon: 'Coming soon'
-	},
-	TransactionsScreen: {
-		transactions: 'Transactions',
-		all: 'All',
-		sent: 'Sent',
-		received: 'Received'
 	},
 	iCloudBackup: {
 		BACKING_UP_WALLET: 'Backing up...',
