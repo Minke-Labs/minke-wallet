@@ -74,6 +74,14 @@ export default {
 			test_network: 'test network'
 		}
 	},
+	DepositScreen: {
+		NotAbleToSaveModal: {
+			not_able: 'Not able to save',
+			need_funds_in: 'First you need to have funds in ',
+			add_funds: 'Add funds',
+			exchange: 'Exchange'
+		}
+	},
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		asset_header: 'Asset',

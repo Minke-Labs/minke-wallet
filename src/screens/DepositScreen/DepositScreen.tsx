@@ -3,7 +3,7 @@ import { Modal, ScreenLoadingIndicator } from '@components';
 import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
 import OpenAave from './OpenAave/OpenAave';
-import { NotAbleToSaveModal } from '../WalletScreen/Modals';
+import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {

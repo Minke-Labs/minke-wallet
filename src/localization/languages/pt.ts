@@ -74,6 +74,13 @@ export default {
 			test_network: 'test network'
 		}
 	},
+	DepositScreen: {
+		NotAbleToSaveModal: {
+			not_able: 'Não foi possível salvar',
+			need_funds_in: 'Primeiro você precisa ter fundos em ',
+			add_funds: 'Adicionar fundos'
+		}
+	},
 	WalletAssetsScreen: {
 		header: 'Carteira',
 		asset_header: 'Ativo',
