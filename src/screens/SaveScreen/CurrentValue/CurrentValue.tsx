@@ -4,6 +4,7 @@ import { useTheme, useNavigation } from '@hooks';
 import { tokenBalanceFormat } from '@src/helpers/utilities';
 import { Text, Icon } from '@components';
 import { BlurView } from 'expo-blur';
+import i18n from '@localization';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
 
@@ -17,7 +18,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 		<View style={styles.container}>
 			<BlurView intensity={12} tint={scheme === 'dark' ? 'dark' : 'light'} style={styles.glassContainer}>
 				<Text type="p2" color="text3" marginBottom={8}>
-					Current deposits
+					{i18n.t('SaveScreen.CurrentValue.current_deposits')}
 				</Text>
 				<Text type="textLarge" weight="medium" marginBottom={14}>
 					${tokenBalanceFormat(depositsBalance, 2)}
@@ -26,7 +27,8 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 					<View style={styles.interestContainer}>
 						<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 						<Text weight="medium" type="a" color="alert3">
-							{(aaveMarket.supplyApy * 100).toFixed(2)}% interest p.a.
+							{(aaveMarket.supplyApy * 100).toFixed(2)}
+							{i18n.t('SaveScreen.interest')}
 						</Text>
 					</View>
 				)}
@@ -38,13 +40,13 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 				>
 					<Icon name="minusStroke" color="cta1" size={20} />
 					<Text marginBottom={4} style={{ marginLeft: 8 }}>
-						Withdraw
+						{i18n.t('SaveScreen.CurrentValue.withdraw')}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('DepositScreen')}>
 					<Icon name="saveStroke" color="cta1" size={20} />
 					<Text marginBottom={4} style={{ marginLeft: 8 }}>
-						Deposit
+						{i18n.t('SaveScreen.CurrentValue.deposit')}
 					</Text>
 				</TouchableOpacity>
 			</View>

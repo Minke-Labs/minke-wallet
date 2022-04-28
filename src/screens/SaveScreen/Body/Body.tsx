@@ -4,6 +4,7 @@ import { useTheme, useNavigation } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { Text, Card, Button, TransactionIcon } from '@components';
+import i18n from '@localization';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
 
@@ -24,7 +25,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 							<Card
 								image={<TransactionIcon received />}
 								title={symbol}
-								subtitle="Deposit"
+								subtitle={i18n.t('Components.Buttons.deposit')}
 								marginBottom={index === interestTokens.length - 1 ? 0 : 32}
 								right={
 									<View>
@@ -41,7 +42,10 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 					}}
 				/>
 			</View>
-			<Button title="Deposit" onPress={() => navigation.navigate('DepositScreen')} />
+			<Button
+				title={i18n.t('Components.Buttons.deposit')}
+				onPress={() => navigation.navigate('DepositScreen')}
+			/>
 		</View>
 	);
 };

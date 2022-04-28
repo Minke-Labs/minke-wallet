@@ -100,6 +100,31 @@ export default {
 			}
 		}
 	},
+	ManualBackupScreen: {
+		done: 'Pronto',
+		recovery_phrase: 'Frase de recuperação',
+		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
+		address_copied: 'Endereço copiado!',
+		Warning: {
+			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
+			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
+		}
+	},
+	SaveScreen: {
+		EmptyState: {
+			save: 'Salvar',
+			open_aave_savings_account: 'Abrir Conta\nPoupança na Aave',
+			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
+		},
+		Header: {
+			save: 'Salvar'
+		},
+		CurrentValue: {
+			current_deposits: 'Depósitos atuais',
+			withdraw: 'Retirar',
+			deposit: 'Depositar'
+		}
+	},
 
 	WalletAssetsScreen: {
 		header: 'Carteira',
@@ -200,16 +225,6 @@ export default {
 			GENERIC_ERROR: 'Ocorreu um erro durante o backup. Código de erro: %{code}'
 		}
 	},
-	ManualBackupScreen: {
-		done: 'Pronto',
-		recovery_phrase: 'Frase de recuperação',
-		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
-		address_copied: 'Endereço copiado!',
-		Warning: {
-			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
-			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
-		}
-	},
 	CopyButton: {
 		copy_to_clipboard: 'Copiar para área de transferência'
 	},
@@ -226,7 +241,8 @@ export default {
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',
 			done: 'Feito',
-			exchange: 'Permuta'
+			exchange: 'Permuta',
+			deposit: 'Depositar'
 		},
 		ModalReusables: {
 			Error: {
