@@ -8,6 +8,7 @@ import { network } from '@models/network';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
+import i18n from '@localization';
 import { makeStyles } from '../../ExchangeScreen.styles';
 
 interface Wait {
@@ -157,7 +158,9 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 						<Text type="span" weight="bold">
 							${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}
 						</Text>
-						<Text type="span">Transaction Fee</Text>
+						<Text type="span">
+							{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}
+						</Text>
 					</View>
 				</Card.Content>
 			</Card>

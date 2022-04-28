@@ -9,6 +9,7 @@ import { BasicLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import i18n from '@localization';
 import SearchTokens from './SearchTokens/SearchTokens';
 import GasSelector from './GasSelector/GasSelector';
 import TokenCard from '../../components/TokenCard/TokenCard';
@@ -66,7 +67,7 @@ const ExchangeScreen = () => {
 			return (
 				<>
 					<Text type="span" weight="regular" color="text3">
-						Fetching...
+						{i18n.t('ExchangeScreen.fetching')}
 					</Text>
 					<ActivityIndicator size={16} />
 				</>
@@ -89,7 +90,7 @@ const ExchangeScreen = () => {
 						<View style={styles.exchangeSection}>
 							<View style={styles.exchangeHeadlineRow}>
 								<Text type="h3" weight="extraBold">
-									Exchange
+									{i18n.t('ExchangeScreen.exchange')}
 								</Text>
 								<ExchangeSummary />
 							</View>
@@ -138,7 +139,8 @@ const ExchangeScreen = () => {
 						</View>
 
 						<View style={[styles.exchangeSection, styles.exchangeButton]}>
-							{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}
+							{!loadingPrices && !enoughForGas &&
+							<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 
 							{loadingPrices ? (
 								<ActivityIndicator />

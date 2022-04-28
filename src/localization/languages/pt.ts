@@ -92,6 +92,14 @@ export default {
 		rate: 'Taxa',
 		swapping_via: 'Trocando via'
 	},
+	ExchangeScreen: {
+		fetching: 'Buscando...',
+		GasSelector: {
+			GasOption: {
+				transaction_fee: 'Taxa de transação'
+			}
+		}
+	},
 
 	WalletAssetsScreen: {
 		header: 'Carteira',
@@ -210,7 +218,8 @@ export default {
 		Inputs: {
 			enter_password: 'Entre a senha',
 			repeat_password: 'Repita a senha',
-			search: 'Procurar'
+			search: 'Procurar',
+			search_token: 'Procurar token'
 		},
 		Buttons: {
 			backup_to_icloud: 'Faça o Backup no iCloud',
@@ -227,10 +236,14 @@ export default {
 		},
 		SettingsHeader: {
 			done: 'Feito'
+		},
+		TokenCard: {
+			choose_token: 'Escolha um token'
 		}
 	},
 
 	Logs: {
-		couldnt_restore_backup: 'Não foi possível restaurar seus backups'
+		couldnt_restore_backup: 'Não foi possível restaurar seus backups',
+		not_enough_balance_for_gas: 'Não há saldo suficiente para gás'
 	}
 };

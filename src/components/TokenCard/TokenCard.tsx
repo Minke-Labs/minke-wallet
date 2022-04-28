@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TokenType } from '@styles';
 import { useTheme } from '@hooks';
+import i18n from '@localization';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
@@ -41,7 +42,9 @@ const TokenCard: React.FC<TokenCardProps> = ({
 							<View style={styles.currencyIcon}>
 								<Icon name="dollarStroke" color="cta1" size={32} />
 							</View>
-							<Text type="p2">Choose token</Text>
+							<Text type="p2">
+								{i18n.t('Components.TokenCard.choose_token')}
+							</Text>
 							<Icon name="chevronRight" color="cta1" size={16} />
 						</View>
 					</View>

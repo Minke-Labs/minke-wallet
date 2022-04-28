@@ -93,6 +93,15 @@ export default {
 		rate: 'Rate',
 		swapping_via: 'Swapping via'
 	},
+	ExchangeScreen: {
+		fetching: 'Fetching...',
+		exchange: 'Exchange',
+		GasSelector: {
+			GasOption: {
+				transaction_fee: 'Transaction Fee'
+			}
+		}
+	},
 
 	WalletAssetsScreen: {
 		header: 'Wallet',
@@ -210,7 +219,8 @@ export default {
 		Inputs: {
 			enter_password: 'Enter password',
 			repeat_password: 'Repeat password',
-			search: 'Search'
+			search: 'Search',
+			search_token: 'Search token'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to iCloud',
@@ -227,10 +237,14 @@ export default {
 		},
 		SettingsHeader: {
 			done: 'Done'
+		},
+		TokenCard: {
+			choose_token: 'Choose token'
 		}
 	},
 
 	Logs: {
-		couldnt_restore_backup: 'We could not restore your backups'
+		couldnt_restore_backup: 'We could not restore your backups',
+		not_enough_balance_for_gas: 'Not enough balance for gas'
 	}
 };

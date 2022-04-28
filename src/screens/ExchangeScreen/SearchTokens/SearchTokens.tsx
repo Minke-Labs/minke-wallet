@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import i18n from '@localization';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
@@ -97,7 +98,11 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
-				<SearchInput marginBottom={24} placeholder="Search token" {...{ search, onSearch }} />
+				<SearchInput
+					marginBottom={24}
+					placeholder={i18n.t('Components.Inputs.search_token')}
+					{...{ search, onSearch }}
+				/>
 				<FlatList
 					style={styles.list}
 					data={filterByExchangebleToken()}
