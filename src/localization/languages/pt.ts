@@ -178,10 +178,6 @@ export default {
 		need_backup: 'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
 		modal_error: 'Erro de backup'
 	},
-
-	LoadingScreen: {
-		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
-	},
 	WalletScreen: {
 		Content: {
 			transactions: 'Transações',
@@ -213,6 +209,23 @@ export default {
 			this_month: 'Nesse mês',
 			see_all: 'Ver todas'
 		}
+	},
+	WelcomeScreen: {
+		wave_goodbye: 'Diga adeus ao seu banco!',
+		easily: 'Economize, gaste e invista facilmente com',
+		creating: 'Criando carteira',
+		create: 'Criar Carteira',
+		import_or_restore: 'Importar ou Restorar Carteira',
+		ImportWalletModal: {
+			add_wallet: 'Adicionar Carteira',
+			seed_or_key: 'Frase semente ou chave privada',
+			importing: 'Importando carteira',
+			import: 'Importar Carteira'
+		}
+	},
+
+	LoadingScreen: {
+		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
 	},
 	Transaction: {
 		failed: 'Falhou',
