@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
 	AccountsScreen: {
 		import_or_restore: 'Importar ou Restaurar',
@@ -158,7 +159,6 @@ export default {
 	USDCoinScreen: {
 		usd_asset: 'Ativos USD'
 	},
-
 	WalletAssetsScreen: {
 		header: 'Carteira',
 		asset_header: 'Ativo',
@@ -173,6 +173,12 @@ export default {
 			your_wallet_balance: 'Seu saldo'
 		}
 	},
+	WalletCreatedScreen: {
+		wallet_created: 'Carteira Criada!',
+		need_backup: 'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
+		modal_error: 'Erro de backup'
+	},
+
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
 	},
@@ -254,6 +260,7 @@ export default {
 		},
 		Buttons: {
 			backup_to_icloud: 'Faça o Backup no iCloud',
+			backup_manually: 'Faça o Backup manualmente',
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',
 			done: 'Feito',
