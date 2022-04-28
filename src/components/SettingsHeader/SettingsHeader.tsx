@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import i18n from '@localization';
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
 import styles from './SettingsHeader.styles';
@@ -16,7 +17,7 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({ onPress, done = true, t
 		{done && (
 			<TouchableOpacity activeOpacity={0.6} {...{ onPress }}>
 				<Text weight="medium" color="text7" type="a">
-					Done
+					{i18n.t('Components.SettingsHeader.done')}
 				</Text>
 			</TouchableOpacity>
 		)}

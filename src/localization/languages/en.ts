@@ -66,6 +66,9 @@ export default {
 			enter_existing: 'your iCloud backup, enter your existing backup password'
 		}
 	},
+	ChangeCurrencyScreen: {
+		header_title: 'Change Currency'
+	},
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		asset_header: 'Asset',
@@ -181,7 +184,8 @@ export default {
 	Components: {
 		Inputs: {
 			enter_password: 'Enter password',
-			repeat_password: 'Repeat password'
+			repeat_password: 'Repeat password',
+			search: 'Search'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to iCloud',
@@ -193,6 +197,9 @@ export default {
 				description: 'Something went wrong, our developers have been notified.',
 				buttonLabel: 'Ok, got it'
 			}
+		},
+		SettingsHeader: {
+			done: 'Done'
 		}
 	},
 

@@ -66,6 +66,9 @@ export default {
 			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
 		}
 	},
+	ChangeCurrencyScreen: {
+		header_title: 'Alterar a Moeda'
+	},
 	WalletAssetsScreen: {
 		header: 'Carteira',
 		asset_header: 'Ativo',
@@ -182,7 +185,8 @@ export default {
 	Components: {
 		Inputs: {
 			enter_password: 'Entre a senha',
-			repeat_password: 'Repita a senha'
+			repeat_password: 'Repita a senha',
+			search: 'Procurar'
 		},
 		Buttons: {
 			backup_to_icloud: 'Faça o Backup no iCloud',
@@ -194,6 +198,9 @@ export default {
 				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
 				buttonLabel: 'Ok, entendi'
 			}
+		},
+		SettingsHeader: {
+			done: 'Feito'
 		}
 	},
 
