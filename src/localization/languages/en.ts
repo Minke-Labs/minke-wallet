@@ -226,6 +226,10 @@ export default {
 			import: 'Import Wallet'
 		}
 	},
+	WithdrawScreen: {
+		withdraw: 'Withdraw',
+		balance: 'Balance: '
+	},
 
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'This can take a few seconds'
@@ -281,6 +285,7 @@ export default {
 			done: 'Done',
 			exchange: 'Exchange',
 			deposit: 'Deposit',
+			withdraw: 'Withdraw',
 			ok_got_it: 'OK, got it'
 		},
 		ModalReusables: {

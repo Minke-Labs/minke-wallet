@@ -223,6 +223,10 @@ export default {
 			import: 'Importar Carteira'
 		}
 	},
+	WithdrawScreen: {
+		withdraw: 'Retirar',
+		balance: 'Saldo: '
+	},
 
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
@@ -279,6 +283,7 @@ export default {
 			done: 'Feito',
 			exchange: 'Permuta',
 			deposit: 'Depositar',
+			withdraw: 'Withdraw',
 			ok_got_it: 'OK, entendi'
 		},
 		ModalReusables: {

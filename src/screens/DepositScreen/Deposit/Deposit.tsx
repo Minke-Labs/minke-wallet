@@ -6,6 +6,7 @@ import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation, useAmplitude } from '@hooks';
 import { debounce } from 'lodash';
+import i18n from '@localization';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -90,7 +91,7 @@ const Deposit = () => {
 				</View>
 
 				<View style={styles.depositButton}>
-					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
+					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 					<HapticButton title="Deposit" disabled={!canDeposit} onPress={onDeposit} />
 				</View>
 				<KeyboardSpacer />

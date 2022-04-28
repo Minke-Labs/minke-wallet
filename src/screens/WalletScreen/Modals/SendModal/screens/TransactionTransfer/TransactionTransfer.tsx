@@ -6,6 +6,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard } from '@hooks';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
+import i18n from '@localization';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
@@ -72,7 +73,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				</View>
 			)}
 
-			{!enoughGas && <Warning label="Not enough balance for gas" />}
+			{!enoughGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 
 			<NetworkWarning.Tag />
 
