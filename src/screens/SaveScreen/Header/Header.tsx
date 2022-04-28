@@ -12,7 +12,7 @@ export const Header = () => {
 			<TouchableOpacity style={styles.headerNavigationLeft} onPress={() => navigation.goBack()}>
 				<Icon name="arrowBackStroke" color="text7" size={24} />
 				<Text weight="extraBold" style={{ marginLeft: 12 }}>
-					{i18n.t('saveScreen.Header.save')}
+					{i18n.t('SaveScreen.Header.save')}
 				</Text>
 			</TouchableOpacity>
 			<TouchableOpacity>
