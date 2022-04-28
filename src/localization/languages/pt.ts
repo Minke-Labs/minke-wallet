@@ -81,6 +81,11 @@ export default {
 			add_funds: 'Adicionar fundos'
 		}
 	},
+	DepositWithdrawalSuccessScreen: {
+		congrats: 'Parabéns!',
+		you_deposited: 'Você fez o seu depósito!',
+		you_withdrawed: 'Você retirou com sucesso!'
+	},
 	WalletAssetsScreen: {
 		header: 'Carteira',
 		asset_header: 'Ativo',
@@ -203,7 +208,8 @@ export default {
 		Buttons: {
 			backup_to_icloud: 'Faça o Backup no iCloud',
 			confirm_restore: 'Confirmar restauração',
-			confirm_backup: 'Confirmar backup'
+			confirm_backup: 'Confirmar backup',
+			done: 'Feito'
 		},
 		ModalReusables: {
 			Error: {

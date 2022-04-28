@@ -82,6 +82,11 @@ export default {
 			exchange: 'Exchange'
 		}
 	},
+	DepositWithdrawalSuccessScreen: {
+		congrats: 'Congrats!',
+		you_deposited: 'You\'ve made your deposit!',
+		you_withdrawed: 'You\'ve withdrawed successfully!'
+	},
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		asset_header: 'Asset',
@@ -203,7 +208,8 @@ export default {
 		Buttons: {
 			backup_to_icloud: 'Back up to iCloud',
 			confirm_restore: 'Confirm restore',
-			confirm_backup: 'Confirm backup'
+			confirm_backup: 'Confirm backup',
+			done: 'Done'
 		},
 		ModalReusables: {
 			Error: {
