@@ -254,7 +254,7 @@ export interface ExchangeRoute {
 export interface Quote {
 	from: { [fromSymbol: string]: BigNumber };
 	to: { [toSymbol: string]: BigNumber };
-	noValue: boolean; // holds if an exchange will need a msg.value (native token is the source)
+	gasless: boolean; // holds if the transaction will be gasless
 }
 
 export interface TransactionData {
