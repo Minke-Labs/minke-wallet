@@ -208,6 +208,21 @@ export default {
 			yesterday: 'Ontem',
 			this_month: 'Nesse mês',
 			see_all: 'Ver todas'
+		},
+		Modals: {
+			SendModal: {
+				screens: {
+					TransactionContacts: {
+						sent_to_address: 'Envie para algum endereço',
+						address_or_ens: 'Address or ENS',
+						choose_from_saved: 'Ou escolha um endereço já salvo',
+						NoContactsYet: {
+							no_contacts_yet: 'No contacts yet',
+							add_some: 'Add some to start'
+						}
+					}
+				}
+			}
 		}
 	},
 	WelcomeScreen: {
@@ -284,7 +299,8 @@ export default {
 			exchange: 'Permuta',
 			deposit: 'Depositar',
 			withdraw: 'Withdraw',
-			ok_got_it: 'OK, entendi'
+			ok_got_it: 'OK, entendi',
+			send: 'Enviar'
 		},
 		ModalReusables: {
 			Error: {

@@ -211,6 +211,21 @@ export default {
 			yesterday: 'Yesterday',
 			this_month: 'This Month',
 			see_all: 'See all'
+		},
+		Modals: {
+			SendModal: {
+				screens: {
+					TransactionContacts: {
+						sent_to_address: 'Send to an address',
+						address_or_ens: 'Address or ENS',
+						choose_from_saved: 'Or choose from a saved address',
+						NoContactsYet: {
+							no_contacts_yet: 'No contacts yet',
+							add_some: 'Add some to start'
+						}
+					}
+				}
+			}
 		}
 	},
 	WelcomeScreen: {
@@ -286,7 +301,8 @@ export default {
 			exchange: 'Exchange',
 			deposit: 'Deposit',
 			withdraw: 'Withdraw',
-			ok_got_it: 'OK, got it'
+			ok_got_it: 'OK, got it',
+			send: 'Send'
 		},
 		ModalReusables: {
 			Error: {

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, Text, Input } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import i18n from '@localization';
 import { ContactItem } from '../../components';
 import { TransactionContactsProps } from './TransactionContacts.types';
 import styles from './TransactionContacts.styles';
@@ -18,10 +19,10 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={styles.container}>
 				<Text weight="extraBold" type="h3" center marginBottom={24}>
-					Send to an address
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.sent_to_address')}
 				</Text>
 				<Input
-					label="Address or ENS"
+					label={i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.address_or_ens')}
 					value={address}
 					onChangeText={(t: string) => setAddress(t)}
 					autoCorrect={false}
@@ -31,13 +32,18 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 					style={{ marginBottom: 24 }}
 				/>
 
-				<Button title="Send" disabled={!validAddress} onPress={onSendAddress} marginBottom={32} />
+				<Button
+					title={i18n.t('Components.Buttons.send')}
+					disabled={!validAddress}
+					onPress={onSendAddress}
+					marginBottom={32}
+				/>
 
 				{!keyboardVisible &&
 					(contactList!.length > 0 ? (
 						<>
 							<Text center weight="extraBold" type="p" marginBottom={32} style={{ marginTop: 32 }}>
-								Or choose from a saved address
+								{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.choose_from_saved')}
 							</Text>
 							<FlatList
 								style={styles.contactsList}
