@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, Image } from 'react-native';
 import { Text, EmptyStates } from '@components';
+import i18n from '@localization';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
@@ -13,11 +14,11 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 		<View style={styles.container}>
 			{!!user.address && <Image source={image!} style={styles.image} />}
 			<Text type="h3" weight="extraBold" marginBottom={32}>
-				Which{' '}
+				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.which')}
 				<Text color="text12" type="h3" weight="extraBold">
-					asset
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.asset')}
 				</Text>{' '}
-				do you want to send to{' '}
+				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.want_to_send')}
 				<Text color="text12" type="h3" weight="extraBold">
 					{user.name}
 				</Text>

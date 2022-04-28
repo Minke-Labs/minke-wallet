@@ -223,6 +223,14 @@ export default {
 							no_contacts_yet: 'No contacts yet',
 							add_some: 'Add some to start'
 						}
+					},
+					TransactionSelectFunds: {
+						which: 'Which ',
+						asset: 'asset ',
+						want_to_send: 'do you want to send to ',
+						Card: {
+							available: ' Available'
+						}
 					}
 				}
 			}
@@ -286,6 +294,11 @@ export default {
 	},
 
 	Components: {
+		EmptyStates: {
+			NoTokens: {
+				no_tokens_here: 'No tokens here'
+			}
+		},
 		Inputs: {
 			enter_password: 'Enter password',
 			repeat_password: 'Repeat password',

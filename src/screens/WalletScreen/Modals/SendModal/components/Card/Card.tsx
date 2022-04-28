@@ -3,6 +3,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
 import { Text, Token } from '@components';
+import i18n from '@localization';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { CardProps } from './Card.types';
 import styles from './Card.styles';
@@ -21,8 +22,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => (
 			<Text type="span" weight="bold">
 				${tokenBalanceFormat(token.balanceUSD, 2)} ({tokenBalanceFormat(token.balance, 9)} {token.symbol})
 				<Text weight="regular" type="span">
-					{' '}
-					available
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.Card.available')}
 				</Text>
 			</Text>
 		</View>
