@@ -37,6 +37,35 @@ export default {
 			All: 'Total'
 		}
 	},
+	BackupSettingsScreen: {
+		title: 'Backup'
+	},
+	BackupStatusScreen: {
+		your_wallet_is_backed_up: 'Sua carteira tem backup!',
+		if_you_lose: 'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no iCloud.',
+		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
+		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
+		back_up_to_icloud: 'Backup no iCloud',
+		backup: 'Backup',
+		done: 'Pronto',
+		go_to_wallet: 'Ir para a carteira',
+		view_secret_phrase: 'Ver Frase Secreta',
+		backup_error: 'Erro no backup'
+	},
+	BackupToICloudScreen: {
+		CreateBackupPassword: {
+			choose_password: 'Escolha uma senha',
+			memorable_password: 'Escolha uma senha que você se lembrará.',
+			not_recoverable: 'Ela não poderá ser recuperada!'
+		},
+		ConfirmBackupPassword: {
+			enter_backup_password: 'Entre a senha do backup',
+			to: 'Para',
+			restore_from: 'restaurar suas carteiras do',
+			add_to: 'adicionar esta carteira ao seu',
+			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
+		}
+	},
 	WalletAssetsScreen: {
 		header: 'Carteira',
 		asset_header: 'Ativo',
@@ -121,21 +150,6 @@ export default {
 		sent: 'Enviadas',
 		received: 'Recebidas'
 	},
-	BackupSettingsScreen: {
-		title: 'Backup'
-	},
-	BackupStatusScreen: {
-		your_wallet_is_backed_up: 'Sua carteira tem backup!',
-		if_you_lose: 'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no iCloud.',
-		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
-		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
-		back_up_to_icloud: 'Backup no iCloud',
-		backup: 'Backup',
-		done: 'Pronto',
-		go_to_wallet: 'Ir para a carteira',
-		view_secret_phrase: 'Ver Frase Secreta',
-		backup_error: 'Erro no backup'
-	},
 	iCloudBackup: {
 		BACKING_UP_WALLET: 'Fazendo backup...',
 		CREATING_WALLET: 'Criando carteira...',
@@ -163,5 +177,27 @@ export default {
 	},
 	CopyButton: {
 		copy_to_clipboard: 'Copiar para área de transferência'
+	},
+
+	Components: {
+		Inputs: {
+			enter_password: 'Entre a senha',
+			repeat_password: 'Repita a senha'
+		},
+		Buttons: {
+			backup_to_icloud: 'Faça o Backup no iCloud',
+			confirm_restore: 'Confirmar restauração',
+			confirm_backup: 'Confirmar backup'
+		},
+		ModalReusables: {
+			Error: {
+				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
+				buttonLabel: 'Ok, entendi'
+			}
+		}
+	},
+
+	Logs: {
+		couldnt_restore_backup: 'Não foi possível restaurar seus backups'
 	}
 };

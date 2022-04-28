@@ -37,6 +37,35 @@ export default {
 			All: 'All'
 		}
 	},
+	BackupSettingsScreen: {
+		title: 'Backup'
+	},
+	BackupStatusScreen: {
+		your_wallet_is_backed_up: 'Your Wallet is Backed Up!',
+		if_you_lose: 'If you lose this device you can recover your encrypted wallet backup from iCloud.',
+		your_wallet_is_not_backed_up: 'Your Wallet is not Backed Up!',
+		your_keys_your_coins: 'Your keys your coins. Backup your wallet incase of loss.',
+		back_up_to_icloud: 'Back up to iCloud',
+		backup: 'Backup',
+		done: 'Done',
+		go_to_wallet: 'Go to Wallet',
+		view_secret_phrase: 'View Secret Phrase',
+		backup_error: 'Backup error'
+	},
+	BackupToICloudScreen: {
+		CreateBackupPassword: {
+			choose_password: 'Choose a password',
+			memorable_password: 'Please choose a password you’ll remember.',
+			not_recoverable: 'It can’t be recovered!'
+		},
+		ConfirmBackupPassword: {
+			enter_backup_password: 'Enter Backup Password',
+			to: 'To',
+			restore_from: 'restore your wallets from',
+			add_to: 'add this wallet to',
+			enter_existing: 'your iCloud backup, enter your existing backup password'
+		}
+	},
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		asset_header: 'Asset',
@@ -121,21 +150,6 @@ export default {
 		sent: 'Sent',
 		received: 'Received'
 	},
-	BackupSettingsScreen: {
-		title: 'Backup'
-	},
-	BackupStatusScreen: {
-		your_wallet_is_backed_up: 'Your Wallet is Backed Up!',
-		if_you_lose: 'If you lose this device you can recover your encrypted wallet backup from iCloud.',
-		your_wallet_is_not_backed_up: 'Your Wallet is not Backed Up!',
-		your_keys_your_coins: 'Your keys your coins. Backup your wallet incase of loss.',
-		back_up_to_icloud: 'Back up to iCloud',
-		backup: 'Backup',
-		done: 'Done',
-		go_to_wallet: 'Go to Wallet',
-		view_secret_phrase: 'View Secret Phrase',
-		backup_error: 'Backup error'
-	},
 	iCloudBackup: {
 		BACKING_UP_WALLET: 'Backing up...',
 		CREATING_WALLET: 'Creating wallet...',
@@ -162,5 +176,27 @@ export default {
 	},
 	CopyButton: {
 		copy_to_clipboard: 'Copy to clipboard'
+	},
+
+	Components: {
+		Inputs: {
+			enter_password: 'Enter password',
+			repeat_password: 'Repeat password'
+		},
+		Buttons: {
+			backup_to_icloud: 'Back up to iCloud',
+			confirm_restore: 'Confirm restore',
+			confirm_backup: 'Confirm backup'
+		},
+		ModalReusables: {
+			Error: {
+				description: 'Something went wrong, our developers have been notified.',
+				buttonLabel: 'Ok, got it'
+			}
+		}
+	},
+
+	Logs: {
+		couldnt_restore_backup: 'We could not restore your backups'
 	}
 };

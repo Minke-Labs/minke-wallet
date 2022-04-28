@@ -4,6 +4,7 @@ import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
 import { backupImg } from '@images';
+import i18n from '@localization';
 import { saveBackupPassword } from '@models/backup';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './CreateBackupPassword.styles';
@@ -53,17 +54,17 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 			)}
 			<View style={{ paddingHorizontal: 24 }}>
 				<Text type="h3" weight="extraBold" marginBottom={8}>
-					Choose a password
+					{i18n.t('BackupToICloudScreen.CreateBackupPassword.choose_password')}
 				</Text>
 				<Text type="p2" weight="medium" color="text2" marginBottom={32}>
-					Please choose a password you’ll remember.{' '}
+					{i18n.t('BackupToICloudScreen.CreateBackupPassword.memorable_password')}{' '}
 					<Text type="p2" weight="bold">
-						It can’t be recovered!
+						{i18n.t('BackupToICloudScreen.CreateBackupPassword.not_recoverable')}
 					</Text>
 				</Text>
 
 				<Input
-					label="Enter password"
+					label={i18n.t('Components.Inputs.enter_password')}
 					isPassword
 					value={password}
 					onChangeText={(t) => setPassword(t)}
@@ -73,7 +74,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 					textContentType="password"
 				/>
 				<Input
-					label="Repeat password"
+					label={i18n.t('Components.Inputs.repeat_password')}
 					isPassword
 					value={passwordConfirmation}
 					onChangeText={(t) => setPasswordConfirmation(t)}
@@ -87,7 +88,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 				/>
 
 				<Button
-					title="Back up to iCloud"
+					title={i18n.t('Components.Buttons.backup_to_icloud')}
 					iconRight="cloudStroke"
 					disabled={!isPasswordValid}
 					onPress={onConfirmBackup}

@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { Text } from '@components';
 import { useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-// import Buttons from './Buttons/Buttons';
 import i18n from '@localization';
 import Selector from './Selector/Selector';
 import { BalanceProps } from './Balance.types';
@@ -24,8 +23,6 @@ const Balance: React.FC<BalanceProps> = ({ coin }) => {
 					{active ? `${tokenBalanceFormat(coin.balance)} ${coin.symbol}` : `${numberFormat(coin.balanceUSD)}`}
 				</Text>
 			</View>
-
-			{/* <Buttons onPress={() => console.log('PRESSED!')} /> */}
 		</View>
 	);
 };
