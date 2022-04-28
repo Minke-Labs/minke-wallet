@@ -1,10 +1,12 @@
-import { Wallet, ethers, BigNumber } from 'ethers';
+import { Wallet, ethers, BigNumber, Contract } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
+import { getProvider } from './wallet';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
+export const exchangeContract = '0x986089F230DF31D34A1baE69A08C11ef6b06EcbA'; // Polygon
 export const sendContract = '0x70e38dedc805330286a305966241abecc41c2438'; // Polygon
 
 export const gaslessApproval = async ({
@@ -22,18 +24,14 @@ export const gaslessApproval = async ({
 	amount?: string | undefined;
 	biconomy: any;
 }): Promise<string | null> => {
-	const abi = [
-		'function balanceOf(address owner) view returns (uint256)',
-		'function approve(address spender, uint256 amount) external returns (bool)',
-		'function decimals() view returns (uint256)'
-	];
+	const abi = ['function balanceOf(address owner) view returns (uint256)'];
 	const provider = biconomy.getEthersProvider();
-	const token = new ethers.Contract(contract, abi, provider);
+	const token = new Contract(contract, abi, provider);
 	let tokenAmount = amount;
 	if (!amount) {
 		const balance: BigNumber = await token.balanceOf(address);
 		// @ts-ignore
-		tokenAmount = balance.mul(BigNumber.from(10));
+		tokenAmount = balance;
 	}
 
 	const wallet = new Wallet(privateKey, provider);
@@ -346,4 +344,15 @@ export const gaslessSend = async ({
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;
+};
+
+export const isExchangeTargetApproved = async (allowanceTarget: string): Promise<boolean> => {
+	const abi = ['function approvedTargets(address) public view returns (bool)'];
+	try {
+		const contract = new Contract(exchangeContract, abi, await getProvider());
+		const approved = await contract.approvedTargets(allowanceTarget);
+		return approved;
+	} catch {
+		return false;
+	}
 };

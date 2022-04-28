@@ -1,12 +1,13 @@
 import React, { useEffect, createRef, useCallback } from 'react';
 import { TextInput, Keyboard } from 'react-native';
-import { useTokens, useNavigation, useNativeToken, useDeposit } from '@hooks';
+import { useTokens, useNavigation, useNativeToken, useBiconomy, useDeposit } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
 import { ParaswapToken, Quote, getExchangePrice, ExchangeParams } from '@models/token';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import Logger from '@utils/logger';
 import { globalWalletState, WalletState } from '@stores/WalletStore';
+import { isExchangeTargetApproved } from '@models/gaslessTransaction';
 
 export const useExchangeScreen = () => {
 	const { nativeToken } = useNativeToken();
@@ -30,7 +31,7 @@ export const useExchangeScreen = () => {
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const fromAmountRef = createRef<TextInput>();
 	const toAmountRef = createRef<TextInput>();
-	const gaslessEnabled = false;
+	const { gaslessEnabled } = useBiconomy();
 	const { tokens: walletTokens } = useTokens();
 	const { defaultToken } = useDeposit();
 
@@ -82,7 +83,7 @@ export const useExchangeScreen = () => {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
 			const { address: destToken, decimals: destDecimals } = toToken;
-			const { reason, message, buyAmount, sellAmount, value } = await getExchangePrice({
+			const { reason, message, buyAmount, sellAmount, value, allowanceTarget, to } = await getExchangePrice({
 				address: wallet.address.value,
 				srcToken,
 				destToken,
@@ -104,7 +105,7 @@ export const useExchangeScreen = () => {
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
 				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) },
-				noValue: BigNumber.from(value).isZero()
+				gasless: BigNumber.from(value).isZero() && (await isExchangeTargetApproved(to || allowanceTarget))
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);
@@ -259,7 +260,7 @@ export const useExchangeScreen = () => {
 	}, [toToken, fromToken]);
 
 	useEffect(() => {
-		setGasless(gaslessEnabled && (quote ? quote.noValue : true));
+		setGasless(gaslessEnabled && (quote ? quote.gasless : true));
 	}, [gaslessEnabled, quote]);
 
 	const enoughForGas = gasless || (nativeToken && +balanceFrom(nativeToken) > 0);
