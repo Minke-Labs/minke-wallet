@@ -128,6 +128,30 @@ export default {
 			deposit: 'Deposit'
 		}
 	},
+	SettingsScreen: {
+		title: 'Settings',
+		creating_wallet: 'Creating wallet',
+		backup: 'Backup',
+		currency: 'Currency',
+		network: 'Network',
+		new_wallet: 'New wallet',
+		usd_coin: 'US Dollar coin',
+		contact_support: 'Contact Support',
+		switch_account: 'Switch account'
+	},
+	TopUpWaitScreen: {
+		Failed: {
+			something_gone_wrong: 'Oh no! Something has gone wrong. Please try again later or contact the support.',
+			reference: 'Reference: '
+		},
+		Processing: {
+			almost_there: 'Almost there... this might take a minute...',
+			please_wait: 'Please wait while we process your payment...'
+		},
+		Success: {
+			funds_being_deposited: 'Your funds are being deposited into your wallet...'
+		}
+	},
 
 	WalletAssetsScreen: {
 		header: 'Wallet',
@@ -142,17 +166,6 @@ export default {
 		Card: {
 			your_wallet_balance: 'Your wallet balance'
 		}
-	},
-	SettingsScreen: {
-		title: 'Settings',
-		creating_wallet: 'Creating wallet',
-		backup: 'Backup',
-		currency: 'Currency',
-		network: 'Network',
-		new_wallet: 'New wallet',
-		usd_coin: 'US Dollar coin',
-		contact_support: 'Contact Support',
-		switch_account: 'Switch account'
 	},
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'This can take a few seconds'
@@ -244,7 +257,8 @@ export default {
 			confirm_backup: 'Confirm backup',
 			done: 'Done',
 			exchange: 'Exchange',
-			deposit: 'Deposit'
+			deposit: 'Deposit',
+			ok_got_it: 'OK, got it'
 		},
 		ModalReusables: {
 			Error: {

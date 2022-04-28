@@ -125,6 +125,30 @@ export default {
 			deposit: 'Depositar'
 		}
 	},
+	SettingsScreen: {
+		title: 'Configurações',
+		creating_wallet: 'Criando carteira',
+		backup: 'Backup',
+		currency: 'Moeda',
+		network: 'Rede',
+		new_wallet: 'Nova carteira',
+		usd_coin: 'Moeda USD',
+		contact_support: 'Contactar suporte',
+		switch_account: 'Trocar conta'
+	},
+	TopUpWaitScreen: {
+		Failed: {
+			something_gone_wrong: 'A não! Algo de errado aconteceu. Por favor tente mais tarde ou contete o suporte.',
+			reference: 'Referência: '
+		},
+		Processing: {
+			almost_there: 'Quase lá... isso pode levar um tempinho...',
+			please_wait: 'Por favor espere enquanto processamos o seu pagamento...'
+		},
+		Success: {
+			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...'
+		}
+	},
 
 	WalletAssetsScreen: {
 		header: 'Carteira',
@@ -139,17 +163,6 @@ export default {
 		Card: {
 			your_wallet_balance: 'Seu saldo'
 		}
-	},
-	SettingsScreen: {
-		title: 'Configurações',
-		creating_wallet: 'Criando carteira',
-		backup: 'Backup',
-		currency: 'Moeda',
-		network: 'Rede',
-		new_wallet: 'Nova carteira',
-		usd_coin: 'Moeda USD',
-		contact_support: 'Contactar suporte',
-		switch_account: 'Trocar conta'
 	},
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
@@ -242,7 +255,8 @@ export default {
 			confirm_backup: 'Confirmar backup',
 			done: 'Feito',
 			exchange: 'Permuta',
-			deposit: 'Depositar'
+			deposit: 'Depositar',
+			ok_got_it: 'OK, entendi'
 		},
 		ModalReusables: {
 			Error: {
