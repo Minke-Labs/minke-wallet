@@ -319,6 +319,21 @@ export default {
 		copy_to_clipboard: 'Copiar para área de transferência'
 	},
 
+	Containers: {
+		AddFunds: {
+			ChooseQuantityModal: {
+				buy_some: 'Compre alguns {{symbol}} com ',
+				to_start_using: ' para começar a usar o Minke:',
+				choose_another_amount: 'Escolha outro valor',
+				or_deposit: 'ou deposite',
+				send_from: 'Envie pela ',
+				or_another_exchange: ' ou por outra exchange',
+				copy_address: 'Copie o endereço',
+				address_copied: 'Endereço copiado!'
+			}
+		}
+	},
+
 	Components: {
 		NetworkWarning: {
 			NetworkTag: {

@@ -281,7 +281,6 @@ export default {
 		withdraw: 'Withdraw',
 		balance: 'Balance: '
 	},
-
 	LoadingScreen: {
 		this_can_take_a_few_seconds: 'This can take a few seconds'
 	},
@@ -319,6 +318,21 @@ export default {
 	},
 	CopyButton: {
 		copy_to_clipboard: 'Copy to clipboard'
+	},
+
+	Containers: {
+		AddFunds: {
+			ChooseQuantityModal: {
+				buy_some: 'Buy some {{symbol}} with ',
+				to_start_using: ' to start using Minke:',
+				choose_another_amount: 'Choose another amount',
+				or_deposit: 'or deposit',
+				send_from: 'Send from ',
+				or_another_exchange: ' or another exchange',
+				copy_address: 'Copy address',
+				address_copied: 'Address copied!'
+			}
+		}
 	},
 
 	Components: {
