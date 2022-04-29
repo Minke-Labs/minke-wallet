@@ -20,27 +20,26 @@ const WelcomeScreen = () => {
 
 						<View style={styles.textContainer}>
 							<Text center weight="extraBold" type="h1" width={273} marginBottom={16}>
-								{i18n.t('welcomeScreen.wave_goodbye')}
+								{i18n.t('WelcomeScreen.wave_goodbye')}
 							</Text>
 							<Text center color="text2" width={198}>
-								{i18n.t('welcomeScreen.easily')}
-								<Text weight="extraBold">Minke</Text>
+								{i18n.t('WelcomeScreen.easily')} <Text weight="extraBold">Minke</Text>
 							</Text>
 						</View>
 
 						<View style={styles.buttonContainer}>
 							{loading ? (
-								<LoadingScreen title={i18n.t('welcomeScreen.creating')} />
+								<LoadingScreen title={i18n.t('WelcomeScreen.creating')} />
 							) : (
 								<Button
-									title={i18n.t('welcomeScreen.create')}
+									title={i18n.t('WelcomeScreen.create')}
 									onPress={onCreateWallet}
 									marginBottom={14}
 								/>
 							)}
 							{!loading && (
 								<Button
-									title={i18n.t('welcomeScreen.import_or_restore')}
+									title={i18n.t('WelcomeScreen.import_or_restore')}
 									mode="text"
 									onPress={() => setModalVisible(true)}
 								/>

@@ -139,13 +139,18 @@ const ExchangeScreen = () => {
 						</View>
 
 						<View style={[styles.exchangeSection, styles.exchangeButton]}>
-							{!loadingPrices && !enoughForGas &&
-							<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
+							{!loadingPrices && !enoughForGas && (
+								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
+							)}
 
 							{loadingPrices ? (
 								<ActivityIndicator />
 							) : (
-								<Button title="Review" onPress={goToExchangeResume} disabled={!canSwap()} />
+								<Button
+									title={i18n.t('ExchangeScreen.review')}
+									onPress={goToExchangeResume}
+									disabled={!canSwap()}
+								/>
 							)}
 							<KeyboardSpacer />
 						</View>

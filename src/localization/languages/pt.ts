@@ -72,7 +72,7 @@ export default {
 	},
 	ChangeNetworkScreen: {
 		ListItem: {
-			test_network: 'test network'
+			test_network: 'rede de testes'
 		}
 	},
 	DepositScreen: {
@@ -89,15 +89,17 @@ export default {
 	},
 	ExchangeResumeScreen: {
 		exchange_resume: 'Resumo da Troca',
-		rate_fixed_for: 'Taxa fixa para:',
-		rate: 'Taxa',
-		swapping_via: 'Trocando via'
+		rate_fixed_for: 'Cotação fixa por:',
+		rate: 'Cotação',
+		swapping_via: 'Convertendo via'
 	},
 	ExchangeScreen: {
 		fetching: 'Buscando...',
+		exchange: 'Câmbio',
+		review: 'Revisar',
 		GasSelector: {
 			GasOption: {
-				transaction_fee: 'Taxa de transação'
+				transaction_fee: 'Taxa da transação'
 			}
 		}
 	},
@@ -176,7 +178,7 @@ export default {
 	WalletCreatedScreen: {
 		wallet_created: 'Carteira Criada!',
 		need_backup:
-			'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
+			'Você precisar fazer backup da sua carteira. Mantenha o seu backup seguro pois se perdê-lo todos os seus ativos estarão em risco.',
 		modal_error: 'Erro de backup'
 	},
 	WalletScreen: {
@@ -227,7 +229,7 @@ export default {
 					},
 					GasPriceLine: {
 						speed: 'Velocidade: ',
-						network_fee: ' Taxa de rede'
+						network_fee: ' Taxa da rede'
 					}
 				},
 				screens: {
@@ -239,8 +241,8 @@ export default {
 						address_or_ens: 'Endereço ou ENS',
 						choose_from_saved: 'Ou escolha um endereço já salvo',
 						NoContactsYet: {
-							no_contacts_yet: 'No contacts yet',
-							add_some: 'Add some to start'
+							no_contacts_yet: 'Nenhum contato disponível',
+							add_some: 'Adicione alguns para começar'
 						}
 					},
 					TransactionSelectFunds: {
@@ -261,10 +263,10 @@ export default {
 	},
 	WelcomeScreen: {
 		wave_goodbye: 'Diga adeus ao seu banco!',
-		easily: 'Economize, gaste e invista facilmente com',
+		easily: 'Economize, gaste e invista facilmente com a',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
-		import_or_restore: 'Importar ou Restorar Carteira',
+		import_or_restore: 'Importar ou Restaurar Carteira',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
 			seed_or_key: 'Frase de recuperação ou chave privada',
@@ -292,7 +294,7 @@ export default {
 		cancel: 'Cancelar',
 		adding_via_apple_pay: 'Adicionando via Apple Pay',
 		withdrew_from_savings: 'Retirada de investimento',
-		deposited_in_savings: 'Deposito de investimento',
+		deposited_in_savings: 'Depósito de investimento',
 		swap: 'Converteu %{source} para %{dest}',
 		from: 'De',
 		to: 'Para',
@@ -336,8 +338,8 @@ export default {
 				choose_another_amount: 'Escolha outro valor',
 				or_deposit: 'ou deposite',
 				send_from: 'Envie pela ',
-				or_another_exchange: ' ou por outra exchange',
-				copy_address: 'Copie o endereço',
+				or_another_exchange: ' ou por outra corretora',
+				copy_address: 'Copiar o endereço',
 				address_copied: 'Endereço copiado!'
 			},
 			CoinSelectorModal: {
@@ -374,12 +376,12 @@ export default {
 			ens_or_wallet: 'ENS ou Endereço da Carteira'
 		},
 		Buttons: {
-			backup_to_icloud: 'Faça o Backup no iCloud',
-			backup_manually: 'Faça o Backup manualmente',
+			backup_to_icloud: 'Fazer Backup no iCloud',
+			backup_manually: 'Fazer backup manualmente',
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',
 			done: 'Feito',
-			exchange: 'Permuta',
+			exchange: 'Converter',
 			deposit: 'Depositar',
 			withdraw: 'Retirar',
 			ok_got_it: 'OK, entendi',

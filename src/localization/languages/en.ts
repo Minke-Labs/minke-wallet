@@ -97,6 +97,7 @@ export default {
 	ExchangeScreen: {
 		fetching: 'Fetching...',
 		exchange: 'Exchange',
+		review: 'Review',
 		GasSelector: {
 			GasOption: {
 				transaction_fee: 'Transaction Fee'
