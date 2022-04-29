@@ -273,6 +273,12 @@ export default {
 			seed_or_key: 'Seed phrase or private key',
 			importing: 'Importing wallet',
 			import: 'Import Wallet'
+		},
+		SelectImportMethodModal: {
+			import_wallet: 'Import wallet',
+			restore_from_icloud: 'Restore from iCloud',
+			backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+			import_with_secret_phrase: 'Import with secret phrase or private key'
 		}
 	},
 	WithdrawScreen: {

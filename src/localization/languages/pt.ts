@@ -133,13 +133,13 @@ export default {
 		currency: 'Moeda',
 		network: 'Rede',
 		new_wallet: 'Nova carteira',
-		usd_coin: 'Moeda USD',
+		usd_coin: 'Moeda padrão USD',
 		contact_support: 'Contactar suporte',
 		switch_account: 'Trocar conta'
 	},
 	TopUpWaitScreen: {
 		Failed: {
-			something_gone_wrong: 'A não! Algo de errado aconteceu. Por favor tente mais tarde ou contete o suporte.',
+			something_gone_wrong: 'Ah não! Algo de errado aconteceu. Por favor tente mais tarde ou contate o suporte.',
 			reference: 'Referência: '
 		},
 		Processing: {
@@ -157,7 +157,7 @@ export default {
 		received: 'Recebidas'
 	},
 	USDCoinScreen: {
-		usd_asset: 'Ativos USD'
+		usd_asset: 'Moeda padrão USD '
 	},
 	WalletAssetsScreen: {
 		header: 'Carteira',
@@ -267,9 +267,15 @@ export default {
 		import_or_restore: 'Importar ou Restorar Carteira',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
-			seed_or_key: 'Frase semente ou chave privada',
+			seed_or_key: 'Frase de recuperação ou chave privada',
 			importing: 'Importando carteira',
 			import: 'Importar Carteira'
+		},
+		SelectImportMethodModal: {
+			import_wallet: 'Importar Carteira',
+			restore_from_icloud: 'Restaurar do iCloud',
+			backup_wallets_count: 'Você tem %{count} carteira%{plural} backed up',
+			import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
 		}
 	},
 	WithdrawScreen: {
@@ -285,7 +291,7 @@ export default {
 		view_on: 'Ver em',
 		cancel: 'Cancelar',
 		adding_via_apple_pay: 'Adicionando via Apple Pay',
-		withdrew_from_savings: 'Saque de investimentos',
+		withdrew_from_savings: 'Retirada de investimento',
 		deposited_in_savings: 'Deposito de investimento',
 		swap: 'Converteu %{source} para %{dest}',
 		from: 'De',
@@ -326,7 +332,7 @@ export default {
 		AddFunds: {
 			ChooseQuantityModal: {
 				buy_some: 'Compre alguns {{symbol}} com ',
-				to_start_using: ' para começar a usar o Minke:',
+				to_start_using: ' para começar a usar a Minke:',
 				choose_another_amount: 'Escolha outro valor',
 				or_deposit: 'ou deposite',
 				send_from: 'Envie pela ',
@@ -375,13 +381,13 @@ export default {
 			done: 'Feito',
 			exchange: 'Permuta',
 			deposit: 'Depositar',
-			withdraw: 'Withdraw',
+			withdraw: 'Retirar',
 			ok_got_it: 'OK, entendi',
 			send: 'Enviar',
 			add_contact: 'Adicionar Contato',
 			add_funds_to_start: 'Adicione fundos para começar',
-			share: 'Compartilhe',
-			pay_with: 'Pague com '
+			share: 'Compartilhar',
+			pay_with: 'Pagar com '
 		},
 		ModalReusables: {
 			Error: {
@@ -404,11 +410,11 @@ export default {
 			exchanged: 'Converteu',
 			sending: 'Enviando',
 			depositing: 'Depositando',
-			withdrawing: 'Sacando',
+			withdrawing: 'Retirando',
 			exchanging: 'Convertendo',
 			in: 'em',
 			for: 'para',
-			transaction: 'Transaction'
+			transaction: 'Transação'
 		}
 	},
 

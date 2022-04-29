@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Icon } from '@components';
 import { TouchableOpacity, View } from 'react-native';
+import i18n from '@localization';
 import { SelectImportMethodModalProps } from './SelectImportMethodModal.types';
 import styles from './SelectImportMethodModal.styles';
 import { useSelectImportMethodModal } from './SelectImportMethodModal.hooks';
@@ -11,7 +12,7 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 	return (
 		<>
 			<Text weight="extraBold" type="h3" marginBottom={40}>
-				Import wallet
+				{i18n.t('WelcomeScreen.SelectImportMethodModal.import_wallet')}
 			</Text>
 			{(walletsBackedUp > 0 || !!latestBackup) && (
 				<TouchableOpacity style={styles.container} onPress={onICloudBackup}>
@@ -21,11 +22,14 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 						</View>
 						<View style={{ marginLeft: 16 }}>
 							<Text type="p2" weight="bold">
-								Restore from iCloud
+								{i18n.t('WelcomeScreen.SelectImportMethodModal.restore_from_icloud')}
 							</Text>
 							{walletsBackedUp > 0 && (
 								<Text type="a">
-									You have {walletsBackedUp} {walletsBackedUp > 1 ? 'wallets' : 'wallet'} backed up
+									{i18n.t('WelcomeScreen.SelectImportMethodModal.backup_wallets_count', {
+										count: walletsBackedUp,
+										plural: walletsBackedUp > 1 ? 's' : ''
+									})}
 								</Text>
 							)}
 						</View>
@@ -37,8 +41,8 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 					<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 						<Icon name="vaultStroke" size={24} color="text7" />
 					</View>
-					<Text weight="bold" type="p2" style={{ marginLeft: 16 }}>
-						Import with secret phrase
+					<Text weight="bold" type="p2" style={{ marginLeft: 16 }} width={250}>
+						{i18n.t('WelcomeScreen.SelectImportMethodModal.import_with_secret_phrase')}
 					</Text>
 				</View>
 			</TouchableOpacity>
