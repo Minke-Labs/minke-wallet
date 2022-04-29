@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Minke - DeFi Wallet",
+    "name": "Minke",
     "slug": "minke-wallet",
     "owner": "minkelabs",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "52",
+      "buildNumber": "3",
       "config": {
         "usesNonExemptEncryption": false
       },

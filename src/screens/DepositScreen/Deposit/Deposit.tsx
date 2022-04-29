@@ -114,7 +114,7 @@ const Deposit = () => {
 				<TransactionWaitModal
 					onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 					fromToken={token}
-					toToken={{ img: market.appImageUrl, symbol: 'Aave' } as ParaswapToken}
+					toToken={{ symbol: 'Aave' } as ParaswapToken}
 					transactionHash={transactionHash}
 					deposit
 				/>

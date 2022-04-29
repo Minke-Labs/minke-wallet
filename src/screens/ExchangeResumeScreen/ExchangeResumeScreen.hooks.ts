@@ -11,7 +11,12 @@ import { getProvider } from '@models/wallet';
 import { convertTransactionResponse } from '@models/transaction';
 import { BigNumber, Wallet } from 'ethers';
 import { approvalState } from '@models/deposit';
-import { exchangeContract, gaslessApproval, gaslessExchange } from '@models/gaslessTransaction';
+import {
+	exchangeContract,
+	gaslessApproval,
+	gaslessExchange,
+	isExchangeTargetApproved
+} from '@models/gaslessTransaction';
 import { makeStyles } from './ExchangeResume.styles';
 
 const useExchangeResumeScreen = () => {
@@ -117,7 +122,16 @@ const useExchangeResumeScreen = () => {
 	}, [priceQuote]);
 
 	useEffect(() => {
-		setGasless(gaslessEnabled && priceQuote && BigNumber.from(priceQuote.value).isZero());
+		const fetchGasless = async () => {
+			setGasless(
+				gaslessEnabled &&
+					(priceQuote
+						? BigNumber.from(priceQuote.value).isZero() && (await isExchangeTargetApproved(priceQuote.to!))
+						: true)
+			);
+		};
+
+		fetchGasless();
 	}, [gaslessEnabled, priceQuote]);
 
 	const exchangeSummary = useCallback(() => {
@@ -192,7 +206,7 @@ const useExchangeResumeScreen = () => {
 					hash,
 					txSuccessful: status === 1,
 					pending: true,
-					timeStamp: new Date().getTime().toString(),
+					timeStamp: (new Date().getTime() / 1000).toString(),
 					amount: toAmount!,
 					direction: 'exchange',
 					symbol: to.symbol,

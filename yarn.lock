@@ -8358,6 +8358,11 @@ react-native-aes-crypto@brunobar79/react-native-aes#65c49f7e70266615b2999eaa7db6
   version "2.0.2"
   resolved "https://codeload.github.com/brunobar79/react-native-aes/tar.gz/65c49f7e70266615b2999eaa7db654d3fe4f2e3b"
 
+react-native-appsflyer@^6.5.21:
+  version "6.5.21"
+  resolved "https://registry.yarnpkg.com/react-native-appsflyer/-/react-native-appsflyer-6.5.21.tgz#ab67214f05e29d8ff20a662d6ee2fd41d4ed9f2b"
+  integrity sha512-9xokVnTRYszhBdBLrwNH9poeQnH0p1wA9ojHACWkZgDjCUypnIIq+5DFqD5oTTE3jPS9alU0AyLGL7zpZZoT7Q==
+
 react-native-cloud-fs@brunobar79/react-native-cloud-fs#e7e3111fb427b6df5e97f61c700ca1e64636cad8:
   version "2.4.0"
   resolved "https://codeload.github.com/brunobar79/react-native-cloud-fs/tar.gz/e7e3111fb427b6df5e97f61c700ca1e64636cad8"

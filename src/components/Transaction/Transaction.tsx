@@ -8,15 +8,27 @@ import { TransactionProps } from './Transaction.types';
 import { useTransaction } from './Transaction.hooks';
 
 const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
-	const { received, title, value, token, failed, pending, openTransaction, topUp, subtitle, exchange } =
-		useTransaction({
-			transaction
-		});
+	const {
+		received,
+		title,
+		value,
+		token,
+		failed,
+		pending,
+		openTransaction,
+		topUp,
+		subtitle,
+		exchange,
+		deposit,
+		withdraw
+	} = useTransaction({
+		transaction
+	});
 
 	return (
 		<TouchableOpacity activeOpacity={0.6} style={styles.container} onPress={openTransaction}>
 			<View style={[styles.leftContainer]}>
-				<TransactionIcon {...{ received, failed, pending, topUp, exchange }} />
+				<TransactionIcon {...{ received, failed, pending, topUp, exchange, deposit, withdraw }} />
 				<View style={styles.titleContainer}>
 					{failed ? (
 						<Text type="span" color="alert1" weight="bold">

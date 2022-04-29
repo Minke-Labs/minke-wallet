@@ -14,7 +14,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { aaveDepositContract, gaslessDeposit } from '@models/gaslessTransaction';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
-import { convertTransactionResponse } from '@models/transaction';
 import { useSaveScreen } from '@src/screens/SaveScreen/SaveScreen.hooks';
 
 export const useDeposit = () => {
@@ -96,17 +95,21 @@ export const useDeposit = () => {
 						hash,
 						gasless: true
 					});
-					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
+					const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
 					addPendingTransaction({
 						from,
 						destination: to,
 						hash,
-						txSuccessful: status === 1,
+						txSuccessful: true,
 						pending: true,
-						timeStamp: new Date().getTime().toString(),
-						direction: 'outgoing',
+						timeStamp: (new Date().getTime() / 1000).toString(),
 						amount,
-						symbol: token.symbol
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
+							{ type: 'incoming', symbol: `am${token.symbol}`, amount: +amount }
+						]
 					});
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 				} else {
@@ -148,14 +151,21 @@ export const useDeposit = () => {
 					Logger.log(`Deposit ${JSON.stringify(hash)}`);
 					await wait();
 					setTransactionHash(hash);
-					addPendingTransaction(
-						convertTransactionResponse({
-							transaction: tx,
-							amount,
-							direction: 'outgoing',
-							symbol: token.symbol
-						})
-					);
+					addPendingTransaction({
+						from,
+						destination: to,
+						hash,
+						txSuccessful: true,
+						pending: true,
+						timeStamp: (new Date().getTime() / 1000).toString(),
+						amount,
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
+							{ type: 'incoming', symbol: `am${token.symbol}`, amount: +amount }
+						]
+					});
 					track('Deposited', {
 						token: token.symbol,
 						amount,
