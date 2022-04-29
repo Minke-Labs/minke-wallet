@@ -30,7 +30,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 								right={
 									<View>
 										<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>
-											{tokenBalanceFormat(item.balance, 2)} {symbol}
+											{tokenBalanceFormat(item.balance, 4)} {symbol}
 										</Text>
 										<Text type="p2" weight="bold" style={{ alignSelf: 'flex-end' }}>
 											${tokenBalanceFormat(item.balance, 2)}

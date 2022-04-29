@@ -35,7 +35,10 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
 
 	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	const interestTokens = allTokens.filter((token) => interestBearingTokens.includes(token.symbol.toLowerCase()));
+	const interestTokens = allTokens.filter(
+		(token) => interestBearingTokens.includes(token.symbol.toLowerCase()) && Number(token.balance) > 0
+	);
+
 	const depositableTokens = allTokens.filter((token) => depositStablecoins.includes(token.symbol));
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
 	tokens = tokens.filter(({ balanceUSD }) => balanceUSD > 0);
