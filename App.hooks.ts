@@ -10,6 +10,8 @@ import {
 } from '@expo-google-fonts/inter';
 import { getTokenList } from '@models/wallet';
 import Logger from '@utils/logger';
+import appsFlyer from 'react-native-appsflyer';
+import { APPS_FLYER_DEV_KEY } from '@env';
 import { globalWalletState } from './src/stores/WalletStore';
 
 export const useApp = () => {
@@ -23,6 +25,24 @@ export const useApp = () => {
 		Inter_500Medium
 	});
 
+	const initializeAppsFlyer = () => {
+		if (!__DEV__) {
+			appsFlyer.initSdk(
+				{
+					devKey: (APPS_FLYER_DEV_KEY || process.env.APPS_FLYER_DEV_KEY)!,
+					isDebug: false, // set to true if you want to see data in the logs
+					appId: '1585144414' // iOS app id
+				},
+				(result) => {
+					Logger.log(result);
+				},
+				(error) => {
+					Logger.error(error);
+				}
+			);
+		}
+	};
+
 	useEffect(() => {
 		const getCoinList = async () => {
 			try {
@@ -35,6 +55,7 @@ export const useApp = () => {
 			}
 		};
 		getCoinList();
+		initializeAppsFlyer();
 	}, []);
 
 	return {

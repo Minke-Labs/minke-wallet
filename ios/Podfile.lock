@@ -1,5 +1,8 @@
 PODS:
   - Amplitude (6.0.0)
+  - AppsFlyerFramework (6.5.2):
+    - AppsFlyerFramework/Main (= 6.5.2)
+  - AppsFlyerFramework/Main (6.5.2)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - EXAmplitude (11.1.1):
@@ -317,6 +320,9 @@ PODS:
   - React-jsinspector (0.64.3)
   - react-native-aes-crypto (2.0.2):
     - React-Core
+  - react-native-appsflyer (6.5.21):
+    - AppsFlyerFramework (= 6.5.2)
+    - React
   - react-native-cloud-fs (2.4.0):
     - React
   - react-native-get-random-values (1.7.2):
@@ -498,6 +504,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-aes-crypto (from `../node_modules/react-native-aes-crypto`)
+  - react-native-appsflyer (from `../node_modules/react-native-appsflyer`)
   - react-native-cloud-fs (from `../node_modules/react-native-cloud-fs`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
@@ -535,6 +542,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Amplitude
+    - AppsFlyerFramework
     - boost-for-react-native
     - Sentry
 
@@ -621,6 +629,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-aes-crypto:
     :path: "../node_modules/react-native-aes-crypto"
+  react-native-appsflyer:
+    :path: "../node_modules/react-native-appsflyer"
   react-native-cloud-fs:
     :path: "../node_modules/react-native-cloud-fs"
   react-native-get-random-values:
@@ -690,6 +700,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Amplitude: cc34fcd8dfffc3470bc2e05f3a4abb0178f6d963
+  AppsFlyerFramework: 9f304d91cc80b6579b1206a59220383056b58b47
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   EXAmplitude: 114788f58379a84955bd712663be4767a4ae2f5c
@@ -732,6 +743,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
   react-native-aes-crypto: d7e87fd02cee7285983c00957a34063dfc4c94b3
+  react-native-appsflyer: 5990accc2e36af78770e8b7edcea0e16956ddebc
   react-native-cloud-fs: 1e883ec82ff418d320c128f61971dd971b128ca0
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846

@@ -166,14 +166,12 @@ export const ether: ParaswapToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	img: 'https://img.paraswap.network/ETH.png',
 	network: 1
 };
 
 export const matic: ParaswapToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	img: 'https://img.paraswap.network/MATIC.png',
 	network: 137,
 	symbol: 'MATIC'
 };
@@ -192,7 +190,6 @@ export interface ParaswapToken {
 	symbol: string;
 	address: string;
 	decimals: number;
-	img: string;
 	network?: number;
 }
 
@@ -257,7 +254,7 @@ export interface ExchangeRoute {
 export interface Quote {
 	from: { [fromSymbol: string]: BigNumber };
 	to: { [toSymbol: string]: BigNumber };
-	noValue: boolean; // holds if an exchange will need a msg.value (native token is the source)
+	gasless: boolean; // holds if the transaction will be gasless
 }
 
 export interface TransactionData {

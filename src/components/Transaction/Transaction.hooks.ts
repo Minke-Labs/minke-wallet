@@ -7,6 +7,7 @@ import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wa
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
 import { network } from '@src/model/network';
+import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import { truncate } from './Transaction.utils';
 
 interface UseTransactionProps {
@@ -28,11 +29,19 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		topUp = false
 	} = transaction;
 	const received = direction === 'incoming';
-	const exchange = direction === 'exchange';
 
 	// subTransactions
 	const sourceToken = subTransactions.find(({ type }) => type === 'outgoing');
 	const toToken = subTransactions.find(({ type }) => type === 'incoming');
+	const exchange = direction === 'exchange' && !!sourceToken && !!toToken;
+	const deposit =
+		exchange &&
+		depositStablecoins.includes(sourceToken.symbol.toUpperCase()) &&
+		interestBearingTokens.includes(toToken.symbol.toLowerCase());
+	const withdraw =
+		exchange &&
+		depositStablecoins.includes(toToken.symbol.toUpperCase()) &&
+		interestBearingTokens.includes(sourceToken.symbol.toLowerCase());
 	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
 	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
@@ -79,6 +88,10 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 
 	const subtitle = topUp
 		? 'Adding via Apple Pay'
+		: withdraw
+		? 'Withdrew from Savings'
+		: deposit
+		? 'Deposited in Savings'
 		: exchange
 		? `Swap ${sourceToken?.symbol} to ${toToken?.symbol}`
 		: `${received ? 'From' : 'To'}: ${formattedSource}`;
@@ -86,13 +99,21 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	return {
 		received,
 		value: truncate((exchange ? toToken?.amount : amount)!, 6),
-		token: exchange ? toToken?.symbol : symbol,
+		token: withdraw
+			? toToken.symbol
+			: deposit
+			? sourceToken.symbol
+			: exchange
+			? toToken.symbol
+			: (received ? toToken?.symbol : sourceToken?.symbol) || symbol,
 		failed: !txSuccessful,
 		pending,
 		topUp,
-		title: format(timestamp, "h'h'mm aaa"),
+		title: format(timestamp, 'h:mm aaa'),
 		subtitle,
 		exchange,
+		deposit,
+		withdraw,
 		openTransaction
 	};
 };
