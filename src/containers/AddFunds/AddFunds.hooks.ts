@@ -23,7 +23,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const customAmountRef = createRef<TextInput>();
 	const { track } = useAmplitude();
 	const { gaslessEnabled } = useBiconomy();
-	const { locationCurrency } = useLocation();
+	const { locationCurrency, paymentOnLocation } = useLocation();
 	const [orderLink, setOrderLink] = React.useState('');
 	const state = useState(globalWalletState());
 	const { address } = state.value;
@@ -70,7 +70,9 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			target: coin.name.toUpperCase(),
 			source_amount: String(value),
 			return_url_on_success: '#',
-			wallet_address: address
+			wallet_address: address,
+			payment_method_id: paymentOnLocation!
+			// target_amount: String(value)
 		};
 
 		const url = await makeOrder({ params });

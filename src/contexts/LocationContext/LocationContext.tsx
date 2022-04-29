@@ -33,7 +33,8 @@ const LocationProvider: React.FC = ({ children }) => {
 			countryCode,
 			setCountryCode: saveLocation,
 			currencies,
-			locationCurrency: locationCurrency?.currency ?? mock.currencies[0].currency
+			locationCurrency: locationCurrency?.currency ?? mock.currencies[0].currency,
+			paymentOnLocation: locationCurrency?.payment_id ?? null
 		}),
 		[countryCode]
 	);

@@ -3,6 +3,7 @@ export interface Currency {
 	iso: string;
 	currencyName: string;
 	currency: string;
+	payment_id: string | null;
 }
 
 export interface LocationContextProps {
@@ -10,4 +11,5 @@ export interface LocationContextProps {
 	setCountryCode: (val: string) => any;
 	currencies: Currency[];
 	locationCurrency: string;
+	paymentOnLocation: string | null;
 }

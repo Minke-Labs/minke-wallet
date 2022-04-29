@@ -4,7 +4,8 @@ const mockCurrency: Currency = {
 	flag: 'unitedStates',
 	iso: 'US',
 	currencyName: 'United States Dollar',
-	currency: 'USD'
+	currency: 'USD',
+	payment_id: null
 };
 
 export const mock = {
@@ -12,6 +13,7 @@ export const mock = {
 	errorMsg: undefined,
 	setCountryCode: () => { },
 	locationCurrency: mockCurrency.currency,
+	paymentOnLocation: mockCurrency.payment_id,
 	currencies: [
 		mockCurrency
 	]
@@ -22,79 +24,92 @@ export const currencies: Currency[] = [
 		flag: 'unitedStates',
 		iso: 'US',
 		currencyName: 'United States Dollar',
-		currency: 'USD'
+		currency: 'USD',
+		payment_id: null
 	},
 	{
 		flag: 'europeanUnion',
 		iso: 'EU',
 		currencyName: 'Euro',
-		currency: 'EUR'
+		currency: 'EUR',
+		payment_id: '6041'
 	},
 	{
 		flag: 'unitedKingdom',
 		iso: 'UK',
 		currencyName: 'British Pound',
-		currency: 'GBP'
+		currency: 'GBP',
+		payment_id: '6043'
 	},
 	{
 		flag: 'australia',
 		iso: 'AU',
 		currencyName: 'Australian Dollar',
-		currency: 'AUD'
+		currency: 'AUD',
+		payment_id: '7538'
 	},
 	{
 		flag: 'china',
 		iso: 'CN',
 		currencyName: 'Chinese Yuan',
-		currency: 'CNY'
+		currency: 'CNY',
+		payment_id: null
 	},
 	{
 		flag: 'southKorea',
 		iso: 'KR',
 		currencyName: 'South Korean Won',
-		currency: 'KRW'
+		currency: 'KRW',
+		payment_id: null
 	},
 	{
 		flag: 'russia',
 		iso: 'RU',
 		currencyName: 'Russian Ruble',
-		currency: 'RUB'
+		currency: 'RUB',
+		payment_id: null
 	},
 	{
 		flag: 'india',
 		iso: 'IN',
 		currencyName: 'Indian Rupee',
-		currency: 'INR'
+		currency: 'INR',
+		payment_id: null
 	},
 	{
 		flag: 'japan',
 		iso: 'JP',
 		currencyName: 'Japanese Yen',
-		currency: 'JPY'
+		currency: 'JPY',
+		payment_id: null
 	},
 	{
 		flag: 'turkey',
 		iso: 'TR',
 		currencyName: 'Turkish Lira',
-		currency: 'TRY'
+		currency: 'TRY',
+		payment_id: null
 	},
 	{
 		flag: 'canada',
 		iso: 'CA',
 		currencyName: 'Canadian Dollar',
-		currency: 'CAD'
+		currency: 'CAD',
+		payment_id: '6031'
 	},
 	{
 		flag: 'newZealand',
 		iso: 'NZ',
 		currencyName: 'New Zealand Dollar',
-		currency: 'NZD'
+		currency: 'NZD',
+		payment_id: null
 	},
 	{
 		flag: 'southafrica',
 		iso: 'ZA',
 		currencyName: 'South African Rand',
-		currency: 'ZAR'
+		currency: 'ZAR',
+		payment_id: null
 	}
 ];
 

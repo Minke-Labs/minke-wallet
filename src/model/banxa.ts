@@ -32,9 +32,11 @@ interface OrderParams {
 	account_reference: string;
 	source: string;
 	source_amount: string;
+	// target_amount: string;
 	target: string;
 	wallet_address: string;
 	return_url_on_success: string;
+	payment_method_id: string;
 }
 
 interface MakeOrder {
