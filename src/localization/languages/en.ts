@@ -393,6 +393,21 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Choose token'
+		},
+		TransactionWaitModal: {
+			transaction_done: 'Transaction done',
+			processing_transaction: 'Processing Transaction',
+			sent: 'Sent',
+			deposited: 'Deposited',
+			withdrew: 'Withdrew',
+			exchanged: 'Exchanged',
+			sending: 'Sending',
+			depositing: 'Depositing',
+			withdrawing: 'Withdrawing',
+			exchanging: 'Exchanging',
+			in: 'in',
+			for: 'for',
+			transaction: 'Transaction'
 		}
 	},
 

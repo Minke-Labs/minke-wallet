@@ -8,6 +8,7 @@ import { network } from '@models/network';
 import { getProvider, smallWalletAddress } from '@src/model/wallet';
 import { ModalHeader, Text, Icon, ActivityIndicator } from '@components';
 import { TokenType } from '@src/styles';
+import i18n from '@localization';
 import { makeStyles } from './TransactionWaitModal.styles';
 import Token from '../Token/Token';
 import { TransactionWaitModalProps } from './TransactionWaitModal.types';
@@ -61,26 +62,28 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalColumn}>
 				<Text type="h3" weight="extraBold" color="text1">
-					{mined ? 'Transaction done' : 'Processing Transaction'}
+					{mined
+						? i18n.t('Components.TransactionWaitModal.transaction_done')
+						: i18n.t('Components.TransactionWaitModal.processing_transaction')}
 				</Text>
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="p2" weight="medium" color="text3">
 					{mined
 						? sent
-							? 'Sent'
+							? i18n.t('Components.TransactionWaitModal.sent')
 							: deposit
-							? 'Deposited'
+							? i18n.t('Components.TransactionWaitModal.deposited')
 							: withdraw
-							? 'Withdrew'
-							: 'Exchanged'
+							? i18n.t('Components.TransactionWaitModal.withdrew')
+							: i18n.t('Components.TransactionWaitModal.exchanged')
 						: sent
-						? 'Sending'
+						? i18n.t('Components.TransactionWaitModal.sending')
 						: deposit
-						? 'Depositing'
+						? i18n.t('Components.TransactionWaitModal.depositing')
 						: withdraw
-						? 'Withdrawing'
-						: 'Exchanging'}{' '}
+						? i18n.t('Components.TransactionWaitModal.withdrawing')
+						: i18n.t('Components.TransactionWaitModal.exchanging')}{' '}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
@@ -90,7 +93,11 @@ const TransactionWaitModal = ({
 					<>
 						<Text type="p2" weight="medium" color="text3">
 							{' '}
-							{sent ? '' : deposit ? 'in' : 'for'}{' '}
+							{sent
+								? ''
+								: deposit
+								? i18n.t('Components.TransactionWaitModal.in')
+								: i18n.t('Components.TransactionWaitModal.for')}{' '}
 						</Text>
 						{!!toToken && (
 							<Text type="p2" weight="extraBold" color="text3">
@@ -103,7 +110,7 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="a" weight="medium" color="text3">
-					Transaction:
+					{i18n.t('Components.TransactionWaitModal.transaction')}:
 				</Text>
 				<Button mode="text" onPress={openTransaction}>
 					<Text type="a" weight="medium" color="text3">
