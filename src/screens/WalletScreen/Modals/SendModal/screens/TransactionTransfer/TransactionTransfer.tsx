@@ -40,11 +40,11 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					</View>
 				)}
 				<Text type="h3" weight="extraBold" marginBottom={32}>
-					How much{' '}
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.how_much')}
 					<Text color="text12" type="h3" weight="extraBold">
 						{amountType === 'token' ? token.symbol : 'USD'}
-					</Text>{' '}
-					do you want to send?
+					</Text>
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.wanna_send')}
 				</Text>
 			</>
 
@@ -82,7 +82,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					<ActivityIndicator />
 				) : (
 					<HapticButton
-						title="Send"
+						title={i18n.t('Components.Buttons.send')}
 						disabled={
 							!enoughGas ||
 							!number ||

@@ -228,6 +228,10 @@ export default {
 						Card: {
 							available: ' Disponível'
 						}
+					},
+					TransactionTransfer: {
+						how_much: 'Quantos ',
+						wanna_send: ' você quer enviar?'
 					}
 				}
 			}
@@ -292,6 +296,11 @@ export default {
 	},
 
 	Components: {
+		NetworkWarning: {
+			NetworkTag: {
+
+			}
+		},
 		EmptyStates: {
 			NoTokens: {
 				no_tokens_here: 'No tokens here'
