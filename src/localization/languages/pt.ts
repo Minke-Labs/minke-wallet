@@ -238,7 +238,7 @@ export default {
 					},
 					TransactionContacts: {
 						sent_to_address: 'Envie para algum endereço',
-						address_or_ens: 'Address or ENS',
+						address_or_ens: 'Endereço ou ENS',
 						choose_from_saved: 'Ou escolha um endereço já salvo',
 						NoContactsYet: {
 							no_contacts_yet: 'No contacts yet',
