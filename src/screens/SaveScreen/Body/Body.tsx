@@ -4,6 +4,7 @@ import { useTheme, useNavigation } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { Text, Card, Button, TransactionIcon } from '@components';
+import { depositSymbol } from '@models/deposit';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
 
@@ -19,7 +20,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 					data={interestTokens}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item, index }) => {
-						const symbol = item.symbol.substring(2);
+						const symbol = depositSymbol[item.symbol];
 						return (
 							<Card
 								image={<TransactionIcon received />}
