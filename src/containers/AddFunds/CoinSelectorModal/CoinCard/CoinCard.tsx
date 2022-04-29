@@ -25,7 +25,7 @@ const CoinCard: React.FC<CoinCardProps> = ({ coin, onSelect, description }) => {
 						<Text style={{ fontSize: 12 }}>{description || symbol}</Text>
 					</View>
 				</View>
-				<Icon name="arrowBackStroke" style={{ transform: [{ rotate: '180deg' }] }} size={24} color="text7" />
+				<Icon name="arrowForwardStroke" size={24} color="text7" />
 			</View>
 		</TouchableOpacity>
 	);

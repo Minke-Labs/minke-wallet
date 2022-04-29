@@ -1,21 +1,14 @@
-import React, { RefObject } from 'react';
-import { TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Text, ApplePayButton, Icon } from '@components';
 import { decimalSeparator as separator, digitGroupingSeparator as delimiter } from 'expo-localization';
 import CurrencyInput from 'react-native-currency-input';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useTheme } from '@hooks';
+import i18n from '@localization';
 import { makeStyles } from './CustomAmountModal.styles';
-
-interface CustomAmountModalProps {
-	setCustomAmount: (value: number | null) => void;
-	customAmount: number | null;
-	customAmountRef: RefObject<TextInput>;
-	onPurchase: () => void;
-}
-
-const MIN_PURCHASE = __DEV__ ? 0.1 : 100;
-const MAX_PURCHASE = 500;
+import { CustomAmountModalProps } from './CustomAmountModal.types';
+import { MIN_PURCHASE, MAX_PURCHASE } from './CustomAmountModal.utils';
 
 const CustomAmountModal: React.FC<CustomAmountModalProps> = ({
 	customAmount,
@@ -30,7 +23,10 @@ const CustomAmountModal: React.FC<CustomAmountModalProps> = ({
 	return (
 		<>
 			<Text weight="extraBold" type="h3">
-				Choose other amount between ${MIN_PURCHASE} and ${MAX_PURCHASE}
+				{i18n.t('Containers.AddFunds.CustomAmountModal.choose_another_amount', {
+					min: MIN_PURCHASE,
+					max: MAX_PURCHASE
+				})}
 			</Text>
 
 			<CurrencyInput
@@ -51,7 +47,7 @@ const CustomAmountModal: React.FC<CustomAmountModalProps> = ({
 			<TouchableOpacity activeOpacity={0.6} style={styles.hintBellowButton}>
 				<Icon name="infoStroke" size={14} color="text2" style={{ marginRight: 4 }} />
 				<Text type="a" color="text2">
-					Use a debit card
+					{i18n.t('Containers.AddFunds.CustomAmountModal.use_a_debit_card')}
 				</Text>
 			</TouchableOpacity>
 

@@ -330,6 +330,14 @@ export default {
 				or_another_exchange: ' ou por outra exchange',
 				copy_address: 'Copie o endereço',
 				address_copied: 'Endereço copiado!'
+			},
+			CoinSelectorModal: {
+				add_funds: 'Adicione fundos',
+				choose_asset: 'Escolha qual ativo gostaria de comprar'
+			},
+			CustomAmountModal: {
+				choose_another_amount: 'Escolha outro valor entre {{min}} e {{max}}',
+				use_a_debit_card: 'Use um cartão de crédito'
 			}
 		}
 	},

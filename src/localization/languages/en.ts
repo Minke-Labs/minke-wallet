@@ -331,6 +331,14 @@ export default {
 				or_another_exchange: ' or another exchange',
 				copy_address: 'Copy address',
 				address_copied: 'Address copied!'
+			},
+			CoinSelectorModal: {
+				add_funds: 'Add funds',
+				choose_asset: 'Choose which asset you\'d like to buy'
+			},
+			CustomAmountModal: {
+				choose_another_amount: 'Choose another amount between {{min}} and {{max}}',
+				use_a_debit_card: 'Use a debit card'
 			}
 		}
 	},
