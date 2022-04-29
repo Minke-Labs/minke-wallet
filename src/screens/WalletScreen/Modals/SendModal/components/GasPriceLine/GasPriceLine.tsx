@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
 import { numberFormat } from '@helpers/utilities';
+import i18n from '@localization';
 import { GasPriceLineProps } from './GasPriceLine.types';
 import styles from './GasPriceLine.styles';
 
@@ -11,10 +12,11 @@ const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD }) => 
 	return (
 		<View style={styles.container}>
 			<Text color="text2" type="span">
-				Speed: {label}
+				{i18n.t('WalletScreen.Modals.SendModal.components.GasPriceLine.speed')}{label}
 			</Text>
 			<Text color="text2" type="span">
-				{numberFormat(coinValue * priceUSD, 5)} Network Fee
+				{numberFormat(coinValue * priceUSD, 5)}
+				{i18n.t('WalletScreen.Modals.SendModal.components.GasPriceLine.network_fee')}
 			</Text>
 		</View>
 	);

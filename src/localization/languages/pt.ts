@@ -219,6 +219,15 @@ export default {
 		},
 		Modals: {
 			SendModal: {
+				components: {
+					Card: {
+						available: ' Disponível'
+					},
+					GasPriceLine: {
+						speed: 'Velocidade: ',
+						network_fee: ' Taxa de rede'
+					}
+				},
 				screens: {
 					AddContact: {
 						add_contact: 'Adicionar Contato'

@@ -222,6 +222,15 @@ export default {
 		},
 		Modals: {
 			SendModal: {
+				components: {
+					Card: {
+						available: ' Available'
+					},
+					GasPriceLine: {
+						speed: 'Speed: ',
+						network_fee: ' Network fee'
+					}
+				},
 				screens: {
 					AddContact: {
 						add_contact: 'Add Contact'
