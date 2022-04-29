@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text, Button, Input } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import i18n from '@localization';
 import styles from './AddContact.styles';
 import { AddContactProps } from './AddContact.types';
 import { useAddContact } from './AddContact.hooks';
@@ -14,10 +15,10 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 	return (
 		<View style={styles.container}>
 			<Text weight="extraBold" type="h3" marginBottom={32}>
-				Add Contact
+				{i18n.t('WalletScreen.Modals.SendModal.screens.AddContact.add_contact')}
 			</Text>
 			<Input
-				label="Name"
+				label={i18n.t('Components.Inputs.name')}
 				value={name}
 				onChangeText={(t) => setName(t)}
 				autoCompleteType="off"
@@ -26,7 +27,7 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 			/>
 
 			<Input
-				label="ENS or Wallet Address"
+				label={i18n.t('Components.Inputs.ens_or_wallet')}
 				value={address}
 				onChangeText={(t) => setAddress(t)}
 				autoCorrect={false}
@@ -36,7 +37,11 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 				style={{ marginBottom: 24 }}
 			/>
 
-			<Button title="Add Contact" onPress={onContactCreate} disabled={!(name && validAddress)} />
+			<Button
+				title={i18n.t('Components.Buttons.add_contact')}
+				onPress={onContactCreate}
+				disabled={!(name && validAddress)}
+			/>
 
 			<KeyboardSpacer />
 		</View>

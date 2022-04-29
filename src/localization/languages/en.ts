@@ -215,6 +215,9 @@ export default {
 		Modals: {
 			SendModal: {
 				screens: {
+					AddContact: {
+						add_contact: 'Add Contact'
+					},
 					TransactionContacts: {
 						sent_to_address: 'Send to an address',
 						address_or_ens: 'Address or ENS',
@@ -300,9 +303,7 @@ export default {
 	Components: {
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Sending on ',
-
-				
+				sending_on: 'Sending on the {{network}} network'
 			}
 		},
 		EmptyStates: {
@@ -314,7 +315,9 @@ export default {
 			enter_password: 'Enter password',
 			repeat_password: 'Repeat password',
 			search: 'Search',
-			search_token: 'Search token'
+			search_token: 'Search token',
+			name: 'Name',
+			ens_or_wallet: 'ENS or Wallet Address'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to iCloud',
@@ -326,7 +329,8 @@ export default {
 			deposit: 'Deposit',
 			withdraw: 'Withdraw',
 			ok_got_it: 'OK, got it',
-			send: 'Send'
+			send: 'Send',
+			add_contact: 'Add Contact'
 		},
 		ModalReusables: {
 			Error: {
