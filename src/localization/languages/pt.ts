@@ -209,6 +209,14 @@ export default {
 			this_month: 'Nesse mês',
 			see_all: 'Ver todas'
 		},
+		screens: {
+			Transactions: {
+				NoTransactionsYet: {
+					no_transactions_here: 'Nenhuma transação aqui',
+					lets_get_started: 'Vamos começar?'
+				}
+			}
+		},
 		Modals: {
 			SendModal: {
 				screens: {
@@ -328,7 +336,8 @@ export default {
 			withdraw: 'Withdraw',
 			ok_got_it: 'OK, entendi',
 			send: 'Enviar',
-			add_contact: 'Adicionar Contato'
+			add_contact: 'Adicionar Contato',
+			add_funds_to_start: 'Adicione fundos para começar'
 		},
 		ModalReusables: {
 			Error: {
