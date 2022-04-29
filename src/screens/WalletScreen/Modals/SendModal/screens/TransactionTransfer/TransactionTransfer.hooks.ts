@@ -93,7 +93,6 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						token: {
 							address: token.address,
 							decimals: token.decimals,
-							img: token.symbol,
 							symbol: token.symbol
 						},
 						hash: ''
@@ -139,7 +138,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 							hash,
 							txSuccessful: status === 1,
 							pending: true,
-							timeStamp: new Date().getTime().toString(),
+							timeStamp: (new Date().getTime() / 1000).toString(),
 							amount: amountToSend,
 							direction: 'outgoing',
 							symbol: token.symbol
@@ -161,7 +160,6 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 							token: {
 								address: token.address,
 								decimals: token.decimals,
-								img: token.symbol,
 								symbol: token.symbol
 							},
 							hash

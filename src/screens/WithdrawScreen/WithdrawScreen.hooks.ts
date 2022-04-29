@@ -4,7 +4,15 @@ import { useState } from '@hookstate/core';
 import { ParaswapToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import useDeposits from '@src/hooks/useDeposits';
-import { useAmplitude, useNavigation, useTokens, useNativeToken, useBiconomy, useTransactions } from '@hooks';
+import {
+	useAmplitude,
+	useNavigation,
+	useTokens,
+	useNativeToken,
+	useBiconomy,
+	useTransactions,
+	useDeposit
+} from '@hooks';
 import Logger from '@utils/logger';
 import { getProvider } from '@models/wallet';
 import { Wallet } from 'ethers';
@@ -13,7 +21,6 @@ import { withdrawTransaction } from '@models/withdraw';
 import { aaveDepositContract, gaslessWithdraw } from '@models/gaslessTransaction';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
-import { convertTransactionResponse } from '@models/transaction';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -32,6 +39,7 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
+	const { defaultToken } = useDeposit();
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -112,17 +120,21 @@ const useWithdrawScreen = () => {
 						gasless: true
 					});
 
-					const { from, to, status } = await biconomy.getEthersProvider().waitForTransaction(hash);
+					const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
 					addPendingTransaction({
 						from,
 						destination: to,
-						symbol: token.symbol,
 						hash,
-						txSuccessful: status === 1,
+						txSuccessful: true,
 						pending: true,
-						timeStamp: new Date().getTime().toString(),
+						timeStamp: (new Date().getTime() / 1000).toString(),
 						amount,
-						direction: 'incoming'
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'incoming', symbol: token.symbol, amount: +amount },
+							{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
+						]
 					});
 
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
@@ -162,9 +174,21 @@ const useWithdrawScreen = () => {
 				const signedTx = await wallet.signTransaction(txDefaults);
 				const tx = await provider.sendTransaction(signedTx as string);
 				const { hash, wait } = tx;
-				addPendingTransaction(
-					convertTransactionResponse({ transaction: tx, amount, direction: 'incoming', symbol: token.symbol })
-				);
+				addPendingTransaction({
+					from,
+					destination: to,
+					hash,
+					txSuccessful: true,
+					pending: true,
+					timeStamp: (new Date().getTime() / 1000).toString(),
+					amount,
+					direction: 'exchange',
+					symbol: token.symbol,
+					subTransactions: [
+						{ type: 'incoming', symbol: token.symbol, amount: +amount },
+						{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
+					]
+				});
 
 				if (hash) {
 					Logger.log(`Withdraw ${JSON.stringify(hash)}`);
@@ -192,6 +216,12 @@ const useWithdrawScreen = () => {
 			setTokenBalance('0');
 		}
 	}, [tokens, token]);
+
+	useEffect(() => {
+		if (!!defaultToken && !token) {
+			setToken(defaultToken);
+		}
+	}, [defaultToken]);
 
 	return {
 		searchVisible,
