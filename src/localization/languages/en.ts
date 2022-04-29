@@ -221,6 +221,10 @@ export default {
 			}
 		},
 		Modals: {
+			ReceiveModal: {
+				receive: 'Receive',
+				show_qr: 'Show your QR code or share your informations'
+			},
 			SendModal: {
 				components: {
 					Card: {
@@ -348,7 +352,8 @@ export default {
 			ok_got_it: 'OK, got it',
 			send: 'Send',
 			add_contact: 'Add Contact',
-			add_funds_to_start: 'Add funds to start'
+			add_funds_to_start: 'Add funds to start',
+			share: 'Share'
 		},
 		ModalReusables: {
 			Error: {
