@@ -85,8 +85,8 @@ export default {
 	},
 	DepositWithdrawalSuccessScreen: {
 		congrats: 'Congrats!',
-		you_deposited: 'You\'ve made your deposit!',
-		you_withdrawed: 'You\'ve withdrawed successfully!'
+		you_deposited: "You've made your deposit!",
+		you_withdrawed: "You've withdrawed successfully!"
 	},
 	ExchangeResumeScreen: {
 		exchange_resume: 'Exchange Resume',
@@ -118,7 +118,7 @@ export default {
 		EmptyState: {
 			save: 'Save',
 			open_aave_savings_account: 'Open Aave\nSavings Account',
-			lets_make_first_deposit: 'Let\'s make your first deposit?'
+			lets_make_first_deposit: "Let's make your first deposit?"
 		},
 		Header: {
 			save: 'Save'
@@ -178,7 +178,8 @@ export default {
 	},
 	WalletCreatedScreen: {
 		wallet_created: 'Wallet Created!',
-		need_backup: 'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
+		need_backup:
+			'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
 		modal_error: 'Backup error'
 	},
 	WalletScreen: {
@@ -207,16 +208,13 @@ export default {
 			address_copied: 'Address copied!'
 		},
 		TransactionsTable: {
-			today: 'Today',
-			yesterday: 'Yesterday',
-			this_month: 'This Month',
 			see_all: 'See all'
 		},
 		screens: {
 			Transactions: {
 				NoTransactionsYet: {
 					no_transactions_here: 'No transactions here',
-					lets_get_started: 'Let\'s get started?'
+					lets_get_started: "Let's get started?"
 				}
 			}
 		},
@@ -291,7 +289,10 @@ export default {
 		adding_via_apple_pay: 'Adding via Apple Pay',
 		swap: 'Swap %{source} to %{dest}',
 		from: 'Received from',
-		to: 'Sent to'
+		to: 'Sent to',
+		today: 'Today',
+		yesterday: 'Yesterday',
+		this_month: 'This Month'
 	},
 	Accounts: {
 		wallet: 'Wallet',
@@ -334,7 +335,7 @@ export default {
 			},
 			CoinSelectorModal: {
 				add_funds: 'Add funds',
-				choose_asset: 'Choose which asset you\'d like to buy'
+				choose_asset: "Choose which asset you'd like to buy"
 			},
 			CustomAmountModal: {
 				choose_another_amount: 'Choose another amount between {{min}} and {{max}}',

@@ -175,7 +175,8 @@ export default {
 	},
 	WalletCreatedScreen: {
 		wallet_created: 'Carteira Criada!',
-		need_backup: 'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
+		need_backup:
+			'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
 		modal_error: 'Erro de backup'
 	},
 	WalletScreen: {
@@ -204,9 +205,6 @@ export default {
 			address_copied: 'Endereço copiado!'
 		},
 		TransactionsTable: {
-			today: 'Hoje',
-			yesterday: 'Ontem',
-			this_month: 'Nesse mês',
 			see_all: 'Ver todas'
 		},
 		screens: {
@@ -289,7 +287,10 @@ export default {
 		adding_via_apple_pay: 'Adicionando via Apple Pay',
 		swap: 'Câmbio %{source} para %{dest}',
 		from: 'De',
-		to: 'Para'
+		to: 'Para',
+		today: 'Hoje',
+		yesterday: 'Ontem',
+		this_month: 'Nesse mês'
 	},
 	Accounts: {
 		wallet: 'Carteira',

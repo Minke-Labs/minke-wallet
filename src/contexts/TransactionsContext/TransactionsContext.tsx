@@ -12,6 +12,7 @@ import {
 	yesterdayTimestamp
 } from '@src/components/Transaction/Transaction.utils';
 import { groupBy } from 'lodash';
+import i18n from '@localization';
 
 export interface TransactionPeriod {
 	data: ZapperTransaction[];
@@ -78,9 +79,9 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const groupTransactionByDate = ({ timeStamp }: { timeStamp: string }) => {
 		const ts = parseInt(timeStamp, 10) * 1000;
 
-		if (ts > todayTimestamp) return 'Today';
-		if (ts > yesterdayTimestamp) return 'Yesterday';
-		if (ts > thisMonthTimestamp) return 'This Month';
+		if (ts > todayTimestamp) return i18n.t('Transaction.today');
+		if (ts > yesterdayTimestamp) return i18n.t('Transaction.yesterday');
+		if (ts > thisMonthTimestamp) return i18n.t('Transaction.this_month');
 
 		return format(ts, `MMMM${ts > thisYearTimestamp ? '' : ' yyyy'}`);
 	};
