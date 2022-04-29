@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput, View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@hooks';
+import i18n from '@localization';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import { TokenAmountInputProps } from './TokenAmountInput.types';
@@ -53,7 +54,7 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 			<View style={styles.buttonsContainer}>
 				<TouchableOpacity onPress={() => !!onMaxPress && onMaxPress(showSymbol)}>
 					<Text type="a" weight="medium" color="text7" style={{ marginRight: 12 }}>
-						Send max
+						{i18n.t('Components.TokenAmountInput.send_max')}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.touchable} onPress={() => setShowSymbol(!showSymbol)}>

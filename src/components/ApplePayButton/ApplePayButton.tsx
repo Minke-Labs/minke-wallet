@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { useTheme } from '@hooks';
+import i18n from '@localization';
 import Text from '../Text/Text';
 
 const styles = StyleSheet.create({
@@ -37,7 +38,7 @@ const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress, marginBottom, 
 			]}
 		>
 			<Text color="text11" weight="medium">
-				Pay with{' '}
+				{i18n.t('Components.Buttons.pay_with')}
 				<Text color="text11" weight="extraBold">
 					 Pay
 				</Text>

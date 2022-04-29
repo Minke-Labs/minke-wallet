@@ -344,6 +344,9 @@ export default {
 	},
 
 	Components: {
+		TokenAmountInput: {
+			send_max: 'Send max'
+		},
 		NetworkWarning: {
 			NetworkTag: {
 				sending_on: 'Sending on the {{network}} network'
@@ -375,7 +378,8 @@ export default {
 			send: 'Send',
 			add_contact: 'Add Contact',
 			add_funds_to_start: 'Add funds to start',
-			share: 'Share'
+			share: 'Share',
+			pay_with: 'Pay with '
 		},
 		ModalReusables: {
 			Error: {
