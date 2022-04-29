@@ -79,7 +79,8 @@ export default {
 		NotAbleToSaveModal: {
 			not_able: 'Não foi possível salvar',
 			need_funds_in: 'Primeiro você precisa ter fundos em ',
-			add_funds: 'Adicionar fundos'
+			add_funds: 'Adicionar fundos',
+			exchange: 'Converter'
 		}
 	},
 	DepositWithdrawalSuccessScreen: {
@@ -95,7 +96,7 @@ export default {
 	},
 	ExchangeScreen: {
 		fetching: 'Buscando...',
-		exchange: 'Câmbio',
+		exchange: 'Converter',
 		review: 'Revisar',
 		GasSelector: {
 			GasOption: {
@@ -114,6 +115,7 @@ export default {
 		}
 	},
 	SaveScreen: {
+		interest: '% de juros anuais',
 		EmptyState: {
 			save: 'Salvar',
 			open_aave_savings_account: 'Abrir Conta\nPoupança na Aave',
@@ -196,7 +198,7 @@ export default {
 		},
 		ActionPanel: {
 			send: 'Enviar',
-			exchange: 'Câmbio',
+			exchange: 'Converter',
 			receive: 'Receber',
 			copy_address: 'Copiar endereço',
 			delete_wallet: 'Apagar carteira',
