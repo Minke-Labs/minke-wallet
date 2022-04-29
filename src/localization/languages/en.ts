@@ -287,6 +287,8 @@ export default {
 		view_on: 'View on',
 		cancel: 'Cancel',
 		adding_via_apple_pay: 'Adding via Apple Pay',
+		withdrew_from_savings: 'Withdrew from Savings',
+		deposited_in_savings: 'Deposited in Savings',
 		swap: 'Swap %{source} to %{dest}',
 		from: 'Received from',
 		to: 'Sent to',

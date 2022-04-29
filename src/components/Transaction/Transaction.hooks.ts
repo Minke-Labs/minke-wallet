@@ -89,6 +89,10 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 
 	const subtitle = topUp
 		? i18n.t('Transaction.adding_via_apple_pay')
+		: withdraw
+		? i18n.t('Transaction.withdrew_from_savings')
+		: deposit
+		? i18n.t('Transaction.deposited_in_savings')
 		: exchange
 		? i18n.t('Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
 		: `${received ? i18n.t('Transaction.from') : i18n.t('Transaction.to')}: ${formattedSource}`;
