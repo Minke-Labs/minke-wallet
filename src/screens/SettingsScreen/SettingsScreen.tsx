@@ -57,8 +57,8 @@ const SettingsScreen = () => {
 						onPress={onChangeNetwork}
 					/>
 					<SettingsOption
-						label="language"
-						icon="networkStroke"
+						label={i18n.t('SettingsScreen.language')}
+						icon="siteStroke"
 						onPress={onChangeLanguage}
 					/>
 					<SettingsOption

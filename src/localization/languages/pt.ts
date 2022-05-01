@@ -70,6 +70,9 @@ export default {
 	ChangeCurrencyScreen: {
 		header_title: 'Alterar a Moeda'
 	},
+	ChangeLanguageScreen: {
+		header_title: 'Alterar a Linguagem'
+	},
 	ChangeNetworkScreen: {
 		ListItem: {
 			test_network: 'rede de testes'
@@ -135,6 +138,7 @@ export default {
 		creating_wallet: 'Criando carteira',
 		backup: 'Backup',
 		currency: 'Moeda',
+		language: 'Linguagem',
 		network: 'Rede',
 		new_wallet: 'Nova carteira',
 		usd_coin: 'Moeda padrão USD',

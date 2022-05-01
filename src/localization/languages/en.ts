@@ -70,6 +70,9 @@ export default {
 	ChangeCurrencyScreen: {
 		header_title: 'Change Currency'
 	},
+	ChangeLanguageScreen: {
+		header_title: 'Change Language'
+	},
 	ChangeNetworkScreen: {
 		ListItem: {
 			test_network: 'test network'
@@ -136,6 +139,7 @@ export default {
 		backup: 'Backup',
 		currency: 'Currency',
 		network: 'Network',
+		language: 'Language',
 		new_wallet: 'New wallet',
 		usd_coin: 'US Dollar coin',
 		contact_support: 'Contact Support',
