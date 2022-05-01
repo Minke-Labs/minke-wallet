@@ -5,7 +5,8 @@ import { useTheme } from '@hooks';
 import styles from './FlagItem.styles';
 import { FlagItemProps } from './FlagItem.types';
 
-export const FlagItem: React.FC<FlagItemProps> = ({ flag, title, active, onPress }) => {
+// TODO: Use this component for the "ChangeCurrencyScreen" as well, when merged, to avoid duplication of code.
+const FlagItem: React.FC<FlagItemProps> = ({ flag, title, active, onPress }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity onPress={onPress} style={[styles.container, { borderColor: colors.text11 }]}>
@@ -19,3 +20,5 @@ export const FlagItem: React.FC<FlagItemProps> = ({ flag, title, active, onPress
 		</TouchableOpacity>
 	);
 };
+
+export default FlagItem;

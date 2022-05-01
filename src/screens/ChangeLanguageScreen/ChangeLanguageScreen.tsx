@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { SettingsHeader } from '@components';
+import { SettingsHeader, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation } from '@hooks';
 import { FlagType } from '@styles';
 import i18n from '@localization';
-import { FlagItem } from './FlagItem/FlagItem';
 import { languageArr } from './ChangeLanguageScreen.utils';
 
 const ChangeLanguageScreen = () => {
