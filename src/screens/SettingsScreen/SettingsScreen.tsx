@@ -21,6 +21,7 @@ const SettingsScreen = () => {
 
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	// const onChangeCurrency = () => navigation.navigate('ChangeCurrencyScreen');
+	const onChangeLanguage = () => navigation.navigate('ChangeLanguageScreen');
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
@@ -54,6 +55,11 @@ const SettingsScreen = () => {
 						label={i18n.t('SettingsScreen.network')}
 						icon="networkStroke"
 						onPress={onChangeNetwork}
+					/>
+					<SettingsOption
+						label="language"
+						icon="networkStroke"
+						onPress={onChangeLanguage}
 					/>
 					<SettingsOption
 						label={i18n.t('SettingsScreen.new_wallet')}
