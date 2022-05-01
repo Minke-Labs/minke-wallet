@@ -4,8 +4,7 @@ import { Text, ApplePayButton, Icon } from '@components';
 import { decimalSeparator as separator, digitGroupingSeparator as delimiter } from 'expo-localization';
 import CurrencyInput from 'react-native-currency-input';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import { makeStyles } from './CustomAmountModal.styles';
 import { CustomAmountModalProps } from './CustomAmountModal.types';
 import { MIN_PURCHASE, MAX_PURCHASE } from './CustomAmountModal.utils';
@@ -19,7 +18,7 @@ const CustomAmountModal: React.FC<CustomAmountModalProps> = ({
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const validAmount = customAmount! >= MIN_PURCHASE && customAmount! <= MAX_PURCHASE;
-
+	const { i18n } = useLanguage();
 	return (
 		<>
 			<Text weight="extraBold" type="h3">

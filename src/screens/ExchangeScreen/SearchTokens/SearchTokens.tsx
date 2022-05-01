@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import i18n from '@localization';
 import { TokenType } from '@src/styles';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
@@ -19,6 +18,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	showOnlyOwnedTokens,
 	selected
 }) => {
+	const { i18n } = useLanguage();
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');

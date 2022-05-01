@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import Text from '../Text/Text';
 
 const styles = StyleSheet.create({
@@ -23,7 +22,7 @@ interface ApplePayButtonProps {
 
 const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress, marginBottom, disabled = false }) => {
 	const { colors } = useTheme();
-
+	const { i18n } = useLanguage();
 	return (
 		<TouchableOpacity
 			onPress={onPress}

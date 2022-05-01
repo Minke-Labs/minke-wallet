@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { Icon, Text, Token } from '@components';
 import { TokenType } from '@styles';
-import i18n from '@localization';
 import { styles } from './ListItem.styles';
 import { ListItemProps } from './ListItem.types';
 
 const ListItem: React.FC<ListItemProps> = ({ label, selected, onPress, token, testnet }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity

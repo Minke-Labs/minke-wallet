@@ -1,11 +1,12 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Text, ModalHeader, PaperTouchable, Icon } from '@components';
-import i18n from '@localization';
+import { useLanguage } from '@hooks';
 import { NotAbleToSaveModalProps } from './NotAbleToSaveModal.types';
 import { useNotAbleToSaveModal } from './NotAbleToSaveModal.hooks';
 
 const NotAbleToSaveModal: React.FC<NotAbleToSaveModalProps> = ({ onDismiss, onAddFunds, visible }) => {
+	const { i18n } = useLanguage();
 	const { defaultUSDCoin, goToExchange, onAddFundsPressed } = useNotAbleToSaveModal({
 		onDismiss,
 		onAddFunds,

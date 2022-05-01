@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Flag, Text, Icon } from '@components';
 import { useTheme } from '@hooks';
+import Text from '../Text/Text';
+import Flag from '../Flag/Flag';
+import Icon from '../Icon/Icon';
 import styles from './FlagItem.styles';
 import { FlagItemProps } from './FlagItem.types';
 

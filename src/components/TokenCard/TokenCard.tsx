@@ -2,8 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TokenType } from '@styles';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
@@ -24,7 +23,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-
+	const { i18n } = useLanguage();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
 		balance,
 		updateQuotes: updateQuotes!,

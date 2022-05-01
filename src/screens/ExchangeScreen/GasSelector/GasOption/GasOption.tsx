@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Card, RadioButton } from 'react-native-paper';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { Text, Icon as IconImg, ActivityIndicator } from '@components';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
-import i18n from '@localization';
 import { makeStyles } from '../../ExchangeScreen.styles';
 
 interface Wait {
@@ -24,6 +23,7 @@ const defaultWait: Wait = {
 };
 
 const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow'; disabled?: boolean }) => {
+	const { i18n } = useLanguage();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [gasPrice, setGasPrice] = React.useState<number>();
 	const [usdPrice, setUsdPrice] = React.useState<number>();

@@ -1,11 +1,11 @@
 export const languageArr = [
 	{
-		id: 'en',
+		id: 'EN',
 		title: 'English (US)',
 		flag: 'unitedStates'
 	},
 	{
-		id: 'pt-br',
+		id: 'pt-BR',
 		title: 'Português (BR)',
 		flag: 'brazil'
 	}

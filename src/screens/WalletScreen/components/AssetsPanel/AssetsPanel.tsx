@@ -2,13 +2,13 @@ import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { Text, Icon } from '@components';
 import makeBlockie from 'ethereum-blockies-base64';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
-import i18n from '@localization';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
 const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave, onWalletAssets }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 
 	return (

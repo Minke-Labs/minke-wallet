@@ -2,11 +2,10 @@ import React from 'react';
 import { Icon, Text } from '@components';
 import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@hooks';
-import i18n from '@localization';
 import { HeaderProps } from './Header.types';
 import styles from './Header.styles';
 
-const Header: React.FC<HeaderProps> = ({ title = i18n.t('WalletAssetsScreen.header') }) => {
+const Header: React.FC<HeaderProps> = ({ title }) => {
 	const navigation = useNavigation();
 
 	return (

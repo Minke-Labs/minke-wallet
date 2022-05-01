@@ -1,11 +1,11 @@
 import { View } from 'react-native';
 import React from 'react';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import { Icon, Text } from '@components';
 import styles from './Warning.styles';
 
 const Warning = () => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 
 	return (

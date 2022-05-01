@@ -1,6 +1,6 @@
 import 'expo-dev-client';
 import React from 'react';
-import { ThemeProvider, AmplitudeProvider, BiconomyProvider } from '@contexts';
+import { ThemeProvider, AmplitudeProvider, BiconomyProvider, LanguageProvider } from '@contexts';
 import Routes from '@routes';
 import AppLoading from 'expo-app-loading';
 import Logger from '@utils/logger';
@@ -14,13 +14,15 @@ const App = () => {
 	if (!coinList || !fontsLoaded || walletState.promised) return <AppLoading />;
 
 	return (
-		<BiconomyProvider>
-			<AmplitudeProvider>
-				<ThemeProvider>
-					<Routes />
-				</ThemeProvider>
-			</AmplitudeProvider>
-		</BiconomyProvider>
+		<LanguageProvider>
+			<BiconomyProvider>
+				<AmplitudeProvider>
+					<ThemeProvider>
+						<Routes />
+					</ThemeProvider>
+				</AmplitudeProvider>
+			</BiconomyProvider>
+		</LanguageProvider>
 	);
 };
 

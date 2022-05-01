@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
-import { useNetwork } from '@hooks';
-import i18n from '@localization';
+import { useNetwork, useLanguage } from '@hooks';
 import Token from '../../Token/Token';
 import Text from '../../Text/Text';
 import Icon from '../../Icon/Icon';
@@ -11,7 +10,7 @@ import { NetworkTagProps } from './NetworkTag.types';
 
 const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, info }) => {
 	const { network } = useNetwork();
-
+	const { i18n } = useLanguage();
 	return (
 		<View style={[styles.container, { justifyContent: info ? 'space-between' : 'center' }]}>
 			<View style={styles.left}>

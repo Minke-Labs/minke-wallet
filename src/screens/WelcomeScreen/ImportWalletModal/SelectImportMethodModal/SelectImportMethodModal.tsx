@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text, Icon } from '@components';
 import { TouchableOpacity, View } from 'react-native';
-import i18n from '@localization';
+import { useLanguage } from '@hooks';
 import { SelectImportMethodModalProps } from './SelectImportMethodModal.types';
 import styles from './SelectImportMethodModal.styles';
 import { useSelectImportMethodModal } from './SelectImportMethodModal.hooks';
 
 const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectImportMethodModalProps) => {
+	const { i18n } = useLanguage();
 	const { colors, latestBackup, walletsBackedUp } = useSelectImportMethodModal();
 
 	return (

@@ -3,12 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { network } from '@models/network';
 import { getProvider, smallWalletAddress } from '@src/model/wallet';
 import { ModalHeader, Text, Icon, ActivityIndicator } from '@components';
 import { TokenType } from '@src/styles';
-import i18n from '@localization';
 import { makeStyles } from './TransactionWaitModal.styles';
 import Token from '../Token/Token';
 import { TransactionWaitModalProps } from './TransactionWaitModal.types';
@@ -22,6 +21,7 @@ const TransactionWaitModal = ({
 	withdraw = false,
 	sent = false
 }: TransactionWaitModalProps) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const [mined, setMined] = useState(false);

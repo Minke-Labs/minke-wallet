@@ -5,7 +5,7 @@ import TransactionWaitModal from '@src/components/TransactionWaitModal/Transacti
 import { Svg, Path } from 'react-native-svg';
 import { BasicLayout } from '@layouts';
 import { Icon, Modal, Text, ActivityIndicator, HapticButton, ModalReusables } from '@components';
-import i18n from '@localization';
+import { useLanguage } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
@@ -35,7 +35,7 @@ const ExchangeResumeScreen = () => {
 		toFiatPrice,
 		gasless
 	} = useExchangeResumeScreen();
-
+	const { i18n } = useLanguage();
 	return (
 		<>
 			<BasicLayout>

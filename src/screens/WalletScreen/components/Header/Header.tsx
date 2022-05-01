@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon, ScreenLoadingIndicator } from '@components';
-import i18n from '@localization';
+import { useLanguage } from '@hooks';
 import styles from './Header.styles';
 import { HeaderProps } from './Header.types';
 import { useHeader } from './Header.hooks';
 
 const Header: React.FC<HeaderProps> = ({ onSettingsPress }) => {
+	const { i18n } = useLanguage();
 	const { accountName, state } = useHeader();
 
 	if (state.promised) return <ScreenLoadingIndicator />;

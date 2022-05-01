@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Image, Modal } from 'react-native';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import Text from '../Text/Text';
 import styles from './LoadingScreen.styles';
 import { LoadingScreenProps } from './LoadingScreen.types';
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ title }) => {
 	const { colors } = useTheme();
+	const { i18n } = useLanguage();
 	return (
 		<Modal visible>
 			<View style={[styles.container, { backgroundColor: colors.background1 }]}>

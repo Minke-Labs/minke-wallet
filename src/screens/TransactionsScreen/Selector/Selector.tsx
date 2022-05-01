@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { Text } from '@components';
 import Animated from 'react-native-reanimated';
-import i18n from '@localization';
 import { makeStyles } from './Selector.styles';
 import { SelectorProps } from './Selector.types';
 import { useSelector } from './Selector.hooks';
 
 const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { current, animatedBackgroundTag } = useSelector();
