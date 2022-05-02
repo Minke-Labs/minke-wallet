@@ -24,5 +24,6 @@ export type RootStackParamList = {
 	OpenAave: undefined;
 	TopUpWaitScreen: undefined;
 	WithdrawScreen: undefined;
+	SavingAccountsScreen: undefined;
 	Test: undefined;
 };

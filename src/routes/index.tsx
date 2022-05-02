@@ -26,6 +26,7 @@ import {
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
+	SavingAccountsScreen,
 	Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
@@ -35,8 +36,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Routes: React.FC = () => {
 	const walletState = useState(globalWalletState());
-	// const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
-	const initialScreen = 'Test';
+	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
+	// const initialScreen = 'Test';
 
 	return (
 		<NavigationContainer>
@@ -65,6 +66,7 @@ const Routes: React.FC = () => {
 					<Stack.Screen name="BackupToICloudScreen" component={BackupToICloudScreen} />
 					<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
 					<Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
+					<Stack.Screen name="SavingAccountsScreen" component={SavingAccountsScreen} />
 				</Stack.Navigator>
 			</TransactionsProvider>
 		</NavigationContainer>

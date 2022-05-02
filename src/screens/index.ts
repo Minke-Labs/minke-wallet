@@ -20,6 +20,7 @@ import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
+import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
 import Test from './Test/Test';
 
 export {
@@ -45,5 +46,6 @@ export {
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
+	SavingAccountsScreen,
 	Test
 };
