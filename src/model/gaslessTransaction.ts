@@ -7,9 +7,8 @@ import { getProvider } from './wallet';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 export const exchangeContract = '0x986089F230DF31D34A1baE69A08C11ef6b06EcbA'; // Polygon
-export const sendContract = '0x70e38dedc805330286a305966241abecc41c2438'; // Polygon
-export const mStableDepositContract = '0xf41885a9cd319f847f617eadbbb18891c27fa2c2';
-// '0xdfd432bc7f0b2193e4769bdea4e951cb7d064e43'; // Polygon
+export const sendContract = '0x70e38dEdC805330286A305966241aBeCC41c2438'; // Polygon
+export const mStableDepositContract = '0x3A91390140c30c9C56fC84EdbEa54C683068e85F';
 
 export const gaslessApproval = async ({
 	address,
@@ -386,7 +385,7 @@ export const gaslessMStableDeposit = async ({
 	const tx = await contract.populateTransaction.saveViaMint(
 		'0xE840B73E5287865EEc17d250bFb1536704B43B21', // _mAsset = mUSD Polygon
 		'0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af', // _save   = imUSD Polygon
-		'0x32aba856dc5ffd5a56bcd182b13380e5c855aa29', // _vault  = imUSD Vault Polygon
+		'0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29', // _vault  = imUSD Vault Polygon
 		token, //                                        _bAsset = stable being deposited
 		amount, //                                       _amount = stable quantity in WEI, stable decimals
 		minAmount, //                                    _minOut = min quantity in WEI, imUSD decimals (18)
@@ -408,7 +407,7 @@ export const gaslessMStableDeposit = async ({
 	const functionSignature = contractInterface.encodeFunctionData('saveViaMint', [
 		'0xE840B73E5287865EEc17d250bFb1536704B43B21', // _mAsset = mUSD Polygon
 		'0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af', // _save   = imUSD Polygon
-		'0x32aba856dc5ffd5a56bcd182b13380e5c855aa29', // _vault  = imUSD Vault Polygon
+		'0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29', // _vault  = imUSD Vault Polygon
 		token, //                                        _bAsset = stable being deposited
 		amount, //                                       _amount = stable quantity in WEI, stable decimals
 		minAmount, //                                    _minOut = min quantity in WEI, imUSD decimals (18)
