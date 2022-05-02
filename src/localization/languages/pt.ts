@@ -60,7 +60,7 @@ export default {
 			not_recoverable: 'Ela não poderá ser recuperada!'
 		},
 		ConfirmBackupPassword: {
-			enter_backup_password: 'Entre a senha do backup',
+			enter_backup_password: 'Digite a senha do backup',
 			to: 'Para',
 			restore_from: 'restaurar suas carteiras do',
 			add_to: 'adicionar esta carteira ao seu',
@@ -71,7 +71,7 @@ export default {
 		header_title: 'Alterar a Moeda'
 	},
 	ChangeLanguageScreen: {
-		header_title: 'Alterar a Linguagem'
+		header_title: 'Alterar o idioma'
 	},
 	ChangeNetworkScreen: {
 		ListItem: {
@@ -125,7 +125,7 @@ export default {
 			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
 		},
 		Header: {
-			save: 'Salvar'
+			save: 'Investir'
 		},
 		CurrentValue: {
 			current_deposits: 'Depósitos atuais',
@@ -138,7 +138,7 @@ export default {
 		creating_wallet: 'Criando carteira',
 		backup: 'Backup',
 		currency: 'Moeda',
-		language: 'Linguagem',
+		language: 'Idioma',
 		network: 'Rede',
 		new_wallet: 'Nova carteira',
 		usd_coin: 'Moeda padrão USD',
@@ -388,7 +388,7 @@ export default {
 			confirm_backup: 'Confirmar backup',
 			done: 'Feito',
 			exchange: 'Converter',
-			deposit: 'Depositar',
+			deposit: 'Depósito',
 			withdraw: 'Retirar',
 			ok_got_it: 'OK, entendi',
 			send: 'Enviar',
