@@ -14,11 +14,8 @@ const ChangeLanguageScreen = () => {
 
 	return (
 		<BasicLayout>
+			<SettingsHeader title={i18n.t('ChangeLanguageScreen.header_title')} onPress={goBack} />
 			<View style={{ flex: 1, paddingHorizontal: 16 }}>
-				<SettingsHeader
-					title={i18n.t('ChangeLanguageScreen.header_title')}
-					onPress={goBack}
-				/>
 				<View style={{ marginTop: 24, flex: 1 }}>
 					<View style={{ flex: 1 }}>
 						<FlatList
