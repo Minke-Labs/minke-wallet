@@ -4,11 +4,11 @@ import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
 import { getProvider } from './wallet';
+import { mStableDepositContract, mAsset, saveAsset, vault } from './mStableDeposit';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 export const exchangeContract = '0x986089F230DF31D34A1baE69A08C11ef6b06EcbA'; // Polygon
 export const sendContract = '0x70e38dEdC805330286A305966241aBeCC41c2438'; // Polygon
-export const mStableDepositContract = '0x3A91390140c30c9C56fC84EdbEa54C683068e85F';
 
 export const gaslessApproval = async ({
 	address,
@@ -346,6 +346,7 @@ export const gaslessSend = async ({
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;
 };
+
 export const gaslessMStableDeposit = async ({
 	address,
 	privateKey,
@@ -363,54 +364,24 @@ export const gaslessMStableDeposit = async ({
 	gasPrice: string;
 	biconomy: any;
 }) => {
-	const provider = await getProvider();
 	// send signed transaction with ethers
-	const userSigner = new ethers.Wallet(privateKey, provider);
-	const nonce = await userSigner.provider.getTransactionCount(userSigner.address, 'latest');
+	const userSigner = new ethers.Wallet(privateKey);
 
 	const abi = [
 		// eslint-disable-next-line max-len
 		'function saveViaMint(address _mAsset, address _save, address _vault, address _bAsset, uint256 _amount, uint256 _minOut, bool _stake) external'
 	];
 
-	const txDefaults = {
-		type: 2,
-		chainId: await userSigner.getChainId(),
-		gasLimit: 1000000,
-		maxFeePerGas: parseUnits(gasPrice, 'gwei'),
-		maxPriorityFeePerGas: parseUnits(gasPrice, 'gwei'),
-		nonce
-	};
-	const contract = new Contract(mStableDepositContract, abi, userSigner);
-	const tx = await contract.populateTransaction.saveViaMint(
-		'0xE840B73E5287865EEc17d250bFb1536704B43B21', // _mAsset = mUSD Polygon
-		'0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af', // _save   = imUSD Polygon
-		'0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29', // _vault  = imUSD Vault Polygon
-		token, //                                        _bAsset = stable being deposited
-		amount, //                                       _amount = stable quantity in WEI, stable decimals
-		minAmount, //                                    _minOut = min quantity in WEI, imUSD decimals (18)
-		true
-	);
-	const signedTx = await userSigner.signTransaction({ ...tx, ...txDefaults });
-	console.log('sending', { ...tx, ...txDefaults });
-	const transaction = await userSigner.provider.sendTransaction(signedTx as string);
-	console.log({ transaction });
-	console.log('waiting', transaction.hash);
-	await transaction.wait(3);
-	console.log('finished', transaction.hash);
-
-	return;
-
 	const contractInterface = new ethers.utils.Interface(abi);
 
 	// Create your target method signature.. here we are calling setQuote() method of our contract
 	const functionSignature = contractInterface.encodeFunctionData('saveViaMint', [
-		'0xE840B73E5287865EEc17d250bFb1536704B43B21', // _mAsset = mUSD Polygon
-		'0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af', // _save   = imUSD Polygon
-		'0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29', // _vault  = imUSD Vault Polygon
-		token, //                                        _bAsset = stable being deposited
-		amount, //                                       _amount = stable quantity in WEI, stable decimals
-		minAmount, //                                    _minOut = min quantity in WEI, imUSD decimals (18)
+		mAsset, //    _mAsset = mUSD Polygon
+		saveAsset, // _save   = imUSD Polygon
+		vault, //     _vault  = imUSD Vault Polygon
+		token, //     _bAsset = stable being deposited
+		amount, //    _amount = stable quantity in WEI, stable decimals
+		minAmount, // _minOut = min quantity in WEI, imUSD decimals (18)
 		true
 	]);
 
@@ -418,11 +389,11 @@ export const gaslessMStableDeposit = async ({
 		to: mStableDepositContract,
 		data: functionSignature,
 		from: address,
-		gasLimit: 500000,
+		gasLimit: 5000000,
 		gasPrice: parseUnits(gasPrice, 'gwei')
 	};
 
-	const signedTxa = await userSigner.signTransaction(rawTx);
+	const signedTx = await userSigner.signTransaction(rawTx);
 	// should get user message to sign for EIP712 or personal signature types
 	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
 
@@ -435,6 +406,7 @@ export const gaslessMStableDeposit = async ({
 		signatureType: biconomy.EIP712_SIGN
 	};
 
+	const provider = biconomy.getEthersProvider();
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;
