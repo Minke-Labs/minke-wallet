@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
-import i18n from '@localization';
 import { MarketCapProps } from './MarketCap.types';
 import styles from './MarketCap.styles';
 
 const MarketCap: React.FC<MarketCapProps> = ({ marketCap, tokenVolume }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const lastVolume = tokenVolume[tokenVolume.length - 1][1];
 	return (

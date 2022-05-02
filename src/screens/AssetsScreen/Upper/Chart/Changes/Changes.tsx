@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text } from '@components';
-import i18n from '@localization';
+import { useLanguage } from '@hooks';
 import { ChangesProps } from './Changes.types';
 import { Box } from './Box/Box';
 import { useChanges } from './Changes.hooks';
 import styles from './Changes.styles';
 
 const Changes: React.FC<ChangesProps> = ({ current, graphs }) => {
+	const { i18n } = useLanguage();
 	const { hour, day, week, month, year, all } = useChanges(graphs);
 	return (
 		<View style={styles.container}>

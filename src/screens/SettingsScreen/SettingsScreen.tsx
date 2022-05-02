@@ -4,14 +4,14 @@ import * as Linking from 'expo-linking';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { LoadingScreen, SettingsHeader } from '@components';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { walletCreate } from '@models/wallet';
-import i18n from '@localization';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
 
 const SettingsScreen = () => {
+	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
 	const navigation = useNavigation();
 	const { colors } = useTheme();

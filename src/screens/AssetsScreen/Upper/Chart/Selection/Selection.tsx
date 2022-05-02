@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 import { View, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
 // import { graphs } from './Graph.utils';
-import i18n from '@localization';
+import { useLanguage } from '@hooks';
 import { GraphIndex } from '../Chart.types';
 import { SelectionProps } from './Selection.types';
 import { styles } from './Selection.styles';
@@ -12,6 +12,7 @@ import { styles } from './Selection.styles';
 const { width } = Dimensions.get('window');
 
 const Selection: React.FC<SelectionProps> = ({ previous, current, transition, graphs }) => {
+	const { i18n } = useLanguage();
 	const BUTTON_WIDTH = width / graphs.length;
 
 	const [using, setUsing] = useState(0);

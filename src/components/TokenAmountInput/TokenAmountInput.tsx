@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextInput, View, TouchableOpacity } from 'react-native';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import { TokenAmountInputProps } from './TokenAmountInput.types';
@@ -28,7 +27,7 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 		onNumberAmountChange,
 		onTypeChange
 	});
-
+	const { i18n } = useLanguage();
 	return (
 		<View style={styles.container}>
 			<View style={[styles.inputContainer, { borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1 }]}>

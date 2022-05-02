@@ -1,12 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, Icon, Text } from '@components';
-import { useTheme } from '@hooks';
-import i18n from '@localization';
+import { useTheme, useLanguage } from '@hooks';
 import { makeStyles } from './Failed.styles';
 import { FailedProps } from './Failed.types';
 
 export const Failed: React.FC<FailedProps> = ({ orderId, onFinish }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (

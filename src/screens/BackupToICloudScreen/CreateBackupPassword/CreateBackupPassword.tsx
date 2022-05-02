@@ -2,14 +2,14 @@ import React, { useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { useKeyboard, useNavigation, useWalletCloudBackup } from '@hooks';
+import { useKeyboard, useNavigation, useWalletCloudBackup, useLanguage } from '@hooks';
 import { backupImg } from '@images';
-import i18n from '@localization';
 import { saveBackupPassword } from '@models/backup';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './CreateBackupPassword.styles';
 
 const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const [password, setPassword] = React.useState<string>();
 	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
