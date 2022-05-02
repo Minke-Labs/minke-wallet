@@ -2,14 +2,13 @@ import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
 import { useImportWalletModal } from './useImportWallet.hooks';
 import SelectImportMethodModal from './SelectImportMethodModal/SelectImportMethodModal';
 import { styles } from './ImportWalletModal.styles';
 
 const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss, visible }) => {
-	const { i18n } = useLanguage();
 	const { text, setText, importing, onImportWallet, onBack, currentStep, goForward, onICloudBackup } =
 		useImportWalletModal({
 			onImportFinished,

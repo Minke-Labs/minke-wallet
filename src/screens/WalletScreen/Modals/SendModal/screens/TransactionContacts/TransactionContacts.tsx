@@ -2,7 +2,7 @@ import React from 'react';
 import { View, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Button, Text, Input } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import { ContactItem } from '../../components';
 import { TransactionContactsProps } from './TransactionContacts.types';
 import styles from './TransactionContacts.styles';
@@ -11,7 +11,6 @@ import { useTransactionContacts } from './TransactionContacts.hooks';
 
 // @TODO: Marcos accept address with a bad format
 const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected }) => {
-	const { i18n } = useLanguage();
 	const { contactList, address, setAddress, keyboardVisible, validAddress, onSendAddress } = useTransactionContacts({
 		onSelected
 	});

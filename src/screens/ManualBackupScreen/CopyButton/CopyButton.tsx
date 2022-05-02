@@ -1,12 +1,12 @@
 import { TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Text, Icon } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme } from '@hooks';
+import i18n from '@localization';
 import { styles } from './CopyButton.styles';
 import { ButtonProps } from './CopyButton.types';
 
 const CopyButton: React.FC<ButtonProps> = ({ onPress }) => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 
 	return (

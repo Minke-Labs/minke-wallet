@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { IconType } from '@styles';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import styles from './ActionsPanel.styles';
 import { Card } from './Card/Card';
 import { ActionsPanelProps } from './ActionsPanel.types';
+import { actions } from './ActionsPanel.utils';
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	setSendModalOpen,
@@ -14,19 +15,6 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	showReceive,
 	onCopyToClipboard
 }) => {
-	const { i18n } = useLanguage();
-
-	const actions = [
-		{ name: i18n.t('WalletScreen.ActionPanel.send'), icon: 'sendStroke' },
-		{ name: i18n.t('WalletScreen.ActionPanel.exchange'), icon: 'exchangeStroke' },
-		{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receiveStroke' },
-		{ name: i18n.t('WalletScreen.ActionPanel.copy_address'), icon: 'copyStroke' }
-	];
-
-	if (__DEV__) {
-		actions.push({ name: i18n.t('WalletScreen.ActionPanel.delete_wallet'), icon: 'closeStroke' });
-	}
-
 	const chooseFnc = (name: string) => {
 		switch (name) {
 			case i18n.t('WalletScreen.ActionPanel.send'):
@@ -45,6 +33,7 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 				return () => {};
 		}
 	};
+
 	return (
 		<View style={styles.actionsPanelContainer}>
 			<FlatList

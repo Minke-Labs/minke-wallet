@@ -1,12 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, Icon, Text } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme } from '@hooks';
+import i18n from '@localization';
 import { SuccessProps } from './Success.types';
 import { makeStyles } from './Success.styles';
 
 export const Success: React.FC<SuccessProps> = ({ onFinish }) => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (

@@ -1,12 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme } from '@hooks';
+import i18n from '@localization';
 import styles from './AboutCoin.styles';
 import { AboutCoinProps } from './AboutCoin.types';
 
 const AboutCoin: React.FC<AboutCoinProps> = ({ name, description }) => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	if (!description) {
 		return null;

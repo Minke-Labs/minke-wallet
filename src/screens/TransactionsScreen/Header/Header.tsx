@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation } from '@hooks';
 import { Icon, Text } from '@components';
+import i18n from '@localization';
 import styles from './Header.styles';
 
 const Header = () => {
-	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 
 	return (

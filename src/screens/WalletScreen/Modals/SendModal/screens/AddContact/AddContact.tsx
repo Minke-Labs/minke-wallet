@@ -2,13 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text, Button, Input } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import styles from './AddContact.styles';
 import { AddContactProps } from './AddContact.types';
 import { useAddContact } from './AddContact.hooks';
 
 const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
-	const { i18n } = useLanguage();
 	const { name, setName, address, setAddress, ensAddress, validAddress, onContactCreate } = useAddContact({
 		onContactAdded
 	});

@@ -4,8 +4,9 @@ import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
 import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
 import { Card } from 'react-native-paper';
-import { useTheme, useNavigation, useAmplitude, useLanguage } from '@hooks';
+import { useTheme, useNavigation, useAmplitude } from '@hooks';
 import { debounce } from 'lodash';
+import i18n from '@localization';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -16,7 +17,6 @@ import { useDeposit } from './Deposit.hooks';
 import { makeStyles } from './Deposit.styles';
 
 const Deposit = () => {
-	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { colors } = useTheme();

@@ -2,8 +2,8 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { Token, Text, PaperTouchable, ApplePayButton, Icon } from '@components';
-import { useLanguage } from '@hooks';
 import { TokenType } from '@styles';
+import i18n from '@localization';
 import { ChooseQuantityModalProps } from './ChooseQuantityModal.types';
 import { useChooseQuantityModal } from './ChooseQuantityModal.hooks';
 
@@ -21,7 +21,7 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		snackbarVisible,
 		setSnackbarVisible
 	} = useChooseQuantityModal({ coin, setPresetAmount });
-	const { i18n } = useLanguage();
+
 	return (
 		<>
 			<View>

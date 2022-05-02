@@ -4,15 +4,15 @@ import { Text, Token, ActivityIndicator, TokenAmountInput, NetworkWarning, Hapti
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
-import { useKeyboard, useLanguage } from '@hooks';
+import { useKeyboard } from '@hooks';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
+import i18n from '@localization';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
 import { useTransactionTransfer } from './TransactionTransfer.hooks';
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
-	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
 	const {
 		image,

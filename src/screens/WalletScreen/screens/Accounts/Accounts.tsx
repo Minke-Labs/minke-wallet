@@ -3,9 +3,10 @@ import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation, useTheme, useLanguage } from '@hooks';
+import { useNavigation, useTheme } from '@hooks';
 import { IconType } from '@styles';
 import { numberFormat } from '@src/helpers/utilities';
+import i18n from '@localization';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
@@ -19,7 +20,6 @@ const Right: React.FC<{ balanceType: number }> = ({ balanceType }) => (
 );
 
 const ComingSoonTag = () => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	return (
 		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -40,7 +40,6 @@ const ComingSoonTag = () => {
 };
 
 const Accounts = () => {
-	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { balance } = useState(globalWalletState()).value;
 

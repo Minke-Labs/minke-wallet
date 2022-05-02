@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme } from '@hooks';
 import { Text } from '@components';
+import i18n from '@localization';
 import styles from './Buttons.styles';
 import { ButtonsProps } from './Buttons.types';
 
 const Buttons: React.FC<ButtonsProps> = ({ onPress }) => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	return (
 		<View style={[styles.container, { borderTopColor: colors.background1 }]}>

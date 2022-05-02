@@ -2,14 +2,13 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { SettingsHeader } from '@components';
-import { useLanguage } from '@hooks';
 import { depositStablecoins as stablecoins } from '@models/deposit';
+import i18n from '@localization';
 import styles from './USDCoinScreen.styles';
 import ListItem from './ListItem/ListItem';
 import { useUSDCoinScreen } from './USDCoinScreen.hooks';
 
 const USDCoinScreen = () => {
-	const { i18n } = useLanguage();
 	const { usdCoin, onSelectCoin, goBack } = useUSDCoinScreen();
 
 	return (

@@ -2,13 +2,14 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Icon, ScreenLoadingIndicator, Text } from '@components';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
+import i18n from '@localization';
 import Card from './Card/Card';
 import CopyButton from './CopyButton/CopyButton';
 import Warning from './Warning/Warning';
@@ -16,7 +17,6 @@ import styles from './ManualBackupScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const ManualBackupScreen = ({ route }: Props) => {
-	const { i18n } = useLanguage();
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();
 	const onFinish = () => navigation.navigate('WalletScreen');

@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, FlatList, Image } from 'react-native';
 import { Text, EmptyStates } from '@components';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
 import { useTransactionSelectFunds } from './TransactionSelectFunds.hooks';
 
 const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
-	const { i18n } = useLanguage();
 	const { image, tokens } = useTransactionSelectFunds({ user });
 
 	return (

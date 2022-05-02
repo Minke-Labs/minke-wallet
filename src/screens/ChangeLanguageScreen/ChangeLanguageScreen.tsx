@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { SettingsHeader, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation } from '@hooks';
 import { FlagType } from '@styles';
+import i18n from '@localization';
 import { languageArr } from './ChangeLanguageScreen.utils';
 
 const ChangeLanguageScreen = () => {
+	const [selected, setSelected] = useState('en');
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
-	const { i18n, language, setLanguage } = useLanguage();
 
 	return (
 		<BasicLayout>
@@ -25,9 +26,9 @@ const ChangeLanguageScreen = () => {
 							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => (
 								<FlagItem
-									onPress={() => setLanguage(item.id)}
+									onPress={() => setSelected(item.id)}
 									flag={item.flag as FlagType}
-									active={language === item.id}
+									active={selected === item.id}
 									title={item.title}
 								/>
 							)}

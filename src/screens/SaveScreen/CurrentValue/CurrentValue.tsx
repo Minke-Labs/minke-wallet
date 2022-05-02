@@ -1,14 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, View, useColorScheme } from 'react-native';
-import { useTheme, useNavigation, useLanguage } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
 import { tokenBalanceFormat } from '@src/helpers/utilities';
 import { Text, Icon } from '@components';
 import { BlurView } from 'expo-blur';
+import i18n from '@localization';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
 
 export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aaveMarket }) => {
-	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const scheme = useColorScheme();

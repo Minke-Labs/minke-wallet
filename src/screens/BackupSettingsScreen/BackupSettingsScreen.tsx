@@ -2,13 +2,12 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { SettingsHeader } from '@components';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import ListItem from './ListItem/ListItem';
 import styles from './BackupSettingsScreen.styles';
 import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
 
 const BackupSettingsScreen = () => {
-	const { i18n } = useLanguage();
 	const { wallets, goBack, onSelectWallet } = useBackupSettingsScreen();
 
 	return (

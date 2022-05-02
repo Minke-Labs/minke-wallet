@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
+import i18n from '@localization';
 import Selector from './Selector/Selector';
 import { BalanceProps } from './Balance.types';
 import styles from './Balance.styles';
 
 const Balance: React.FC<BalanceProps> = ({ coin }) => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const [active, setActive] = useState(false);
 

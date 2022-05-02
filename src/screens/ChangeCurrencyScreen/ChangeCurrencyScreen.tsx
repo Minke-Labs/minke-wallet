@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { SettingsHeader, SearchInput } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation } from '@hooks';
 import { FlagType } from '@styles';
+import i18n from '@localization';
 import { ItemCurrency } from './ItemCurrency/ItemCurrency';
 import { currencies } from './ChangeCurrencyScreen.utils';
 
 const ChangeCurrencyScreen = () => {
-	const { i18n } = useLanguage();
 	const [current, setCurrent] = useState('unitedStates');
 	const [filtered, setFiltered] = useState<any>(currencies);
 	const [search, setSearch] = useState('');

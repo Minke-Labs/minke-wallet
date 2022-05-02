@@ -12,7 +12,7 @@ import {
 	yesterdayTimestamp
 } from '@src/components/Transaction/Transaction.utils';
 import { groupBy } from 'lodash';
-import useLanguage from '../../hooks/useLanguage';
+import i18n from '@localization';
 
 export interface TransactionPeriod {
 	data: ZapperTransaction[];
@@ -31,7 +31,6 @@ interface TransactionContextProps {
 export const TransactionsContext = React.createContext<TransactionContextProps>({} as TransactionContextProps);
 
 const TransactionsProvider: React.FC = ({ children }) => {
-	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);

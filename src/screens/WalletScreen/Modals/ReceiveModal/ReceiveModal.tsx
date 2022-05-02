@@ -2,13 +2,12 @@ import React from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { Text, WhiteButton, ModalHeader, ActivityIndicator, NetworkWarning } from '@components';
 import QRCode from 'react-native-qrcode-svg';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import { ReceiveModalProps } from './ReceiveModal.types';
 import styles from './ReceiveModal.styles';
 import { useReceiveModal } from './ReceiveModal.hooks';
 
 const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
-	const { i18n } = useLanguage();
 	const { address, ensName, onShare } = useReceiveModal();
 
 	if (!address) {

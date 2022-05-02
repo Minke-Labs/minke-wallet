@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
-import { useLanguage } from '@hooks';
+import i18n from '@localization';
 import { network } from '@src/model/network';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import { truncate } from './Transaction.utils';
@@ -30,7 +30,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		topUp = false
 	} = transaction;
 	const received = direction === 'incoming';
-	const { i18n } = useLanguage();
+
 	// subTransactions
 	const sourceToken = subTransactions.find(({ type }) => type === 'outgoing');
 	const toToken = subTransactions.find(({ type }) => type === 'incoming');

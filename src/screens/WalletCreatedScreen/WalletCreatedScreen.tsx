@@ -3,12 +3,12 @@ import { Image, View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button, ScreenLoadingIndicator, LoadingScreen, Modal, ModalReusables } from '@components';
-import { iCloudBackup, useLanguage } from '@hooks';
+import { iCloudBackup } from '@hooks';
+import i18n from '@localization';
 import styles from './WalletCreatedScreen.styles';
 import { useWalletCreatedScreen } from './WalletCreatedScreen.hooks';
 
 const WalletCreatedScreen = () => {
-	const { i18n } = useLanguage();
 	const { backupManually, seed, walletId } = useWalletCreatedScreen();
 	const [error, setError] = React.useState<string | undefined>();
 	const { handleIcloudBackup, isWalletLoading, backupError } = iCloudBackup(walletId || '');

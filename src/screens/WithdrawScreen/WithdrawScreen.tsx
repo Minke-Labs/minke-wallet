@@ -4,10 +4,11 @@ import { Card } from 'react-native-paper';
 import { Icon, Modal, HapticButton, Text, TokenCard } from '@components';
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
-import { useNavigation, useTheme, useLanguage } from '@hooks';
+import { useNavigation, useTheme } from '@hooks';
 import { debounce } from 'lodash';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import i18n from '@localization';
 import GasSelector from '../ExchangeScreen/GasSelector/GasSelector';
 import { makeStyles } from './WithdrawScreen.styles';
 import Warning from '../ExchangeScreen/Warning/Warning';
@@ -35,7 +36,7 @@ const WithdrawScreen = () => {
 		tokens,
 		gaslessEnabled
 	} = useWithdrawScreen();
-	const { i18n } = useLanguage();
+
 	return (
 		<>
 			<BasicLayout>

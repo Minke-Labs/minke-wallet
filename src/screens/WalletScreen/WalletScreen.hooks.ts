@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useState } from '@hookstate/core';
-import { useAmplitude, useNavigation, useLanguage } from '@hooks';
+import { useAmplitude, useNavigation } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import i18n from '@localization';
 import { walletDelete, getAllWallets } from '@models/wallet';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
-	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);

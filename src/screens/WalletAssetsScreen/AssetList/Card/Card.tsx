@@ -3,12 +3,12 @@ import { View, TouchableOpacity } from 'react-native';
 import { Token, Icon, Text } from '@components';
 import { TokenType } from '@styles';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme } from '@hooks';
+import i18n from '@localization';
 import { CardProps } from './Card.types';
 import styles from './Card.styles';
 
 const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalance, walletBalanceUsd, interest }) => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	return (
 		<View style={[styles.container, { borderColor: colors.detail4 }]}>

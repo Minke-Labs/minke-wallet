@@ -2,7 +2,8 @@ import React from 'react';
 import { Text } from '@components';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { useNativeToken, useLanguage } from '@hooks';
+import { useNativeToken } from '@hooks';
+import i18n from '@localization';
 import CoinCard from './CoinCard/CoinCard';
 
 const CoinSelectorModal: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
@@ -10,7 +11,7 @@ const CoinSelectorModal: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 		network: { topUpToken }
 	} = useState(globalWalletState()).value;
 	const { nativeToken, name } = useNativeToken();
-	const { i18n } = useLanguage();
+
 	return (
 		<>
 			<Text weight="extraBold" type="h3" marginBottom={8}>

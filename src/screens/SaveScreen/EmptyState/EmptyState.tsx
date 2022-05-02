@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
-import { useTheme, useNavigation, useLanguage } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { globalDepositState } from '@src/stores/DepositStore';
+import i18n from '@localization';
 import { makeStyles } from './EmptyState.styles';
 
 const EmptyState = () => {
-	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();

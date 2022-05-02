@@ -3,14 +3,15 @@ import { View, ImageBackground, useColorScheme } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Text, Button } from '@components';
-import { useTheme, useNavigation, useLanguage } from '@hooks';
+import { useTheme, useNavigation } from '@hooks';
+import i18n from '@localization';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { makeStyles } from './DepositWithdrawalSuccessScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'DepositWithdrawalSuccessScreen'>;
 const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 	const { type } = route.params;
-	const { i18n } = useLanguage();
+
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
