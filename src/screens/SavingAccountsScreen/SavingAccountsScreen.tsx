@@ -12,7 +12,7 @@ const SavingAccountsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title="USD Asset" onPress={() => navigation.goBack()} />
+			<SettingsHeader title="Savings account" onPress={() => navigation.goBack()} />
 
 			<View style={styles.container}>
 				<SafeAreaView>
