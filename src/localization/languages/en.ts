@@ -87,7 +87,7 @@ export default {
 	DepositScreen: {
 		Congrats: {
 			congrats: 'Congrats',
-			you_just: 'You\'ve made your first deposit!'
+			you_just: "You've made your first deposit!"
 		},
 		Deposit: {
 			deposit: 'Deposit',
@@ -96,7 +96,8 @@ export default {
 		OpenAave: {
 			open_aave: 'Open Aave\nSavings Account',
 			what_is: 'What is Aave?',
-			aave_des: 'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
+			aave_des:
+				'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
 			view_site: 'View Site',
 			learn_more: 'Learn More',
 			this_transaction: 'This transaction will cost a few cents.'
@@ -166,8 +167,8 @@ export default {
 		creating_wallet: 'Creating wallet',
 		backup: 'Backup',
 		currency: 'Currency',
-		network: 'Network',
 		language: 'Language',
+		network: 'Network',
 		new_wallet: 'New wallet',
 		usd_coin: 'US Dollar coin',
 		contact_support: 'Contact Support',
@@ -218,7 +219,7 @@ export default {
 		},
 		AssetListEmpty: {
 			no_tokens_yet: 'No tokens yet',
-			lets_buy_some: 'Let\'s buy some?'
+			lets_buy_some: "Let's buy some?"
 		}
 	},
 	WalletCreatedScreen: {

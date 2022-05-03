@@ -96,7 +96,8 @@ export default {
 		OpenAave: {
 			open_aave: 'Abra uma conta de investimentos\nna Aave',
 			what_is: 'O que é a Aave?',
-			aave_des: 'Aave permite que você ganhe juros em suas criptomoedas e stablecoins emprestando-as a mutuários. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e muito mais. O Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
+			aave_des:
+				'Aave permite que você ganhe juros em suas criptomoedas e stablecoins emprestando-as a mutuários. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e muito mais. O Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
 			view_site: 'Veja o Site',
 			learn_more: 'Veja Mais',
 			this_transaction: 'Esta transação vai custar alguns centavos de dólar.'
@@ -171,7 +172,7 @@ export default {
 		new_wallet: 'Nova carteira',
 		usd_coin: 'Moeda padrão USD',
 		contact_support: 'Contactar suporte',
-		switch_account: 'Trocar conta'
+		switch_account: 'Trocar carteira'
 	},
 	TopUpWaitScreen: {
 		Failed: {
