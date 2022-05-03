@@ -7,7 +7,7 @@ import { BlurView } from 'expo-blur';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
 
-export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aaveMarket }) => {
+export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { colors } = useTheme();
@@ -23,11 +23,11 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, aav
 				<Text type="textLarge" weight="medium" marginBottom={14}>
 					${tokenBalanceFormat(depositsBalance, 2)}
 				</Text>
-				{aaveMarket && (
+				{apy && (
 					<View style={styles.interestContainer}>
 						<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 						<Text weight="medium" type="a" color="alert3">
-							{(aaveMarket.supplyApy * 100).toFixed(2)}
+							{apy}
 							{i18n.t('SaveScreen.interest')}
 						</Text>
 					</View>

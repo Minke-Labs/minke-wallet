@@ -32,7 +32,7 @@ const Deposit = () => {
 		transactionHash,
 		nativeToken,
 		enoughForGas,
-		market,
+		apy,
 		gaslessEnabled,
 		searchVisible,
 		hideModal,
@@ -80,11 +80,11 @@ const Deposit = () => {
 						<GasSelector />
 					</View>
 
-					{market && (
+					{apy && (
 						<View style={styles.interestContainer}>
 							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 							<Text weight="medium" type="a" color="alert3">
-								{(market.supplyApy * 100).toFixed(2)}% interest p.a.
+								{apy}% interest p.a.
 							</Text>
 						</View>
 					)}

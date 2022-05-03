@@ -7,7 +7,15 @@ import { globalWalletState } from '@stores/WalletStore';
 import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { aaveMarketTokenToParaswapToken, depositTransaction, usdCoinSettingsKey } from '@models/deposit';
-import { useNavigation, useTokens, useAmplitude, useBiconomy, useNativeToken, useTransactions } from '@hooks';
+import {
+	useNavigation,
+	useTokens,
+	useAmplitude,
+	useBiconomy,
+	useNativeToken,
+	useTransactions,
+	useDepositProtocols
+} from '@hooks';
 import { Wallet } from 'ethers';
 import Logger from '@utils/logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,13 +42,14 @@ export const useDeposit = () => {
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const { setSelectedUSDCoin } = useSaveScreen();
 	const { addPendingTransaction } = useTransactions();
+	const { apy } = useDepositProtocols();
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {
 			if (!paraSwapToken) {
 				return 0;
 			}
-			const walletToken = allTokens?.find(
+			const walletToken = [...tokens, ...allTokens].find(
 				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
 			);
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
@@ -222,7 +231,7 @@ export const useDeposit = () => {
 		transactionHash,
 		nativeToken,
 		enoughForGas,
-		market,
+		apy,
 		gaslessEnabled,
 		searchVisible,
 		hideModal,

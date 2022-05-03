@@ -4,7 +4,6 @@ import { Icon, Text, Button } from '@components';
 import { useTheme, useNavigation, useDepositProtocols, useLanguage } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
-import { globalDepositState } from '@src/stores/DepositStore';
 import { makeStyles } from './EmptyState.styles';
 
 const EmptyState = () => {
@@ -13,13 +12,7 @@ const EmptyState = () => {
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
-	const { selectedProtocol } = useDepositProtocols();
-	const { market, mStableApy } = globalDepositState().value;
-
-	const apy =
-		selectedProtocol && selectedProtocol.id === 'aave' && market
-			? (market.supplyApy * 100).toFixed(2)
-			: mStableApy && mStableApy.toFixed(2);
+	const { selectedProtocol, apy } = useDepositProtocols();
 
 	return (
 		<View style={styles.container}>
