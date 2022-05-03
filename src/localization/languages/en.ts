@@ -96,6 +96,7 @@ export default {
 			balance: 'Balance: '
 		},
 		OpenAave: {
+			open_account: 'Open Account',
 			open_aave: 'Open Aave\nSavings Account',
 			what_is: 'What is Aave?',
 			aave_des:
