@@ -4,6 +4,7 @@ import { AaveMarket } from '@models/deposit';
 export interface DepositState {
 	market: AaveMarket;
 	amount: number;
+	mStableApy?: number;
 }
 
 const globalStateInit = createState({ amount: 0 } as DepositState);

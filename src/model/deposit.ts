@@ -9,7 +9,7 @@ import { erc20abi, estimateGas, getProvider } from './wallet';
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
 export const depositStablecoins = ['USDC', 'DAI', 'USDT'];
-export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt'];
+export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt', 'v-imusd'];
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const baseURL = `https://api.zapper.fi/v1/protocols/${protocol}/token-market-data`;
@@ -18,6 +18,12 @@ export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const result = await fetch(`${baseURL}?&type=interest-bearing&api_key=${apiKey}&network=${zapperNetwork}`);
 	const allMarkets: Array<AaveMarket> = await result.json();
 	return allMarkets.filter(({ tokens }) => tokens.find(({ symbol }) => stablecoins.includes(symbol)));
+};
+
+export const fetchMStablePoolData = async (): Promise<MStablePoolData> => {
+	const baseURL = 'https://api.mstable.org/pools';
+	const result = await fetch(baseURL);
+	return result.json();
 };
 
 export const aaveMarketTokenToParaswapToken = ({ tokens }: AaveMarket): ParaswapToken => {
@@ -263,4 +269,13 @@ export interface AaveMarket {
 	appName: string;
 	appImageUrl: string;
 	protcolDisplay: string;
+}
+
+interface MStablePool {
+	chain: string;
+	pair: string;
+	apy: number;
+}
+interface MStablePoolData {
+	pools: MStablePool[];
 }

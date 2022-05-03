@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
-import { aaveDeposits, AaveBalances, usdCoin, AaveMarket, fetchAaveMarketData } from '@models/deposit';
+import {
+	aaveDeposits,
+	AaveBalances,
+	usdCoin,
+	AaveMarket,
+	fetchAaveMarketData,
+	fetchMStablePoolData
+} from '@models/deposit';
 import { useState } from '@hookstate/core';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
+import { network } from '@models/network';
 
 export const useSaveScreen = () => {
 	const [aaveMarket, setAaveMarket] = React.useState<AaveMarket>();
@@ -14,6 +22,15 @@ export const useSaveScreen = () => {
 	const getAaveMarket = async () => {
 		const markets = await fetchAaveMarketData();
 		const defaultMarket = markets.find((m) => m.tokens[0].symbol === selectedUSDCoin);
+
+		const { name } = await network();
+		const poolData = await fetchMStablePoolData();
+		const pool = poolData.pools.find(({ pair, chain }) => chain === name.toLowerCase() && pair === 'imUSD');
+
+		if (pool) {
+			depositState.mStableApy.set(pool.apy);
+		}
+
 		if (defaultMarket) {
 			setAaveMarket(defaultMarket);
 			depositState.market.set(defaultMarket);

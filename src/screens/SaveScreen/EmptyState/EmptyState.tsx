@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useDepositProtocols } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { globalDepositState } from '@src/stores/DepositStore';
@@ -12,7 +12,13 @@ const EmptyState = () => {
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
-	const { market } = globalDepositState().value;
+	const { selectedProtocol } = useDepositProtocols();
+	const { market, mStableApy } = globalDepositState().value;
+
+	const apy =
+		selectedProtocol && selectedProtocol.id === 'aave' && market
+			? (market.supplyApy * 100).toFixed(2)
+			: mStableApy && mStableApy.toFixed(2);
 
 	return (
 		<View style={styles.container}>
@@ -34,14 +40,15 @@ const EmptyState = () => {
 			<View style={styles.saveEmptyStateContent}>
 				<View style={styles.saveEmptyStateCard}>
 					<Text type="h3" weight="extraBold" color="text1" marginBottom={16} center>
-						Open Aave{'\n'}Savings Account
+						Open {selectedProtocol?.name}
+						{'\n'}Savings Account
 					</Text>
 
 					<Text type="p2" color="text3" marginBottom={32}>
 						Let&apos;s make your first deposit?
 					</Text>
 
-					{market && (
+					{apy && (
 						<View style={styles.linearGradientContainer}>
 							<LinearGradient
 								start={{ x: 0, y: 0.75 }}
@@ -51,7 +58,7 @@ const EmptyState = () => {
 							>
 								<Icon name="iconUp" color="text11" size={16} style={styles.greenButtonIcon} />
 								<Text weight="bold" type="a" color="text11" style={{ lineHeight: 25 }}>
-									{(market.supplyApy * 100).toFixed(2)}% interest p.a.
+									{apy}% interest p.a.
 								</Text>
 							</LinearGradient>
 						</View>
