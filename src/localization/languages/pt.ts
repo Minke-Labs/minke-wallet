@@ -79,6 +79,10 @@ export default {
 		}
 	},
 	DepositScreen: {
+		Congrats: {
+			congrats: 'Parabéns',
+			you_just: 'Você acabou de fazer seu primeiro depósito!'
+		},
 		OpenAave: {
 			open_aave: 'Abra uma conta de investimentos\nna Aave',
 			what_is: 'O que é a Aave?',
