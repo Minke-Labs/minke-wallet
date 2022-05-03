@@ -223,7 +223,8 @@ export default {
 		},
 		AssetListEmpty: {
 			no_tokens_yet: 'No tokens yet',
-			lets_buy_some: "Let's buy some?"
+			lets_buy_some: "Let's buy some?",
+			add_funds_to_start: 'Add funds to start'
 		}
 	},
 	WalletCreatedScreen: {
