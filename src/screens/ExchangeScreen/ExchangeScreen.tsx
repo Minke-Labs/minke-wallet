@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Card } from 'react-native-paper';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { BigNumber as BN } from 'bignumber.js';
 import { fromBn } from 'evm-bn';
 import { debounce } from 'lodash';
@@ -49,7 +49,7 @@ const ExchangeScreen = () => {
 		setError,
 		gasless
 	} = useExchangeScreen();
-
+	const { i18n } = useLanguage();
 	const ExchangeSummary = useCallback(() => {
 		if (fromToken && toToken) {
 			if (quote) {
@@ -66,7 +66,7 @@ const ExchangeScreen = () => {
 			return (
 				<>
 					<Text type="span" weight="regular" color="text3">
-						Fetching...
+						{i18n.t('ExchangeScreen.fetching')}
 					</Text>
 					<ActivityIndicator size={16} />
 				</>
@@ -89,7 +89,7 @@ const ExchangeScreen = () => {
 						<View style={styles.exchangeSection}>
 							<View style={styles.exchangeHeadlineRow}>
 								<Text type="h3" weight="extraBold">
-									Exchange
+									{i18n.t('ExchangeScreen.exchange')}
 								</Text>
 								<ExchangeSummary />
 							</View>
@@ -138,12 +138,18 @@ const ExchangeScreen = () => {
 						</View>
 
 						<View style={[styles.exchangeSection, styles.exchangeButton]}>
-							{!loadingPrices && !enoughForGas && <Warning label="Not enough balance for gas" />}
+							{!loadingPrices && !enoughForGas && (
+								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
+							)}
 
 							{loadingPrices ? (
 								<ActivityIndicator />
 							) : (
-								<Button title="Review" onPress={goToExchangeResume} disabled={!canSwap()} />
+								<Button
+									title={i18n.t('ExchangeScreen.review')}
+									onPress={goToExchangeResume}
+									disabled={!canSwap()}
+								/>
 							)}
 							<KeyboardSpacer />
 						</View>

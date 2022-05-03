@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect } from 'react';
@@ -6,6 +7,7 @@ import { format } from 'date-fns';
 import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
+import { useLanguage } from '@hooks';
 import { network } from '@src/model/network';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import { truncate } from './Transaction.utils';
@@ -29,7 +31,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		topUp = false
 	} = transaction;
 	const received = direction === 'incoming';
-
+	const { i18n } = useLanguage();
 	// subTransactions
 	const sourceToken = subTransactions.find(({ type }) => type === 'outgoing');
 	const toToken = subTransactions.find(({ type }) => type === 'incoming');
@@ -44,7 +46,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		interestBearingTokens.includes(sourceToken.symbol.toLowerCase());
 	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
-	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source));
+	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, 6));
 
 	useEffect(() => {
 		const formatAddress = async () => {
@@ -57,7 +59,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 					const ensContact = await searchContact(ens);
 					setFormattedSource(ensContact?.name || ens);
 				} else {
-					setFormattedSource(smallWalletAddress(source));
+					setFormattedSource(smallWalletAddress(source, 6));
 				}
 			}
 		};
@@ -71,9 +73,9 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 			if (nets.includes(name)) return 'Etherscan';
 			return 'Polygonscan';
 		};
-		Alert.alert(`View on ${getNetwork()}?`, '', [
+		Alert.alert(`${i18n.t('Components.Transaction.view_on')} ${getNetwork()}?`, '', [
 			{
-				text: 'Cancel',
+				text: i18n.t('Components.Transaction.cancel'),
 				style: 'cancel'
 			},
 			{
@@ -87,14 +89,14 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	};
 
 	const subtitle = topUp
-		? 'Adding via Apple Pay'
+		? i18n.t('Components.Transaction.adding_via_apple_pay')
 		: withdraw
-		? 'Withdrew from Savings'
+		? i18n.t('Components.Transaction.withdrew_from_savings')
 		: deposit
-		? 'Deposited in Savings'
+		? i18n.t('Components.Transaction.deposited_in_savings')
 		: exchange
-		? `Swap ${sourceToken?.symbol} to ${toToken?.symbol}`
-		: `${received ? 'From' : 'To'}: ${formattedSource}`;
+		? i18n.t('Components.Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
+		: `${received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')}: ${formattedSource}`;
 
 	return {
 		received,

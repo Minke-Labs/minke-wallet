@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@hooks';
 import { getTokenMarketCap, getTokenData, getTokenVolume, MinkeToken } from '@models/token';
 
 export const useAssetsScreen = (coin: MinkeToken) => {
+	const { i18n } = useLanguage();
 	const [tokenData, setTokenData] = useState<any>(null);
 	const [tokenVolume, setTokenVolume] = useState<any>(null);
 	const [marketCap, setMarketCap] = useState<any>(null);
@@ -54,7 +56,7 @@ export const useAssetsScreen = (coin: MinkeToken) => {
 	}, []);
 
 	return {
-		tokenData,
+		description: tokenData?.description[i18n.currentLocale()] || tokenData?.description.en,
 		tokenVolume,
 		marketCap
 	};

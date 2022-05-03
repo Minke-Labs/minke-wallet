@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { SettingsHeader, SearchInput } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { FlagType } from '@styles';
 import { ItemCurrency } from './ItemCurrency/ItemCurrency';
 import { currencies } from './ChangeCurrencyScreen.utils';
 
 const ChangeCurrencyScreen = () => {
+	const { i18n } = useLanguage();
 	const [current, setCurrent] = useState('unitedStates');
 	const [filtered, setFiltered] = useState<any>(currencies);
 	const [search, setSearch] = useState('');
@@ -24,11 +25,11 @@ const ChangeCurrencyScreen = () => {
 	return (
 		<BasicLayout>
 			<View style={{ flex: 1, paddingHorizontal: 16 }}>
-				<SettingsHeader title="Change Currency" onPress={goBack} />
+				<SettingsHeader title={i18n.t('ChangeCurrencyScreen.header_title')} onPress={goBack} />
 				<View style={{ marginTop: 24, flex: 1 }}>
 					<SearchInput
 						marginBottom={24}
-						placeholder="Search"
+						placeholder={i18n.t('Components.Inputs.search')}
 						search={search}
 						onSearch={(val) => filterCurrencies(val)}
 					/>

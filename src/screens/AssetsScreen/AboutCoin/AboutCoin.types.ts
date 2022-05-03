@@ -1,4 +1,4 @@
 export interface AboutCoinProps {
 	name: string;
-	data: any;
+	description: string;
 }

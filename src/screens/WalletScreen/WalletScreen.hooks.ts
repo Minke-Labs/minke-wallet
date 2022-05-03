@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useState } from '@hookstate/core';
-import { useAmplitude, useNavigation } from '@hooks';
+import { useAmplitude, useNavigation, useLanguage } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletDelete, getAllWallets } from '@models/wallet';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
+	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
@@ -20,9 +21,9 @@ export const useWalletScreen = () => {
 	const [sentTransaction, setSentTransaction] = React.useState<ResultProps>();
 
 	const onDeleteWallet = () =>
-		Alert.alert('Are you sure?', '', [
+		Alert.alert(i18n.t('WalletScreen.ActionPanel.are_you_sure'), '', [
 			{
-				text: 'Cancel',
+				text: i18n.t('WalletScreen.ActionPanel.cancel'),
 				style: 'cancel'
 			},
 			{

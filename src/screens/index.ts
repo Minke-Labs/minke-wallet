@@ -2,6 +2,7 @@ import AccountsScreen from './AccountsScreen/AccountsScreen';
 import AssetsScreen from './AssetsScreen/AssetsScreen';
 import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
+import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import ChangeCurrencyScreen from './ChangeCurrencyScreen/ChangeCurrencyScreen';
@@ -27,6 +28,7 @@ export {
 	AssetsScreen,
 	ManualBackupScreen,
 	BackupSettingsScreen,
+	ChangeLanguageScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,
 	ChangeCurrencyScreen,

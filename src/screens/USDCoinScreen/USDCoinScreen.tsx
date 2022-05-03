@@ -2,17 +2,22 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { SettingsHeader } from '@components';
+import { useLanguage } from '@hooks';
 import { depositStablecoins as stablecoins } from '@models/deposit';
 import styles from './USDCoinScreen.styles';
 import ListItem from './ListItem/ListItem';
 import { useUSDCoinScreen } from './USDCoinScreen.hooks';
 
 const USDCoinScreen = () => {
+	const { i18n } = useLanguage();
 	const { usdCoin, onSelectCoin, goBack } = useUSDCoinScreen();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title="USD Asset" onPress={goBack} />
+			<SettingsHeader
+				title={i18n.t('USDCoinScreen.usd_asset')}
+				onPress={goBack}
+			/>
 
 			<View style={styles.container}>
 				<SafeAreaView>

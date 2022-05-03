@@ -5,6 +5,7 @@
 		"strict": true,
 		"baseUrl": "./",
 		"paths": {
+			"@localization": ["src/localization/index"],
 			"@components": ["src/components/index"],
 			"@helpers/*": ["src/helpers/*"],
 			"@stores/*": ["src/stores/*"],

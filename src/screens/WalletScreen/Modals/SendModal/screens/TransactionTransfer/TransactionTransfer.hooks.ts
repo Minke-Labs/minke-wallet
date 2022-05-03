@@ -126,6 +126,14 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 						});
 
 						const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash);
+						sentSuccessfully({
+							token: {
+								address: token.address,
+								decimals: token.decimals,
+								symbol: token.symbol
+							},
+							hash
+						});
 						track('Sent', {
 							token: token.symbol,
 							tokenAmount,

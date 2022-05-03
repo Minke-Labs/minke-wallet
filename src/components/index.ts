@@ -14,6 +14,7 @@ import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
+import FlagItem from './FlagItem/FlagItem';
 import Card from './Card/Card';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
@@ -52,6 +53,7 @@ export {
 	NetworkWarning,
 	LoadingScreen,
 	Flag,
+	FlagItem,
 	Card,
 	TransparentCard,
 	TokenCard,

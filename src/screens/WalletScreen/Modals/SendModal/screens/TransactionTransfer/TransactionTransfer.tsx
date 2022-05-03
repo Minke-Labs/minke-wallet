@@ -4,7 +4,7 @@ import { Text, Token, ActivityIndicator, TokenAmountInput, NetworkWarning, Hapti
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
-import { useKeyboard } from '@hooks';
+import { useKeyboard, useLanguage } from '@hooks';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
@@ -12,6 +12,7 @@ import { Card, GasPriceLine } from '../../components';
 import { useTransactionTransfer } from './TransactionTransfer.hooks';
 
 const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
+	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
 	const {
 		image,
@@ -39,11 +40,11 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					</View>
 				)}
 				<Text type="h3" weight="extraBold" marginBottom={32}>
-					How much{' '}
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.how_much')}
 					<Text color="text12" type="h3" weight="extraBold">
 						{amountType === 'token' ? token.symbol : 'USD'}
-					</Text>{' '}
-					do you want to send?
+					</Text>
+					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.wanna_send')}
 				</Text>
 			</>
 
@@ -72,7 +73,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				</View>
 			)}
 
-			{!enoughGas && <Warning label="Not enough balance for gas" />}
+			{!enoughGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 
 			<NetworkWarning.Tag />
 
@@ -81,7 +82,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					<ActivityIndicator />
 				) : (
 					<HapticButton
-						title="Send"
+						title={i18n.t('Components.Buttons.send')}
 						disabled={
 							!enoughGas ||
 							!number ||

@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { Icon, Text } from '@components';
 import styles from './Header.styles';
 
 const Header = () => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 
 	return (
@@ -13,7 +14,7 @@ const Header = () => {
 				<Icon name="arrowBackStroke" color="text7" size={24} />
 			</TouchableOpacity>
 			<Text weight="extraBold" type="h3">
-				Transactions
+				{i18n.t('TransactionsScreen.Header.transactions')}
 			</Text>
 		</View>
 	);

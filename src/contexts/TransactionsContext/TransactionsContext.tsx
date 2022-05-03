@@ -12,6 +12,7 @@ import {
 	yesterdayTimestamp
 } from '@src/components/Transaction/Transaction.utils';
 import { groupBy } from 'lodash';
+import useLanguage from '../../hooks/useLanguage';
 
 export interface TransactionPeriod {
 	data: ZapperTransaction[];
@@ -30,6 +31,7 @@ interface TransactionContextProps {
 export const TransactionsContext = React.createContext<TransactionContextProps>({} as TransactionContextProps);
 
 const TransactionsProvider: React.FC = ({ children }) => {
+	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
 	const [loading, setLoading] = React.useState(true);
 	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);
@@ -78,9 +80,9 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const groupTransactionByDate = ({ timeStamp }: { timeStamp: string }) => {
 		const ts = parseInt(timeStamp, 10) * 1000;
 
-		if (ts > todayTimestamp) return 'Today';
-		if (ts > yesterdayTimestamp) return 'Yesterday';
-		if (ts > thisMonthTimestamp) return 'This Month';
+		if (ts > todayTimestamp) return i18n.t('Components.Transaction.today');
+		if (ts > yesterdayTimestamp) return i18n.t('Components.Transaction.yesterday');
+		if (ts > thisMonthTimestamp) return i18n.t('Components.Transaction.this_month');
 
 		return format(ts, `MMMM${ts > thisYearTimestamp ? '' : ' yyyy'}`);
 	};
