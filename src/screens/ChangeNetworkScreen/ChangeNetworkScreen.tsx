@@ -2,19 +2,23 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { networks } from '@models/network';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useNetwork } from '@hooks';
+import { useNavigation, useNetwork, useLanguage } from '@hooks';
 import { SettingsHeader } from '@components';
 import ListItem from './ListItem/ListItem';
 import styles from './ChangeNetworkScreen.styles';
 
 const ChangeNetworkScreen = () => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 	const { selectNetwork, network } = useNetwork();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title="Network" onPress={goBack} />
+			<SettingsHeader
+				title={i18n.t('ChangeNetworkScreen.header_title')}
+				onPress={goBack}
+			/>
 
 			<View style={styles.padding}>
 				<FlatList

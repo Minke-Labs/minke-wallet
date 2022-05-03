@@ -80,6 +80,7 @@ export default {
 		header_title: 'Change Language'
 	},
 	ChangeNetworkScreen: {
+		header_title: 'Network',
 		ListItem: {
 			test_network: 'test network'
 		}
