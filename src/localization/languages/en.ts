@@ -165,6 +165,9 @@ export default {
 			deposit: 'Deposit'
 		}
 	},
+	SavingAccountsScreen: {
+		title: 'Savings account'
+	},
 	SettingsScreen: {
 		title: 'Settings',
 		creating_wallet: 'Creating wallet',
@@ -179,7 +182,8 @@ export default {
 		my_wallet: 'My Wallet',
 		my_account: 'My Account',
 		help: 'Help',
-		other: 'Other'
+		other: 'Other',
+		savings_account: 'Savings Account'
 	},
 	TopUpWaitScreen: {
 		Failed: {

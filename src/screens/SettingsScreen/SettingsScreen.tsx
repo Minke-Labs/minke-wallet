@@ -44,7 +44,7 @@ const SettingsScreen = () => {
 			<SettingsHeader title="" onPress={goBack} done={false} />
 
 			<View style={styles.container}>
-				<ScrollView>
+				<ScrollView showsVerticalScrollIndicator={false}>
 					<Text weight="extraBold" marginBottom={8}>
 						{i18n.t('SettingsScreen.title')}
 					</Text>
@@ -75,7 +75,11 @@ const SettingsScreen = () => {
 						icon="dollarStroke"
 						onPress={onDollarSettings}
 					/>
-					<SettingsOption label="Savings Account" icon="vaultStroke" onPress={onSavingAccount} />
+					<SettingsOption
+						label={i18n.t('SettingsScreen.savings_account')}
+						icon="vaultStroke"
+						onPress={onSavingAccount}
+					/>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.help')}
 					</Text>

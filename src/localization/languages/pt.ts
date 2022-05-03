@@ -165,6 +165,9 @@ export default {
 			deposit: 'Depositar'
 		}
 	},
+	SavingAccountsScreen: {
+		title: 'Conta de investimentos'
+	},
 	SettingsScreen: {
 		title: 'Configurações',
 		creating_wallet: 'Criando carteira',
@@ -179,7 +182,8 @@ export default {
 		my_wallet: 'Minha Carteira',
 		my_account: 'Minha Conta',
 		help: 'Ajuda',
-		other: 'Outros'
+		other: 'Outros',
+		savings_account: 'Conta de Investimentos'
 	},
 	TopUpWaitScreen: {
 		Failed: {

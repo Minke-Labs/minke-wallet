@@ -2,17 +2,18 @@ import React from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { SettingsHeader } from '@components';
 import { BasicLayout } from '@layouts';
-import { useDepositProtocols, useNavigation } from '@hooks';
+import { useDepositProtocols, useLanguage, useNavigation } from '@hooks';
 import ListItem from '../USDCoinScreen/ListItem/ListItem';
 import styles from './SavingAccountsScreen.styles';
 
 const SavingAccountsScreen = () => {
 	const { availableDepositProtocols, selectedProtocol, onChangeProtocol } = useDepositProtocols();
 	const navigation = useNavigation();
+	const { i18n } = useLanguage();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title="Savings account" onPress={() => navigation.goBack()} />
+			<SettingsHeader title={i18n.t('SavingAccountsScreen.title')} onPress={() => navigation.goBack()} />
 
 			<View style={styles.container}>
 				<SafeAreaView>
