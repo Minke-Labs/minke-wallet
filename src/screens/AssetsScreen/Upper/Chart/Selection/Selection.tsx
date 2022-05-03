@@ -43,7 +43,7 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition, gr
 								color={item.value === using ? 'text6' : 'text9'}
 								weight={item.value === using ? 'bold' : 'regular'}
 							>
-								{i18n.t(`AssetsScreen.Chart.${item.label}`)}
+								{i18n.t(`AssetsScreen.Upper.Chart.Selection.Chart.${item.label}`)}
 							</Text>
 						</Animated.View>
 					</TouchableWithoutFeedback>

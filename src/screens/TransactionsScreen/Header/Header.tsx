@@ -14,7 +14,7 @@ const Header = () => {
 				<Icon name="arrowBackStroke" color="text7" size={24} />
 			</TouchableOpacity>
 			<Text weight="extraBold" type="h3">
-				{i18n.t('TransactionsScreen.transactions')}
+				{i18n.t('TransactionsScreen.Header.transactions')}
 			</Text>
 		</View>
 	);

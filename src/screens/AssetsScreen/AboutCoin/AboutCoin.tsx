@@ -15,7 +15,7 @@ const AboutCoin: React.FC<AboutCoinProps> = ({ name, description }) => {
 	return (
 		<View style={[styles.container, { backgroundColor: colors.background2 }]}>
 			<Text weight="extraBold" marginBottom={12}>
-				{i18n.t('AssetsScreen.AboutCoin.about')} {name}
+				{i18n.t('AssetsScreen.AboutCoin.about')}{name}
 			</Text>
 			<Text type="span">{description.replaceAll('<[^>]*>', '')}</Text>
 		</View>

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React, { useEffect } from 'react';
@@ -72,9 +73,9 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 			if (nets.includes(name)) return 'Etherscan';
 			return 'Polygonscan';
 		};
-		Alert.alert(`${i18n.t('Transaction.view_on')} ${getNetwork()}?`, '', [
+		Alert.alert(`${i18n.t('Components.Transaction.view_on')} ${getNetwork()}?`, '', [
 			{
-				text: i18n.t('Transaction.cancel'),
+				text: i18n.t('Components.Transaction.cancel'),
 				style: 'cancel'
 			},
 			{
@@ -88,14 +89,14 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	};
 
 	const subtitle = topUp
-		? i18n.t('Transaction.adding_via_apple_pay')
+		? i18n.t('Components.Transaction.adding_via_apple_pay')
 		: withdraw
-		? i18n.t('Transaction.withdrew_from_savings')
+		? i18n.t('Components.Transaction.withdrew_from_savings')
 		: deposit
-		? i18n.t('Transaction.deposited_in_savings')
+		? i18n.t('Components.Transaction.deposited_in_savings')
 		: exchange
-		? i18n.t('Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
-		: `${received ? i18n.t('Transaction.from') : i18n.t('Transaction.to')}: ${formattedSource}`;
+		? i18n.t('Components.Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
+		: `${received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')}: ${formattedSource}`;
 
 	return {
 		received,

@@ -19,26 +19,26 @@ const useWalletCloudBackup = () => {
 	const [isWalletLoading, setIsWalletLoading] = useState<string | null>();
 
 	const walletLoadingStates = useMemo(() => ({
-		BACKING_UP_WALLET: i18n.t('iCloudBackup.BACKING_UP_WALLET'),
-		CREATING_WALLET: i18n.t('iCloudBackup.CREATING_WALLET'),
-		FETCHING_PASSWORD: i18n.t('iCloudBackup.FETCHING_PASSWORD'),
-		IMPORTING_WALLET: i18n.t('iCloudBackup.IMPORTING_WALLET'),
-		RESTORING_WALLET: i18n.t('iCloudBackup.RESTORING_WALLET')
+		BACKING_UP_WALLET: i18n.t('Hooks.iCloudBackup.BACKING_UP_WALLET'),
+		CREATING_WALLET: i18n.t('Hooks.iCloudBackup.CREATING_WALLET'),
+		FETCHING_PASSWORD: i18n.t('Hooks.iCloudBackup.FETCHING_PASSWORD'),
+		IMPORTING_WALLET: i18n.t('Hooks.iCloudBackup.IMPORTING_WALLET'),
+		RESTORING_WALLET: i18n.t('Hooks.iCloudBackup.RESTORING_WALLET')
 	}), []);
 
 	const getUserError = useCallback((e: any) => {
 		switch (e.message) {
 			case CLOUD_BACKUP_ERRORS.KEYCHAIN_ACCESS_ERROR:
-				return i18n.t('iCloudBackup.errors.KEYCHAIN_ACCESS_ERROR');
+				return i18n.t('Hooks.iCloudBackup.errors.KEYCHAIN_ACCESS_ERROR');
 			case CLOUD_BACKUP_ERRORS.ERROR_DECRYPTING_DATA:
-				return i18n.t('iCloudBackup.errors.ERROR_DECRYPTING_DATA');
+				return i18n.t('Hooks.iCloudBackup.errors.ERROR_DECRYPTING_DATA');
 			case CLOUD_BACKUP_ERRORS.NO_BACKUPS_FOUND:
 			case CLOUD_BACKUP_ERRORS.SPECIFIC_BACKUP_NOT_FOUND:
-				return i18n.t('iCloudBackup.errors.NO_BACKUPS_FOUND');
+				return i18n.t('Hooks.iCloudBackup.errors.NO_BACKUPS_FOUND');
 			case CLOUD_BACKUP_ERRORS.ERROR_GETTING_ENCRYPTED_DATA:
-				return i18n.t('iCloudBackup.errors.ERROR_GETTING_ENCRYPTED_DATA');
+				return i18n.t('Hooks.iCloudBackup.errors.ERROR_GETTING_ENCRYPTED_DATA');
 			default:
-				return i18n.t('iCloudBackup.errors.GENERIC_ERROR', {
+				return i18n.t('Hooks.iCloudBackup.errors.GENERIC_ERROR', {
 					code: values(CLOUD_BACKUP_ERRORS).indexOf(e.message)
 				});
 		}

@@ -17,7 +17,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ title }) => {
 						{title}
 					</Text>
 					<Text type="p2" center>
-						{i18n.t('LoadingScreen.this_can_take_a_few_seconds')}
+						{i18n.t('Components.LoadingScreen.this_can_take_a_few_seconds')}
 					</Text>
 				</View>
 			</View>

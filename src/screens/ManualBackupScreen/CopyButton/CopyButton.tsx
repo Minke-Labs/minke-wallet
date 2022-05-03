@@ -17,7 +17,7 @@ const CopyButton: React.FC<ButtonProps> = ({ onPress }) => {
 		>
 			<Icon name="copyStroke" size={16} color="text1" />
 			<Text type="a" style={{ marginLeft: 8 }}>
-				{i18n.t('CopyButton.copy_to_clipboard')}
+				{i18n.t('ManualBackupScreen.CopyButton.copy_to_clipboard')}
 			</Text>
 		</TouchableOpacity>
 	);

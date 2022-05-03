@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { Text, Icon } from '@components';
 import { TouchableOpacity, View } from 'react-native';
@@ -13,7 +14,7 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 	return (
 		<>
 			<Text weight="extraBold" type="h3" marginBottom={40}>
-				{i18n.t('WelcomeScreen.SelectImportMethodModal.import_wallet')}
+				{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.import_wallet')}
 			</Text>
 			{(walletsBackedUp > 0 || !!latestBackup) && (
 				<TouchableOpacity style={styles.container} onPress={onICloudBackup}>
@@ -23,11 +24,11 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 						</View>
 						<View style={{ marginLeft: 16 }}>
 							<Text type="p2" weight="bold">
-								{i18n.t('WelcomeScreen.SelectImportMethodModal.restore_from_icloud')}
+								{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.restore_from_icloud')}
 							</Text>
 							{walletsBackedUp > 0 && (
 								<Text type="a">
-									{i18n.t('WelcomeScreen.SelectImportMethodModal.backup_wallets_count', {
+									{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.backup_wallets_count', {
 										count: walletsBackedUp,
 										plural: walletsBackedUp > 1 ? 's' : ''
 									})}
@@ -43,7 +44,7 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 						<Icon name="vaultStroke" size={24} color="text7" />
 					</View>
 					<Text weight="bold" type="p2" style={{ marginLeft: 16 }} width={250}>
-						{i18n.t('WelcomeScreen.SelectImportMethodModal.import_with_secret_phrase')}
+						{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.import_with_secret_phrase')}
 					</Text>
 				</View>
 			</TouchableOpacity>

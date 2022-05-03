@@ -10,10 +10,10 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
 	return (
 		<View style={styles.container}>
 			<Button active={active === 0} onPress={() => setActive(0)}>
-				{i18n.t('WalletAssetsScreen.Selector.all_coins')}
+				{i18n.t('WalletAssetsScreen.AssetList.Selector.all_coins')}
 			</Button>
 			<Button active={active === 1} onPress={() => setActive(1)}>
-				{i18n.t('WalletAssetsScreen.Selector.stable_coins')}
+				{i18n.t('WalletAssetsScreen.AssetList.Selector.stable_coins')}
 			</Button>
 		</View>
 	);

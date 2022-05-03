@@ -32,7 +32,7 @@ const ComingSoonTag = () => {
 				}}
 			>
 				<Text color="text2" type="span">
-					{i18n.t('Accounts.coming_soon')}
+					{i18n.t('WalletScreen.screens.Accounts.coming_soon')}
 				</Text>
 			</View>
 		</View>
@@ -47,22 +47,22 @@ const Accounts = () => {
 	const cardArr = useMemo(
 		() => [
 			{
-				title: i18n.t('Accounts.wallet'),
-				subtitle: i18n.t('Accounts.available_funds_in_your_wallet'),
+				title: i18n.t('WalletScreen.screens.Accounts.wallet'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.available_funds_in_your_wallet'),
 				image: 'wallet2Stroke',
 				onPress: () => navigation.navigate('WalletAssetsScreen'),
 				right: <Right balanceType={balance?.walletBalance || 0} />
 			},
 			{
-				title: i18n.t('Accounts.savings'),
-				subtitle: i18n.t('Accounts.funds_deposited_in_savings'),
+				title: i18n.t('WalletScreen.screens.Accounts.savings'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.funds_deposited_in_savings'),
 				image: 'vaultStroke',
 				onPress: () => navigation.navigate('SaveScreen'),
 				right: <Right balanceType={balance?.depositedBalance || 0} />
 			},
 			{
-				title: i18n.t('Accounts.borrowing'),
-				subtitle: i18n.t('Accounts.open_loans'),
+				title: i18n.t('WalletScreen.screens.Accounts.borrowing'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.open_loans'),
 				image: 'borrowStroke',
 				onPress: () => null,
 				right: <ComingSoonTag />

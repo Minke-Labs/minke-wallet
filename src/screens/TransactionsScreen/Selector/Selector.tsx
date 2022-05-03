@@ -17,9 +17,9 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
 		<View style={styles.container}>
 			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
 			{[
-				i18n.t('TransactionsScreen.all'),
-				i18n.t('TransactionsScreen.sent'),
-				i18n.t('TransactionsScreen.received')
+				i18n.t('TransactionsScreen.Selector.all'),
+				i18n.t('TransactionsScreen.Selector.sent'),
+				i18n.t('TransactionsScreen.Selector.received')
 			].map((item, index) => (
 				<TouchableOpacity
 					key={item}

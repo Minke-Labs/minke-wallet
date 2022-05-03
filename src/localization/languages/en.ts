@@ -6,7 +6,7 @@ export default {
 	},
 	AssetsScreen: {
 		AboutCoin: {
-			about: 'About'
+			about: 'About '
 		},
 		Balance: {
 			Balance: 'Balance',
@@ -20,22 +20,28 @@ export default {
 			market_cap: 'MarketCap',
 			volume: 'Volume (1D)'
 		},
-		Changes: {
-			changes: 'Changes',
-			hour: '1 Hour',
-			day: '1 Day',
-			week: '1 Week',
-			month: '1 Month',
-			year: '1 Year',
-			all: 'All'
-		},
-		Chart: {
-			'1H': '1H',
-			'1D': '1D',
-			'1W': '1W',
-			'1M': '1M',
-			'1Y': '1Y',
-			All: 'All'
+		Upper: {
+			Chart: {
+				Changes: {
+					changes: 'Changes',
+					hour: '1 Hour',
+					day: '1 Day',
+					week: '1 Week',
+					month: '1 Month',
+					year: '1 Year',
+					all: 'All'
+				},
+				Selection: {
+					Chart: {
+						'1H': '1H',
+						'1D': '1D',
+						'1W': '1W',
+						'1M': '1M',
+						'1Y': '1Y',
+						All: 'All'
+					}
+				}
+			}
 		}
 	},
 	BackupSettingsScreen: {
@@ -127,6 +133,9 @@ export default {
 		}
 	},
 	ManualBackupScreen: {
+		CopyButton: {
+			copy_to_clipboard: 'Copy to clipboard'
+		},
 		done: 'Done',
 		recovery_phrase: 'Recovery phrase',
 		write_this_down: 'Write this down on paper or save it in your password manager.',
@@ -178,26 +187,38 @@ export default {
 		}
 	},
 	TransactionsScreen: {
-		transactions: 'Transactions',
-		all: 'All',
-		sent: 'Sent',
-		received: 'Received'
+		Header: {
+			transactions: 'Transactions'
+		},
+		Selector: {
+			all: 'All',
+			sent: 'Sent',
+			received: 'Received'
+		}
 	},
 	USDCoinScreen: {
 		usd_asset: 'USD Asset'
 	},
 	WalletAssetsScreen: {
 		header: 'Wallet',
-		asset_header: 'Asset',
 		ValueBox: {
 			current_value: 'Current value'
 		},
-		Selector: {
-			all_coins: 'All coins',
-			stable_coins: 'Stable coins'
+		AssetList: {
+			Header: {
+				asset_header: 'Asset'
+			},
+			Selector: {
+				all_coins: 'All coins',
+				stable_coins: 'Stable coins'
+			},
+			Card: {
+				your_wallet_balance: 'Your wallet balance'
+			}
 		},
-		Card: {
-			your_wallet_balance: 'Your wallet balance'
+		AssetListEmpty: {
+			no_tokens_yet: 'No tokens yet',
+			lets_buy_some: 'Let\'s buy some?'
 		}
 	},
 	WalletCreatedScreen: {
@@ -235,6 +256,15 @@ export default {
 			see_all: 'See all'
 		},
 		screens: {
+			Accounts: {
+				wallet: 'Wallet',
+				available_funds_in_your_wallet: 'Available funds in your wallet',
+				savings: 'Savings',
+				funds_deposited_in_savings: 'Funds deposited in savings',
+				borrowing: 'Borrowing',
+				open_loans: 'Open loans',
+				coming_soon: 'Coming soon'
+			},
 			Transactions: {
 				NoTransactionsYet: {
 					no_transactions_here: 'No transactions here',
@@ -296,63 +326,35 @@ export default {
 			add_wallet: 'Add Wallet',
 			seed_or_key: 'Seed phrase or private key',
 			importing: 'Importing wallet',
-			import: 'Import Wallet'
-		},
-		SelectImportMethodModal: {
-			import_wallet: 'Import wallet',
-			restore_from_icloud: 'Restore from iCloud',
-			backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
-			import_with_secret_phrase: 'Import with secret phrase or private key'
+			import: 'Import Wallet',
+			SelectImportMethodModal: {
+				import_wallet: 'Import wallet',
+				restore_from_icloud: 'Restore from iCloud',
+				backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+				import_with_secret_phrase: 'Import with secret phrase or private key'
+			}
 		}
 	},
 	WithdrawScreen: {
 		withdraw: 'Withdraw',
 		balance: 'Balance: '
 	},
-	LoadingScreen: {
-		this_can_take_a_few_seconds: 'This can take a few seconds'
-	},
-	Transaction: {
-		failed: 'Failed',
-		view_on: 'View on',
-		cancel: 'Cancel',
-		adding_via_apple_pay: 'Adding via Apple Pay',
-		withdrew_from_savings: 'Withdrew from Savings',
-		deposited_in_savings: 'Deposited in Savings',
-		swap: 'Swap %{source} to %{dest}',
-		from: 'Received from',
-		to: 'Sent to',
-		today: 'Today',
-		yesterday: 'Yesterday',
-		this_month: 'This Month'
-	},
-	Accounts: {
-		wallet: 'Wallet',
-		available_funds_in_your_wallet: 'Available funds in your wallet',
-		savings: 'Savings',
-		funds_deposited_in_savings: 'Funds deposited in savings',
-		borrowing: 'Borrowing',
-		open_loans: 'Open loans',
-		coming_soon: 'Coming soon'
-	},
-	iCloudBackup: {
-		BACKING_UP_WALLET: 'Backing up...',
-		CREATING_WALLET: 'Creating wallet...',
-		FETCHING_PASSWORD: 'Fetching Password...',
-		IMPORTING_WALLET: 'Importing...',
-		RESTORING_WALLET: 'Restoring...',
-		errors: {
-			KEYCHAIN_ACCESS_ERROR: 'You need to authenticate to proceed with the Backup process',
-			ERROR_DECRYPTING_DATA: 'Incorrect password! Please try again.',
-			NO_BACKUPS_FOUND: "We couldn't find your previous backup!",
-			ERROR_GETTING_ENCRYPTED_DATA: "We couldn't access your backup at this time. Please try again later.",
-			GENERIC_ERROR: 'Error while trying to backup. Error code: %{code}'
+	Hooks: {
+		iCloudBackup: {
+			BACKING_UP_WALLET: 'Backing up...',
+			CREATING_WALLET: 'Creating wallet...',
+			FETCHING_PASSWORD: 'Fetching Password...',
+			IMPORTING_WALLET: 'Importing...',
+			RESTORING_WALLET: 'Restoring...',
+			errors: {
+				KEYCHAIN_ACCESS_ERROR: 'You need to authenticate to proceed with the Backup process',
+				ERROR_DECRYPTING_DATA: 'Incorrect password! Please try again.',
+				NO_BACKUPS_FOUND: "We couldn't find your previous backup!",
+				ERROR_GETTING_ENCRYPTED_DATA: "We couldn't access your backup at this time. Please try again later.",
+				GENERIC_ERROR: 'Error while trying to backup. Error code: %{code}'
+			}
 		}
 	},
-	CopyButton: {
-		copy_to_clipboard: 'Copy to clipboard'
-	},
-
 	Containers: {
 		AddFunds: {
 			ChooseQuantityModal: {
@@ -375,8 +377,24 @@ export default {
 			}
 		}
 	},
-
 	Components: {
+		Transaction: {
+			failed: 'Failed',
+			view_on: 'View on',
+			cancel: 'Cancel',
+			adding_via_apple_pay: 'Adding via Apple Pay',
+			withdrew_from_savings: 'Withdrew from Savings',
+			deposited_in_savings: 'Deposited in Savings',
+			swap: 'Swap %{source} to %{dest}',
+			from: 'Received from',
+			to: 'Sent to',
+			today: 'Today',
+			yesterday: 'Yesterday',
+			this_month: 'This Month'
+		},
+		LoadingScreen: {
+			this_can_take_a_few_seconds: 'This can take a few seconds'
+		},
 		TokenAmountInput: {
 			send_max: 'Send max'
 		},
@@ -442,7 +460,6 @@ export default {
 			transaction: 'Transaction'
 		}
 	},
-
 	Logs: {
 		couldnt_restore_backup: 'We could not restore your backups',
 		not_enough_balance_for_gas: 'Not enough balance for gas'

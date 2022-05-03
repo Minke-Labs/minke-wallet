@@ -6,7 +6,7 @@ export default {
 	},
 	AssetsScreen: {
 		AboutCoin: {
-			about: 'Sobre'
+			about: 'Sobre '
 		},
 		Balance: {
 			Balance: 'Saldo',
@@ -20,22 +20,28 @@ export default {
 			market_cap: 'Valor de mercado',
 			volume: 'Volume (1D)'
 		},
-		Changes: {
-			changes: 'Mudanças',
-			hour: '1 Hora',
-			day: '1 Dia',
-			week: '1 Semana',
-			month: '1 Mês',
-			year: '1 Ano',
-			all: 'Total'
-		},
-		Chart: {
-			'1H': '1H',
-			'1D': '1H',
-			'1W': '1S',
-			'1M': '1M',
-			'1Y': '1A',
-			All: 'Total'
+		Upper: {
+			Chart: {
+				Changes: {
+					changes: 'Mudanças',
+					hour: '1 Hora',
+					day: '1 Dia',
+					week: '1 Semana',
+					month: '1 Mês',
+					year: '1 Ano',
+					all: 'Total'
+				},
+				Selection: {
+					Chart: {
+						'1H': '1H',
+						'1D': '1H',
+						'1W': '1S',
+						'1M': '1M',
+						'1Y': '1A',
+						All: 'Total'
+					}
+				}
+			}
 		}
 	},
 	BackupSettingsScreen: {
@@ -127,6 +133,9 @@ export default {
 		}
 	},
 	ManualBackupScreen: {
+		CopyButton: {
+			copy_to_clipboard: 'Copiar para área de transferência'
+		},
 		done: 'Pronto',
 		recovery_phrase: 'Frase de recuperação',
 		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
@@ -178,26 +187,38 @@ export default {
 		}
 	},
 	TransactionsScreen: {
-		transactions: 'Transações',
-		all: 'Todas',
-		sent: 'Enviadas',
-		received: 'Recebidas'
+		Header: {
+			transactions: 'Transações'
+		},
+		Selector: {
+			all: 'Todas',
+			sent: 'Enviadas',
+			received: 'Recebidas'
+		}
 	},
 	USDCoinScreen: {
 		usd_asset: 'Moeda padrão USD '
 	},
 	WalletAssetsScreen: {
 		header: 'Carteira',
-		asset_header: 'Ativo',
 		ValueBox: {
 			current_value: 'Valor atual'
 		},
-		Selector: {
-			all_coins: 'Todas as moedas',
-			stable_coins: 'Moedas estáveis'
+		AssetList: {
+			Header: {
+				asset_header: 'Ativo'
+			},
+			Selector: {
+				all_coins: 'Todas as moedas',
+				stable_coins: 'Moedas estáveis'
+			},
+			Card: {
+				your_wallet_balance: 'Seu saldo'
+			}
 		},
-		Card: {
-			your_wallet_balance: 'Seu saldo'
+		AssetListEmpty: {
+			no_tokens_yet: 'Ainda não tem nenhum token',
+			lets_buy_some: 'Vamos comprar algum?'
 		}
 	},
 	WalletCreatedScreen: {
@@ -235,6 +256,15 @@ export default {
 			see_all: 'Ver todas'
 		},
 		screens: {
+			Accounts: {
+				wallet: 'Carteira',
+				available_funds_in_your_wallet: 'Fundos na sua carteira',
+				savings: 'Investimentos',
+				funds_deposited_in_savings: 'Fundos investidos',
+				borrowing: 'Empréstimos',
+				open_loans: 'Empréstimos em aberto',
+				coming_soon: 'Em breve'
+			},
 			Transactions: {
 				NoTransactionsYet: {
 					no_transactions_here: 'Nenhuma transação aqui',
@@ -296,65 +326,36 @@ export default {
 			add_wallet: 'Adicionar Carteira',
 			seed_or_key: 'Frase de recuperação ou chave privada',
 			importing: 'Importando carteira',
-			import: 'Importar Carteira'
-		},
-		SelectImportMethodModal: {
-			import_wallet: 'Importar Carteira',
-			restore_from_icloud: 'Restaurar do iCloud',
-			backup_wallets_count: 'Você tem %{count} carteira%{plural} backed up',
-			import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
+			import: 'Importar Carteira',
+			SelectImportMethodModal: {
+				import_wallet: 'Importar Carteira',
+				restore_from_icloud: 'Restaurar do iCloud',
+				backup_wallets_count: 'Você tem %{count} carteira%{plural} backed up',
+				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
+			}
 		}
 	},
 	WithdrawScreen: {
 		withdraw: 'Retirar',
 		balance: 'Saldo: '
 	},
-
-	LoadingScreen: {
-		this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
-	},
-	Transaction: {
-		failed: 'Falhou',
-		view_on: 'Ver em',
-		cancel: 'Cancelar',
-		adding_via_apple_pay: 'Adicionando via Apple Pay',
-		withdrew_from_savings: 'Retirada de investimento',
-		deposited_in_savings: 'Depósito de investimento',
-		swap: 'Converteu %{source} para %{dest}',
-		from: 'De',
-		to: 'Para',
-		today: 'Hoje',
-		yesterday: 'Ontem',
-		this_month: 'Nesse mês'
-	},
-	Accounts: {
-		wallet: 'Carteira',
-		available_funds_in_your_wallet: 'Fundos na sua carteira',
-		savings: 'Investimentos',
-		funds_deposited_in_savings: 'Fundos investidos',
-		borrowing: 'Empréstimos',
-		open_loans: 'Empréstimos em aberto',
-		coming_soon: 'Em breve'
-	},
-	iCloudBackup: {
-		BACKING_UP_WALLET: 'Fazendo backup...',
-		CREATING_WALLET: 'Criando carteira...',
-		FETCHING_PASSWORD: 'Recuperando senha...',
-		IMPORTING_WALLET: 'Importando...',
-		RESTORING_WALLET: 'Restaurando...',
-		errors: {
-			KEYCHAIN_ACCESS_ERROR: 'Você precisa autenticar para continuar o processo de backup',
-			ERROR_DECRYPTING_DATA: 'Senha incorreta! Por favor, tente novamente.',
-			NO_BACKUPS_FOUND: 'Não conseguimos encontrar um backup anterior.',
-			ERROR_GETTING_ENCRYPTED_DATA:
-				'Não conseguimos acessar o seu backup neste momento. Por favor, tente novamente mais tarde',
-			GENERIC_ERROR: 'Ocorreu um erro durante o backup. Código de erro: %{code}'
+	Hooks: {
+		iCloudBackup: {
+			BACKING_UP_WALLET: 'Fazendo backup...',
+			CREATING_WALLET: 'Criando carteira...',
+			FETCHING_PASSWORD: 'Recuperando senha...',
+			IMPORTING_WALLET: 'Importando...',
+			RESTORING_WALLET: 'Restaurando...',
+			errors: {
+				KEYCHAIN_ACCESS_ERROR: 'Você precisa autenticar para continuar o processo de backup',
+				ERROR_DECRYPTING_DATA: 'Senha incorreta! Por favor, tente novamente.',
+				NO_BACKUPS_FOUND: 'Não conseguimos encontrar um backup anterior.',
+				ERROR_GETTING_ENCRYPTED_DATA:
+					'Não conseguimos acessar o seu backup neste momento. Por favor, tente novamente mais tarde',
+				GENERIC_ERROR: 'Ocorreu um erro durante o backup. Código de erro: %{code}'
+			}
 		}
 	},
-	CopyButton: {
-		copy_to_clipboard: 'Copiar para área de transferência'
-	},
-
 	Containers: {
 		AddFunds: {
 			ChooseQuantityModal: {
@@ -377,8 +378,24 @@ export default {
 			}
 		}
 	},
-
 	Components: {
+		Transaction: {
+			failed: 'Falhou',
+			view_on: 'Ver em',
+			cancel: 'Cancelar',
+			adding_via_apple_pay: 'Adicionando via Apple Pay',
+			withdrew_from_savings: 'Retirada de investimento',
+			deposited_in_savings: 'Depósito de investimento',
+			swap: 'Converteu %{source} para %{dest}',
+			from: 'De',
+			to: 'Para',
+			today: 'Hoje',
+			yesterday: 'Ontem',
+			this_month: 'Nesse mês'
+		},
+		LoadingScreen: {
+			this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
+		},
 		TokenAmountInput: {
 			send_max: 'Envie o máximo'
 		},
@@ -444,7 +461,6 @@ export default {
 			transaction: 'Transação'
 		}
 	},
-
 	Logs: {
 		couldnt_restore_backup: 'Não foi possível restaurar seus backups',
 		not_enough_balance_for_gas: 'Não há saldo suficiente para gás'

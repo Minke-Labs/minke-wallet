@@ -8,7 +8,7 @@ const AssetHeader = () => {
 	const { i18n } = useLanguage();
 	return (
 		<View style={styles.container}>
-			<Text weight="extraBold">{i18n.t('WalletAssetsScreen.asset_header')}</Text>
+			<Text weight="extraBold">{i18n.t('WalletAssetsScreen.AssetList.Header.asset_header')}</Text>
 		</View>
 	);
 };
