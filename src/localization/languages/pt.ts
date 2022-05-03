@@ -407,7 +407,7 @@ export default {
 		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'No tokens here'
+				no_tokens_here: 'Nenhum token'
 			}
 		},
 		Inputs: {
