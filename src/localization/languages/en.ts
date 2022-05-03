@@ -79,6 +79,14 @@ export default {
 		}
 	},
 	DepositScreen: {
+		OpenAave: {
+			open_aave: 'Open Aave\nSavings Account',
+			what_is: 'What is Aave?',
+			aave_des: 'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
+			view_site: 'View Site',
+			learn_more: 'Learn More',
+			this_transaction: 'This transaction will cost a few cents.'
+		},
 		NotAbleToSaveModal: {
 			not_able: 'Not able to save',
 			need_funds_in: 'First you need to have funds in ',
