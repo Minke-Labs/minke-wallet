@@ -438,6 +438,10 @@ export default {
 			Error: {
 				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
 				buttonLabel: 'Ok, entendi'
+			},
+			ComingSoonModal: {
+				coming_soon: 'Em breve!',
+				devs_doing_something: 'Nossos devs estão fazendo alguma coisa aí.'
 			}
 		},
 		SettingsHeader: {

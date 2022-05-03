@@ -437,6 +437,10 @@ export default {
 			Error: {
 				description: 'Something went wrong, our developers have been notified.',
 				buttonLabel: 'Ok, got it'
+			},
+			ComingSoonModal: {
+				coming_soon: 'Coming soon!',
+				devs_doing_something: 'Devs are doing something.'
 			}
 		},
 		SettingsHeader: {
