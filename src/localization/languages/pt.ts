@@ -459,7 +459,7 @@ export default {
 			processing_transaction: 'Processando transação',
 			sent: 'Enviou',
 			deposited: 'Depositou',
-			withdrew: 'Sacou',
+			withdrew: 'Retirou',
 			exchanged: 'Converteu',
 			sending: 'Enviando',
 			depositing: 'Depositando',
