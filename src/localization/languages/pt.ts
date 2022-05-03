@@ -304,7 +304,7 @@ export default {
 					},
 					TransactionSelectFunds: {
 						which: 'Qual ',
-						asset: 'ativo ',
+						asset: 'token',
 						want_to_send: 'você deseja enviar para ',
 						Card: {
 							available: ' Disponível'
@@ -372,7 +372,7 @@ export default {
 			},
 			CoinSelectorModal: {
 				add_funds: 'Adicione fundos',
-				choose_asset: 'Escolha qual ativo gostaria de comprar'
+				choose_asset: 'Escolha qual token gostaria de comprar'
 			},
 			CustomAmountModal: {
 				choose_another_amount: 'Escolha outro valor entre {{min}} e {{max}}',
