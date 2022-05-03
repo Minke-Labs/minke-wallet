@@ -179,12 +179,12 @@ export default {
 	},
 	TopUpWaitScreen: {
 		Failed: {
-			something_gone_wrong: 'Ah não! Algo de errado aconteceu. Por favor tente mais tarde ou contate o suporte.',
+			something_gone_wrong: 'Ah não! Algo de errado aconteceu. Por favor, tente mais tarde ou contate o suporte.',
 			reference: 'Referência: '
 		},
 		Processing: {
 			almost_there: 'Quase lá... isso pode levar um tempinho...',
-			please_wait: 'Por favor espere enquanto processamos o seu pagamento...'
+			please_wait: 'Por favor, espere enquanto processamos o seu pagamento...'
 		},
 		Success: {
 			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
@@ -460,7 +460,7 @@ export default {
 			processing_transaction: 'Processando transação',
 			sent: 'Enviou',
 			deposited: 'Depositou',
-			withdrew: 'Sacou',
+			withdrew: 'Retirou',
 			exchanged: 'Converteu',
 			sending: 'Enviando',
 			depositing: 'Depositando',
