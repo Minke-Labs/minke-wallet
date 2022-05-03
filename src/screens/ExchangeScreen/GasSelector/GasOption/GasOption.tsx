@@ -139,7 +139,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 				<Card.Content style={styles.gasSelectorCardContent}>
 					<View style={{ marginRight: 4 }}>
 						<RadioButton
-							value={type}
+							value={i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
 							status={selected ? 'checked' : 'unchecked'}
 							onPress={onSelectGas}
 							color={colors.cta1}
@@ -150,7 +150,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 					</View>
 					<View style={styles.gasSelectorCardGasOption}>
 						<Text type="span" weight="bold">
-							{type.charAt(0).toUpperCase() + type.slice(1)}
+							{i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
 						</Text>
 						<Text type="span">{waiting()}</Text>
 					</View>

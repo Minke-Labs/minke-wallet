@@ -119,7 +119,10 @@ export default {
 		review: 'Revisar',
 		GasSelector: {
 			GasOption: {
-				transaction_fee: 'Taxa da transação'
+				transaction_fee: 'Taxa da transação',
+				fast: 'Rápido',
+				normal: 'Normal',
+				slow: 'Devagar'
 			}
 		}
 	},
