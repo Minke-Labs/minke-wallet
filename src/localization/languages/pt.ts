@@ -399,7 +399,7 @@ export default {
 			this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
 		},
 		TokenAmountInput: {
-			send_max: 'Envie o máximo'
+			send_max: 'Enviar o máximo'
 		},
 		NetworkWarning: {
 			NetworkTag: {
