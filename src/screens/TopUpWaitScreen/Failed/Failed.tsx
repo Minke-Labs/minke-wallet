@@ -1,11 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button, Icon, Text } from '@components';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { makeStyles } from './Failed.styles';
 import { FailedProps } from './Failed.types';
 
 export const Failed: React.FC<FailedProps> = ({ orderId, onFinish }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (
@@ -14,12 +15,15 @@ export const Failed: React.FC<FailedProps> = ({ orderId, onFinish }) => {
 				<Icon name="closeStroke" color="alert1" size={32} />
 			</View>
 			<Text type="h3" weight="extraBold" center width={275} marginBottom={24}>
-				Oh no! Something has gone wrong. Please try again later or contact the support.
+				{i18n.t('TopUpWaitScreen.Failed.something_gone_wrong')}
 			</Text>
 			<Text type="p" center width={275} marginBottom={40}>
-				Reference: {orderId}
+				{i18n.t('TopUpWaitScreen.Failed.reference')}{orderId}
 			</Text>
-			<Button title="Ok, got it" onPress={onFinish} />
+			<Button
+				title={i18n.t('Components.Buttons.ok_got_it')}
+				onPress={onFinish}
+			/>
 		</View>
 	);
 };

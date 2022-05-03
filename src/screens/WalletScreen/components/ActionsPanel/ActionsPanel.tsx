@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { IconType } from '@styles';
+import { useLanguage } from '@hooks';
 import styles from './ActionsPanel.styles';
 import { Card } from './Card/Card';
 import { ActionsPanelProps } from './ActionsPanel.types';
-import { actions } from './ActionsPanel.utils';
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	setSendModalOpen,
@@ -14,25 +14,37 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	showReceive,
 	onCopyToClipboard
 }) => {
+	const { i18n } = useLanguage();
+
+	const actions = [
+		{ name: i18n.t('WalletScreen.ActionPanel.send'), icon: 'sendStroke' },
+		{ name: i18n.t('WalletScreen.ActionPanel.exchange'), icon: 'exchangeStroke' },
+		{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receiveStroke' },
+		{ name: i18n.t('WalletScreen.ActionPanel.copy_address'), icon: 'copyStroke' }
+	];
+
+	if (__DEV__) {
+		actions.push({ name: i18n.t('WalletScreen.ActionPanel.delete_wallet'), icon: 'closeStroke' });
+	}
+
 	const chooseFnc = (name: string) => {
 		switch (name) {
-			case 'Send':
+			case i18n.t('WalletScreen.ActionPanel.send'):
 				return setSendModalOpen;
-			case 'Exchange':
+			case i18n.t('WalletScreen.ActionPanel.exchange'):
 				return onExchange;
-			case 'Receive':
+			case i18n.t('WalletScreen.ActionPanel.receive'):
 				return showReceive;
-			case 'Copy address':
+			case i18n.t('WalletScreen.ActionPanel.copy_address'):
 				return onCopyToClipboard;
-			case 'Switch accounts':
+			case i18n.t('WalletScreen.ActionPanel.switch_accounts'):
 				return onSwitchAccounts;
-			case 'Delete wallet':
+			case i18n.t('WalletScreen.ActionPanel.delete_wallet'):
 				return onDeleteWallet;
 			default:
 				return () => {};
 		}
 	};
-
 	return (
 		<View style={styles.actionsPanelContainer}>
 			<FlatList

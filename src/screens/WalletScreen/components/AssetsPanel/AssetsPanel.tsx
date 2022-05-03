@@ -2,12 +2,13 @@ import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { Text, Icon } from '@components';
 import makeBlockie from 'ethereum-blockies-base64';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
 const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave, onWalletAssets }) => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 
 	return (
@@ -18,7 +19,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 			>
 				<View>
 					<Text type="a" marginBottom={8}>
-						Your total assets
+						{i18n.t('WalletScreen.AssetsPanel.your_total_assets')}
 					</Text>
 					<Text type="h1" weight="medium">
 						{numberFormat(balance || 0)}
@@ -36,7 +37,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 					]}
 				>
 					<Icon name="addStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
-					<Text type="a">Add Funds</Text>
+					<Text type="a">{i18n.t('WalletScreen.AssetsPanel.add_funds')}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={onSave}
@@ -47,7 +48,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 					]}
 				>
 					<Icon name="saveStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
-					<Text type="a">Save</Text>
+					<Text type="a">{i18n.t('WalletScreen.AssetsPanel.save')}</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

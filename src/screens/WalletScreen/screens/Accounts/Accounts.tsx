@@ -3,22 +3,23 @@ import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation, useTheme } from '@hooks';
+import { useNavigation, useTheme, useLanguage } from '@hooks';
 import { IconType } from '@styles';
-import { numberFormat, tokenBalanceFormat } from '@src/helpers/utilities';
+import { numberFormat } from '@src/helpers/utilities';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
-const Right: React.FC<{ balanceType: number; token?: boolean }> = ({ balanceType, token = false }) => (
+const Right: React.FC<{ balanceType: number }> = ({ balanceType }) => (
 	<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 		<Text weight="bold" type="p2">
-			{token ? `$${tokenBalanceFormat(balanceType, 2)}` : numberFormat(balanceType || 0)}
+			{numberFormat(balanceType || 0)}
 		</Text>
 		<Icon name="arrowForwardStroke" size={16} color="text7" />
 	</View>
 );
 
 const ComingSoonTag = () => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	return (
 		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -31,7 +32,7 @@ const ComingSoonTag = () => {
 				}}
 			>
 				<Text color="text2" type="span">
-					Coming soon
+					{i18n.t('WalletScreen.screens.Accounts.coming_soon')}
 				</Text>
 			</View>
 		</View>
@@ -39,28 +40,29 @@ const ComingSoonTag = () => {
 };
 
 const Accounts = () => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { balance } = useState(globalWalletState()).value;
 
 	const cardArr = useMemo(
 		() => [
 			{
-				title: 'Wallet',
-				subtitle: 'Available funds in your wallet',
+				title: i18n.t('WalletScreen.screens.Accounts.wallet'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.available_funds_in_your_wallet'),
 				image: 'wallet2Stroke',
 				onPress: () => navigation.navigate('WalletAssetsScreen'),
 				right: <Right balanceType={balance?.walletBalance || 0} />
 			},
 			{
-				title: 'Savings',
-				subtitle: 'Funds deposited in savings',
+				title: i18n.t('WalletScreen.screens.Accounts.savings'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.funds_deposited_in_savings'),
 				image: 'vaultStroke',
 				onPress: () => navigation.navigate('SaveScreen'),
-				right: <Right balanceType={balance?.depositedBalance || 0} token />
+				right: <Right balanceType={balance?.depositedBalance || 0} />
 			},
 			{
-				title: 'Borrowing',
-				subtitle: 'Open loans',
+				title: i18n.t('WalletScreen.screens.Accounts.borrowing'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.open_loans'),
 				image: 'borrowStroke',
 				onPress: () => null,
 				right: <ComingSoonTag />

@@ -2,21 +2,16 @@ import React from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
+import { useLanguage } from '@hooks';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem/ListItem';
 import ImportWalletModal from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
 import { useAccountsScreen } from './AccountsScreen.hooks';
 
 const AccountsScreen = () => {
-	const {
-		address,
-		wallets,
-		goBack,
-		onImportFinished,
-		onSelectWallet,
-		isModalVisible,
-		setModalVisible
-	} = useAccountsScreen();
+	const { address, wallets, goBack, onImportFinished, onSelectWallet, isModalVisible, setModalVisible } =
+		useAccountsScreen();
+	const { i18n } = useLanguage();
 
 	return (
 		<BasicLayout>
@@ -26,14 +21,14 @@ const AccountsScreen = () => {
 				</TouchableOpacity>
 				<TouchableOpacity activeOpacity={0.6} onPress={() => setModalVisible(true)}>
 					<Text weight="medium" color="text7" type="a">
-						Import or Restore
+						{i18n.t('AccountsScreen.import_or_restore')}
 					</Text>
 				</TouchableOpacity>
 			</View>
 
 			<View style={styles.container}>
 				<Text weight="extraBold" type="h3">
-					Accounts
+					{i18n.t('AccountsScreen.accounts')}
 				</Text>
 				<SafeAreaView>
 					<FlatList

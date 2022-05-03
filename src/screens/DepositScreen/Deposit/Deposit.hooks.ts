@@ -108,7 +108,7 @@ export const useDeposit = () => {
 						symbol: token.symbol,
 						subTransactions: [
 							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: `am${token.symbol}`, amount: +amount }
+							{ type: 'incoming', symbol: market.symbol, amount: +amount }
 						]
 					});
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
@@ -163,7 +163,7 @@ export const useDeposit = () => {
 						symbol: token.symbol,
 						subTransactions: [
 							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: `am${token.symbol}`, amount: +amount }
+							{ type: 'incoming', symbol: market.symbol, amount: +amount }
 						]
 					});
 					track('Deposited', {

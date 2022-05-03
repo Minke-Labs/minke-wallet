@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
@@ -18,6 +18,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	showOnlyOwnedTokens,
 	selected
 }) => {
+	const { i18n } = useLanguage();
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');
@@ -97,7 +98,11 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
-				<SearchInput marginBottom={24} placeholder="Search token" {...{ search, onSearch }} />
+				<SearchInput
+					marginBottom={24}
+					placeholder={i18n.t('Components.Inputs.search_token')}
+					{...{ search, onSearch }}
+				/>
 				<FlatList
 					style={styles.list}
 					data={filterByExchangebleToken()}

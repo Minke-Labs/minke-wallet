@@ -4,13 +4,14 @@ import * as Linking from 'expo-linking';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { LoadingScreen, SettingsHeader, Text } from '@components';
-import { useNavigation } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { walletCreate } from '@models/wallet';
 import { globalWalletState, walletState } from '@stores/WalletStore';
-import styles from './SettingsScreen.styles';
 import SettingsOption from './SettingsOption/SettingsOption';
+import styles from './SettingsScreen.styles';
 
 const SettingsScreen = () => {
+	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
 	const navigation = useNavigation();
 	const [creatingWallet, setCreatingWallet] = React.useState(false);
@@ -19,6 +20,7 @@ const SettingsScreen = () => {
 
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	// const onChangeCurrency = () => navigation.navigate('ChangeCurrencyScreen');
+	const onChangeLanguage = () => navigation.navigate('ChangeLanguageScreen');
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
@@ -34,7 +36,7 @@ const SettingsScreen = () => {
 	}, [creatingWallet, navigation]);
 
 	if (creatingWallet) {
-		return <LoadingScreen title="Creating wallet" />;
+		return <LoadingScreen title={i18n.t('SettingsScreen.creating_wallet')} />;
 	}
 
 	return (
@@ -44,24 +46,52 @@ const SettingsScreen = () => {
 			<View style={styles.container}>
 				<ScrollView>
 					<Text weight="extraBold" marginBottom={8}>
-						Settings
+						{i18n.t('SettingsScreen.title')}
 					</Text>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
-						My Wallet
+						{i18n.t('SettingsScreen.my_wallet')}
 					</Text>
-					<SettingsOption label="Backup" icon="backupStroke" onPress={onBackup} />
-					<SettingsOption label="Switch wallet" onPress={onAccounts} icon="avatarStroke" />
-					<SettingsOption label="New Wallet" icon="walletStroke" onPress={onCreateWallet} />
+					<SettingsOption label={i18n.t('SettingsScreen.backup')} icon="backupStroke" onPress={onBackup} />
+					<SettingsOption
+						label={i18n.t('SettingsScreen.switch_account')}
+						onPress={onAccounts}
+						icon="avatarStroke"
+					/>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.new_wallet')}
+						icon="walletStroke"
+						onPress={onCreateWallet}
+					/>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
-						My Account
+						{i18n.t('SettingsScreen.my_account')}
 					</Text>
-					<SettingsOption label="Network" icon="networkStroke" onPress={onChangeNetwork} />
-					<SettingsOption label="USD Asset" icon="dollarStroke" onPress={onDollarSettings} />
+					<SettingsOption
+						label={i18n.t('SettingsScreen.network')}
+						icon="networkStroke"
+						onPress={onChangeNetwork}
+					/>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.usd_coin')}
+						icon="dollarStroke"
+						onPress={onDollarSettings}
+					/>
 					<SettingsOption label="Savings Account" icon="vaultStroke" onPress={onSavingAccount} />
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
-						Help
+						{i18n.t('SettingsScreen.help')}
 					</Text>
-					<SettingsOption label="Contact Support" icon="helpStroke" onPress={onContactSupport} />
+					<SettingsOption
+						label={i18n.t('SettingsScreen.contact_support')}
+						icon="helpStroke"
+						onPress={onContactSupport}
+					/>
+					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
+						{i18n.t('SettingsScreen.other')}
+					</Text>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.language')}
+						icon="siteStroke"
+						onPress={onChangeLanguage}
+					/>
 				</ScrollView>
 			</View>
 		</BasicLayout>

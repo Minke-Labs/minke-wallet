@@ -11,8 +11,8 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
 	onDismiss,
 	showHeader = true, // useful if we want to have a dismiss function but without the header
 	title = 'Oops!',
-	description = 'Something went wrong, our developers have been notified.',
-	buttonLabel = 'Ok, got it'
+	description,
+	buttonLabel
 }) => (
 	<SafeAreaView>
 		{showHeader && onDismiss && <ModalHeader onDismiss={onDismiss} />}
@@ -24,7 +24,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
 			<Text weight="extraBold" center marginBottom={45}>
 				{description}
 			</Text>
-			<Button title={buttonLabel} onPress={onDismiss} marginBottom={8} />
+			<Button title={buttonLabel!} onPress={onDismiss} marginBottom={8} />
 		</View>
 	</SafeAreaView>
 );

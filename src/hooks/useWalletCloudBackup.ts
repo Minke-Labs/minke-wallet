@@ -1,3 +1,4 @@
+import { useMemo, useState, useCallback } from 'react';
 import { CLOUD_BACKUP_ERRORS, isCloudBackupAvailable } from '@models/cloudBackup';
 import {
 	addWalletToCloudBackup,
@@ -8,37 +9,40 @@ import {
 import { delay } from '@helpers/utilities';
 import { values } from 'lodash';
 import { getAllWallets, setWalletBackedUp } from '@models/wallet';
-import { useState } from 'react';
 import Logger from '@utils/logger';
+import useLanguage from './useLanguage';
 
 export const cloudPlatform = 'iCloud';
 
-const walletLoadingStates = {
-	BACKING_UP_WALLET: 'Backing up...',
-	CREATING_WALLET: 'Creating wallet...',
-	FETCHING_PASSWORD: 'Fetching Password...',
-	IMPORTING_WALLET: 'Importing...',
-	RESTORING_WALLET: 'Restoring...'
-};
-
-const getUserError = (e: any) => {
-	switch (e.message) {
-		case CLOUD_BACKUP_ERRORS.KEYCHAIN_ACCESS_ERROR:
-			return 'You need to authenticate to proceed with the Backup process';
-		case CLOUD_BACKUP_ERRORS.ERROR_DECRYPTING_DATA:
-			return 'Incorrect password! Please try again.';
-		case CLOUD_BACKUP_ERRORS.NO_BACKUPS_FOUND:
-		case CLOUD_BACKUP_ERRORS.SPECIFIC_BACKUP_NOT_FOUND:
-			return "We couldn't find your previous backup!";
-		case CLOUD_BACKUP_ERRORS.ERROR_GETTING_ENCRYPTED_DATA:
-			return "We couldn't access your backup at this time. Please try again later.";
-		default:
-			return `Error while trying to backup. Error code: ${values(CLOUD_BACKUP_ERRORS).indexOf(e.message)}`;
-	}
-};
-
 const useWalletCloudBackup = () => {
+	const { i18n } = useLanguage();
 	const [isWalletLoading, setIsWalletLoading] = useState<string | null>();
+
+	const walletLoadingStates = useMemo(() => ({
+		BACKING_UP_WALLET: i18n.t('Hooks.iCloudBackup.BACKING_UP_WALLET'),
+		CREATING_WALLET: i18n.t('Hooks.iCloudBackup.CREATING_WALLET'),
+		FETCHING_PASSWORD: i18n.t('Hooks.iCloudBackup.FETCHING_PASSWORD'),
+		IMPORTING_WALLET: i18n.t('Hooks.iCloudBackup.IMPORTING_WALLET'),
+		RESTORING_WALLET: i18n.t('Hooks.iCloudBackup.RESTORING_WALLET')
+	}), []);
+
+	const getUserError = useCallback((e: any) => {
+		switch (e.message) {
+			case CLOUD_BACKUP_ERRORS.KEYCHAIN_ACCESS_ERROR:
+				return i18n.t('Hooks.iCloudBackup.errors.KEYCHAIN_ACCESS_ERROR');
+			case CLOUD_BACKUP_ERRORS.ERROR_DECRYPTING_DATA:
+				return i18n.t('Hooks.iCloudBackup.errors.ERROR_DECRYPTING_DATA');
+			case CLOUD_BACKUP_ERRORS.NO_BACKUPS_FOUND:
+			case CLOUD_BACKUP_ERRORS.SPECIFIC_BACKUP_NOT_FOUND:
+				return i18n.t('Hooks.iCloudBackup.errors.NO_BACKUPS_FOUND');
+			case CLOUD_BACKUP_ERRORS.ERROR_GETTING_ENCRYPTED_DATA:
+				return i18n.t('Hooks.iCloudBackup.errors.ERROR_GETTING_ENCRYPTED_DATA');
+			default:
+				return i18n.t('Hooks.iCloudBackup.errors.GENERIC_ERROR', {
+					code: values(CLOUD_BACKUP_ERRORS).indexOf(e.message)
+				});
+		}
+	}, []);
 
 	const walletCloudBackup = async ({
 		handleNoLatestBackup,

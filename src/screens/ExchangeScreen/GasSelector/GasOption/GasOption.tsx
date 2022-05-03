@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Card, RadioButton } from 'react-native-paper';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { Text, Icon as IconImg, ActivityIndicator } from '@components';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
@@ -23,6 +23,7 @@ const defaultWait: Wait = {
 };
 
 const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow'; disabled?: boolean }) => {
+	const { i18n } = useLanguage();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [gasPrice, setGasPrice] = React.useState<number>();
 	const [usdPrice, setUsdPrice] = React.useState<number>();
@@ -138,7 +139,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 				<Card.Content style={styles.gasSelectorCardContent}>
 					<View style={{ marginRight: 4 }}>
 						<RadioButton
-							value={type}
+							value={i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
 							status={selected ? 'checked' : 'unchecked'}
 							onPress={onSelectGas}
 							color={colors.cta1}
@@ -149,7 +150,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 					</View>
 					<View style={styles.gasSelectorCardGasOption}>
 						<Text type="span" weight="bold">
-							{type.charAt(0).toUpperCase() + type.slice(1)}
+							{i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
 						</Text>
 						<Text type="span">{waiting()}</Text>
 					</View>
@@ -157,7 +158,9 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 						<Text type="span" weight="bold">
 							${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}
 						</Text>
-						<Text type="span">Transaction Fee</Text>
+						<Text type="span">
+							{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}
+						</Text>
 					</View>
 				</Card.Content>
 			</Card>

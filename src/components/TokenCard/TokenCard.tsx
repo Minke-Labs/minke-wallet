@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TokenType } from '@styles';
-import { useTheme } from '@hooks';
+import { useTheme, useLanguage } from '@hooks';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
@@ -23,7 +23,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-
+	const { i18n } = useLanguage();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
 		balance,
 		updateQuotes: updateQuotes!,
@@ -41,7 +41,9 @@ const TokenCard: React.FC<TokenCardProps> = ({
 							<View style={styles.currencyIcon}>
 								<Icon name="dollarStroke" color="cta1" size={32} />
 							</View>
-							<Text type="p2">Choose token</Text>
+							<Text type="p2">
+								{i18n.t('Components.TokenCard.choose_token')}
+							</Text>
 							<Icon name="chevronRight" color="cta1" size={16} />
 						</View>
 					</View>

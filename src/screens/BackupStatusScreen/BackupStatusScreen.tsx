@@ -5,47 +5,58 @@ import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
-import { useNavigation, iCloudBackup, useWallets, useAuthentication } from '@hooks';
+import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { walletState, globalWalletState } from '@src/stores/WalletStore';
-
 import styles from './BackupStatusScreen.styles';
 
-const BackedUp: React.FC<{ address: string }> = ({ address }) => (
-	<>
-		<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
-			Your Wallet is Backed Up!
-		</Text>
-		<Text type="p" weight="regular" center marginBottom={48}>
-			{smallWalletAddress(address, 9)}
-		</Text>
-		<Text weight="medium" center marginBottom={40}>
-			If you lose this device you can recover your encrpyted wallet backup from iCloud.
-		</Text>
-	</>
-);
+const BackedUp: React.FC<{ address: string }> = ({ address }) => {
+	const { i18n } = useLanguage();
+	return (
+		<>
+			<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
+				{i18n.t('BackupStatusScreen.your_wallet_is_backed_up')}
+			</Text>
+			<Text type="p" weight="regular" center marginBottom={48}>
+				{smallWalletAddress(address, 9)}
+			</Text>
+			<Text weight="medium" center marginBottom={40}>
+				{i18n.t('BackupStatusScreen.if_you_lose')}
+			</Text>
+		</>
+	);
+};
 
 const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }> = ({
 	address,
 	handleIcloudBackup
-}) => (
-	<>
-		<Text weight="extraBold" type="h2" center marginBottom={24} width={275} color="alert1">
-			Your Wallet is not Backed Up!
-		</Text>
-		<Text type="p" weight="regular" center marginBottom={48}>
-			{smallWalletAddress(address, 9)}
-		</Text>
-		<Text weight="medium" center marginBottom={40}>
-			Your keys your coin. Backup your wallet incase of loss.
-		</Text>
-		<Button title="Back up to iCloud" onPress={handleIcloudBackup} iconRight="cloudStroke" marginBottom={24} />
-	</>
-);
+}) => {
+	const { i18n } = useLanguage();
+	return (
+		<>
+			<Text weight="extraBold" type="h2" center marginBottom={24} width={275} color="alert1">
+				{i18n.t('BackupStatusScreen.your_wallet_is_not_backed_up')}
+			</Text>
+			<Text type="p" weight="regular" center marginBottom={48}>
+				{smallWalletAddress(address, 9)}
+			</Text>
+			<Text weight="medium" center marginBottom={40}>
+				{i18n.t('BackupStatusScreen.your_keys_your_coins')}
+			</Text>
+			<Button
+				title={i18n.t('BackupStatusScreen.back_up_to_icloud')}
+				onPress={handleIcloudBackup}
+				iconRight="cloudStroke"
+				marginBottom={24}
+			/>
+		</>
+	);
+};
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupStatusScreen'>;
 const BackupStatusScreen = ({ route }: Props) => {
+	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
 	const { address: addressState } = state.value;
 
@@ -91,7 +102,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					</TouchableOpacity>
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
 						<Text weight="medium" color="text7" type="a">
-							Done
+							{i18n.t('BackupStatusScreen.done')}
 						</Text>
 					</TouchableOpacity>
 				</View>
@@ -104,7 +115,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 				>
 					<View style={{ width: '100%', marginBottom: 32 }}>
 						<Text weight="extraBold" type="h3">
-							Backup
+							{i18n.t('BackupStatusScreen.backup')}
 						</Text>
 					</View>
 
@@ -116,7 +127,11 @@ const BackupStatusScreen = ({ route }: Props) => {
 						<NotBackedUp {...{ address, handleIcloudBackup }} />
 					)}
 					{address !== addressState && (
-						<Button title="Go to Wallet" marginBottom={21} onPress={() => onSelectWallet(wallet)} />
+						<Button
+							title={i18n.t('BackupStatusScreen.go_to_wallet')}
+							marginBottom={21}
+							onPress={() => onSelectWallet(wallet)}
+						/>
 					)}
 					{seed.value && (
 						<Button
@@ -124,7 +139,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 								showAuthenticationPrompt({
 									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
 								})}
-							title="View Secret Phrase"
+							title={i18n.t('BackupStatusScreen.view_secret_phrase')}
 							mode="outlined"
 						/>
 					)}
@@ -132,7 +147,11 @@ const BackupStatusScreen = ({ route }: Props) => {
 			</BasicLayout>
 
 			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
-				<ModalReusables.Error onDismiss={() => setError(undefined)} title="Backup error" description={error} />
+				<ModalReusables.Error
+					onDismiss={() => setError(undefined)}
+					title={i18n.t('BackupStatusScreen.backup_error')}
+					description={error}
+				/>
 			</Modal>
 		</>
 	);
