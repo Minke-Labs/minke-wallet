@@ -77,7 +77,7 @@ export default {
 		header_title: 'Alterar a Moeda'
 	},
 	ChangeLanguageScreen: {
-		header_title: 'Alterar o idioma'
+		header_title: 'Alterar o Idioma'
 	},
 	ChangeNetworkScreen: {
 		ListItem: {
@@ -97,10 +97,10 @@ export default {
 			open_aave: 'Abra uma conta de investimentos\nna Aave',
 			what_is: 'O que é a Aave?',
 			aave_des:
-				'Aave permite que você ganhe juros em suas criptomoedas e stablecoins emprestando-as a mutuários. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e muito mais. O Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
+				'Aave permite que você ganhe juros em suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
 			view_site: 'Veja o Site',
 			learn_more: 'Veja Mais',
-			this_transaction: 'Esta transação vai custar alguns centavos de dólar.'
+			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		NotAbleToSaveModal: {
 			not_able: 'Não foi possível salvar',
@@ -375,7 +375,7 @@ export default {
 			},
 			CustomAmountModal: {
 				choose_another_amount: 'Escolha outro valor entre {{min}} e {{max}}',
-				use_a_debit_card: 'Use um cartão de crédito'
+				use_a_debit_card: 'Use um cartão de débito'
 			}
 		}
 	},
