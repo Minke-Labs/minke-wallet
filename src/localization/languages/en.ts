@@ -187,7 +187,8 @@ export default {
 			please_wait: 'Please wait while we process your payment...'
 		},
 		Success: {
-			funds_being_deposited: 'Your funds are being deposited into your wallet...'
+			funds_being_deposited: 'Your funds are being deposited into your wallet...',
+			done: 'Done'
 		}
 	},
 	TransactionsScreen: {

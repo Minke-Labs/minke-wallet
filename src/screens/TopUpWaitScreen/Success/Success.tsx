@@ -17,7 +17,10 @@ export const Success: React.FC<SuccessProps> = ({ onFinish }) => {
 			<Text type="h3" weight="extraBold" center marginBottom={40} width={275}>
 				{i18n.t('TopUpWaitScreen.Success.funds_being_deposited')}
 			</Text>
-			<Button title="Done" onPress={onFinish} />
+			<Button
+				title={i18n.t('TopUpWaitScreen.Success.done')}
+				onPress={onFinish}
+			/>
 		</View>
 	);
 };

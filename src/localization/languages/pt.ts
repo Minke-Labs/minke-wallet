@@ -187,7 +187,8 @@ export default {
 			please_wait: 'Por favor espere enquanto processamos o seu pagamento...'
 		},
 		Success: {
-			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...'
+			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
+			done: 'Feito'
 		}
 	},
 	TransactionsScreen: {
