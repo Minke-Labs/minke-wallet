@@ -56,10 +56,10 @@ const Deposit = () => {
 					{token && tokenBalance && (
 						<View style={styles.depositHeadline}>
 							<Text type="h3" weight="extraBold">
-								Deposit
+								{i18n.t('DepositScreen.Deposit.deposit')}
 							</Text>
 							<Text type="a" weight="regular" color="text3">
-								Balance:{' '}
+								{i18n.t('DepositScreen.Deposit.balance')}
 								<Text type="a" weight="extraBold" color="text3">
 									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
 								</Text>

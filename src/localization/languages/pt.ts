@@ -83,6 +83,10 @@ export default {
 			congrats: 'Parabéns',
 			you_just: 'Você acabou de fazer seu primeiro depósito!'
 		},
+		Deposit: {
+			deposit: 'Depósito',
+			balance: 'Saldo: '
+		},
 		OpenAave: {
 			open_aave: 'Abra uma conta de investimentos\nna Aave',
 			what_is: 'O que é a Aave?',
