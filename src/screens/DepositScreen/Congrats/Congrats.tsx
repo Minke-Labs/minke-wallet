@@ -23,7 +23,10 @@ const SaveCongratsScreen = () => {
 				</Text>
 			</View>
 			<View style={styles.ctaBottom}>
-				<Button title="Done" onPress={() => navigation.goBack()} />
+				<Button
+					title={i18n.t('DepositScreen.Congrats.done')}
+					onPress={() => navigation.goBack()}
+				/>
 			</View>
 		</View>
 	);

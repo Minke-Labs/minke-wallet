@@ -88,7 +88,8 @@ export default {
 	DepositScreen: {
 		Congrats: {
 			congrats: 'Parabéns',
-			you_just: 'Você acabou de fazer seu primeiro depósito!'
+			you_just: 'Você acabou de fazer seu primeiro depósito!',
+			done: 'Feito'
 		},
 		Deposit: {
 			deposit: 'Depósito',
