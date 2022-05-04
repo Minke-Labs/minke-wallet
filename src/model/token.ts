@@ -308,3 +308,15 @@ export interface CovalentToken {
 	quote_24h: number;
 	nft_data: null;
 }
+
+export interface CovalentAavePool {
+	underlying: {
+		contract_address: string;
+		contract_ticker_symbol: string;
+	};
+	atoken: {
+		contract_address: string;
+		contract_ticker_symbol: string;
+	};
+	supply_apy: number;
+}

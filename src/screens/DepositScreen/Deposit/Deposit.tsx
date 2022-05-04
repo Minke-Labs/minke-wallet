@@ -32,12 +32,12 @@ const Deposit = () => {
 		transactionHash,
 		nativeToken,
 		enoughForGas,
-		apy,
 		gaslessEnabled,
 		searchVisible,
 		hideModal,
 		showModal,
-		onTokenSelect
+		onTokenSelect,
+		apy
 	} = useDeposit();
 
 	useEffect(() => {
@@ -53,19 +53,19 @@ const Deposit = () => {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.deposit}>
-					{token && tokenBalance && (
-						<View style={styles.depositHeadline}>
-							<Text type="h3" weight="extraBold">
-								{i18n.t('DepositScreen.Deposit.deposit')}
-							</Text>
+					<View style={styles.depositHeadline}>
+						<Text type="h3" weight="extraBold">
+							{i18n.t('DepositScreen.Deposit.deposit')}
+						</Text>
+						{token && tokenBalance && (
 							<Text type="a" weight="regular" color="text3">
 								{i18n.t('DepositScreen.Deposit.balance')}
 								<Text type="a" weight="extraBold" color="text3">
 									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
 								</Text>
 							</Text>
-						</View>
-					)}
+						)}
+					</View>
 
 					<Card style={styles.tokenCard}>
 						<TokenCard
@@ -80,7 +80,7 @@ const Deposit = () => {
 						<GasSelector />
 					</View>
 
-					{apy && (
+					{!!apy && (
 						<View style={styles.interestContainer}>
 							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 							<Text weight="medium" type="a" color="alert3">
@@ -115,13 +115,15 @@ const Deposit = () => {
 				isVisible={waitingTransaction}
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
-				<TransactionWaitModal
-					onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
-					fromToken={token}
-					toToken={{ symbol: 'Aave' } as ParaswapToken}
-					transactionHash={transactionHash}
-					deposit
-				/>
+				{!!token && (
+					<TransactionWaitModal
+						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
+						fromToken={token}
+						toToken={{ symbol: 'Aave' } as ParaswapToken}
+						transactionHash={transactionHash}
+						deposit
+					/>
+				)}
 			</Modal>
 		</>
 	);

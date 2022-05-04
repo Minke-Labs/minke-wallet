@@ -4,14 +4,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTokenBalances } from '@src/services/apis';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { useSaveScreen } from '@src/screens/SaveScreen/SaveScreen.hooks';
 import { MinkeToken } from '@models/token';
+import useDepositProtocols from './useDepositProtocols';
 
 const useDeposit = () => {
 	const [ableToDeposit, setAbleToDeposit] = React.useState<boolean | undefined>();
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
 	const { address } = useState(globalWalletState()).value;
-	const { setSelectedUSDCoin } = useSaveScreen();
+	const { setSelectedUSDCoin } = useDepositProtocols();
 
 	useEffect(() => {
 		const checkAbleToDeposit = async () => {

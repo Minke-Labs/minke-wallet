@@ -3,7 +3,6 @@ import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
 import { ParaswapToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import useDeposits from '@src/hooks/useDeposits';
 import {
 	useAmplitude,
 	useNavigation,
@@ -31,8 +30,7 @@ const useWithdrawScreen = () => {
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const { tokens } = useDeposits();
-	const { tokens: balances } = useTokens();
+	const { interestTokens: tokens, tokens: balances } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();

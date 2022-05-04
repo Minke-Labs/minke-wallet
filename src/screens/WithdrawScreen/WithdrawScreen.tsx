@@ -36,6 +36,7 @@ const WithdrawScreen = () => {
 		gaslessEnabled
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
+
 	return (
 		<>
 			<BasicLayout>

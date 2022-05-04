@@ -4,9 +4,8 @@ import { useState } from '@hookstate/core';
 import { getProvider } from '@models/wallet';
 import { ParaswapToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
-import { globalDepositState } from '@stores/DepositStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { aaveMarketTokenToParaswapToken, depositTransaction, usdCoinSettingsKey } from '@models/deposit';
+import { depositableTokenToParaswapToken, depositTransaction, usdCoinSettingsKey } from '@models/deposit';
 import {
 	useNavigation,
 	useTokens,
@@ -22,7 +21,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { aaveDepositContract, gaslessDeposit } from '@models/gaslessTransaction';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
-import { useSaveScreen } from '@src/screens/SaveScreen/SaveScreen.hooks';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -31,18 +29,17 @@ export const useDeposit = () => {
 	const navigation = useNavigation();
 	const { depositableTokens: tokens, tokens: allTokens } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
-	const { market } = useState(globalDepositState()).value;
+	const { depositableToken } = useDepositProtocols();
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const [token, setToken] = React.useState<ParaswapToken>(aaveMarketTokenToParaswapToken(market));
+	const [token, setToken] = React.useState<ParaswapToken>();
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const { setSelectedUSDCoin } = useSaveScreen();
+	const { setSelectedUSDCoin, apy } = useDepositProtocols();
 	const { addPendingTransaction } = useTransactions();
-	const { apy } = useDepositProtocols();
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {
@@ -80,7 +77,7 @@ export const useDeposit = () => {
 
 	const onDeposit = async () => {
 		Keyboard.dismiss();
-		if (canDeposit) {
+		if (canDeposit && depositableToken) {
 			setWaitingTransaction(true);
 
 			if (gaslessEnabled) {
@@ -92,7 +89,7 @@ export const useDeposit = () => {
 					biconomy,
 					depositContract: aaveDepositContract,
 					gasPrice: gweiValue.toString(),
-					interestBearingToken: market.address,
+					interestBearingToken: depositableToken.address,
 					token: token.address
 				});
 				if (hash) {
@@ -117,7 +114,7 @@ export const useDeposit = () => {
 						symbol: token.symbol,
 						subTransactions: [
 							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: market.symbol, amount: +amount }
+							{ type: 'incoming', symbol: depositableToken.symbol, amount: +amount }
 						]
 					});
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
@@ -130,7 +127,7 @@ export const useDeposit = () => {
 					amount,
 					token: token.address,
 					decimals: token.decimals,
-					interestBearingToken: market.address,
+					interestBearingToken: depositableToken.interestBearingAddress,
 					gweiValue
 				});
 				Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
@@ -172,7 +169,7 @@ export const useDeposit = () => {
 						symbol: token.symbol,
 						subTransactions: [
 							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: market.symbol, amount: +amount }
+							{ type: 'incoming', symbol: depositableToken.symbol, amount: +amount }
 						]
 					});
 					track('Deposited', {
@@ -216,10 +213,10 @@ export const useDeposit = () => {
 	}, [tokens, token]);
 
 	useEffect(() => {
-		if (market.tokens[0].symbol !== token.symbol) {
-			setToken(aaveMarketTokenToParaswapToken(market));
+		if (depositableToken && !token) {
+			setToken(depositableTokenToParaswapToken(depositableToken));
 		}
-	}, [market]);
+	}, [depositableToken]);
 
 	return {
 		token,
@@ -231,12 +228,12 @@ export const useDeposit = () => {
 		transactionHash,
 		nativeToken,
 		enoughForGas,
-		apy,
 		gaslessEnabled,
 		searchVisible,
 		hideModal,
 		showModal,
 		onTokenSelect,
-		tokens
+		tokens,
+		apy
 	};
 };
