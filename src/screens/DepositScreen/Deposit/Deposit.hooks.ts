@@ -29,7 +29,6 @@ export const useDeposit = () => {
 	const navigation = useNavigation();
 	const { depositableTokens: tokens, tokens: allTokens } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
-	const { depositableToken } = useDepositProtocols();
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
 	const [token, setToken] = React.useState<ParaswapToken>();
@@ -38,7 +37,7 @@ export const useDeposit = () => {
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const { setSelectedUSDCoin, apy } = useDepositProtocols();
+	const { setSelectedUSDCoin, apy, depositableToken } = useDepositProtocols();
 	const { addPendingTransaction } = useTransactions();
 
 	const balanceFrom = useCallback(
@@ -89,7 +88,7 @@ export const useDeposit = () => {
 					biconomy,
 					depositContract: aaveDepositContract,
 					gasPrice: gweiValue.toString(),
-					interestBearingToken: depositableToken.address,
+					interestBearingToken: depositableToken.interestBearingAddress,
 					token: token.address
 				});
 				if (hash) {
@@ -114,7 +113,7 @@ export const useDeposit = () => {
 						symbol: token.symbol,
 						subTransactions: [
 							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: depositableToken.symbol, amount: +amount }
+							{ type: 'incoming', symbol: depositableToken.interestBearingSymbol, amount: +amount }
 						]
 					});
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
@@ -169,7 +168,7 @@ export const useDeposit = () => {
 						symbol: token.symbol,
 						subTransactions: [
 							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: depositableToken.symbol, amount: +amount }
+							{ type: 'incoming', symbol: depositableToken.interestBearingSymbol, amount: +amount }
 						]
 					});
 					track('Deposited', {

@@ -46,7 +46,9 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	let interestTokens = await fetchInterestBearingTokens(address);
 	interestTokens = interestTokens.filter((token) => Number(token.balance) > 0);
 
-	const depositableTokens = allTokens.filter((token) => depositStablecoins.includes(token.symbol));
+	const depositableTokens = allTokens.filter(
+		(token) => depositStablecoins.includes(token.symbol) && token.balanceUSD > 0
+	);
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
 	tokens = tokens.filter(({ balanceUSD }) => balanceUSD > 0);
 	const walletBalance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
