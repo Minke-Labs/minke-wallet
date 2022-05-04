@@ -6,16 +6,19 @@ import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageCon
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
 
 export {
-	ThemeProvider,
 	ThemeContext,
-	AmplitudeProvider,
 	AmplitudeContext,
-	BiconomyProvider,
 	LanguageContext,
-	LanguageProvider,
 	BiconomyContext,
-	TransactionsProvider,
 	TransactionsContext,
-	LocationProvider,
-	LocationContext
+	LocationContext,
+	TransactionsProvider
 };
+
+export const providers = [
+	ThemeProvider,
+	AmplitudeProvider,
+	BiconomyProvider,
+	LocationProvider,
+	LanguageProvider
+];

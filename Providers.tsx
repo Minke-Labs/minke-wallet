@@ -1,16 +1,20 @@
-import React from 'react';
-import { ThemeProvider, AmplitudeProvider, BiconomyProvider, LocationProvider, LanguageProvider } from '@contexts';
+/* eslint-disable react/jsx-no-useless-fragment */
+import React, { ComponentProps, FC } from 'react';
+import { providers } from '@contexts';
+
+export const combineComponents = (...components: FC[]): FC => components.reduce(
+	(AccumulatedComponents, CurrentComponent) => ({ children }: ComponentProps<FC>): JSX.Element => (
+		<AccumulatedComponents>
+			<CurrentComponent>{children}</CurrentComponent>
+		</AccumulatedComponents>
+	),
+	({ children }) => <>{children}</>
+);
+
+export const AppContextProvider = combineComponents(...providers);
 
 export const Providers: React.FC = ({ children }) => (
-	<LanguageProvider>
-		<BiconomyProvider>
-			<AmplitudeProvider>
-				<ThemeProvider>
-					<LocationProvider>
-						{children}
-					</LocationProvider>
-				</ThemeProvider>
-			</AmplitudeProvider>
-		</BiconomyProvider>
-	</LanguageProvider>
+	<AppContextProvider>
+		{children}
+	</AppContextProvider>
 );
