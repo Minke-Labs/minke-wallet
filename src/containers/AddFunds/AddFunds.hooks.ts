@@ -2,6 +2,7 @@ import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
 import { useAmplitude, useBiconomy, useFormProgress, useLocation, useNavigation, useWyreApplePay } from '@hooks';
+import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder } from '@models/banxa';
 import { globalWalletState } from '@src/stores/WalletStore';
@@ -64,6 +65,8 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	};
 
 	const onOnrampPurchase = async (value: number) => {
+		const { name } = await network();
+
 		const params = {
 			account_reference: address,
 			source: locationCurrency,
@@ -71,8 +74,8 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			source_amount: String(value),
 			return_url_on_success: '#',
 			wallet_address: address,
-			payment_method_id: paymentOnLocation!
-			// target_amount: String(value)
+			payment_method_id: paymentOnLocation!,
+			blockchain: name === 'Polygon' ? 'MATIC' : 'ETH'
 		};
 
 		const url = await makeOrder({ params });
