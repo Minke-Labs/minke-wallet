@@ -45,7 +45,8 @@ const useDepositProtocols = () => {
 
 	const fetchSelectedProtocol = async () => {
 		const protocol = await AsyncStorage.getItem('@depositProtocol');
-		const setupProtocol = protocol ? availableDepositProtocols[protocol] : availableDepositProtocols.mStable;
+		// @TODO: Change it here to mStable
+		const setupProtocol = protocol ? availableDepositProtocols[protocol] : availableDepositProtocols.aave;
 		setSelectedProtocol(setupProtocol);
 	};
 

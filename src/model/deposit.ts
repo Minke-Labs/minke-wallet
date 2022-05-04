@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import * as qs from 'qs';
 import { DepositableToken } from './depositTokens';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
@@ -118,17 +119,22 @@ export const depositTransaction = async ({
 }): Promise<DepositTransaction> => {
 	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/transaction`;
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
-	const { zapperNetwork } = await selectedNetwork();
 	const gasValue = gweiValue * 1000000000;
-	const gas = `&maxFeePerGas=${gasValue}&maxPriorityFeePerGas=${gasValue}`;
-	const addresses = `&ownerAddress=${address}&sellTokenAddress=${token}`;
-	const poolAddresses = `&poolAddress=${interestBearingToken}&payoutTokenAddress=${interestBearingToken}`;
-	const slippage = '&slippagePercentage=0.05';
-	const network = `&network=${zapperNetwork}&api_key=${apiKey}${gas}`;
+	const { zapperNetwork } = await selectedNetwork();
 	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
-	const result = await fetch(
-		`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`
-	);
+	const params = {
+		maxFeePerGas: gasValue,
+		maxPriorityFeePerGas: gasValue,
+		ownerAddress: address.toLowerCase(),
+		sellTokenAddress: token.toLowerCase(),
+		poolAddress: interestBearingToken.toLowerCase(),
+		payoutTokenAddress: interestBearingToken.toLowerCase(),
+		slippagePercentage: 0.05,
+		network: zapperNetwork,
+		api_key: apiKey,
+		sellAmount: tokenAmount
+	};
+	const result = await fetch(`${baseURL}?${qs.stringify(params)}`);
 
 	return result.json();
 };

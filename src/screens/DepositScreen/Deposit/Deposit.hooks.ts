@@ -27,7 +27,7 @@ export const useDeposit = () => {
 	const { nativeToken } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { depositableTokens: tokens, tokens: allTokens } = useTokens();
+	const { depositableTokens: tokens = [], tokens: allTokens = [] } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
@@ -37,8 +37,8 @@ export const useDeposit = () => {
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const { setSelectedUSDCoin, apy, depositableToken } = useDepositProtocols();
 	const { addPendingTransaction } = useTransactions();
+	const { setSelectedUSDCoin, apy, depositableToken } = useDepositProtocols();
 
 	const balanceFrom = useCallback(
 		(paraSwapToken: ParaswapToken | undefined): number => {

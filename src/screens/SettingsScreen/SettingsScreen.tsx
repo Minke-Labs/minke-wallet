@@ -75,11 +75,13 @@ const SettingsScreen = () => {
 						icon="dollarStroke"
 						onPress={onDollarSettings}
 					/>
-					<SettingsOption
-						label={i18n.t('SettingsScreen.savings_account')}
-						icon="vaultStroke"
-						onPress={onSavingAccount}
-					/>
+					{!!__DEV__ && (
+						<SettingsOption
+							label={i18n.t('SettingsScreen.savings_account')}
+							icon="vaultStroke"
+							onPress={onSavingAccount}
+						/>
+					)}
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.help')}
 					</Text>
