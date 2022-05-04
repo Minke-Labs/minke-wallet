@@ -1,11 +1,12 @@
 import React from 'react';
 import { ImageBackground, View } from 'react-native';
 import { Text, Button } from '@components';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { saveCongratsImg } from '@src/images';
 import { makeStyles } from './Congrats.styles';
 
 const SaveCongratsScreen = () => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const navigation = useNavigation();
@@ -15,14 +16,17 @@ const SaveCongratsScreen = () => {
 			<ImageBackground source={saveCongratsImg} style={styles.saveCongratsImg} />
 			<View style={styles.congratsMessage}>
 				<Text center type="h2" weight="bold" color="text2" marginBottom={24}>
-					Congrats
+					{i18n.t('DepositScreen.Congrats.congrats')}
 				</Text>
 				<Text center color="text2" marginBottom={24}>
-					You&apos;ve made your first deposit!
+					{i18n.t('DepositScreen.Congrats.you_just')}
 				</Text>
 			</View>
 			<View style={styles.ctaBottom}>
-				<Button title="Done" onPress={() => navigation.goBack()} />
+				<Button
+					title={i18n.t('DepositScreen.Congrats.done')}
+					onPress={() => navigation.goBack()}
+				/>
 			</View>
 		</View>
 	);

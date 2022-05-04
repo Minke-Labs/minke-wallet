@@ -15,6 +15,7 @@ import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
+import FlagItem from './FlagItem/FlagItem';
 import Card from './Card/Card';
 import OnrampButton from './OnrampButton/OnrampButton';
 import TransparentCard from './TransparentCard/TransparentCard';
@@ -56,6 +57,7 @@ export {
 	LoadingScreen,
 	OnrampButton,
 	Flag,
+	FlagItem,
 	Card,
 	TransparentCard,
 	TokenCard,

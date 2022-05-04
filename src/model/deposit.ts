@@ -9,7 +9,15 @@ import { erc20abi, estimateGas, getProvider } from './wallet';
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
 export const depositStablecoins = ['USDC', 'DAI', 'USDT'];
-export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt'];
+export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt', 'ausdc', 'adai', 'ausdt'];
+export const depositSymbol: { [key: string]: string } = {
+	amUSDC: 'USDC',
+	amDAI: 'DAI',
+	amUSDT: 'USDT',
+	aUSDC: 'USDC',
+	aDAI: 'DAI',
+	aUSDT: 'USDT'
+};
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const baseURL = `https://api.zapper.fi/v1/protocols/${protocol}/token-market-data`;

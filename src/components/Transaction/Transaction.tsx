@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { useLanguage } from '@hooks';
 import Text from '../Text/Text';
 import TransactionIcon from '../TransactionIcon/TransactionIcon';
 import { styles } from './Transaction.styles';
@@ -23,7 +24,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 	} = useTransaction({
 		transaction
 	});
-
+	const { i18n } = useLanguage();
 	return (
 		<TouchableOpacity activeOpacity={0.6} style={styles.container} onPress={openTransaction}>
 			<View style={[styles.leftContainer]}>
@@ -31,7 +32,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 				<View style={styles.titleContainer}>
 					{failed ? (
 						<Text type="span" color="alert1" weight="bold">
-							Failed
+							{i18n.t('Transaction.failed')}
 						</Text>
 					) : (
 						<Text type="span">{title}</Text>

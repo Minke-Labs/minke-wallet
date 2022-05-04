@@ -4,7 +4,7 @@ import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
 import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
 import { Card } from 'react-native-paper';
-import { useTheme, useNavigation, useAmplitude } from '@hooks';
+import { useTheme, useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
@@ -16,6 +16,7 @@ import { useDeposit } from './Deposit.hooks';
 import { makeStyles } from './Deposit.styles';
 
 const Deposit = () => {
+	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { colors } = useTheme();
@@ -55,10 +56,10 @@ const Deposit = () => {
 					{token && tokenBalance && (
 						<View style={styles.depositHeadline}>
 							<Text type="h3" weight="extraBold">
-								Deposit
+								{i18n.t('DepositScreen.Deposit.deposit')}
 							</Text>
 							<Text type="a" weight="regular" color="text3">
-								Balance:{' '}
+								{i18n.t('DepositScreen.Deposit.balance')}
 								<Text type="a" weight="extraBold" color="text3">
 									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
 								</Text>
@@ -90,8 +91,12 @@ const Deposit = () => {
 				</View>
 
 				<View style={styles.depositButton}>
-					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<HapticButton title="Deposit" disabled={!canDeposit} onPress={onDeposit} />
+					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
+					<HapticButton
+						title={i18n.t('DepositScreen.Deposit.deposit')}
+						disabled={!canDeposit}
+						onPress={onDeposit}
+					/>
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>

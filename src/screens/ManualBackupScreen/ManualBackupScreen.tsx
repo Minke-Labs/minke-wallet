@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Icon, ScreenLoadingIndicator, Text } from '@components';
-import { useNavigation } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
@@ -11,11 +11,12 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import Card from './Card/Card';
 import CopyButton from './CopyButton/CopyButton';
-import styles from './ManualBackupScreen.styles';
 import Warning from './Warning/Warning';
+import styles from './ManualBackupScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const ManualBackupScreen = ({ route }: Props) => {
+	const { i18n } = useLanguage();
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();
 	const onFinish = () => navigation.navigate('WalletScreen');
@@ -38,18 +39,18 @@ const ManualBackupScreen = ({ route }: Props) => {
 					</TouchableOpacity>
 					<TouchableOpacity activeOpacity={0.6} onPress={onFinish}>
 						<Text weight="medium" type="a" color="text7">
-							Done
+							{i18n.t('ManualBackupScreen.done')}
 						</Text>
 					</TouchableOpacity>
 				</View>
 
 				<View style={styles.container}>
 					<Text weight="extraBold" type="h3" marginBottom={8}>
-						Recovery phrase
+						{i18n.t('ManualBackupScreen.recovery_phrase')}
 					</Text>
 
 					<Text color="text2" width={290} marginBottom={40}>
-						Write this down on paper or save it in your password manager.
+						{i18n.t('ManualBackupScreen.write_this_down')}
 					</Text>
 
 					<FlatList
@@ -66,7 +67,7 @@ const ManualBackupScreen = ({ route }: Props) => {
 				</View>
 			</BasicLayout>
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text style={{ color: '#FFFFFF' }}>Address copied!</Text>
+				<Text style={{ color: '#FFFFFF' }}> {i18n.t('ManualBackupScreen.address_copied')}</Text>
 			</Snackbar>
 		</>
 	);

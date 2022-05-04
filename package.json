@@ -5,7 +5,8 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "postinstall": "./scripts/postinstall.sh"
+    "postinstall": "./scripts/postinstall.sh",
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "3.2.4",
@@ -61,6 +62,7 @@
     "expo-status-bar": "~1.2.0",
     "global": "^4.4.0",
     "https-browserify": "0.0.1",
+    "i18n-js": "^3.9.2",
     "lodash": "^4.17.21",
     "main": "^1000.0.1",
     "metro": "^0.67.0",
@@ -115,6 +117,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@types/i18n-js": "^3.8.2",
+    "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.175",
     "@types/qs": "^6.9.7",
     "@types/react": "~17.0.21",
@@ -131,6 +135,8 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^28.0.3",
+    "mocha": "^9.2.2",
     "typescript": "~4.3.5"
   },
   "private": true,

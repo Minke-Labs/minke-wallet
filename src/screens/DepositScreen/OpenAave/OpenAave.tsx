@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Linking, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import { Icon, Text, HapticButton, TransparentCard, ActivityIndicator } from '@components';
-import { useAmplitude, useNavigation } from '@hooks';
+import { useAmplitude, useNavigation, useLanguage } from '@hooks';
 import { BasicLayout } from '@layouts';
 import styles from './OpenAave.styles';
 import { Background } from './Background/Background';
 import { useOpenAave } from './OpenAave.hooks';
 
 const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
+	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { loading, onOpenAccount, gaslessEnabled } = useOpenAave({ onApprove });
@@ -28,20 +29,15 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 						</View>
 
 						<Text type="h3" weight="bold" color="text1" marginBottom={35}>
-							Open Aave {'\n'}Savings Account
+							{i18n.t('DepositScreen.OpenAave.open_aave')}
 						</Text>
 
 						<TransparentCard marginBottom={8}>
 							<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
-								What is Aave
+								{i18n.t('DepositScreen.OpenAave.what_is')}
 							</Text>
 							<Text type="a">
-								Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers.
-								Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable
-								and can change at any time. {'\n\n'}
-								Risks include the economics of the protocol, market risks, security of the smart
-								contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open
-								Zeppelin.
+								{i18n.t('DepositScreen.OpenAave.aave_des')}
 							</Text>
 						</TransparentCard>
 
@@ -50,7 +46,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 								<TransparentCard row padding={16}>
 									<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 									<Text type="a" color="text2">
-										View Site
+										{i18n.t('DepositScreen.OpenAave.view_site')}
 									</Text>
 									<Icon name="chevronRight" color="cta1" size={24} />
 								</TransparentCard>
@@ -60,7 +56,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 								<TransparentCard row padding={16}>
 									<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 									<Text type="a" color="text2">
-										Learn More
+										{i18n.t('DepositScreen.OpenAave.learn_more')}
 									</Text>
 									<Icon name="chevronRight" color="cta1" size={24} />
 								</TransparentCard>
@@ -69,14 +65,14 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 					</SafeAreaView>
 					<View style={{ bottom: 34 }}>
 						<HapticButton
-							title="Open Account"
+							title={i18n.t('DepositScreen.OpenAave.open_account')}
 							marginBottom={16}
 							onPress={onOpenAccount}
 							disabled={loading}
 						/>
 						{!gaslessEnabled && (
 							<Text type="span" color="text2" style={{ textAlign: 'center' }}>
-								This transaction will cost a few cents.
+								{i18n.t('DepositScreen.OpenAave.this_transaction')}
 							</Text>
 						)}
 					</View>

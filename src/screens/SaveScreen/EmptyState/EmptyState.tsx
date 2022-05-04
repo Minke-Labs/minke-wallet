@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
-import { useTheme, useNavigation } from '@hooks';
+import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
 import { globalDepositState } from '@src/stores/DepositStore';
 import { makeStyles } from './EmptyState.styles';
 
 const EmptyState = () => {
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
@@ -27,18 +28,18 @@ const EmptyState = () => {
 				<TouchableOpacity style={styles.headerNavigationLeft} onPress={() => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 					<Text weight="extraBold" type="h3" color="text1" style={{ marginLeft: 12 }}>
-						Save
+						{i18n.t('SaveScreen.EmptyState.save')}
 					</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={styles.saveEmptyStateContent}>
 				<View style={styles.saveEmptyStateCard}>
 					<Text type="h3" weight="extraBold" color="text1" marginBottom={16} center>
-						Open Aave{'\n'}Savings Account
+						{i18n.t('SaveScreen.EmptyState.open_aave_savings_account')}
 					</Text>
 
 					<Text type="p2" color="text3" marginBottom={32}>
-						Let&apos;s make your first deposit?
+						{i18n.t('SaveScreen.EmptyState.lets_make_first_deposit')}
 					</Text>
 
 					{market && (
@@ -51,7 +52,8 @@ const EmptyState = () => {
 							>
 								<Icon name="iconUp" color="text11" size={16} style={styles.greenButtonIcon} />
 								<Text weight="bold" type="a" color="text11" style={{ lineHeight: 25 }}>
-									{(market.supplyApy * 100).toFixed(2)}% interest p.a.
+									{(market.supplyApy * 100).toFixed(2)}
+									{i18n.t('SaveScreen.interest')}
 								</Text>
 							</LinearGradient>
 						</View>
@@ -60,7 +62,7 @@ const EmptyState = () => {
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 58 }}>
 						<Button
 							iconLeft="addStroke"
-							title="Deposit"
+							title={i18n.t('Components.Buttons.deposit')}
 							onPress={() => navigation.navigate('DepositScreen')}
 						/>
 					</View>

@@ -4,6 +4,7 @@ import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
 import useNetwork from './useNetwork';
 import useKeyboard from './useKeyboard';
+import useLanguage from './useLanguage';
 import useTimeout from './useTimeout';
 import useTransactions from './useTransactions';
 import useWyreApplePay from './useWyreApplePay';
@@ -25,6 +26,7 @@ export {
 	useFormProgress,
 	useNetwork,
 	useKeyboard,
+	useLanguage,
 	useTokens,
 	useTransactions,
 	useDeposit,

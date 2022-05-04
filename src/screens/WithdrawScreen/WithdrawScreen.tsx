@@ -4,7 +4,7 @@ import { Card } from 'react-native-paper';
 import { Icon, Modal, HapticButton, Text, TokenCard } from '@components';
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
-import { useNavigation, useTheme } from '@hooks';
+import { useNavigation, useTheme, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
@@ -35,7 +35,7 @@ const WithdrawScreen = () => {
 		tokens,
 		gaslessEnabled
 	} = useWithdrawScreen();
-
+	const { i18n } = useLanguage();
 	return (
 		<>
 			<BasicLayout>
@@ -47,11 +47,11 @@ const WithdrawScreen = () => {
 				<View style={styles.withdraw}>
 					<View style={styles.withdrawHeadline}>
 						<Text type="h3" weight="extraBold">
-							Withdraw
+							{i18n.t('WithdrawScreen.withdraw')}
 						</Text>
 						{token && tokenBalance && (
 							<Text type="a" weight="regular" color="text3">
-								Balance:{' '}
+								{i18n.t('WithdrawScreen.balance')}
 								<Text type="a" weight="extraBold" color="text3">
 									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
 								</Text>
@@ -72,8 +72,12 @@ const WithdrawScreen = () => {
 				</View>
 
 				<View style={styles.withdrawButton}>
-					{nativeToken && !enoughForGas && <Warning label="Not enough balance for gas" />}
-					<HapticButton title="Withdraw" disabled={!canWithdraw} onPress={onWithdraw} />
+					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
+					<HapticButton
+						title={i18n.t('Components.Buttons.withdraw')}
+						disabled={!canWithdraw}
+						onPress={onWithdraw}
+					/>
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>
