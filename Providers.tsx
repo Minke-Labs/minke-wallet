@@ -13,7 +13,7 @@ export const combineComponents = (...components: FC[]): FC => components.reduce(
 
 export const AppContextProvider = combineComponents(...providers);
 
-export const Providers: React.FC = ({ children }) => (
+export const Providers: FC = ({ children }) => (
 	<AppContextProvider>
 		{children}
 	</AppContextProvider>
