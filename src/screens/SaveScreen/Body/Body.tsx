@@ -23,7 +23,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 						<Card
 							image={<TransactionIcon received />}
 							title={item.name}
-							subtitle={i18n.t('Components.Buttons.deposit')}
+							subtitle={i18n.t('SaveScreen.Body.deposit')}
 							marginBottom={index === interestTokens.length - 1 ? 0 : 32}
 							right={
 								<View>

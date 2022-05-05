@@ -163,6 +163,9 @@ export default {
 			current_deposits: 'Current deposits',
 			withdraw: 'Withdraw',
 			deposit: 'Deposit'
+		},
+		Body: {
+			deposit: 'Deposit'
 		}
 	},
 	SavingAccountsScreen: {

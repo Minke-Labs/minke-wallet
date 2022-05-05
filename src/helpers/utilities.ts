@@ -1,7 +1,7 @@
 import { BigNumber, FixedNumber } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
-import * as Localization from 'expo-localization';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from 'i18n-js';
 
 export function convertEthToUsd(ethValue: BigNumber, ethInUsd: string, round = 2): string {
 	const formatedEthInUsd = Math.trunc((+ethInUsd * 100) / 100)
@@ -24,7 +24,7 @@ export const coinFromSymbol = async (symbol: string): Promise<CoingeckoToken> =>
 };
 
 export const numberFormat = (value: number, digits?: number) =>
-	new Intl.NumberFormat(Localization.locale || 'en-US', {
+	new Intl.NumberFormat(i18n.currentLocale() || 'en-US', {
 		style: 'currency',
 		currency: 'USD',
 		minimumFractionDigits: digits || 2

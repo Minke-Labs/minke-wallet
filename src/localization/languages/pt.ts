@@ -89,20 +89,20 @@ export default {
 		Congrats: {
 			congrats: 'Parabéns',
 			you_just: 'Você acabou de fazer seu primeiro depósito!',
-			done: 'Feito'
+			done: 'Pronto'
 		},
 		Deposit: {
 			deposit: 'Depósito',
 			balance: 'Saldo: '
 		},
 		OpenAave: {
-			open_account: 'Abra uma Conta',
-			open_aave: 'Abra uma conta de investimentos\nna Aave',
+			open_account: 'Abrir uma Conta',
+			open_aave: 'Abrir uma conta na Aave',
 			what_is: 'O que é a Aave?',
 			aave_des:
-				'Aave permite que você ganhe juros em suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
-			view_site: 'Veja o Site',
-			learn_more: 'Veja Mais',
+				'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
+			view_site: 'Ver o Site',
+			learn_more: 'Ver Mais',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		NotAbleToSaveModal: {
@@ -160,9 +160,12 @@ export default {
 			save: 'Investir'
 		},
 		CurrentValue: {
-			current_deposits: 'Depósitos atuais',
+			current_deposits: 'Depósitos',
 			withdraw: 'Retirar',
 			deposit: 'Depositar'
+		},
+		Body: {
+			deposit: 'Depósito'
 		}
 	},
 	SavingAccountsScreen: {
@@ -196,7 +199,7 @@ export default {
 		},
 		Success: {
 			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
-			done: 'Feito'
+			done: 'Pronto'
 		}
 	},
 	TransactionsScreen: {
@@ -288,7 +291,7 @@ export default {
 		},
 		Modals: {
 			ReceiveModal: {
-				receive: 'Receba',
+				receive: 'Receber',
 				show_qr: 'Mostre seu código QR ou compartilhe suas informações'
 			},
 			SendModal: {
@@ -436,14 +439,14 @@ export default {
 			backup_manually: 'Fazer backup manualmente',
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',
-			done: 'Feito',
+			done: 'Pronto',
 			exchange: 'Converter',
-			deposit: 'Depósito',
+			deposit: 'Depositar',
 			withdraw: 'Retirar',
 			ok_got_it: 'OK, entendi',
 			send: 'Enviar',
 			add_contact: 'Adicionar Contato',
-			add_funds_to_start: 'Adicione fundos para começar',
+			add_funds_to_start: 'Adicionar fundos para começar',
 			share: 'Compartilhar',
 			pay_with: 'Pagar com '
 		},
@@ -458,7 +461,7 @@ export default {
 			}
 		},
 		SettingsHeader: {
-			done: 'Feito'
+			done: 'Pronto'
 		},
 		TokenCard: {
 			choose_token: 'Escolha um token'
