@@ -1,4 +1,4 @@
 export interface IconInnerProps {
-	pending: boolean;
-	failed: boolean;
+	pending?: boolean;
+	failed?: boolean;
 }
