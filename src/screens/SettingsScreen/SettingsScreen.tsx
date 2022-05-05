@@ -55,7 +55,7 @@ const SettingsScreen = () => {
 					<SettingsOption
 						label={i18n.t('SettingsScreen.switch_account')}
 						onPress={onAccounts}
-						icon="avatarStroke"
+						icon="switchWallet"
 					/>
 					<SettingsOption
 						label={i18n.t('SettingsScreen.new_wallet')}
