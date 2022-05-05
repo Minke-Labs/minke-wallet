@@ -77,22 +77,25 @@ const fetchInterestBearingTokens = async (wallet: string): Promise<MinkeToken[]>
 	const provider = await getProvider();
 	const tokens = depositTokens[id];
 
-	const promises = Object.values(tokens).map(async ({ address, decimals, symbol, interestBearingAddress }) => {
-		const token = new Contract(interestBearingAddress, erc20abi, provider);
-		const balance: BigNumber = await token.balanceOf(wallet);
-		const formatedBalance = formatUnits(balance, decimals);
+	const promises = Object.values(tokens).map(
+		async ({ address, decimals, symbol, interestBearingAddress, interestBearingSymbol }) => {
+			const token = new Contract(interestBearingAddress, erc20abi, provider);
+			const balance: BigNumber = await token.balanceOf(wallet);
+			const formatedBalance = formatUnits(balance, decimals);
 
-		return {
-			address,
-			decimals,
-			symbol,
-			interestBearingAddress,
-			balance: formatedBalance,
-			balanceUSD: Number(formatedBalance),
-			image: symbol,
-			name: symbol
-		};
-	});
+			return {
+				address,
+				decimals,
+				symbol,
+				interestBearingAddress,
+				interestBearingSymbol,
+				balance: formatedBalance,
+				balanceUSD: Number(formatedBalance),
+				image: symbol,
+				name: symbol
+			};
+		}
+	);
 
 	return Promise.all(promises);
 };

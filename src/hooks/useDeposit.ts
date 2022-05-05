@@ -7,7 +7,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/token';
 import useDepositProtocols from './useDepositProtocols';
 
-const useDeposit = () => {
+const useDeposit = (withdraw = false) => {
 	const [ableToDeposit, setAbleToDeposit] = React.useState<boolean | undefined>();
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
 	const { address } = useState(globalWalletState()).value;
@@ -16,8 +16,8 @@ const useDeposit = () => {
 	useEffect(() => {
 		const checkAbleToDeposit = async () => {
 			const defaultUSDCoin = await usdCoin();
-			const { depositableTokens: tokens } = await getTokenBalances(address);
-			let token = tokens.find((t) => t.symbol === defaultUSDCoin);
+			const { depositableTokens: tokens, interestTokens } = await getTokenBalances(address);
+			let token = (withdraw ? interestTokens : tokens).find((t) => t.symbol === defaultUSDCoin);
 			const hasTheDefaultToken = !!token;
 			if (hasTheDefaultToken) {
 				setAbleToDeposit(true);

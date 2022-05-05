@@ -2,6 +2,7 @@ import Logger from '@utils/logger';
 import { Wallet } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import * as qs from 'qs';
 import { approvalTransaction, zapperApprovalState } from './deposit';
 import { getProvider } from './wallet';
 import { network as selectedNetwork } from './network';
@@ -72,15 +73,21 @@ export const withdrawTransaction = async ({
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
 	const { zapperNetwork } = await selectedNetwork();
 	const gasValue = gweiValue * 1000000000;
-	const gas = `&maxFeePerGas=${gasValue}&maxPriorityFeePerGas=${gasValue}`;
-	const addresses = `&ownerAddress=${address}&sellTokenAddress=${interestBearingToken}`;
-	const poolAddresses = `&poolAddress=${interestBearingToken}&toTokenAddress=${toTokenAddress}`;
-	const slippage = '&slippagePercentage=0.05';
-	const network = `&network=${zapperNetwork}&api_key=${apiKey}${gas}`;
 	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
-	const result = await fetch(
-		`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`
-	);
+	const params = {
+		maxFeePerGas: gasValue,
+		maxPriorityFeePerGas: gasValue,
+		ownerAddress: address.toLowerCase(),
+		sellTokenAddress: interestBearingToken.toLowerCase(),
+		poolAddress: interestBearingToken.toLowerCase(),
+		toTokenAddress: toTokenAddress.toLowerCase(),
+		slippagePercentage: 0.05,
+		network: zapperNetwork,
+		api_key: apiKey,
+		sellAmount: tokenAmount
+	};
+
+	const result = await fetch(`${baseURL}?${qs.stringify(params)}`);
 
 	return result.json();
 };

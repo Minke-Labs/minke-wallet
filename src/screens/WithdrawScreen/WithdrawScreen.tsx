@@ -90,6 +90,7 @@ const WithdrawScreen = () => {
 					ownedTokens={tokens?.map((t) => t.symbol.toLowerCase())}
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
+					withdraw
 				/>
 			</Modal>
 			<Modal isVisible={waitingTransaction} onDismiss={() => navigation.navigate('SaveScreen')}>
