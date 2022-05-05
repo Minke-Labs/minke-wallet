@@ -50,7 +50,7 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 		(token) => depositStablecoins.includes(token.symbol) && token.balanceUSD > 0
 	);
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
-	tokens = tokens.filter(({ balanceUSD }) => balanceUSD > 0);
+	tokens = tokens.filter(({ balance }) => +balance > 0);
 	const walletBalance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const depositedBalance = interestTokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const balance = walletBalance + depositedBalance;
