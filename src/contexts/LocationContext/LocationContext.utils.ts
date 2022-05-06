@@ -110,6 +110,13 @@ export const currencies: Currency[] = [
 		currencyName: 'South African Rand',
 		currency: 'ZAR',
 		payment_id: null
+	},
+	{
+		flag: 'brazil',
+		iso: 'BR',
+		currencyName: 'Brazilian Real',
+		currency: 'BRL',
+		payment_id: '7540'
 	}
 ];
 

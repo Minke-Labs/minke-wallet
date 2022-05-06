@@ -1,4 +1,4 @@
-import { PayId, Interac, FasterPayments, Sepa } from './images';
+import { PayId, Interac, FasterPayments, Sepa, Pix } from './images';
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
@@ -25,6 +25,12 @@ export const chooseLocation = (loc: string) => {
 				backgroundColor: '#004899',
 				fontColor: '#FFFFFF',
 				image: Sepa
+			};
+		case 'BR':
+			return {
+				backgroundColor: '#FFFFFF',
+				fontColor: '#0A2138',
+				image: Pix
 			};
 		default:
 			return null;
