@@ -29,6 +29,11 @@ const availableDepositProtocols: DepositProtocols = {
 	}
 };
 
+export const fetchDepositProtocol = async () => {
+	const protocol = await AsyncStorage.getItem('@depositProtocol');
+	return protocol ? availableDepositProtocols[protocol] : availableDepositProtocols.mstable;
+};
+
 const useDepositProtocols = () => {
 	const {
 		network: { name, id }
@@ -44,10 +49,7 @@ const useDepositProtocols = () => {
 	};
 
 	const fetchSelectedProtocol = async () => {
-		const protocol = await AsyncStorage.getItem('@depositProtocol');
-		// @TODO: Change it here to mStable
-		const setupProtocol = protocol ? availableDepositProtocols[protocol] : availableDepositProtocols.aave;
-		setSelectedProtocol(setupProtocol);
+		setSelectedProtocol(await fetchDepositProtocol());
 	};
 
 	const fetchDepositToken = async () => {

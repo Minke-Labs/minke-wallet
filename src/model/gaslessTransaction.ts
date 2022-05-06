@@ -4,7 +4,6 @@ import Logger from '@utils/logger';
 import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, permitSignature, signTypedDataV3 } from '@utils/signing/signing';
 import { getProvider } from './wallet';
-import { mStableDepositContract, mAsset, saveAsset, vault } from './mStableDeposit';
 
 export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 export const exchangeContract = '0x986089F230DF31D34A1baE69A08C11ef6b06EcbA'; // Polygon
@@ -74,75 +73,6 @@ export const gaslessApproval = async ({
 	}
 
 	return null;
-};
-
-export const gaslessDeposit = async ({
-	address,
-	privateKey,
-	token,
-	amount,
-	interestBearingToken,
-	minAmount,
-	depositContract,
-	gasPrice,
-	biconomy
-}: {
-	address: string;
-	privateKey: string;
-	token: string;
-	amount: string; // in WEI
-	interestBearingToken: string;
-	minAmount: string;
-	depositContract: string;
-	gasPrice: string;
-	biconomy: any;
-}) => {
-	const abi = [
-		// eslint-disable-next-line max-len
-		'function ZapIn(address fromToken, uint256 amountIn, address aToken, uint256 minATokens, address swapTarget, bytes calldata swapData, address affiliate) external payable returns (uint256 aTokensRec)'
-	];
-
-	const contractInterface = new ethers.utils.Interface(abi);
-
-	const userSigner = new ethers.Wallet(privateKey);
-
-	// Create your target method signature.. here we are calling setQuote() method of our contract
-	const functionSignature = contractInterface.encodeFunctionData('ZapIn', [
-		token,
-		amount,
-		interestBearingToken,
-		minAmount,
-		'0x0000000000000000000000000000000000000000',
-		'0x00',
-		'0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'
-	]);
-
-	const rawTx = {
-		to: depositContract,
-		data: functionSignature,
-		from: address,
-		gasLimit: 500000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
-	};
-
-	const signedTx = await userSigner.signTransaction(rawTx);
-	// should get user message to sign for EIP712 or personal signature types
-	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
-
-	const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
-
-	const data = {
-		signature,
-		forwardRequest: forwardData.request,
-		rawTransaction: signedTx,
-		signatureType: biconomy.EIP712_SIGN
-	};
-
-	const provider = biconomy.getEthersProvider();
-	// send signed transaction with ethers
-	// promise resolves to transaction hash
-	const txHash = await provider.send('eth_sendRawTransaction', [data]);
-	return txHash;
 };
 
 export const gaslessWithdraw = async ({
@@ -342,71 +272,6 @@ export const gaslessSend = async ({
 		signatureType: biconomy.EIP712_SIGN
 	};
 
-	// promise resolves to transaction hash
-	const txHash = await provider.send('eth_sendRawTransaction', [data]);
-	return txHash;
-};
-
-export const gaslessMStableDeposit = async ({
-	address,
-	privateKey,
-	token,
-	amount,
-	minAmount,
-	gasPrice,
-	biconomy
-}: {
-	address: string;
-	privateKey: string;
-	token: string;
-	amount: string; // in WEI
-	minAmount: string; // in WEI, imUSD decimals
-	gasPrice: string;
-	biconomy: any;
-}) => {
-	// send signed transaction with ethers
-	const userSigner = new ethers.Wallet(privateKey);
-
-	const abi = [
-		// eslint-disable-next-line max-len
-		'function saveViaMint(address _mAsset, address _save, address _vault, address _bAsset, uint256 _amount, uint256 _minOut, bool _stake) external'
-	];
-
-	const contractInterface = new ethers.utils.Interface(abi);
-
-	// Create your target method signature.. here we are calling setQuote() method of our contract
-	const functionSignature = contractInterface.encodeFunctionData('saveViaMint', [
-		mAsset, //    _mAsset = mUSD Polygon
-		saveAsset, // _save   = imUSD Polygon
-		vault, //     _vault  = imUSD Vault Polygon
-		token, //     _bAsset = stable being deposited
-		amount, //    _amount = stable quantity in WEI, stable decimals
-		minAmount, // _minOut = min quantity in WEI, imUSD decimals (18)
-		true
-	]);
-
-	const rawTx = {
-		to: mStableDepositContract,
-		data: functionSignature,
-		from: address,
-		gasLimit: 5000000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
-	};
-
-	const signedTx = await userSigner.signTransaction(rawTx);
-	// should get user message to sign for EIP712 or personal signature types
-	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
-
-	const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
-
-	const data = {
-		signature,
-		forwardRequest: forwardData.request,
-		rawTransaction: signedTx,
-		signatureType: biconomy.EIP712_SIGN
-	};
-
-	const provider = biconomy.getEthersProvider();
 	// promise resolves to transaction hash
 	const txHash = await provider.send('eth_sendRawTransaction', [data]);
 	return txHash;

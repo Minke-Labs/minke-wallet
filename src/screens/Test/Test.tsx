@@ -10,7 +10,7 @@ import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import { approvalState } from '@models/deposit';
 import { approveSpending } from '@models/contract';
-import { mStableDepositContract, mStableDepositTransaction } from '@models/mStableDeposit';
+import { mStableDeposit, mStableDepositContract } from '@src/services/deposit/mStable';
 
 const Test = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -70,7 +70,7 @@ const Test = () => {
 			});
 			console.log('finished gasless deposit with gas', hash);
 		} else {
-			const { hash } = await mStableDepositTransaction({
+			const { hash } = await mStableDeposit({
 				token: params.deposit,
 				amount: params.amount,
 				minAmount: params.minAmount,
