@@ -201,6 +201,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 		try {
 			throw new Error('Not implemented');
 		} catch {
+			console.log('ERROU!!!');
 			setBlockchainError(true);
 		}
 	};

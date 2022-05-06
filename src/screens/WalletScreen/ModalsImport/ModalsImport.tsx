@@ -3,7 +3,7 @@ import { Snackbar } from 'react-native-paper';
 import { Text, Modal } from '@components';
 import { AddFunds } from '@containers';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
-import { useLanguage } from '@hooks';
+import { useError, useLanguage } from '@hooks';
 import { SendModal, ReceiveModal } from '../Modals';
 import { ResultProps } from '../WalletScreen.types';
 import { ModalsImportProps } from './ModalsImport.types';
@@ -22,6 +22,7 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 	hideReceive,
 	onSendFinished
 }) => {
+	const { onBlockchainError, setBlockchainError } = useError();
 	const { i18n } = useLanguage();
 	return (
 		<>
@@ -54,6 +55,20 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 						sent
 					/>
 				)}
+			</Modal>
+
+			{/* asdfadsfakjdsflkjasdkfj */}
+			<Modal isVisible={onBlockchainError} onDismiss={() => setBlockchainError(false)}>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
+				<Text>Modal</Text>
 			</Modal>
 		</>
 	);
