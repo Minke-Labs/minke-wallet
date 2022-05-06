@@ -11,6 +11,7 @@ import useWyreApplePay from './useWyreApplePay';
 import useTokens from './useTokens';
 import useWyreOrderStatus from './useWyreOrderStatus';
 import useDeposit from './useDeposit';
+import useError from './useError';
 import useWalletCloudBackup from './useWalletCloudBackup';
 import iCloudBackup from './iCloudBackup';
 import useWallets from './useWallets';
@@ -25,6 +26,7 @@ export {
 	useFormProgress,
 	useNetwork,
 	useKeyboard,
+	useError,
 	useLanguage,
 	useTokens,
 	useTransactions,
