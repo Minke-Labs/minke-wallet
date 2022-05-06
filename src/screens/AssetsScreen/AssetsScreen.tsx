@@ -25,10 +25,10 @@ const AssetsScreen = ({ route }: Props) => {
 					<Upper {...{ coin }} />
 					<ScrollView style={[styles.bodyContainer, { backgroundColor: colors.background1 }]}>
 						<Balance {...{ coin }} />
-						{marketCap > 0 && tokenVolume && (
+						{marketCap > 0 && !!tokenVolume && (
 							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
 						)}
-						{description && <AboutCoin description={description} name={coin.name} />}
+						{!!description && <AboutCoin description={description} name={coin.name} />}
 					</ScrollView>
 				</SafeAreaView>
 			</ScrollView>
