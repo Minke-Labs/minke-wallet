@@ -6,6 +6,7 @@ import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
+import { fetchDepositProtocol } from '@src/hooks/useDepositProtocols';
 import { fetchInterestBearingTokens } from '@models/depositTokens';
 import { BalanceApiResponse } from './covalent.types';
 
@@ -31,6 +32,7 @@ export const getAavePools = async (): Promise<CovalentAavePool[]> => {
 
 export const getTokenBalances = async (address: string): Promise<AccountBalance> => {
 	const { chainId: networkId } = await network();
+	const protocol = await fetchDepositProtocol();
 	const { status, data } = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
 	if (status !== 200) Logger.sentry('Balances API failed');
 	const {
@@ -43,7 +45,7 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
 
 	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	let interestTokens = await fetchInterestBearingTokens(address);
+	let interestTokens = await fetchInterestBearingTokens(address, protocol.id);
 	interestTokens = interestTokens.filter((token) => Number(token.balance) > 0);
 
 	const depositableTokens = allTokens.filter(

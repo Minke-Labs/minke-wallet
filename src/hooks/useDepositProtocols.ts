@@ -53,8 +53,8 @@ const useDepositProtocols = () => {
 	};
 
 	const fetchDepositToken = async () => {
-		if (selectedUSDCoin) {
-			const token = getDepositToken(id, selectedUSDCoin);
+		if (selectedUSDCoin && selectedProtocol) {
+			const token = await getDepositToken(id, selectedUSDCoin, selectedProtocol.id);
 			setDepositableToken(token);
 		}
 	};
