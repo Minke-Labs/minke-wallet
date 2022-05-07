@@ -11,6 +11,7 @@ export const useWalletScreen = () => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
+	const [error, setError] = React.useState(false);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const navigation = useNavigation();
 
@@ -67,6 +68,11 @@ export const useWalletScreen = () => {
 		track('Wallet Screen Opened');
 	}, []);
 
+	const onError = () => {
+		setError(true);
+		setSendModalOpen(false);
+	};
+
 	return {
 		sendModalOpen,
 		setSendModalOpen,
@@ -88,6 +94,9 @@ export const useWalletScreen = () => {
 		onCopyToClipboard,
 		onSendFinished,
 		address,
-		balance
+		balance,
+		onError,
+		setError,
+		error
 	};
 };

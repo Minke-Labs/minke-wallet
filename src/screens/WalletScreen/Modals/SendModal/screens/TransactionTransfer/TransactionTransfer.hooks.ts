@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-tabs */
 import React, { useEffect } from 'react';
 import { useState } from '@hookstate/core';
-import { useAmplitude, useAuthentication, useBiconomy, useNativeToken, useTransactions, useError } from '@hooks';
+import { useAmplitude, useAuthentication, useBiconomy, useNativeToken, useTransactions } from '@hooks';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { network } from '@models/network';
 import { convertTransactionResponse } from '@models/transaction';
@@ -21,13 +19,19 @@ interface UserProps {
 
 interface UseTransactionTransferProps {
 	onDismiss: () => void;
+	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	user: UserProps;
 	token: MinkeToken;
 }
 
-export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, token }: UseTransactionTransferProps) => {
-	const { something, onBlockchainError, setBlockchainError } = useError();
+export const useTransactionTransfer = ({
+	onDismiss,
+	onError,
+	sentSuccessfully,
+	user,
+	token
+}: UseTransactionTransferProps) => {
 	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
 	const [image, setImage] = React.useState<{ uri: string }>();
@@ -75,135 +79,126 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 		network: { id }
 	} = state.value;
 
-	// const onSend = () => {
-	// 	showAuthenticationPrompt({
-	// 		onSuccess: async () => {
-	// 			if (gasPrice && chainDefaultToken && number) {
-	// 				setSending(true);
-	// 				let tokenAmount = number;
-
-	// 				if (amountType === 'fiat') {
-	// 					// @ts-ignore
-	// 					tokenAmount = (Number(token.balance) * number) / token.balanceUSD;
-	// 				}
-
-	// 				const ens = user.address;
-	// 				const to = (await resolveENSAddress(ens)) || ens;
-	// 				const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
-
-	// 				onDismiss();
-	// 				sentSuccessfully({
-	// 					token: {
-	// 						address: token.address,
-	// 						decimals: token.decimals,
-	// 						symbol: token.symbol
-	// 					},
-	// 					hash: ''
-	// 				});
-
-	// 				if (gasless) {
-	// 					const { isApproved } = await approvalState(address, token.address, sendContract);
-
-	// 					if (!isApproved) {
-	// 						const tx = await gaslessApproval({
-	// 							address,
-	// 							biconomy,
-	// 							contract: token.address,
-	// 							privateKey,
-	// 							spender: sendContract
-	// 						});
-
-	// 						track('Approved for sending', { token: token.symbol, name: token.name, gasless: true });
-
-	// 						await biconomy.getEthersProvider().waitForTransaction(tx, 1);
-	// 					}
-
-	// 					const hash = await gaslessSend({
-	// 						biconomy,
-	// 						address,
-	// 						privateKey,
-	// 						amount: parseUnits(amountToSend, token.decimals).toString(),
-	// 						gasPrice: gasPrice.result.ProposeGasPrice,
-	// 						token: token.address,
-	// 						to
-	// 					});
-
-	// 					const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash);
-	// 					sentSuccessfully({
-	// 						token: {
-	// 							address: token.address,
-	// 							decimals: token.decimals,
-	// 							symbol: token.symbol
-	// 						},
-	// 						hash
-	// 					});
-	// 					track('Sent', {
-	// 						token: token.symbol,
-	// 						tokenAmount,
-	// 						to,
-	// 						hash
-	// 					});
-	// 					addPendingTransaction({
-	// 						from: src,
-	// 						destination: to,
-	// 						hash,
-	// 						txSuccessful: status === 1,
-	// 						pending: true,
-	// 						timeStamp: (new Date().getTime() / 1000).toString(),
-	// 						amount: amountToSend,
-	// 						direction: 'outgoing',
-	// 						symbol: token.symbol
-	// 					});
-	// 				} else {
-	// 					const transaction = await sendTransaction(
-	// 						privateKey,
-	// 						to,
-	// 						tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'),
-	// 						gasPrice.result.ProposeGasPrice,
-	// 						id,
-	// 						token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
-	// 						token.decimals
-	// 					);
-	// 					const { wait, hash } = transaction;
-
-	// 					await wait();
-	// 					sentSuccessfully({
-	// 						token: {
-	// 							address: token.address,
-	// 							decimals: token.decimals,
-	// 							symbol: token.symbol
-	// 						},
-	// 						hash
-	// 					});
-	// 					// Pending transaction...
-	// 					addPendingTransaction(
-	// 						convertTransactionResponse({
-	// 							transaction,
-	// 							amount: amountToSend,
-	// 							direction: 'outgoing',
-	// 							symbol: token.symbol
-	// 						})
-	// 					);
-
-	// 					track('Sent', {
-	// 						token: token.symbol,
-	// 						tokenAmount,
-	// 						to,
-	// 						hash
-	// 					});
-	// 				}
-	// 			}
-	// 		}
-	// 	});
-	// };
-
 	const onSend = () => {
-		try {
-			throw new Error('Not implemented');
-		} catch {
-			console.log('ERROU!!!');
-			setBlockchainError(true);
-		}
+		showAuthenticationPrompt({
+			onSuccess: async () => {
+				if (gasPrice && chainDefaultToken && number) {
+					setSending(true);
+					let tokenAmount = number;
+
+					if (amountType === 'fiat') {
+						// @ts-ignore
+						tokenAmount = (Number(token.balance) * number) / token.balanceUSD;
+					}
+
+					const ens = user.address;
+					const to = (await resolveENSAddress(ens)) || ens;
+					const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
+
+					onDismiss();
+
+					if (gasless) {
+						const { isApproved } = await approvalState(address, token.address, sendContract);
+
+						if (!isApproved) {
+							const tx = await gaslessApproval({
+								address,
+								biconomy,
+								contract: token.address,
+								privateKey,
+								spender: sendContract
+							});
+
+							track('Approved for sending', { token: token.symbol, name: token.name, gasless: true });
+
+							await biconomy.getEthersProvider().waitForTransaction(tx, 1);
+						}
+
+						try {
+							const hash = await gaslessSend({
+								biconomy,
+								address,
+								privateKey,
+								amount: parseUnits(amountToSend, token.decimals).toString(),
+								gasPrice: gasPrice.result.ProposeGasPrice,
+								token: token.address,
+								to
+							});
+
+							const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash);
+							sentSuccessfully({
+								token: {
+									address: token.address,
+									decimals: token.decimals,
+									symbol: token.symbol
+								},
+								hash
+							});
+							track('Sent', {
+								token: token.symbol,
+								tokenAmount,
+								to,
+								hash
+							});
+							addPendingTransaction({
+								from: src,
+								destination: to,
+								hash,
+								txSuccessful: status === 1,
+								pending: true,
+								timeStamp: (new Date().getTime() / 1000).toString(),
+								amount: amountToSend,
+								direction: 'outgoing',
+								symbol: token.symbol
+							});
+						} catch (e) {
+							onError();
+						}
+					} else {
+						try {
+							const transaction = await sendTransaction(
+								privateKey,
+								to,
+								tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'),
+								gasPrice.result.ProposeGasPrice,
+								id,
+								token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
+								token.decimals
+							);
+							const { wait, hash } = transaction;
+
+							await wait();
+							sentSuccessfully({
+								token: {
+									address: token.address,
+									decimals: token.decimals,
+									symbol: token.symbol
+								},
+								hash
+							});
+							// Pending transaction...
+							addPendingTransaction(
+								convertTransactionResponse({
+									transaction,
+									amount: amountToSend,
+									direction: 'outgoing',
+									symbol: token.symbol
+								})
+							);
+
+							track('Sent', {
+								token: token.symbol,
+								tokenAmount,
+								to,
+								hash
+							});
+						} catch (e) {
+							onError();
+						}
+					}
+				}
+			}
+		});
 	};
 
 	const onMaxPress = (tokenValue = true) => {
