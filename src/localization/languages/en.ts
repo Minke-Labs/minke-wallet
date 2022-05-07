@@ -441,7 +441,12 @@ export default {
 		ModalReusables: {
 			Error: {
 				description: 'Something went wrong, our developers have been notified.',
-				buttonLabel: 'Ok, got it'
+				buttonLabel: 'Ok, got it',
+				Blockchain: {
+					title: 'Oops!',
+					description: 'Something\'s gone wrong when talking with the blockchain',
+					button: 'Try again'
+				}
 			},
 			ComingSoonModal: {
 				coming_soon: 'Coming soon!',

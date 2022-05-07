@@ -91,11 +91,11 @@ const WalletScreen = () => {
 			<Modal isVisible={error} onDismiss={() => setError(false)}>
 				{error && (
 					<ModalReusables.Error
-						title="Oops!"
-						description="Something's gone wrong when talking with the blockchain"
+						title={i18n.t('Components.ModalReusables.Error.Blockchain.title')}
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
 						onDismiss={() => setError(false)}
 						showHeader
-						buttonLabel="Try again"
+						buttonLabel={i18n.t('Components.ModalReusables.Error.Blockchain.button')}
 					/>
 				)}
 			</Modal>
