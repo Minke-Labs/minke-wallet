@@ -3,7 +3,7 @@ import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeRoute, getExchangePrice } from '@models/token';
-import { useAmplitude, useBiconomy, useNavigation, useTheme, useTransactions } from '@hooks';
+import { useAmplitude, useBiconomy, useNavigation, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
 import { coinFromSymbol, tokenBalanceFormat } from '@helpers/utilities';
 import { approveSpending } from '@models/contract';
@@ -17,7 +17,6 @@ import {
 	gaslessExchange,
 	isExchangeTargetApproved
 } from '@models/gaslessTransaction';
-import { makeStyles } from './ExchangeResume.styles';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -34,8 +33,6 @@ const useExchangeResumeScreen = () => {
 	const [error, setError] = React.useState('');
 	const [fromFiatPrice, setFromFiatPrice] = React.useState<number>();
 	const [toFiatPrice, setToFiatPrice] = React.useState<number>();
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const { addPendingTransaction } = useTransactions();
 	const { track } = useAmplitude();
 	const { gaslessEnabled, biconomy } = useBiconomy();
@@ -269,12 +266,10 @@ const useExchangeResumeScreen = () => {
 		}
 	};
 	return {
-		styles,
 		navigation,
 		priceQuote,
 		from,
 		to,
-		colors,
 		loading,
 		count,
 		exchangeSummary,
