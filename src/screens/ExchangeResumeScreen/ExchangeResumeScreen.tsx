@@ -31,7 +31,9 @@ const ExchangeResumeScreen = () => {
 		onSuccess,
 		fromFiatPrice,
 		toFiatPrice,
-		gasless
+		gasless,
+		blockchainError,
+		setBlockchainError
 	} = useExchangeResumeScreen();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -150,6 +152,18 @@ const ExchangeResumeScreen = () => {
 			</Modal>
 			<Modal isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
+			</Modal>
+
+			<Modal isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
+				{blockchainError && (
+					<ModalReusables.Error
+						title={i18n.t('Components.ModalReusables.Error.Blockchain.title')}
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						onDismiss={() => setBlockchainError(false)}
+						showHeader
+						buttonLabel={i18n.t('Components.ModalReusables.Error.Blockchain.button')}
+					/>
+				)}
 			</Modal>
 		</>
 	);
