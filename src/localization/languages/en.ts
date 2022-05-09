@@ -153,7 +153,7 @@ export default {
 		interest: '% interest p.a.',
 		EmptyState: {
 			save: 'Save',
-			open_aave_savings_account: 'Open Aave\nSavings Account',
+			open_aave_savings_account: 'Open %{protocol}\nSavings Account',
 			lets_make_first_deposit: "Let's make your first deposit?"
 		},
 		Header: {
@@ -163,7 +163,13 @@ export default {
 			current_deposits: 'Current deposits',
 			withdraw: 'Withdraw',
 			deposit: 'Deposit'
+		},
+		Body: {
+			deposit: 'Deposit'
 		}
+	},
+	SavingAccountsScreen: {
+		title: 'Savings account'
 	},
 	SettingsScreen: {
 		title: 'Settings',
@@ -175,7 +181,12 @@ export default {
 		new_wallet: 'New wallet',
 		usd_coin: 'US Dollar coin',
 		contact_support: 'Contact Support',
-		switch_account: 'Switch account'
+		switch_account: 'Switch account',
+		my_wallet: 'My Wallet',
+		my_account: 'My Account',
+		help: 'Help',
+		other: 'Other',
+		savings_account: 'Savings Account'
 	},
 	TopUpWaitScreen: {
 		Failed: {

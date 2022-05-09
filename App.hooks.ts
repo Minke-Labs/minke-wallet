@@ -3,9 +3,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from '@hookstate/core';
 import {
 	Inter_400Regular,
+	Inter_500Medium,
+	Inter_600SemiBold,
 	Inter_700Bold,
 	Inter_800ExtraBold,
-	Inter_500Medium,
 	useFonts
 } from '@expo-google-fonts/inter';
 import { getTokenList } from '@models/wallet';
@@ -20,9 +21,10 @@ export const useApp = () => {
 	const walletState = useState(globalWalletState());
 	const [fontsLoaded] = useFonts({
 		Inter_400Regular,
+		Inter_500Medium,
+		Inter_600SemiBold,
 		Inter_700Bold,
-		Inter_800ExtraBold,
-		Inter_500Medium
+		Inter_800ExtraBold
 	});
 
 	const initializeAppsFlyer = () => {

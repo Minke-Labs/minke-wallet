@@ -9,7 +9,7 @@ export default StyleSheet.create({
 
 	container: {
 		paddingHorizontal: 24,
-		marginTop: 24
+		marginVertical: 24
 	},
 
 	headline: {

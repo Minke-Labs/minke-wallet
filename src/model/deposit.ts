@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import * as qs from 'qs';
+import { DepositableToken } from './depositTokens';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
 import { erc20abi, estimateGas, getProvider } from './wallet';
@@ -9,15 +11,7 @@ import { erc20abi, estimateGas, getProvider } from './wallet';
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
 export const depositStablecoins = ['USDC', 'DAI', 'USDT'];
-export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt', 'ausdc', 'adai', 'ausdt'];
-export const depositSymbol: { [key: string]: string } = {
-	amUSDC: 'USDC',
-	amDAI: 'DAI',
-	amUSDT: 'USDT',
-	aUSDC: 'USDC',
-	aDAI: 'DAI',
-	aUSDT: 'USDT'
-};
+export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt', 'ausdc', 'adai', 'ausdt', 'v-imusd'];
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const baseURL = `https://api.zapper.fi/v1/protocols/${protocol}/token-market-data`;
@@ -28,13 +22,18 @@ export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	return allMarkets.filter(({ tokens }) => tokens.find(({ symbol }) => stablecoins.includes(symbol)));
 };
 
-export const aaveMarketTokenToParaswapToken = ({ tokens }: AaveMarket): ParaswapToken => {
-	const { address, decimals, symbol, network } = tokens[0];
+export const fetchMStablePoolData = async (): Promise<MStablePoolData> => {
+	const baseURL = 'https://api.mstable.org/pools';
+	const result = await fetch(baseURL);
+	return result.json();
+};
+
+export const depositableTokenToParaswapToken = (token: DepositableToken): ParaswapToken => {
+	const { address, decimals, symbol } = token;
 	return {
 		address,
 		decimals,
-		symbol,
-		network: +network
+		symbol
 	};
 };
 
@@ -120,17 +119,22 @@ export const depositTransaction = async ({
 }): Promise<DepositTransaction> => {
 	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/transaction`;
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
-	const { zapperNetwork } = await selectedNetwork();
 	const gasValue = gweiValue * 1000000000;
-	const gas = `&maxFeePerGas=${gasValue}&maxPriorityFeePerGas=${gasValue}`;
-	const addresses = `&ownerAddress=${address}&sellTokenAddress=${token}`;
-	const poolAddresses = `&poolAddress=${interestBearingToken}&payoutTokenAddress=${interestBearingToken}`;
-	const slippage = '&slippagePercentage=0.05';
-	const network = `&network=${zapperNetwork}&api_key=${apiKey}${gas}`;
+	const { zapperNetwork } = await selectedNetwork();
 	const tokenAmount = formatUnits(toBn(amount, decimals), 'wei');
-	const result = await fetch(
-		`${baseURL}?&sellAmount=${tokenAmount}${addresses}${poolAddresses}${slippage}${network}`
-	);
+	const params = {
+		maxFeePerGas: gasValue,
+		maxPriorityFeePerGas: gasValue,
+		ownerAddress: address.toLowerCase(),
+		sellTokenAddress: token.toLowerCase(),
+		poolAddress: interestBearingToken.toLowerCase(),
+		payoutTokenAddress: interestBearingToken.toLowerCase(),
+		slippagePercentage: 0.05,
+		network: zapperNetwork,
+		api_key: apiKey,
+		sellAmount: tokenAmount
+	};
+	const result = await fetch(`${baseURL}?${qs.stringify(params)}`);
 
 	return result.json();
 };
@@ -271,4 +275,13 @@ export interface AaveMarket {
 	appName: string;
 	appImageUrl: string;
 	protcolDisplay: string;
+}
+
+interface MStablePool {
+	chain: string;
+	pair: string;
+	apy: number;
+}
+interface MStablePoolData {
+	pools: MStablePool[];
 }

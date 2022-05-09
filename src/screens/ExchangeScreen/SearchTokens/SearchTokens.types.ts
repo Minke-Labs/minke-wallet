@@ -5,4 +5,5 @@ export interface SearchTokensProps {
 	showOnlyOwnedTokens: boolean;
 	ownedTokens?: Array<string>;
 	selected?: Array<string | undefined>;
+	withdraw?: boolean;
 }
