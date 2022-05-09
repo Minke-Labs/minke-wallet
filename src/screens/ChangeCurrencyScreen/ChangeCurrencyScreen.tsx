@@ -24,9 +24,9 @@ const ChangeCurrencyScreen = () => {
 
 	return (
 		<BasicLayout>
-			<View style={{ flex: 1, paddingHorizontal: 16 }}>
+			<View style={{ flex: 1 }}>
 				<SettingsHeader title={i18n.t('ChangeCurrencyScreen.header_title')} onPress={goBack} />
-				<View style={{ marginTop: 24, flex: 1 }}>
+				<View style={{ marginTop: 24, flex: 1, paddingHorizontal: 16 }}>
 					<SearchInput
 						marginBottom={24}
 						placeholder={i18n.t('Components.Inputs.search')}
