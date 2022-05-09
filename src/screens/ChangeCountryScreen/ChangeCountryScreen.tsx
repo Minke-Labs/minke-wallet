@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { SettingsHeader, SearchInput } from '@components';
+import { SettingsHeader, SearchInput, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLocation, useLanguage } from '@hooks';
 import { FlagType } from '@styles';
-import { ItemCurrency } from './ItemCurrency/ItemCurrency';
 
-const ChangeCurrencyScreen = () => {
-	const { countryCode, setCountryCode, currencies } = useLocation();
+const ChangeCountryScreen = () => {
+	const { countryCode, setCountryCode, countries } = useLocation();
 	const { i18n } = useLanguage();
-	const [filtered, setFiltered] = useState<any>(currencies);
+	const [filtered, setFiltered] = useState<any>(countries);
 	const [search, setSearch] = useState('');
 
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 
 	const filterCurrencies = (text: string) => {
-		const newCurrencies = currencies.filter((currency) =>
-			currency.currencyName.toLowerCase().includes(text.toLowerCase()));
+		const newCurrencies = countries.filter((country) =>
+			country.currencyName.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCurrencies);
 	};
@@ -25,7 +24,7 @@ const ChangeCurrencyScreen = () => {
 	return (
 		<BasicLayout>
 			<View style={{ flex: 1 }}>
-				<SettingsHeader title={i18n.t('ChangeCurrencyScreen.header_title')} onPress={goBack} />
+				<SettingsHeader title={i18n.t('ChangeCountryScreen.header_title')} onPress={goBack} />
 				<View style={{ marginTop: 24, flex: 1, paddingHorizontal: 16 }}>
 					<SearchInput
 						marginBottom={24}
@@ -38,11 +37,11 @@ const ChangeCurrencyScreen = () => {
 							data={filtered}
 							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => (
-								<ItemCurrency
+								<FlagItem
 									onPress={() => setCountryCode(item.iso)}
 									flag={item.flag as FlagType}
 									active={item.iso === countryCode}
-									currencyName={item.currencyName}
+									title={item.name}
 								/>
 							)}
 							keyExtractor={(item) => item.flag}
@@ -54,4 +53,4 @@ const ChangeCurrencyScreen = () => {
 	);
 };
 
-export default ChangeCurrencyScreen;
+export default ChangeCountryScreen;

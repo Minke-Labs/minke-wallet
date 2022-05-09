@@ -73,8 +73,8 @@ export default {
 			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
 		}
 	},
-	ChangeCurrencyScreen: {
-		header_title: 'Alterar a Moeda'
+	ChangeCountryScreen: {
+		header_title: 'Alterar o País'
 	},
 	ChangeLanguageScreen: {
 		header_title: 'Alterar o Idioma'
@@ -175,7 +175,7 @@ export default {
 		title: 'Configurações',
 		creating_wallet: 'Criando carteira',
 		backup: 'Backup',
-		currency: 'Moeda',
+		country: 'País',
 		language: 'Idioma',
 		network: 'Rede',
 		new_wallet: 'Nova carteira',

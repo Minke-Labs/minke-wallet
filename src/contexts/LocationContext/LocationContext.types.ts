@@ -1,4 +1,5 @@
-export interface Currency {
+export interface Country {
+	name: string;
 	flag: string;
 	iso: string;
 	currencyName: string;
@@ -9,7 +10,7 @@ export interface Currency {
 export interface LocationContextProps {
 	countryCode: string | null;
 	setCountryCode: (val: string) => any;
-	currencies: Currency[];
+	countries: Country[];
 	locationCurrency: string;
 	paymentOnLocation: string | null;
 }

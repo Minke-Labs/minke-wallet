@@ -19,7 +19,7 @@ const SettingsScreen = () => {
 	const goBack = () => navigation.goBack();
 
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
-	const onChangeCurrency = () => navigation.navigate('ChangeCurrencyScreen');
+	const onChangeCountry = () => navigation.navigate('ChangeCountryScreen');
 	const onChangeLanguage = () => navigation.navigate('ChangeLanguageScreen');
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
@@ -66,9 +66,9 @@ const SettingsScreen = () => {
 						{i18n.t('SettingsScreen.my_account')}
 					</Text>
 					<SettingsOption
-						label={i18n.t('SettingsScreen.currency')}
+						label={i18n.t('SettingsScreen.country')}
 						icon="currencyStroke"
-						onPress={onChangeCurrency}
+						onPress={onChangeCountry}
 					/>
 					<SettingsOption
 						label={i18n.t('SettingsScreen.network')}

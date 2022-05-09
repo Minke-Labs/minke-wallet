@@ -5,7 +5,7 @@ import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
-import ChangeCurrencyScreen from './ChangeCurrencyScreen/ChangeCurrencyScreen';
+import ChangeCountryScreen from './ChangeCountryScreen/ChangeCountryScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
@@ -32,7 +32,7 @@ export {
 	ChangeLanguageScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,
-	ChangeCurrencyScreen,
+	ChangeCountryScreen,
 	DepositScreen,
 	DepositWithdrawalSuccessScreen,
 	ExchangeResumeScreen,

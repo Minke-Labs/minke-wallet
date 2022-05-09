@@ -1,7 +1,8 @@
 /* eslint-disable no-tabs */
-import { Currency } from './LocationContext.types';
+import { Country } from './LocationContext.types';
 
-const mockCurrency: Currency = {
+const mockCurrency: Country = {
+	name: 'United States',
 	flag: 'unitedStates',
 	iso: 'US',
 	currencyName: 'United States Dollar',
@@ -15,13 +16,14 @@ export const mock = {
 	setCountryCode: () => { },
 	locationCurrency: mockCurrency.currency,
 	paymentOnLocation: mockCurrency.payment_id,
-	currencies: [
+	countries: [
 		mockCurrency
 	]
 };
 
-export const currencies: Currency[] = [
+export const countries: Country[] = [
 	{
+		name: 'United States',
 		flag: 'unitedStates',
 		iso: 'US',
 		currencyName: 'United States Dollar',
@@ -29,6 +31,7 @@ export const currencies: Currency[] = [
 		payment_id: null
 	},
 	{
+		name: 'Europe',
 		flag: 'europeanUnion',
 		iso: 'EU',
 		currencyName: 'Euro',
@@ -36,6 +39,7 @@ export const currencies: Currency[] = [
 		payment_id: '6041'
 	},
 	{
+		name: 'United Kingdom',
 		flag: 'unitedKingdom',
 		iso: 'UK',
 		currencyName: 'British Pound',
@@ -43,6 +47,7 @@ export const currencies: Currency[] = [
 		payment_id: '6043'
 	},
 	{
+		name: 'Australia',
 		flag: 'australia',
 		iso: 'AU',
 		currencyName: 'Australian Dollar',
@@ -92,6 +97,7 @@ export const currencies: Currency[] = [
 	// 	payment_id: null
 	// },
 	{
+		name: 'Canada',
 		flag: 'canada',
 		iso: 'CA',
 		currencyName: 'Canadian Dollar',
@@ -113,6 +119,7 @@ export const currencies: Currency[] = [
 	// 	payment_id: null
 	// },
 	{
+		name: 'Brazil',
 		flag: 'brazil',
 		iso: 'BR',
 		currencyName: 'Brazilian Real',
@@ -121,4 +128,4 @@ export const currencies: Currency[] = [
 	}
 ];
 
-export const currencyByIso = (iso: string) => currencies.find((currency) => currency.iso === iso) || null;
+export const currencyByIso = (iso: string) => countries.find((country) => country.iso === iso) || null;

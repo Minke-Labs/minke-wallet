@@ -2,7 +2,7 @@ import React, { createContext, useMemo, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import { LocationContextProps } from './LocationContext.types';
-import { mock, currencies, currencyByIso } from './LocationContext.utils';
+import { mock, countries, currencyByIso } from './LocationContext.utils';
 
 export const LocationContext = createContext<LocationContextProps>(mock);
 
@@ -32,8 +32,8 @@ const LocationProvider: React.FC = ({ children }) => {
 		() => ({
 			countryCode,
 			setCountryCode: saveLocation,
-			currencies,
-			locationCurrency: locationCurrency?.currency ?? mock.currencies[0].currency,
+			countries,
+			locationCurrency: locationCurrency?.currency ?? mock.countries[0].currency,
 			paymentOnLocation: locationCurrency?.payment_id ?? null
 		}),
 		[countryCode]
