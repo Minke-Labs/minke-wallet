@@ -44,6 +44,7 @@ const TransactionWaitModal = ({
 
 		fetchStatus();
 	}, [transactionHash]);
+
 	return (
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />

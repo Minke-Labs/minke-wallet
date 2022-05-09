@@ -12,13 +12,13 @@ const AssetListEmpty: React.FC<AssetListEmptyProps> = ({ onPress }) => {
 		<View style={styles.container}>
 			<Image source={whale3Img} style={styles.image} />
 			<Text type="p2" marginBottom={15}>
-				{i18n.t('walletAssetsScreen.AssetListEmpty.no_tokens_yet')}
+				{i18n.t('WalletAssetsScreen.AssetListEmpty.no_tokens_yet')}
 			</Text>
 			<Text weight="bold" type="p2" marginBottom={65}>
-				{i18n.t('walletAssetsScreen.AssetListEmpty.lets_buy_some')}
+				{i18n.t('WalletAssetsScreen.AssetListEmpty.lets_buy_some')}
 			</Text>
 			<Button
-				title={i18n.t('walletAssetsScreen.AssetListEmpty.add_funds_to_start')}
+				title={i18n.t('WalletAssetsScreen.AssetListEmpty.add_funds_to_start')}
 				iconLeft="addStroke"
 				onPress={onPress}
 			/>

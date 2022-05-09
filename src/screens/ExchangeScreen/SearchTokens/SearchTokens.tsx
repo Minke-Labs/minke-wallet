@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme, useLanguage, useTokens } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
@@ -16,13 +16,15 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	onTokenSelect,
 	ownedTokens = [],
 	showOnlyOwnedTokens,
-	selected
+	selected,
+	withdraw = false
 }) => {
 	const { i18n } = useLanguage();
 	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
+	const { interestTokens } = useTokens();
 
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -54,13 +56,13 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	useEffect(() => {
 		const loadTokens = async () => {
 			setLoading(true);
-			const allTokens = (await paraswapTokens()).tokens;
+			const allTokens = withdraw ? interestTokens : (await paraswapTokens()).tokens;
 			setTokens(allTokens);
 			removeSelectedTokens(allTokens);
 			setLoading(false);
 		};
 		loadTokens();
-	}, []);
+	}, [interestTokens]);
 
 	useEffect(() => {
 		setSearch('');

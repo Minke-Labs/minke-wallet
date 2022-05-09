@@ -2,18 +2,17 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { ScreenLoadingIndicator } from '@components';
 import { BasicLayout } from '@layouts';
-import { useTokens } from '@hooks';
+import { useDepositProtocols, useTokens } from '@hooks';
 import EmptyState from './EmptyState/EmptyState';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
 import { CurrentValue } from './CurrentValue/CurrentValue';
 import { Background } from './Background/Background';
-import { useSaveScreen } from './SaveScreen.hooks';
 
 const SaveScreen = () => {
-	const { aaveMarket } = useSaveScreen();
+	const { apy } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useTokens();
-	if (!interestTokens || !aaveMarket) return <ScreenLoadingIndicator />;
+	if (!interestTokens || !apy) return <ScreenLoadingIndicator />;
 	if (interestTokens.length === 0) return <EmptyState />;
 
 	return (
@@ -21,7 +20,7 @@ const SaveScreen = () => {
 			<SafeAreaView>
 				<Background>
 					<Header />
-					<CurrentValue depositsBalance={depositedBalance} aaveMarket={aaveMarket!} />
+					<CurrentValue depositsBalance={depositedBalance} apy={apy!} />
 				</Background>
 			</SafeAreaView>
 
