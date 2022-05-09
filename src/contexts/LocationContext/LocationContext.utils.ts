@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import { Currency } from './LocationContext.types';
 
 const mockCurrency: Currency = {
@@ -48,48 +49,48 @@ export const currencies: Currency[] = [
 		currency: 'AUD',
 		payment_id: '7538'
 	},
-	{
-		flag: 'china',
-		iso: 'CN',
-		currencyName: 'Chinese Yuan',
-		currency: 'CNY',
-		payment_id: null
-	},
-	{
-		flag: 'southKorea',
-		iso: 'KR',
-		currencyName: 'South Korean Won',
-		currency: 'KRW',
-		payment_id: null
-	},
-	{
-		flag: 'russia',
-		iso: 'RU',
-		currencyName: 'Russian Ruble',
-		currency: 'RUB',
-		payment_id: null
-	},
-	{
-		flag: 'india',
-		iso: 'IN',
-		currencyName: 'Indian Rupee',
-		currency: 'INR',
-		payment_id: null
-	},
-	{
-		flag: 'japan',
-		iso: 'JP',
-		currencyName: 'Japanese Yen',
-		currency: 'JPY',
-		payment_id: null
-	},
-	{
-		flag: 'turkey',
-		iso: 'TR',
-		currencyName: 'Turkish Lira',
-		currency: 'TRY',
-		payment_id: null
-	},
+	// {
+	// 	flag: 'china',
+	// 	iso: 'CN',
+	// 	currencyName: 'Chinese Yuan',
+	// 	currency: 'CNY',
+	// 	payment_id: null
+	// },
+	// {
+	// 	flag: 'southKorea',
+	// 	iso: 'KR',
+	// 	currencyName: 'South Korean Won',
+	// 	currency: 'KRW',
+	// 	payment_id: null
+	// },
+	// {
+	// 	flag: 'russia',
+	// 	iso: 'RU',
+	// 	currencyName: 'Russian Ruble',
+	// 	currency: 'RUB',
+	// 	payment_id: null
+	// },
+	// {
+	// 	flag: 'india',
+	// 	iso: 'IN',
+	// 	currencyName: 'Indian Rupee',
+	// 	currency: 'INR',
+	// 	payment_id: null
+	// },
+	// {
+	// 	flag: 'japan',
+	// 	iso: 'JP',
+	// 	currencyName: 'Japanese Yen',
+	// 	currency: 'JPY',
+	// 	payment_id: null
+	// },
+	// {
+	// 	flag: 'turkey',
+	// 	iso: 'TR',
+	// 	currencyName: 'Turkish Lira',
+	// 	currency: 'TRY',
+	// 	payment_id: null
+	// },
 	{
 		flag: 'canada',
 		iso: 'CA',
@@ -97,20 +98,20 @@ export const currencies: Currency[] = [
 		currency: 'CAD',
 		payment_id: '6031'
 	},
-	{
-		flag: 'newZealand',
-		iso: 'NZ',
-		currencyName: 'New Zealand Dollar',
-		currency: 'NZD',
-		payment_id: null
-	},
-	{
-		flag: 'southafrica',
-		iso: 'ZA',
-		currencyName: 'South African Rand',
-		currency: 'ZAR',
-		payment_id: null
-	},
+	// {
+	// 	flag: 'newZealand',
+	// 	iso: 'NZ',
+	// 	currencyName: 'New Zealand Dollar',
+	// 	currency: 'NZD',
+	// 	payment_id: null
+	// },
+	// {
+	// 	flag: 'southafrica',
+	// 	iso: 'ZA',
+	// 	currencyName: 'South African Rand',
+	// 	currency: 'ZAR',
+	// 	payment_id: null
+	// },
 	{
 		flag: 'brazil',
 		iso: 'BR',
