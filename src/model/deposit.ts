@@ -144,6 +144,34 @@ export const usdCoin = async (): Promise<string> => {
 	return coin || 'USDC';
 };
 
+export const availableDepositProtocols: DepositProtocols = {
+	mstable: {
+		id: 'mstable',
+		name: 'mStable',
+		icon: 'MTA'
+	},
+	aave: {
+		id: 'aave',
+		name: 'Aave',
+		icon: 'AAVE'
+	}
+};
+
+export const fetchDepositProtocol = async (): Promise<DepositProtocol> => {
+	const depositProtocol = await AsyncStorage.getItem('@depositProtocol');
+	return depositProtocol ? availableDepositProtocols[depositProtocol] : availableDepositProtocols.mstable;
+};
+
+interface DepositProtocols {
+	[key: string]: DepositProtocol;
+}
+
+export interface DepositProtocol {
+	id: string;
+	name: string;
+	icon: string;
+}
+
 export interface DepositTransaction {
 	buyTokenAddress: string;
 	data: string;

@@ -1,43 +1,11 @@
 import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { fetchMStablePoolData, usdCoin } from '@models/deposit';
+import { DepositProtocol, fetchDepositProtocol, fetchMStablePoolData, usdCoin } from '@models/deposit';
 import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { DepositableToken, getDepositToken } from '@models/depositTokens';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
-
-export interface DepositProtocol {
-	id: string;
-	name: string;
-	icon: string;
-}
-
-interface DepositProtocols {
-	[key: string]: DepositProtocol;
-}
-
-const availableDepositProtocols: DepositProtocols = {
-	mstable: {
-		id: 'mstable',
-		name: 'mStable',
-		icon: 'MTA'
-	},
-	aave: {
-		id: 'aave',
-		name: 'Aave',
-		icon: 'AAVE'
-	}
-};
-
-export const fetchDepositProtocol = async () => {
-	const protocol = await AsyncStorage.getItem('@depositProtocol');
-	return protocol ? availableDepositProtocols[protocol] : availableDepositProtocols.mstable;
-};
+import { network } from '@models/network';
 
 const useDepositProtocols = () => {
-	const {
-		network: { name, id }
-	} = useState(globalWalletState()).value;
 	const [selectedProtocol, setSelectedProtocol] = React.useState<DepositProtocol>();
 	const [selectedUSDCoin, setSelectedUSDCoin] = React.useState('');
 	const [depositableToken, setDepositableToken] = React.useState<DepositableToken>();
@@ -54,6 +22,7 @@ const useDepositProtocols = () => {
 
 	const fetchDepositToken = async () => {
 		if (selectedUSDCoin && selectedProtocol) {
+			const { id } = await network();
 			const token = await getDepositToken(id, selectedUSDCoin, selectedProtocol.id);
 			setDepositableToken(token);
 		}
@@ -87,6 +56,7 @@ const useDepositProtocols = () => {
 						setApy((pool.supply_apy * 100).toFixed(2));
 					}
 				} else {
+					const { name } = await network();
 					const poolData = await fetchMStablePoolData();
 					const pool = poolData.pools.find(
 						({ pair, chain }) => chain === name.toLowerCase() && pair === 'imUSD'
@@ -103,7 +73,6 @@ const useDepositProtocols = () => {
 	}, [depositableToken]);
 
 	return {
-		availableDepositProtocols,
 		selectedProtocol,
 		apy,
 		depositableToken,

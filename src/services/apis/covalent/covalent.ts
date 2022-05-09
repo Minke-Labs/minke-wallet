@@ -5,8 +5,7 @@ import { AccountBalance, CovalentAavePool } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
-import { depositStablecoins, interestBearingTokens } from '@models/deposit';
-import { fetchDepositProtocol } from '@src/hooks/useDepositProtocols';
+import { depositStablecoins, interestBearingTokens, fetchDepositProtocol } from '@models/deposit';
 import { fetchInterestBearingTokens } from '@models/depositTokens';
 import { BalanceApiResponse } from './covalent.types';
 
