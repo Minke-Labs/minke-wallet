@@ -43,7 +43,7 @@ const EmptyState = () => {
 						{i18n.t('SaveScreen.EmptyState.lets_make_first_deposit')}
 					</Text>
 
-					{apy && (
+					{!!apy && (
 						<View style={styles.linearGradientContainer}>
 							<LinearGradient
 								start={{ x: 0, y: 0.75 }}
