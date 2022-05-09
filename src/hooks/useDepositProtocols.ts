@@ -46,24 +46,28 @@ const useDepositProtocols = () => {
 	useEffect(() => {
 		const updateApy = async () => {
 			if (selectedProtocol) {
-				if (selectedProtocol.id === 'aave') {
-					const pools = await getAavePools();
-					const pool = pools.find(
-						({ underlying }) =>
-							underlying.contract_ticker_symbol.toLowerCase() === selectedUSDCoin.toLowerCase()
-					);
-					if (pool) {
-						setApy((pool.supply_apy * 100).toFixed(2));
+				try {
+					if (selectedProtocol.id === 'aave') {
+						const pools = await getAavePools();
+						const pool = pools.find(
+							({ underlying }) =>
+								underlying.contract_ticker_symbol.toLowerCase() === selectedUSDCoin.toLowerCase()
+						);
+						if (pool) {
+							setApy((pool.supply_apy * 100).toFixed(2));
+						}
+					} else {
+						const { name } = await network();
+						const poolData = await fetchMStablePoolData();
+						const pool = poolData.pools.find(
+							({ pair, chain }) => chain === name.toLowerCase() && pair === 'imUSD'
+						);
+						if (pool) {
+							setApy(pool.apy.toFixed(2));
+						}
 					}
-				} else {
-					const { name } = await network();
-					const poolData = await fetchMStablePoolData();
-					const pool = poolData.pools.find(
-						({ pair, chain }) => chain === name.toLowerCase() && pair === 'imUSD'
-					);
-					if (pool) {
-						setApy(pool.apy.toFixed(2));
-					}
+				} catch {
+					setApy('0.00');
 				}
 			}
 		};
