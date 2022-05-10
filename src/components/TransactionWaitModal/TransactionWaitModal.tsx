@@ -84,7 +84,7 @@ const TransactionWaitModal = ({
 						? i18n.t('Components.TransactionWaitModal.depositing')
 						: withdraw
 						? i18n.t('Components.TransactionWaitModal.withdrawing')
-						: i18n.t('Components.TransactionWaitModal.exchanging')}{' '}
+						: i18n.t('Components.TransactionWaitModal.exchanging')}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
