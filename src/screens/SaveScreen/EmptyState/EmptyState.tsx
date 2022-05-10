@@ -15,14 +15,9 @@ const EmptyState = () => {
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
 	const { selectedProtocol, apy } = useDepositProtocols();
-	const backgroundImg =
-		selectedProtocol?.id === 'aave'
-			? scheme === 'dark'
-				? bgSaveBackgroundDark
-				: bgSaveBackground
-			: scheme === 'dark'
-			? mStableSaveBackgroundDark
-			: mStableSaveBackground;
+	const mStableBg = scheme === 'dark' ? mStableSaveBackgroundDark : mStableSaveBackground;
+	const aaveBg = scheme === 'dark' ? bgSaveBackgroundDark : bgSaveBackground;
+	const backgroundImg = selectedProtocol?.id === 'aave' ? aaveBg : mStableBg;
 
 	return (
 		<View style={styles.container}>
