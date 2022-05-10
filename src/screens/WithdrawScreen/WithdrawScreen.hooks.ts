@@ -10,7 +10,7 @@ import {
 	useNativeToken,
 	useBiconomy,
 	useTransactions,
-	useDeposit
+	useDepositProtocols
 } from '@hooks';
 import Logger from '@utils/logger';
 import { getProvider } from '@models/wallet';
@@ -37,7 +37,7 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
-	const { defaultToken } = useDeposit(true);
+	const { defaultToken } = useDepositProtocols(true);
 
 	const showModal = () => {
 		Keyboard.dismiss();

@@ -37,7 +37,8 @@ const Deposit = () => {
 		hideModal,
 		showModal,
 		onTokenSelect,
-		apy
+		apy,
+		selectedProtocol
 	} = useDeposit();
 
 	useEffect(() => {
@@ -119,7 +120,7 @@ const Deposit = () => {
 					<TransactionWaitModal
 						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 						fromToken={token}
-						toToken={{ symbol: 'Aave' } as ParaswapToken}
+						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
 						transactionHash={transactionHash}
 						deposit
 					/>

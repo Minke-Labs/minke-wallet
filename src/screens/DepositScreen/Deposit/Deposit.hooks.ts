@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
+import { getProvider } from '@models/wallet';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -76,19 +77,18 @@ export const useDeposit = () => {
 		Keyboard.dismiss();
 		if (canDeposit && depositableToken && selectedProtocol) {
 			setWaitingTransaction(true);
-			const deposit = await new Deposit(selectedProtocol.id).deposit({
+			const hash = await new Deposit(selectedProtocol.id).deposit({
 				address,
 				privateKey,
 				amount: formatUnits(toBn(amount, token.decimals), 'wei'),
 				minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
 				gasPrice: gweiValue.toString(),
-				tokenSymbol: token.symbol,
+				depositableToken,
 				gasless: gaslessEnabled,
 				biconomy
 			});
 
-			if (deposit) {
-				const { hash, wait } = deposit;
+			if (hash) {
 				Logger.log(`Deposit ${JSON.stringify(hash)}`);
 				setTransactionHash(hash);
 				track('Deposited', {
@@ -97,7 +97,8 @@ export const useDeposit = () => {
 					hash,
 					gasless: gaslessEnabled
 				});
-				const { from, to } = await wait(hash);
+				const provider = await getProvider();
+				const { from, to } = await provider.waitForTransaction(hash);
 				addPendingTransaction({
 					from,
 					destination: to,
@@ -168,6 +169,7 @@ export const useDeposit = () => {
 		showModal,
 		onTokenSelect,
 		tokens,
-		apy
+		apy,
+		selectedProtocol
 	};
 };

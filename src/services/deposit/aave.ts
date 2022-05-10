@@ -71,7 +71,7 @@ export const gaslessDeposit = async ({
 	// send signed transaction with ethers
 	// promise resolves to transaction hash
 	const hash = await provider.send('eth_sendRawTransaction', [data]);
-	return { hash, wait: provider.waitForTransaction };
+	return hash;
 };
 
 export const deposit = async ({
@@ -122,5 +122,5 @@ export const deposit = async ({
 	const signedTx = await wallet.signTransaction(txDefaults);
 	const tx = await provider.sendTransaction(signedTx as string);
 	const { hash } = tx;
-	return { hash, wait: provider.waitForTransaction };
+	return hash;
 };

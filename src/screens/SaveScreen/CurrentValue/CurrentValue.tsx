@@ -23,7 +23,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 				<Text type="textLarge" weight="medium" marginBottom={14}>
 					{numberFormat(depositsBalance, 2)}
 				</Text>
-				{apy && (
+				{!!apy && (
 					<View style={styles.interestContainer}>
 						<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 						<Text weight="medium" type="a" color="alert3">

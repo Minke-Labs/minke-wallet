@@ -1,13 +1,9 @@
+import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import { signTypedDataV3 } from '@utils/signing/signing';
 import { Contract, ethers, Wallet } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
 import { DepositReturn } from './deposit.types';
-
-export const mStableDepositContract = '0x3A91390140c30c9C56fC84EdbEa54C683068e85F'; // Polygon
-export const mAsset = '0xE840B73E5287865EEc17d250bFb1536704B43B21';
-export const saveAsset = '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af';
-export const vault = '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29';
 
 const mStableDeposit = async ({
 	privateKey,
@@ -40,7 +36,10 @@ const mStableDeposit = async ({
 		maxPriorityFeePerGas: parseUnits(gasPrice, 'gwei'),
 		nonce
 	};
-	const contract = new Contract(mStableDepositContract, abi, userSigner);
+	const { mStable } = await network();
+	const { mAsset, saveAsset, vault, depositContract } = mStable!;
+
+	const contract = new Contract(depositContract, abi, userSigner);
 	const tx = await contract.populateTransaction.saveViaMint(
 		mAsset, //    _mAsset = mUSD Polygon
 		saveAsset, // _save   = imUSD Polygon
@@ -52,7 +51,7 @@ const mStableDeposit = async ({
 	);
 	const signedTx = await userSigner.signTransaction({ ...tx, ...txDefaults });
 	const { hash } = await userSigner.provider.sendTransaction(signedTx as string);
-	return { hash, wait: userSigner.provider.waitForTransaction };
+	return hash;
 };
 
 export const gaslessMStableDeposit = async ({
@@ -82,6 +81,8 @@ export const gaslessMStableDeposit = async ({
 
 	const contractInterface = new ethers.utils.Interface(abi);
 
+	const { mStable } = await network();
+	const { mAsset, saveAsset, vault, depositContract } = mStable!;
 	// Create your target method signature.. here we are calling setQuote() method of our contract
 	const functionSignature = contractInterface.encodeFunctionData('saveViaMint', [
 		mAsset, //    _mAsset = mUSD Polygon
@@ -94,7 +95,7 @@ export const gaslessMStableDeposit = async ({
 	]);
 
 	const rawTx = {
-		to: mStableDepositContract,
+		to: depositContract,
 		data: functionSignature,
 		from: address,
 		gasLimit: 5000000,
@@ -117,7 +118,7 @@ export const gaslessMStableDeposit = async ({
 	const provider = biconomy.getEthersProvider();
 	// promise resolves to transaction hash
 	const hash = await provider.send('eth_sendRawTransaction', [data]);
-	return { hash, wait: provider.waitForTransaction };
+	return hash;
 };
 
 export { mStableDeposit };

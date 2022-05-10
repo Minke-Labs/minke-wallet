@@ -12,7 +12,7 @@ import { Background } from './Background/Background';
 const SaveScreen = () => {
 	const { apy } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useTokens();
-	if (!interestTokens || !apy) return <ScreenLoadingIndicator />;
+	if (!interestTokens) return <ScreenLoadingIndicator />;
 	if (interestTokens.length === 0) return <EmptyState />;
 
 	return (
@@ -20,7 +20,7 @@ const SaveScreen = () => {
 			<SafeAreaView>
 				<Background>
 					<Header />
-					<CurrentValue depositsBalance={depositedBalance} apy={apy!} />
+					<CurrentValue depositsBalance={depositedBalance} apy={apy} />
 				</Background>
 			</SafeAreaView>
 

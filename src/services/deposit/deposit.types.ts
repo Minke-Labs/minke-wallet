@@ -1,3 +1,5 @@
+import { DepositableToken } from '@models/depositTokens';
+
 export interface DepositParams {
 	gasless: boolean;
 	address: string;
@@ -5,11 +7,8 @@ export interface DepositParams {
 	amount: string; // WEI
 	minAmount: string; // WEI
 	gasPrice: string; // WEI
-	tokenSymbol: string;
+	depositableToken: DepositableToken;
 	biconomy: any;
 }
 
-export type DepositReturn = {
-	hash: string;
-	wait: (transactionHash: string, confirmations?: number, timeout?: number) => Promise<TransactionReceipt>;
-};
+export type DepositReturn = string | null;
