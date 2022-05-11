@@ -76,8 +76,7 @@ export const approvalTransaction = async (
 	address: string,
 	token: string,
 	type = 'in',
-	amount = '',
-	decimals = 18
+	amount = ''
 ): Promise<ApprovalTransaction> => {
 	const baseURL = `https://api.zapper.fi/v1/zap-${type}/interest-bearing/${protocol}/approval-transaction`;
 	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
@@ -89,8 +88,8 @@ export const approvalTransaction = async (
 	const gasValue = +gasPrice * 1000000000;
 	const gas = `&maxFeePerGas=${baseFee + gasValue}&maxPriorityFeePerGas=${gasValue}`;
 	let tokenAmount;
-	if (amount && decimals) {
-		tokenAmount = `&amount=${formatUnits(toBn(amount, decimals), 'wei')}`;
+	if (amount) {
+		tokenAmount = `&amount=${amount}`;
 	} else {
 		tokenAmount = '';
 	}

@@ -13,13 +13,10 @@ import {
 	useDepositProtocols
 } from '@hooks';
 import Logger from '@utils/logger';
-import { getProvider } from '@models/wallet';
-import { Wallet } from 'ethers';
 import { globalWalletState } from '@stores/WalletStore';
-import { withdrawTransaction } from '@models/withdraw';
-import { aaveDepositContract, gaslessWithdraw } from '@models/gaslessTransaction';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import WithdrawService from '@src/services/withdraw/WithdrawService';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -37,7 +34,7 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
-	const { defaultToken } = useDepositProtocols(true);
+	const { defaultToken, selectedProtocol } = useDepositProtocols(true);
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -90,85 +87,32 @@ const useWithdrawScreen = () => {
 
 	const onWithdraw = async () => {
 		Keyboard.dismiss();
-		if (canWithdraw && token) {
+		if (canWithdraw && token && selectedProtocol) {
 			setWaitingTransaction(true);
-			if (gaslessEnabled) {
-				const hash = await gaslessWithdraw({
-					address,
-					privateKey,
-					amount: formatUnits(toBn(amount, token.decimals), 'wei'),
-					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
-					depositContract: aaveDepositContract,
-					gasPrice: gweiValue.toString(),
-					interestBearingToken: token.interestBearingAddress!,
-					token: token.address,
-					biconomy
-				});
+			const hash = await new WithdrawService(selectedProtocol.id).withdraw({
+				gasless: gaslessEnabled,
+				address,
+				privateKey,
+				amount: formatUnits(toBn(amount, token.decimals), 'wei'),
+				minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
+				token: token.address,
+				tokenDecimals: token.decimals,
+				interestBearingToken: token.interestBearingAddress!,
+				gasPrice: gweiValue.toString(),
+				biconomy
+			});
 
-				if (hash) {
-					Logger.log(`Withdraw gasless ${JSON.stringify(hash)}`);
-					setTransactionHash(hash);
-					track('Withdraw done', {
-						token: token.symbol,
-						amount,
-						hash,
-						gasless: true
-					});
-
-					const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
-					addPendingTransaction({
-						from,
-						destination: to,
-						hash,
-						txSuccessful: true,
-						pending: true,
-						timeStamp: (new Date().getTime() / 1000).toString(),
-						amount,
-						direction: 'exchange',
-						symbol: token.symbol,
-						subTransactions: [
-							{ type: 'incoming', symbol: token.symbol, amount: +amount },
-							{ type: 'outgoing', symbol: token.interestBearingSymbol!, amount: +amount }
-						]
-					});
-
-					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
-				} else {
-					Logger.error('Error withdrawing');
-				}
-			} else {
-				const transaction = await withdrawTransaction({
-					address,
-					privateKey,
+			if (hash) {
+				Logger.log(`Withdraw gasless ${JSON.stringify(hash)}`);
+				setTransactionHash(hash);
+				track('Withdraw done', {
+					token: token.symbol,
 					amount,
-					toTokenAddress: token.address,
-					decimals: token.decimals,
-					interestBearingToken: token.interestBearingAddress!,
-					gweiValue
+					hash,
+					gasless: true
 				});
-				Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
 
-				const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
-
-				const provider = await getProvider();
-				const wallet = new Wallet(privateKey, provider);
-				const chainId = await wallet.getChainId();
-				const nonce = await provider.getTransactionCount(address, 'latest');
-				const txDefaults = {
-					from,
-					to,
-					data,
-					nonce,
-					gasLimit,
-					maxFeePerGas,
-					maxPriorityFeePerGas,
-					type: 2,
-					chainId
-				};
-				Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);
-				const signedTx = await wallet.signTransaction(txDefaults);
-				const tx = await provider.sendTransaction(signedTx as string);
-				const { hash, wait } = tx;
+				const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
 				addPendingTransaction({
 					from,
 					destination: to,
@@ -185,20 +129,9 @@ const useWithdrawScreen = () => {
 					]
 				});
 
-				if (hash) {
-					Logger.log(`Withdraw ${JSON.stringify(hash)}`);
-					await wait();
-					setTransactionHash(hash);
-					track('Withdraw done', {
-						token: token.symbol,
-						amount,
-						hash,
-						gasless: false
-					});
-					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
-				} else {
-					Logger.error('Error withdrawing');
-				}
+				navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
+			} else {
+				Logger.error('Error withdrawing');
 			}
 		}
 	};
