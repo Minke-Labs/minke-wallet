@@ -125,7 +125,7 @@ export default {
 	DepositWithdrawalSuccessScreen: {
 		congrats: 'Congrats!',
 		you_deposited: "You've made your deposit!",
-		you_withdrawed: "You've withdrawed successfully!"
+		you_withdrawn: "You've withdrawn successfully!"
 	},
 	ExchangeResumeScreen: {
 		exchange_resume: 'Exchange Resume',
