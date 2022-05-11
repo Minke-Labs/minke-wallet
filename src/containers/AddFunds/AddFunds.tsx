@@ -85,7 +85,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 						{
 							currentStep === 3 && (
 								<LocalCurrencyModal
-									onOnramp={(val) => onOnrampPurchase(val ?? (amount || 100))}
+									onOnramp={(val) => onOnrampPurchase(val === 0 ? (amount || 100) : val)}
 								/>
 							)
 						}

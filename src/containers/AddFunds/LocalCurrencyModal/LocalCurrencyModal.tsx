@@ -6,7 +6,7 @@ import { useLocation, useLanguage } from '@hooks';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 interface LocalCurrencyModalProps {
-	onOnramp: (text: number) => void;
+	onOnramp: (val: number) => void;
 }
 
 const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => {
