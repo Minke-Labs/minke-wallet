@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, useColorScheme } from 'react-native';
 import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Icon } from '@components';
+import { Text, Icon, ActivityIndicator } from '@components';
 import { BlurView } from 'expo-blur';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
@@ -23,15 +23,19 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 				<Text type="textLarge" weight="medium" marginBottom={14}>
 					{numberFormat(depositsBalance, 2)}
 				</Text>
-				{!!apy && (
-					<View style={styles.interestContainer}>
-						<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
-						<Text weight="medium" type="a" color="alert3">
-							{apy}
-							{i18n.t('SaveScreen.interest')}
-						</Text>
-					</View>
-				)}
+				<View style={styles.interestContainer}>
+					{apy ? (
+						<>
+							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
+							<Text weight="medium" type="a" color="alert3">
+								{apy}
+								{i18n.t('SaveScreen.interest')}
+							</Text>
+						</>
+					) : (
+						<ActivityIndicator size={16} />
+					)}
+				</View>
 			</BlurView>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<TouchableOpacity
