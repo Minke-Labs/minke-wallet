@@ -13,7 +13,8 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	setPresetAmount,
 	enableCustomAmount,
 	onPurchase,
-	onOnramp
+	// onOnramp,
+	onClickBanxa
 }) => {
 	const {
 		name,
@@ -59,7 +60,11 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 				</PaperTouchable>
 
 				<ApplePayButton marginBottom={16} onPress={onPurchase} disabled={amount! <= 0} />
-				<OnrampButton marginBottom={16} onPress={onOnramp} />
+				<OnrampButton
+					marginBottom={16}
+					// onPress={onOnramp}
+					onPress={onClickBanxa}
+				/>
 
 				<View
 					style={{

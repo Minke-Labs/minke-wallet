@@ -15,7 +15,7 @@ interface UseAddFundsProps {
 
 export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const navigation = useNavigation();
-	const { currentStep, reset, goForward, goBack } = useFormProgress();
+	const { currentStep, reset, goForward, goBack, setCurrentStep } = useFormProgress();
 	const [banxaModalVisible, setBanxaModalVisible] = React.useState(false);
 	const [coin, setCoin] = React.useState<ICoin>(coins.usdc);
 	const [amount, setAmount] = React.useState<number | undefined>(undefined);
@@ -116,6 +116,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		gaslessEnabled,
 		orderLink,
 		goBack,
+		setCurrentStep,
 		dismissError,
 		selectCoin,
 		dismissCoin,

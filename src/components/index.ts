@@ -22,6 +22,7 @@ import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import HapticButton from './HapticButton/HapticButton';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
+import TokenInputInner from './TokenInputInner/TokenInputInner';
 import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
@@ -51,6 +52,7 @@ export {
 	SearchInput,
 	TextArea,
 	HapticButton,
+	TokenInputInner,
 	TouchableShrinks,
 	Input,
 	NetworkWarning,

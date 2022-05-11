@@ -1,10 +1,11 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View, SafeAreaView } from 'react-native';
-import { ModalHeader, ModalReusables, FullModal } from '@components';
+import { ModalHeader, ModalReusables, FullModal, Text } from '@components';
 import CoinSelectorModal from './CoinSelectorModal/CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal/ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
+import LocalCurrencyModal from './LocalCurrencyModal/LocalCurrencyModal';
 import { useAddFunds } from './AddFunds.hooks';
 import { AddFundsProps } from './AddFunds.types';
 
@@ -15,6 +16,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		customAmount,
 		customAmountRef,
 		currentStep,
+		setCurrentStep,
 		wyreError,
 		error,
 		gaslessEnabled,
@@ -25,7 +27,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		dismissCoin,
 		setPresetAmount,
 		onApplePayPurchase,
-		onOnrampPurchase,
+		// onOnrampPurchase,
 		enableCustomAmount,
 		setCustomAmount,
 		banxaModalVisible,
@@ -34,6 +36,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 
 	return (
 		<SafeAreaView>
+
 			<ModalHeader onBack={currentStep > 0 && !gaslessEnabled ? goBack : undefined} onDismiss={dismissCoin} />
 			<View style={{ paddingHorizontal: 24 }}>
 				{wyreError && error ? (
@@ -53,7 +56,8 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								setPresetAmount={setPresetAmount}
 								enableCustomAmount={enableCustomAmount}
 								onPurchase={() => onApplePayPurchase(amount || 100)}
-								onOnramp={() => onOnrampPurchase(amount || 100)}
+								// onOnramp={() => onOnrampPurchase(amount || 100)}
+								onClickBanxa={() => setCurrentStep(3)}
 							/>
 						)}
 						{currentStep === 2 && (
@@ -64,9 +68,15 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								onPurchase={() => onApplePayPurchase(customAmount || 100)}
 							/>
 						)}
+						{
+							currentStep === 3 && (
+								<LocalCurrencyModal />
+							)
+						}
 					</>
 				)}
 			</View>
+
 			<FullModal
 				visible={banxaModalVisible}
 				onClose={() => setBanxaModalVisible(false)}
@@ -81,6 +91,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					}}
 				/>
 			</FullModal>
+
 		</SafeAreaView>
 	);
 };
