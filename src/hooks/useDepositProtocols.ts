@@ -17,7 +17,7 @@ import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { getTokenBalances } from '@src/services/apis';
 import { DepositableToken } from '@models/types/depositTokens.types';
-import DepositSelector from '@src/services/deposit/DepositService';
+import DepositService from '@src/services/deposit/DepositService';
 import useBiconomy from './useBiconomy';
 
 const useDepositProtocols = (withdraw = false) => {
@@ -90,7 +90,7 @@ const useDepositProtocols = (withdraw = false) => {
 	useEffect(() => {
 		const loadApproved = async () => {
 			if (selectedProtocol && depositableToken) {
-				const { isApproved } = await new DepositSelector(selectedProtocol.id).approveState(
+				const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
 					address,
 					gaslessEnabled,
 					depositableToken.address,

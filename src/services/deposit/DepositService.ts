@@ -8,7 +8,7 @@ import { gaslessDeposit, deposit } from './aave';
 import { gaslessMStableDeposit, mStableDeposit } from './mStable';
 import { DepositParams, DepositReturn } from './deposit.types';
 
-class DepositSelector {
+class DepositService {
 	protocol: string;
 
 	constructor(protocol: string) {
@@ -163,4 +163,4 @@ class DepositSelector {
 	}
 }
 
-export default DepositSelector;
+export default DepositService;

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
 import Logger from '@utils/logger';
-import DepositSelector from '@src/services/deposit/DepositService';
+import DepositService from '@src/services/deposit/DepositService';
+import { getProvider } from '@models/wallet';
 
 export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -15,7 +16,7 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 		setLoading(true);
 
 		if (!depositableToken || !selectedProtocol || !depositContract) return;
-		const hash = await new DepositSelector(selectedProtocol.id).approve({
+		const hash = await new DepositService(selectedProtocol.id).approve({
 			gasless: gaslessEnabled,
 			address,
 			privateKey,
@@ -25,6 +26,8 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 		});
 
 		if (hash) {
+			const provider = await getProvider();
+			provider.waitForTransaction(hash);
 			track('Opened AAVE Account', { hash, gasless: true });
 			setLoading(false);
 			onApprove();
