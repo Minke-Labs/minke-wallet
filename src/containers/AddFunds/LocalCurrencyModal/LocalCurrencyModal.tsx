@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
@@ -41,11 +40,10 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 
 			<TokenInputInner
 				symbol={locationCountry!.currency}
-				// isAmountValid={(number || 0) <= Number(token.balance)}
 				isAmountValid
 				placeholder="0.00"
 				autoFocus
-				showSymbol // Always true here
+				showSymbol
 				marginBottom={32}
 				amount={amount}
 				onChangeText={onChangeText}
