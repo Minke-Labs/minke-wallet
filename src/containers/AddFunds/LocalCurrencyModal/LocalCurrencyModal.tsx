@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
 import { Text, OnrampButton, TokenInputInner } from '@components';
-import { useLocation } from '@hooks';
+import { useLocation, useLanguage } from '@hooks';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 interface LocalCurrencyModalProps {
@@ -10,6 +10,7 @@ interface LocalCurrencyModalProps {
 }
 
 const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => {
+	const { i18n } = useLanguage();
 	const { locationCountry } = useLocation();
 	const [number, onChangeNumber] = useState<number>();
 	const [amount, onChangeAmount] = useState('');
@@ -36,7 +37,9 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 
 	return (
 		<View>
-			<Text type="h3" weight="bold" marginBottom={32}>Choose another amount</Text>
+			<Text type="h3" weight="bold" marginBottom={32}>
+				{i18n.t('Containers.AddFunds.LocalCurrencyModal.choose_another_amount')}
+			</Text>
 
 			<TokenInputInner
 				symbol={locationCountry!.currency}

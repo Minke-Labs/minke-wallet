@@ -374,6 +374,9 @@ export default {
 	},
 	Containers: {
 		AddFunds: {
+			LocalCurrencyModal: {
+				choose_another_amount: 'Choose another amount'
+			},
 			ChooseQuantityModal: {
 				buy_some: 'Buy some {{symbol}} with ',
 				to_start_using: ' to start using Minke:',
