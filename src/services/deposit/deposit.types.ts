@@ -1,4 +1,4 @@
-import { DepositableToken } from '@models/depositTokens';
+import { DepositableToken } from '@models/types/depositTokens.types';
 
 export interface DepositParams {
 	gasless: boolean;

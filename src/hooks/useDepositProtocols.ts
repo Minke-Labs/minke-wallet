@@ -9,13 +9,14 @@ import {
 	usdCoinSettingsKey
 } from '@models/deposit';
 import { getAavePools } from '@src/services/apis/covalent/covalent';
-import { DepositableToken, getDepositToken } from '@models/depositTokens';
+import { getDepositToken } from '@models/depositTokens';
 import { network } from '@models/network';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { MinkeToken } from '@models/token';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { getTokenBalances } from '@src/services/apis';
+import { DepositableToken } from '@models/types/depositTokens.types';
 import DepositSelector from '@src/services/deposit/DepositService';
 import useBiconomy from './useBiconomy';
 
@@ -55,7 +56,8 @@ const useDepositProtocols = (withdraw = false) => {
 	const checkAbleToDeposit = async () => {
 		const defaultUSDCoin = await usdCoin();
 		const { depositableTokens: tokens, interestTokens } = await getTokenBalances(address);
-		let token = (withdraw ? interestTokens : tokens).find((t) => t.symbol === defaultUSDCoin);
+		const sourceTokens = withdraw ? interestTokens : tokens;
+		let token = sourceTokens.find((t) => t.symbol === defaultUSDCoin);
 		const hasTheDefaultToken = !!token;
 		if (hasTheDefaultToken) {
 			setAbleToDeposit(true);
@@ -63,7 +65,7 @@ const useDepositProtocols = (withdraw = false) => {
 			return;
 		}
 
-		token = tokens.reverse().find((t) => depositStablecoins.includes(t.symbol)) || ({} as MinkeToken);
+		token = sourceTokens.reverse().find((t) => depositStablecoins.includes(t.symbol)) || ({} as MinkeToken);
 		const { symbol } = token;
 		if (symbol) {
 			await AsyncStorage.setItem(usdCoinSettingsKey, symbol);

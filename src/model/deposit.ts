@@ -3,9 +3,9 @@ import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
-import { DepositableToken } from './depositTokens';
 import { network as selectedNetwork } from './network';
 import { ParaswapToken, stablecoins } from './token';
+import { DepositableToken } from './types/depositTokens.types';
 import { erc20abi, estimateGas, getProvider } from './wallet';
 
 const protocol = 'aave-v2';

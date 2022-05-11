@@ -56,5 +56,13 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const depositedBalance = interestTokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const balance = walletBalance + depositedBalance;
 
-	return { address, tokens, balance, depositedBalance, walletBalance, interestTokens, depositableTokens };
+	return {
+		address,
+		tokens,
+		balance,
+		depositedBalance,
+		walletBalance,
+		interestTokens,
+		depositableTokens
+	};
 };
