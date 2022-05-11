@@ -1,7 +1,7 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View, SafeAreaView } from 'react-native';
-import { ModalHeader, ModalReusables, FullModal, Text } from '@components';
+import { ModalHeader, ModalReusables, FullModal } from '@components';
 import CoinSelectorModal from './CoinSelectorModal/CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal/ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
@@ -27,7 +27,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		dismissCoin,
 		setPresetAmount,
 		onApplePayPurchase,
-		// onOnrampPurchase,
+		onOnrampPurchase,
 		enableCustomAmount,
 		setCustomAmount,
 		banxaModalVisible,
@@ -56,7 +56,6 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								setPresetAmount={setPresetAmount}
 								enableCustomAmount={enableCustomAmount}
 								onPurchase={() => onApplePayPurchase(amount || 100)}
-								// onOnramp={() => onOnrampPurchase(amount || 100)}
 								onClickBanxa={() => setCurrentStep(3)}
 							/>
 						)}
@@ -70,7 +69,9 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 						)}
 						{
 							currentStep === 3 && (
-								<LocalCurrencyModal />
+								<LocalCurrencyModal
+									onOnramp={(val) => onOnrampPurchase(val ?? (amount || 100))}
+								/>
 							)
 						}
 					</>

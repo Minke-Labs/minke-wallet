@@ -1,11 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
 import { Text, OnrampButton, TokenInputInner } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-const LocalCurrencyModal = () => {
-	const [number, onChangeNumber] = React.useState<Number>();
+interface LocalCurrencyModalProps {
+	onOnramp: (text: number) => void;
+}
+
+const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => {
+	const [number, onChangeNumber] = useState<number>();
 	const [amount, onChangeAmount] = useState('');
 
 	const onChangeText = (value: string) => {
@@ -46,7 +51,7 @@ const LocalCurrencyModal = () => {
 
 			<OnrampButton
 				marginBottom={80}
-				onPress={() => console.log('ONRAMP CLICKED!!', number)}
+				onPress={() => onOnramp(number || 0)}
 			/>
 
 			<KeyboardSpacer />
