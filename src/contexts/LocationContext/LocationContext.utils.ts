@@ -18,7 +18,8 @@ export const mock = {
 	paymentOnLocation: mockCurrency.payment_id,
 	countries: [
 		mockCurrency
-	]
+	],
+	locationCountry: mockCurrency
 };
 
 export const countries: Country[] = [
@@ -128,4 +129,4 @@ export const countries: Country[] = [
 	}
 ];
 
-export const currencyByIso = (iso: string) => countries.find((country) => country.iso === iso) || null;
+export const countryByIso = (iso: string) => countries.find((country) => country.iso === iso) || null;

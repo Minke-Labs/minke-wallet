@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
 import { Text, OnrampButton, TokenInputInner } from '@components';
+import { useLocation } from '@hooks';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 interface LocalCurrencyModalProps {
@@ -10,6 +11,7 @@ interface LocalCurrencyModalProps {
 }
 
 const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => {
+	const { locationCountry } = useLocation();
 	const [number, onChangeNumber] = useState<number>();
 	const [amount, onChangeAmount] = useState('');
 
@@ -38,7 +40,7 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 			<Text type="h3" weight="bold" marginBottom={32}>Choose another amount</Text>
 
 			<TokenInputInner
-				symbol="BRL"
+				symbol={locationCountry!.currency}
 				// isAmountValid={(number || 0) <= Number(token.balance)}
 				isAmountValid
 				placeholder="0.00"

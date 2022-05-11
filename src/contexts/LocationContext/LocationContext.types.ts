@@ -13,4 +13,5 @@ export interface LocationContextProps {
 	countries: Country[];
 	locationCurrency: string;
 	paymentOnLocation: string | null;
+	locationCountry: Country | null;
 }
