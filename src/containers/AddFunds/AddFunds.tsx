@@ -35,6 +35,9 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	} = useAddFunds({ visible, onDismiss });
 
 	const handleGoBack = () => {
+		if (currentStep === 0) {
+			dismissCoin();
+		}
 		if ((currentStep > 0 && currentStep < 3) && !gaslessEnabled) {
 			goBack();
 		}
