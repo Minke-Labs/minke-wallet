@@ -23,6 +23,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 
 const useWithdrawScreen = () => {
+	const [blockchainError, setBlockchainError] = React.useState(false);
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { nativeToken } = useNativeToken();
 	const [searchVisible, setSearchVisible] = React.useState(false);
@@ -111,33 +112,38 @@ const useWithdrawScreen = () => {
 				});
 
 				if (hash) {
-					Logger.log(`Withdraw gasless ${JSON.stringify(hash)}`);
-					setTransactionHash(hash);
-					track('Withdraw done', {
-						token: token.symbol,
-						amount,
-						hash,
-						gasless: true
-					});
+					try {
+						Logger.log(`Withdraw gasless ${JSON.stringify(hash)}`);
+						setTransactionHash(hash);
+						track('Withdraw done', {
+							token: token.symbol,
+							amount,
+							hash,
+							gasless: true
+						});
 
-					const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
-					addPendingTransaction({
-						from,
-						destination: to,
-						hash,
-						txSuccessful: true,
-						pending: true,
-						timeStamp: (new Date().getTime() / 1000).toString(),
-						amount,
-						direction: 'exchange',
-						symbol: token.symbol,
-						subTransactions: [
-							{ type: 'incoming', symbol: token.symbol, amount: +amount },
-							{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
-						]
-					});
+						const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
+						addPendingTransaction({
+							from,
+							destination: to,
+							hash,
+							txSuccessful: true,
+							pending: true,
+							timeStamp: (new Date().getTime() / 1000).toString(),
+							amount,
+							direction: 'exchange',
+							symbol: token.symbol,
+							subTransactions: [
+								{ type: 'incoming', symbol: token.symbol, amount: +amount },
+								{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
+							]
+						});
 
-					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
+						navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
+					} catch (e) {
+						setBlockchainError(true);
+						setWaitingTransaction(false);
+					}
 				} else {
 					Logger.error('Error withdrawing');
 				}
@@ -170,39 +176,45 @@ const useWithdrawScreen = () => {
 					type: 2,
 					chainId
 				};
-				Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);
-				const signedTx = await wallet.signTransaction(txDefaults);
-				const tx = await provider.sendTransaction(signedTx as string);
-				const { hash, wait } = tx;
-				addPendingTransaction({
-					from,
-					destination: to,
-					hash,
-					txSuccessful: true,
-					pending: true,
-					timeStamp: (new Date().getTime() / 1000).toString(),
-					amount,
-					direction: 'exchange',
-					symbol: token.symbol,
-					subTransactions: [
-						{ type: 'incoming', symbol: token.symbol, amount: +amount },
-						{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
-					]
-				});
 
-				if (hash) {
-					Logger.log(`Withdraw ${JSON.stringify(hash)}`);
-					await wait();
-					setTransactionHash(hash);
-					track('Withdraw done', {
-						token: token.symbol,
-						amount,
+				try {
+					Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);
+					const signedTx = await wallet.signTransaction(txDefaults);
+					const tx = await provider.sendTransaction(signedTx as string);
+					const { hash, wait } = tx;
+					addPendingTransaction({
+						from,
+						destination: to,
 						hash,
-						gasless: false
+						txSuccessful: true,
+						pending: true,
+						timeStamp: (new Date().getTime() / 1000).toString(),
+						amount,
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'incoming', symbol: token.symbol, amount: +amount },
+							{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
+						]
 					});
-					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
-				} else {
-					Logger.error('Error withdrawing');
+
+					if (hash) {
+						Logger.log(`Withdraw ${JSON.stringify(hash)}`);
+						await wait();
+						setTransactionHash(hash);
+						track('Withdraw done', {
+							token: token.symbol,
+							amount,
+							hash,
+							gasless: false
+						});
+						navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
+					} else {
+						Logger.error('Error withdrawing');
+					}
+				} catch (e) {
+					setBlockchainError(true);
+					setWaitingTransaction(false);
 				}
 			}
 		}
@@ -238,7 +250,9 @@ const useWithdrawScreen = () => {
 		transactionHash,
 		waitingTransaction,
 		tokens,
-		gaslessEnabled
+		gaslessEnabled,
+		blockchainError,
+		setBlockchainError
 	};
 };
 
