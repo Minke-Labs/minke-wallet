@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { approvalTransaction } from '@models/deposit';
-import { globalDepositState } from '@src/stores/DepositStore';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
-import { useAmplitude, useBiconomy } from '@hooks';
+import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
 import Logger from '@utils/logger';
 import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
 
@@ -13,21 +12,20 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const [loading, setLoading] = useState(false);
 	const { address, privateKey } = globalWalletState().value;
-	const {
-		market: { tokens }
-	} = globalDepositState().value;
+	const { depositableToken } = useDepositProtocols();
 	const { track } = useAmplitude();
 
 	const onOpenAccount = async () => {
 		setLoading(true);
 
+		if (!depositableToken) return;
 		if (gaslessEnabled) {
 			try {
 				const hash = await gaslessApproval({
 					address,
 					privateKey,
 					biconomy,
-					contract: tokens[0].address,
+					contract: depositableToken.address,
 					spender: aaveDepositContract
 				});
 				if (hash) {
@@ -37,13 +35,14 @@ export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
 				} else {
 					Logger.error('Error approving');
 					setLoading(false);
+					setBlockchainError(true);
 				}
 			} catch (e) {
 				setLoading(false);
 				setBlockchainError(true);
 			}
 		} else {
-			const transaction = await approvalTransaction(address, tokens[0].address);
+			const transaction = await approvalTransaction(address, depositableToken.address);
 			const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
 			const provider = await getProvider();
 			const wallet = new Wallet(privateKey, provider);

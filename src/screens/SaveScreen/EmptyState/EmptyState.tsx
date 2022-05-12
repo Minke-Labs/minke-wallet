@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
-import { useTheme, useNavigation, useLanguage } from '@hooks';
+import { useTheme, useNavigation, useDepositProtocols, useLanguage } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
-import { globalDepositState } from '@src/stores/DepositStore';
 import { makeStyles } from './EmptyState.styles';
 
 const EmptyState = () => {
@@ -13,7 +12,7 @@ const EmptyState = () => {
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
-	const { market } = globalDepositState().value;
+	const { selectedProtocol, apy } = useDepositProtocols();
 
 	return (
 		<View style={styles.container}>
@@ -35,14 +34,16 @@ const EmptyState = () => {
 			<View style={styles.saveEmptyStateContent}>
 				<View style={styles.saveEmptyStateCard}>
 					<Text type="h3" weight="extraBold" color="text1" marginBottom={16} center>
-						{i18n.t('SaveScreen.EmptyState.open_aave_savings_account')}
+						{i18n.t('SaveScreen.EmptyState.open_aave_savings_account', {
+							protocol: selectedProtocol?.name
+						})}
 					</Text>
 
 					<Text type="p2" color="text3" marginBottom={32}>
 						{i18n.t('SaveScreen.EmptyState.lets_make_first_deposit')}
 					</Text>
 
-					{market && (
+					{!!apy && (
 						<View style={styles.linearGradientContainer}>
 							<LinearGradient
 								start={{ x: 0, y: 0.75 }}
@@ -52,7 +53,7 @@ const EmptyState = () => {
 							>
 								<Icon name="iconUp" color="text11" size={16} style={styles.greenButtonIcon} />
 								<Text weight="bold" type="a" color="text11" style={{ lineHeight: 25 }}>
-									{(market.supplyApy * 100).toFixed(2)}
+									{apy}
 									{i18n.t('SaveScreen.interest')}
 								</Text>
 							</LinearGradient>

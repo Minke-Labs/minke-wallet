@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken, ParaswapToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import useDeposits from '@src/hooks/useDeposits';
 import {
 	useAmplitude,
 	useNavigation,
@@ -27,20 +26,19 @@ const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { nativeToken } = useNativeToken();
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const [token, setToken] = React.useState<ParaswapToken>();
+	const [token, setToken] = React.useState<MinkeToken>();
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const { tokens } = useDeposits();
-	const { tokens: balances } = useTokens();
+	const { interestTokens: tokens, tokens: balances } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
-	const { defaultToken } = useDeposit();
+	const { defaultToken } = useDeposit(true);
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -77,7 +75,7 @@ const useWithdrawScreen = () => {
 		[balances, tokens, nativeToken, gas]
 	);
 
-	const onTokenSelect = (selectedToken: ParaswapToken) => {
+	const onTokenSelect = (selectedToken: MinkeToken) => {
 		hideModal();
 		setToken(selectedToken);
 	};
@@ -95,9 +93,6 @@ const useWithdrawScreen = () => {
 		Keyboard.dismiss();
 		if (canWithdraw && token) {
 			setWaitingTransaction(true);
-			const { interestBearingAddress = '' } =
-				tokens!.find((t) => t.symbol.toLowerCase() === token.symbol.toLowerCase()) || {};
-
 			if (gaslessEnabled) {
 				const hash = await gaslessWithdraw({
 					address,
@@ -106,7 +101,7 @@ const useWithdrawScreen = () => {
 					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
 					depositContract: aaveDepositContract,
 					gasPrice: gweiValue.toString(),
-					interestBearingToken: interestBearingAddress,
+					interestBearingToken: token.interestBearingAddress!,
 					token: token.address,
 					biconomy
 				});
@@ -135,7 +130,7 @@ const useWithdrawScreen = () => {
 							symbol: token.symbol,
 							subTransactions: [
 								{ type: 'incoming', symbol: token.symbol, amount: +amount },
-								{ type: 'outgoing', symbol: `am${token.symbol}`, amount: +amount }
+								{ type: 'outgoing', symbol: token.interestBearingSymbol!, amount: +amount }
 							]
 						});
 
@@ -154,7 +149,7 @@ const useWithdrawScreen = () => {
 					amount,
 					toTokenAddress: token.address,
 					decimals: token.decimals,
-					interestBearingToken: interestBearingAddress,
+					interestBearingToken: token.interestBearingAddress!,
 					gweiValue
 				});
 				Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
@@ -182,6 +177,23 @@ const useWithdrawScreen = () => {
 					const signedTx = await wallet.signTransaction(txDefaults);
 					const tx = await provider.sendTransaction(signedTx as string);
 					const { hash, wait } = tx;
+					addPendingTransaction({
+						from,
+						destination: to,
+						hash,
+						txSuccessful: true,
+						pending: true,
+						timeStamp: (new Date().getTime() / 1000).toString(),
+						amount,
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'incoming', symbol: token.symbol, amount: +amount },
+							{ type: 'outgoing', symbol: token.interestBearingSymbol!, amount: +amount }
+						]
+					});
+
+					Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);
 					addPendingTransaction({
 						from,
 						destination: to,
