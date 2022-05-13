@@ -19,7 +19,6 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		setCurrentStep,
 		wyreError,
 		error,
-		gaslessEnabled,
 		orderLink,
 		selectCoin,
 		dismissError,
@@ -38,21 +37,16 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		if (currentStep === 0) {
 			dismissCoin();
 		}
-		if ((currentStep > 0 && currentStep < 3) && !gaslessEnabled) {
-			goBack();
-		}
 		if (currentStep === 3) {
 			setCurrentStep(1);
+			return;
 		}
+		goBack();
 	};
 
 	return (
 		<SafeAreaView>
-
-			<ModalHeader
-				onBack={handleGoBack}
-				onDismiss={dismissCoin}
-			/>
+			<ModalHeader onBack={handleGoBack} onDismiss={dismissCoin} />
 			<View style={{ paddingHorizontal: 24 }}>
 				{wyreError && error ? (
 					<ModalReusables.Error
@@ -63,7 +57,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					/>
 				) : (
 					<>
-						{currentStep === 0 && !gaslessEnabled && <CoinSelectorModal onSelect={selectCoin} />}
+						{currentStep === 0 && <CoinSelectorModal onSelect={selectCoin} />}
 						{currentStep === 1 && (
 							<ChooseQuantityModal
 								coin={coin}
@@ -82,21 +76,14 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								onPurchase={() => onApplePayPurchase(customAmount || 100)}
 							/>
 						)}
-						{
-							currentStep === 3 && (
-								<LocalCurrencyModal
-									onOnramp={(val) => onOnrampPurchase(val === 0 ? (amount || 100) : val)}
-								/>
-							)
-						}
+						{currentStep === 3 && (
+							<LocalCurrencyModal onOnramp={(val) => onOnrampPurchase(val === 0 ? amount || 100 : val)} />
+						)}
 					</>
 				)}
 			</View>
 
-			<FullModal
-				visible={banxaModalVisible}
-				onClose={() => setBanxaModalVisible(false)}
-			>
+			<FullModal visible={banxaModalVisible} onClose={() => setBanxaModalVisible(false)}>
 				<WebView
 					source={{ uri: orderLink }}
 					sharedCookiesEnabled
@@ -107,7 +94,6 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					}}
 				/>
 			</FullModal>
-
 		</SafeAreaView>
 	);
 };

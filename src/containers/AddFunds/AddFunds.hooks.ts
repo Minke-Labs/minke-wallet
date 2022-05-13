@@ -1,7 +1,7 @@
 import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
-import { useAmplitude, useBiconomy, useFormProgress, useLocation, useNavigation, useWyreApplePay } from '@hooks';
+import { useAmplitude, useFormProgress, useLocation, useNavigation, useWyreApplePay } from '@hooks';
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder } from '@models/banxa';
@@ -23,7 +23,6 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const [wyreError, setWyreError] = React.useState<UseWyreApplePayError | null>();
 	const customAmountRef = createRef<TextInput>();
 	const { track } = useAmplitude();
-	const { gaslessEnabled } = useBiconomy();
 	const { locationCurrency, paymentOnLocation } = useLocation();
 	const [orderLink, setOrderLink] = React.useState('');
 	const state = useState(globalWalletState());
@@ -65,7 +64,9 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	};
 
 	const onOnrampPurchase = async (value: number) => {
-		const { name } = await network();
+		const {
+			nativeToken: { symbol }
+		} = await network();
 
 		const params = {
 			account_reference: address,
@@ -75,7 +76,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			return_url_on_success: '#',
 			wallet_address: address,
 			payment_method_id: paymentOnLocation!,
-			blockchain: name === 'Polygon' ? 'MATIC' : 'ETH'
+			blockchain: symbol
 		};
 
 		const url = await makeOrder({ params });
@@ -110,10 +111,9 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		amount,
 		customAmount,
 		customAmountRef,
-		currentStep: gaslessEnabled ? currentStep + 1 : currentStep,
+		currentStep,
 		wyreError,
 		error,
-		gaslessEnabled,
 		orderLink,
 		goBack,
 		setCurrentStep,
