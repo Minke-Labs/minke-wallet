@@ -96,7 +96,6 @@ const useWithdrawScreen = () => {
 				amount: formatUnits(toBn(amount, token.decimals), 'wei'),
 				minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
 				token: token.address,
-				tokenDecimals: token.decimals,
 				interestBearingToken: token.interestBearingAddress!,
 				gasPrice: gweiValue.toString(),
 				biconomy
