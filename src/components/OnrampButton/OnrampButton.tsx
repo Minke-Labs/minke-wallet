@@ -8,30 +8,24 @@ import { OnrampButtonProps } from './OnrampButton.types';
 const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, marginBottom = 0, disabled = false }) => {
 	const { countryCode } = useLocation();
 	const { i18n } = useLanguage();
+	const location = chooseLocation(countryCode!);
+	if (!location) return null;
 
-	if (!chooseLocation(countryCode!)) return null;
-
+	const { backgroundColor, fontColor, image } = location;
 	return (
 		<TouchableOpacity
 			activeOpacity={0.6}
 			style={[
 				styles.container,
 				{
-					backgroundColor: chooseLocation(countryCode!)?.backgroundColor,
+					backgroundColor,
 					marginBottom
 				}
 			]}
 			{...{ onPress, disabled }}
 		>
-			<Text
-				style={[
-					styles.text,
-					{ color: chooseLocation(countryCode!)?.fontColor }
-				]}
-			>
-				{i18n.t('Components.Buttons.pay_with')}
-			</Text>
-			<Image source={chooseLocation(countryCode!)?.image} style={styles.image} />
+			<Text style={[styles.text, { color: fontColor }]}>{i18n.t('Components.Buttons.pay_with')}</Text>
+			<Image source={image} style={styles.image} />
 		</TouchableOpacity>
 	);
 };
