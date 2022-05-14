@@ -16,7 +16,7 @@ const ChangeCountryScreen = () => {
 
 	const filterCurrencies = (text: string) => {
 		const newCurrencies = countries.filter((country: Country) =>
-			country.currencyName.toLowerCase().includes(text.toLowerCase()));
+			country.name.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCurrencies);
 	};
