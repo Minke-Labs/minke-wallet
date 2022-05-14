@@ -28,11 +28,11 @@ const LanguageProvider: React.FC = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		const storeLanguage = async () => {
+		const storeLocalization = async () => {
 			await AsyncStorage.setItem('@location', countryCode!);
 			await AsyncStorage.setItem('@language', language!);
 		};
-		storeLanguage();
+		storeLocalization();
 	}, [language, countryCode]);
 
 	const countries: Country[] = useMemo(() => ([
@@ -84,7 +84,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			currency: 'BRL',
 			payment_id: '7540'
 		}
-	]), [countryCode, language]);
+	]), [language]);
 
 	const countryByIso = useCallback((iso: string) => countries.find((country: Country) => country.iso === iso), [countries]);
 	const locationCountry = useMemo(() => countryByIso(countryCode || mock.countryCode), [countryCode]);
@@ -103,7 +103,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			paymentOnLocation: locationCountry?.payment_id ?? null,
 			locationCountry
 		}),
-		[language]
+		[language, countryCode]
 	);
 
 	return <LanguageContext.Provider value={obj}>{children}</LanguageContext.Provider>;

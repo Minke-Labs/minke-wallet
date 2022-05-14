@@ -36,14 +36,15 @@ const ChangeCountryScreen = () => {
 						<FlatList
 							data={filtered}
 							showsVerticalScrollIndicator={false}
-							renderItem={({ item }) => (
-								<FlagItem
+							renderItem={({ item }) => {
+								console.log(item.iso);
+								return (<FlagItem
 									onPress={() => setCountryCode(item.iso)}
 									flag={item.flag as FlagType}
 									active={item.iso === countryCode}
 									title={item.name}
-								/>
-							)}
+								/>);
+							}}
 							keyExtractor={(item) => item.flag}
 						/>
 					</View>
