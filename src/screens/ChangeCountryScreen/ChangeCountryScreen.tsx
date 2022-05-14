@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { SettingsHeader, SearchInput, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLocation, useLanguage } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { FlagType } from '@styles';
+import { Country } from '../../contexts/LanguageContext/LanguageContext.types';
 
 const ChangeCountryScreen = () => {
-	const { countryCode, setCountryCode, countries } = useLocation();
-	const { i18n } = useLanguage();
+	const { i18n, countries, countryCode, setCountryCode } = useLanguage();
 	const [filtered, setFiltered] = useState<any>(countries);
 	const [search, setSearch] = useState('');
 
@@ -15,7 +15,7 @@ const ChangeCountryScreen = () => {
 	const goBack = () => navigation.goBack();
 
 	const filterCurrencies = (text: string) => {
-		const newCurrencies = countries.filter((country) =>
+		const newCurrencies = countries.filter((country: Country) =>
 			country.currencyName.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCurrencies);

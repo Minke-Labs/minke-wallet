@@ -1,5 +1,31 @@
 /* eslint-disable max-len */
 export default {
+	LocationContext: {
+		US: {
+			name: 'Estados Unidos',
+			currencyName: 'Dólar Americano'
+		},
+		EU: {
+			name: 'Europa',
+			currencyName: 'Euro'
+		},
+		UK: {
+			name: 'Reino Unido',
+			currencyName: 'Libra Esterlina'
+		},
+		AU: {
+			name: 'Austrália',
+			currencyName: 'Dólar Australiano'
+		},
+		CA: {
+			name: 'Canadá',
+			currencyName: 'Dólar Canadense'
+		},
+		BR: {
+			name: 'Brasil',
+			currencyName: 'Real Brasileiro'
+		}
+	},
 	AccountsScreen: {
 		import_or_restore: 'Importar ou Restaurar',
 		accounts: 'Contas'

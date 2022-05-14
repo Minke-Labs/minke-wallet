@@ -1,7 +1,7 @@
 import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
-import { useAmplitude, useFormProgress, useLocation, useNavigation, useWyreApplePay } from '@hooks';
+import { useAmplitude, useFormProgress, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder } from '@models/banxa';
@@ -23,7 +23,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const [wyreError, setWyreError] = React.useState<UseWyreApplePayError | null>();
 	const customAmountRef = createRef<TextInput>();
 	const { track } = useAmplitude();
-	const { locationCurrency, paymentOnLocation } = useLocation();
+	const { locationCurrency, paymentOnLocation } = useLanguage();
 	const [orderLink, setOrderLink] = React.useState('');
 	const state = useState(globalWalletState());
 	const { address } = state.value;

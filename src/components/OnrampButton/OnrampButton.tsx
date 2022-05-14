@@ -1,13 +1,12 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
-import { useLocation, useLanguage } from '@hooks';
+import { useLanguage } from '@hooks';
 import styles from './OnrampButton.styles';
 import { chooseLocation } from './OnrampButton.utils';
 import { OnrampButtonProps } from './OnrampButton.types';
 
 const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, marginBottom = 0, disabled = false }) => {
-	const { countryCode } = useLocation();
-	const { i18n } = useLanguage();
+	const { i18n, countryCode } = useLanguage();
 	const location = chooseLocation(countryCode!);
 	if (!location) return null;
 

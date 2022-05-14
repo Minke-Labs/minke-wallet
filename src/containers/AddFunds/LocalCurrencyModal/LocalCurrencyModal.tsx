@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { decimalSeparator } from 'expo-localization';
 import { Text, OnrampButton, TokenInputInner } from '@components';
-import { useLocation, useLanguage } from '@hooks';
+import { useLanguage } from '@hooks';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 interface LocalCurrencyModalProps {
@@ -10,8 +10,7 @@ interface LocalCurrencyModalProps {
 }
 
 const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => {
-	const { i18n } = useLanguage();
-	const { locationCountry } = useLocation();
+	const { i18n, locationCountry } = useLanguage();
 	const [number, onChangeNumber] = useState<number>();
 	const [amount, onChangeAmount] = useState('');
 
