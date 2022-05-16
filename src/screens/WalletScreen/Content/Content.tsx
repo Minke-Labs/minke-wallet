@@ -24,10 +24,10 @@ export const Content: React.FC<ContentProps> = ({
 
 	return (
 		<TabLayout
-			rightTitle={i18n.t('WalletScreen.Content.transactions')}
 			leftTitle={i18n.t('WalletScreen.Content.accounts')}
-			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
+			rightTitle={i18n.t('WalletScreen.Content.transactions')}
 			left={<Accounts />}
+			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			{...{ loading, fetchTransactions }}
 		>
 			<Header onSettingsPress={onSettingsPress} />
