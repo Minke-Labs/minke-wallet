@@ -31,21 +31,20 @@ const ChangeCountryScreen = () => {
 						marginBottom={24}
 						placeholder={i18n.t('Components.Inputs.search')}
 						search={search}
-						onSearch={(val) => filterCurrencies(val)}
+						onSearch={(val) => filterCountries(val)}
 					/>
 					<View style={{ flex: 1 }}>
 						<FlatList
 							data={filtered}
 							showsVerticalScrollIndicator={false}
-							renderItem={({ item }) => {
-								console.log(item.iso);
-								return (<FlagItem
+							renderItem={({ item }) => (
+								<FlagItem
 									onPress={() => setCountryCode(item.iso)}
 									flag={item.flag as FlagType}
 									active={item.iso === countryCode}
 									title={item.name}
-								/>);
-							}}
+								/>
+							)}
 							keyExtractor={(item) => item.flag}
 						/>
 					</View>
