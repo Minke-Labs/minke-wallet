@@ -2,15 +2,17 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		marginBottom: 18
-	},
-	buttonsContainer: {
-		height: 40,
-		flexDirection: 'row',
+		height: 50,
+		borderRadius: 8,
+		justifyContent: 'center',
 		alignItems: 'center',
-		justifyContent: 'flex-end'
-	},
-	touchable: {
 		flexDirection: 'row'
+	},
+	image: {
+		marginLeft: 8
+	},
+	text: {
+		fontWeight: '700',
+		fontSize: 20
 	}
 });
