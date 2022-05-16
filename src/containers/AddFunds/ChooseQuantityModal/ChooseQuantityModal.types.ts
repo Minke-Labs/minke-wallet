@@ -6,4 +6,6 @@ export interface ChooseQuantityModalProps {
 	setPresetAmount: Function;
 	enableCustomAmount: () => void;
 	onPurchase: () => void;
+	// onOnramp: () => void;
+	onClickBanxa: () => void;
 }

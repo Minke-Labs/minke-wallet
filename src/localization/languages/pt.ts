@@ -1,5 +1,31 @@
 /* eslint-disable max-len */
 export default {
+	LocationContext: {
+		US: {
+			name: 'Estados Unidos',
+			currencyName: 'Dólar Americano'
+		},
+		EU: {
+			name: 'Europa',
+			currencyName: 'Euro'
+		},
+		UK: {
+			name: 'Reino Unido',
+			currencyName: 'Libra Esterlina'
+		},
+		AU: {
+			name: 'Austrália',
+			currencyName: 'Dólar Australiano'
+		},
+		CA: {
+			name: 'Canadá',
+			currencyName: 'Dólar Canadense'
+		},
+		BR: {
+			name: 'Brasil',
+			currencyName: 'Real Brasileiro'
+		}
+	},
 	AccountsScreen: {
 		import_or_restore: 'Importar ou Restaurar',
 		accounts: 'Contas'
@@ -73,8 +99,8 @@ export default {
 			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
 		}
 	},
-	ChangeCurrencyScreen: {
-		header_title: 'Alterar a Moeda'
+	ChangeCountryScreen: {
+		header_title: 'Alterar o País'
 	},
 	ChangeLanguageScreen: {
 		header_title: 'Alterar o Idioma'
@@ -185,7 +211,7 @@ export default {
 		title: 'Configurações',
 		creating_wallet: 'Criando carteira',
 		backup: 'Backup',
-		currency: 'Moeda',
+		country: 'País',
 		language: 'Idioma',
 		network: 'Rede',
 		new_wallet: 'Nova carteira',
@@ -385,6 +411,9 @@ export default {
 	},
 	Containers: {
 		AddFunds: {
+			LocalCurrencyModal: {
+				choose_another_amount: 'Escolha outro valor'
+			},
 			ChooseQuantityModal: {
 				buy_some: 'Compre alguns {{symbol}} com ',
 				to_start_using: ' para começar a usar a Minke:',

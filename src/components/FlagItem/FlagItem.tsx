@@ -7,7 +7,6 @@ import Icon from '../Icon/Icon';
 import styles from './FlagItem.styles';
 import { FlagItemProps } from './FlagItem.types';
 
-// TODO: Use this component for the "ChangeCurrencyScreen" as well, when merged, to avoid duplication of code.
 const FlagItem: React.FC<FlagItemProps> = ({ flag, title, active, onPress }) => {
 	const { colors } = useTheme();
 	return (
