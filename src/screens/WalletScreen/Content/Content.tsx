@@ -30,7 +30,10 @@ export const Content: React.FC<ContentProps> = ({
 			right={<Accounts />}
 			{...{ loading, fetchTransactions }}
 		>
-			<Header onSettingsPress={onSettingsPress} />
+			<Header
+				onSettingsPress={onSettingsPress}
+				onCopyPress={onCopyToClipboard}
+			/>
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
 				onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
