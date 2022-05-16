@@ -21,7 +21,6 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 			address,
 			privateKey,
 			contract: depositableToken.address,
-			spender: depositContract,
 			biconomy
 		});
 

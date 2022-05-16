@@ -1,9 +1,10 @@
 import { ApprovalState, approvalState, approvalTransaction, zapperApprovalState } from '@models/deposit';
 import { Wallet } from 'ethers';
 import Logger from '@utils/logger';
-import { gaslessApproval } from '@models/gaslessTransaction';
+import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
 import { estimateGas, getProvider } from '@models/wallet';
 import { onChainApproval } from '@models/contract';
+import { network } from '@models/network';
 import { gaslessDeposit, deposit } from './aave';
 import { gaslessMStableDeposit, mStableDeposit } from './mStable';
 import { DepositParams, DepositReturn } from './deposit.types';
@@ -25,6 +26,18 @@ class DepositService {
 		gasPrice,
 		biconomy
 	}: DepositParams): Promise<DepositReturn> {
+		const { isApproved } = await this.approveState(address, gasless, depositableToken.address);
+
+		if (!isApproved) {
+			await this.approve({
+				gasless,
+				address,
+				privateKey,
+				contract: depositableToken.address,
+				biconomy
+			});
+		}
+
 		if (this.protocol === 'aave') {
 			if (gasless) {
 				const hash = await gaslessDeposit({
@@ -78,12 +91,9 @@ class DepositService {
 		return null;
 	}
 
-	public async approveState(
-		address: string,
-		gasless: boolean,
-		contract: string,
-		spender: string
-	): Promise<ApprovalState> {
+	public async approveState(address: string, gasless: boolean, contract: string): Promise<ApprovalState> {
+		const { mStable } = await network();
+		const spender = this.protocol === 'mstable' ? mStable?.depositContract! : aaveDepositContract;
 		if (this.protocol === 'aave' && !gasless) {
 			const approval = await zapperApprovalState(address, spender);
 			return approval;
@@ -98,16 +108,16 @@ class DepositService {
 		address,
 		privateKey,
 		contract,
-		spender,
 		biconomy
 	}: {
 		gasless: boolean;
 		address: string;
 		privateKey: string;
 		contract: string;
-		spender: string;
 		biconomy: any;
 	}): Promise<DepositReturn> {
+		const { mStable } = await network();
+		const spender = this.protocol === 'mstable' ? mStable?.depositContract! : aaveDepositContract;
 		if (gasless) {
 			const hash = await gaslessApproval({
 				address,
