@@ -23,11 +23,12 @@ const Test = () => {
 		interestToken: '0x0168560488ebfd72ad3a152bae1c675ef3b1e31a',
 		withdrawContract: networks.matic.mStable?.depositContract!, // v-imUSD
 		// output: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', // DAI
-		output: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
+		// output: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
+		output: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
 		router: '0xE840B73E5287865EEc17d250bFb1536704B43B21', // mAsset
-		amount: formatUnits(toBn('0.353051937720049641', 18), 'wei'), // always 18 - interestToken amount
-		minAmount: formatUnits(toBn('0.030', 6), 'wei'), // return min amount,
-		gas: 150
+		amount: formatUnits(toBn('3.190124521480855464', 18), 'wei'), // always 18 - interestToken amount
+		minAmount: formatUnits(toBn('0.0001', 6), 'wei'), // return min amount,
+		gas: 70
 	};
 
 	const approve = useCallback(async () => {

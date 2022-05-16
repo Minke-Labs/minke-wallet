@@ -145,7 +145,7 @@ const useDepositProtocols = (withdraw = false) => {
 							({ pair, chain }) => chain === name.toLowerCase() && pair === 'imUSD'
 						);
 						if (pool) {
-							setApy(pool.apy.toFixed(2));
+							setApy(pool.apyDetails.yieldOnly.toFixed(2));
 						}
 					}
 				} catch {

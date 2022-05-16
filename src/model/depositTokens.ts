@@ -78,8 +78,8 @@ const depositTokens: DepositTokens = {
 				...stables.matic.imUSD,
 				exchangeRateContract: true,
 				convertToDefaultUSD: true,
-				interestBearingSymbol: 'v-imUSD',
-				interestBearingAddress: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'
+				interestBearingSymbol: 'mv-imUSD',
+				interestBearingAddress: '0xD879eD895BcA8496106ADF1DcEB0E297Bf35739f'
 			}
 		]
 	},
