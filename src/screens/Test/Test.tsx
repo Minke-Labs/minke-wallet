@@ -10,19 +10,58 @@ import { formatUnits, Interface, parseUnits } from 'ethers/lib/utils';
 import { getProvider } from '@models/wallet';
 import { Contract, Wallet } from 'ethers';
 import { signTypedDataV3 } from '@utils/signing/signing';
+import { approvalState } from '@models/deposit';
+import { gaslessApproval } from '@models/gaslessTransaction';
+import { approveSpending } from '@models/contract';
+import { networks } from '@models/network';
 
 const Test = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { address, privateKey } = useState(globalWalletState()).value;
 
 	const params = {
-		withdrawContract: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29', // v-imUSD
-		output: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
+		interestToken: '0x0168560488ebfd72ad3a152bae1c675ef3b1e31a',
+		withdrawContract: networks.matic.mStable?.depositContract!, // v-imUSD
+		// output: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', // DAI
+		output: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
 		router: '0xE840B73E5287865EEc17d250bFb1536704B43B21', // mAsset
-		amount: formatUnits(toBn('0.001', 18), 'wei'), // imUSD amount
-		minAmount: formatUnits(toBn('0.0001', 18), 'wei'), // DAI min amount,
-		gas: 200
+		amount: formatUnits(toBn('0.353051937720049641', 18), 'wei'), // always 18 - interestToken amount
+		minAmount: formatUnits(toBn('0.030', 6), 'wei'), // return min amount,
+		gas: 150
 	};
+
+	const approve = useCallback(async () => {
+		const { isApproved } = await approvalState(address, params.interestToken, params.withdrawContract);
+		if (!isApproved) {
+			if (gaslessEnabled) {
+				const tx = await gaslessApproval({
+					address,
+					biconomy,
+					contract: params.interestToken,
+					privateKey,
+					spender: params.withdrawContract
+				});
+
+				await biconomy.getEthersProvider().waitForTransaction(tx, 3);
+
+				console.log('Gasless approval ', tx);
+			} else {
+				const { transaction: approvalTransaction } = await approveSpending({
+					contractAddress: params.interestToken,
+					spender: params.withdrawContract,
+					gasPrice: params.gas * 1000000000,
+					privateKey,
+					userAddress: address
+				});
+
+				if (approvalTransaction) {
+					await approvalTransaction.wait(3);
+				}
+
+				console.log('gas approval transaction', approvalTransaction?.hash);
+			}
+		}
+	}, [gaslessEnabled, biconomy, address, privateKey]);
 
 	const withdraw = useCallback(async () => {
 		const abi = [
@@ -48,7 +87,7 @@ const Test = () => {
 				to: params.withdrawContract,
 				data: functionSignature,
 				from: address,
-				gasLimit: 700000,
+				gasLimit: 800000,
 				gasPrice: parseUnits(params.gas.toString(), 'gwei')
 			};
 
@@ -79,7 +118,7 @@ const Test = () => {
 				chainId,
 				to: params.withdrawContract,
 				gasPrice: parseUnits(params.gas.toString(), 'gwei'),
-				gasLimit: 700000,
+				gasLimit: 800000,
 				nonce
 			};
 
@@ -104,6 +143,8 @@ const Test = () => {
 
 	const test = async () => {
 		console.log('started');
+		await approve();
+		console.log('approved');
 		await withdraw();
 		console.log('done');
 	};

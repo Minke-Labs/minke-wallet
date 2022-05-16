@@ -82,7 +82,7 @@ export const networks: Networks = {
 		apiUrl0x: 'https://polygon.api.0x.org/',
 		alchemyAPIKey: (ALCHEMY_API_KEY_MATIC || process.env.ALCHEMY_API_KEY_MATIC)!,
 		mStable: {
-			depositContract: '0x3A91390140c30c9C56fC84EdbEa54C683068e85F',
+			depositContract: '0x8b20d977AFDa47f75AD9BFB253C29b835ACd7DD6',
 			mAsset: '0xE840B73E5287865EEc17d250bFb1536704B43B21',
 			saveAsset: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
 			vault: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'
