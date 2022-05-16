@@ -14,11 +14,12 @@ const ChangeCountryScreen = () => {
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 
-	const filterCurrencies = (text: string) => {
-		const newCurrencies = countries.filter((country: Country) =>
-			country.name.toLowerCase().includes(text.toLowerCase()));
+	const filterCountries = (text: string) => {
+		const newCountries = countries.filter((country: Country) =>
+			country.name.toLowerCase().includes(text.toLowerCase())
+		);
 		setSearch(text);
-		setFiltered(newCurrencies);
+		setFiltered(newCountries);
 	};
 
 	return (
