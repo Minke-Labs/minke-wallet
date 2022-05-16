@@ -29,6 +29,10 @@ const ModalsImport: React.FC<ModalsImportProps> = ({
 				<Text color="text11">{i18n.t('WalletScreen.ModalsImport.address_copied')}</Text>
 			</Snackbar>
 
+
+
+
+			{/* ONDE O USER COMPRA MOEDAS  */}
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
