@@ -7,6 +7,12 @@ export default StyleSheet.create({
 		marginBottom: 16,
 		borderRadius: 16,
 		paddingVertical: 8,
-		paddingHorizontal: 24
+		paddingHorizontal: 24,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+
+		borderWidth: 2,
+		borderColor: 'green'
 	}
 });
