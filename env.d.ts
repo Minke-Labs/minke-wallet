@@ -18,5 +18,8 @@ declare module '@env' {
 	export const ALCHEMY_API_KEY_MATIC: string;
 	export const ALCHEMY_API_KEY_ROPSTEN: string;
 	export const ALCHEMY_API_KEY_KOVAN: string;
+	export const BANXA_ENDPOINT_URL: string;
+	export const BANXA_KEY: string;
+	export const BANXA_SECRET: string;
 	export const APPS_FLYER_DEV_KEY: string;
 }

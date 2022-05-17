@@ -30,7 +30,10 @@ export const Content: React.FC<ContentProps> = ({
 			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			{...{ loading, fetchTransactions }}
 		>
-			<Header onSettingsPress={onSettingsPress} />
+			<Header
+				onSettingsPress={onSettingsPress}
+				onCopyPress={onCopyToClipboard}
+			/>
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
 				onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}

@@ -5,6 +5,7 @@ import Icon from './Icon/Icon';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
+import FullModal from './FullModal/FullModal';
 import NetworkWarning from './NetworkWarning';
 import ModalHeader from './ModalHeader/ModalHeader';
 import ModalReusables from './ModalReusables';
@@ -16,10 +17,12 @@ import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
 import FlagItem from './FlagItem/FlagItem';
 import Card from './Card/Card';
+import OnrampButton from './OnrampButton/OnrampButton';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import HapticButton from './HapticButton/HapticButton';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
+import TokenInputInner from './TokenInputInner/TokenInputInner';
 import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
@@ -42,16 +45,19 @@ export {
 	Token,
 	TokenAmountInput,
 	Modal,
+	FullModal,
 	ModalHeader,
 	SettingsHeader,
 	ModalReusables,
 	SearchInput,
 	TextArea,
 	HapticButton,
+	TokenInputInner,
 	TouchableShrinks,
 	Input,
 	NetworkWarning,
 	LoadingScreen,
+	OnrampButton,
 	Flag,
 	FlagItem,
 	Card,

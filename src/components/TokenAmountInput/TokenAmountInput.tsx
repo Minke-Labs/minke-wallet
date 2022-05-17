@@ -1,6 +1,7 @@
 import React from 'react';
-import { TextInput, View, TouchableOpacity } from 'react-native';
-import { useTheme, useLanguage } from '@hooks';
+import { View, TouchableOpacity } from 'react-native';
+import { useLanguage } from '@hooks';
+import TokenInputInner from '../TokenInputInner/TokenInputInner';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import { TokenAmountInputProps } from './TokenAmountInput.types';
@@ -8,19 +9,16 @@ import styles from './TokenAmountInput.styles';
 import { useTokenAmountInput } from './TokenAmountInput.hooks';
 
 const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
-	amount,
 	symbol,
+	amount,
+	isAmountValid = true,
+	placeholder,
+	autoFocus = false,
 	onAmountChange,
 	onNumberAmountChange,
-	innerRef,
-	placeholder,
 	onMaxPress,
-	onTypeChange,
-	visible = true,
-	isAmountValid = true,
-	autoFocus = false
+	onTypeChange
 }) => {
-	const { colors } = useTheme();
 	const { onChangeText, showSymbol, setShowSymbol } = useTokenAmountInput({
 		amount,
 		onAmountChange,
@@ -30,26 +28,18 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 	const { i18n } = useLanguage();
 	return (
 		<View style={styles.container}>
-			<View style={[styles.inputContainer, { borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1 }]}>
-				<TextInput
-					keyboardType="numeric"
-					style={[
-						styles.input,
-						{
-							display: visible ? 'flex' : 'none',
-							color: colors.text1
-						}
-					]}
-					value={amount}
-					ref={innerRef}
-					placeholder={placeholder}
-					onChangeText={(text) => onChangeText(text)}
-					autoFocus={autoFocus}
-				/>
-				<Text type="a" weight="bold">
-					{showSymbol ? symbol : 'USD'}
-				</Text>
-			</View>
+			<TokenInputInner
+				{...{
+					symbol,
+					amount,
+					isAmountValid,
+					placeholder,
+					autoFocus,
+					showSymbol,
+					onChangeText
+				}}
+			/>
+
 			<View style={styles.buttonsContainer}>
 				<TouchableOpacity onPress={() => !!onMaxPress && onMaxPress(showSymbol)}>
 					<Text type="a" weight="medium" color="text7" style={{ marginRight: 12 }}>
