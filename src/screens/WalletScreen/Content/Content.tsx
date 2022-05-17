@@ -36,7 +36,13 @@ export const Content: React.FC<ContentProps> = ({
 				onCopyPress={onCopyToClipboard}
 			/>
 
-			<PendingTransaction />
+			<PendingTransaction
+				address="To fridder.eth"
+				amount="0.1"
+				symbol="ETH"
+				pending={false}
+				minAgo={3}
+			/>
 
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}

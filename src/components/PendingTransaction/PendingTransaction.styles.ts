@@ -11,5 +11,22 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between'
+	},
+	leftContainer: {
+		height: '100%',
+		flexDirection: 'row',
+		alignItems: 'center',
+		flex: 1.3
+	},
+	centerContainer: {
+		flex: 0.4,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	rightContainer: {
+		height: '100%',
+		justifyContent: 'space-between',
+		alignItems: 'flex-end',
+		flex: 1.3
 	}
 });
