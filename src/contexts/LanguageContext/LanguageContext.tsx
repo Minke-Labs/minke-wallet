@@ -42,7 +42,8 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'US',
 			currencyName: i18n.t('LocationContext.US.currencyName'),
 			currency: 'USD',
-			payment_id: null
+			payment_id: null,
+			minTopup: null
 		},
 		{
 			name: i18n.t('LocationContext.EU.name'),
@@ -50,7 +51,8 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'EU',
 			currencyName: i18n.t('LocationContext.EU.currencyName'),
 			currency: 'EUR',
-			payment_id: '6041'
+			payment_id: '6041',
+			minTopup: 20
 		},
 		{
 			name: i18n.t('LocationContext.UK.name'),
@@ -58,7 +60,8 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'UK',
 			currencyName: i18n.t('LocationContext.UK.currencyName'),
 			currency: 'GBP',
-			payment_id: '6043'
+			payment_id: '6043',
+			minTopup: 20
 		},
 		{
 			name: i18n.t('LocationContext.AU.name'),
@@ -66,7 +69,8 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'AU',
 			currencyName: i18n.t('LocationContext.AU.currencyName'),
 			currency: 'AUD',
-			payment_id: '7538'
+			payment_id: '7538',
+			minTopup: 30
 		},
 		{
 			name: i18n.t('LocationContext.CA.name'),
@@ -74,7 +78,8 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'CA',
 			currencyName: i18n.t('LocationContext.CA.currencyName'),
 			currency: 'CAD',
-			payment_id: '6031'
+			payment_id: '6031',
+			minTopup: 20
 		},
 		{
 			name: i18n.t('LocationContext.BR.name'),
@@ -82,7 +87,8 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'BR',
 			currencyName: i18n.t('LocationContext.BR.currencyName'),
 			currency: 'BRL',
-			payment_id: '7540'
+			payment_id: '7540',
+			minTopup: 50
 		}
 	]), [language]);
 
