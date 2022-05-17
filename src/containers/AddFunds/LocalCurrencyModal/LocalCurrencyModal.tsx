@@ -46,10 +46,14 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 				placeholder="0.00"
 				autoFocus
 				showSymbol
-				marginBottom={32}
+				marginBottom={8}
 				amount={amount}
 				onChangeText={onChangeText}
 			/>
+
+			<Text color="text2" type="span" marginBottom={32}>
+				min {locationCountry!.minTopup} {locationCountry!.currency}
+			</Text>
 
 			<OnrampButton
 				marginBottom={80}
