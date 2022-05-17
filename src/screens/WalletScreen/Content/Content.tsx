@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
+import { PendingTransaction } from '@components';
 import { AssetsPanel, ActionsPanel, Header } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
@@ -34,6 +35,9 @@ export const Content: React.FC<ContentProps> = ({
 				onSettingsPress={onSettingsPress}
 				onCopyPress={onCopyToClipboard}
 			/>
+
+			<PendingTransaction />
+
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
 				onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
