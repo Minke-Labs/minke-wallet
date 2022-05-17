@@ -51,6 +51,7 @@ export const Content: React.FC<ContentProps> = ({
 				balance={balance?.usd || 0}
 				address={address}
 			/>
+
 			<ActionsPanel
 				{...{
 					onDeleteWallet,
