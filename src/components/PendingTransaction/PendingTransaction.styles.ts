@@ -10,9 +10,6 @@ export default StyleSheet.create({
 		paddingHorizontal: 24,
 		flexDirection: 'row',
 		alignItems: 'center',
-		justifyContent: 'space-between',
-
-		borderWidth: 2,
-		borderColor: 'green'
+		justifyContent: 'space-between'
 	}
 });

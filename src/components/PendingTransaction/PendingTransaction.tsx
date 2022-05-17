@@ -12,31 +12,49 @@ const PendingTransaction: React.FC = () => {
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
 			<View
 				style={{
-					borderWidth: 1,
-					borderColor: 'red',
 					height: '100%',
 					flexDirection: 'row',
-					alignItems: 'center'
+					alignItems: 'center',
+					borderWidth: 1,
+					borderColor: 'red',
+					flex: 1
 				}}
 			>
-				<Icon name="checkmark" size={24} color="alert3" />
+				<Icon
+					name="checkmark"
+					size={24}
+					color="alert3"
+					style={{ marginRight: 8 }}
+				/>
 				<View>
-					<Text>asdf</Text>
-					<Text>asdf</Text>
+					<Text type="p2" weight="semiBold">Succes!</Text>
+					<Text type="span" weight="semiBold">3 min.</Text>
 				</View>
 			</View>
-			<Icon
-				name="arrowRight"
-				size={22}
-				color="text7"
-			/>
+			<View style={{
+				borderWidth: 1,
+				borderColor: 'green',
+				flex: 1
+			}}
+			>
+				<Icon
+					name="arrowRight"
+					size={22}
+					color="text7"
+				/>
+			</View>
 			<View
 				style={{
 					borderWidth: 1,
 					borderColor: 'purple',
-					height: '100%'
+					height: '100%',
+					justifyContent: 'space-between',
+					flex: 1
 				}}
-			/>
+			>
+				<Text type="p2">To fridder.eth</Text>
+				<Text type="span" weight="semiBold">0.01 ETH</Text>
+			</View>
 		</View>
 	);
 };
