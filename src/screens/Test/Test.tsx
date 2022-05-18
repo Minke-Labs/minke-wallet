@@ -14,25 +14,27 @@ import { approvalState } from '@models/deposit';
 import { gaslessApproval } from '@models/gaslessTransaction';
 import { approveSpending } from '@models/contract';
 import { networks } from '@models/network';
+import { mStableGaslessWithdraw } from '@src/services/deposit/mStable';
 
 const Test = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { address, privateKey } = useState(globalWalletState()).value;
 
 	const params = {
-		interestToken: '0x0168560488ebfd72ad3a152bae1c675ef3b1e31a',
-		withdrawContract: networks.matic.mStable?.depositContract!, // v-imUSD
-		// output: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', // DAI
+		interestToken: '0x8fC81a10Aa4843d80e6Fe46Ee6aE0fD61f35FA25',
+		withdrawContract: networks.matic.mStable?.withdrawContract!, // v-imUSD
+		output: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063', // DAI
 		// output: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
-		output: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+		// output: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F', // USDT
 		router: '0xE840B73E5287865EEc17d250bFb1536704B43B21', // mAsset
-		amount: formatUnits(toBn('3.190124521480855464', 18), 'wei'), // always 18 - interestToken amount
-		minAmount: formatUnits(toBn('0.0001', 6), 'wei'), // return min amount,
+		amount: formatUnits(toBn('9.03689653940166851', 18), 'wei'), // always 18 - interestToken amount
+		minAmount: formatUnits(toBn('0.60', 18), 'wei'), // return min amount,
 		gas: 70
 	};
 
 	const approve = useCallback(async () => {
 		const { isApproved } = await approvalState(address, params.interestToken, params.withdrawContract);
+		console.log({ isApproved });
 		if (!isApproved) {
 			if (gaslessEnabled) {
 				const tx = await gaslessApproval({
@@ -56,7 +58,7 @@ const Test = () => {
 				});
 
 				if (approvalTransaction) {
-					await approvalTransaction.wait(3);
+					await approvalTransaction.wait(1);
 				}
 
 				console.log('gas approval transaction', approvalTransaction?.hash);
@@ -65,52 +67,23 @@ const Test = () => {
 	}, [gaslessEnabled, biconomy, address, privateKey]);
 
 	const withdraw = useCallback(async () => {
-		const abi = [
-			// eslint-disable-next-line max-len
-			'function withdrawAndUnwrap (uint256 _amount, uint256 _minAmountOut, address _output, address _beneficiary, address _router, bool _isBassetOut) external returns (uint256 outputQuantity)'
-		];
 		if (gaslessEnabled) {
-			const contractInterface = new Interface(abi);
-
-			const userSigner = new Wallet(privateKey);
-
-			// Create your target method signature.. here we are calling setQuote() method of our contract
-			const functionSignature = contractInterface.encodeFunctionData('withdrawAndUnwrap', [
-				params.amount,
-				params.minAmount,
-				params.output,
+			const hash = await mStableGaslessWithdraw({
 				address,
-				params.router,
-				true
-			]);
-
-			const rawTx = {
-				to: params.withdrawContract,
-				data: functionSignature,
-				from: address,
-				gasLimit: 800000,
-				gasPrice: parseUnits(params.gas.toString(), 'gwei')
-			};
-
-			const signedTx = await userSigner.signTransaction(rawTx);
-			// should get user message to sign for EIP712 or personal signature types
-			const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
-
-			const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
-
-			const data = {
-				signature,
-				forwardRequest: forwardData.request,
-				rawTransaction: signedTx,
-				signatureType: biconomy.EIP712_SIGN
-			};
-
-			const provider = biconomy.getEthersProvider();
-			// send signed transaction with ethers
-			// promise resolves to transaction hash
-			const hash = await provider.send('eth_sendRawTransaction', [data]);
-			console.log('finished withdraw without gas', hash);
+				privateKey,
+				amount: params.amount,
+				minAmount: params.minAmount,
+				token: params.output,
+				gasPrice: params.gas.toString(),
+				biconomy,
+				router: params.router
+			});
+			console.log('Gasless withdraw', hash);
 		} else {
+			const abi = [
+				// eslint-disable-next-line max-len
+				'function withdrawAndUnwrap(uint256 _amount, uint256 _minAmountOut, address _output, address _beneficiary, address _router, bool _isBassetOut, bytes calldata _permitSig) external returns (uint256 outputQuantity)'
+			];
 			const provider = await getProvider();
 			const wallet = new Wallet(privateKey, provider);
 			const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
@@ -143,9 +116,8 @@ const Test = () => {
 	}, [gaslessEnabled, biconomy, address, privateKey]);
 
 	const test = async () => {
-		console.log('started');
+		console.log('started, approving...');
 		await approve();
-		console.log('approved');
 		await withdraw();
 		console.log('done');
 	};

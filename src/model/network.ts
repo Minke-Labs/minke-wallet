@@ -28,6 +28,7 @@ export interface Network {
 	apiUrl0x?: string;
 	mStable?: {
 		depositContract: string;
+		withdrawContract: string;
 		mAsset: string;
 		saveAsset: string;
 		vault: string;
@@ -59,6 +60,7 @@ export const networks: Networks = {
 		alchemyAPIKey: (ALCHEMY_API_KEY_ETHEREUM || process.env.ALCHEMY_API_KEY_ETHEREUM)!,
 		mStable: {
 			depositContract: '0x1f2d51eadf24BfcC6Eeb8318D0408dFD9Fbd05d9',
+			withdrawContract: null,
 			mAsset: '0xe2f2a5C287993345a840Db3B0845fbC70f5935a5',
 			saveAsset: '0x30647a72Dc82d7Fbb1123EA74716aB8A317Eac19',
 			vault: '0x78BefCa7de27d07DC6e71da295Cc2946681A6c7B'
@@ -82,7 +84,8 @@ export const networks: Networks = {
 		apiUrl0x: 'https://polygon.api.0x.org/',
 		alchemyAPIKey: (ALCHEMY_API_KEY_MATIC || process.env.ALCHEMY_API_KEY_MATIC)!,
 		mStable: {
-			depositContract: '0xEf9002a18912748F10E90d63E79692Efa38868a7',
+			depositContract: '0xF1492066f02beC8313f807b8c9C208359FDeaa35',
+			withdrawContract: '0xF1492066f02beC8313f807b8c9C208359FDeaa35',
 			mAsset: '0xE840B73E5287865EEc17d250bFb1536704B43B21',
 			saveAsset: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
 			vault: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'

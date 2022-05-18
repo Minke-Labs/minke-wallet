@@ -78,8 +78,8 @@ const depositTokens: DepositTokens = {
 				...stables.matic.imUSD,
 				exchangeRateContract: true,
 				convertToDefaultUSD: true,
-				interestBearingSymbol: 'MNKTESTV6',
-				interestBearingAddress: '0x533de50A545dC0b8df27ccF67C71eB279047A518'
+				interestBearingSymbol: 'MNKTESTV7',
+				interestBearingAddress: '0x8fC81a10Aa4843d80e6Fe46Ee6aE0fD61f35FA25'
 			}
 		]
 	},
