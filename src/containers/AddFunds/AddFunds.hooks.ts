@@ -4,7 +4,7 @@ import { ICoin, coins } from '@helpers/coins';
 import { useAmplitude, useFormProgress, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
-import { makeOrder } from '@models/banxa';
+import { makeOrder, pickPaymentMethodIdFromName } from '@models/banxa';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { useState } from '@hookstate/core';
 
@@ -23,7 +23,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const [wyreError, setWyreError] = React.useState<UseWyreApplePayError | null>();
 	const customAmountRef = createRef<TextInput>();
 	const { track } = useAmplitude();
-	const { locationCurrency, paymentOnLocation } = useLanguage();
+	const { locationCurrency, locationCountry } = useLanguage();
 	const [orderLink, setOrderLink] = React.useState('');
 	const state = useState(globalWalletState());
 	const { address } = state.value;
@@ -68,6 +68,8 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			nativeToken: { symbol }
 		} = await network();
 
+		const paymentId = await pickPaymentMethodIdFromName(locationCountry.paymentName);
+
 		const params = {
 			account_reference: address,
 			source: locationCurrency,
@@ -75,7 +77,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			source_amount: String(value),
 			return_url_on_success: '#',
 			wallet_address: address,
-			payment_method_id: paymentOnLocation!,
+			payment_method_id: paymentId,
 			blockchain: symbol
 		};
 

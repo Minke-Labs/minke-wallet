@@ -42,7 +42,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'US',
 			currencyName: i18n.t('LocationContext.US.currencyName'),
 			currency: 'USD',
-			payment_id: null,
+			paymentName: null,
 			minTopup: null
 		},
 		{
@@ -51,7 +51,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'EU',
 			currencyName: i18n.t('LocationContext.EU.currencyName'),
 			currency: 'EUR',
-			payment_id: '6053',
+			paymentName: 'SEPA',
 			minTopup: 20
 		},
 		{
@@ -60,7 +60,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'UK',
 			currencyName: i18n.t('LocationContext.UK.currencyName'),
 			currency: 'GBP',
-			payment_id: '6059',
+			paymentName: 'Bank Transfer',
 			minTopup: 20
 		},
 		{
@@ -69,7 +69,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'AU',
 			currencyName: i18n.t('LocationContext.AU.currencyName'),
 			currency: 'AUD',
-			payment_id: '6063',
+			paymentName: 'PayID',
 			minTopup: 30
 		},
 		{
@@ -78,7 +78,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'CA',
 			currencyName: i18n.t('LocationContext.CA.currencyName'),
 			currency: 'CAD',
-			payment_id: '6046',
+			paymentName: 'Interac e-Transfer',
 			minTopup: 20
 		},
 		{
@@ -87,7 +87,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'BR',
 			currencyName: i18n.t('LocationContext.BR.currencyName'),
 			currency: 'BRL',
-			payment_id: '6065',
+			paymentName: 'PIX',
 			minTopup: 50
 		}
 	]), [language]);
@@ -106,7 +106,6 @@ const LanguageProvider: React.FC = ({ children }) => {
 			countryCode,
 			setCountryCode: saveLocation,
 			locationCurrency: locationCountry?.currency ?? mock.countries[0].currency,
-			paymentOnLocation: locationCountry?.payment_id ?? null,
 			locationCountry
 		}),
 		[language, countryCode]
