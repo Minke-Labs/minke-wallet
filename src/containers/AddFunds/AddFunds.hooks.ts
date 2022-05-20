@@ -4,7 +4,7 @@ import { ICoin, coins } from '@helpers/coins';
 import { useAmplitude, useFormProgress, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
-import { makeOrder, pickPaymentMethodIdFromName } from '@models/banxa';
+import { makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { useState } from '@hookstate/core';
 
@@ -68,7 +68,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			nativeToken: { symbol }
 		} = await network();
 
-		const paymentId = await pickPaymentMethodIdFromName(locationCountry.paymentName);
+		const paymentRes = await pickPaymentMethodFromName(locationCountry.paymentName);
 
 		const params = {
 			account_reference: address,
@@ -77,7 +77,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			source_amount: String(value),
 			return_url_on_success: '#',
 			wallet_address: address,
-			payment_method_id: paymentId,
+			payment_method_id: paymentRes.id,
 			blockchain: symbol
 		};
 
