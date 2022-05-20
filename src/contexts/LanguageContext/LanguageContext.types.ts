@@ -4,6 +4,5 @@ export interface Country {
 	iso: string;
 	currencyName: string;
 	currency: string;
-	payment_id: string | null;
-	minTopup: number | null;
+	paymentName: string | null;
 }
