@@ -71,7 +71,7 @@ const SettingsScreen = () => {
 					</Text>
 					<SettingsOption
 						label={i18n.t('SettingsScreen.country')}
-						icon="currencyStroke"
+						icon="globe"
 						onPress={onChangeCountry}
 					/>
 					<SettingsOption

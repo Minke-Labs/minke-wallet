@@ -10,6 +10,7 @@ export const exchangebleTokens = [
 	'MATIC',
 	'USDT',
 	'USDC',
+	'WETH',
 	'WBTC',
 	'CRO',
 	'DAI',

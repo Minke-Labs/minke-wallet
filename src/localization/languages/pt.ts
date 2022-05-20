@@ -6,7 +6,7 @@ export default {
 			currencyName: 'Dólar Americano'
 		},
 		EU: {
-			name: 'Europa',
+			name: 'União Europeia',
 			currencyName: 'Euro'
 		},
 		UK: {
