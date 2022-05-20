@@ -35,7 +35,9 @@ export const gaslessApproval = async ({
 	}
 
 	const wallet = new Wallet(privateKey, provider);
-
+	console.log('amount', tokenAmount?.toString());
+	console.log('contract', contract);
+	console.log('spender', spender);
 	const rawTx = {
 		to: contract,
 		data: await gaslessTransactionData({
@@ -67,8 +69,7 @@ export const gaslessApproval = async ({
 	}
 
 	if (transactionHash) {
-		// await provider.waitForTransaction(transactionHash);
-		Logger.log('Gasless approval transaction - done', transactionHash);
+		await provider.waitForTransaction(transactionHash);
 		return transactionHash;
 	}
 

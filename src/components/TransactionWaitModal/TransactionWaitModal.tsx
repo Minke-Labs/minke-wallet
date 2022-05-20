@@ -98,7 +98,7 @@ const TransactionWaitModal = ({
 								? ''
 								: deposit
 								? i18n.t('Components.TransactionWaitModal.in')
-								: i18n.t('Components.TransactionWaitModal.for')}{' '}
+								: i18n.t('Components.TransactionWaitModal.for')}
 						</Text>
 						{!!toToken && (
 							<Text type="p2" weight="extraBold" color="text3">

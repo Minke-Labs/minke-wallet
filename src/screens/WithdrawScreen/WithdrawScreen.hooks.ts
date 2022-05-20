@@ -102,13 +102,13 @@ const useWithdrawScreen = () => {
 			});
 
 			if (hash) {
-				Logger.log(`Withdraw gasless ${JSON.stringify(hash)}`);
+				Logger.log(`Withdraw ${JSON.stringify(hash)}`);
 				setTransactionHash(hash);
 				track('Withdraw done', {
 					token: token.symbol,
 					amount,
 					hash,
-					gasless: true
+					gasless: gaslessEnabled
 				});
 
 				const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
@@ -130,7 +130,7 @@ const useWithdrawScreen = () => {
 
 				navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 			} else {
-				Logger.error('Error withdrawing');
+				// Logger.error('Error withdrawing');
 			}
 		}
 	};

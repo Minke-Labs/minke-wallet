@@ -1,13 +1,10 @@
-import { ApprovalState, approvalState, approvalTransaction, zapperApprovalState } from '@models/deposit';
-import { Wallet } from 'ethers';
-import Logger from '@utils/logger';
-import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
-import { estimateGas, getProvider } from '@models/wallet';
-import { onChainApproval } from '@models/contract';
+import { ApprovalState } from '@models/deposit';
+import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
 import { gaslessDeposit, deposit } from './aave';
 import { gaslessMStableDeposit, mStableDeposit } from './mStable';
 import { DepositParams, DepositReturn } from './deposit.types';
+import ApprovalService from '../approval/ApprovalService';
 
 class DepositService {
 	protocol: string;
@@ -27,7 +24,6 @@ class DepositService {
 		biconomy
 	}: DepositParams): Promise<DepositReturn> {
 		const { isApproved } = await this.approveState(address, gasless, depositableToken.address);
-
 		if (!isApproved) {
 			await this.approve({
 				gasless,
@@ -91,16 +87,18 @@ class DepositService {
 		return null;
 	}
 
-	public async approveState(address: string, gasless: boolean, contract: string): Promise<ApprovalState> {
+	private async depositContract(): Promise<string> {
 		const { mStable } = await network();
-		const spender = this.protocol === 'mstable' ? mStable?.depositContract! : aaveDepositContract;
-		if (this.protocol === 'aave' && !gasless) {
-			const approval = await zapperApprovalState(address, spender);
-			return approval;
-		}
+		return this.protocol === 'mstable' ? mStable?.depositContract! : aaveDepositContract;
+	}
 
-		const approval = await approvalState(address, contract, spender);
-		return approval;
+	public async approveState(address: string, gasless: boolean, contract: string): Promise<ApprovalState> {
+		return new ApprovalService(this.protocol).approveState(
+			address,
+			gasless,
+			contract,
+			await this.depositContract()
+		);
 	}
 
 	public async approve({
@@ -116,60 +114,14 @@ class DepositService {
 		contract: string;
 		biconomy: any;
 	}): Promise<DepositReturn> {
-		const { mStable } = await network();
-		const spender = this.protocol === 'mstable' ? mStable?.depositContract! : aaveDepositContract;
-		if (gasless) {
-			const hash = await gaslessApproval({
-				address,
-				privateKey,
-				biconomy,
-				contract,
-				spender
-			});
-
-			return hash;
-		}
-		if (this.protocol === 'mstable') {
-			const {
-				result: { FastGasPrice: gasPrice }
-			} = await estimateGas();
-			const { transaction } = await onChainApproval({
-				contractAddress: contract,
-				spender,
-				privateKey,
-				gasPrice: +gasPrice * 1000000000
-			});
-
-			return transaction?.hash || null;
-		}
-
-		if (this.protocol === 'aave') {
-			const transaction = await approvalTransaction(address, contract);
-			const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
-			const provider = await getProvider();
-			const wallet = new Wallet(privateKey, provider);
-			const chainId = await wallet.getChainId();
-			const nonce = await provider.getTransactionCount(address, 'latest');
-			Logger.log(`Approval API ${JSON.stringify(transaction)}`);
-			const txDefaults = {
-				from,
-				to,
-				data,
-				nonce,
-				maxFeePerGas,
-				maxPriorityFeePerGas,
-				type: 2,
-				gasLimit: 500000,
-				chainId
-			};
-
-			Logger.log(`Approval ${JSON.stringify(txDefaults)}`);
-
-			const signedTx = await wallet.signTransaction(txDefaults);
-			const { hash } = await provider.sendTransaction(signedTx as string);
-			return hash;
-		}
-		return null;
+		return new ApprovalService(this.protocol).approve({
+			gasless,
+			address,
+			privateKey,
+			contract,
+			biconomy,
+			spender: await this.depositContract()
+		});
 	}
 }
 

@@ -18,6 +18,8 @@ const mStableDeposit = async ({
 	minAmount: string; // in WEI, imUSD decimals
 	gasPrice: string;
 }): Promise<DepositReturn> => {
+	const { mStable } = await network();
+
 	const provider = await getProvider();
 	// send signed transaction with ethers
 	const userSigner = new Wallet(privateKey, provider);
@@ -36,7 +38,6 @@ const mStableDeposit = async ({
 		maxPriorityFeePerGas: parseUnits(gasPrice, 'gwei'),
 		nonce
 	};
-	const { mStable } = await network();
 	const { mAsset, saveAsset, vault, depositContract } = mStable!;
 
 	const contract = new Contract(depositContract, abi, userSigner);
@@ -121,71 +122,4 @@ const gaslessMStableDeposit = async ({
 	return hash;
 };
 
-const mStableGaslessWithdraw = async ({
-	address,
-	privateKey,
-	token,
-	amount,
-	router,
-	minAmount,
-	gasPrice,
-	biconomy
-}: {
-	address: string;
-	privateKey: string;
-	token: string;
-	amount: string; // in WEI
-	minAmount: string;
-	router: string;
-	gasPrice: string;
-	biconomy: any;
-}) => {
-	const provider = biconomy.getEthersProvider();
-	// send signed transaction with ethers
-	const userSigner = new ethers.Wallet(privateKey, provider);
-	const abi = [
-		// eslint-disable-next-line max-len
-		'function withdrawAndUnwrap(uint256 _amount, uint256 _minAmountOut, address _output, address _beneficiary, address _router, bool _isBassetOut, bytes calldata _permitSig) external returns (uint256 outputQuantity)'
-	];
-
-	const contractInterface = new ethers.utils.Interface(abi);
-
-	// Create your target method signature.. here we are calling setQuote() method of our contract
-	const functionSignature = contractInterface.encodeFunctionData('withdrawAndUnwrap', [
-		amount,
-		minAmount,
-		token,
-		address,
-		router,
-		true,
-		[]
-	]);
-
-	const { mStable } = await network();
-	const rawTx = {
-		to: mStable!.withdrawContract,
-		data: functionSignature,
-		from: address,
-		gasLimit: 800000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
-	};
-
-	const signedTx = await userSigner.signTransaction(rawTx);
-	// should get user message to sign for EIP712 or personal signature types
-	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
-
-	const signature = signTypedDataV3({ privateKey, data: forwardData.eip712Format });
-
-	const data = {
-		signature,
-		forwardRequest: forwardData.request,
-		rawTransaction: signedTx,
-		signatureType: biconomy.EIP712_SIGN
-	};
-
-	// promise resolves to transaction hash
-	const txHash: string = await provider.send('eth_sendRawTransaction', [data]);
-	return txHash;
-};
-
-export { mStableDeposit, gaslessMStableDeposit, mStableGaslessWithdraw };
+export { mStableDeposit, gaslessMStableDeposit };

@@ -3,7 +3,7 @@ import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
-import { network as selectedNetwork } from './network';
+import { network, network as selectedNetwork, networks } from './network';
 import { ParaswapToken, stablecoins } from './token';
 import { DepositableToken } from './types/depositTokens.types';
 import { erc20abi, estimateGas, getProvider } from './wallet';
@@ -11,7 +11,7 @@ import { erc20abi, estimateGas, getProvider } from './wallet';
 const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
 export const depositStablecoins = ['USDC', 'DAI', 'USDT'];
-export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt', 'ausdc', 'adai', 'ausdt', 'mnktest7'];
+export const interestBearingTokens = ['amusdc', 'amdai', 'amusdt', 'ausdc', 'adai', 'ausdt', 'mnktestv9'];
 
 export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
 	const baseURL = `https://api.zapper.fi/v1/protocols/${protocol}/token-market-data`;
@@ -158,6 +158,11 @@ export const availableDepositProtocols: DepositProtocols = {
 
 export const fetchDepositProtocol = async (): Promise<DepositProtocol> => {
 	const depositProtocol = await AsyncStorage.getItem('@depositProtocol');
+	const { chainId } = await network();
+	if (chainId === networks.mainnet.chainId) {
+		return availableDepositProtocols.aave;
+	}
+
 	return depositProtocol ? availableDepositProtocols[depositProtocol] : availableDepositProtocols.mstable;
 };
 
