@@ -52,7 +52,7 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 
 			<TokenInputInner
 				symbol={locationCountry!.currency}
-				isAmountValid={amount >= paymentMethodId!.minTopup}
+				isAmountValid={amount >= paymentMethodId?.minTopup}
 				placeholder="0.00"
 				autoFocus
 				showSymbol
