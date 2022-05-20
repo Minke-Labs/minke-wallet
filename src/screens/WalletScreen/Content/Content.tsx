@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
@@ -23,13 +23,23 @@ export const Content: React.FC<ContentProps> = ({
 	const navigation = useNavigation();
 	const { loading, fetchTransactions } = useTransactions();
 
+	const handleRefresh = useCallback(() => {
+		fetchTransactions();
+	}, [fetchTransactions]);
+
 	return (
 		<TabLayout
 			leftTitle={i18n.t('WalletScreen.Content.accounts')}
 			rightTitle={i18n.t('WalletScreen.Content.transactions')}
 			left={<Accounts />}
-			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
-			{...{ loading, fetchTransactions }}
+			right={
+				<Transactions
+					onAddFunds={() => setAddFundsVisible(true)}
+					{...{ onSeeAllTransactions, loading }}
+				/>
+			}
+			loading={loading}
+			onRefresh={handleRefresh}
 		>
 			<Header
 				onSettingsPress={onSettingsPress}

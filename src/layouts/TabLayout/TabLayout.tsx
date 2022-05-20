@@ -6,7 +6,7 @@ import { styles } from './TabLayout.styles';
 import { TabLayoutProps } from './TabLayout.types';
 import BasicLayout from '../BasicLayout/BasicLayout';
 
-const TabLayout: React.FC<TabLayoutProps> = ({ fetchTransactions, children, left, right, leftTitle, rightTitle }) => {
+const TabLayout: React.FC<TabLayoutProps> = ({ onRefresh, children, left, right, leftTitle, rightTitle }) => {
 	const [selectedTab, setSelectedTab] = useState('transactions');
 	const { colors } = useTheme();
 
@@ -14,7 +14,7 @@ const TabLayout: React.FC<TabLayoutProps> = ({ fetchTransactions, children, left
 		<BasicLayout hideSafeAreaView>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
-				refreshControl={<RefreshControl refreshing={false} onRefresh={fetchTransactions} />}
+				refreshControl={<RefreshControl refreshing={false} onRefresh={onRefresh} />}
 			>
 				<SafeAreaView>
 					<View style={styles.container}>
