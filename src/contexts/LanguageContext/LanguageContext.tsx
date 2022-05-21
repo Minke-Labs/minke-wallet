@@ -42,8 +42,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'US',
 			currencyName: i18n.t('LocationContext.US.currencyName'),
 			currency: 'USD',
-			payment_id: null,
-			minTopup: null
+			paymentName: null
 		},
 		{
 			name: i18n.t('LocationContext.EU.name'),
@@ -51,8 +50,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'EU',
 			currencyName: i18n.t('LocationContext.EU.currencyName'),
 			currency: 'EUR',
-			payment_id: '6041',
-			minTopup: 20
+			paymentName: 'SEPA'
 		},
 		{
 			name: i18n.t('LocationContext.UK.name'),
@@ -60,8 +58,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'UK',
 			currencyName: i18n.t('LocationContext.UK.currencyName'),
 			currency: 'GBP',
-			payment_id: '6043',
-			minTopup: 20
+			paymentName: 'Bank Transfer'
 		},
 		{
 			name: i18n.t('LocationContext.AU.name'),
@@ -69,8 +66,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'AU',
 			currencyName: i18n.t('LocationContext.AU.currencyName'),
 			currency: 'AUD',
-			payment_id: '7538',
-			minTopup: 30
+			paymentName: 'PayID'
 		},
 		{
 			name: i18n.t('LocationContext.CA.name'),
@@ -78,8 +74,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'CA',
 			currencyName: i18n.t('LocationContext.CA.currencyName'),
 			currency: 'CAD',
-			payment_id: '6031',
-			minTopup: 20
+			paymentName: 'Interac e-Transfer'
 		},
 		{
 			name: i18n.t('LocationContext.BR.name'),
@@ -87,8 +82,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 			iso: 'BR',
 			currencyName: i18n.t('LocationContext.BR.currencyName'),
 			currency: 'BRL',
-			payment_id: '7540',
-			minTopup: 50
+			paymentName: 'PIX'
 		}
 	]), [language]);
 
@@ -106,7 +100,6 @@ const LanguageProvider: React.FC = ({ children }) => {
 			countryCode,
 			setCountryCode: saveLocation,
 			locationCurrency: locationCountry?.currency ?? mock.countries[0].currency,
-			paymentOnLocation: locationCountry?.payment_id ?? null,
 			locationCountry
 		}),
 		[language, countryCode]

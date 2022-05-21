@@ -14,6 +14,7 @@ import Logger from '@utils/logger';
 import appsFlyer from 'react-native-appsflyer';
 import { APPS_FLYER_DEV_KEY } from '@env';
 import { globalWalletState } from './src/stores/WalletStore';
+import coins from './src/utils/files/coins.json';
 
 export const useApp = () => {
 	const [coinList, setCoinList] = React.useState<any>();
@@ -51,9 +52,9 @@ export const useApp = () => {
 				const data = await getTokenList();
 				setCoinList(data);
 				AsyncStorage.setItem('@listCoins', JSON.stringify(data));
-			} catch {
-				Logger.error('Error loading tokens from coingecko');
-				setCoinList([]);
+			} catch (error) {
+				setCoinList(coins);
+				AsyncStorage.setItem('@listCoins', JSON.stringify(coins));
 			}
 		};
 		getCoinList();

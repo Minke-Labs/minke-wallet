@@ -1,9 +1,13 @@
-import Interac from './Interac.png';
-import PayId from './PayId.png';
-import FasterPayments from './FasterPayments.png';
-import Sepa from './Sepa.png';
-import Pix from './Pix.png';
+import FasterPayments from './FasterPayments';
+import Interac from './Interac';
+import PayId from './PayId';
+import Pix from './Pix';
+import Sepa from './Sepa';
 
 export {
-	Interac, PayId, FasterPayments, Sepa, Pix
+	FasterPayments,
+	Interac,
+	PayId,
+	Pix,
+	Sepa
 };
