@@ -25,6 +25,7 @@ interface TransactionContextProps {
 	homeTransactions: TransactionPeriod[];
 	hasTransactions: boolean;
 	fetchTransactions: () => void;
+	pendingTransactions: ZapperTransaction[];
 	addPendingTransaction: (transaction: ZapperTransaction) => void;
 }
 
@@ -107,6 +108,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 			homeTransactions,
 			hasTransactions: allTransactions.length > 0,
 			fetchTransactions,
+			pendingTransactions,
 			addPendingTransaction
 		}),
 		[loading, address, chainId, pendingTransactions, transactions]

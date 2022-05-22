@@ -8,14 +8,14 @@ import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 import styles from './PendingTransaction.styles';
 import { PendingTransactionProps } from './PendingTransaction.types';
 
-const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount, symbol, pending, minAgo }) => {
+const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount, symbol, pending, timestamp }) => {
 	const { colors } = useTheme();
 
 	return (
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
 			<View style={styles.leftContainer}>
 				{
-					pending ? (
+					pending && pending ? (
 						<ActivityIndicator size={26} />
 					) : (
 						<Icon
@@ -30,7 +30,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount
 					<Text type="p2" weight="semiBold">
 						{ pending ? 'Pending' : 'Succes!' }
 					</Text>
-					<Text type="span" weight="semiBold">{minAgo} min.</Text>
+					<Text type="span" weight="semiBold">{timestamp} min.</Text>
 				</View>
 			</View>
 

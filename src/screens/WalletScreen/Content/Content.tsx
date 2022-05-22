@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
+import { FlatList } from 'react-native';
 import { AssetsPanel, ActionsPanel, Header } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
@@ -21,7 +22,10 @@ export const Content: React.FC<ContentProps> = ({
 }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { loading, fetchTransactions } = useTransactions();
+	const { loading, fetchTransactions, pendingTransactions } = useTransactions();
+
+	console.log('\n\n\n\n');
+	console.log('PendingTransaction HASH: ', pendingTransactions[0]);
 
 	const handleRefresh = useCallback(() => {
 		fetchTransactions();
@@ -46,12 +50,20 @@ export const Content: React.FC<ContentProps> = ({
 				onCopyPress={onCopyToClipboard}
 			/>
 
-			<PendingTransaction
-				address="To fridder.eth"
-				amount="0.1"
-				symbol="ETH"
-				pending={false}
-				minAgo={3}
+			<FlatList
+				style={{ paddingTop: 24, paddingBottom: 24 }}
+				data={pendingTransactions}
+				showsVerticalScrollIndicator={false}
+				renderItem={({ item }) => (
+					<PendingTransaction
+						address={item.destination}
+						pending={item.pending}
+						amount={item.amount}
+						symbol={item.symbol}
+						timestamp={item.timeStamp}
+					/>
+				)}
+				keyExtractor={(item) => item.hash}
 			/>
 
 			<AssetsPanel
