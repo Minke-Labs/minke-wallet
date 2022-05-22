@@ -44,9 +44,6 @@ export const Content: React.FC<ContentProps> = ({
 		if (mined) setPendingTransactions([]);
 	}, [fetchTransactions]);
 
-	console.log('\n\n\n\n')
-	console.log('pendingTransactions', pendingTransactions);
-
 	return (
 		<TabLayout
 			leftTitle={i18n.t('WalletScreen.Content.accounts')}
