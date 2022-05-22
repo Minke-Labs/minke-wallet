@@ -11,6 +11,8 @@ import { PendingTransactionProps } from './PendingTransaction.types';
 const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount, symbol, pending, timestamp }) => {
 	const { colors } = useTheme();
 
+	const getTs = (ts: string) => new Date(Number(ts) * 1000).getTime();
+
 	return (
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
 			<View style={styles.leftContainer}>
@@ -30,7 +32,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount
 					<Text type="p2" weight="semiBold">
 						{ pending ? 'Pending' : 'Succes!' }
 					</Text>
-					<Text type="span" weight="semiBold">{timestamp} min.</Text>
+					<Text type="span" weight="semiBold">{getTs(timestamp)} min.</Text>
 				</View>
 			</View>
 

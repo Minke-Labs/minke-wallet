@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
-import { FlatList } from 'react-native';
+import { getProvider } from '@src/model/wallet';
 import { AssetsPanel, ActionsPanel, Header } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
@@ -20,15 +20,28 @@ export const Content: React.FC<ContentProps> = ({
 	setAddFundsVisible,
 	setSendModalOpen
 }) => {
+	const [mined, setMined] = useState(false);
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { loading, fetchTransactions, pendingTransactions } = useTransactions();
+	const { loading, fetchTransactions, pendingTransactions, setPendingTransactions } = useTransactions();
 
-	console.log('\n\n\n\n');
-	console.log('PendingTransaction HASH: ', pendingTransactions[0]);
+	useEffect(() => {
+		const fetchStatus = async () => {
+			if (pendingTransactions[0]?.hash) {
+				const provider = await getProvider();
+				await provider.waitForTransaction(pendingTransactions[0]?.hash);
+				setMined(true);
+			} else {
+				setMined(false);
+			}
+		};
+
+		fetchStatus();
+	}, [pendingTransactions[0]?.hash]);
 
 	const handleRefresh = useCallback(() => {
 		fetchTransactions();
+		if (mined) setPendingTransactions([]);
 	}, [fetchTransactions]);
 
 	return (
@@ -50,21 +63,18 @@ export const Content: React.FC<ContentProps> = ({
 				onCopyPress={onCopyToClipboard}
 			/>
 
-			<FlatList
-				style={{ paddingTop: 24, paddingBottom: 24 }}
-				data={pendingTransactions}
-				showsVerticalScrollIndicator={false}
-				renderItem={({ item }) => (
+			{
+				pendingTransactions.length > 0 && (
 					<PendingTransaction
-						address={item.destination}
-						pending={item.pending}
-						amount={item.amount}
-						symbol={item.symbol}
-						timestamp={item.timeStamp}
+						key={pendingTransactions[0].hash}
+						address={pendingTransactions[0].destination}
+						pending={!mined}
+						amount={pendingTransactions[0].amount}
+						symbol={pendingTransactions[0].symbol}
+						timestamp={pendingTransactions[0].timeStamp}
 					/>
-				)}
-				keyExtractor={(item) => item.hash}
-			/>
+				)
+			}
 
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
