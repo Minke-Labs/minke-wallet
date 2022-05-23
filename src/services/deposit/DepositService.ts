@@ -5,6 +5,7 @@ import { gaslessDeposit, deposit } from './aave';
 import { gaslessMStableDeposit, mStableDeposit } from './mStable';
 import { DepositParams, DepositReturn } from './deposit.types';
 import ApprovalService from '../approval/ApprovalService';
+import Logger from '@utils/logger';
 
 class DepositService {
 	protocol: string;
@@ -24,14 +25,16 @@ class DepositService {
 		biconomy
 	}: DepositParams): Promise<DepositReturn> {
 		const { isApproved } = await this.approveState(address, gasless, depositableToken.address);
+		Logger.log('Deposit approved:', isApproved);
 		if (!isApproved) {
-			await this.approve({
+			const hash = await this.approve({
 				gasless,
 				address,
 				privateKey,
 				contract: depositableToken.address,
 				biconomy
 			});
+			Logger.log('Deposit approval:', hash);
 		}
 
 		if (this.protocol === 'aave') {

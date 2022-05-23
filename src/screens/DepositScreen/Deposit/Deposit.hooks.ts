@@ -40,9 +40,9 @@ export const useDeposit = () => {
 	const { setSelectedUSDCoin, apy, depositableToken, selectedProtocol } = useDepositProtocols();
 
 	const balanceFrom = useCallback(
-		(paraSwapToken: ParaswapToken | undefined): number => {
+		(paraSwapToken: ParaswapToken | undefined): string => {
 			if (!paraSwapToken) {
-				return 0;
+				return '0';
 			}
 			const walletToken = [...tokens, ...allTokens].find(
 				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
@@ -50,9 +50,10 @@ export const useDeposit = () => {
 			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
 			if (isNativeToken && walletToken) {
 				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(+walletToken.balance - gasPrice, 0);
+				return Math.max(+walletToken.balance - gasPrice, 0).toString();
 			}
-			return walletToken ? +walletToken.balance : 0;
+
+			return walletToken ? walletToken.balance : '0';
 		},
 		[tokens, allTokens, nativeToken, gas]
 	);
@@ -64,7 +65,7 @@ export const useDeposit = () => {
 		}
 	};
 
-	const enoughForGas = gaslessEnabled || (nativeToken && balanceFrom(nativeToken) > 0);
+	const enoughForGas = gaslessEnabled || (nativeToken && +balanceFrom(nativeToken) > 0);
 	const canDeposit =
 		token &&
 		+tokenBalance > 0 &&
@@ -140,8 +141,7 @@ export const useDeposit = () => {
 
 	useEffect(() => {
 		if (token && tokens && tokens.length > 0) {
-			const balance = balanceFrom(token);
-			setTokenBalance(balance.toFixed(token.decimals));
+			setTokenBalance(balanceFrom(token));
 		} else {
 			setTokenBalance('0');
 		}

@@ -55,15 +55,15 @@ export const gaslessApproval = async ({
 	try {
 		Logger.log('Sending transaction', rawTx);
 		await provider.sendTransaction(tx);
-		Logger.log('Sending transaction done');
 	} catch (error: any) {
 		// Ethers check the hash from user's signed tx and hash returned from Biconomy
 		// Both hash are expected to be different as biconomy send the transaction from its relayers
 		if (error.returnedHash && error.expectedHash) {
 			transactionHash = error.returnedHash;
+			Logger.log('Sending transaction done', transactionHash);
 		} else {
 			captureException(error);
-			Logger.error('Error on gasless approval transaction');
+			Logger.log('Error on gasless approval transaction', error);
 		}
 	}
 
