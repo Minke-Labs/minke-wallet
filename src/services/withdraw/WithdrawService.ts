@@ -26,8 +26,8 @@ class WithdrawService {
 		biconomy
 	}: WithdrawParams): Promise<WithdrawReturn> {
 		const { isApproved } = await this.approveState(address, gasless, interestBearingToken);
-		console.log({ isApproved });
-		if (!isApproved) {
+		if (!isApproved && !(this.protocol === 'aave' && gasless)) {
+			// Gasless AAVE withdraw uses a permit signature
 			const hash = await this.approve({
 				gasless,
 				address,

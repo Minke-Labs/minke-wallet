@@ -46,7 +46,7 @@ const Logger = {
 
 	error(...args: any[]) {
 		if (__DEV__) {
-			console.error(...args);
+			console.log(...args);
 		}
 	},
 
