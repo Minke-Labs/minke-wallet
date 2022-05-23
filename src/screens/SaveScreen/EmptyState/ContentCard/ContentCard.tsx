@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme } from '@hooks';
 import { makeStyles } from './ContentCard.styles';
-import BorderSVG from '../BorderSVG';
+import BorderSVG from './BorderSVG';
 
 export const ContentCard: React.FC = ({ children }) => {
 	const { colors } = useTheme();
@@ -12,7 +12,9 @@ export const ContentCard: React.FC = ({ children }) => {
 			<View style={styles.imgContainer}>
 				<BorderSVG />
 			</View>
-			{children}
+			<View style={styles.content}>
+				{children}
+			</View>
 		</View>
 	);
 };
