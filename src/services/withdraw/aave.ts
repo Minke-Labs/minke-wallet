@@ -98,7 +98,6 @@ export const withdraw = async ({
 }) => {
 	const transaction = await withdrawTransaction({
 		address,
-		privateKey,
 		amount,
 		toTokenAddress,
 		interestBearingToken,

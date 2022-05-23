@@ -1,6 +1,7 @@
 import { ApprovalState } from '@models/deposit';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
+import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import ApprovalService from '../approval/ApprovalService';
 import { DepositReturn } from '../deposit/deposit.types';
@@ -41,6 +42,8 @@ class WithdrawService {
 				Logger.log('approval failed');
 				return null;
 			}
+			await (await getProvider()).waitForTransaction(hash);
+			Logger.log('Withdraw approval', hash);
 		}
 		if (this.protocol === 'aave') {
 			if (gasless) {
