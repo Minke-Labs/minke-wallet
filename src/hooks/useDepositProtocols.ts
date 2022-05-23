@@ -88,12 +88,17 @@ const useDepositProtocols = (withdraw = false) => {
 	useEffect(() => {
 		const loadApproved = async () => {
 			if (selectedProtocol && depositableToken) {
-				const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
-					address,
-					gaslessEnabled,
-					depositableToken.address
-				);
-				setApproved(isApproved);
+				const protocolApproved = await AsyncStorage.getItem(`@approved-${selectedProtocol.id}`);
+				if (protocolApproved) {
+					setApproved(true);
+				} else {
+					const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
+						address,
+						gaslessEnabled,
+						depositableToken.address
+					);
+					setApproved(isApproved);
+				}
 			}
 		};
 		loadApproved();

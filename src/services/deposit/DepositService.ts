@@ -1,11 +1,11 @@
 import { ApprovalState } from '@models/deposit';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
+import Logger from '@utils/logger';
 import { gaslessDeposit, deposit } from './aave';
 import { gaslessMStableDeposit, mStableDeposit } from './mStable';
 import { DepositParams, DepositReturn } from './deposit.types';
 import ApprovalService from '../approval/ApprovalService';
-import Logger from '@utils/logger';
 
 class DepositService {
 	protocol: string;

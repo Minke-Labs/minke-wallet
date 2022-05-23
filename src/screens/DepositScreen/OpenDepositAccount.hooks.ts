@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { globalWalletState } from '@src/stores/WalletStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
 import Logger from '@utils/logger';
 import DepositService from '@src/services/deposit/DepositService';
@@ -26,8 +27,9 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 
 		if (hash) {
 			const provider = await getProvider();
-			provider.waitForTransaction(hash);
-			track('Opened AAVE Account', { hash, gasless: true });
+			await provider.waitForTransaction(hash);
+			await AsyncStorage.setItem(`@approved-${selectedProtocol.id}`, 'true');
+			track(`Opened ${selectedProtocol.name} Account`, { hash, gasless: gaslessEnabled });
 			setLoading(false);
 			onApprove();
 		} else {
