@@ -58,8 +58,7 @@ class DepositService {
 				amount,
 				gweiValue: gasPrice,
 				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
-				tokenAddress: depositableToken.address,
-				tokenDecimals: 0
+				tokenAddress: depositableToken.address
 			});
 
 			return hash;

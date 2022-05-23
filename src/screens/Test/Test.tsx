@@ -16,8 +16,6 @@ const Test = () => {
 
 		const { isApproved } = await new WithdrawService('mstable').approveState(address, true, dai);
 
-		console.log({ isApproved });
-
 		if (!isApproved) {
 			await new WithdrawService('mstable').approve({
 				gasless,

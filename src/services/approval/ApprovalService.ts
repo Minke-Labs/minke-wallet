@@ -20,7 +20,7 @@ class ApprovalService {
 		spender: string
 	): Promise<ApprovalState> {
 		if (this.protocol === 'aave' && !gasless) {
-			const approval = await zapperApprovalState(address, spender);
+			const approval = await zapperApprovalState(address, contract);
 			return approval;
 		}
 

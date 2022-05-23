@@ -1,6 +1,7 @@
 import { ApprovalState } from '@models/deposit';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
+import Logger from '@utils/logger';
 import ApprovalService from '../approval/ApprovalService';
 import { DepositReturn } from '../deposit/deposit.types';
 import { gaslessWithdraw, withdraw } from './aave';
@@ -37,7 +38,7 @@ class WithdrawService {
 			});
 
 			if (!hash) {
-				console.log('approval failed');
+				Logger.log('approval failed');
 				return null;
 			}
 		}

@@ -79,7 +79,6 @@ export const deposit = async ({
 	privateKey,
 	amount,
 	tokenAddress,
-	tokenDecimals,
 	interestBearingTokenAddress,
 	gweiValue
 }: {
@@ -87,7 +86,6 @@ export const deposit = async ({
 	privateKey: string;
 	amount: string;
 	tokenAddress: string;
-	tokenDecimals: number;
 	interestBearingTokenAddress: string;
 	gweiValue: string;
 }): Promise<DepositReturn> => {
@@ -95,7 +93,6 @@ export const deposit = async ({
 		address,
 		amount,
 		token: tokenAddress,
-		decimals: tokenDecimals,
 		interestBearingToken: interestBearingTokenAddress,
 		gweiValue: Number(gweiValue)
 	});
