@@ -1,5 +1,6 @@
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
+import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
 import { BigNumber, Contract, ethers, Wallet } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
@@ -79,6 +80,8 @@ const mStableGaslessWithdraw = async ({
 		gasPrice: parseUnits(gasPrice, 'gwei')
 	};
 
+	Logger.log('mStable gasless withdraw', rawTx);
+
 	const signedTx = await userSigner.signTransaction(rawTx);
 	// should get user message to sign for EIP712 or personal signature types
 	const forwardData = await biconomy.getForwardRequestAndMessageToSign(signedTx);
@@ -93,7 +96,9 @@ const mStableGaslessWithdraw = async ({
 	};
 
 	// promise resolves to transaction hash
+	Logger.log('mStable gasless withdraw sending', data);
 	const txHash: string = await provider.send('eth_sendRawTransaction', [data]);
+	Logger.log('mStable gasless withdraw done', txHash);
 	return txHash;
 };
 

@@ -35,9 +35,7 @@ export const gaslessApproval = async ({
 	}
 
 	const wallet = new Wallet(privateKey, provider);
-	console.log('amount', tokenAmount?.toString());
-	console.log('contract', contract);
-	console.log('spender', spender);
+
 	const rawTx = {
 		to: contract,
 		data: await gaslessTransactionData({
@@ -51,12 +49,13 @@ export const gaslessApproval = async ({
 		from: address
 	};
 
-	Logger.log('Gasless approval transaction', rawTx);
 	const tx = await wallet.signTransaction(rawTx);
 
 	let transactionHash;
 	try {
+		Logger.log('Sending transaction', rawTx);
 		await provider.sendTransaction(tx);
+		Logger.log('Sending transaction done');
 	} catch (error: any) {
 		// Ethers check the hash from user's signed tx and hash returned from Biconomy
 		// Both hash are expected to be different as biconomy send the transaction from its relayers

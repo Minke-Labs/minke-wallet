@@ -12,14 +12,21 @@ const Test = () => {
 	const { address, privateKey } = useState(globalWalletState()).value;
 
 	const test = async () => {
-		const dai = '0x533de50A545dC0b8df27ccF67C71eB279047A518';
-		await new WithdrawService('mstable').approve({
-			gasless,
-			biconomy,
-			address,
-			privateKey,
-			contract: dai
-		});
+		const dai = '0x707AD4021FAd2D9267F918DB937319a8710b10D8';
+
+		const { isApproved } = await new WithdrawService('mstable').approveState(address, true, dai);
+
+		console.log({ isApproved });
+
+		if (!isApproved) {
+			await new WithdrawService('mstable').approve({
+				gasless,
+				biconomy,
+				address,
+				privateKey,
+				contract: dai
+			});
+		}
 	};
 
 	return (

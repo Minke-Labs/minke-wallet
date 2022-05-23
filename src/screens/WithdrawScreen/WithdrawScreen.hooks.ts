@@ -87,16 +87,16 @@ const useWithdrawScreen = () => {
 
 	const onWithdraw = async () => {
 		Keyboard.dismiss();
-		if (canWithdraw && token && selectedProtocol) {
+		if (canWithdraw && token && token.interestBearingToken && selectedProtocol) {
 			setWaitingTransaction(true);
 			const hash = await new WithdrawService(selectedProtocol.id).withdraw({
 				gasless: gaslessEnabled,
 				address,
 				privateKey,
-				amount: formatUnits(toBn(amount, token.decimals), 'wei'),
+				amount: formatUnits(toBn(amount, token.interestBearingToken.decimals), 'wei'),
 				minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
 				token: token.address,
-				interestBearingToken: token.interestBearingAddress!,
+				interestBearingToken: token.interestBearingToken.address,
 				gasPrice: gweiValue.toString(),
 				biconomy
 			});
@@ -124,13 +124,13 @@ const useWithdrawScreen = () => {
 					symbol: token.symbol,
 					subTransactions: [
 						{ type: 'incoming', symbol: token.symbol, amount: +amount },
-						{ type: 'outgoing', symbol: token.interestBearingSymbol!, amount: +amount }
+						{ type: 'outgoing', symbol: token.interestBearingToken.symbol, amount: +amount }
 					]
 				});
 
 				navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 			} else {
-				// Logger.error('Error withdrawing');
+				Logger.error('Error withdrawing');
 			}
 		}
 	};
@@ -138,7 +138,7 @@ const useWithdrawScreen = () => {
 	useEffect(() => {
 		if (token && tokens && tokens.length > 0) {
 			const balance = balanceFrom(token);
-			setTokenBalance(balance.toFixed(token.decimals));
+			setTokenBalance(balance.toFixed(token.interestBearingToken?.decimals));
 		} else {
 			setTokenBalance('0');
 		}

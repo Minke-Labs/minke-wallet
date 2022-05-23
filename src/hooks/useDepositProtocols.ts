@@ -5,8 +5,7 @@ import {
 	depositStablecoins,
 	fetchDepositProtocol,
 	fetchMStablePoolData,
-	usdCoin,
-	usdCoinSettingsKey
+	usdCoin
 } from '@models/deposit';
 import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { getDepositToken } from '@models/depositTokens';
@@ -68,7 +67,6 @@ const useDepositProtocols = (withdraw = false) => {
 		token = sourceTokens.reverse().find((t) => depositStablecoins.includes(t.symbol)) || ({} as MinkeToken);
 		const { symbol } = token;
 		if (symbol) {
-			await AsyncStorage.setItem(usdCoinSettingsKey, symbol);
 			setSelectedUSDCoin(symbol);
 			setAbleToDeposit(true);
 			setDefaultToken(token);

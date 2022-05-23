@@ -2,11 +2,14 @@ export interface DepositableToken {
 	address: string;
 	symbol: string;
 	decimals: number;
-	exchangeRateContract?: boolean; // mStable has an exchange rate
-	// holds if the token will appear as the default USD token. Ex: imUSD will appear as USDC
-	convertToDefaultUSD?: boolean;
-	interestBearingSymbol: string;
-	interestBearingAddress: string;
+	interestBearingToken: {
+		exchangeRateContract?: boolean; // mStable has an exchange rate
+		// holds if the token will appear as the default USD token. Ex: imUSD will appear as USDC
+		convertToDefaultUSD?: boolean;
+		symbol: string;
+		address: string;
+		decimals: number;
+	};
 }
 
 export interface DepositTokens {

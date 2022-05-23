@@ -229,8 +229,6 @@ const getApproveFunctionSignature = async ({
 		message
 	};
 
-	console.log({ dataToSign });
-
 	const signature = signTypedDataV3({ privateKey, data: dataToSign });
 	const { r, s, v } = getSignatureParameters(signature);
 	return { functionSignature, r, s, v };

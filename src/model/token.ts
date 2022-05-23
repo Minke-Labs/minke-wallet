@@ -278,10 +278,13 @@ export interface MinkeToken {
 	image: string;
 	balance: string;
 	balanceUSD: number;
-	// withdraw: tokens that can be deposited (DAI, USDC...) will have this field pointing to
-	// the interest bearing token address (amDAI, amUSDC...)
-	interestBearingAddress?: string | undefined;
-	interestBearingSymbol?: string | undefined;
+	interestBearingToken?: {
+		// withdraw: tokens that can be deposited (DAI, USDC...) will have this field pointing to
+		// the interest bearing token address (amDAI, amUSDC...)
+		address: string;
+		symbol: string;
+		decimals: number;
+	};
 }
 
 export interface AccountBalance {

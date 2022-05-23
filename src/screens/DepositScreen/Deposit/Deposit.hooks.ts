@@ -111,7 +111,7 @@ export const useDeposit = () => {
 					symbol: token.symbol,
 					subTransactions: [
 						{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-						{ type: 'incoming', symbol: depositableToken.interestBearingSymbol, amount: +amount }
+						{ type: 'incoming', symbol: depositableToken.interestBearingToken.symbol, amount: +amount }
 					]
 				});
 				navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });

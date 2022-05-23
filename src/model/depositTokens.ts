@@ -59,27 +59,39 @@ const depositTokens: DepositTokens = {
 		aave: [
 			{
 				...stables.matic.USDC,
-				interestBearingSymbol: 'amUSDC',
-				interestBearingAddress: '0x1a13F4Ca1d028320A707D99520AbFefca3998b7F'
+				interestBearingToken: {
+					symbol: 'amUSDC',
+					address: '0x1a13F4Ca1d028320A707D99520AbFefca3998b7F',
+					decimals: 6
+				}
 			},
 			{
 				...stables.matic.DAI,
-				interestBearingSymbol: 'amDAI',
-				interestBearingAddress: '0x27F8D03b3a2196956ED754baDc28D73be8830A6e'
+				interestBearingToken: {
+					symbol: 'amDAI',
+					address: '0x27F8D03b3a2196956ED754baDc28D73be8830A6e',
+					decimals: 18
+				}
 			},
 			{
 				...stables.matic.USDT,
-				interestBearingSymbol: 'amUSDT',
-				interestBearingAddress: '0x60D55F02A771d515e077c9C2403a1ef324885CeC'
+				interestBearingToken: {
+					symbol: 'amUSDT',
+					address: '0x60D55F02A771d515e077c9C2403a1ef324885CeC',
+					decimals: 6
+				}
 			}
 		],
 		mstable: [
 			{
 				...stables.matic.imUSD,
-				exchangeRateContract: true,
-				convertToDefaultUSD: true,
-				interestBearingSymbol: 'MNKTESTV9',
-				interestBearingAddress: '0xd31a02A126Bb7ACD359BD61E9a8276959408855E'
+				interestBearingToken: {
+					exchangeRateContract: true,
+					convertToDefaultUSD: true,
+					symbol: 'MNKTESTV12',
+					address: '0x707AD4021FAd2D9267F918DB937319a8710b10D8',
+					decimals: 18
+				}
 			}
 		]
 	},
@@ -87,27 +99,39 @@ const depositTokens: DepositTokens = {
 		aave: [
 			{
 				...stables.mainnet.USDC,
-				interestBearingSymbol: 'aUSDC',
-				interestBearingAddress: '0xBcca60bB61934080951369a648Fb03DF4F96263C'
+				interestBearingToken: {
+					symbol: 'aUSDC',
+					address: '0xBcca60bB61934080951369a648Fb03DF4F96263C',
+					decimals: 6
+				}
 			},
 			{
 				...stables.mainnet.DAI,
-				interestBearingSymbol: 'aDAI',
-				interestBearingAddress: '0x028171bCA77440897B824Ca71D1c56caC55b68A3'
+				interestBearingToken: {
+					symbol: 'aDAI',
+					address: '0x028171bCA77440897B824Ca71D1c56caC55b68A3',
+					decimals: 18
+				}
 			},
 			{
 				...stables.mainnet.USDT,
-				interestBearingSymbol: 'aUSDT',
-				interestBearingAddress: '0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811'
+				interestBearingToken: {
+					symbol: 'aUSDT',
+					address: '0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811',
+					decimals: 6
+				}
 			}
 		],
 		mstable: [
 			{
 				...stables.mainnet.imUSD,
-				exchangeRateContract: true,
-				convertToDefaultUSD: true,
-				interestBearingSymbol: 'v-imUSD',
-				interestBearingAddress: '0x78BefCa7de27d07DC6e71da295Cc2946681A6c7B'
+				interestBearingToken: {
+					exchangeRateContract: true,
+					convertToDefaultUSD: true,
+					symbol: 'v-imUSD',
+					address: '0x78BefCa7de27d07DC6e71da295Cc2946681A6c7B',
+					decimals: 18
+				}
 			}
 		]
 	}
@@ -123,61 +147,59 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 	const provider = await getProvider();
 	const tokens = depositTokens[id][protocol];
 
-	const promises = tokens.map(
-		async ({
-			address,
-			decimals,
-			symbol,
-			interestBearingAddress,
-			interestBearingSymbol,
+	const promises = tokens.map(async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
+		const {
+			address: interestBearingAddress,
+			symbol: interestBearingSymbol,
+			decimals: interestBearingDecimals,
 			exchangeRateContract,
 			convertToDefaultUSD
-		}) => {
-			const token = new Contract(interestBearingAddress, erc20abi, provider);
+		} = interestBearingToken;
+		const token = new Contract(interestBearingAddress, erc20abi, provider);
 
-			let balance: BigNumber = await token.balanceOf(wallet);
-			if (exchangeRateContract) {
-				const savingAsset = new Contract(
-					address,
-					['function exchangeRate() public view returns (uint256)'],
-					provider
-				);
-				const exchangeRate: BigNumber = await savingAsset.exchangeRate();
-				balance = toBn(
-					(Number(formatUnits(balance, decimals)) * Number(formatUnits(exchangeRate, decimals))).toString(),
-					decimals
-				);
-			}
-			const formatedBalance = formatUnits(balance, decimals);
-
-			let tokenParams = {
+		let balance: BigNumber = await token.balanceOf(wallet);
+		if (exchangeRateContract) {
+			const savingAsset = new Contract(
 				address,
-				symbol,
-				decimals,
-				image: symbol,
-				name: symbol
-			};
+				['function exchangeRate() public view returns (uint256)'],
+				provider
+			);
+			const exchangeRate: BigNumber = await savingAsset.exchangeRate();
+			balance = toBn(
+				(Number(formatUnits(balance, decimals)) * Number(formatUnits(exchangeRate, decimals))).toString(),
+				decimals
+			);
+		}
+		const formatedBalance = formatUnits(balance, decimals);
 
-			if (convertToDefaultUSD) {
-				const defaultToken = await usdCoin();
-				tokenParams = {
-					...stables[id][defaultToken],
-					decimals,
-					image: defaultToken,
-					name: defaultToken
-				};
-			}
+		let tokenParams = {
+			address,
+			symbol,
+			decimals,
+			image: symbol,
+			name: symbol
+		};
 
-			return {
-				...tokenParams,
-				decimals,
-				interestBearingAddress,
-				interestBearingSymbol,
-				balance: formatedBalance,
-				balanceUSD: Number(formatedBalance)
+		if (convertToDefaultUSD) {
+			const defaultToken = await usdCoin();
+			tokenParams = {
+				...stables[id][defaultToken],
+				image: defaultToken,
+				name: defaultToken
 			};
 		}
-	);
+
+		return {
+			...tokenParams,
+			interestBearingToken: {
+				address: interestBearingAddress,
+				symbol: interestBearingSymbol,
+				decimals: interestBearingDecimals
+			},
+			balance: formatedBalance,
+			balanceUSD: Number(formatedBalance)
+		};
+	});
 
 	return Promise.all(promises);
 };

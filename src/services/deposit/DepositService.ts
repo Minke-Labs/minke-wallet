@@ -43,7 +43,7 @@ class DepositService {
 					minAmount,
 					biconomy,
 					gasPrice,
-					interestBearingToken: depositableToken.interestBearingAddress,
+					interestBearingToken: depositableToken.interestBearingToken.address,
 					token: depositableToken.address
 				});
 
@@ -54,7 +54,7 @@ class DepositService {
 				privateKey,
 				amount,
 				gweiValue: gasPrice,
-				interestBearingTokenAddress: depositableToken.interestBearingAddress,
+				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
 				tokenAddress: depositableToken.address,
 				tokenDecimals: 0
 			});
