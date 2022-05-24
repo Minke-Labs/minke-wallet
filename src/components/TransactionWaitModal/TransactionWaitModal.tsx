@@ -88,7 +88,7 @@ const TransactionWaitModal = ({
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
-					{fromToken.symbol}
+					{withdraw ? toToken?.symbol : fromToken.symbol}
 				</Text>
 				{!withdraw && (
 					<>
