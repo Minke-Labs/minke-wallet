@@ -21,7 +21,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 		const fetchLocation = async () => {
 			const storedLocation = await AsyncStorage.getItem('@location');
 			const storedLanguage = await AsyncStorage.getItem('@language');
-			setCountryCode(storedLocation || mock.countryCode);
+			setCountryCode(storedLocation || Localization.region);
 			setLanguage(storedLanguage || Localization.locale);
 		};
 		fetchLocation();
