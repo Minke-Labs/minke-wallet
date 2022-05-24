@@ -1,5 +1,6 @@
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
+import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
 import { Contract, ethers, Wallet } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
@@ -118,8 +119,13 @@ const gaslessMStableDeposit = async ({
 
 	const provider = biconomy.getEthersProvider();
 	// promise resolves to transaction hash
-	const hash = await provider.send('eth_sendRawTransaction', [data]);
-	return hash;
+	try {
+		const hash = await provider.send('eth_sendRawTransaction', [data]);
+		return hash;
+	} catch (error) {
+		Logger.error('mStable gasless deposit error', error);
+		return null;
+	}
 };
 
 export { mStableDeposit, gaslessMStableDeposit };

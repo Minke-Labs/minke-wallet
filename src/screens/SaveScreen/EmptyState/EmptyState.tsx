@@ -5,7 +5,7 @@ import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView }
 import { Icon, Text, Button } from '@components';
 import { useTheme, useNavigation, useDepositProtocols, useLanguage } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
-import { bgSaveBackground, bgSaveBackgroundDark, mStableSaveBackground, mStableSaveBackgroundDark } from '@images';
+import { bgSaveBackground, bgSaveBackgroundDark, mStableSaveBackground } from '@images';
 import { makeStyles } from './EmptyState.styles';
 
 const EmptyState = () => {
@@ -15,9 +15,8 @@ const EmptyState = () => {
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
 	const { selectedProtocol, apy } = useDepositProtocols();
-	const mStableBg = scheme === 'dark' ? mStableSaveBackgroundDark : mStableSaveBackground;
 	const aaveBg = scheme === 'dark' ? bgSaveBackgroundDark : bgSaveBackground;
-	const backgroundImg = selectedProtocol?.id === 'aave' ? aaveBg : mStableBg;
+	const backgroundImg = selectedProtocol?.id === 'aave' ? aaveBg : mStableSaveBackground;
 
 	return (
 		<View style={styles.container}>

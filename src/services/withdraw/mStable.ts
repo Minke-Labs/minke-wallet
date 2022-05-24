@@ -1,7 +1,7 @@
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
-import { signTypedDataV3 } from '@utils/signing/signing';
+import { permitSignature, signTypedDataV3 } from '@utils/signing/signing';
 import { BigNumber, Contract, ethers, Wallet } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
@@ -76,7 +76,7 @@ const mStableGaslessWithdraw = async ({
 		to: withdrawContract,
 		data: functionSignature,
 		from: address,
-		gasLimit: 800000,
+		gasLimit: 1000000,
 		gasPrice: parseUnits(gasPrice, 'gwei')
 	};
 
@@ -96,9 +96,7 @@ const mStableGaslessWithdraw = async ({
 	};
 
 	// promise resolves to transaction hash
-	Logger.log('mStable gasless withdraw sending', data);
 	const txHash: string = await provider.send('eth_sendRawTransaction', [data]);
-	Logger.log('mStable gasless withdraw done', txHash);
 	return txHash;
 };
 

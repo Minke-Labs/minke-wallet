@@ -110,8 +110,8 @@ const useWithdrawScreen = () => {
 					hash,
 					gasless: gaslessEnabled
 				});
-
-				const { from, to } = await biconomy.getEthersProvider().waitForTransaction(hash);
+				const provider = biconomy.getEthersProvider();
+				const { from, to } = await provider.waitForTransaction(hash);
 				addPendingTransaction({
 					from,
 					destination: to,
@@ -165,7 +165,8 @@ const useWithdrawScreen = () => {
 		transactionHash,
 		waitingTransaction,
 		tokens,
-		gaslessEnabled
+		gaslessEnabled,
+		selectedProtocol
 	};
 };
 

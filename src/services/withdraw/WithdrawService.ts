@@ -1,7 +1,6 @@
 import { ApprovalState } from '@models/deposit';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
-import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import ApprovalService from '../approval/ApprovalService';
 import { DepositReturn } from '../deposit/deposit.types';
@@ -28,6 +27,8 @@ class WithdrawService {
 		biconomy
 	}: WithdrawParams): Promise<WithdrawReturn> {
 		const { isApproved } = await this.approveState(address, gasless, interestBearingToken);
+		const provider = biconomy.getEthersProvider();
+		Logger.log('Is provider ready?', !!provider);
 		if (!isApproved && !(this.protocol === 'aave' && gasless)) {
 			// Gasless AAVE withdraw uses a permit signature
 			const hash = await this.approve({
@@ -42,7 +43,7 @@ class WithdrawService {
 				Logger.log('approval failed');
 				return null;
 			}
-			await (await getProvider()).waitForTransaction(hash);
+			await provider.waitForTransaction(hash);
 			Logger.log('Withdraw approval', hash);
 		}
 		if (this.protocol === 'aave') {

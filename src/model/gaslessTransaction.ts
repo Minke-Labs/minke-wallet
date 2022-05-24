@@ -48,27 +48,26 @@ export const gaslessApproval = async ({
 		}),
 		from: address
 	};
-
 	const tx = await wallet.signTransaction(rawTx);
 
 	let transactionHash;
 	try {
-		Logger.log('Sending transaction', rawTx);
+		Logger.log('Approval transaction', tx);
+		Logger.log('Is provider ready?', !!provider);
 		await provider.sendTransaction(tx);
 	} catch (error: any) {
 		// Ethers check the hash from user's signed tx and hash returned from Biconomy
 		// Both hash are expected to be different as biconomy send the transaction from its relayers
 		if (error.returnedHash && error.expectedHash) {
 			transactionHash = error.returnedHash;
-			Logger.log('Sending transaction done', transactionHash);
+			Logger.log('Approval transaction done', transactionHash);
 		} else {
 			captureException(error);
-			Logger.log('Error on gasless approval transaction', error);
+			Logger.error('Error on gasless approval transaction', error);
 		}
 	}
 
 	if (transactionHash) {
-		await provider.waitForTransaction(transactionHash);
 		return transactionHash;
 	}
 

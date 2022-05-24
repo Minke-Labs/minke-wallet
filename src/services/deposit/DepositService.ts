@@ -26,15 +26,16 @@ class DepositService {
 	}: DepositParams): Promise<DepositReturn> {
 		const { isApproved } = await this.approveState(address, gasless, depositableToken.address);
 		Logger.log('Deposit approved:', isApproved);
+		const provider = biconomy.getEthersProvider();
+		Logger.log('Is provider ready?', !!provider);
 		if (!isApproved) {
-			const hash = await this.approve({
+			await this.approve({
 				gasless,
 				address,
 				privateKey,
 				contract: depositableToken.address,
 				biconomy
 			});
-			Logger.log('Deposit approval:', hash);
 		}
 
 		if (this.protocol === 'aave') {

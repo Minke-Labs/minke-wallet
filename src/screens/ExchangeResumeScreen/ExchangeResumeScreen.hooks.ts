@@ -169,6 +169,7 @@ const useExchangeResumeScreen = () => {
 
 			if (gasless) {
 				const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract);
+				const provider = biconomy.getEthersProvider();
 
 				if (!isApproved) {
 					const tx = await gaslessApproval({
@@ -180,8 +181,7 @@ const useExchangeResumeScreen = () => {
 					});
 
 					track('Approved for exchange', { to: to.symbol, from: from.symbol, gasless: true });
-
-					await biconomy.getEthersProvider().waitForTransaction(tx, 3);
+					await provider.waitForTransaction(tx);
 				}
 
 				const hash = await gaslessExchange({
@@ -198,7 +198,7 @@ const useExchangeResumeScreen = () => {
 					swapTarget: toAddress!
 				});
 				setTransactionHash(hash);
-				const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash, 3);
+				const { status, from: src } = await provider.waitForTransaction(hash, 3);
 				track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
 				addPendingTransaction({
 					from: src,

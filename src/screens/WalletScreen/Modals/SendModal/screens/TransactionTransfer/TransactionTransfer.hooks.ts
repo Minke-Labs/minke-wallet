@@ -100,6 +100,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 
 					if (gasless) {
 						const { isApproved } = await approvalState(address, token.address, sendContract);
+						const provider = biconomy.getEthersProvider();
 
 						if (!isApproved) {
 							const tx = await gaslessApproval({
@@ -112,7 +113,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 
 							track('Approved for sending', { token: token.symbol, name: token.name, gasless: true });
 
-							await biconomy.getEthersProvider().waitForTransaction(tx, 1);
+							await provider.waitForTransaction(tx, 1);
 						}
 
 						const hash = await gaslessSend({
@@ -125,7 +126,7 @@ export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, toke
 							to
 						});
 
-						const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash);
+						const { status, from: src } = await provider.waitForTransaction(hash);
 						sentSuccessfully({
 							token: {
 								address: token.address,
