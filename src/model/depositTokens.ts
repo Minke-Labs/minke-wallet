@@ -1,6 +1,7 @@
 import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
+import { partition } from 'lodash';
 import { usdCoin } from './deposit';
 import { network } from './network';
 import { MinkeToken } from './token';
@@ -142,10 +143,11 @@ export const getDepositToken = (id: string, symbol: string, protocol: string): D
 	return values.find((t) => symbol.toLowerCase() === t.symbol.toLowerCase()) || values[0];
 };
 
-const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<MinkeToken[]> => {
+const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<[MinkeToken[], MinkeToken[]]> => {
 	const { id } = await network();
 	const provider = await getProvider();
-	const tokens = depositTokens[id][protocol];
+	const tokens = Object.values(depositTokens[id]).flat();
+	const protocolAddresses = depositTokens[id][protocol].map(({ interestBearingToken: { address } }) => address);
 
 	const promises = tokens.map(async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
 		const {
@@ -201,7 +203,8 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 		};
 	});
 
-	return Promise.all(promises);
+	const minkeTokens = await Promise.all(promises);
+	return partition(minkeTokens, (token) => protocolAddresses.includes(token.interestBearingToken!.address));
 };
 
 export { fetchInterestBearingTokens };

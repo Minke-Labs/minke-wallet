@@ -295,6 +295,7 @@ export interface AccountBalance {
 	tokens: MinkeToken[];
 	interestTokens: MinkeToken[];
 	depositableTokens: MinkeToken[];
+	withdrawableTokens: MinkeToken[];
 }
 
 export interface CovalentToken {

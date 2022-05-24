@@ -1,7 +1,7 @@
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
-import { permitSignature, signTypedDataV3 } from '@utils/signing/signing';
+import { signTypedDataV3 } from '@utils/signing/signing';
 import { BigNumber, Contract, ethers, Wallet } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';

@@ -27,7 +27,7 @@ const useWithdrawScreen = () => {
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const { interestTokens: tokens, tokens: balances } = useTokens();
+	const { withdrawableTokens: tokens, tokens: balances } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();

@@ -44,8 +44,11 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
 
 	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	let interestTokens = await fetchInterestBearingTokens(address, protocol.id);
-	interestTokens = interestTokens.filter((token) => Number(token.balance) > 0);
+	const allInterestTokens = await fetchInterestBearingTokens(address, protocol.id);
+	let interestTokens = allInterestTokens.flat();
+	let [withdrawableTokens] = allInterestTokens;
+	interestTokens = interestTokens.filter((token) => token.balanceUSD > 0);
+	withdrawableTokens = withdrawableTokens.filter((token) => token.balanceUSD > 0);
 
 	const depositableTokens = allTokens.filter(
 		(token) => depositStablecoins.includes(token.symbol) && +token.balance > 0
@@ -63,6 +66,7 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 		depositedBalance,
 		walletBalance,
 		interestTokens,
-		depositableTokens
+		depositableTokens,
+		withdrawableTokens
 	};
 };

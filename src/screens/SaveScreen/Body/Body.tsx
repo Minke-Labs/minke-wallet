@@ -16,7 +16,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 		<View style={styles.depositCardContainer}>
 			<View style={styles.actionDepositCard}>
 				<FlatList
-					keyExtractor={(item) => item.address}
+					keyExtractor={(item) => item.interestBearingToken!.address}
 					data={interestTokens}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item, index }) => (
