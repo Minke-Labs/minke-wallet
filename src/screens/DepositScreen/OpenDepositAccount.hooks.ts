@@ -41,6 +41,7 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 				setLoading(false);
 			}
 		} catch (error) {
+			setLoading(false);
 			captureException(error);
 			Logger.error('Open account blockchain error', error);
 			setBlockchainError(true);

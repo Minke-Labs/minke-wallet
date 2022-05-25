@@ -17,6 +17,7 @@ import {
 	gaslessExchange,
 	isExchangeTargetApproved
 } from '@models/gaslessTransaction';
+import { captureException } from '@sentry/react-native';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -101,7 +102,9 @@ const useExchangeResumeScreen = () => {
 		}
 	};
 
-	const onBlockchainError = () => {
+	const onBlockchainError = (e: any) => {
+		captureException(e);
+		Logger.error('Exchange resume blockchain error', e);
 		setVisible(false);
 		setBlockchainError(true);
 		setLoading(false);
@@ -271,7 +274,7 @@ const useExchangeResumeScreen = () => {
 					await wait(3);
 					navigation.navigate('WalletScreen');
 				} catch (e) {
-					onBlockchainError();
+					onBlockchainError(e);
 				}
 			}
 		}
