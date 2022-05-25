@@ -68,6 +68,7 @@ export const useWalletScreen = () => {
 
 	useEffect(() => {
 		track('Wallet Screen Opened');
+		track('Wallet access', { active: (balance?.usd || 0) > 0, address });
 	}, []);
 
 	const onError = () => {
