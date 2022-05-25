@@ -11,7 +11,9 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { loading, onOpenAccount, gaslessEnabled } = useOpenDepositAccount({ onApprove });
+	const { loading, onOpenAccount, gaslessEnabled, blockchainError, setBlockchainError } = useOpenDepositAccount({
+		onApprove
+	});
 
 	useEffect(() => {
 		track('OpenAave Screen Opened');
