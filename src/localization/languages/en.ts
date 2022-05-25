@@ -121,9 +121,10 @@ export default {
 			deposit: 'Deposit',
 			balance: 'Balance: '
 		},
-		OpenAave: {
+		OpenSavings: {
 			open_account: 'Open Account',
 			open_aave: 'Open Aave\nSavings Account',
+			open_mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'This transaction will cost a few cents.'
 		},
 		NotAbleToSaveModal: {
@@ -431,7 +432,7 @@ export default {
 		MStableReusables: {
 			Info: {
 				what_is: 'What is mStable?',
-				aave_des:
+				mstable_des:
 					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
 				view_site: 'View Site',
 				learn_more: 'Learn More'

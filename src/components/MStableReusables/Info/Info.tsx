@@ -14,7 +14,7 @@ const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 					{i18n.t('Components.MStableReusables.Info.what_is')}
 				</Text>
 				<Text type="a">
-					{i18n.t('Components.MStableReusables.Info.aave_des')}
+					{i18n.t('Components.MStableReusables.Info.mstable_des')}
 				</Text>
 			</TransparentCard>
 			<View style={{
@@ -22,7 +22,7 @@ const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 				justifyContent: 'space-between'
 			}}
 			>
-				<TouchableOpacity onPress={() => Linking.openURL('https://aave.com/')}>
+				<TouchableOpacity onPress={() => Linking.openURL('https://mstable.org/')}>
 					<TransparentCard row padding={16}>
 						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
@@ -32,7 +32,7 @@ const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 					</TransparentCard>
 				</TouchableOpacity>
 
-				<TouchableOpacity onPress={() => Linking.openURL('https://docs.aave.com/faq/')}>
+				<TouchableOpacity onPress={() => Linking.openURL('https://docs.mstable.org/')}>
 					<TransparentCard row padding={16}>
 						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">

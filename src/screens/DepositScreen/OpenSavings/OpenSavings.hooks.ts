@@ -7,7 +7,7 @@ import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
 import Logger from '@utils/logger';
 import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
 
-export const useOpenAave = ({ onApprove }: { onApprove: () => void }) => {
+export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const [loading, setLoading] = useState(false);
 	const { address, privateKey } = globalWalletState().value;

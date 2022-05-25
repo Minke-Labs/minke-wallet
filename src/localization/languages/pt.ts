@@ -121,9 +121,10 @@ export default {
 			deposit: 'Depósito',
 			balance: 'Saldo: '
 		},
-		OpenAave: {
+		OpenSavings: {
 			open_account: 'Abrir uma Conta',
 			open_aave: 'Abrir uma conta na Aave',
+			open_mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		NotAbleToSaveModal: {
@@ -435,7 +436,7 @@ export default {
 		MStableReusables: {
 			Info: {
 				what_is: 'O que é o mStable?',
-				aave_des:
+				mstable_des:
 					'O mStable é uma infraestrutura autônoma e sem custódia para ativos criptográficos de valor atrelado. O protocolo foi criado para resolver três problemas principais: \n\nfragmentação significativa em ativos criptográficos de mesma indexação (atualmente, existem pelo menos 5 ativos criptográficos indexados em dólares principais no Ethereum, por exemplo). \n\nFalta de rendimento em moedas fiduciárias e ativos criptográficos atrelados.\n\nFalta de proteção contra perda de capital permanente em ativos criptográficos atrelados.',
 				view_site: 'Ver o Site',
 				learn_more: 'Ver Mais'

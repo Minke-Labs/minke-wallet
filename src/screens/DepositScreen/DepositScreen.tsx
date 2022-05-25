@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, ScreenLoadingIndicator } from '@components';
 import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
-import OpenAave from './OpenAave/OpenAave';
+import OpenSavings from './OpenSavings/OpenSavings';
 import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
@@ -39,7 +39,7 @@ const DepositScreen = () => {
 		);
 	}
 	if (approved) return <Deposit />;
-	return <OpenAave onApprove={() => setApproved(true)} />;
+	return <OpenSavings onApprove={() => setApproved(true)} />;
 };
 
 export default DepositScreen;
