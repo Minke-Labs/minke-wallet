@@ -12,9 +12,11 @@ import backgroundRoundedWaves from './background-rounded-waves.png';
 import aaveGhost from './aave-ghost.png';
 import bgSaveBackground from './bg-save-background.png';
 import bgSaveBackgroundDark from './bg-save-background-dark.png';
+import mStableSaveBackground from './mstable-background.png';
 import walletAssetBackImg from './wallet-asset-back.png';
 import walletAssetBackDarkImg from './wallet-asset-back-dark.png';
 import saveCongratsImg from './save-congrats-image.png';
+import mStableLogo from './mstable-logo.png';
 
 export {
 	welcomeImg,
@@ -33,5 +35,7 @@ export {
 	backupImg,
 	walletAssetBackImg,
 	walletAssetBackDarkImg,
-	saveCongratsImg
+	saveCongratsImg,
+	mStableSaveBackground,
+	mStableLogo
 };

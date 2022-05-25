@@ -131,6 +131,16 @@ export default {
 			learn_more: 'Learn More',
 			this_transaction: 'This transaction will cost a few cents.'
 		},
+		OpenMStable: {
+			open_account: 'Open Account',
+			open_mstable: 'Open mStable\nSavings Account',
+			what_is: 'What is mStable?',
+			mstable_des:
+				'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems: \n\n- Significant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example). \n\n - Lack of yield in fiat currencies and pegged crypto assets. \n\n - Lack of protection against permanent capital loss in pegged crypto assets.',
+			view_site: 'View Site',
+			learn_more: 'Learn More',
+			this_transaction: 'This transaction will cost a few cents.'
+		},
 		NotAbleToSaveModal: {
 			not_able: 'Not able to save',
 			need_funds_in: 'First you need to have funds in ',
@@ -141,7 +151,7 @@ export default {
 	DepositWithdrawalSuccessScreen: {
 		congrats: 'Congrats!',
 		you_deposited: "You've made your deposit!",
-		you_withdrawed: "You've withdrawed successfully!"
+		you_withdrawn: "You've withdrawn successfully!"
 	},
 	ExchangeResumeScreen: {
 		exchange_resume: 'Exchange Resume',
@@ -176,7 +186,7 @@ export default {
 		}
 	},
 	SaveScreen: {
-		interest: '% interest p.a.',
+		interest: '% anualized interest',
 		EmptyState: {
 			save: 'Save',
 			open_aave_savings_account: 'Open %{protocol}\nSavings Account',
@@ -191,7 +201,7 @@ export default {
 			deposit: 'Deposit'
 		},
 		Body: {
-			deposit: 'Deposit'
+			deposit: '{{source}} Deposit'
 		}
 	},
 	SavingAccountsScreen: {
@@ -432,8 +442,8 @@ export default {
 			withdrew_from_savings: 'Withdrew from Savings',
 			deposited_in_savings: 'Deposited in Savings',
 			swap: 'Swap %{source} to %{dest}',
-			from: 'Received from',
-			to: 'Sent to',
+			from: 'From',
+			to: 'To',
 			today: 'Today',
 			yesterday: 'Yesterday',
 			this_month: 'This Month'

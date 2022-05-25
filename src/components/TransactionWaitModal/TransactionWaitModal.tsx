@@ -84,11 +84,11 @@ const TransactionWaitModal = ({
 						? i18n.t('Components.TransactionWaitModal.depositing')
 						: withdraw
 						? i18n.t('Components.TransactionWaitModal.withdrawing')
-						: i18n.t('Components.TransactionWaitModal.exchanging')}{' '}
+						: i18n.t('Components.TransactionWaitModal.exchanging')}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
-					{fromToken.symbol}
+					{withdraw ? toToken?.symbol : fromToken.symbol}
 				</Text>
 				{!withdraw && (
 					<>
@@ -98,7 +98,7 @@ const TransactionWaitModal = ({
 								? ''
 								: deposit
 								? i18n.t('Components.TransactionWaitModal.in')
-								: i18n.t('Components.TransactionWaitModal.for')}{' '}
+								: i18n.t('Components.TransactionWaitModal.for')}
 						</Text>
 						{!!toToken && (
 							<Text type="p2" weight="extraBold" color="text3">

@@ -1,4 +1,5 @@
 import { Wallet, Contract, providers, BigNumber } from 'ethers';
+import Logger from '@utils/logger';
 import { getProvider } from './wallet';
 import { network } from './network';
 import { approvalState } from './deposit';
@@ -61,8 +62,9 @@ export const onChainApproval = async ({
 	if (!amount) {
 		const balance: BigNumber = await erc20.balanceOf(wallet.address);
 		// @ts-ignore
-		tokenAmount = balance.mul(BigNumber.from(10));
+		tokenAmount = balance;
 	}
+	Logger.log('onChainApproval', txDefaults);
 	const tx = await erc20.populateTransaction.approve(spender, tokenAmount);
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	const transaction = await wallet.provider.sendTransaction(signedTx as string);

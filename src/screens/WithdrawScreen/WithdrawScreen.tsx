@@ -8,6 +8,7 @@ import { useNavigation, useTheme, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import { ParaswapToken } from '@models/token';
 import GasSelector from '../ExchangeScreen/GasSelector/GasSelector';
 import { makeStyles } from './WithdrawScreen.styles';
 import Warning from '../ExchangeScreen/Warning/Warning';
@@ -33,7 +34,8 @@ const WithdrawScreen = () => {
 		waitingTransaction,
 		transactionHash,
 		tokens,
-		gaslessEnabled
+		gaslessEnabled,
+		selectedProtocol
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
@@ -97,7 +99,7 @@ const WithdrawScreen = () => {
 				{token && (
 					<TransactionWaitModal
 						onDismiss={() => navigation.navigate('SaveScreen')}
-						fromToken={token!}
+						fromToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
 						toToken={token!}
 						transactionHash={transactionHash}
 						withdraw

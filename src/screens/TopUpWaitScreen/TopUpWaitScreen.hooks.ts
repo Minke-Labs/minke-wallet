@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigation, useTransactions, useWyreOrderStatus } from '@hooks';
-import { WYRE_ORDER_STATUS_TYPES } from '@models/wyre.types';
+import { WYRE_ORDER_STATUS_TYPES } from '@models/types/wyre.types';
 import { useState } from '@hookstate/core';
 import { globalTopUpState, TopUpState } from '@stores/TopUpStore';
 import { globalWalletState } from '@stores/WalletStore';
