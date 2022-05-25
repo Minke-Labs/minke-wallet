@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
+import { Icon, Modal, Text, TokenCard, HapticButton, ModalReusables } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
@@ -38,7 +38,9 @@ const Deposit = () => {
 		showModal,
 		onTokenSelect,
 		apy,
-		selectedProtocol
+		selectedProtocol,
+		blockchainError,
+		setBlockchainError
 	} = useDeposit();
 
 	useEffect(() => {
@@ -124,6 +126,15 @@ const Deposit = () => {
 						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
 						transactionHash={transactionHash}
 						deposit
+					/>
+				)}
+			</Modal>
+			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+				{blockchainError && (
+					<ModalReusables.Error
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						onDismiss={() => setBlockchainError(false)}
+						showHeader
 					/>
 				)}
 			</Modal>

@@ -133,12 +133,11 @@ const ExchangeResumeScreen = () => {
 
 					<View style={{ marginTop: 'auto', marginBottom: 16 }}>
 						{priceQuote &&
-							(loading ?
-								<ActivityIndicator /> :
-								<HapticButton
-									title={i18n.t('Components.Buttons.exchange')}
-									onPress={onSuccess}
-								/>)}
+							(loading ? (
+								<ActivityIndicator />
+							) : (
+								<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />
+							))}
 					</View>
 				</View>
 			</BasicLayout>

@@ -20,6 +20,7 @@ import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
 import { getProvider } from '@models/wallet';
+import { captureException } from '@sentry/react-native';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -34,6 +35,7 @@ export const useDeposit = () => {
 	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
+	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const { addPendingTransaction } = useTransactions();
@@ -78,46 +80,53 @@ export const useDeposit = () => {
 		Keyboard.dismiss();
 		if (canDeposit && depositableToken && selectedProtocol) {
 			setWaitingTransaction(true);
-			const hash = await new Deposit(selectedProtocol.id).deposit({
-				address,
-				privateKey,
-				amount: formatUnits(toBn(amount, token.decimals), 'wei'),
-				minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
-				gasPrice: gweiValue.toString(),
-				depositableToken,
-				gasless: gaslessEnabled,
-				biconomy
-			});
+			try {
+				const hash = await new Deposit(selectedProtocol.id).deposit({
+					address,
+					privateKey,
+					amount: formatUnits(toBn(amount, token.decimals), 'wei'),
+					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
+					gasPrice: gweiValue.toString(),
+					depositableToken,
+					gasless: gaslessEnabled,
+					biconomy
+				});
 
-			if (hash) {
-				Logger.log(`Deposit ${JSON.stringify(hash)}`);
-				setTransactionHash(hash);
-				track('Deposited', {
-					token: token.symbol,
-					amount,
-					hash,
-					gasless: gaslessEnabled
-				});
-				const provider = await getProvider();
-				const { from, to } = await provider.waitForTransaction(hash);
-				addPendingTransaction({
-					from,
-					destination: to,
-					hash,
-					txSuccessful: true,
-					pending: true,
-					timeStamp: (new Date().getTime() / 1000).toString(),
-					amount,
-					direction: 'exchange',
-					symbol: token.symbol,
-					subTransactions: [
-						{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-						{ type: 'incoming', symbol: depositableToken.interestBearingToken.symbol, amount: +amount }
-					]
-				});
-				navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
-			} else {
-				Logger.error('Error depositing');
+				if (hash) {
+					Logger.log(`Deposit ${JSON.stringify(hash)}`);
+					setTransactionHash(hash);
+					track('Deposited', {
+						token: token.symbol,
+						amount,
+						hash,
+						gasless: gaslessEnabled
+					});
+					const provider = await getProvider();
+					const { from, to } = await provider.waitForTransaction(hash);
+					addPendingTransaction({
+						from,
+						destination: to,
+						hash,
+						txSuccessful: true,
+						pending: true,
+						timeStamp: (new Date().getTime() / 1000).toString(),
+						amount,
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
+							{ type: 'incoming', symbol: depositableToken.interestBearingToken.symbol, amount: +amount }
+						]
+					});
+					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
+				} else {
+					Logger.error('Error depositing');
+				}
+			} catch (error) {
+				setWaitingTransaction(false);
+				captureException(error);
+				Logger.error('Deposit blockchain error', error);
+				setBlockchainError(true);
 			}
 		}
 	};
@@ -170,6 +179,8 @@ export const useDeposit = () => {
 		onTokenSelect,
 		tokens,
 		apy,
-		selectedProtocol
+		selectedProtocol,
+		blockchainError,
+		setBlockchainError
 	};
 };
