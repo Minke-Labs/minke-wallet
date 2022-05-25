@@ -1,19 +1,14 @@
 import React from 'react';
 import { useColorScheme, View } from 'react-native';
 import { BlurView } from 'expo-blur';
-
-interface TransparentCardProps {
-	marginBottom: number;
-	row: boolean;
-	padding: number;
-}
+import { TransparentCardProps } from './TransparentCard.types';
 
 const TransparentCard: React.FC<Partial<TransparentCardProps>> = ({ children, marginBottom = 0, row, padding }) => {
 	const scheme = useColorScheme();
 	return (
 		<View
 			style={{
-				borderRadius: 18,
+				borderRadius: 16,
 				overflow: 'hidden',
 				marginBottom
 			}}

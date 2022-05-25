@@ -39,6 +39,20 @@ const fontType = {
 	span: {
 		fontSize: 12,
 		lineHeight: 16
+	},
+
+	// NEW SIZES
+	hSmall: {
+		fontSize: 20,
+		lineHeight: 28
+	},
+	tSmall: {
+		fontSize: 16,
+		lineHeight: 22.4
+	},
+	lMedium: {
+		fontSize: 14,
+		lineHeight: 19.6
 	}
 };
 

@@ -1,3 +1,4 @@
+import AaveReusables from './AaveReusables';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
 import Button from './Button/Button';
@@ -36,6 +37,7 @@ import TransactionPeriod from './TransactionPeriod/TransactionPeriod';
 import EmptyStates from './EmptyStates';
 
 export {
+	AaveReusables,
 	ActivityIndicator,
 	Text,
 	AnimatedText,
