@@ -11,10 +11,10 @@ const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 		<View style={{ marginBottom }}>
 			<TransparentCard marginBottom={16}>
 				<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
-					{i18n.t('Components.AaveReusables.Info.what_is')}
+					{i18n.t('Components.MStableReusables.Info.what_is')}
 				</Text>
 				<Text type="a">
-					{i18n.t('Components.AaveReusables.Info.aave_des')}
+					{i18n.t('Components.MStableReusables.Info.aave_des')}
 				</Text>
 			</TransparentCard>
 			<View style={{
@@ -26,7 +26,7 @@ const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 					<TransparentCard row padding={16}>
 						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
-							{i18n.t('Components.AaveReusables.Info.view_site')}
+							{i18n.t('Components.MStableReusables.Info.view_site')}
 						</Text>
 						<Icon name="chevronRight" color="cta1" size={24} />
 					</TransparentCard>
@@ -36,7 +36,7 @@ const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 					<TransparentCard row padding={16}>
 						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
-							{i18n.t('Components.AaveReusables.Info.learn_more')}
+							{i18n.t('Components.MStableReusables.Info.learn_more')}
 						</Text>
 						<Icon name="chevronRight" color="cta1" size={24} />
 					</TransparentCard>

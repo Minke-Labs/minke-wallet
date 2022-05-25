@@ -124,11 +124,6 @@ export default {
 		OpenAave: {
 			open_account: 'Open Account',
 			open_aave: 'Open Aave\nSavings Account',
-			what_is: 'What is Aave?',
-			aave_des:
-				'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
-			view_site: 'View Site',
-			learn_more: 'Learn More',
 			this_transaction: 'This transaction will cost a few cents.'
 		},
 		NotAbleToSaveModal: {
@@ -424,6 +419,24 @@ export default {
 		}
 	},
 	Components: {
+		AaveReusables: {
+			Info: {
+				what_is: 'What is Aave?',
+				aave_des:
+					'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
+			}
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'What is mStable?',
+				aave_des:
+					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
+			}
+		},
 		Transaction: {
 			failed: 'Failed',
 			view_on: 'View on',

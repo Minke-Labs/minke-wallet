@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { ScreenLoadingIndicator, Modal, AaveReusables } from '@components';
+import { ScreenLoadingIndicator, Modal } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useTokens } from '@hooks';
 import EmptyState from './EmptyState/EmptyState';
@@ -12,8 +12,9 @@ import InfoModal from './InfoModal';
 
 const SaveScreen = () => {
 	const [isModalVisible, setModalVisible] = useState(false);
-	const { apy } = useDepositProtocols();
+	const { apy, selectedProtocol } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useTokens();
+
 	if (!interestTokens || !apy) return <ScreenLoadingIndicator />;
 	if (interestTokens.length === 0) return <EmptyState />;
 
@@ -30,9 +31,12 @@ const SaveScreen = () => {
 			</BasicLayout>
 
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<AaveReusables.Background ghostTop={220}>
-					<InfoModal.Aave onDismiss={() => setModalVisible(false)} />
-				</AaveReusables.Background>
+				{
+					selectedProtocol?.id === 'aave' ?
+						<InfoModal.Aave onDismiss={() => setModalVisible(false)} />
+						:
+						<InfoModal.MStable onDismiss={() => setModalVisible(false)} />
+				}
 			</Modal>
 		</>
 	);

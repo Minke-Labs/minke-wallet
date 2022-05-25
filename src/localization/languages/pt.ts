@@ -124,11 +124,6 @@ export default {
 		OpenAave: {
 			open_account: 'Abrir uma Conta',
 			open_aave: 'Abrir uma conta na Aave',
-			what_is: 'O que é a Aave?',
-			aave_des:
-				'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
-			view_site: 'Ver o Site',
-			learn_more: 'Ver Mais',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		NotAbleToSaveModal: {
@@ -425,6 +420,27 @@ export default {
 		}
 	},
 	Components: {
+		AaveReusables: {
+			Info: {
+				open_account: 'Abrir uma Conta',
+				open_aave: 'Abrir uma conta na Aave',
+				what_is: 'O que é a Aave?',
+				aave_des:
+					'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
+				view_site: 'Ver o Site',
+				learn_more: 'Ver Mais',
+				this_transaction: 'Esta transação vai custar alguns centavos.'
+			}
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'O que é o mStable?',
+				aave_des:
+					'O mStable é uma infraestrutura autônoma e sem custódia para ativos criptográficos de valor atrelado. O protocolo foi criado para resolver três problemas principais: \n\nfragmentação significativa em ativos criptográficos de mesma indexação (atualmente, existem pelo menos 5 ativos criptográficos indexados em dólares principais no Ethereum, por exemplo). \n\nFalta de rendimento em moedas fiduciárias e ativos criptográficos atrelados.\n\nFalta de proteção contra perda de capital permanente em ativos criptográficos atrelados.',
+				view_site: 'Ver o Site',
+				learn_more: 'Ver Mais'
+			}
+		},
 		Transaction: {
 			failed: 'Falhou',
 			view_on: 'Ver em',

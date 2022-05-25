@@ -10,6 +10,7 @@ import FullModal from './FullModal/FullModal';
 import NetworkWarning from './NetworkWarning';
 import ModalHeader from './ModalHeader/ModalHeader';
 import ModalReusables from './ModalReusables';
+import MStableReusables from './MStableReusables';
 import SearchInput from './SearchInput/SearchInput';
 import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
@@ -51,6 +52,7 @@ export {
 	ModalHeader,
 	SettingsHeader,
 	ModalReusables,
+	MStableReusables,
 	SearchInput,
 	TextArea,
 	HapticButton,
