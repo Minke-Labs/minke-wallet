@@ -89,11 +89,9 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
-						title={i18n.t('Components.ModalReusables.Error.Blockchain.title')}
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
 						onDismiss={() => setBlockchainError(false)}
 						showHeader
-						buttonLabel={i18n.t('Components.ModalReusables.Error.Blockchain.button')}
 					/>
 				)}
 			</Modal>

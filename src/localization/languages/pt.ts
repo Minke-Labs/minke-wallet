@@ -491,17 +491,16 @@ export default {
 		},
 		ModalReusables: {
 			Error: {
+				title: 'Oops!',
 				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
 				buttonLabel: 'Ok, entendi',
 				Blockchain: {
-					title: 'Oops!',
-					description: 'Algo deu errado ao falar com a Blockchain',
-					button: 'Tente denovo'
+					description: 'Algo deu errado ao falar com a Blockchain'
 				}
 			},
 			ComingSoonModal: {
 				coming_soon: 'Em breve!',
-				devs_doing_something: 'Nossos devs estão fazendo alguma coisa aí.'
+				devs_doing_something: 'Nossos devs estão trabalhando.'
 			}
 		},
 		SettingsHeader: {
