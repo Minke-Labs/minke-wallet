@@ -63,7 +63,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					symbol: 'amUSDC',
 					address: '0x1a13F4Ca1d028320A707D99520AbFefca3998b7F',
-					decimals: 6
+					decimals: 6,
+					source: 'AAVE'
 				}
 			},
 			{
@@ -71,7 +72,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					symbol: 'amDAI',
 					address: '0x27F8D03b3a2196956ED754baDc28D73be8830A6e',
-					decimals: 18
+					decimals: 18,
+					source: 'AAVE'
 				}
 			},
 			{
@@ -79,7 +81,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					symbol: 'amUSDT',
 					address: '0x60D55F02A771d515e077c9C2403a1ef324885CeC',
-					decimals: 6
+					decimals: 6,
+					source: 'AAVE'
 				}
 			}
 		],
@@ -91,7 +94,8 @@ const depositTokens: DepositTokens = {
 					convertToDefaultUSD: true,
 					symbol: 'MNKTESTV12',
 					address: '0x707AD4021FAd2D9267F918DB937319a8710b10D8',
-					decimals: 18
+					decimals: 18,
+					source: 'mStable'
 				}
 			}
 		]
@@ -103,7 +107,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					symbol: 'aUSDC',
 					address: '0xBcca60bB61934080951369a648Fb03DF4F96263C',
-					decimals: 6
+					decimals: 6,
+					source: 'AAVE'
 				}
 			},
 			{
@@ -111,7 +116,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					symbol: 'aDAI',
 					address: '0x028171bCA77440897B824Ca71D1c56caC55b68A3',
-					decimals: 18
+					decimals: 18,
+					source: 'AAVE'
 				}
 			},
 			{
@@ -119,7 +125,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					symbol: 'aUSDT',
 					address: '0x3Ed3B47Dd13EC9a98b44e6204A523E766B225811',
-					decimals: 6
+					decimals: 6,
+					source: 'AAVE'
 				}
 			}
 		],
@@ -131,7 +138,8 @@ const depositTokens: DepositTokens = {
 					convertToDefaultUSD: true,
 					symbol: 'v-imUSD',
 					address: '0x78BefCa7de27d07DC6e71da295Cc2946681A6c7B',
-					decimals: 18
+					decimals: 18,
+					source: 'mStable'
 				}
 			}
 		]
@@ -155,7 +163,8 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 			symbol: interestBearingSymbol,
 			decimals: interestBearingDecimals,
 			exchangeRateContract,
-			convertToDefaultUSD
+			convertToDefaultUSD,
+			source
 		} = interestBearingToken;
 		const token = new Contract(interestBearingAddress, erc20abi, provider);
 
@@ -196,7 +205,8 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 			interestBearingToken: {
 				address: interestBearingAddress,
 				symbol: interestBearingSymbol,
-				decimals: interestBearingDecimals
+				decimals: interestBearingDecimals,
+				source
 			},
 			balance: formatedBalance,
 			balanceUSD: Number(formatedBalance)

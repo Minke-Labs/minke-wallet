@@ -170,7 +170,7 @@ interface DepositProtocols {
 }
 
 export interface DepositProtocol {
-	id: string;
+	id: 'aave' | 'mstable';
 	name: string;
 	icon: string;
 }

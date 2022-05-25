@@ -9,6 +9,7 @@ export interface DepositableToken {
 		symbol: string;
 		address: string;
 		decimals: number;
+		source: string;
 	};
 }
 

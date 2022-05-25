@@ -284,6 +284,7 @@ export interface MinkeToken {
 		address: string;
 		symbol: string;
 		decimals: number;
+		source: string;
 	};
 }
 

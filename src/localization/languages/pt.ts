@@ -201,7 +201,7 @@ export default {
 			deposit: 'Depositar'
 		},
 		Body: {
-			deposit: 'Depósito'
+			deposit: 'Depósito ({{source}})'
 		}
 	},
 	SavingAccountsScreen: {

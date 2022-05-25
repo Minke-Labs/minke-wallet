@@ -186,7 +186,7 @@ export default {
 		}
 	},
 	SaveScreen: {
-		interest: '% interest p.a.',
+		interest: '% anualized interest',
 		EmptyState: {
 			save: 'Save',
 			open_aave_savings_account: 'Open %{protocol}\nSavings Account',
@@ -201,7 +201,7 @@ export default {
 			deposit: 'Deposit'
 		},
 		Body: {
-			deposit: 'Deposit'
+			deposit: '{{source}} Deposit'
 		}
 	},
 	SavingAccountsScreen: {
