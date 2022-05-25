@@ -92,8 +92,8 @@ const depositTokens: DepositTokens = {
 				interestBearingToken: {
 					exchangeRateContract: true,
 					convertToDefaultUSD: true,
-					symbol: 'MNKTESTV12',
-					address: '0x707AD4021FAd2D9267F918DB937319a8710b10D8',
+					symbol: 'mv-imUSD',
+					address: '0x6265b466d9E6368057ed631caEE9C9f84c1A2Ad3',
 					decimals: 18,
 					source: 'mStable'
 				}

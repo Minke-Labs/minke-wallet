@@ -52,6 +52,8 @@ class ApprovalService {
 				spender
 			});
 			Logger.log('Gasless approval', hash);
+			const provider = biconomy.getEthersProvider();
+			await provider.waitForTransaction(hash);
 			return hash;
 		}
 		if (this.protocol === 'mstable') {
@@ -65,7 +67,14 @@ class ApprovalService {
 				gasPrice: +gasPrice * 1000000000
 			});
 
-			return transaction?.hash || null;
+			const { hash } = transaction || {};
+
+			if (hash) {
+				const provider = await getProvider();
+				await provider.waitForTransaction(hash);
+				return hash;
+			}
+			return null;
 		}
 
 		if (this.protocol === 'aave') {
@@ -92,6 +101,7 @@ class ApprovalService {
 
 			const signedTx = await wallet.signTransaction(txDefaults);
 			const { hash } = await provider.sendTransaction(signedTx as string);
+			await provider.waitForTransaction(hash);
 			return hash;
 		}
 		return null;
