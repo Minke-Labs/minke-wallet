@@ -1,13 +1,14 @@
 import React from 'react';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Card } from 'react-native-paper';
-import { Icon, Modal, HapticButton, Text, TokenCard, ModalReusables } from '@components';
+import { Icon, Modal, HapticButton, Text, TokenCard } from '@components';
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useTheme, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import { ParaswapToken } from '@models/token';
 import GasSelector from '../ExchangeScreen/GasSelector/GasSelector';
 import { makeStyles } from './WithdrawScreen.styles';
 import Warning from '../ExchangeScreen/Warning/Warning';
@@ -34,8 +35,7 @@ const WithdrawScreen = () => {
 		transactionHash,
 		tokens,
 		gaslessEnabled,
-		blockchainError,
-		setBlockchainError
+		selectedProtocol
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
@@ -99,22 +99,10 @@ const WithdrawScreen = () => {
 				{token && (
 					<TransactionWaitModal
 						onDismiss={() => navigation.navigate('SaveScreen')}
-						fromToken={token!}
+						fromToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
 						toToken={token!}
 						transactionHash={transactionHash}
 						withdraw
-					/>
-				)}
-			</Modal>
-
-			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
-				{blockchainError && (
-					<ModalReusables.Error
-						title={i18n.t('Components.ModalReusables.Error.Blockchain.title')}
-						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
-						onDismiss={() => setBlockchainError(false)}
-						showHeader
-						buttonLabel={i18n.t('Components.ModalReusables.Error.Blockchain.button')}
 					/>
 				)}
 			</Modal>

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, ImageBackground, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { Icon, Text, Button } from '@components';
 import { useTheme, useNavigation, useDepositProtocols, useLanguage } from '@hooks';
 import { LinearGradient } from 'expo-linear-gradient';
-import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
+import { bgSaveBackground, bgSaveBackgroundDark, mStableSaveBackground } from '@images';
 import { makeStyles } from './EmptyState.styles';
 
 const EmptyState = () => {
@@ -13,14 +15,13 @@ const EmptyState = () => {
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
 	const { selectedProtocol, apy } = useDepositProtocols();
+	const aaveBg = scheme === 'dark' ? bgSaveBackgroundDark : bgSaveBackground;
+	const backgroundImg = selectedProtocol?.id === 'aave' ? aaveBg : mStableSaveBackground;
 
 	return (
 		<View style={styles.container}>
 			<SafeAreaView>
-				<ImageBackground
-					source={scheme === 'dark' ? bgSaveBackgroundDark : bgSaveBackground}
-					style={styles.bgSaveEmptyScreen}
-				/>
+				<ImageBackground source={backgroundImg} style={styles.bgSaveEmptyScreen} />
 			</SafeAreaView>
 
 			<View style={styles.headerNavigation}>

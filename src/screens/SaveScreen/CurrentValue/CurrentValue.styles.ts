@@ -18,8 +18,13 @@ export const makeStyles = (colors: ColorType) =>
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
 		},
-		interestContainer: {
+		infoRow: {
 			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'center'
+		},
+		interestContainer: {
+			flexDirection: 'column',
 			alignItems: 'center',
 			paddingVertical: 4,
 			paddingHorizontal: 12,

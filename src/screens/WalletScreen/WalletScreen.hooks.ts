@@ -5,6 +5,7 @@ import { useAmplitude, useNavigation, useLanguage } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletDelete, getAllWallets } from '@models/wallet';
+import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
@@ -56,6 +57,7 @@ export const useWalletScreen = () => {
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(address || '');
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 		setSnackbarVisible(true);
 	};
 

@@ -1,6 +1,6 @@
 import React, { useEffect, createRef, useCallback } from 'react';
 import { TextInput, Keyboard } from 'react-native';
-import { useTokens, useNavigation, useNativeToken, useBiconomy, useDeposit } from '@hooks';
+import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
 import { ParaswapToken, Quote, getExchangePrice, ExchangeParams } from '@models/token';
@@ -33,7 +33,7 @@ export const useExchangeScreen = () => {
 	const toAmountRef = createRef<TextInput>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens: walletTokens } = useTokens();
-	const { defaultToken } = useDeposit();
+	const { defaultToken } = useDepositProtocols();
 
 	const balanceFrom = useCallback(
 		(token: ParaswapToken | undefined): string => {

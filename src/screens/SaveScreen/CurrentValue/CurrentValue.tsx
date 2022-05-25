@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, View, useColorScheme } from 'react-native';
-import { useTheme, useNavigation, useLanguage } from '@hooks';
+import { useTheme, useNavigation, useLanguage, useDepositProtocols } from '@hooks';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Icon } from '@components';
+import { Text, Icon, ActivityIndicator, Token } from '@components';
 import { BlurView } from 'expo-blur';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
@@ -13,6 +13,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 	const { colors } = useTheme();
 	const scheme = useColorScheme();
 	const styles = makeStyles(colors);
+	const { selectedProtocol } = useDepositProtocols();
 
 	return (
 		<View style={styles.container}>
@@ -23,15 +24,29 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 				<Text type="textLarge" weight="medium" marginBottom={14}>
 					{numberFormat(depositsBalance, 2)}
 				</Text>
-				{apy && (
-					<View style={styles.interestContainer}>
-						<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
-						<Text weight="medium" type="a" color="alert3">
-							{apy}
-							{i18n.t('SaveScreen.interest')}
-						</Text>
-					</View>
-				)}
+				<View style={styles.interestContainer}>
+					{!!selectedProtocol && (
+						<View style={[styles.infoRow, { marginBottom: 4 }]}>
+							<View style={{ marginRight: 4 }}>
+								<Token name={selectedProtocol.id} size={24} />
+							</View>
+							<Text weight="semiBold" type="span">
+								{selectedProtocol.name}
+							</Text>
+						</View>
+					)}
+					{apy ? (
+						<View style={styles.infoRow}>
+							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
+							<Text weight="semiBold" type="a" color="alert3">
+								{apy}
+								{i18n.t('SaveScreen.interest')}
+							</Text>
+						</View>
+					) : (
+						<ActivityIndicator size={16} />
+					)}
+				</View>
 			</BlurView>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<TouchableOpacity

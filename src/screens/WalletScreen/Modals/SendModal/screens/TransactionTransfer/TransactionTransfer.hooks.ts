@@ -19,19 +19,12 @@ interface UserProps {
 
 interface UseTransactionTransferProps {
 	onDismiss: () => void;
-	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	user: UserProps;
 	token: MinkeToken;
 }
 
-export const useTransactionTransfer = ({
-	onDismiss,
-	onError,
-	sentSuccessfully,
-	user,
-	token
-}: UseTransactionTransferProps) => {
+export const useTransactionTransfer = ({ onDismiss, sentSuccessfully, user, token }: UseTransactionTransferProps) => {
 	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
 	const [image, setImage] = React.useState<{ uri: string }>();
@@ -96,9 +89,18 @@ export const useTransactionTransfer = ({
 					const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
 
 					onDismiss();
+					sentSuccessfully({
+						token: {
+							address: token.address,
+							decimals: token.decimals,
+							symbol: token.symbol
+						},
+						hash: ''
+					});
 
 					if (gasless) {
 						const { isApproved } = await approvalState(address, token.address, sendContract);
+						const provider = biconomy.getEthersProvider();
 
 						if (!isApproved) {
 							const tx = await gaslessApproval({
@@ -111,90 +113,82 @@ export const useTransactionTransfer = ({
 
 							track('Approved for sending', { token: token.symbol, name: token.name, gasless: true });
 
-							await biconomy.getEthersProvider().waitForTransaction(tx, 1);
+							await provider.waitForTransaction(tx, 1);
 						}
 
-						try {
-							const hash = await gaslessSend({
-								biconomy,
-								address,
-								privateKey,
-								amount: parseUnits(amountToSend, token.decimals).toString(),
-								gasPrice: gasPrice.result.ProposeGasPrice,
-								token: token.address,
-								to
-							});
+						const hash = await gaslessSend({
+							biconomy,
+							address,
+							privateKey,
+							amount: parseUnits(amountToSend, token.decimals).toString(),
+							gasPrice: gasPrice.result.ProposeGasPrice,
+							token: token.address,
+							to
+						});
 
-							const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash);
-							sentSuccessfully({
-								token: {
-									address: token.address,
-									decimals: token.decimals,
-									symbol: token.symbol
-								},
-								hash
-							});
-							track('Sent', {
-								token: token.symbol,
-								tokenAmount,
-								to,
-								hash
-							});
-							addPendingTransaction({
-								from: src,
-								destination: to,
-								hash,
-								txSuccessful: status === 1,
-								pending: true,
-								timeStamp: (new Date().getTime() / 1000).toString(),
+						const { status, from: src } = await provider.waitForTransaction(hash);
+						sentSuccessfully({
+							token: {
+								address: token.address,
+								decimals: token.decimals,
+								symbol: token.symbol
+							},
+							hash
+						});
+						track('Sent', {
+							token: token.symbol,
+							tokenAmount,
+							to,
+							hash
+						});
+						addPendingTransaction({
+							from: src,
+							destination: to,
+							hash,
+							txSuccessful: status === 1,
+							pending: true,
+							timeStamp: (new Date().getTime() / 1000).toString(),
+							amount: amountToSend,
+							direction: 'outgoing',
+							symbol: token.symbol
+						});
+					} else {
+						const transaction = await sendTransaction(
+							privateKey,
+							to,
+							tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'),
+							gasPrice.result.ProposeGasPrice,
+							id,
+							token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
+							token.decimals
+						);
+						const { wait, hash } = transaction;
+
+						await wait();
+						sentSuccessfully({
+							token: {
+								address: token.address,
+								decimals: token.decimals,
+								symbol: token.symbol
+							},
+							hash
+						});
+						// Pending transaction...
+						addPendingTransaction(
+							convertTransactionResponse({
+								transaction,
 								amount: amountToSend,
 								direction: 'outgoing',
 								symbol: token.symbol
-							});
-						} catch (e) {
-							onError();
-						}
-					} else {
-						try {
-							const transaction = await sendTransaction(
-								privateKey,
-								to,
-								tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.'),
-								gasPrice.result.ProposeGasPrice,
-								id,
-								token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
-								token.decimals
-							);
-							const { wait, hash } = transaction;
+							})
+						);
 
-							await wait();
-							sentSuccessfully({
-								token: {
-									address: token.address,
-									decimals: token.decimals,
-									symbol: token.symbol
-								},
-								hash
-							});
-							// Pending transaction...
-							addPendingTransaction(
-								convertTransactionResponse({
-									transaction,
-									amount: amountToSend,
-									direction: 'outgoing',
-									symbol: token.symbol
-								})
-							);
-
-							track('Sent', {
-								token: token.symbol,
-								tokenAmount,
-								to,
-								hash
-							});
-						} catch (e) {
-							onError();
-						}
+						track('Sent', {
+							token: token.symbol,
+							tokenAmount,
+							to,
+							hash
+						});
 					}
 				}
 			}

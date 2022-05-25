@@ -5,19 +5,13 @@ import { useAmplitude, useNavigation, useLanguage } from '@hooks';
 import { BasicLayout } from '@layouts';
 import styles from './OpenAave.styles';
 import { Background } from './Background/Background';
-import { useOpenAave } from './OpenAave.hooks';
+import { useOpenDepositAccount } from '../OpenDepositAccount.hooks';
 
 const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const {
-		loading,
-		onOpenAccount,
-		gaslessEnabled,
-		blockchainError,
-		setBlockchainError
-	} = useOpenAave({ onApprove });
+	const { loading, onOpenAccount, gaslessEnabled } = useOpenDepositAccount({ onApprove });
 
 	useEffect(() => {
 		track('OpenAave Screen Opened');
@@ -43,9 +37,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 								<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
 									{i18n.t('DepositScreen.OpenAave.what_is')}
 								</Text>
-								<Text type="a">
-									{i18n.t('DepositScreen.OpenAave.aave_des')}
-								</Text>
+								<Text type="a">{i18n.t('DepositScreen.OpenAave.aave_des')}</Text>
 							</TransparentCard>
 
 							<View style={styles.actionContainer}>

@@ -10,5 +10,13 @@ export default StyleSheet.create({
 	iconsContainer: {
 		flexDirection: 'row',
 		alignItems: 'center'
+	},
+	leftContainer: {
+		flexDirection: 'row',
+		alignItems: 'flex-end'
+	},
+	icon: {
+		marginLeft: 12,
+		marginBottom: 3
 	}
 });

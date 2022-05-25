@@ -16,14 +16,14 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 		<View style={styles.depositCardContainer}>
 			<View style={styles.actionDepositCard}>
 				<FlatList
-					keyExtractor={(item) => item.address}
+					keyExtractor={(item) => item.interestBearingToken!.address}
 					data={interestTokens}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item, index }) => (
 						<Card
 							image={<TransactionIcon received />}
 							title={item.name}
-							subtitle={i18n.t('SaveScreen.Body.deposit')}
+							subtitle={i18n.t('SaveScreen.Body.deposit', { source: item.interestBearingToken!.source })}
 							marginBottom={index === interestTokens.length - 1 ? 0 : 32}
 							right={
 								<View>

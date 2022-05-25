@@ -173,6 +173,7 @@ const useExchangeResumeScreen = () => {
 
 			if (gasless) {
 				const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract);
+				const provider = biconomy.getEthersProvider();
 
 				if (!isApproved) {
 					const tx = await gaslessApproval({
@@ -184,47 +185,42 @@ const useExchangeResumeScreen = () => {
 					});
 
 					track('Approved for exchange', { to: to.symbol, from: from.symbol, gasless: true });
-
-					await biconomy.getEthersProvider().waitForTransaction(tx, 3);
+					await provider.waitForTransaction(tx);
 				}
 
-				try {
-					const hash = await gaslessExchange({
-						address,
-						amount: sellAmount,
-						minAmount: buyAmount,
-						biconomy,
-						depositContract: exchangeContract,
-						gasPrice,
-						privateKey,
-						swapData: data,
-						token: sellTokenAddress,
-						toToken: buyTokenAddress,
-						swapTarget: toAddress!
-					});
-					setTransactionHash(hash);
-					const { status, from: src } = await biconomy.getEthersProvider().waitForTransaction(hash, 3);
-					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
-					addPendingTransaction({
-						from: src,
-						destination: address,
-						hash,
-						txSuccessful: status === 1,
-						pending: true,
-						timeStamp: (new Date().getTime() / 1000).toString(),
-						amount: toAmount!,
-						direction: 'exchange',
-						symbol: to.symbol,
-						subTransactions: [
-							{ type: 'outgoing', symbol: from.symbol, amount: +fromAmount! },
-							{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
-						]
-					});
+				const hash = await gaslessExchange({
+					address,
+					amount: sellAmount,
+					minAmount: buyAmount,
+					biconomy,
+					depositContract: exchangeContract,
+					gasPrice,
+					privateKey,
+					swapData: data,
+					token: sellTokenAddress,
+					toToken: buyTokenAddress,
+					swapTarget: toAddress!
+				});
+				setTransactionHash(hash);
+				const { status, from: src } = await provider.waitForTransaction(hash, 3);
+				track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
+				addPendingTransaction({
+					from: src,
+					destination: address,
+					hash,
+					txSuccessful: status === 1,
+					pending: true,
+					timeStamp: (new Date().getTime() / 1000).toString(),
+					amount: toAmount!,
+					direction: 'exchange',
+					symbol: to.symbol,
+					subTransactions: [
+						{ type: 'outgoing', symbol: from.symbol, amount: +fromAmount! },
+						{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
+					]
+				});
 
-					navigation.navigate('WalletScreen');
-				} catch (e) {
-					onBlockchainError();
-				}
+				navigation.navigate('WalletScreen');
 			} else {
 				const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
 				const { gweiValue = 30 } = exchange.gas.value || {};
