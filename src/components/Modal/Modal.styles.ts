@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
 const screen = Dimensions.get('screen');
 
@@ -16,6 +16,7 @@ export default StyleSheet.create({
 		backgroundColor: 'rgba(6, 19, 33, 0.9)'
 	},
 	container: {
+		minHeight: Platform.OS === 'android' ? 400 : undefined,
 		width: screen.width,
 		bottom: 0,
 		position: 'absolute',

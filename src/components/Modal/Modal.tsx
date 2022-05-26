@@ -43,6 +43,10 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 		}
 	}, [isVisible]);
 
+	if (!isVisible) {
+		return null;
+	}
+
 	return (
 		<View style={styles.fullScreen}>
 			<TouchableWithoutFeedback onPress={onDismiss}>

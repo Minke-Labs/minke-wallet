@@ -92,6 +92,10 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		[filteredTokens, exchangebleTokens]
 	);
 
+	if (!visible) {
+		return null;
+	}
+
 	if (!tokens || loading) {
 		return <ScreenLoadingIndicator />;
 	}
