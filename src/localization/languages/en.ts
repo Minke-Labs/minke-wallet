@@ -506,7 +506,8 @@ export default {
 			done: 'Done'
 		},
 		TokenCard: {
-			choose_token: 'Choose token'
+			choose_token: 'Choose token',
+			available: 'Available'
 		},
 		TransactionWaitModal: {
 			transaction_done: 'Transaction done',

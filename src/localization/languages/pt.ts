@@ -510,7 +510,8 @@ export default {
 			done: 'Pronto'
 		},
 		TokenCard: {
-			choose_token: 'Escolha um token'
+			choose_token: 'Escolha um token',
+			available: 'Disponível'
 		},
 		TransactionWaitModal: {
 			transaction_done: 'Transação concluida',

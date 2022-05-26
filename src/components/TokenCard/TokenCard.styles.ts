@@ -3,38 +3,39 @@ import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
-		tokenCardWrap: {
+		container: {
 			padding: 16,
-			width: '100%'
-		},
-		tokenCard: {
+			width: '100%',
 			borderRadius: 16,
-			marginTop: 16,
-			backgroundColor: colors.background2
+			backgroundColor: colors.background5
 		},
-		tokenCardCoinContent: {
-			flexWrap: 'wrap',
+
+		coinSelector: {
 			flexDirection: 'row',
-			width: '100%'
+			width: '100%',
+			marginBottom: 16
 		},
-		tokenCardCoin: {
-			flexWrap: 'wrap',
+		coinSelectorTitles: {
+			justifyContent: 'space-between',
+			marginLeft: 16
+		},
+
+		coinSelectorTitlesUpper: {
+			flexDirection: 'row'
+		},
+
+		bottomRow: {
 			flexDirection: 'row',
-			alignItems: 'center'
+			alignItems: 'center',
+			justifyContent: 'space-between'
 		},
-		tokenImageContainer: {
-			borderRadius: 50,
-			borderWidth: 2,
-			borderColor: 'rgba(98, 126, 234, 0.2)'
-		},
+
 		tokenImage: {
 			borderRadius: 100,
 			width: 40,
 			height: 40
 		},
-		tokenName: {
-			paddingLeft: 8
-		},
+
 		tokenCardDivisor: {
 			justifyContent: 'center',
 			alignItems: 'center',
@@ -60,10 +61,7 @@ export const makeStyles = (colors: ColorType) =>
 		tokenCardMaxButton: {
 			flexDirection: 'row'
 		},
-		tokenCardMaxButtonContent: {
-			alignItems: 'flex-end',
-			marginTop: 8
-		},
+
 		tokenCardMaxButtonText: {
 			paddingLeft: 4
 		},

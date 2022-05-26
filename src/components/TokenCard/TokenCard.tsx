@@ -2,28 +2,32 @@ import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { TokenType } from '@styles';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme, useLanguage, useTokens } from '@hooks';
+import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import Token from '../Token/Token';
-import Input from '../Input/Input';
+import TokenInputInner from '../TokenInputInner/TokenInputInner';
+import { InterestTag } from './InterestTag/InterestTag';
 
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
 	onPress,
 	balance,
-	innerRef,
 	disableMax = false,
 	updateQuotes,
 	conversionAmount = '',
-	notTouchable = false
+	notTouchable = false,
+	apy,
+	tokenBalance
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { i18n } = useLanguage();
+	const { tokens } = useTokens();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
 		balance,
 		updateQuotes: updateQuotes!,
@@ -32,11 +36,13 @@ const TokenCard: React.FC<TokenCardProps> = ({
 		disableMax
 	});
 
+	const getBalanceUSD = () => numberFormat(tokens?.filter((item) => item.symbol === token?.symbol)[0].balanceUSD);
+
 	if (!token) {
 		return (
 			<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
-				<View style={styles.tokenCardWrap}>
-					<View style={styles.tokenCardCoinContent}>
+				<View style={styles.container}>
+					<View style={styles.coinSelector}>
 						<View style={styles.selectTokenRow}>
 							<View style={styles.currencyIcon}>
 								<Icon name="dollarStroke" color="cta1" size={32} />
@@ -53,39 +59,64 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	}
 
 	return (
-		<View style={styles.tokenCardWrap}>
-			<View style={styles.tokenCardCoinContent}>
-				<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
-					<View style={styles.tokenCardCoin}>
-						<View style={styles.tokenImageContainer}>
-							<Token name={(token.symbol || '').toLowerCase() as TokenType} size={34} glow />
+		<View style={styles.container}>
+
+			<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
+				<View style={styles.coinSelector}>
+
+					<Token
+						name={(token.symbol || '').toLowerCase() as TokenType}
+						size={34}
+					/>
+
+					<View style={styles.coinSelectorTitles}>
+						<View style={styles.coinSelectorTitlesUpper}>
+							<Text
+								type="p2"
+								style={{ marginRight: 8 }}
+								weight="extraBold"
+							>
+								{token.symbol}
+							</Text>
+							<Icon name="chevronDown" color="cta1" size={16} />
 						</View>
-						<Text type="p2" style={styles.tokenName} weight="extraBold">
-							{token.symbol}
-						</Text>
-						<Icon name="chevronRight" color="cta1" size={16} />
+						<View>
+							<Text type="span" weight="semiBold">
+								{getBalanceUSD()}
+								{' '}
+								({tokenBalanceFormat(tokenBalance, 6)} {token.symbol})
+								{' '}
+								{i18n.t('Components.TokenCard.available')}
+							</Text>
+						</View>
 					</View>
-				</TouchableOpacity>
-				<Input
-					keyboardType="numeric"
-					style={{ flex: 1 }}
-					error={invalidAmount as boolean}
-					value={amount}
-					ref={innerRef}
-					onChangeText={(text) => onChangeText(text)}
-					small
-				/>
-			</View>
-			{isMaxEnabled && (
-				<View style={styles.tokenCardMaxButtonContent}>
+
+				</View>
+			</TouchableOpacity>
+
+			<TokenInputInner
+				symbol={token.symbol}
+				isAmountValid={!invalidAmount}
+				placeholder="0.00"
+				autoFocus
+				showSymbol
+				marginBottom={8}
+				amount={amount}
+				onChangeText={onChangeText}
+			/>
+
+			<View style={styles.bottomRow}>
+				{!!apy && <InterestTag apy={apy} />}
+				{isMaxEnabled && (
 					<TouchableOpacity onPress={onMaxPress} style={styles.tokenCardMaxButton}>
 						<Icon name="sparkleStroke" size={16} color="cta1" />
 						<Text type="a" color="cta1" style={styles.tokenCardMaxButtonText}>
 							Max
 						</Text>
 					</TouchableOpacity>
-				</View>
-			)}
+				)}
+			</View>
+
 		</View>
 	);
 };

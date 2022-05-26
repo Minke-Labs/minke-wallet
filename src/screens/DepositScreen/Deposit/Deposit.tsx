@@ -3,8 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
 import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
-import { Card } from 'react-native-paper';
-import { useTheme, useNavigation, useAmplitude, useLanguage } from '@hooks';
+import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
@@ -13,14 +12,45 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens';
 import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
-import { makeStyles } from './Deposit.styles';
+import styles from './Deposit.styles';
+
+interface HeaderProps {
+	token: ParaswapToken | undefined;
+	tokenBalance: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ token, tokenBalance }) => {
+	const { i18n } = useLanguage();
+	const navigation = useNavigation();
+	return (
+		<>
+			<View style={styles.header}>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+					<Icon name="arrowBackStroke" color="text7" size={24} />
+				</TouchableOpacity>
+			</View>
+
+			<View style={styles.depositHeadline}>
+				<Text type="h3" weight="extraBold">
+					{i18n.t('DepositScreen.Deposit.deposit')}
+				</Text>
+				{token && tokenBalance && (
+					<Text type="a" weight="regular" color="text3">
+						{i18n.t('DepositScreen.Deposit.balance')}
+						<Text type="a" weight="extraBold" color="text3">
+							{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
+						</Text>
+					</Text>
+				)}
+			</View>
+		</>
+	);
+};
 
 const Deposit = () => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const {
 		tokens,
 		token,
@@ -47,47 +77,23 @@ const Deposit = () => {
 	return (
 		<>
 			<BasicLayout>
-				<View style={styles.header}>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-						<Icon name="arrowBackStroke" color="text7" size={24} />
-					</TouchableOpacity>
-				</View>
-				<View style={styles.deposit}>
-					<View style={styles.depositHeadline}>
-						<Text type="h3" weight="extraBold">
-							{i18n.t('DepositScreen.Deposit.deposit')}
-						</Text>
-						{token && tokenBalance && (
-							<Text type="a" weight="regular" color="text3">
-								{i18n.t('DepositScreen.Deposit.balance')}
-								<Text type="a" weight="extraBold" color="text3">
-									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
-								</Text>
-							</Text>
-						)}
-					</View>
 
-					<Card style={styles.tokenCard}>
-						<TokenCard
-							onPress={showModal}
-							token={token}
-							balance={tokenBalance}
-							updateQuotes={debounce(updateAmount, 500)}
-						/>
-					</Card>
+				<Header {...{ token, tokenBalance }} />
+
+				<View style={{ paddingHorizontal: 24 }}>
+
+					<TokenCard
+						onPress={showModal}
+						token={token}
+						balance={tokenBalance}
+						updateQuotes={debounce(updateAmount, 500)}
+						apy={apy}
+						tokenBalance={tokenBalance}
+					/>
 
 					<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
 						<GasSelector />
 					</View>
-
-					{!!apy && (
-						<View style={styles.interestContainer}>
-							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
-							<Text weight="medium" type="a" color="alert3">
-								{apy}% interest p.a.
-							</Text>
-						</View>
-					)}
 				</View>
 
 				<View style={styles.depositButton}>
@@ -100,6 +106,7 @@ const Deposit = () => {
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>
+
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
 				<SearchTokens
 					visible={searchVisible}
