@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { globalContactState } from '@src/stores/ContactStore';
 import { isAddress } from 'ethers/lib/utils';
@@ -14,12 +14,17 @@ export const useTransactionContacts = ({ onSelected }: TransactionContactsProps)
 	const { contactList = [] } = state.value;
 	const keyboardVisible = useKeyboard();
 	const { wallets, address: selectedAddress } = useWallets();
-	const availableAddresses: ContactItem[] = Object.values(wallets || [])
-		.filter((wallet) => wallet.address !== selectedAddress)
-		.map(({ address: addr }) => ({
-			name: smallWalletAddress(addr, 9),
-			address: addr
-		}));
+
+	const availableAddresses = useCallback(
+		(): ContactItem[] =>
+			Object.values(wallets || [])
+				.filter((wallet) => wallet.address !== selectedAddress)
+				.map(({ address: addr }) => ({
+					name: smallWalletAddress(addr, 9),
+					address: addr
+				})),
+		[wallets]
+	);
 
 	useEffect(() => {
 		const lookForENS = async () => {
@@ -41,7 +46,7 @@ export const useTransactionContacts = ({ onSelected }: TransactionContactsProps)
 	};
 
 	return {
-		contactList: [...contactList, ...availableAddresses],
+		contactList: [...contactList, ...availableAddresses()],
 		address,
 		setAddress,
 		keyboardVisible,

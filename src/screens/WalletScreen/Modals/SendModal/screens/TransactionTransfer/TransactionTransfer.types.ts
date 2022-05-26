@@ -6,5 +6,6 @@ export interface TransactionTransferProps {
 	user: UserProps;
 	token: MinkeToken;
 	onDismiss: () => void;
+	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 }

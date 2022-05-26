@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
+import { Icon, Modal, Text, TokenCard, HapticButton, ModalReusables } from '@components';
 import { Card } from 'react-native-paper';
 import { useTheme, useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
@@ -37,7 +37,10 @@ const Deposit = () => {
 		hideModal,
 		showModal,
 		onTokenSelect,
-		apy
+		apy,
+		selectedProtocol,
+		blockchainError,
+		setBlockchainError
 	} = useDeposit();
 
 	useEffect(() => {
@@ -84,7 +87,8 @@ const Deposit = () => {
 						<View style={styles.interestContainer}>
 							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
 							<Text weight="medium" type="a" color="alert3">
-								{apy}% interest p.a.
+								{apy}
+								{i18n.t('SaveScreen.interest')}
 							</Text>
 						</View>
 					)}
@@ -119,9 +123,18 @@ const Deposit = () => {
 					<TransactionWaitModal
 						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 						fromToken={token}
-						toToken={{ symbol: 'Aave' } as ParaswapToken}
+						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
 						transactionHash={transactionHash}
 						deposit
+					/>
+				)}
+			</Modal>
+			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+				{blockchainError && (
+					<ModalReusables.Error
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						onDismiss={() => setBlockchainError(false)}
+						showHeader
 					/>
 				)}
 			</Modal>

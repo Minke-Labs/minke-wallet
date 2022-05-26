@@ -3,7 +3,7 @@ import { captureException } from '@sentry/react-native';
 import { network as selectedNetwork } from '@models/network';
 import { globalTopUpState } from '@stores/TopUpStore';
 import { useState } from '@hookstate/core';
-import { WYRE_ORDER_STATUS_TYPES } from '@models/wyre.types';
+import { WYRE_ORDER_STATUS_TYPES } from '@models/types/wyre.types';
 import { trackWyreOrder, trackWyreTransfer } from '@models/wyre';
 import Logger from '@utils/logger';
 

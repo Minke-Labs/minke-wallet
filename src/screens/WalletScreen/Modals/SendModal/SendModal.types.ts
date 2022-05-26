@@ -7,6 +7,7 @@ interface UserProps {
 
 interface SendModalProps {
 	onDismiss: () => void;
+	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	isVisible: boolean;
 }

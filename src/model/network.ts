@@ -26,6 +26,13 @@ export interface Network {
 	jsonRpcProvider?: string;
 	biconomyAPIKey?: string;
 	apiUrl0x?: string;
+	mStable?: {
+		depositContract: string;
+		withdrawContract: string;
+		mAsset: string;
+		saveAsset: string;
+		vault: string;
+	};
 }
 
 export interface Networks {
@@ -68,7 +75,14 @@ export const networks: Networks = {
 		biconomyAPIKey: BICONOMY_API_KEY_POLYGON_MAINNET || process.env.BICONOMY_API_KEY_POLYGON_MAINNET,
 		topUpToken: { symbol: 'MUSDC', name: 'USDC' },
 		apiUrl0x: 'https://polygon.api.0x.org/',
-		alchemyAPIKey: (ALCHEMY_API_KEY_MATIC || process.env.ALCHEMY_API_KEY_MATIC)!
+		alchemyAPIKey: (ALCHEMY_API_KEY_MATIC || process.env.ALCHEMY_API_KEY_MATIC)!,
+		mStable: {
+			depositContract: '0x89252e32e98D467C6Ae3e2E6a9942bA3033f938a',
+			withdrawContract: '0x89252e32e98D467C6Ae3e2E6a9942bA3033f938a',
+			mAsset: '0xE840B73E5287865EEc17d250bFb1536704B43B21',
+			saveAsset: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
+			vault: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'
+		}
 	},
 	ropsten: {
 		chainId: 3,

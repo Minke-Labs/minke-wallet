@@ -3,11 +3,12 @@ import { FlatList, SafeAreaView, View } from 'react-native';
 import { SettingsHeader } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useLanguage, useNavigation } from '@hooks';
+import { availableDepositProtocols } from '@models/deposit';
 import ListItem from '../USDCoinScreen/ListItem/ListItem';
 import styles from './SavingAccountsScreen.styles';
 
 const SavingAccountsScreen = () => {
-	const { availableDepositProtocols, selectedProtocol, onChangeProtocol } = useDepositProtocols();
+	const { selectedProtocol, onChangeProtocol } = useDepositProtocols();
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 
