@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { RadioButton } from 'react-native-paper';
 import { useTheme, useLanguage } from '@hooks';
 import { Text, Icon, ActivityIndicator } from '@components';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
@@ -9,6 +8,7 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { makeStyles } from './GasOption.styles';
+import Radio from './Radio/Radio';
 
 interface Wait {
 	normal: number;
@@ -136,12 +136,7 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 			<View style={[styles.container, selected ? styles.selectedCard : {}]}>
 				<View style={styles.content}>
 
-					<RadioButton
-						value={i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
-						status={selected ? 'checked' : 'unchecked'}
-						onPress={onSelectGas}
-						color={colors.cta1}
-					/>
+					<Radio selected={selected} />
 
 					<View style={styles.icon}>
 						<Icon
