@@ -110,7 +110,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 				{isMaxEnabled && (
 					<TouchableOpacity onPress={onMaxPress} style={styles.tokenCardMaxButton}>
 						<Icon name="sparkleStroke" size={16} color="cta1" />
-						<Text type="a" color="cta1" style={styles.tokenCardMaxButtonText}>
+						<Text type="a" weight="semiBold" color="cta1" style={styles.tokenCardMaxButtonText}>
 							Max
 						</Text>
 					</TouchableOpacity>

@@ -27,7 +27,8 @@ export const makeStyles = (colors: ColorType) =>
 		bottomRow: {
 			flexDirection: 'row',
 			alignItems: 'center',
-			justifyContent: 'space-between'
+			justifyContent: 'space-between',
+			marginTop: 4
 		},
 
 		tokenImage: {

@@ -15,6 +15,7 @@ const Radio: React.FC<RadioProps> = ({ selected }) => {
 			borderRadius: 7,
 			borderWidth: 1,
 			borderColor: selected ? colors.cta1 : colors.detail1,
+			backgroundColor: '#ffffff',
 			justifyContent: 'center',
 			alignItems: 'center'
 		}}

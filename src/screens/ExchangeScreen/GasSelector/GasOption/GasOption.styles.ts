@@ -7,7 +7,8 @@ export const makeStyles = (colors: ColorType) =>
 			padding: 16,
 			borderRadius: 16,
 			marginRight: 8,
-			backgroundColor: colors.background5
+			backgroundColor: colors.background5,
+			width: 318
 		},
 		selectedCard: {
 			borderWidth: 2,
@@ -22,6 +23,6 @@ export const makeStyles = (colors: ColorType) =>
 			borderRadius: 50,
 			marginLeft: 8,
 			marginRight: 16,
-			backgroundColor: colors.background3
+			backgroundColor: colors.background6
 		}
 	});
