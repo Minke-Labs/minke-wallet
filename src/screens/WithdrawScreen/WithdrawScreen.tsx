@@ -1,7 +1,7 @@
 import React from 'react';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Card } from 'react-native-paper';
-import { Icon, Modal, HapticButton, Text, TokenCard } from '@components';
+import { Icon, Modal, HapticButton, Text, TokenCard, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useTheme, useLanguage } from '@hooks';
@@ -35,7 +35,9 @@ const WithdrawScreen = () => {
 		transactionHash,
 		tokens,
 		gaslessEnabled,
-		selectedProtocol
+		selectedProtocol,
+		blockchainError,
+		setBlockchainError
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
@@ -103,6 +105,15 @@ const WithdrawScreen = () => {
 						toToken={token!}
 						transactionHash={transactionHash}
 						withdraw
+					/>
+				)}
+			</Modal>
+			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+				{blockchainError && (
+					<ModalReusables.Error
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						onDismiss={() => setBlockchainError(false)}
+						showHeader
 					/>
 				)}
 			</Modal>

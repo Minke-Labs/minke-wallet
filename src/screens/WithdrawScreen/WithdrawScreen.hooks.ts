@@ -17,6 +17,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import WithdrawService from '@src/services/withdraw/WithdrawService';
+import { captureException } from '@sentry/react-native';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -29,6 +30,7 @@ const useWithdrawScreen = () => {
 	const { gweiValue = 0 } = gas || {};
 	const { withdrawableTokens: tokens, tokens: balances } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
+	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
@@ -89,48 +91,55 @@ const useWithdrawScreen = () => {
 		Keyboard.dismiss();
 		if (canWithdraw && token && token.interestBearingToken && selectedProtocol) {
 			setWaitingTransaction(true);
-			const hash = await new WithdrawService(selectedProtocol.id).withdraw({
-				gasless: gaslessEnabled,
-				address,
-				privateKey,
-				amount: formatUnits(toBn(amount, token.interestBearingToken.decimals), 'wei'),
-				minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
-				token: token.address,
-				interestBearingToken: token.interestBearingToken.address,
-				gasPrice: gweiValue.toString(),
-				biconomy
-			});
-
-			if (hash) {
-				Logger.log(`Withdraw ${JSON.stringify(hash)}`);
-				setTransactionHash(hash);
-				track('Withdraw done', {
-					token: token.symbol,
-					amount,
-					hash,
-					gasless: gaslessEnabled
-				});
-				const provider = biconomy.getEthersProvider();
-				const { from, to } = await provider.waitForTransaction(hash);
-				addPendingTransaction({
-					from,
-					destination: to,
-					hash,
-					txSuccessful: true,
-					pending: true,
-					timeStamp: (new Date().getTime() / 1000).toString(),
-					amount,
-					direction: 'exchange',
-					symbol: token.symbol,
-					subTransactions: [
-						{ type: 'incoming', symbol: token.symbol, amount: +amount },
-						{ type: 'outgoing', symbol: token.interestBearingToken.symbol, amount: +amount }
-					]
+			try {
+				const hash = await new WithdrawService(selectedProtocol.id).withdraw({
+					gasless: gaslessEnabled,
+					address,
+					privateKey,
+					amount: formatUnits(toBn(amount, token.interestBearingToken.decimals), 'wei'),
+					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
+					token: token.address,
+					interestBearingToken: token.interestBearingToken.address,
+					gasPrice: gweiValue.toString(),
+					biconomy
 				});
 
-				navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
-			} else {
-				Logger.error('Error withdrawing');
+				if (hash) {
+					Logger.log(`Withdraw ${JSON.stringify(hash)}`);
+					setTransactionHash(hash);
+					track('Withdraw done', {
+						token: token.symbol,
+						amount,
+						hash,
+						gasless: gaslessEnabled
+					});
+					const provider = biconomy.getEthersProvider();
+					const { from, to } = await provider.waitForTransaction(hash);
+					addPendingTransaction({
+						from,
+						destination: to,
+						hash,
+						txSuccessful: true,
+						pending: true,
+						timeStamp: (new Date().getTime() / 1000).toString(),
+						amount,
+						direction: 'exchange',
+						symbol: token.symbol,
+						subTransactions: [
+							{ type: 'incoming', symbol: token.symbol, amount: +amount },
+							{ type: 'outgoing', symbol: token.interestBearingToken.symbol, amount: +amount }
+						]
+					});
+
+					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
+				} else {
+					Logger.error('Error withdrawing');
+				}
+			} catch (error) {
+				setWaitingTransaction(false);
+				captureException(error);
+				Logger.error('Withdraw blockchain error', error);
+				setBlockchainError(true);
 			}
 		}
 	};
@@ -166,7 +175,9 @@ const useWithdrawScreen = () => {
 		waitingTransaction,
 		tokens,
 		gaslessEnabled,
-		selectedProtocol
+		selectedProtocol,
+		blockchainError,
+		setBlockchainError
 	};
 };
 
