@@ -1,28 +1,34 @@
 import React from 'react';
-import { View, SafeAreaView, ScrollView } from 'react-native';
-import { useTheme } from '@hooks';
+import { View, ScrollView } from 'react-native';
 import GasOption from './GasOption/GasOption';
-import { makeStyles } from '../ExchangeScreen.styles';
 
-const GasSelector = () => {
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
-
-	return (
-		<SafeAreaView>
-			<ScrollView
-				style={styles.scrollviewHorizontal}
-				horizontal
-				showsVerticalScrollIndicator={false}
-				showsHorizontalScrollIndicator={false}
+const GasSelector = () => (
+	<View style={{ alignItems: 'center' }}>
+		<ScrollView
+			style={{ marginBottom: 12 }}
+			horizontal
+			showsVerticalScrollIndicator={false}
+			showsHorizontalScrollIndicator={false}
+		>
+			<View style={{
+				flexDirection: 'row',
+				paddingLeft: 24,
+				paddingRight: 32
+			}}
 			>
-				<View style={styles.scrollviewHorizontalContent}>
-					<GasOption type="fast" />
-					<GasOption type="normal" />
-				</View>
-			</ScrollView>
-		</SafeAreaView>
-	);
-};
+				<GasOption type="fast" />
+				<GasOption type="normal" />
+			</View>
+		</ScrollView>
+
+		<View style={{
+			height: 6,
+			width: 40,
+			borderWidth: 1,
+			borderColor: 'purple'
+		}}
+		/>
+	</View>
+);
 
 export default GasSelector;

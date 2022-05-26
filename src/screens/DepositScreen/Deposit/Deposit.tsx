@@ -8,7 +8,6 @@ import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { tokenBalanceFormat } from '@helpers/utilities';
 import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens';
 import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
@@ -16,10 +15,9 @@ import styles from './Deposit.styles';
 
 interface HeaderProps {
 	token: ParaswapToken | undefined;
-	tokenBalance: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ token, tokenBalance }) => {
+const Header: React.FC<HeaderProps> = ({ token }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	return (
@@ -31,17 +29,9 @@ const Header: React.FC<HeaderProps> = ({ token, tokenBalance }) => {
 			</View>
 
 			<View style={styles.depositHeadline}>
-				<Text type="h3" weight="extraBold">
-					{i18n.t('DepositScreen.Deposit.deposit')}
+				<Text type="hSmall" weight="extraBold">
+					{i18n.t('DepositScreen.Deposit.deposit')} {token?.symbol}
 				</Text>
-				{token && tokenBalance && (
-					<Text type="a" weight="regular" color="text3">
-						{i18n.t('DepositScreen.Deposit.balance')}
-						<Text type="a" weight="extraBold" color="text3">
-							{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
-						</Text>
-					</Text>
-				)}
 			</View>
 		</>
 	);
@@ -80,8 +70,7 @@ const Deposit = () => {
 
 				<Header {...{ token, tokenBalance }} />
 
-				<View style={{ paddingHorizontal: 24 }}>
-
+				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
 					<TokenCard
 						onPress={showModal}
 						token={token}
@@ -90,11 +79,9 @@ const Deposit = () => {
 						apy={apy}
 						tokenBalance={tokenBalance}
 					/>
-
-					<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
-						<GasSelector />
-					</View>
 				</View>
+
+				{!gaslessEnabled && <GasSelector />}
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}

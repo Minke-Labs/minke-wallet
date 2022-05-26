@@ -13,9 +13,6 @@ export const makeStyles = (colors: ColorType) =>
 		textBold: {
 			fontFamily: 'Inter_800ExtraBold'
 		},
-		alignRight: {
-			alignItems: 'flex-end'
-		},
 		exchangeSection: {
 			paddingHorizontal: 24
 		},
@@ -32,59 +29,5 @@ export const makeStyles = (colors: ColorType) =>
 			marginTop: 8,
 			fontSize: 12,
 			color: colors.cta2
-		},
-
-		// Gas Option
-		scrollviewHorizontal: {
-			marginTop: 24,
-			marginBottom: 24,
-			paddingLeft: 0
-		},
-		scrollviewHorizontalContent: {
-			flexDirection: 'row',
-			paddingLeft: 24,
-			paddingRight: 32
-		},
-		gasSelectorCard: {
-			borderRadius: 16,
-			marginRight: 16,
-			backgroundColor: colors.background2
-		},
-		selectedCard: {
-			borderWidth: 2,
-			borderColor: colors.cta1
-		},
-		gasSelectorCardContent: {
-			flexDirection: 'row',
-			alignItems: 'center',
-			paddingLeft: 8
-		},
-		gasSelectorCardIcon: {
-			padding: 8,
-			borderRadius: 50,
-			marginRight: 16,
-			backgroundColor: colors.background4
-		},
-		gasSelectorCardGasOption: {
-			marginRight: 16
-		},
-		tokenCard: {
-			borderRadius: 16,
-			marginTop: 16,
-			backgroundColor: colors.background2
-		},
-		tokenCardDivisor: {
-			justifyContent: 'center',
-			alignItems: 'center',
-			borderBottomWidth: 1,
-			borderColor: colors.background1,
-			marginTop: 24,
-			marginBottom: 24
-		},
-		tokenCardDivisorBackground: {
-			borderRadius: 50,
-			padding: 8,
-			backgroundColor: colors.background1,
-			position: 'absolute'
 		}
 	});

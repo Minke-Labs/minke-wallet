@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Card, RadioButton } from 'react-native-paper';
+import { RadioButton } from 'react-native-paper';
 import { useTheme, useLanguage } from '@hooks';
-import { Text, Icon as IconImg, ActivityIndicator } from '@components';
+import { Text, Icon, ActivityIndicator } from '@components';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
-import { makeStyles } from '../../ExchangeScreen.styles';
+import { makeStyles } from './GasOption.styles';
 
 interface Wait {
 	normal: number;
@@ -116,45 +116,49 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 		}
 	}, [gasPrice, usdPrice, wait]);
 
-	const Icon = useCallback(() => {
-		switch (type) {
-			case 'fast':
-				return <IconImg name="boltStroke" size={20} color="cta1" />;
-			default:
-				return <IconImg name="clockStroke" size={20} color="cta1" />; // normal
-		}
-	}, []);
-
 	const onSelectGas = () => {
 		exchange.gas.set({ type, gweiValue: gasPrice, usdPrice, wait: wait || defaultWait[type as keyof Wait] } as Gas);
 	};
 
 	if (!gasPrice || !usdPrice) {
-		return <ActivityIndicator size={24} style={styles.scrollviewHorizontal} />;
+		return <ActivityIndicator
+			size={24}
+			style={{
+				marginTop: 24,
+				marginBottom: 24,
+				paddingLeft: 0
+			}}
+		/>;
 	}
 
 	return (
-		<TouchableOpacity onPress={onSelectGas} disabled={disabled}>
-			<Card style={[styles.gasSelectorCard, selected ? styles.selectedCard : {}]}>
-				<Card.Content style={styles.gasSelectorCardContent}>
-					<View style={{ marginRight: 4 }}>
-						<RadioButton
-							value={i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
-							status={selected ? 'checked' : 'unchecked'}
-							onPress={onSelectGas}
-							color={colors.cta1}
+		<TouchableOpacity onPress={onSelectGas} disabled={disabled} activeOpacity={0.6}>
+			<View style={[styles.container, selected ? styles.selectedCard : {}]}>
+				<View style={styles.content}>
+
+					<RadioButton
+						value={i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
+						status={selected ? 'checked' : 'unchecked'}
+						onPress={onSelectGas}
+						color={colors.cta1}
+					/>
+
+					<View style={styles.icon}>
+						<Icon
+							name={type === 'fast' ? 'boltStroke' : 'clockStroke'}
+							size={20}
+							color="cta1"
 						/>
 					</View>
-					<View style={styles.gasSelectorCardIcon}>
-						<Icon />
-					</View>
-					<View style={styles.gasSelectorCardGasOption}>
+
+					<View style={{ marginRight: 16 }}>
 						<Text type="span" weight="bold">
 							{i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
 						</Text>
 						<Text type="span">{waiting()}</Text>
 					</View>
-					<View style={styles.alignRight}>
+
+					<View style={{ alignItems: 'flex-end' }}>
 						<Text type="span" weight="bold">
 							${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}
 						</Text>
@@ -162,8 +166,9 @@ const GasOption = ({ type, disabled = false }: { type: 'normal' | 'fast' | 'slow
 							{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}
 						</Text>
 					</View>
-				</Card.Content>
-			</Card>
+
+				</View>
+			</View>
 		</TouchableOpacity>
 	);
 };
