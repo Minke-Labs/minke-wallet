@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
-import { getProvider } from '@src/model/wallet';
+import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { AssetsPanel, ActionsPanel, Header } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
@@ -20,28 +20,28 @@ export const Content: React.FC<ContentProps> = ({
 	setAddFundsVisible,
 	setSendModalOpen
 }) => {
-	const [mined, setMined] = useState(false);
+	const [txs, setTxs] = useState<ZapperTransaction[]>([]);
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { loading, fetchTransactions, pendingTransactions, setPendingTransactions } = useTransactions();
 
 	useEffect(() => {
 		const fetchStatus = async () => {
-			if (pendingTransactions[0]?.hash) {
+			const res = pendingTransactions.map(async (tx: ZapperTransaction) => {
 				const provider = await getProvider();
-				await provider.waitForTransaction(pendingTransactions[0]?.hash);
-				setMined(true);
-			} else {
-				setMined(false);
-			}
+				await provider.waitForTransaction(tx.hash);
+				return { ...tx, pending: false, txSuccessful: true };
+			});
+			setTxs(await Promise.all(res));
 		};
 
 		fetchStatus();
-	}, [pendingTransactions[0]?.hash]);
+	}, [pendingTransactions]);
 
 	const handleRefresh = useCallback(() => {
 		fetchTransactions();
-		if (mined) setPendingTransactions([]);
+		setPendingTransactions([]);
+		setTxs([]);
 	}, [fetchTransactions]);
 
 	return (
@@ -64,16 +64,16 @@ export const Content: React.FC<ContentProps> = ({
 			/>
 
 			{
-				pendingTransactions.length > 0 && (
+				txs.map((tx: ZapperTransaction) => (
 					<PendingTransaction
-						key={pendingTransactions[0].hash}
-						address={pendingTransactions[0].destination}
-						pending={!mined}
-						amount={pendingTransactions[0].amount}
-						symbol={pendingTransactions[0].symbol}
-						timestamp={pendingTransactions[0].timeStamp}
+						key={tx.hash}
+						address={tx.destination}
+						pending={tx.pending}
+						amount={tx.amount}
+						symbol={tx.symbol}
+						timestamp={tx.timeStamp}
 					/>
-				)
+				))
 			}
 
 			<AssetsPanel

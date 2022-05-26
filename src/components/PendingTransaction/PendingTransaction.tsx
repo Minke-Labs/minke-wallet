@@ -17,7 +17,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
 			<View style={styles.leftContainer}>
 				{
-					pending && pending ? (
+					pending ? (
 						<ActivityIndicator size={26} />
 					) : (
 						<Icon
@@ -30,7 +30,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount
 
 				<View style={{ marginLeft: 8 }}>
 					<Text type="p2" weight="semiBold">
-						{ pending ? 'Pending' : 'Succes!' }
+						{ pending ? 'Pending' : 'Success!' }
 					</Text>
 					<Text type="span" weight="semiBold">{getMin(timestamp)} min.</Text>
 				</View>

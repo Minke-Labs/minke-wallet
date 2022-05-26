@@ -369,14 +369,6 @@ export const setWalletBackedUp = async (walletId: string, backupFile = '') => {
 	}
 };
 
-export const getAccountName = async (address: string) => {
-	const ensName = await getENSAddress(address);
-	if (ensName) {
-		return ensName;
-	}
-	return smallWalletAddress(address);
-};
-
 export interface MinkeTokenList {
 	[name: string]: {
 		contract: Contract;
