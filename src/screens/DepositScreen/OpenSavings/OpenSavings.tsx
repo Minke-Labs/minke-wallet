@@ -5,7 +5,7 @@ import { Icon, Text, HapticButton, ActivityIndicator, AaveReusables, MStableReus
 import { useAmplitude, useNavigation, useLanguage, useDepositProtocols } from '@hooks';
 import { BasicLayout } from '@layouts';
 import styles from './OpenSavings.styles';
-import { useOpenSavings } from './OpenSavings.hooks';
+import { useOpenDepositAccount } from '../OpenDepositAccount.hooks';
 
 const Background: React.FC = ({ children }) => {
 	const { selectedProtocol } = useDepositProtocols();
@@ -22,7 +22,7 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { selectedProtocol } = useDepositProtocols();
-	const { loading, onOpenAccount, gaslessEnabled } = useOpenSavings({ onApprove });
+	const { loading, onOpenAccount, gaslessEnabled } = useOpenDepositAccount({ onApprove });
 
 	useEffect(() => {
 		track('OpenSavings Screen Opened');

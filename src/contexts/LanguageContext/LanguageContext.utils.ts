@@ -6,7 +6,7 @@ const mockCurrency: Country = {
 	iso: 'US',
 	currencyName: 'United States Dollar',
 	currency: 'USD',
-	payment_id: null
+	paymentName: null
 };
 
 export const mock = {
@@ -14,7 +14,6 @@ export const mock = {
 	errorMsg: undefined,
 	setCountryCode: () => { },
 	locationCurrency: mockCurrency.currency,
-	paymentOnLocation: mockCurrency.payment_id,
 	countries: [
 		mockCurrency
 	],

@@ -6,7 +6,7 @@ import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddCo
 import { SendModalProps } from './SendModal.types';
 import { useSendModal } from './SendModal.hooks';
 
-const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully, isVisible = false }) => {
+const SendModal: React.FC<SendModalProps> = ({ onDismiss, onError, sentSuccessfully, isVisible = false }) => {
 	const {
 		currentStep,
 		user,
@@ -46,7 +46,18 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, sentSuccessfully, isVi
 
 			{currentStep === 1 && <TransactionSelectFunds user={user} onSelected={onTokenSelected} />}
 
-			{currentStep === 2 && token && <TransactionTransfer {...{ user, token, onDismiss, sentSuccessfully }} />}
+			{
+				currentStep === 2 && token &&
+				<TransactionTransfer
+					{...{
+						user,
+						token,
+						onDismiss,
+						onError,
+						sentSuccessfully
+					}}
+				/>
+			}
 		</SafeAreaView>
 	);
 };

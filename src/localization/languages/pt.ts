@@ -127,6 +127,16 @@ export default {
 			open_mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
+		OpenMStable: {
+			open_account: 'Abrir Conta',
+			open_mstable: 'Abrir uma conta\nna mStable',
+			what_is: 'O que é a mStable?',
+			mstable_des:
+				'mStable é serviço de infraestrutura para crypto ativos autônoma e não custodial. O protocolo foi criado para corrigir três problemas: \n\n- Fragmentação significativa entre ativos com o mesmo mecanismo de funcionamento (há pelo menos 5 grandes stablecoins vinculadas ao dólar americano na rede Ethereum, por exemplo). \n\n - Falta de rendimentos em stablecoins e moedas fiduciárias. \n\n - Falta de proteção contra perda de capital em crypto ativos vinculados a uma outra moeda.',
+			view_site: 'Ver Site',
+			learn_more: 'Ver Mais',
+			this_transaction: 'Esta transação vai custar alguns centavos.'
+		},
 		NotAbleToSaveModal: {
 			not_able: 'Não foi possível salvar',
 			need_funds_in: 'Primeiro você precisa ter fundos em ',
@@ -137,7 +147,7 @@ export default {
 	DepositWithdrawalSuccessScreen: {
 		congrats: 'Parabéns!',
 		you_deposited: 'Você fez o seu depósito!',
-		you_withdrawed: 'Você retirou com sucesso!'
+		you_withdrawn: 'Você retirou com sucesso!'
 	},
 	ExchangeResumeScreen: {
 		exchange_resume: 'Resumo da Troca',
@@ -175,7 +185,7 @@ export default {
 		interest: '% de juros anuais',
 		EmptyState: {
 			save: 'Salvar',
-			open_aave_savings_account: 'Abrir Conta\nPoupança na %{protocol}',
+			open_aave_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
 			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
 		},
 		Header: {
@@ -187,7 +197,7 @@ export default {
 			deposit: 'Depositar'
 		},
 		Body: {
-			deposit: 'Depósito'
+			deposit: 'Depósito ({{source}})'
 		}
 	},
 	SavingAccountsScreen: {
@@ -498,12 +508,16 @@ export default {
 		},
 		ModalReusables: {
 			Error: {
+				title: 'Oops!',
 				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
-				buttonLabel: 'Ok, entendi'
+				buttonLabel: 'Ok, entendi',
+				Blockchain: {
+					description: 'Algo deu errado ao falar com a Blockchain'
+				}
 			},
 			ComingSoonModal: {
 				coming_soon: 'Em breve!',
-				devs_doing_something: 'Nossos devs estão fazendo alguma coisa aí.'
+				devs_doing_something: 'Nossos devs estão trabalhando.'
 			}
 		},
 		SettingsHeader: {

@@ -12,7 +12,7 @@ import {
 } from '@env';
 import { WyreReferenceInfo } from '@stores/TopUpStore';
 import { Network } from './network';
-import { ApplePayResponse } from './wyre.types';
+import { ApplePayResponse } from './types/wyre.types';
 
 const SOURCE_CURRENCY_USD = 'USD';
 const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';

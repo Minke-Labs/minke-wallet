@@ -11,7 +11,7 @@ import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';
 import { useTransactionTransfer } from './TransactionTransfer.hooks';
 
-const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, ...props }) => {
+const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, onError, ...props }) => {
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
 	const {
@@ -28,7 +28,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 		amountType,
 		gasless,
 		enoughGas
-	} = useTransactionTransfer({ token, user, ...props });
+	} = useTransactionTransfer({ token, user, onError, ...props });
 
 	return (
 		<View style={styles.container}>

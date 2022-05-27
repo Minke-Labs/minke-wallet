@@ -5,7 +5,7 @@ import { AccountBalance, CovalentAavePool } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
-import { depositStablecoins, interestBearingTokens } from '@models/deposit';
+import { depositStablecoins, interestBearingTokens, fetchDepositProtocol } from '@models/deposit';
 import { fetchInterestBearingTokens } from '@models/depositTokens';
 import { BalanceApiResponse } from './covalent.types';
 
@@ -31,6 +31,7 @@ export const getAavePools = async (): Promise<CovalentAavePool[]> => {
 
 export const getTokenBalances = async (address: string): Promise<AccountBalance> => {
 	const { chainId: networkId } = await network();
+	const protocol = await fetchDepositProtocol();
 	const { status, data } = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
 	if (status !== 200) Logger.sentry('Balances API failed');
 	const {
@@ -43,11 +44,14 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
 
 	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	let interestTokens = await fetchInterestBearingTokens(address);
-	interestTokens = interestTokens.filter((token) => Number(token.balance) > 0);
+	const allInterestTokens = await fetchInterestBearingTokens(address, protocol.id);
+	let interestTokens = allInterestTokens.flat();
+	let [withdrawableTokens] = allInterestTokens;
+	interestTokens = interestTokens.filter((token) => token.balanceUSD >= 0.001);
+	withdrawableTokens = withdrawableTokens.filter((token) => token.balanceUSD >= 0.001);
 
 	const depositableTokens = allTokens.filter(
-		(token) => depositStablecoins.includes(token.symbol) && token.balanceUSD > 0
+		(token) => depositStablecoins.includes(token.symbol) && +token.balance > 0
 	);
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
 	tokens = tokens.filter(({ balance }) => +balance > 0);
@@ -55,5 +59,14 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const depositedBalance = interestTokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const balance = walletBalance + depositedBalance;
 
-	return { address, tokens, balance, depositedBalance, walletBalance, interestTokens, depositableTokens };
+	return {
+		address,
+		tokens,
+		balance,
+		depositedBalance,
+		walletBalance,
+		interestTokens,
+		depositableTokens,
+		withdrawableTokens
+	};
 };

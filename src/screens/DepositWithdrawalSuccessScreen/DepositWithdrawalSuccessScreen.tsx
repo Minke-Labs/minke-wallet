@@ -28,9 +28,9 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 						{i18n.t('DepositWithdrawalSuccessScreen.congrats')}
 					</Text>
 					<Text type="p2" color="text3" marginBottom={32} style={styles.textCenter}>
-						{type === 'deposit' ?
-							i18n.t('DepositWithdrawalSuccessScreen.you_deposited') :
-							i18n.t('DepositWithdrawalSuccessScreen.you_withdrawed')}
+						{type === 'deposit'
+							? i18n.t('DepositWithdrawalSuccessScreen.you_deposited')
+							: i18n.t('DepositWithdrawalSuccessScreen.you_withdrawn')}
 					</Text>
 
 					<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>

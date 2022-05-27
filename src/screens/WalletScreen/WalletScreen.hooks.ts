@@ -5,12 +5,14 @@ import { useAmplitude, useNavigation, useLanguage } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletDelete, getAllWallets } from '@models/wallet';
+import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const state = useState(globalWalletState());
+	const [error, setError] = React.useState(false);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const navigation = useNavigation();
 
@@ -55,6 +57,7 @@ export const useWalletScreen = () => {
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(address || '');
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 		setSnackbarVisible(true);
 	};
 
@@ -65,7 +68,13 @@ export const useWalletScreen = () => {
 
 	useEffect(() => {
 		track('Wallet Screen Opened');
+		track('Wallet access', { active: (balance?.usd || 0) > 0, address });
 	}, []);
+
+	const onError = () => {
+		setError(true);
+		setSendModalOpen(false);
+	};
 
 	return {
 		sendModalOpen,
@@ -88,6 +97,9 @@ export const useWalletScreen = () => {
 		onCopyToClipboard,
 		onSendFinished,
 		address,
-		balance
+		balance,
+		onError,
+		setError,
+		error
 	};
 };

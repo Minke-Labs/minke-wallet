@@ -6,6 +6,7 @@ import { BasicLayout } from '@layouts';
 import { LoadingScreen, SettingsHeader, Text } from '@components';
 import { useNavigation, useLanguage } from '@hooks';
 import { walletCreate } from '@models/wallet';
+import { networks } from '@models/network';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
@@ -13,6 +14,9 @@ import styles from './SettingsScreen.styles';
 const SettingsScreen = () => {
 	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
+	const {
+		network: { chainId }
+	} = state.value;
 	const navigation = useNavigation();
 	const [creatingWallet, setCreatingWallet] = React.useState(false);
 
@@ -80,7 +84,7 @@ const SettingsScreen = () => {
 						icon="dollarStroke"
 						onPress={onDollarSettings}
 					/>
-					{!!__DEV__ && (
+					{chainId !== networks.mainnet.chainId && (
 						<SettingsOption
 							label={i18n.t('SettingsScreen.savings_account')}
 							icon="vaultStroke"

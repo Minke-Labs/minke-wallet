@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, TokenCard, HapticButton } from '@components';
+import { Icon, Modal, Text, TokenCard, HapticButton, ModalReusables } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
@@ -57,7 +57,10 @@ const Deposit = () => {
 		hideModal,
 		showModal,
 		onTokenSelect,
-		apy
+		apy,
+		selectedProtocol,
+		blockchainError,
+		setBlockchainError
 	} = useDeposit();
 
 	useEffect(() => {
@@ -113,9 +116,18 @@ const Deposit = () => {
 					<TransactionWaitModal
 						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 						fromToken={token}
-						toToken={{ symbol: 'Aave' } as ParaswapToken}
+						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
 						transactionHash={transactionHash}
 						deposit
+					/>
+				)}
+			</Modal>
+			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+				{blockchainError && (
+					<ModalReusables.Error
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						onDismiss={() => setBlockchainError(false)}
+						showHeader
 					/>
 				)}
 			</Modal>
