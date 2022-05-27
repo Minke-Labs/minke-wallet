@@ -13,6 +13,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		content: {
 			width: '100%',
+			minHeight: '40%',
 			paddingHorizontal: 24,
 			alignItems: 'center'
 		}
