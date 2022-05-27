@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme } from '@hooks';
+import { useLanguage, useTheme } from '@hooks';
 import { smallWalletAddress } from '@src/model/wallet';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
@@ -10,6 +10,7 @@ import { PendingTransactionProps } from './PendingTransaction.types';
 
 const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount, symbol, pending, timestamp }) => {
 	const { colors } = useTheme();
+	const { i18n } = useLanguage();
 
 	const getMin = (ts: string) => Math.floor(((new Date().getTime() / 1000) - Number(ts)) / 60);
 
@@ -30,7 +31,9 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount
 
 				<View style={{ marginLeft: 8 }}>
 					<Text type="p2" weight="semiBold">
-						{ pending ? 'Pending' : 'Success!' }
+						{ pending ?
+							i18n.t('Components.PendingTransactions.pending') :
+							i18n.t('Components.PendingTransactions.success') }
 					</Text>
 					<Text type="span" weight="semiBold">{getMin(timestamp)} min.</Text>
 				</View>
