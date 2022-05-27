@@ -10,20 +10,6 @@ export const makeStyles = (colors: ColorType) =>
 			backgroundColor: colors.background5
 		},
 
-		coinSelector: {
-			flexDirection: 'row',
-			width: '100%',
-			marginBottom: 16
-		},
-		coinSelectorTitles: {
-			justifyContent: 'space-between',
-			marginLeft: 16
-		},
-
-		coinSelectorTitlesUpper: {
-			flexDirection: 'row'
-		},
-
 		bottomRow: {
 			flexDirection: 'row',
 			alignItems: 'center',
@@ -70,9 +56,5 @@ export const makeStyles = (colors: ColorType) =>
 			flexDirection: 'row',
 			alignItems: 'center',
 			paddingRight: 16
-		},
-		currencyIcon: {
-			padding: 8,
-			marginRight: 8
 		}
 	});

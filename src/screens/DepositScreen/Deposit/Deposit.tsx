@@ -68,7 +68,7 @@ const Deposit = () => {
 		<>
 			<BasicLayout>
 
-				<Header {...{ token, tokenBalance }} />
+				<Header token={token ?? undefined} />
 
 				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
 					<TokenCard
