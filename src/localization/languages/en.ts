@@ -123,8 +123,8 @@ export default {
 		},
 		OpenSavings: {
 			open_account: 'Open Account',
-			open_aave: 'Open Aave\nSavings Account',
-			open_mstable: 'Open mStable\nSavings Account',
+			aave: 'Open Aave\nSavings Account',
+			mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'This transaction will cost a few cents.'
 		},
 		OpenMStable: {

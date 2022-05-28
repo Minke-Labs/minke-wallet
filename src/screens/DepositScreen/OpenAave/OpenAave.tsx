@@ -32,7 +32,7 @@ const OpenAave = ({ onApprove }: { onApprove: () => void }) => {
 							</View>
 
 							<Text type="h3" weight="bold" color="text1" marginBottom={35}>
-								{i18n.t('DepositScreen.OpenAave.open_aave')}
+								{i18n.t('DepositScreen.OpenAave.aave')}
 							</Text>
 
 							<TransparentCard marginBottom={8}>

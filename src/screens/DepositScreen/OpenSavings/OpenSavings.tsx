@@ -42,7 +42,7 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 							</TouchableOpacity>
 						</View>
 						<Text type="h3" weight="bold" color="text1" marginBottom={35}>
-							{i18n.t(`DepositScreen.OpenSavings.${selectedProtocol?.id === 'aave' ? 'open_aave' : 'open_mstable'}`)}
+							{i18n.t(`DepositScreen.OpenSavings.${selectedProtocol?.id}`)}
 						</Text>
 
 						{selectedProtocol?.id === 'aave' ? <AaveReusables.Info /> : <MStableReusables.Info />}
