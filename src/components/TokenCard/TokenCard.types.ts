@@ -1,9 +1,10 @@
 import { RefObject } from 'react';
 import { TextInput } from 'react-native';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken, ParaswapToken } from '@models/token';
 
 export interface TokenCardProps {
 	token: ParaswapToken | undefined;
+	tokens: MinkeToken[];
 	onPress?: (() => void) | undefined;
 	balance: string;
 	innerRef?: RefObject<TextInput>;

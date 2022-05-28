@@ -76,6 +76,7 @@ const Deposit = () => {
 				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
 					<TokenCard
 						onPress={showModal}
+						tokens={tokens}
 						token={token}
 						balance={tokenBalance}
 						updateQuotes={debounce(updateAmount, 500)}
