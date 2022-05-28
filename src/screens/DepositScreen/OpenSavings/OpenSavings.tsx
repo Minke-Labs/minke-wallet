@@ -25,7 +25,10 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { loading, onOpenAccount, gaslessEnabled } = useOpenDepositAccount({ onApprove });
 
 	useEffect(() => {
-		track('OpenSavings Screen Opened');
+		track('OpenSavings Screen Opened', {
+			gasless: gaslessEnabled,
+			protocol: selectedProtocol?.id
+		});
 	}, []);
 
 	return (
