@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text, Icon } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { useLanguage, useTheme } from '@hooks';
+import Text from '../../Text/Text';
+import Icon from '../../Icon/Icon';
 import Radio from './Radio/Radio';
 import { makeStyles } from './GasOption.styles';
 import { GasOptionProps } from './GasOption.types';

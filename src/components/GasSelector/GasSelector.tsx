@@ -1,11 +1,11 @@
 import React, { useEffect, useCallback } from 'react';
 import { useTheme } from '@hooks';
 import { View, ScrollView } from 'react-native';
-import { ActivityIndicator } from '@components';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
+import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 import GasOption from './GasOption/GasOption';
 import styles from './GasSelector.styles';
 
