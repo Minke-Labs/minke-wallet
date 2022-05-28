@@ -521,7 +521,10 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Choose token',
-			available: 'Available'
+			available: 'Available',
+			InterestTag: {
+				interest: '% anualized interest'
+			}
 		},
 		TransactionWaitModal: {
 			transaction_done: 'Transaction done',

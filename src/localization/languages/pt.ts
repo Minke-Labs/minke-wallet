@@ -525,7 +525,10 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Escolha um token',
-			available: 'Disponível'
+			available: 'Disponível',
+			InterestTag: {
+				interest: '% de juros anuais'
+			}
 		},
 		TransactionWaitModal: {
 			transaction_done: 'Transação concluida',
