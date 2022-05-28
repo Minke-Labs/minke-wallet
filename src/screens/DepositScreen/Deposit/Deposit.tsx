@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, TokenCard, HapticButton, ModalReusables } from '@components';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
@@ -12,30 +12,6 @@ import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens'
 import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
 import styles from './Deposit.styles';
-
-interface HeaderProps {
-	token: ParaswapToken | undefined;
-}
-
-const Header: React.FC<HeaderProps> = ({ token }) => {
-	const { i18n } = useLanguage();
-	const navigation = useNavigation();
-	return (
-		<>
-			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</TouchableOpacity>
-			</View>
-
-			<View style={styles.depositHeadline}>
-				<Text type="hSmall" weight="extraBold">
-					{i18n.t('DepositScreen.Deposit.deposit')} {token?.symbol}
-				</Text>
-			</View>
-		</>
-	);
-};
 
 const Deposit = () => {
 	const { i18n } = useLanguage();
@@ -71,7 +47,7 @@ const Deposit = () => {
 		<>
 			<BasicLayout>
 
-				<Header token={token ?? undefined} />
+				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} />
 
 				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
 					<TokenCard

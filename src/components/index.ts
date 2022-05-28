@@ -23,6 +23,7 @@ import OnrampButton from './OnrampButton/OnrampButton';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import HapticButton from './HapticButton/HapticButton';
+import Header from './Header/Header';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
 import TokenInputInner from './TokenInputInner/TokenInputInner';
 import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
@@ -56,6 +57,7 @@ export {
 	SearchInput,
 	TextArea,
 	HapticButton,
+	Header,
 	TokenInputInner,
 	TouchableShrinks,
 	Input,
