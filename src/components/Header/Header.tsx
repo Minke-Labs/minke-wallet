@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Icon, Text } from '@components';
 import { useNavigation } from '@hooks';
+import Icon from '../Icon/Icon';
+import Text from '../Text/Text';
 import styles from './Header.styles';
 
 interface HeaderProps {

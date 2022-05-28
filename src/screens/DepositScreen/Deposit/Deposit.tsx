@@ -9,7 +9,7 @@ import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens';
-import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
+import GasSelector from '../../../components/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
 import styles from './Deposit.styles';
 
