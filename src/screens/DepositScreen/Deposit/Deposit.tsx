@@ -2,14 +2,11 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header } from '@components';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
-import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens';
-import GasSelector from '../../../components/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
 import styles from './Deposit.styles';
 
@@ -46,7 +43,6 @@ const Deposit = () => {
 	return (
 		<>
 			<BasicLayout>
-
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} />
 
 				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
@@ -75,7 +71,7 @@ const Deposit = () => {
 			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
-				<SearchTokens
+				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}
@@ -90,7 +86,7 @@ const Deposit = () => {
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
 				{!!token && (
-					<TransactionWaitModal
+					<ModalReusables.TransactionWait
 						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 						fromToken={token}
 						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}

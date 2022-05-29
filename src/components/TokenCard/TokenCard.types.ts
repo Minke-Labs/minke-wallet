@@ -12,6 +12,6 @@ export interface TokenCardProps {
 	updateQuotes?: Function;
 	conversionAmount?: string;
 	notTouchable?: boolean;
-	apy: string;
+	apy?: string;
 	tokenBalance: string;
 }
