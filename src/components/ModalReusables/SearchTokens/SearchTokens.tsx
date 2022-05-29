@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { ModalHeader, ScreenLoadingIndicator, SearchInput, Text, Token, EmptyStates } from '@components';
 import { useTheme, useLanguage, useTokens } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
+import ModalHeader from '../../ModalHeader/ModalHeader';
+import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
+import SearchInput from '../../SearchInput/SearchInput';
+import Text from '../../Text/Text';
+import Token from '../../Token/Token';
+import EmptyStates from '../../EmptyStates';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
 
