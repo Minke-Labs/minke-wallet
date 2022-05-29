@@ -6,11 +6,14 @@ import { Button } from 'react-native-paper';
 import { useTheme, useLanguage } from '@hooks';
 import { network } from '@models/network';
 import { getProvider, smallWalletAddress } from '@src/model/wallet';
-import { ModalHeader, Text, Icon, ActivityIndicator } from '@components';
 import { TokenType } from '@src/styles';
-import { makeStyles } from './TransactionWaitModal.styles';
-import Token from '../Token/Token';
-import { TransactionWaitModalProps } from './TransactionWaitModal.types';
+import ModalHeader from '../../ModalHeader/ModalHeader';
+import { makeStyles } from './TransactionWait.styles';
+import Token from '../../Token/Token';
+import Icon from '../../Icon/Icon';
+import ActivityIndicator from '../../ActivityIndicator/ActivityIndicator';
+import Text from '../../Text/Text';
+import { TransactionWaitModalProps } from './TransactionWait.types';
 
 const TransactionWaitModal = ({
 	onDismiss,
