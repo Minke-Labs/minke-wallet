@@ -507,6 +507,21 @@ export default {
 			pay_with: 'Pagar com '
 		},
 		ModalReusables: {
+			TransactionWaitModal: {
+				transaction_done: 'Transação concluida',
+				processing_transaction: 'Processando transação',
+				sent: 'Enviou',
+				deposited: 'Depositou',
+				withdrew: 'Retirou',
+				exchanged: 'Converteu',
+				sending: 'Enviando',
+				depositing: 'Depositando',
+				withdrawing: 'Retirando',
+				exchanging: 'Convertendo',
+				in: 'em',
+				for: 'para',
+				transaction: 'Transação'
+			},
 			Error: {
 				title: 'Oops!',
 				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
@@ -529,21 +544,6 @@ export default {
 			InterestTag: {
 				interest: '% de juros anuais'
 			}
-		},
-		TransactionWaitModal: {
-			transaction_done: 'Transação concluida',
-			processing_transaction: 'Processando transação',
-			sent: 'Enviou',
-			deposited: 'Depositou',
-			withdrew: 'Retirou',
-			exchanged: 'Converteu',
-			sending: 'Enviando',
-			depositing: 'Depositando',
-			withdrawing: 'Retirando',
-			exchanging: 'Convertendo',
-			in: 'em',
-			for: 'para',
-			transaction: 'Transação'
 		}
 	},
 	Logs: {

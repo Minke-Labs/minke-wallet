@@ -503,6 +503,21 @@ export default {
 			pay_with: 'Pay with '
 		},
 		ModalReusables: {
+			TransactionWaitModal: {
+				transaction_done: 'Transaction done',
+				processing_transaction: 'Processing Transaction',
+				sent: 'Sent',
+				deposited: 'Deposited',
+				withdrew: 'Withdrew',
+				exchanged: 'Exchanged',
+				sending: 'Sending',
+				depositing: 'Depositing',
+				withdrawing: 'Withdrawing',
+				exchanging: 'Exchanging',
+				in: 'in',
+				for: 'for',
+				transaction: 'Transaction'
+			},
 			Error: {
 				title: 'Oops!',
 				description: 'Something went wrong, our developers have been notified.',
@@ -525,21 +540,6 @@ export default {
 			InterestTag: {
 				interest: '% anualized interest'
 			}
-		},
-		TransactionWaitModal: {
-			transaction_done: 'Transaction done',
-			processing_transaction: 'Processing Transaction',
-			sent: 'Sent',
-			deposited: 'Deposited',
-			withdrew: 'Withdrew',
-			exchanged: 'Exchanged',
-			sending: 'Sending',
-			depositing: 'Depositing',
-			withdrawing: 'Withdrawing',
-			exchanging: 'Exchanging',
-			in: 'in',
-			for: 'for',
-			transaction: 'Transaction'
 		}
 	},
 	Logs: {
