@@ -15,7 +15,7 @@ const BorderSVG = () => {
 		>
 			<Path
 				d="M-72 52.524c0-12.458 9.531-22.844 21.943-23.912L279.957.22C331.344-4.201 375.5 36.319 375.5 87.896V430H-72V52.524Z"
-				fill={colors.text6}
+				fill={colors.background5}
 			/>
 		</Svg>
 	);

@@ -3,7 +3,7 @@ import { View, ImageBackground, Image, SafeAreaView } from 'react-native';
 import { useTheme, useDepositProtocols } from '@hooks';
 import {
 	wavesBackground,
-	krakenAave,
+	krakenAave2,
 	krakenMStable
 } from '@images';
 import { Header } from '@components';
@@ -21,7 +21,7 @@ export const Background: React.FC = ({ children }) => {
 					style={styles.bgImage}
 				/>
 				<Image
-					source={selectedProtocol?.id === 'aave' ? krakenAave : krakenMStable}
+					source={selectedProtocol?.id === 'aave' ? krakenAave2 : krakenMStable}
 					style={styles.krakenImage}
 				/>
 				<View>

@@ -19,27 +19,27 @@ const DepositScreen = () => {
 		// selectedProtocol,
 	} = useDepositProtocols();
 
-	// if (ableToDeposit === undefined || approved === undefined) {
-	// 	return <ScreenLoadingIndicator />;
-	// }
+	if (ableToDeposit === undefined || approved === undefined) {
+		return <ScreenLoadingIndicator />;
+	}
 
-	// if (!ableToDeposit) {
-	// 	return (
-	// 		<>
-	// 			<Modal isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
-	// 				<NotAbleToSaveModal
-	// 					visible={notAbleToSaveVisible}
-	// 					onDismiss={notAbleToSaveDismiss}
-	// 					onAddFunds={onAddFunds}
-	// 				/>
-	// 			</Modal>
-	// 			<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
-	// 				<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
-	// 			</Modal>
-	// 		</>
-	// 	);
-	// }
-	// if (approved) return <Deposit />;
+	if (!ableToDeposit) {
+		return (
+			<>
+				<Modal isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
+					<NotAbleToSaveModal
+						visible={notAbleToSaveVisible}
+						onDismiss={notAbleToSaveDismiss}
+						onAddFunds={onAddFunds}
+					/>
+				</Modal>
+				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
+					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
+				</Modal>
+			</>
+		);
+	}
+	if (approved) return <Deposit />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;
 	// return selectedProtocol?.id === 'aave' ? (
 	// <OpenAave onApprove={() => setApproved(true)} />

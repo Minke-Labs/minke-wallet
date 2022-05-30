@@ -30,16 +30,11 @@ export const makeStyles = (colors: ColorType) =>
 			position: 'absolute',
 			bottom: 0,
 			overflow: 'visible',
-			resizeMode: 'contain',
-
-			borderWidth: 5,
-			borderColor: 'red'
+			resizeMode: 'contain'
 		},
 
 		// CONTENT
 		contentContainer: {
-			borderWidth: 2,
-			borderColor: 'green',
 			flex: 0.4
 		}
 	});
