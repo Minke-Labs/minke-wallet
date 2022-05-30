@@ -1,3 +1,4 @@
+import { network, networks } from '@models/network';
 import { coinFromSymbol } from '@src/helpers/utilities';
 import { MinkeToken } from '@src/model/token';
 import { formatUnits } from 'ethers/lib/utils';
@@ -5,6 +6,10 @@ import { TokenConverterParams, TokensConverterParams } from './tokenConverter.ty
 
 const convertToken = async ({ source, token }: TokenConverterParams): Promise<MinkeToken> => {
 	const { id, name } = await coinFromSymbol(token.contract_ticker_symbol);
+	const { chainId } = await network();
+	const matic = chainId === networks.matic.chainId;
+	const weth = token.contract_ticker_symbol === 'WETH';
+	const symbol = matic && weth ? 'ETH' : token.contract_ticker_symbol;
 
 	switch (source) {
 		// covalent
@@ -17,7 +22,7 @@ const convertToken = async ({ source, token }: TokenConverterParams): Promise<Mi
 				decimals: token.contract_decimals,
 				image: token.logo_url,
 				name: name || token.contract_name,
-				symbol: token.contract_ticker_symbol
+				symbol
 			};
 	}
 };
