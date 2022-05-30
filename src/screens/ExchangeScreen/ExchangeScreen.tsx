@@ -9,8 +9,8 @@ import { BasicLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import SearchTokens from './SearchTokens/SearchTokens';
-import GasSelector from './GasSelector/GasSelector';
+import SearchTokens from '../../components/ModalReusables/SearchTokens/SearchTokens';
+// import GasSelector from './GasSelector/GasSelector';
 import TokenCard from '../../components/TokenCard/TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
@@ -134,7 +134,7 @@ const ExchangeScreen = () => {
 						</View>
 
 						<View style={{ display: gasless ? 'none' : 'flex' }}>
-							<GasSelector />
+							{/* <GasSelector /> */}
 						</View>
 
 						<View style={[styles.exchangeSection, styles.exchangeButton]}>

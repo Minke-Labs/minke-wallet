@@ -15,30 +15,32 @@ const SaveScreen = () => {
 	const { apy, selectedProtocol } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useTokens();
 
-	if (!interestTokens || !apy) return <ScreenLoadingIndicator />;
-	if (interestTokens.length === 0) return <EmptyState />;
+	// if (!interestTokens || !apy) return <ScreenLoadingIndicator />;
+	// if (interestTokens.length === 0) return <EmptyState />;
 
-	return (
-		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
-				<SafeAreaView>
-					<Background>
-						<Header onInfo={() => setModalVisible(true)} />
-						<CurrentValue depositsBalance={depositedBalance} apy={apy!} />
-					</Background>
-				</SafeAreaView>
-				<Body {...{ interestTokens }} />
-			</BasicLayout>
+	return <EmptyState />;
 
-			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				{
-					selectedProtocol?.id === 'aave' ?
-						<InfoModal.Aave onDismiss={() => setModalVisible(false)} />
-						:
-						<InfoModal.MStable onDismiss={() => setModalVisible(false)} />
-				}
-			</Modal>
-		</>
-	);
+	// return (
+	// 	<>
+	// 		<BasicLayout hideSafeAreaView bg="detail4">
+	// 			<SafeAreaView>
+	// 				<Background>
+	// 					<Header onInfo={() => setModalVisible(true)} />
+	// 					<CurrentValue depositsBalance={depositedBalance} apy={apy!} />
+	// 				</Background>
+	// 			</SafeAreaView>
+	// 			<Body {...{ interestTokens }} />
+	// 		</BasicLayout>
+
+	// 		<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
+	// 			{
+	// 				selectedProtocol?.id === 'aave' ?
+	// 					<InfoModal.Aave onDismiss={() => setModalVisible(false)} />
+	// 					:
+	// 					<InfoModal.MStable onDismiss={() => setModalVisible(false)} />
+	// 			}
+	// 		</Modal>
+	// 	</>
+	// );
 };
 export default SaveScreen;

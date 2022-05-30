@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
-import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import { BasicLayout } from '@layouts';
 import { Icon, Modal, Text, ActivityIndicator, HapticButton, ModalReusables } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
 import { makeStyles } from './ExchangeResume.styles';
-import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
+// import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
 import { TokenDetail } from './TokenDetail/TokenDetail';
 
@@ -21,8 +20,8 @@ const ExchangeResumeScreen = () => {
 		count,
 		exchangeSummary,
 		exchangeName,
-		exchange,
-		gas,
+		// exchange,
+		// gas,
 		visible,
 		hideModal,
 		transactionHash,
@@ -31,7 +30,7 @@ const ExchangeResumeScreen = () => {
 		onSuccess,
 		fromFiatPrice,
 		toFiatPrice,
-		gasless,
+		// gasless,
 		blockchainError,
 		setBlockchainError
 	} = useExchangeResumeScreen();
@@ -125,9 +124,9 @@ const ExchangeResumeScreen = () => {
 						</Card.Content>
 					</Card>
 
-					<View style={{ display: gasless || loading ? 'none' : 'flex' }}>
+					{/* <View style={{ display: gasless || loading ? 'none' : 'flex' }}>
 						{exchange.value.gas && <GasOption type={gas.type} disabled />}
-					</View>
+					</View> */}
 
 					<View style={{ marginBottom: 32 }} />
 
@@ -142,7 +141,7 @@ const ExchangeResumeScreen = () => {
 				</View>
 			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={hideModal}>
-				<TransactionWaitModal
+				<ModalReusables.TransactionWait
 					onDismiss={hideModal}
 					fromToken={from}
 					toToken={to}
