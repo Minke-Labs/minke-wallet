@@ -37,7 +37,7 @@ const WithdrawScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} />
+				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} />
 
 				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
 					<TokenCard
