@@ -14,9 +14,10 @@ import { truncate } from './Transaction.utils';
 
 interface UseTransactionProps {
 	transaction: ZapperTransaction;
+	walletDigits?: number;
 }
 
-export const useTransaction = ({ transaction }: UseTransactionProps) => {
+export const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) => {
 	const {
 		from,
 		timeStamp,
@@ -46,7 +47,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		interestBearingTokens.includes(sourceToken.symbol.toLowerCase());
 	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
-	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, 6));
+	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, walletDigits));
 
 	useEffect(() => {
 		const formatAddress = async () => {
@@ -59,7 +60,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 					const ensContact = await searchContact(ens);
 					setFormattedSource(ensContact?.name || ens);
 				} else {
-					setFormattedSource(smallWalletAddress(source, 6));
+					setFormattedSource(smallWalletAddress(source, walletDigits));
 				}
 			}
 		};
@@ -96,7 +97,9 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		? i18n.t('Components.Transaction.deposited_in_savings')
 		: exchange
 		? i18n.t('Components.Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
-		: `${received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')}: ${formattedSource}`;
+		: `${
+				received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')
+		  }: ${formattedSource}`;
 
 	return {
 		received,
