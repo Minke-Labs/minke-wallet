@@ -12,12 +12,17 @@ const TextComponent: React.FC<Partial<TextComponentProps>> = ({
 	marginBottom = 0,
 	width = 0,
 	center = false,
+	numberOfLines,
 	style
 }) => {
 	const { colors } = useTheme();
 	const chosenColor = colors[color];
 	const styles = makeStyles({ weight, type, chosenColor, marginBottom, width, center, style });
-	return <Text style={styles.text}>{children}</Text>;
+	return (
+		<Text style={styles.text} numberOfLines={numberOfLines}>
+			{children}
+		</Text>
+	);
 };
 
 export default TextComponent;
