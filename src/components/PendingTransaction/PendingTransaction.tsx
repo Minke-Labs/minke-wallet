@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useLanguage, useTheme } from '@hooks';
-import { smallWalletAddress } from '@src/model/wallet';
+import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
@@ -9,10 +9,18 @@ import styles from './PendingTransaction.styles';
 import { PendingTransactionProps } from './PendingTransaction.types';
 
 const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount, symbol, pending, timestamp }) => {
+	const [ensName, setEnsName] = useState<string | null>();
 	const { colors } = useTheme();
 	const { i18n } = useLanguage();
-
 	const getMin = (ts: string) => Math.floor(((new Date().getTime() / 1000) - Number(ts)) / 60);
+
+	useEffect(() => {
+		const fetchENSAddress = async () => {
+			const name = await getENSAddress(address);
+			setEnsName(name);
+		};
+		fetchENSAddress();
+	}, []);
 
 	return (
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
@@ -48,7 +56,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ address, amount
 			</View>
 
 			<View style={styles.rightContainer}>
-				<Text type="p2">{smallWalletAddress(address)}</Text>
+				<Text type="p2">{ensName ?? smallWalletAddress(address)}</Text>
 				<Text type="span" weight="semiBold">{amount} {symbol}</Text>
 			</View>
 		</View>
