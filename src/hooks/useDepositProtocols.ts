@@ -87,11 +87,11 @@ const useDepositProtocols = (withdraw = false) => {
 
 	useEffect(() => {
 		const loadApproved = async () => {
-			if (selectedProtocol && depositableToken) {
+			if (selectedProtocol) {
 				const protocolApproved = await AsyncStorage.getItem(`@approved-${selectedProtocol.id}`);
 				if (protocolApproved) {
 					setApproved(true);
-				} else {
+				} else if (depositableToken) {
 					const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
 						address,
 						gaslessEnabled,
@@ -129,7 +129,7 @@ const useDepositProtocols = (withdraw = false) => {
 
 	useEffect(() => {
 		const updateApy = async () => {
-			if (selectedProtocol) {
+			if (selectedProtocol && selectedUSDCoin) {
 				try {
 					if (selectedProtocol.id === 'aave') {
 						const pools = await getAavePools();
@@ -155,10 +155,9 @@ const useDepositProtocols = (withdraw = false) => {
 				}
 			}
 		};
-		if (depositableToken) {
-			updateApy();
-		}
-	}, [depositableToken]);
+
+		updateApy();
+	}, [selectedProtocol, selectedUSDCoin]);
 
 	return {
 		selectedProtocol,

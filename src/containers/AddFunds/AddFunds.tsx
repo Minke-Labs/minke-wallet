@@ -30,7 +30,8 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		enableCustomAmount,
 		setCustomAmount,
 		banxaModalVisible,
-		setBanxaModalVisible
+		setBanxaModalVisible,
+		gaslessEnabled
 	} = useAddFunds({ visible, onDismiss });
 
 	const handleGoBack = () => {
@@ -46,7 +47,10 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 
 	return (
 		<SafeAreaView>
-			<ModalHeader onBack={handleGoBack} onDismiss={dismissCoin} />
+			<ModalHeader
+				onBack={currentStep === 1 && gaslessEnabled ? undefined : handleGoBack}
+				onDismiss={dismissCoin}
+			/>
 			<View style={{ paddingHorizontal: 24 }}>
 				{wyreError && error ? (
 					<ModalReusables.Error
