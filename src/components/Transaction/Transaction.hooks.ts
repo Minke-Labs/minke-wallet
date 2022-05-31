@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
@@ -119,6 +120,8 @@ export const useTransaction = ({ transaction, walletDigits = 6 }: UseTransaction
 		exchange,
 		deposit,
 		withdraw,
+		timestamp: timeStamp,
+		formattedSource,
 		openTransaction
 	};
 };

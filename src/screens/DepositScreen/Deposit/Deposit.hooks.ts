@@ -101,11 +101,9 @@ export const useDeposit = () => {
 						hash,
 						gasless: gaslessEnabled
 					});
-					const provider = await getProvider();
-					const { from, to } = await provider.waitForTransaction(hash);
 					addPendingTransaction({
-						from,
-						destination: to,
+						from: token.address,
+						destination: address,
 						hash,
 						txSuccessful: true,
 						pending: true,

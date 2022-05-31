@@ -20,19 +20,20 @@ export const Content: React.FC<ContentProps> = ({
 	setAddFundsVisible,
 	setSendModalOpen
 }) => {
-	const [txs, setTxs] = useState<ZapperTransaction[]>([]);
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { loading, fetchTransactions, pendingTransactions, setPendingTransactions } = useTransactions();
+	const { loading, fetchTransactions, pendingTransactions } = useTransactions();
+	const [tx, setTx] = useState<ZapperTransaction | null>();
 
 	useEffect(() => {
 		const fetchStatus = async () => {
-			const res = pendingTransactions.map(async (tx: ZapperTransaction) => {
-				const provider = await getProvider();
-				await provider.waitForTransaction(tx.hash);
-				return { ...tx, pending: false, txSuccessful: true };
-			});
-			setTxs(await Promise.all(res));
+			const provider = await getProvider();
+			const pending = pendingTransactions[0];
+			setTx(pending);
+			if (pending) {
+				const { status } = await provider.waitForTransaction(pending.hash);
+				setTx({ ...pending, pending: false, txSuccessful: status === 1 });
+			}
 		};
 
 		fetchStatus();
@@ -40,8 +41,7 @@ export const Content: React.FC<ContentProps> = ({
 
 	const handleRefresh = useCallback(() => {
 		fetchTransactions();
-		setPendingTransactions([]);
-		setTxs([]);
+		setTx(null);
 	}, [fetchTransactions]);
 
 	return (
@@ -49,32 +49,13 @@ export const Content: React.FC<ContentProps> = ({
 			leftTitle={i18n.t('WalletScreen.Content.accounts')}
 			rightTitle={i18n.t('WalletScreen.Content.transactions')}
 			left={<Accounts />}
-			right={
-				<Transactions
-					onAddFunds={() => setAddFundsVisible(true)}
-					{...{ onSeeAllTransactions, loading }}
-				/>
-			}
+			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			loading={loading}
 			onRefresh={handleRefresh}
 		>
-			<Header
-				onSettingsPress={onSettingsPress}
-				onCopyPress={onCopyToClipboard}
-			/>
+			<Header onSettingsPress={onSettingsPress} onCopyPress={onCopyToClipboard} />
 
-			{
-				txs.map((tx: ZapperTransaction) => (
-					<PendingTransaction
-						key={tx.hash}
-						address={tx.destination}
-						pending={tx.pending}
-						amount={tx.amount}
-						symbol={tx.symbol}
-						timestamp={tx.timeStamp}
-					/>
-				))
-			}
+			{!!tx && <PendingTransaction transaction={tx} />}
 
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
