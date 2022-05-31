@@ -19,7 +19,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
-import { getProvider } from '@models/wallet';
 import { captureException } from '@sentry/react-native';
 
 export const useDeposit = () => {
