@@ -5,12 +5,7 @@ import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
 import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
-import {
-	thisMonthTimestamp,
-	thisYearTimestamp,
-	todayTimestamp,
-	yesterdayTimestamp
-} from '@models/timestamps';
+import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp } from '@models/timestamps';
 import { groupBy } from 'lodash';
 import useLanguage from '../../hooks/useLanguage';
 
@@ -27,6 +22,7 @@ interface TransactionContextProps {
 	fetchTransactions: () => void;
 	pendingTransactions: ZapperTransaction[];
 	addPendingTransaction: (transaction: ZapperTransaction) => void;
+	updatePendingTransaction: (hash: string, newTransaction: ZapperTransaction) => void;
 }
 
 export const TransactionsContext = React.createContext<TransactionContextProps>({} as TransactionContextProps);
@@ -101,6 +97,12 @@ const TransactionsProvider: React.FC = ({ children }) => {
 		title: section
 	}));
 
+	const updatePendingTransaction = (hash: string, newTransaction: ZapperTransaction) => {
+		setPendingTransactions(
+			pendingTransactions.map((transaction) => (transaction.hash === hash ? newTransaction : transaction))
+		);
+	};
+
 	const obj = useMemo(
 		() => ({
 			loading,
@@ -109,7 +111,8 @@ const TransactionsProvider: React.FC = ({ children }) => {
 			hasTransactions: allTransactions.length > 0,
 			fetchTransactions,
 			pendingTransactions,
-			addPendingTransaction
+			addPendingTransaction,
+			updatePendingTransaction
 		}),
 		[loading, address, chainId, pendingTransactions, transactions]
 	);

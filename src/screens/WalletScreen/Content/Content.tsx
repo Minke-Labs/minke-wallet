@@ -22,17 +22,19 @@ export const Content: React.FC<ContentProps> = ({
 }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { loading, fetchTransactions, pendingTransactions } = useTransactions();
+	const { loading, fetchTransactions, pendingTransactions, updatePendingTransaction } = useTransactions();
 	const [tx, setTx] = useState<ZapperTransaction | null>();
 
 	useEffect(() => {
 		const fetchStatus = async () => {
 			const provider = await getProvider();
-			const pending = pendingTransactions[0];
-			setTx(pending);
+			const pending = pendingTransactions.filter((t) => t.pending)[0];
 			if (pending) {
+				setTx(pending);
 				const { status } = await provider.waitForTransaction(pending.hash);
-				setTx({ ...pending, pending: false, txSuccessful: status === 1 });
+				const newTransaction = { ...pending, pending: false, txSuccessful: status === 1 };
+				setTx(newTransaction);
+				updatePendingTransaction(pending.hash, newTransaction);
 			}
 		};
 
