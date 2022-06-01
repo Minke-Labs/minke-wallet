@@ -536,10 +536,10 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Choose token',
-			available: 'Available',
-			InterestTag: {
-				interest: '% anualized interest'
-			}
+			available: 'Available'
+		},
+		InterestBanner: {
+			interest: '% anualized interest'
 		}
 	},
 	Logs: {

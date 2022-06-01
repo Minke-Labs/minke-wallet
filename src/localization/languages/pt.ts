@@ -540,10 +540,10 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Escolha um token',
-			available: 'Disponível',
-			InterestTag: {
-				interest: '% de juros anuais'
-			}
+			available: 'Disponível'
+		},
+		InterestBanner: {
+			interest: '% de juros anuais'
 		}
 	},
 	Logs: {

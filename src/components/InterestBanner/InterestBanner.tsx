@@ -38,7 +38,7 @@ const Inner: React.FC<InterestBannerProps> = ({ token, bold, apy }) => {
 				type={bold ? 'lMedium' : 'lSmall'}
 				color={bold ? 'text11' : 'alert3'}
 			>
-				{apy}{i18n.t('Components.TokenCard.InterestTag.interest')}
+				{apy}{i18n.t('Components.InterestBanner.interest')}
 			</Text>
 		</View>
 	);
