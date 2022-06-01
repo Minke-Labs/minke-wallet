@@ -10,7 +10,7 @@ import {
 	thisYearTimestamp,
 	todayTimestamp,
 	yesterdayTimestamp
-} from '@src/components/Transaction/Transaction.utils';
+} from '@models/timestamps';
 import { groupBy } from 'lodash';
 import useLanguage from '../../hooks/useLanguage';
 

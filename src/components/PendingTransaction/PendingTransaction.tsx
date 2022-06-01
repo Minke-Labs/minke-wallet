@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import { useLanguage, useTheme } from '@hooks';
+import { useLanguage, useTheme, useTransaction } from '@hooks';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 import styles from './PendingTransaction.styles';
 import { PendingTransactionProps } from './PendingTransaction.types';
-import { useTransaction } from '../Transaction/Transaction.hooks';
 
 const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: PendingTransactionProps) => {
 	const { colors } = useTheme();

@@ -9,6 +9,7 @@ import useTimeout from './useTimeout';
 import useTransactions from './useTransactions';
 import useWyreApplePay from './useWyreApplePay';
 import useTokens from './useTokens';
+import useTransaction from './useTransaction';
 import useWyreOrderStatus from './useWyreOrderStatus';
 import useWalletCloudBackup from './useWalletCloudBackup';
 import iCloudBackup from './iCloudBackup';
@@ -27,6 +28,7 @@ export {
 	useKeyboard,
 	useLanguage,
 	useTokens,
+	useTransaction,
 	useTransactions,
 	useWalletCloudBackup,
 	useTimeout,
