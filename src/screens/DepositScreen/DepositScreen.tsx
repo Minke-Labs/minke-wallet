@@ -10,12 +10,7 @@ import { useDepositScreen } from './DepositScreen.hooks';
 const DepositScreen = () => {
 	const { notAbleToSaveVisible, notAbleToSaveDismiss, addFundsVisible, dismissAddFunds, onAddFunds } =
 		useDepositScreen();
-	const {
-		ableToDeposit,
-		approved,
-		setApproved
-		// selectedProtocol,
-	} = useDepositProtocols();
+	const { ableToDeposit, approved, setApproved } = useDepositProtocols();
 
 	if (ableToDeposit === undefined || approved === undefined) {
 		return <ScreenLoadingIndicator />;
