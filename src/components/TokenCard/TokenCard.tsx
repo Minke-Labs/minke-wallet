@@ -8,8 +8,8 @@ import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
+import InterestBanner from '../InterestBanner/InterestBanner';
 import TokenInputInner from '../TokenInputInner/TokenInputInner';
-import { InterestTag } from './InterestTag/InterestTag';
 import { SelectorHeader } from './SelectorHeader/SelectorHeader';
 
 const TokenCard: React.FC<TokenCardProps> = ({
@@ -34,13 +34,18 @@ const TokenCard: React.FC<TokenCardProps> = ({
 		disableMax
 	});
 
-	const getBalanceUSD = () => numberFormat(tokens?.filter((item) => item.symbol === token?.symbol)[0].balanceUSD);
+	const getBalanceUSD = () => {
+		if (token && tokens?.length > 0) {
+			return numberFormat(tokens.filter((item) => item.symbol === token?.symbol)[0].balanceUSD) ?? '';
+		}
+		return '$0';
+	};
 
 	return (
 		<View style={styles.container}>
 
 			<SelectorHeader
-				balanceUSD={token ? getBalanceUSD() : ''}
+				balanceUSD={getBalanceUSD()}
 				tokenBalance={tokenBalance}
 				token={token!}
 				onPress={onPress!}
@@ -60,7 +65,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 			/>
 
 			<View style={styles.bottomRow}>
-				{!!apy && <InterestTag apy={apy} />}
+				{!!apy && <InterestBanner token apy={apy} />}
 				{isMaxEnabled && (
 					<TouchableOpacity onPress={onMaxPress} style={styles.tokenCardMaxButton}>
 						<Icon name="sparkleStroke" size={16} color="cta1" />
