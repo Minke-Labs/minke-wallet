@@ -38,7 +38,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Routes: React.FC = () => {
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
-	// const initialScreen = 'DepositWithdrawalSuccessScreen';
+	// const initialScreen = 'Test';
 
 	return (
 		<NavigationContainer>

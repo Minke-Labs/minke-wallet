@@ -16,6 +16,7 @@ import SearchInput from './SearchInput/SearchInput';
 import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
+import InterestBanner from './InterestBanner/InterestBanner';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
 import FlagItem from './FlagItem/FlagItem';
@@ -63,6 +64,7 @@ export {
 	TokenInputInner,
 	TouchableShrinks,
 	Input,
+	InterestBanner,
 	NetworkWarning,
 	LoadingScreen,
 	OnrampButton,

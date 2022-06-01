@@ -26,7 +26,6 @@ type Speeds = 'fast' | 'normal' | 'slow';
 const GasSelector = () => {
 	const [type, setType] = React.useState<Speeds>('fast');
 	const { colors } = useTheme();
-	// const styles = makeStyles(colors);
 
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [gasPrice, setGasPrice] = React.useState<number>();

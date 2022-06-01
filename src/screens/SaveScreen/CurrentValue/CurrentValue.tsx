@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, View, useColorScheme } from 'react-native';
 import { useTheme, useNavigation, useLanguage, useDepositProtocols } from '@hooks';
 import { numberFormat } from '@src/helpers/utilities';
-import { Text, Icon, ActivityIndicator, Token } from '@components';
+import { Text, Icon, ActivityIndicator, Token, InterestBanner } from '@components';
 import { BlurView } from 'expo-blur';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
@@ -26,26 +26,18 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 				</Text>
 				<View style={styles.interestContainer}>
 					{!!selectedProtocol && (
-						<View style={[styles.infoRow, { marginBottom: 4 }]}>
-							<View style={{ marginRight: 4 }}>
-								<Token name={selectedProtocol.id} size={24} />
-							</View>
-							<Text weight="semiBold" type="span">
+						<View style={styles.infoRow}>
+							<Token name={selectedProtocol.id} size={20} />
+							<Text
+								weight="semiBold"
+								type="lSmall"
+								style={{ marginLeft: 4 }}
+							>
 								{selectedProtocol.name}
 							</Text>
 						</View>
 					)}
-					{apy ? (
-						<View style={styles.infoRow}>
-							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
-							<Text weight="semiBold" type="a" color="alert3">
-								{apy}
-								{i18n.t('SaveScreen.interest')}
-							</Text>
-						</View>
-					) : (
-						<ActivityIndicator size={16} />
-					)}
+					{apy ? <InterestBanner apy={apy} /> : <ActivityIndicator size={16} />}
 				</View>
 			</BlurView>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>

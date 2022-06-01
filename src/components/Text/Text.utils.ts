@@ -53,6 +53,10 @@ const fontType = {
 	lMedium: {
 		fontSize: 14,
 		lineHeight: 19.6
+	},
+	lSmall: {
+		fontSize: 12,
+		lineHeight: 16.8
 	}
 };
 
