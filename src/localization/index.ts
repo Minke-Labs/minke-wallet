@@ -1,6 +1,6 @@
 import { en, pt } from './languages';
 
-export const translationObj = {
+export const availableLanguagues = {
 	en,
 	pt
 };
