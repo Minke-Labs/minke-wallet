@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable no-nested-ternary */
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { useLanguage, useTheme, useTransaction } from '@hooks';
@@ -14,7 +16,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: 
 		(ts: string) => Math.floor((new Date().getTime() / 1000 - Number(ts)) / 60),
 		[transaction]
 	);
-	const { pending, timestamp, subtitle, value, token } = useTransaction({ transaction, walletDigits: 4 });
+	const { pending, timestamp, subtitle, value, token, failed } = useTransaction({ transaction, walletDigits: 4 });
 
 	return (
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
@@ -25,6 +27,8 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: 
 					<Text type="p2" weight="semiBold">
 						{pending
 							? i18n.t('Components.PendingTransactions.pending')
+							: failed
+							? i18n.t('Components.PendingTransactions.failed')
 							: i18n.t('Components.PendingTransactions.success')}
 					</Text>
 					<Text type="span" weight="semiBold">
