@@ -6,6 +6,5 @@ export interface CoinSelectorProps {
 	notTouchable: boolean;
 	balanceUSD: string;
 	tokenBalance: string;
-	noToken: boolean;
 	inline?: boolean;
 }

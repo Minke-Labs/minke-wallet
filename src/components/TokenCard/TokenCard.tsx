@@ -50,7 +50,6 @@ const TokenCard: React.FC<TokenCardProps> = ({
 				token={token!}
 				onPress={onPress!}
 				notTouchable={notTouchable}
-				noToken={!token}
 			/>
 
 			<TokenInputInner

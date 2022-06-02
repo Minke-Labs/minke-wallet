@@ -192,6 +192,7 @@ export interface ParaswapToken {
 	address: string;
 	decimals: number;
 	network?: number;
+	balanceUSD?: number;
 }
 
 export interface TokenResponse {

@@ -77,14 +77,13 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({
 	token,
 	balanceUSD,
 	tokenBalance,
-	noToken,
 	inline = false
 }) => (
 	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 		<View style={styles.container}>
 
 			{
-				noToken ? (
+				!token ? (
 					<NoTokenIcon />
 				) : (
 					<Token
@@ -100,7 +99,7 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({
 				flex: 1
 			}]}
 			>
-				{ noToken ? <TitlesEmpty /> : <Titles {...{ token, balanceUSD, tokenBalance, inline }} /> }
+				{ !token ? <TitlesEmpty /> : <Titles {...{ token, balanceUSD, tokenBalance, inline }} /> }
 			</View>
 
 		</View>

@@ -1,3 +1,5 @@
+/* eslint-disable no-tabs */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback } from 'react';
 import { View, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Card } from 'react-native-paper';
@@ -6,7 +8,18 @@ import { BigNumber as BN } from 'bignumber.js';
 import { fromBn } from 'evm-bn';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@components';
+import {
+	Text,
+	Button,
+	Icon,
+	Modal,
+	ActivityIndicator,
+	ModalReusables,
+	Header,
+	CoinSelector,
+	GasSelector,
+	TokenInputInner
+} from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SearchTokens from '../../components/ModalReusables/SearchTokens/SearchTokens';
@@ -75,11 +88,80 @@ const ExchangeScreen = () => {
 		return null;
 	}, [quote, error]);
 
+	console.log('\n\n\n');
+	console.log(fromToken);
+
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
 		<>
 			<BasicLayout>
-				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+				<Header title="Exchange" />
+
+				<View style={styles.container}>
+					<View style={styles.top}>
+						<CoinSelector
+							balanceUSD={fromToken?.balanceUSD?.toString() || '0'}
+							token={fromToken!}
+							onPress={showModalFrom}
+							notTouchable={false}
+							tokenBalance={fromTokenBalance}
+							inline
+						/>
+						<TokenInputInner
+							symbol={fromToken?.symbol || ''}
+							isAmountValid
+							placeholder="0.00"
+							autoFocus
+							amount={fromConversionAmount!}
+							onChangeText={debounce(updateFromQuotes, 500)}
+							showSymbol={false}
+						/>
+					</View>
+					<View style={styles.bottom}>
+						<CoinSelector
+							balanceUSD={fromToken?.balanceUSD?.toString() || '0'}
+							token={fromToken!}
+							onPress={showModalFrom}
+							notTouchable={false}
+							tokenBalance={fromTokenBalance}
+							inline
+						/>
+						<TokenInputInner
+							symbol={fromToken?.symbol || ''}
+							isAmountValid
+							placeholder="0.00"
+							autoFocus
+							amount={fromConversionAmount!}
+							onChangeText={debounce(updateFromQuotes, 500)}
+							showSymbol={false}
+						/>
+					</View>
+				</View>
+
+				<View style={{ marginBottom: 24 }}>
+					{!gasless && <GasSelector />}
+				</View>
+
+				<View style={{ marginHorizontal: 16 }}>
+					{!loadingPrices && !enoughForGas && (
+						<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
+					)}
+				</View>
+
+				<View style={styles.buttonBox}>
+					{loadingPrices ? (
+						<ActivityIndicator />
+					) : (
+						<Button
+							title={i18n.t('ExchangeScreen.review')}
+							onPress={goToExchangeResume}
+							disabled={!canSwap()}
+						/>
+					)}
+				</View>
+				<KeyboardSpacer />
+
+				{/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 					<View style={{ flex: 1 }}>
 						<View style={styles.header}>
 							<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
@@ -132,29 +214,8 @@ const ExchangeScreen = () => {
 								/>
 							</Card>
 						</View>
-
-						<View style={{ display: gasless ? 'none' : 'flex' }}>
-							{/* <GasSelector /> */}
-						</View>
-
-						<View style={[styles.exchangeSection, styles.exchangeButton]}>
-							{!loadingPrices && !enoughForGas && (
-								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
-							)}
-
-							{loadingPrices ? (
-								<ActivityIndicator />
-							) : (
-								<Button
-									title={i18n.t('ExchangeScreen.review')}
-									onPress={goToExchangeResume}
-									disabled={!canSwap()}
-								/>
-							)}
-							<KeyboardSpacer />
-						</View>
 					</View>
-				</TouchableWithoutFeedback>
+				</TouchableWithoutFeedback> */}
 			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
