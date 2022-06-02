@@ -14,6 +14,7 @@ export default StyleSheet.create({
 		marginLeft: 16,
 		height: '100%'
 	},
+
 	titlesUpper: {
 		flexDirection: 'row'
 	},

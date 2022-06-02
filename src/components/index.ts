@@ -21,6 +21,7 @@ import LoadingScreen from './LoadingScreen/LoadingScreen';
 import Flag from './Flag/Flag';
 import FlagItem from './FlagItem/FlagItem';
 import Card from './Card/Card';
+import CoinSelector from './CoinSelector/CoinSelector';
 import OnrampButton from './OnrampButton/OnrampButton';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
@@ -32,6 +33,7 @@ import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
 import SettingsHeader from './SettingsHeader/SettingsHeader';
+import Snackbar from './Snackbar/Snackbar';
 import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
@@ -55,6 +57,7 @@ export {
 	GasSelector,
 	ModalHeader,
 	SettingsHeader,
+	Snackbar,
 	ModalReusables,
 	MStableReusables,
 	SearchInput,
@@ -71,6 +74,7 @@ export {
 	Flag,
 	FlagItem,
 	Card,
+	CoinSelector,
 	TransparentCard,
 	TokenCard,
 	PercChange,

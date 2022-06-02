@@ -1,17 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { InterestBanner } from '@components';
+import { Snackbar } from '@components';
 import { BasicLayout } from '@layouts';
 
 const Test = () => (
 	<BasicLayout>
-		<View style={{ flexDirection: 'row', marginTop: 160 }}>
-			<InterestBanner
-				// token
-				// bold
-				apy="2.40"
-			/>
-		</View>
+		<View style={{ flexDirection: 'row', marginTop: 160 }} />
+		<Snackbar />
 	</BasicLayout>
 );
 

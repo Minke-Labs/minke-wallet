@@ -5,11 +5,11 @@ import { useLanguage, useTheme } from '@hooks';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { TokenType } from '@styles';
 import { ParaswapToken } from '@models/token';
-import styles from './SelectorHeader.styles';
-import Text from '../../Text/Text';
-import Icon from '../../Icon/Icon';
-import Token from '../../Token/Token';
-import { SelectorHeaderProps } from './SelectorHeader.types';
+import styles from './CoinSelector.styles';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
+import Token from '../Token/Token';
+import { CoinSelectorProps } from './CoinSelector.types';
 
 const NoTokenIcon = () => {
 	const { colors } = useTheme();
@@ -24,9 +24,10 @@ interface TitlesProps {
 	token: ParaswapToken;
 	balanceUSD: string;
 	tokenBalance: string;
+	inline?: boolean;
 }
 
-const Titles: React.FC<TitlesProps> = ({ token, balanceUSD, tokenBalance }) => {
+const Titles: React.FC<TitlesProps> = ({ token, balanceUSD, tokenBalance, inline }) => {
 	const { i18n } = useLanguage();
 	return (
 		<>
@@ -46,7 +47,7 @@ const Titles: React.FC<TitlesProps> = ({ token, balanceUSD, tokenBalance }) => {
 					{' '}
 					({tokenBalanceFormat(tokenBalance, 6)} {token.symbol})
 					{' '}
-					{i18n.t('Components.TokenCard.available')}
+					{!inline && i18n.t('Components.TokenCard.available')}
 				</Text>
 			</View>
 		</>
@@ -70,13 +71,14 @@ const TitlesEmpty = () => {
 	);
 };
 
-export const SelectorHeader: React.FC<SelectorHeaderProps> = ({
+const CoinSelector: React.FC<CoinSelectorProps> = ({
 	onPress,
 	notTouchable,
 	token,
 	balanceUSD,
 	tokenBalance,
-	noToken
+	noToken,
+	inline = false
 }) => (
 	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 		<View style={styles.container}>
@@ -92,10 +94,17 @@ export const SelectorHeader: React.FC<SelectorHeaderProps> = ({
 				)
 			}
 
-			<View style={styles.titlesContainer}>
-				{ noToken ? <TitlesEmpty /> : <Titles {...{ token, balanceUSD, tokenBalance }} /> }
+			<View style={[styles.titlesContainer, inline && {
+				flexDirection: 'row',
+				alignItems: 'center',
+				flex: 1
+			}]}
+			>
+				{ noToken ? <TitlesEmpty /> : <Titles {...{ token, balanceUSD, tokenBalance, inline }} /> }
 			</View>
 
 		</View>
 	</TouchableOpacity>
 );
+
+export default CoinSelector;

@@ -8,9 +8,9 @@ import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
+import CoinSelector from '../CoinSelector/CoinSelector';
 import InterestBanner from '../InterestBanner/InterestBanner';
 import TokenInputInner from '../TokenInputInner/TokenInputInner';
-import { SelectorHeader } from './SelectorHeader/SelectorHeader';
 
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
@@ -44,7 +44,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	return (
 		<View style={styles.container}>
 
-			<SelectorHeader
+			<CoinSelector
 				balanceUSD={getBalanceUSD()}
 				tokenBalance={tokenBalance}
 				token={token!}
