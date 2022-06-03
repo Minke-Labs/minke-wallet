@@ -12,8 +12,17 @@ const MaxButton: React.FC<MaxButtonProps> = ({ onPress }) => (
 		onPress={onPress}
 		style={{ flexDirection: 'row', alignItems: 'center' }}
 	>
-		<Icon name="sparkleStroke" size={16} color="cta1" />
-		<Text type="a" weight="semiBold" color="cta1" style={{ paddingLeft: 4 }}>
+		<Icon
+			name="sparkleStroke"
+			size={20}
+			color="cta1"
+		/>
+		<Text
+			type="lMedium"
+			weight="semiBold"
+			color="cta1"
+			style={{ paddingLeft: 8 }}
+		>
 			Max
 		</Text>
 	</TouchableOpacity>

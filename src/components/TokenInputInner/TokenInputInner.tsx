@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import { useTheme } from '@hooks';
@@ -23,9 +24,19 @@ const TokenInputInner: React.FC<TokenInputInnerProps> = ({
 		<View style={[styles.container, { marginBottom }]}>
 			<TextInput
 				keyboardType="numeric"
-				style={[styles.input, { color: colors.text1 }]}
+				style={
+					[
+						styles.input,
+						{
+							color: ghost ?
+								!isAmountValid ? colors.alert1 : colors.text1
+								: colors.text1
+						}
+					]
+				}
 				value={amount}
 				placeholder={placeholder}
+				selectionColor={colors.text7}
 				onChangeText={(text) => onChangeText!(text)}
 				autoFocus={autoFocus}
 			/>
