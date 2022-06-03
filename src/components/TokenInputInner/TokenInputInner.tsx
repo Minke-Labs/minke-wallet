@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import { useTheme } from '@hooks';
 import Text from '../Text/Text';
-import styles from './TokenInputInner.styles';
+import { makeStyles } from './TokenInputInner.styles';
 import { TokenInputInnerProps } from './TokenInputInner.types';
 
 const TokenInputInner: React.FC<TokenInputInnerProps> = ({
@@ -13,21 +14,14 @@ const TokenInputInner: React.FC<TokenInputInnerProps> = ({
 	autoFocus,
 	showSymbol,
 	onChangeText,
-	marginBottom = 0
+	marginBottom = 0,
+	ghost = false
 }) => {
 	const { colors } = useTheme();
+	const styles = makeStyles(isAmountValid, ghost, colors);
 
 	return (
-		<View style={
-			[
-				styles.container,
-				{
-					borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1,
-					marginBottom
-				}
-			]
-		}
-		>
+		<View style={[styles.container, { marginBottom }]}>
 			<TextInput
 				keyboardType="numeric"
 				style={[styles.input, { color: colors.text1 }]}
