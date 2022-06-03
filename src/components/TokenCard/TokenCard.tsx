@@ -1,13 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
-import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
+import MaxButton from '../MaxButton/MaxButton';
 import CoinSelector from '../CoinSelector/CoinSelector';
 import InterestBanner from '../InterestBanner/InterestBanner';
 import TokenInputInner from '../TokenInputInner/TokenInputInner';
@@ -65,14 +63,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
 			<View style={styles.bottomRow}>
 				{!!apy && <InterestBanner token apy={apy} />}
-				{isMaxEnabled && (
-					<TouchableOpacity onPress={onMaxPress} style={styles.tokenCardMaxButton}>
-						<Icon name="sparkleStroke" size={16} color="cta1" />
-						<Text type="a" weight="semiBold" color="cta1" style={styles.tokenCardMaxButtonText}>
-							Max
-						</Text>
-					</TouchableOpacity>
-				)}
+				{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 			</View>
 
 		</View>

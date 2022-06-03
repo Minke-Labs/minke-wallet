@@ -18,6 +18,7 @@ import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
 import InterestBanner from './InterestBanner/InterestBanner';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
+import MaxButton from './MaxButton/MaxButton';
 import Flag from './Flag/Flag';
 import FlagItem from './FlagItem/FlagItem';
 import Card from './Card/Card';
@@ -70,6 +71,7 @@ export {
 	InterestBanner,
 	NetworkWarning,
 	LoadingScreen,
+	MaxButton,
 	OnrampButton,
 	Flag,
 	FlagItem,
