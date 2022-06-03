@@ -6,6 +6,7 @@ import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { globalWalletState } from '@src/stores/WalletStore';
+import * as Linking from 'expo-linking';
 import { useState } from '@hookstate/core';
 
 interface UseAddFundsProps {
@@ -71,17 +72,22 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 
 		const paymentRes = await pickPaymentMethodFromName(locationCountry.paymentName);
 
+		const cancelURL = Linking.createURL('test');
+
 		const params = {
 			account_reference: address,
 			source: locationCurrency,
 			target: coin.name.toUpperCase(),
 			source_amount: String(value),
 			return_url_on_success: '#',
+			return_url_on_cancelled: cancelURL,
 			wallet_address: address,
 			payment_method_id: paymentRes.id,
-			blockchain: symbol
+			blockchain: symbol,
+			meta_data: JSON.stringify({ address, cancelURL })
 		};
 
+		console.log({ params });
 		const url = await makeOrder({ params });
 		setOrderLink(url);
 		setBanxaModalVisible(true);

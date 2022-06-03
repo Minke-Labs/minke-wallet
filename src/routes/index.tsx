@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { TransactionsProvider } from '@contexts';
 import { NavigationContainer } from '@react-navigation/native';
@@ -30,18 +30,46 @@ import {
 	SavingAccountsScreen,
 	Test
 } from '@screens';
+import * as Linking from 'expo-linking';
 import { RootStackParamList } from './types.routes';
 import { globalWalletState } from '../stores/WalletStore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const prefix = Linking.createURL('/');
 
 const Routes: React.FC = () => {
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
 	// const initialScreen = 'Test';
+	const urlRedirect = (event: any) => {
+		const { url } = event;
+		console.log('URL', url);
+		if (!url) return;
+		const lala = Linking.parse(url);
+		console.log({ lala });
+		const { path, queryParams } = lala;
+		console.log(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
+	};
+
+	useEffect(() => {
+		Linking.getInitialURL().then((url) => url && urlRedirect({ url }));
+
+		Linking.addEventListener('url', urlRedirect);
+
+		return () => Linking.removeEventListener('url', urlRedirect);
+	}, []);
+
+	const linking = {
+		prefixes: [prefix],
+		config: {
+			screens: {
+				Test: 'test'
+			}
+		}
+	};
 
 	return (
-		<NavigationContainer>
+		<NavigationContainer linking={linking}>
 			<TransactionsProvider>
 				<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
 					<Stack.Screen name="AccountsScreen" component={AccountsScreen} />
