@@ -45,6 +45,19 @@ const fontType = {
 
 	// NEW SIZES
 
+	// Display
+	dLarge: {
+		fontSize: 48,
+		lineHeight: 57.6
+	},
+	dMedium: {
+		fontSize: 32,
+		lineHeight: 44.8
+	},
+	dSmall: {
+		fontSize: 24,
+		lineHeight: 33.6 // Not sure yet. Change when the design is ready.
+	},
 	// Headline
 	hLarge: {
 		fontSize: 32,

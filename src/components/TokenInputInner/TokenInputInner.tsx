@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import { useTheme } from '@hooks';
@@ -30,9 +29,13 @@ const TokenInputInner: React.FC<TokenInputInnerProps> = ({
 				onChangeText={(text) => onChangeText!(text)}
 				autoFocus={autoFocus}
 			/>
-			<Text type="a" weight="bold">
-				{showSymbol ? symbol : 'USD'}
-			</Text>
+			{
+				!ghost && (
+					<Text type="a" weight="bold">
+						{showSymbol ? symbol : 'USD'}
+					</Text>
+				)
+			}
 		</View>
 	);
 };

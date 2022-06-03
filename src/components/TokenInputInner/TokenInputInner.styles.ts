@@ -13,12 +13,10 @@ export const makeStyles = (isAmountValid: boolean, ghost: boolean, colors: Color
 		},
 		input: {
 			flex: 1,
-			height: 54,
 			fontFamily: 'Inter_400Regular',
 			fontStyle: 'normal',
 			fontWeight: 'normal',
 			...(!ghost ? fontType.dMedium : fontType.dSmall),
-
 			paddingBottom: 8
 		}
 	});
