@@ -8,7 +8,10 @@ interface MaxButtonProps {
 }
 
 const MaxButton: React.FC<MaxButtonProps> = ({ onPress }) => (
-	<TouchableOpacity onPress={onPress} style={{ flexDirection: 'row' }}>
+	<TouchableOpacity
+		onPress={onPress}
+		style={{ flexDirection: 'row', alignItems: 'center' }}
+	>
 		<Icon name="sparkleStroke" size={16} color="cta1" />
 		<Text type="a" weight="semiBold" color="cta1" style={{ paddingLeft: 4 }}>
 			Max

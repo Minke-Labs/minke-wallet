@@ -18,7 +18,8 @@ import {
 	Header,
 	CoinSelector,
 	GasSelector,
-	TokenInputInner
+	TokenInputInner,
+	MaxButton
 } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -107,15 +108,21 @@ const ExchangeScreen = () => {
 							tokenBalance={fromTokenBalance}
 							inline
 						/>
-						<TokenInputInner
-							symbol={fromToken?.symbol || ''}
-							isAmountValid
-							placeholder="0.00"
-							autoFocus
-							amount={fromConversionAmount!}
-							onChangeText={debounce(updateFromQuotes, 500)}
-							showSymbol={false}
-						/>
+						<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+							<View style={{ flex: 1 }}>
+								<TokenInputInner
+									symbol={fromToken?.symbol || ''}
+									isAmountValid
+									placeholder="0.00"
+									autoFocus
+									amount={fromConversionAmount!}
+									onChangeText={debounce(updateFromQuotes, 500)}
+									showSymbol={false}
+									ghost
+								/>
+							</View>
+							<MaxButton onPress={() => console.log('MAX!')} />
+						</View>
 					</View>
 					<View style={styles.bottom}>
 						<CoinSelector
@@ -126,15 +133,21 @@ const ExchangeScreen = () => {
 							tokenBalance={fromTokenBalance}
 							inline
 						/>
-						<TokenInputInner
-							symbol={fromToken?.symbol || ''}
-							isAmountValid
-							placeholder="0.00"
-							autoFocus
-							amount={fromConversionAmount!}
-							onChangeText={debounce(updateFromQuotes, 500)}
-							showSymbol={false}
-						/>
+						<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+							<View style={{ flex: 1 }}>
+								<TokenInputInner
+									symbol={fromToken?.symbol || ''}
+									isAmountValid
+									placeholder="0.00"
+									autoFocus
+									amount={fromConversionAmount!}
+									onChangeText={debounce(updateFromQuotes, 500)}
+									showSymbol={false}
+									ghost
+								/>
+							</View>
+							<MaxButton onPress={() => console.log('MAX!')} />
+						</View>
 					</View>
 				</View>
 
