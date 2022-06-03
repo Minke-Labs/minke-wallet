@@ -154,67 +154,75 @@ export const getDepositToken = (id: string, symbol: string, protocol: string): D
 const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<[MinkeToken[], MinkeToken[]]> => {
 	const { id } = await network();
 	const provider = await getProvider();
-	const tokens = Object.values(depositTokens[id]).flat();
-	const protocolAddresses = depositTokens[id][protocol].map(({ interestBearingToken: { address } }) => address);
+	const tokens = Object.values(depositTokens[id] || []).flat();
+	if (tokens.length > 0) {
+		const protocolAddresses = depositTokens[id][protocol].map(({ interestBearingToken: { address } }) => address);
 
-	const promises = tokens.map(async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
-		const {
-			address: interestBearingAddress,
-			symbol: interestBearingSymbol,
-			decimals: interestBearingDecimals,
-			exchangeRateContract,
-			convertToDefaultUSD,
-			source
-		} = interestBearingToken;
-		const token = new Contract(interestBearingAddress, erc20abi, provider);
+		const promises = tokens.map(
+			async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
+				const {
+					address: interestBearingAddress,
+					symbol: interestBearingSymbol,
+					decimals: interestBearingDecimals,
+					exchangeRateContract,
+					convertToDefaultUSD,
+					source
+				} = interestBearingToken;
+				const token = new Contract(interestBearingAddress, erc20abi, provider);
 
-		let balance: BigNumber = await token.balanceOf(wallet);
-		if (exchangeRateContract) {
-			const savingAsset = new Contract(
-				address,
-				['function exchangeRate() public view returns (uint256)'],
-				provider
-			);
-			const exchangeRate: BigNumber = await savingAsset.exchangeRate();
-			balance = toBn(
-				(Number(formatUnits(balance, decimals)) * Number(formatUnits(exchangeRate, decimals))).toString(),
-				decimals
-			);
-		}
-		const formatedBalance = formatUnits(balance, decimals);
+				let balance: BigNumber = await token.balanceOf(wallet);
+				if (exchangeRateContract) {
+					const savingAsset = new Contract(
+						address,
+						['function exchangeRate() public view returns (uint256)'],
+						provider
+					);
+					const exchangeRate: BigNumber = await savingAsset.exchangeRate();
+					balance = toBn(
+						(
+							Number(formatUnits(balance, decimals)) * Number(formatUnits(exchangeRate, decimals))
+						).toString(),
+						decimals
+					);
+				}
+				const formatedBalance = formatUnits(balance, decimals);
 
-		let tokenParams = {
-			address,
-			symbol,
-			decimals,
-			image: symbol,
-			name: symbol
-		};
+				let tokenParams = {
+					address,
+					symbol,
+					decimals,
+					image: symbol,
+					name: symbol
+				};
 
-		if (convertToDefaultUSD) {
-			const defaultToken = await usdCoin();
-			tokenParams = {
-				...stables[id][defaultToken],
-				image: defaultToken,
-				name: defaultToken
-			};
-		}
+				if (convertToDefaultUSD) {
+					const defaultToken = await usdCoin();
+					tokenParams = {
+						...stables[id][defaultToken],
+						image: defaultToken,
+						name: defaultToken
+					};
+				}
 
-		return {
-			...tokenParams,
-			interestBearingToken: {
-				address: interestBearingAddress,
-				symbol: interestBearingSymbol,
-				decimals: interestBearingDecimals,
-				source
-			},
-			balance: formatedBalance,
-			balanceUSD: Number(formatedBalance)
-		};
-	});
+				return {
+					...tokenParams,
+					interestBearingToken: {
+						address: interestBearingAddress,
+						symbol: interestBearingSymbol,
+						decimals: interestBearingDecimals,
+						source
+					},
+					balance: formatedBalance,
+					balanceUSD: Number(formatedBalance)
+				};
+			}
+		);
 
-	const minkeTokens = await Promise.all(promises);
-	return partition(minkeTokens, (token) => protocolAddresses.includes(token.interestBearingToken!.address));
+		const minkeTokens = await Promise.all(promises);
+		return partition(minkeTokens, (token) => protocolAddresses.includes(token.interestBearingToken!.address));
+	}
+
+	return [[], []];
 };
 
 export { fetchInterestBearingTokens };
