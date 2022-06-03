@@ -27,6 +27,7 @@ import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
 import SettingsHeader from './SettingsHeader/SettingsHeader';
+import PendingTransaction from './PendingTransaction/PendingTransaction';
 import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
@@ -63,6 +64,7 @@ export {
 	Card,
 	TransparentCard,
 	TokenCard,
+	PendingTransaction,
 	PercChange,
 	PaperTouchable,
 	ApplePayButton,

@@ -1,22 +1,23 @@
-/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/indent */
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { format } from 'date-fns';
 import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
-import { useLanguage } from '@hooks';
 import { network } from '@src/model/network';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
-import { truncate } from './Transaction.utils';
+import useLanguage from './useLanguage';
+
+export const truncate = (num: number | string, idx = 2) =>
+	+num.toString().slice(0, num.toString().indexOf('.') + (idx + 1));
 
 interface UseTransactionProps {
 	transaction: ZapperTransaction;
+	walletDigits?: number;
 }
 
-export const useTransaction = ({ transaction }: UseTransactionProps) => {
+const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) => {
 	const {
 		from,
 		timeStamp,
@@ -46,7 +47,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		interestBearingTokens.includes(sourceToken.symbol.toLowerCase());
 	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
-	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, 6));
+	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, walletDigits));
 
 	useEffect(() => {
 		const formatAddress = async () => {
@@ -59,7 +60,7 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 					const ensContact = await searchContact(ens);
 					setFormattedSource(ensContact?.name || ens);
 				} else {
-					setFormattedSource(smallWalletAddress(source, 6));
+					setFormattedSource(smallWalletAddress(source, walletDigits));
 				}
 			}
 		};
@@ -91,12 +92,14 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 	const subtitle = topUp
 		? i18n.t('Components.Transaction.adding_via_apple_pay')
 		: withdraw
-		? i18n.t('Components.Transaction.withdrew_from_savings')
-		: deposit
-		? i18n.t('Components.Transaction.deposited_in_savings')
-		: exchange
-		? i18n.t('Components.Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
-		: `${received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')}: ${formattedSource}`;
+			? i18n.t('Components.Transaction.withdrew_from_savings')
+			: deposit
+				? i18n.t('Components.Transaction.deposited_in_savings')
+				: exchange
+					? i18n.t('Components.Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
+					: `${
+						received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')
+					}: ${formattedSource}`;
 
 	return {
 		received,
@@ -104,10 +107,10 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		token: withdraw
 			? toToken.symbol
 			: deposit
-			? sourceToken.symbol
-			: exchange
-			? toToken.symbol
-			: (received ? toToken?.symbol : sourceToken?.symbol) || symbol,
+				? sourceToken.symbol
+				: exchange
+					? toToken.symbol
+					: (received ? toToken?.symbol : sourceToken?.symbol) || symbol,
 		failed: !txSuccessful,
 		pending,
 		topUp,
@@ -116,6 +119,10 @@ export const useTransaction = ({ transaction }: UseTransactionProps) => {
 		exchange,
 		deposit,
 		withdraw,
+		timestamp: timeStamp,
+		formattedSource,
 		openTransaction
 	};
 };
+
+export default useTransaction;

@@ -434,6 +434,11 @@ export default {
 		}
 	},
 	Components: {
+		PendingTransactions: {
+			pending: 'Pending',
+			success: 'Success',
+			failed: 'Failed'
+		},
 		Transaction: {
 			failed: 'Failed',
 			view_on: 'View on',
