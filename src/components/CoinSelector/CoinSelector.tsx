@@ -34,7 +34,7 @@ const Titles: React.FC<TitlesProps> = ({ token, balanceUSD, tokenBalance, inline
 			<View style={styles.titlesUpper}>
 				<Text
 					type="p2"
-					style={{ marginRight: 8 }}
+					style={{ marginRight: inline ? 4 : 8 }}
 					weight="extraBold"
 				>
 					{token.symbol}
@@ -88,12 +88,14 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({
 				) : (
 					<Token
 						name={(token.symbol || '').toLowerCase() as TokenType}
-						size={34}
+						size={inline ? 28 : 40}
 					/>
 				)
 			}
 
-			<View style={[styles.titlesContainer, inline && {
+			<View style={[styles.titlesContainer, {
+				marginLeft: inline ? 8 : 16
+			}, inline && {
 				flexDirection: 'row',
 				alignItems: 'center',
 				flex: 1

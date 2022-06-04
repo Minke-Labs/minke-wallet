@@ -29,6 +29,7 @@ import TokenCard from '../../components/TokenCard/TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
+import DirectionButton from './DirectionButton/DirectionButton';
 
 const ExchangeScreen = () => {
 	const navigation = useNavigation();
@@ -89,14 +90,11 @@ const ExchangeScreen = () => {
 		return null;
 	}, [quote, error]);
 
-	console.log('\n\n\n');
-	console.log(fromToken);
-
 	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
 		<>
 			<BasicLayout>
-				<Header title="Exchange" />
+				<Header title="Exchange" marginBottom={36} />
 
 				<View style={styles.container}>
 					<View style={styles.top}>
@@ -149,6 +147,11 @@ const ExchangeScreen = () => {
 							<MaxButton onPress={() => console.log('MAX!')} />
 						</View>
 					</View>
+
+					<DirectionButton
+						// onPress={directionSwap}
+						onPress={() => console.log('CLICOU!!!')}
+					/>
 				</View>
 
 				<View style={{ marginBottom: 24 }}>

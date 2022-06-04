@@ -11,12 +11,12 @@ export default StyleSheet.create({
 
 	titlesContainer: {
 		justifyContent: 'space-between',
-		marginLeft: 16,
 		height: '100%'
 	},
 
 	titlesUpper: {
-		flexDirection: 'row'
+		flexDirection: 'row',
+		alignItems: 'center'
 	},
 
 	noTokenIcon: {
