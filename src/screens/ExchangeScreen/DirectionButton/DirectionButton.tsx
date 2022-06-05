@@ -6,9 +6,10 @@ import { useTheme } from '@hooks';
 interface DirectionButtonProps {
 	onPress: () => void;
 	disabled?: boolean;
+	right?: boolean;
 }
 
-const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled }) => {
+const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled, right }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity
@@ -25,7 +26,7 @@ const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled }) 
 			{...{ onPress, disabled }}
 		>
 			<Icon
-				name="arrowDown"
+				name={right ? 'arrowRight' : 'arrowDown'}
 				size={20}
 				color="cta1"
 			/>

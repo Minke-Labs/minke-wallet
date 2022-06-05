@@ -24,6 +24,7 @@ import FlagItem from './FlagItem/FlagItem';
 import Card from './Card/Card';
 import CoinSelector from './CoinSelector/CoinSelector';
 import OnrampButton from './OnrampButton/OnrampButton';
+import Paper from './Paper/Paper';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import HapticButton from './HapticButton/HapticButton';
@@ -73,6 +74,7 @@ export {
 	LoadingScreen,
 	MaxButton,
 	OnrampButton,
+	Paper,
 	Flag,
 	FlagItem,
 	Card,

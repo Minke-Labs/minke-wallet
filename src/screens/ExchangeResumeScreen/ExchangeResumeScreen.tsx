@@ -1,32 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Header, Token, HapticButton } from '@components';
+import { Text, Header, Token, HapticButton, Paper } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
-
-interface PaperProps {
-	marginBottom?: number;
-	padding?: number;
-}
-
-const Paper: React.FC<PaperProps> = ({ children, marginBottom, padding }) => {
-	const { colors } = useTheme();
-	return (
-		<View
-			style={{
-				marginHorizontal: 16,
-				backgroundColor: colors.background5,
-				borderRadius: 16,
-				marginBottom,
-				padding,
-				overflow: 'hidden'
-			}}
-		>
-			{children}
-		</View>
-	);
-};
 
 const ExchangeResumeScreen = () => {
 	const { i18n } = useLanguage();
@@ -43,7 +20,9 @@ const ExchangeResumeScreen = () => {
 					style={{
 						borderBottomWidth: 1,
 						borderBottomColor: colors.background1,
-						flexDirection: 'row'
+						flexDirection: 'row',
+						justifyContent: 'center',
+						alignItems: 'center'
 					}}
 				>
 
@@ -88,7 +67,11 @@ const ExchangeResumeScreen = () => {
 						<Text>B</Text>
 					</View>
 
-					<DirectionButton onPress={() => null} disabled />
+					<DirectionButton
+						onPress={() => null}
+						disabled
+						right
+					/>
 				</View>
 
 				<View style={{ paddingVertical: 12, alignItems: 'center' }}>
