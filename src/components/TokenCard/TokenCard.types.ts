@@ -4,7 +4,7 @@ import { MinkeToken, ParaswapToken } from '@models/token';
 
 export interface TokenCardProps {
 	token: ParaswapToken | undefined;
-	tokens: MinkeToken[];
+	tokens?: MinkeToken[];
 	onPress?: (() => void) | undefined;
 	balance: string;
 	innerRef?: RefObject<TextInput>;
@@ -14,4 +14,7 @@ export interface TokenCardProps {
 	notTouchable?: boolean;
 	apy?: string;
 	tokenBalance: string;
+	exchange?: boolean;
+	noMax?: boolean;
+	noInvalid?: boolean;
 }

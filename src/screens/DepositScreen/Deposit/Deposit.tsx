@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { ParaswapToken } from '@models/token';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector } from '@components';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
@@ -48,7 +48,7 @@ const Deposit = () => {
 					marginBottom={60}
 				/>
 
-				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
+				<Paper padding={16} marginBottom={42}>
 					<TokenCard
 						onPress={showModal}
 						tokens={tokens}
@@ -58,7 +58,7 @@ const Deposit = () => {
 						apy={apy}
 						tokenBalance={tokenBalance}
 					/>
-				</View>
+				</Paper>
 
 				{!gaslessEnabled && <GasSelector />}
 

@@ -1,13 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { ColorType } from '@styles';
 
-export const makeStyles = (colors: ColorType) =>
+export const makeStyles = () =>
 	StyleSheet.create({
 		container: {
-			padding: 16,
-			width: '100%',
-			borderRadius: 16,
-			backgroundColor: colors.background5
+			width: '100%'
 		},
 		bottomRow: {
 			flexDirection: 'row',

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
@@ -20,10 +19,12 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	conversionAmount = '',
 	notTouchable = false,
 	apy,
-	tokenBalance
+	tokenBalance,
+	exchange = false,
+	noMax = false,
+	noInvalid = false
 }) => {
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
+	const styles = makeStyles();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
 		balance,
 		updateQuotes: updateQuotes!,
@@ -33,7 +34,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	});
 
 	const getBalanceUSD = () => {
-		if (token && tokens?.length > 0) {
+		if (token && tokens && tokens.length > 0) {
 			return numberFormat(tokens.filter((item) => item.symbol === token?.symbol)[0].balanceUSD) ?? '';
 		}
 		return '$0';
@@ -48,22 +49,32 @@ const TokenCard: React.FC<TokenCardProps> = ({
 				token={token!}
 				onPress={onPress!}
 				notTouchable={notTouchable}
+				inline={exchange}
 			/>
 
-			<TokenInputInner
-				symbol={token ? token.symbol : ''}
-				isAmountValid={!invalidAmount}
-				placeholder="0.00"
-				autoFocus
-				showSymbol
-				marginBottom={8}
-				amount={amount}
-				onChangeText={onChangeText}
-			/>
+			<View
+				style={exchange && {
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center'
+				}}
+			>
+				<TokenInputInner
+					symbol={token ? token.symbol : ''}
+					isAmountValid={noInvalid ? true : !invalidAmount}
+					placeholder="0.00"
+					autoFocus
+					showSymbol
+					amount={amount}
+					onChangeText={onChangeText}
+					ghost={exchange}
+					marginBottom={exchange ? 0 : 8}
+				/>
 
-			<View style={styles.bottomRow}>
-				{!!apy && <InterestBanner token apy={apy} />}
-				{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
+				<View style={[styles.bottomRow, exchange && { marginBottom: 8 }]}>
+					{!!apy && <InterestBanner token apy={apy} />}
+					{isMaxEnabled && !noMax && <MaxButton onPress={onMaxPress} />}
+				</View>
 			</View>
 
 		</View>

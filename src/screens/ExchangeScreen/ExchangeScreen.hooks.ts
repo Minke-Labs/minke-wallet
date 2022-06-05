@@ -1,5 +1,5 @@
-import React, { useEffect, createRef, useCallback } from 'react';
-import { TextInput, Keyboard } from 'react-native';
+import React, { useEffect, useCallback } from 'react';
+import { Keyboard } from 'react-native';
 import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
@@ -29,8 +29,6 @@ export const useExchangeScreen = () => {
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
-	const fromAmountRef = createRef<TextInput>();
-	const toAmountRef = createRef<TextInput>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens: walletTokens } = useTokens();
 	const { defaultToken } = useDepositProtocols();
@@ -62,7 +60,6 @@ export const useExchangeScreen = () => {
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
-		// fromAmountRef.current?.focus();
 	};
 
 	const updateToToken = (token: ParaswapToken) => {
@@ -70,7 +67,6 @@ export const useExchangeScreen = () => {
 		setToConversionAmount(undefined);
 		exchange.to.set(token);
 		exchange.toAmount.set(undefined);
-		// toAmountRef.current?.focus();
 	};
 
 	interface PriceParams {
@@ -294,8 +290,6 @@ export const useExchangeScreen = () => {
 		loadingPrices,
 		searchVisible,
 		showOnlyOwnedTokens,
-		fromAmountRef,
-		toAmountRef,
 		updateFromQuotes,
 		updateToQuotes,
 		enoughForGas,

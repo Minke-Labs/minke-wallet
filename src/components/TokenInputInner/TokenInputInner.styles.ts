@@ -9,7 +9,8 @@ export const makeStyles = (isAmountValid: boolean, ghost: boolean, colors: Color
 			...(!ghost && {
 				borderBottomWidth: 2,
 				borderBottomColor: isAmountValid ? colors.cta2 : colors.alert1
-			})
+			}),
+			...(ghost && { flex: 1 })
 		},
 		input: {
 			flex: 1,

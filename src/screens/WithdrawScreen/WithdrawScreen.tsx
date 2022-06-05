@@ -1,6 +1,6 @@
 import React from 'react';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector } from '@components';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
 import { BasicLayout } from '@layouts';
 import { View } from 'react-native';
 import { useNavigation, useLanguage } from '@hooks';
@@ -37,9 +37,12 @@ const WithdrawScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} />
+				<Header
+					title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`}
+					marginBottom={60}
+				/>
 
-				<View style={{ paddingHorizontal: 24, marginBottom: 42 }}>
+				<Paper padding={16} marginBottom={42}>
 					<TokenCard
 						onPress={showModal}
 						tokens={tokens}
@@ -48,7 +51,7 @@ const WithdrawScreen = () => {
 						updateQuotes={debounce(updateAmount, 500)}
 						tokenBalance={tokenBalance}
 					/>
-				</View>
+				</Paper>
 
 				{!gaslessEnabled && <GasSelector />}
 

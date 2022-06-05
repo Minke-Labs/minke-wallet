@@ -1,15 +1,16 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Icon } from '@components';
+import { Icon, ActivityIndicator } from '@components';
 import { useTheme } from '@hooks';
 
 interface DirectionButtonProps {
 	onPress: () => void;
 	disabled?: boolean;
 	right?: boolean;
+	loading?: boolean;
 }
 
-const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled, right }) => {
+const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled, right, loading }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity
@@ -25,11 +26,16 @@ const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled, ri
 			}}
 			{...{ onPress, disabled }}
 		>
-			<Icon
-				name={right ? 'arrowRight' : 'arrowDown'}
-				size={20}
-				color="cta1"
-			/>
+			{
+				loading ?
+					<ActivityIndicator />
+					:
+					<Icon
+						name={right ? 'arrowRight' : 'arrowDown'}
+						size={20}
+						color="cta1"
+					/>
+			}
 		</TouchableOpacity>
 	);
 };
