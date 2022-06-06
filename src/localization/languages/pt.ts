@@ -184,7 +184,7 @@ export default {
 	SaveScreen: {
 		interest: '% de juros anuais',
 		EmptyState: {
-			save: 'Salvar',
+			save: 'Investir',
 			open_aave_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
 			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
 		},
@@ -451,6 +451,11 @@ export default {
 				view_site: 'Ver o Site',
 				learn_more: 'Ver Mais'
 			}
+		},
+		PendingTransactions: {
+			pending: 'Pendente',
+			success: 'Sucesso',
+			failed: 'Falhou'
 		},
 		Transaction: {
 			failed: 'Falhou',

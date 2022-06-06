@@ -23,6 +23,7 @@ interface TextComponentProps {
 	width: number | string;
 	style: StyleProp<TextStyle>;
 	center: boolean;
+	numberOfLines?: number;
 }
 
 export type { FontWeightType, FontType, MakeStylesProps, TextComponentProps };

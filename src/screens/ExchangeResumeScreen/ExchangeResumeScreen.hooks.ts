@@ -205,13 +205,12 @@ const useExchangeResumeScreen = () => {
 						swapTarget: toAddress!
 					});
 					setTransactionHash(hash);
-					const { status, from: src } = await provider.waitForTransaction(hash, 3);
 					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
 					addPendingTransaction({
-						from: src,
+						from: from.address,
 						destination: address,
 						hash,
-						txSuccessful: status === 1,
+						txSuccessful: true,
 						pending: true,
 						timeStamp: (new Date().getTime() / 1000).toString(),
 						amount: toAmount!,
@@ -267,10 +266,9 @@ const useExchangeResumeScreen = () => {
 						]
 					});
 					addPendingTransaction(converted);
-					const { hash, wait } = transaction;
+					const { hash } = transaction;
 					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: false, hash });
 					setTransactionHash(hash);
-					await wait(3);
 					navigation.navigate('WalletScreen');
 				}
 			} catch (e) {

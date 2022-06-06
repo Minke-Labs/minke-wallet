@@ -38,6 +38,7 @@ import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
 import SettingsHeader from './SettingsHeader/SettingsHeader';
 import Snackbar from './Snackbar/Snackbar';
+import PendingTransaction from './PendingTransaction/PendingTransaction';
 import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
@@ -85,6 +86,7 @@ export {
 	CoinSelector,
 	TransparentCard,
 	TokenCard,
+	PendingTransaction,
 	PercChange,
 	PaperTouchable,
 	ApplePayButton,

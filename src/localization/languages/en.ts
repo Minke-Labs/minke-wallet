@@ -448,6 +448,11 @@ export default {
 				learn_more: 'Learn More'
 			}
 		},
+		PendingTransactions: {
+			pending: 'Pending',
+			success: 'Success',
+			failed: 'Failed'
+		},
 		Transaction: {
 			failed: 'Failed',
 			view_on: 'View on',

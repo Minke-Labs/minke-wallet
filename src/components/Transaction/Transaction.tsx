@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useLanguage } from '@hooks';
+import { useLanguage, useTransaction } from '@hooks';
 import Text from '../Text/Text';
 import TransactionIcon from '../TransactionIcon/TransactionIcon';
 import { styles } from './Transaction.styles';
 import { TransactionProps } from './Transaction.types';
-import { useTransaction } from './Transaction.hooks';
 
 const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 	const {

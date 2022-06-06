@@ -62,7 +62,8 @@ export const useWalletScreen = () => {
 	};
 
 	const onSendFinished = (obj: ResultProps) => {
-		setSendModalFinished(true);
+		const { hash } = obj;
+		setSendModalFinished(!hash);
 		setSentTransaction(obj);
 	};
 

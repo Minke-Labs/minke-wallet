@@ -12,7 +12,7 @@ const DepositScreen = () => {
 		useDepositScreen();
 	const { ableToDeposit, approved, setApproved } = useDepositProtocols();
 
-	if (ableToDeposit === undefined || approved === undefined) {
+	if (ableToDeposit === undefined) {
 		return <ScreenLoadingIndicator />;
 	}
 
@@ -32,6 +32,11 @@ const DepositScreen = () => {
 			</>
 		);
 	}
+
+	if (approved === undefined) {
+		return <ScreenLoadingIndicator />;
+	}
+
 	if (approved) return <Deposit />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;
 };

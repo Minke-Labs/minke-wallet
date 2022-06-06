@@ -19,7 +19,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toBn } from 'evm-bn';
 import { formatUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
-import { getProvider } from '@models/wallet';
 import { captureException } from '@sentry/react-native';
 
 export const useDeposit = () => {
@@ -101,11 +100,9 @@ export const useDeposit = () => {
 						hash,
 						gasless: gaslessEnabled
 					});
-					const provider = await getProvider();
-					const { from, to } = await provider.waitForTransaction(hash);
 					addPendingTransaction({
-						from,
-						destination: to,
+						from: token.address,
+						destination: address,
 						hash,
 						txSuccessful: true,
 						pending: true,
