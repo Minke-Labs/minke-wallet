@@ -4,7 +4,7 @@ import { Icon, ActivityIndicator } from '@components';
 import { useTheme } from '@hooks';
 
 interface DirectionButtonProps {
-	onPress: () => void;
+	onPress?: () => void;
 	disabled?: boolean;
 	right?: boolean;
 	loading?: boolean;

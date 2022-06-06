@@ -1,18 +1,15 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { Card } from 'react-native-paper';
 import { BasicLayout } from '@layouts';
-import { Icon, Modal, Text, ActivityIndicator, HapticButton, ModalReusables } from '@components';
+import { Modal, Text, ActivityIndicator, HapticButton, ModalReusables } from '@components';
 import { useLanguage, useTheme } from '@hooks';
-import { formatUnits } from 'ethers/lib/utils';
 import { makeStyles } from './ExchangeResume.styles';
 // import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
-import { TokenDetail } from './TokenDetail/TokenDetail';
 
 const ExchangeResumeScreen = () => {
 	const {
-		navigation,
 		priceQuote,
 		from,
 		to,
@@ -28,8 +25,6 @@ const ExchangeResumeScreen = () => {
 		error,
 		setError,
 		onSuccess,
-		fromFiatPrice,
-		toFiatPrice,
 		// gasless,
 		blockchainError,
 		setBlockchainError
@@ -41,7 +36,7 @@ const ExchangeResumeScreen = () => {
 		<>
 			<BasicLayout>
 				<View style={styles.exchangeResumeContainer}>
-					<View>
+					{/* <View>
 						<TouchableOpacity
 							activeOpacity={0.6}
 							onPress={() => navigation.goBack()}
@@ -52,10 +47,10 @@ const ExchangeResumeScreen = () => {
 								{i18n.t('ExchangeResumeScreen.exchange_resume')}
 							</Text>
 						</TouchableOpacity>
-					</View>
+					</View> */}
 
 					<Card style={styles.tokenCard}>
-						{priceQuote ? (
+						{/* {priceQuote ? (
 							<TokenDetail
 								token={from}
 								amount={formatUnits(priceQuote.sellAmount, from.decimals)}
@@ -63,15 +58,15 @@ const ExchangeResumeScreen = () => {
 							/>
 						) : (
 							<ActivityIndicator size={24} />
-						)}
+						)} */}
 
-						<View style={styles.tokenCardDivisor}>
+						{/* <View style={styles.tokenCardDivisor}>
 							<View style={styles.tokenCardDivisorBackground}>
 								<Icon name="arrowDown" color="text7" size={24} />
 							</View>
-						</View>
+						</View> */}
 
-						{priceQuote ? (
+						{/* {priceQuote ? (
 							<TokenDetail
 								token={to}
 								amount={formatUnits(priceQuote.buyAmount, to.decimals)}
@@ -79,7 +74,7 @@ const ExchangeResumeScreen = () => {
 							/>
 						) : (
 							<ActivityIndicator size={24} />
-						)}
+						)} */}
 
 						{!loading && (
 							<View style={styles.exchangeResumeRateFixedContainer}>

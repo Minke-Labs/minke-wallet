@@ -150,7 +150,7 @@ export default {
 		you_withdrawn: 'Você retirou com sucesso!'
 	},
 	ExchangeResumeScreen: {
-		exchange_resume: 'Resumo da Troca',
+		exchange_resume: 'Confirmação',
 		rate_fixed_for: 'Cotação fixa por:',
 		rate: 'Cotação',
 		swapping_via: 'Convertendo via'

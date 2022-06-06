@@ -280,7 +280,6 @@ const useExchangeResumeScreen = () => {
 	};
 
 	return {
-		navigation,
 		priceQuote,
 		from,
 		to,

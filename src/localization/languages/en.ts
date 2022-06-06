@@ -150,7 +150,7 @@ export default {
 		you_withdrawn: "You've withdrawn successfully!"
 	},
 	ExchangeResumeScreen: {
-		exchange_resume: 'Exchange Resume',
+		exchange_resume: 'Confirmation',
 		rate_fixed_for: 'Rate fixed for:',
 		rate: 'Rate',
 		swapping_via: 'Swapping via'
