@@ -7,6 +7,8 @@ import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
 import FullModal from './FullModal/FullModal';
+import GasOption from './GasOption/GasOption';
+import GasOptionInner from './GasOptionInner/GasOptionInner';
 import GasSelector from './GasSelector/GasSelector';
 import NetworkWarning from './NetworkWarning';
 import ModalHeader from './ModalHeader/ModalHeader';
@@ -56,6 +58,8 @@ export {
 	TokenAmountInput,
 	Modal,
 	FullModal,
+	GasOption,
+	GasOptionInner,
 	GasSelector,
 	ModalHeader,
 	SettingsHeader,

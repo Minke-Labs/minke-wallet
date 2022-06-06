@@ -6,7 +6,7 @@ import { State, useState } from '@hookstate/core';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
 import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
-import GasOption from './GasOption/GasOption';
+import GasOption from '../GasOption/GasOption';
 import styles from './GasSelector.styles';
 
 interface Wait {

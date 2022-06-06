@@ -54,8 +54,8 @@ const darkTheme = {
 
 	background1: '#0A2138',
 	background2: '#22374C',
-	background3: '#22374C',
-	background4: '#22374C', // Missing color, I just repeated above's for now.
+	background3: '#2A4967',
+	background4: '#374C63', // Missing color, I just repeated above's for now.
 	background5: '#22374C',
 
 	cta1: '#0090E0',

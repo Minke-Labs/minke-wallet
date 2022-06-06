@@ -1,18 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Header, HapticButton, Paper } from '@components';
+import { Text, Header, HapticButton, Paper, Modal, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
 import { TokenDetail } from './TokenDetail/TokenDetail';
-import { makeStyles } from './ExchangeResume.styles';
+import { makeStyles } from './ExchangeResumeScreen.styles';
 import { Rate } from './Rate/Rate';
+import { GasSelected } from './GasSelected/GasSelected';
 
 const ExchangeResumeScreen = () => {
 	const {
-		navigation,
 		priceQuote,
 		from,
 		to,
@@ -30,7 +30,7 @@ const ExchangeResumeScreen = () => {
 		onSuccess,
 		fromFiatPrice,
 		toFiatPrice,
-		// gasless,
+		gasless,
 		blockchainError,
 		setBlockchainError
 	} = useExchangeResumeScreen();
@@ -38,63 +38,91 @@ const ExchangeResumeScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (
-		<BasicLayout>
-			<Header
-				title={i18n.t('ExchangeResumeScreen.exchange_resume')}
-				marginBottom={36}
-			/>
-
-			<Paper marginBottom={24}>
-				<View style={styles.container}>
-					<View style={styles.containerLeft}>
-						<TokenDetail
-							token={from}
-							amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
-							usdAmount={fromFiatPrice}
-							loading={!priceQuote}
-						/>
-					</View>
-					<View style={styles.containerRight}>
-						<TokenDetail
-							token={to}
-							amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
-							usdAmount={toFiatPrice}
-							loading={!priceQuote}
-						/>
-					</View>
-					<DirectionButton disabled right />
-				</View>
-				<View style={styles.containerBottom}>
-					<Text type="lSmall" weight="semiBold" style={{ marginRight: 8 }}>
-						{i18n.t('ExchangeResumeScreen.rate_fixed_for')}
-					</Text>
-					<Rate count={count} />
-				</View>
-			</Paper>
-
-			<Paper marginBottom={24} padding={24}>
-				<View style={styles.infoTop}>
-					<Text weight="semiBold" color="text3" type="lMedium">Rate</Text>
-					<Text weight="bold" color="text2" type="tSmall">2000 DAI per 1 ETH</Text>
-				</View>
-				<View style={styles.infoBottom}>
-					<Text weight="semiBold" color="text3" type="lMedium">Swapping via</Text>
-					<Text weight="bold" color="text2" type="tSmall">Uniswap v2 🦄</Text>
-				</View>
-			</Paper>
-
-			<Paper padding={16}>
-				<Text>ExchangeResumeScreen</Text>
-				<Text>ExchangeResumeScreen</Text>
-			</Paper>
-
-			<View style={{ marginTop: 'auto', marginBottom: 32, marginHorizontal: 16 }}>
-				<HapticButton
-					title={i18n.t('Components.Buttons.exchange')}
-					onPress={() => null}
+		<>
+			<BasicLayout>
+				<Header
+					title={i18n.t('ExchangeResumeScreen.exchange_resume')}
+					marginBottom={36}
 				/>
-			</View>
-		</BasicLayout>
+
+				<Paper marginBottom={24}>
+					<View style={styles.container}>
+						<View style={styles.containerLeft}>
+							<TokenDetail
+								token={from}
+								amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
+								usdAmount={fromFiatPrice}
+								loading={!priceQuote}
+							/>
+						</View>
+						<View style={styles.containerRight}>
+							<TokenDetail
+								token={to}
+								amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
+								usdAmount={toFiatPrice}
+								loading={!priceQuote}
+							/>
+						</View>
+						<DirectionButton disabled right />
+					</View>
+					<View style={styles.containerBottom}>
+						<Text type="lSmall" weight="semiBold" style={{ marginRight: 8 }}>
+							{i18n.t('ExchangeResumeScreen.rate_fixed_for')}
+						</Text>
+						{!loading && <Rate count={count} />}
+					</View>
+				</Paper>
+
+				<Paper marginBottom={24} padding={24}>
+					<View style={styles.infoTop}>
+						<Text weight="semiBold" color="text3" type="lMedium">
+							{i18n.t('ExchangeResumeScreen.rate')}
+						</Text>
+						<Text weight="bold" color="text2" type="tSmall">
+							{exchangeSummary()}
+						</Text>
+					</View>
+					<View style={styles.infoBottom}>
+						<Text weight="semiBold" color="text3" type="lMedium">
+							{i18n.t('ExchangeResumeScreen.swapping_via')}
+						</Text>
+						<Text weight="bold" color="text2" type="tSmall">
+							{exchangeName}
+						</Text>
+					</View>
+				</Paper>
+
+				{!gasless && <GasSelected />}
+
+				<View style={styles.haptic}>
+					<HapticButton
+						title={i18n.t('Components.Buttons.exchange')}
+						onPress={onSuccess}
+					/>
+				</View>
+			</BasicLayout>
+
+			<Modal isVisible={visible} onDismiss={hideModal}>
+				<ModalReusables.TransactionWait
+					onDismiss={hideModal}
+					fromToken={from}
+					toToken={to}
+					transactionHash={transactionHash}
+				/>
+			</Modal>
+			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
+			</Modal>
+			<Modal isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
+				{blockchainError && (
+					<ModalReusables.Error
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						onDismiss={() => setBlockchainError(false)}
+						showHeader
+					/>
+				)}
+			</Modal>
+		</>
 	);
 };
 

@@ -17,12 +17,5 @@ export const makeStyles = (colors: ColorType) =>
 		content: {
 			flexDirection: 'row',
 			alignItems: 'center'
-		},
-		icon: {
-			padding: 8,
-			borderRadius: 50,
-			marginLeft: 8,
-			marginRight: 16,
-			backgroundColor: colors.background6
 		}
 	});

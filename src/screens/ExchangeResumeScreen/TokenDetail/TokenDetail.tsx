@@ -37,7 +37,7 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 			<Text
 				type="lMedium"
 				weight="medium"
-				color="text2"
+				color="text3"
 				center
 				width={132}
 			>
