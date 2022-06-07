@@ -316,7 +316,9 @@ export default {
 				funds_deposited_in_savings: 'Funds deposited in savings',
 				borrowing: 'Borrowing',
 				open_loans: 'Open loans',
-				coming_soon: 'Coming soon'
+				coming_soon: 'Coming soon',
+				points: 'Points',
+				points_earned: 'Points earned, refer a friend'
 			},
 			Transactions: {
 				NoTransactionsYet: {

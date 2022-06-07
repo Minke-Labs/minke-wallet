@@ -13,16 +13,25 @@ const Card: React.FC<CardProps> = ({
 	onPress,
 	marginBottom = 32,
 	titleStyle,
-	subtitleStyle
+	subtitleStyle,
+	thirdRowText,
+	thirdRowStyle
 }) => (
 	<TouchableOpacity activeOpacity={0.6} style={[styles.container, { marginBottom }]} {...{ onPress }}>
 		<View style={[styles.leftContainer, { ...(style as object) }]}>
 			{image}
 			<View style={styles.titleContainer}>
-				<Text style={{ fontSize: 12, ...(titleStyle as object) }}>{title}</Text>
+				<Text weight="semiBold" style={{ fontSize: 12, ...(titleStyle as object) }}>
+					{title}
+				</Text>
 				<Text style={{ fontSize: 16, ...(subtitleStyle as object) }} weight="medium">
 					{subtitle}
 				</Text>
+				{thirdRowText && (
+					<Text style={{ fontSize: 16, ...(thirdRowStyle as object) }} weight="medium">
+						{thirdRowText}
+					</Text>
+				)}
 			</View>
 		</View>
 		{right}
