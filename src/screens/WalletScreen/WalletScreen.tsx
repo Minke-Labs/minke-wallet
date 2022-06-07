@@ -90,7 +90,7 @@ const WalletScreen = () => {
 			<Modal isVisible={error} onDismiss={() => setError(false)}>
 				{error && (
 					<ModalReusables.Error
-						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						description={i18n.t('ModalReusables.Error.Blockchain.description')}
 						onDismiss={() => setError(false)}
 						showHeader
 					/>

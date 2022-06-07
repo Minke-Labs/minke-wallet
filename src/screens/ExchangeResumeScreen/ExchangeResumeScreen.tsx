@@ -116,7 +116,7 @@ const ExchangeResumeScreen = () => {
 			<Modal isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
-						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
+						description={i18n.t('ModalReusables.Error.Blockchain.description')}
 						onDismiss={() => setBlockchainError(false)}
 						showHeader
 					/>
