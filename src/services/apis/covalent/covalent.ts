@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logger from '@utils/logger';
+import isValidDomain from 'is-valid-domain';
 import { AccountBalance, CovalentAavePool } from '@src/model/token';
 import { convertTokens } from '@src/services/tokenConverter/tokenConverter';
 import { network } from '@models/network';
@@ -55,6 +56,7 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	);
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
 	tokens = tokens.filter(({ balance }) => +balance > 0);
+	tokens = tokens.filter((token) => !isValidDomain(token.name));
 	const walletBalance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const depositedBalance = interestTokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const balance = walletBalance + depositedBalance;
