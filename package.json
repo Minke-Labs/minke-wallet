@@ -63,6 +63,7 @@
     "global": "^4.4.0",
     "https-browserify": "0.0.1",
     "i18n-js": "^3.9.2",
+    "is-valid-domain": "^0.1.6",
     "lodash": "^4.17.21",
     "main": "^1000.0.1",
     "metro": "^0.67.0",
