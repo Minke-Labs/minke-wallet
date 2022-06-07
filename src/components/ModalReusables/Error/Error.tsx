@@ -22,13 +22,13 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
 			<View style={styles.container}>
 				<Image source={whale3Img} style={styles.image} />
 				<Text weight="extraBold" center>
-					{title || i18n.t('ModalReusables.Error.title')}
+					{title || i18n.t('Components.ModalReusables.Error.title')}
 				</Text>
 				<Text weight="extraBold" center marginBottom={45}>
-					{description || i18n.t('ModalReusables.Error.description')}
+					{description || i18n.t('Components.ModalReusables.Error.description')}
 				</Text>
 				<Button
-					title={buttonLabel || i18n.t('ModalReusables.Error.buttonLabel')}
+					title={buttonLabel || i18n.t('Components.ModalReusables.Error.buttonLabel')}
 					onPress={onDismiss}
 					marginBottom={8}
 				/>

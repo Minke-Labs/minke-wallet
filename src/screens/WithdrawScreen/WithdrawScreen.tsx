@@ -37,10 +37,7 @@ const WithdrawScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header
-					title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`}
-					marginBottom={60}
-				/>
+				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper padding={16} marginBottom={42}>
 					<TokenCard
@@ -94,7 +91,7 @@ const WithdrawScreen = () => {
 			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
-						description={i18n.t('ModalReusables.Error.Blockchain.description')}
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
 						onDismiss={() => setBlockchainError(false)}
 						showHeader
 					/>

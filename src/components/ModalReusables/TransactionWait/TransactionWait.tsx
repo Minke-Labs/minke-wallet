@@ -59,10 +59,10 @@ const TransactionWaitModal = ({
 					{sent
 						? i18n.t('TransactionWaitModal.sending')
 						: deposit
-						? i18n.t('ModalReusables.TransactionWaitModal.depositing')
+						? i18n.t('Components.ModalReusables.TransactionWaitModal.depositing')
 						: withdraw
-						? i18n.t('ModalReusables.TransactionWaitModal.withdrawing')
-						: i18n.t('ModalReusables.TransactionWaitModal.exchanging')}
+						? i18n.t('Components.ModalReusables.TransactionWaitModal.withdrawing')
+						: i18n.t('Components.ModalReusables.TransactionWaitModal.exchanging')}
 				</Text>
 				<Text type="p2" weight="extraBold" color="text3">
 					{' '}
@@ -75,8 +75,8 @@ const TransactionWaitModal = ({
 							{sent
 								? ''
 								: deposit
-								? i18n.t('ModalReusables.TransactionWaitModal.in')
-								: i18n.t('ModalReusables.TransactionWaitModal.for')}
+								? i18n.t('Components.ModalReusables.TransactionWaitModal.in')
+								: i18n.t('Components.ModalReusables.TransactionWaitModal.for')}
 						</Text>
 						{!!toToken && (
 							<Text type="p2" weight="extraBold" color="text3">
@@ -89,7 +89,7 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="a" weight="medium" color="text3">
-					{i18n.t('ModalReusables.TransactionWaitModal.transaction')}:
+					{i18n.t('Components.ModalReusables.TransactionWaitModal.transaction')}:
 				</Text>
 				<Button mode="text" onPress={openTransaction}>
 					<Text type="a" weight="medium" color="text3">

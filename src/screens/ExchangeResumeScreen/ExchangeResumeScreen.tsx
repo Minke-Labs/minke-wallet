@@ -40,10 +40,7 @@ const ExchangeResumeScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header
-					title={i18n.t('ExchangeResumeScreen.exchange_resume')}
-					marginBottom={36}
-				/>
+				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} marginBottom={36} />
 
 				<Paper marginBottom={24}>
 					<View style={styles.container}>
@@ -95,10 +92,7 @@ const ExchangeResumeScreen = () => {
 				{!gasless && <GasSelected />}
 
 				<View style={styles.haptic}>
-					<HapticButton
-						title={i18n.t('Components.Buttons.exchange')}
-						onPress={onSuccess}
-					/>
+					<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />
 				</View>
 			</BasicLayout>
 
@@ -116,7 +110,7 @@ const ExchangeResumeScreen = () => {
 			<Modal isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
-						description={i18n.t('ModalReusables.Error.Blockchain.description')}
+						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
 						onDismiss={() => setBlockchainError(false)}
 						showHeader
 					/>
