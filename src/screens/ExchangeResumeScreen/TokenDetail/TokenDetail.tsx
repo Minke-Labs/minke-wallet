@@ -14,6 +14,16 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 			</>
 		);
 	}
+
+	const truncVal = (val: string) => {
+		const before = val.split('.')[0];
+		const after = val.split('.')[1];
+		if (after && after.length > 8) {
+			return `${before}.${after.substring(0, 8)}...`;
+		}
+		return val;
+	};
+
 	return (
 		<>
 			<Token
@@ -40,9 +50,8 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 				color="text3"
 				center
 				width={132}
-				numberOfLines={1}
 			>
-				{amount} {token.symbol}
+				{truncVal(amount)} {token.symbol}
 			</Text>
 		</>
 	);
