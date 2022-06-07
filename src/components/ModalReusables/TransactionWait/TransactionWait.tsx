@@ -51,13 +51,13 @@ const TransactionWaitModal = ({
 			</View>
 			<View style={styles.modalColumn}>
 				<Text type="h3" weight="extraBold" color="text1">
-					{i18n.t('TransactionWaitModal.processing_transaction')}
+					{i18n.t('Components.ModalReusables.TransactionWaitModal.processing_transaction')}
 				</Text>
 			</View>
 			<View style={styles.modalRow}>
 				<Text type="p2" weight="medium" color="text3">
 					{sent
-						? i18n.t('TransactionWaitModal.sending')
+						? i18n.t('Components.ModalReusables.TransactionWaitModal.sending')
 						: deposit
 						? i18n.t('Components.ModalReusables.TransactionWaitModal.depositing')
 						: withdraw

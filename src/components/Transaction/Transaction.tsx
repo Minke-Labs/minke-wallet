@@ -31,7 +31,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 				<View style={styles.titleContainer}>
 					{failed ? (
 						<Text type="span" color="alert1" weight="bold">
-							{i18n.t('Transaction.failed')}
+							{i18n.t('Components.Transaction.failed')}
 						</Text>
 					) : (
 						<Text type="span">{title}</Text>

@@ -40,6 +40,7 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 				color="text3"
 				center
 				width={132}
+				numberOfLines={1}
 			>
 				{amount} {token.symbol}
 			</Text>

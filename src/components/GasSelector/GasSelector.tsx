@@ -117,13 +117,18 @@ const GasSelector = () => {
 		}
 	}, [gasPrice, usdPrice, wait]);
 
-	const onSelectGas = () => {
-		exchange.gas.set({ type, gweiValue: gasPrice, usdPrice, wait: wait || defaultWait[type as keyof Wait] } as Gas);
+	const onSelectGas = (val: Speeds) => {
+		exchange.gas.set({
+			type: val,
+			gweiValue: gasPrice,
+			usdPrice,
+			wait: wait || defaultWait[type as keyof Wait]
+		} as Gas);
 	};
 
 	const handleClick = (val: Speeds) => {
-		onSelectGas();
 		setType(val);
+		onSelectGas(val);
 	};
 
 	if (!gasPrice || !usdPrice) {

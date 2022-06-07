@@ -77,7 +77,8 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	const obj = useMemo(
 		() => ({
 			biconomy: biconomyClient,
-			gaslessEnabled: !!biconomyClient && biconomyClient.status === biconomyClient.READY && gaslessEnabled
+			gaslessEnabled: false
+			// gaslessEnabled: !!biconomyClient && biconomyClient.status === biconomyClient.READY && gaslessEnabled
 		}),
 		[biconomyClient, status, biconomyAPIKey, address, gaslessEnabled]
 	);
