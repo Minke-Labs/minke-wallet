@@ -29,9 +29,11 @@ import {
 	WithdrawScreen,
 	SavingAccountsScreen,
 	ReferralScreen,
+	EnterReferralCodeScreen,
 	Test
 } from '@screens';
 import * as Linking from 'expo-linking';
+import Logger from '@utils/logger';
 import { RootStackParamList } from './types.routes';
 import { globalWalletState } from '../stores/WalletStore';
 
@@ -42,14 +44,13 @@ const Routes: React.FC = () => {
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
 	// const initialScreen = 'Test';
+
 	const urlRedirect = (event: any) => {
 		const { url } = event;
-		console.log('URL', url);
 		if (!url) return;
 		const lala = Linking.parse(url);
-		console.log({ lala });
 		const { path, queryParams } = lala;
-		console.log(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
+		Logger.log(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
 	};
 
 	useEffect(() => {
@@ -99,6 +100,7 @@ const Routes: React.FC = () => {
 					<Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
 					<Stack.Screen name="SavingAccountsScreen" component={SavingAccountsScreen} />
 					<Stack.Screen name="ReferralScreen" component={ReferralScreen} />
+					<Stack.Screen name="EnterReferralCodeScreen" component={EnterReferralCodeScreen} />
 				</Stack.Navigator>
 			</TransactionsProvider>
 		</NavigationContainer>

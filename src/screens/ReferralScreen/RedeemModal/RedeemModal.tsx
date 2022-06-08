@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { Icon, ModalHeader, Text } from '@components';
-import { useLanguage, useTheme } from '@hooks';
+import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { makeStyles } from './RedeemModal.styles';
 import TokenRow from './TokenRow';
 import useRedeemModalHooks from './RedeemModal.hooks';
@@ -11,6 +11,7 @@ const RedeemModal = ({ onDismiss }: { onDismiss: () => void }) => {
 	const styles = makeStyles(colors);
 	const { i18n } = useLanguage();
 	const { tokens } = useRedeemModalHooks();
+	const navigation = useNavigation();
 
 	return (
 		<SafeAreaView>
@@ -43,7 +44,7 @@ const RedeemModal = ({ onDismiss }: { onDismiss: () => void }) => {
 					<TokenRow tokenName={name} usdPrice={usdPrice} key={id} />
 				))}
 
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => navigation.navigate('EnterReferralCodeScreen')}>
 					<Text type="p2" weight="semiBold" color="text4" marginBottom={32}>
 						{i18n.t('ReferralScreen.Modals.RedeemModal.i_have_a_referral_code')}
 					</Text>

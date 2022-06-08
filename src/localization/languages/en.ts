@@ -434,6 +434,14 @@ export default {
 			}
 		}
 	},
+	EnterReferralCodeScreen: {
+		enter_referral_code: 'Enter referral code',
+		get_rewarded_for_saving_money: 'Get rewarded for saving money!',
+		or: 'or',
+		refer_a_friend: 'Refer a friend',
+		referral_note:
+			'This code can only be used once. After topping-up 100 USD you and your friend will get each 100 Minke points.'
+	},
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Backing up...',
@@ -517,7 +525,8 @@ export default {
 			search: 'Search',
 			search_token: 'Search token',
 			name: 'Name',
-			ens_or_wallet: 'ENS or Wallet Address'
+			ens_or_wallet: 'ENS or Wallet Address',
+			enter_code: 'Enter code'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to iCloud',
@@ -533,7 +542,8 @@ export default {
 			add_contact: 'Add Contact',
 			add_funds_to_start: 'Add funds to start',
 			share: 'Share',
-			pay_with: 'Pay with '
+			pay_with: 'Pay with ',
+			use_code: 'Use code'
 		},
 		ModalReusables: {
 			Error: {
