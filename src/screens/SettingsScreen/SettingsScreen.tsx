@@ -30,7 +30,7 @@ const SettingsScreen = () => {
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
 	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
-	const onHelpCentre = () => null;
+	const onHelpCentre = () => navigation.navigate('HelpCentreScreen');
 
 	const onCreateWallet = useCallback(async () => {
 		setCreatingWallet(true);

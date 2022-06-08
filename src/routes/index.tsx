@@ -14,6 +14,7 @@ import {
 	ChangeCountryScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
+	HelpCentreScreen,
 	SettingsScreen,
 	TransactionsScreen,
 	WalletAssetsScreen,
@@ -55,6 +56,7 @@ const Routes: React.FC = () => {
 					<Stack.Screen name="DepositScreen" component={DepositScreen} />
 					<Stack.Screen name="ExchangeResumeScreen" component={ExchangeResumeScreen} />
 					<Stack.Screen name="ExchangeScreen" component={ExchangeScreen} />
+					<Stack.Screen name="HelpCentreScreen" component={HelpCentreScreen} />
 					<Stack.Screen name="SaveScreen" component={SaveScreen} />
 					<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
 					<Stack.Screen name="TransactionsScreen" component={TransactionsScreen} />

@@ -12,6 +12,7 @@ export type RootStackParamList = {
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
 	ExchangeScreen: undefined;
+	HelpCentreScreen: undefined;
 	SaveScreen: undefined;
 	SettingsScreen: undefined;
 	TransactionsScreen: undefined;
