@@ -28,6 +28,7 @@ import {
 	TopUpWaitScreen,
 	WithdrawScreen,
 	SavingAccountsScreen,
+	ReferralScreen,
 	Test
 } from '@screens';
 import * as Linking from 'expo-linking';
@@ -97,6 +98,7 @@ const Routes: React.FC = () => {
 					<Stack.Screen name="TopUpWaitScreen" component={TopUpWaitScreen} />
 					<Stack.Screen name="WithdrawScreen" component={WithdrawScreen} />
 					<Stack.Screen name="SavingAccountsScreen" component={SavingAccountsScreen} />
+					<Stack.Screen name="ReferralScreen" component={ReferralScreen} />
 				</Stack.Navigator>
 			</TransactionsProvider>
 		</NavigationContainer>

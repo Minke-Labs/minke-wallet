@@ -21,14 +21,14 @@ const Card: React.FC<CardProps> = ({
 		<View style={[styles.leftContainer, { ...(style as object) }]}>
 			{image}
 			<View style={styles.titleContainer}>
-				<Text weight="semiBold" style={{ fontSize: 12, ...(titleStyle as object) }}>
+				<Text color="text1" weight="semiBold" style={{ fontSize: 12, ...(titleStyle as object) }}>
 					{title}
 				</Text>
-				<Text style={{ fontSize: 16, ...(subtitleStyle as object) }} weight="medium">
+				<Text color="text4" style={{ fontSize: 16, ...(subtitleStyle as object) }} weight="medium">
 					{subtitle}
 				</Text>
 				{thirdRowText && (
-					<Text style={{ fontSize: 16, ...(thirdRowStyle as object) }} weight="medium">
+					<Text color="text2" style={{ fontSize: 16, ...(thirdRowStyle as object) }} weight="medium">
 						{thirdRowText}
 					</Text>
 				)}

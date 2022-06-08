@@ -58,7 +58,7 @@ const Accounts = () => {
 				subtitle: i18n.t('WalletScreen.screens.Accounts.points_earned'),
 				thirdRowText: '100',
 				image: 'gift',
-				onPress: () => navigation.navigate('SaveScreen'),
+				onPress: () => navigation.navigate('ReferralScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
 			},
 			{

@@ -22,6 +22,7 @@ import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
+import ReferralScreen from './ReferralScreen/ReferralScreen';
 import Test from './Test/Test';
 
 export {
@@ -49,5 +50,6 @@ export {
 	TopUpWaitScreen,
 	WithdrawScreen,
 	SavingAccountsScreen,
+	ReferralScreen,
 	Test
 };

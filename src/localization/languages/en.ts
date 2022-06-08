@@ -394,6 +394,46 @@ export default {
 		withdraw: 'Withdraw',
 		balance: 'Balance: '
 	},
+	ReferralScreen: {
+		Header: {
+			points: 'Points'
+		},
+		CurrentValue: {
+			pts: 'pts.',
+			owned: 'Owned',
+			redeem: 'Redeem',
+			earn: 'Earn'
+		},
+		Modals: {
+			HelpModal: {
+				how_minke_points_work: 'How Minke points work?',
+				rewards_explanation: 'Minke points are rewards given to you when you perform certain tasks on the app.',
+				you_can_earn_points_by: 'You can earn points by:',
+				topping_up_for_the_first_time: 'Topping up for the first time.',
+				refering_minke: 'Refering Minke to friends and family.',
+				setting_recurrent_top_ups: 'Setting recurrent top-ups.',
+				what_can_you_do: 'What can you do with your points?',
+				you_can_redeem_your_points: 'You can redeem your points for rewards in selected tokens. '
+			},
+			EarnModal: {
+				earn_minke_points: 'Earn Minke points!',
+				refer_a_friend: 'Refer a friend',
+				when_your_friends_top_up: 'When your friend tops up 100 USD both get 100 Minke points.',
+				top_up: 'Top-up',
+				get_rewarded: 'Get rewarded for saving money!',
+				coming_soon: '(Coming soon)',
+				share_text:
+					"Hi! I've been using Minke to save and earn 20x more than my bank. We will both receive 100 Minke Reward Points (~$10 that you can buy crypto with) when you signup and make your first deposit of $100 or more. My invite code is {{code}} - signup here: https://apps.apple.com/pt/app/minke-defi-wallet/id1585144414"
+			},
+			RedeemModal: {
+				redeem_your_points: 'Redeem your points',
+				select_the_token_you_want: 'Select the token you want to redeem your points for.',
+				surprise: 'Surprise:',
+				randomly_selected: 'Randomly selected',
+				i_have_a_referral_code: 'I have a referral code'
+			}
+		}
+	},
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Backing up...',

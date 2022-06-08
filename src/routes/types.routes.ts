@@ -26,5 +26,6 @@ export type RootStackParamList = {
 	TopUpWaitScreen: undefined;
 	WithdrawScreen: undefined;
 	SavingAccountsScreen: undefined;
+	ReferralScreen: undefined;
 	Test: undefined;
 };
