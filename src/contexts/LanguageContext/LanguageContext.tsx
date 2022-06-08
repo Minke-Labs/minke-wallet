@@ -87,7 +87,15 @@ const LanguageProvider: React.FC = ({ children }) => {
 				currencyName: i18n.t('LocationContext.BR.currencyName'),
 				currency: 'BRL',
 				paymentName: 'PIX'
-			}
+			},
+			{
+				name: i18n.t('LocationContext.TUR.name'),
+				flag: 'Turkey',
+				iso: 'TUR',
+				currencyName: i18n.t('LocationContext.TUR.currencyName'),
+				currency: 'TRY',
+				// paymentName: 'PIX'
+			},
 		],
 		[language]
 	);
