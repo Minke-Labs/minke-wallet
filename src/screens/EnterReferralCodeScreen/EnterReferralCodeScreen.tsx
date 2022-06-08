@@ -14,7 +14,7 @@ const EnterReferralCodeScreen = () => {
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const { code, setCode, invalidCode, onConfirm } = useEnterReferralCodeScreen();
-	const { earnModalVisible, onEarnPress, onEarnDismiss } = useReferralScreen();
+	const { earnModalVisible, onEarnPress, onEarnDismiss, showReferralButton } = useReferralScreen();
 
 	return (
 		<>
@@ -26,7 +26,7 @@ const EnterReferralCodeScreen = () => {
 							{i18n.t('EnterReferralCodeScreen.enter_referral_code')}
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
+					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 						<Icon name="closeStroke" color="text7" size={24} />
 					</TouchableOpacity>
 				</View>
@@ -53,17 +53,21 @@ const EnterReferralCodeScreen = () => {
 						title={i18n.t('Components.Buttons.use_code')}
 						disabled={invalidCode}
 						onPress={onConfirm}
-						marginBottom={8}
+						marginBottom={showReferralButton ? 8 : 24}
 					/>
-					<Text type="p2" color="text4" center marginBottom={8}>
-						{i18n.t('EnterReferralCodeScreen.or')}
-					</Text>
-					<Button
-						onPress={onEarnPress}
-						title={i18n.t('EnterReferralCodeScreen.refer_a_friend')}
-						mode="outlined"
-						marginBottom={24}
-					/>
+					{showReferralButton && (
+						<>
+							<Text type="p2" color="text4" center marginBottom={8}>
+								{i18n.t('EnterReferralCodeScreen.or')}
+							</Text>
+							<Button
+								onPress={onEarnPress}
+								title={i18n.t('EnterReferralCodeScreen.refer_a_friend')}
+								mode="outlined"
+								marginBottom={24}
+							/>
+						</>
+					)}
 					<Text type="a" color="text3" weight="semiBold" center marginBottom={8} width={293}>
 						{i18n.t('EnterReferralCodeScreen.referral_note')}
 					</Text>

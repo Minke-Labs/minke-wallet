@@ -30,6 +30,7 @@ const SettingsScreen = () => {
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
 	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
+	const onEnterReferralCode = () => navigation.navigate('EnterReferralCodeScreen');
 
 	const onCreateWallet = useCallback(async () => {
 		setCreatingWallet(true);
@@ -45,13 +46,10 @@ const SettingsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title="" onPress={goBack} done={false} />
+			<SettingsHeader title={i18n.t('SettingsScreen.title')} onPress={goBack} done={false} />
 
 			<View style={styles.container}>
 				<ScrollView showsVerticalScrollIndicator={false}>
-					<Text weight="extraBold" marginBottom={8}>
-						{i18n.t('SettingsScreen.title')}
-					</Text>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.my_wallet')}
 					</Text>
@@ -66,14 +64,15 @@ const SettingsScreen = () => {
 						icon="walletStroke"
 						onPress={onCreateWallet}
 					/>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.enter_referral_code')}
+						icon="borrowStroke"
+						onPress={onEnterReferralCode}
+					/>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.my_account')}
 					</Text>
-					<SettingsOption
-						label={i18n.t('SettingsScreen.country')}
-						icon="globe"
-						onPress={onChangeCountry}
-					/>
+					<SettingsOption label={i18n.t('SettingsScreen.country')} icon="globe" onPress={onChangeCountry} />
 					<SettingsOption
 						label={i18n.t('SettingsScreen.network')}
 						icon="networkStroke"

@@ -222,7 +222,8 @@ export default {
 		my_account: 'My Account',
 		help: 'Help',
 		other: 'Other',
-		savings_account: 'Savings Account'
+		savings_account: 'Savings Account',
+		enter_referral_code: 'Enter referral code'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -377,6 +378,7 @@ export default {
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import or Restore Wallet',
+		i_have_a_referral_code: 'I have a referral code',
 		ImportWalletModal: {
 			add_wallet: 'Add Wallet',
 			seed_or_key: 'Seed phrase or private key',
