@@ -90,12 +90,12 @@ const LanguageProvider: React.FC = ({ children }) => {
 			},
 			{
 				name: i18n.t('LocationContext.TUR.name'),
-				flag: 'Turkey',
+				flag: 'turkey',
 				iso: 'TUR',
 				currencyName: i18n.t('LocationContext.TUR.currencyName'),
 				currency: 'TRY',
-				// paymentName: 'PIX'
-			},
+				paymentName: 'Turkey Bank Transfer'
+			}
 		],
 		[language]
 	);
