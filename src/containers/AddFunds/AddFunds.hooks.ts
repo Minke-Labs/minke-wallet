@@ -74,7 +74,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		const params = {
 			account_reference: address,
 			source: locationCurrency,
-			target: coin.name.toUpperCase(),
+			target: coin.name.toUpperCase() === 'ETHEREUM' ? 'ETH' : coin.name.toUpperCase(),
 			source_amount: String(value),
 			return_url_on_success: '#',
 			wallet_address: address,

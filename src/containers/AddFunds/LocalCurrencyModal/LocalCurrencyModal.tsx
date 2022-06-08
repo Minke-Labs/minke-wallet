@@ -66,7 +66,11 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 					Min {paymentMethodId!.minTopup} {locationCountry!.currency}
 				</Text>
 			)}
-			<OnrampButton marginBottom={80} disabled={!isAmountValid} onPress={() => onOnramp(number || 0)} />
+			<OnrampButton
+				marginBottom={80}
+				disabled={!isAmountValid}
+				onPress={() => onOnramp(number || 0)}
+			/>
 
 			<KeyboardSpacer />
 		</View>
