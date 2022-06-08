@@ -30,6 +30,7 @@ const SettingsScreen = () => {
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
 	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
+	const onHelpCentre = () => null;
 
 	const onCreateWallet = useCallback(async () => {
 		setCreatingWallet(true);
@@ -98,6 +99,12 @@ const SettingsScreen = () => {
 						label={i18n.t('SettingsScreen.contact_support')}
 						icon="helpStroke"
 						onPress={onContactSupport}
+					/>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.help_centre')}
+						icon="questionMark"
+						onPress={onHelpCentre}
+						newTab
 					/>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.other')}

@@ -217,6 +217,7 @@ export default {
 		new_wallet: 'Nova carteira',
 		usd_coin: 'Moeda padrão USD',
 		contact_support: 'Contactar suporte',
+		help_centre: 'Central de ajuda',
 		switch_account: 'Trocar carteira',
 		my_wallet: 'Minha Carteira',
 		my_account: 'Minha Conta',

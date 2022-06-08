@@ -217,6 +217,7 @@ export default {
 		new_wallet: 'New wallet',
 		usd_coin: 'US Dollar coin',
 		contact_support: 'Contact Support',
+		help_centre: 'Help Center',
 		switch_account: 'Switch account',
 		my_wallet: 'My Wallet',
 		my_account: 'My Account',
