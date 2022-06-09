@@ -442,7 +442,9 @@ export default {
 		or: 'or',
 		refer_a_friend: 'Refer a friend',
 		referral_note:
-			'This code can only be used once. After topping-up 100 USD you and your friend will get each 100 Minke points.'
+			'This code can only be used once. After topping-up 100 USD you and your friend will get each 100 Minke points.',
+		invalid_code: 'Invalid code',
+		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
 	Hooks: {
 		iCloudBackup: {
@@ -545,7 +547,8 @@ export default {
 			add_funds_to_start: 'Add funds to start',
 			share: 'Share',
 			pay_with: 'Pay with ',
-			use_code: 'Use code'
+			use_code: 'Use code',
+			loading: 'Loading'
 		},
 		ModalReusables: {
 			Error: {

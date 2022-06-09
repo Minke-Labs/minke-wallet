@@ -4,9 +4,8 @@ import { Icon, ModalHeader, Text } from '@components';
 import { useLanguage } from '@hooks';
 import styles from './EarnModal.styles';
 
-const EarnModal = ({ onDismiss }: { onDismiss: () => void }) => {
+const EarnModal = ({ onDismiss, code }: { onDismiss: () => void; code: string | undefined }) => {
 	const { i18n } = useLanguage();
-	const code = 'USDREKT';
 	const onShare = async () => {
 		await Share.share({ message: i18n.t('ReferralScreen.Modals.EarnModal.share_text', { code }) });
 	};
@@ -22,12 +21,14 @@ const EarnModal = ({ onDismiss }: { onDismiss: () => void }) => {
 					<Text type="p" weight="bold" color="text2">
 						{i18n.t('ReferralScreen.Modals.EarnModal.refer_a_friend')}
 					</Text>
-					<TouchableOpacity onPress={onShare}>
-						<Text type="p" weight="bold" color="cta1" style={{ width: '100%' }}>
-							{code}
-							<Icon name="shareStroke" style={{ marginLeft: 8 }} color="cta1" size={18} />
-						</Text>
-					</TouchableOpacity>
+					{!!code && (
+						<TouchableOpacity onPress={onShare}>
+							<Text type="p" weight="bold" color="cta1" style={{ width: '100%' }}>
+								{code}
+								<Icon name="shareStroke" style={{ marginLeft: 8 }} color="cta1" size={18} />
+							</Text>
+						</TouchableOpacity>
+					)}
 				</View>
 				<Text type="a" weight="semiBold" color="text3" style={{ width: '100%' }} marginBottom={24}>
 					{i18n.t('ReferralScreen.Modals.EarnModal.when_your_friends_top_up')}

@@ -82,7 +82,7 @@
     "react-native-cloud-fs": "brunobar79/react-native-cloud-fs#e7e3111fb427b6df5e97f61c700ca1e64636cad8",
     "react-native-crypto": "^2.2.0",
     "react-native-currency-input": "^1.0.1",
-    "react-native-device-info": "^8.4.0",
+    "react-native-device-info": "^9.0.2",
     "react-native-dotenv": "^3.3.1",
     "react-native-fs": "2.16.6",
     "react-native-gesture-handler": "~2.1.0",

@@ -1,3 +1,4 @@
 import { getTokenBalances } from './covalent/covalent';
+import { createReferralCode, createReferral, getUsedReferralCode } from './minke/minke';
 
-export { getTokenBalances };
+export { getTokenBalances, createReferralCode, createReferral, getUsedReferralCode };

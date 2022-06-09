@@ -87,7 +87,6 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 			meta_data: JSON.stringify({ address, cancelURL })
 		};
 
-		console.log({ params });
 		const url = await makeOrder({ params });
 		setOrderLink(url);
 		setBanxaModalVisible(true);

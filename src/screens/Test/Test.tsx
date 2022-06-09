@@ -2,11 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button } from '@components';
 import { BasicLayout } from '@layouts';
-import { getOrder } from '@models/banxa';
+import { getUniqueId } from 'react-native-device-info';
 
 const Test = () => {
-	const test = async () => {
-		await getOrder('4831273cf0c7fa8c1d1a9fb98c19a98a');
+	const test = () => {
+		console.log(getUniqueId());
 	};
 
 	return (

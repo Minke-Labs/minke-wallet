@@ -12,13 +12,13 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({ onPress, done = true, t
 		<View style={styles.container}>
 			<View style={{ flexDirection: 'row' }}>
 				<TouchableOpacity
-					style={{ marginRight: 12, flexDirection: 'row', alignContent: 'center' }}
+					style={{ flexDirection: 'row', alignContent: 'center' }}
 					activeOpacity={0.6}
 					{...{ onPress }}
 				>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
+					<Icon name="arrowBackStroke" color="text7" size={24} style={{ marginRight: 12 }} />
+					<Text weight="extraBold">{title}</Text>
 				</TouchableOpacity>
-				<Text weight="extraBold">{title}</Text>
 			</View>
 			{done && (
 				<TouchableOpacity activeOpacity={0.6} {...{ onPress }}>

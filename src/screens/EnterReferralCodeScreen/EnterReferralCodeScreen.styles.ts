@@ -19,5 +19,8 @@ export default StyleSheet.create({
 	},
 	title: {
 		lineHeight: 32
+	},
+	code: {
+		marginTop: 48
 	}
 });

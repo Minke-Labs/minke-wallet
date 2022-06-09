@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Modal } from '@components';
+import { useReferralCode } from '@hooks';
 import { Background } from './Background/Background';
 import { Header } from './Header/Header';
 import { CurrentValue } from './CurrentValue/CurrentValue';
@@ -22,6 +23,8 @@ const ReferralScreen = () => {
 		onRedeemPress,
 		onRedeemDismiss
 	} = useReferralScreen();
+	const { code } = useReferralCode();
+
 	return (
 		<>
 			<BasicLayout hideSafeAreaView bg="detail4">
@@ -36,7 +39,7 @@ const ReferralScreen = () => {
 				<HelpModal onDismiss={onHelpDismiss} />
 			</Modal>
 			<Modal isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
-				<EarnModal onDismiss={onEarnDismiss} />
+				<EarnModal onDismiss={onEarnDismiss} code={code} />
 			</Modal>
 			<Modal isVisible={redeemModalVisible} onDismiss={onRedeemDismiss}>
 				<RedeemModal onDismiss={onRedeemDismiss} />

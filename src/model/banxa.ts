@@ -124,6 +124,5 @@ export const getOrder = async (id: string) => {
 export const makeOrder = async ({ params }: MakeOrder) => {
 	const query = '/api/orders';
 	const res = await sendPostRequest({ query, params });
-	console.log(res.data);
 	return res.data.data.order.checkout_url;
 };
