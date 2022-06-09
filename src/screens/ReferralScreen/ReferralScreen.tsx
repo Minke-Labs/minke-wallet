@@ -10,6 +10,7 @@ import useReferralScreen from './ReferralScreen.hooks';
 import HelpModal from './HelpModal/HelpModal';
 import EarnModal from './EarnModal/EarnModal';
 import RedeemModal from './RedeemModal/RedeemModal';
+import { Body } from './Body/Body';
 
 const ReferralScreen = () => {
 	const {
@@ -34,6 +35,7 @@ const ReferralScreen = () => {
 						<CurrentValue onEarnPress={onEarnPress} onRedeemPress={onRedeemPress} />
 					</Background>
 				</SafeAreaView>
+				<Body onEarnPress={onEarnPress} />
 			</BasicLayout>
 			<Modal isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
 				<HelpModal onDismiss={onHelpDismiss} />

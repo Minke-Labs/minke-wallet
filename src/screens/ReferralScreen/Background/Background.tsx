@@ -6,7 +6,7 @@ import styles from './Background.styles';
 export const Background: React.FC = ({ children }) => {
 	const scheme = useColorScheme();
 	return (
-		<View style={{ paddingHorizontal: 24, height: 328 }}>
+		<View style={{ paddingHorizontal: 24, height: 296 }}>
 			<Image
 				resizeMode="cover"
 				source={scheme === 'dark' ? walletAssetBackDarkImg : walletAssetBackImg}

@@ -521,6 +521,11 @@ export default {
 		EmptyStates: {
 			NoTokens: {
 				no_tokens_here: 'No tokens here'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Your points will appear here',
+				lets_get_started: "Let's get started?",
+				earn_points: 'Earn points'
 			}
 		},
 		Inputs: {
