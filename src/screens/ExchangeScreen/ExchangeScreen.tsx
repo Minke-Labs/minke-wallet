@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 import React from 'react';
 import {
 	View,
@@ -6,9 +5,6 @@ import {
 	Keyboard
 } from 'react-native';
 import { useTheme, useLanguage } from '@hooks';
-// import { fromBn } from 'evm-bn';
-// import { BigNumber as BN } from 'bignumber.js';
-// import { tokenBalanceFormat } from '@helpers/utilities';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
 import {
@@ -30,6 +26,7 @@ import DirectionButton from './DirectionButton/DirectionButton';
 const ExchangeScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	// const { depositableTokens } = useTokens();
 	const {
 		fromToken,
 		toToken,
@@ -56,33 +53,6 @@ const ExchangeScreen = () => {
 		gasless
 	} = useExchangeScreen();
 	const { i18n } = useLanguage();
-
-	// Franz got rid of it, so I'm not sure if it's needed.
-
-	// const ExchangeSummary = useCallback(() => {
-	// 	if (fromToken && toToken) {
-	// 		if (quote) {
-	// 			const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
-	// 			const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
-	// 			const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
-	// 			const destQuantityString = tokenBalanceFormat(division, 9);
-	// 			return (
-	// 				<Text type="span" weight="regular" color="text3">
-	// 					1 {fromToken.symbol} = {destQuantityString} {toToken.symbol}
-	// 				</Text>
-	// 			);
-	// 		}
-	// 		return (
-	// 			<>
-	// 				<Text type="span" weight="regular" color="text3">
-	// 					{i18n.t('ExchangeScreen.fetching')}
-	// 				</Text>
-	// 				<ActivityIndicator size={16} />
-	// 			</>
-	// 		);
-	// 	}
-	// 	return null;
-	// }, [quote, error]);
 
 	return (
 		<>

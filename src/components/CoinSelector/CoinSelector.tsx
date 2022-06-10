@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useLanguage, useTheme } from '@hooks';
-import { tokenBalanceFormat } from '@helpers/utilities';
+import { useLanguage, useTheme, useTokens } from '@hooks';
+import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
 import { TokenType } from '@styles';
 import { ParaswapToken } from '@models/token';
 import styles from './CoinSelector.styles';
@@ -75,37 +75,52 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({
 	onPress,
 	notTouchable,
 	token,
-	balanceUSD,
 	tokenBalance,
 	inline = false
-}) => (
-	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
-		<View style={styles.container}>
+}) => {
+	const { tokens } = useTokens();
 
-			{
-				!token ? (
-					<NoTokenIcon />
-				) : (
-					<Token
-						name={(token.symbol || '').toLowerCase() as TokenType}
-						size={inline ? 28 : 40}
-					/>
-				)
+	const getBalanceUSD = () => {
+		if (token && tokens && tokens.length > 0) {
+			const foundToken = tokens.find((t) => t.symbol === token.symbol);
+			if (foundToken) {
+				return numberFormat(foundToken.balanceUSD);
 			}
+		}
+		return '$0';
+	};
+	return (
+		<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
+			<View style={styles.container}>
 
-			<View style={[styles.titlesContainer, {
-				marginLeft: inline ? 8 : 16
-			}, inline && {
-				flexDirection: 'row',
-				alignItems: 'center',
-				flex: 1
-			}]}
-			>
-				{ !token ? <TitlesEmpty /> : <Titles {...{ token, balanceUSD, tokenBalance, inline }} /> }
+				{
+					!token ? (
+						<NoTokenIcon />
+					) : (
+						<Token
+							name={(token.symbol || '').toLowerCase() as TokenType}
+							size={inline ? 28 : 40}
+						/>
+					)
+				}
+
+				<View style={[styles.titlesContainer, {
+					marginLeft: inline ? 8 : 16
+				}, inline && {
+					flexDirection: 'row',
+					alignItems: 'center',
+					flex: 1
+				}]}
+				>
+					{ !token ? <TitlesEmpty /> : <Titles
+						balanceUSD={getBalanceUSD()}
+						{...{ token, tokenBalance, inline }}
+					/> }
+				</View>
+
 			</View>
-
-		</View>
-	</TouchableOpacity>
-);
+		</TouchableOpacity>
+	);
+};
 
 export default CoinSelector;

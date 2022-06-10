@@ -68,7 +68,6 @@ export const useExchangeScreen = () => {
 		exchange.to.set(token);
 		exchange.toAmount.set(undefined);
 	};
-
 	interface PriceParams {
 		amount?: string;
 		side?: ExchangeParams['side'];

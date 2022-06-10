@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import { numberFormat } from '@helpers/utilities';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
@@ -11,7 +10,7 @@ import TokenInputInner from '../TokenInputInner/TokenInputInner';
 
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
-	tokens,
+	// tokens,
 	onPress,
 	balance,
 	disableMax = false,
@@ -33,18 +32,10 @@ const TokenCard: React.FC<TokenCardProps> = ({
 		disableMax
 	});
 
-	const getBalanceUSD = () => {
-		if (token && tokens && tokens.length > 0) {
-			return numberFormat(tokens.filter((item) => item.symbol === token?.symbol)[0].balanceUSD) ?? '';
-		}
-		return '$0';
-	};
-
 	return (
 		<View style={styles.container}>
 
 			<CoinSelector
-				balanceUSD={getBalanceUSD()}
 				tokenBalance={tokenBalance}
 				token={token!}
 				onPress={onPress!}

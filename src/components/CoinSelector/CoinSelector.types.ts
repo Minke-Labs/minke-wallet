@@ -4,7 +4,7 @@ export interface CoinSelectorProps {
 	token: ParaswapToken;
 	onPress: () => void;
 	notTouchable: boolean;
-	balanceUSD: string;
+	balanceUSD?: string;
 	tokenBalance: string;
 	inline?: boolean;
 }
