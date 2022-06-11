@@ -34,27 +34,27 @@ PODS:
     - EXJSONUtils
   - Expo (44.0.6):
     - ExpoModulesCore
-  - expo-dev-client (0.8.4):
+  - expo-dev-client (0.8.5):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
-  - expo-dev-launcher (0.10.4):
+  - expo-dev-launcher (0.10.5):
     - EXManifests
-    - expo-dev-launcher/Main (= 0.10.4)
+    - expo-dev-launcher/Main (= 0.10.5)
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
     - React-Core
-  - expo-dev-launcher/Main (0.10.4):
+  - expo-dev-launcher/Main (0.10.5):
     - EXManifests
     - expo-dev-launcher/Unsafe
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
     - React-Core
-  - expo-dev-launcher/Unsafe (0.10.4):
+  - expo-dev-launcher/Unsafe (0.10.5):
     - EXManifests
     - expo-dev-menu
     - expo-dev-menu-interface
@@ -449,6 +449,9 @@ PODS:
     - Sentry (= 7.11.0)
   - RNSVG (12.1.1):
     - React
+  - RNUxcam (5.3.4):
+    - React-Core
+    - UXCam (~> 3.3.9)
   - RNVectorIcons (9.1.0):
     - React-Core
   - Sentry (7.11.0):
@@ -458,6 +461,7 @@ PODS:
     - React
   - UMTaskManagerInterface (7.1.1):
     - ExpoModulesCore
+  - UXCam (3.3.9)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -534,6 +538,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNUxcam (from `../node_modules/react-native-ux-cam`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TcpSockets (from `../node_modules/react-native-tcp`)
   - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
@@ -545,6 +550,7 @@ SPEC REPOS:
     - AppsFlyerFramework
     - boost-for-react-native
     - Sentry
+    - UXCam
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -689,6 +695,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNUxcam:
+    :path: "../node_modules/react-native-ux-cam"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   TcpSockets:
@@ -717,8 +725,8 @@ SPEC CHECKSUMS:
   EXLocation: 013b5d07cca26c2d15d998766322e70b7a228b57
   EXManifests: d3464cd2278f4a19cd80c1aa673231570b534c11
   Expo: 534e51e607aba8229293297da5585f4b26f50fa1
-  expo-dev-client: 6856be1c9b8a098a23e1099abee01a9d66bc0fa4
-  expo-dev-launcher: 875237591555e0258aa1f65442c9a557c5b61b40
+  expo-dev-client: aac6ed888f00c7e7335fedda6755df5676612f40
+  expo-dev-launcher: 0619fe27ecc91573fae69cf6d00b8e1737ef773f
   expo-dev-menu: 942ad845341d994c8dfb70c83cd840378b81650d
   expo-dev-menu-interface: 395d046704878e5de471a89102ddf361cbb7e52f
   ExpoHaptics: 0d0b69b2414755a4057ffad0a10315902c0ea1b7
@@ -729,7 +737,7 @@ SPEC CHECKSUMS:
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: bcbae1611f573cd67d2ba346fed3c358aaf6e7a9
+  FBReactNativeSpec: 754ca3a85ede8e325f8977d6c756794a5bf8d9f8
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
@@ -773,12 +781,14 @@ SPEC CHECKSUMS:
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: 3e7f2504006c19fa07027a7c4fbe83d88e69125a
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNUxcam: c4a44f41832e54db0c386b434bf9e8d0c237b326
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
+  UXCam: fb294bf954e708fc308a645ae65bb967cac0760e
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: 57602ad27137d70188eb62b9b65c20120de84420
+PODFILE CHECKSUM: 9a6abd60def283330c348dc981741ee4b829cc95
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

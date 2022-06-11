@@ -22,4 +22,5 @@ declare module '@env' {
 	export const BANXA_KEY: string;
 	export const BANXA_SECRET: string;
 	export const APPS_FLYER_DEV_KEY: string;
+	export const UXCAM_API_KEY: string;
 }
