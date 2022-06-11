@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { walletCreate } from '@models/wallet';
 import { useAmplitude, useNavigation } from '@hooks';
+import Intercom from '@intercom/intercom-react-native';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 
 export const useWelcomeScreen = () => {
@@ -21,6 +22,10 @@ export const useWelcomeScreen = () => {
 		const newWallet = await walletCreate();
 		track('Created Wallet', { newAddress: newWallet.address });
 		state.set(await walletState(newWallet));
+
+		// Register user on Intercom
+		Intercom.registerIdentifiedUser({ userId: newWallet.address });
+
 		setLoading(false);
 		navigation.navigate('WalletCreatedScreen');
 	}, [navigation]);

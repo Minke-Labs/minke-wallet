@@ -5,6 +5,7 @@ import { useAmplitude, useNavigation, useLanguage } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
 import { walletDelete, getAllWallets } from '@models/wallet';
+import Intercom from '@intercom/intercom-react-native';
 import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
 
@@ -41,6 +42,8 @@ export const useWalletScreen = () => {
 						state.set(emptyWallet);
 						navigation.navigate('WelcomeScreen');
 					}
+					// Logout user from Intercom
+					Intercom.logout();
 				}
 			}
 		]);
