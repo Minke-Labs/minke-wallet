@@ -9,7 +9,6 @@ import ChangeCountryScreen from './ChangeCountryScreen/ChangeCountryScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
-import HelpCentreScreen from './HelpCentreScreen/HelpCentreScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
@@ -36,7 +35,6 @@ export {
 	ChangeCountryScreen,
 	DepositScreen,
 	DepositWithdrawalSuccessScreen,
-	HelpCentreScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
 	SaveScreen,
