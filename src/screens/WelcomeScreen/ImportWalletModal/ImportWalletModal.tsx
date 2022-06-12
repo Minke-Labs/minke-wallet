@@ -3,6 +3,7 @@ import { SafeAreaView, View } from 'react-native';
 import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
 import { useImportWalletModal } from './useImportWallet.hooks';
 import SelectImportMethodModal from './SelectImportMethodModal/SelectImportMethodModal';
@@ -39,6 +40,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 									value={text}
 									numberOfLines={6}
 									onChangeText={(t) => setText(t)}
+									ref={(view: any) => RNUxcam.occludeSensitiveView(view)}
 								/>
 							</View>
 							{importing ? (

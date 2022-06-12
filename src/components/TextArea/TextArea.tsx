@@ -4,7 +4,7 @@ import { View, TextInput, Text } from 'react-native';
 import styles from './TextArea.styles';
 import { TextAreaProps } from './TextArea.types';
 
-const TextArea: React.FC<TextAreaProps> = ({ label, value, onChangeText, numberOfLines = 6, style }) => {
+const TextArea: React.FC<TextAreaProps> = ({ label, value, onChangeText, numberOfLines = 6, style, ref }) => {
 	const { colors } = useTheme();
 	return (
 		<View>
@@ -24,6 +24,7 @@ const TextArea: React.FC<TextAreaProps> = ({ label, value, onChangeText, numberO
 				autoCapitalize="none"
 				autoCorrect={false}
 				multiline
+				ref={ref}
 				{...{ numberOfLines, onChangeText, value }}
 			/>
 		</View>

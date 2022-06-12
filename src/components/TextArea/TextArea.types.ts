@@ -6,4 +6,5 @@ export interface TextAreaProps {
 	onChangeText: (text: string) => void;
 	numberOfLines?: number;
 	style?: TextInputProps;
+	ref?: any;
 }
