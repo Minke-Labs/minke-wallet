@@ -22,6 +22,8 @@ import com.facebook.react.bridge.JSIModulePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.intercom.reactnative.IntercomModule;
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
     this,
@@ -58,6 +60,8 @@ public class MainApplication extends Application implements ReactApplication {
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
+    
+    IntercomModule.initialize(this, "android_sdk-111e15fcdaa0c32ec305e20df56a5330cdaa4fb9", "umqk8oq3"); 
   }
 
   @Override
