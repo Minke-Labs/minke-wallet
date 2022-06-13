@@ -14,14 +14,12 @@ const Header: React.FC<HeaderProps> = ({ title, marginBottom = 0 }) => {
 	const navigation = useNavigation();
 	return (
 		<View style={[styles.container, { marginBottom }]}>
-			<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+			<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()} style={styles.title}>
 				<Icon name="arrowBackStroke" color="text7" size={24} />
-			</TouchableOpacity>
-			<View style={styles.title}>
 				<Text type="hSmall" weight="extraBold">
 					{title}
 				</Text>
-			</View>
+			</TouchableOpacity>
 		</View>
 	);
 };

@@ -9,7 +9,6 @@ export default StyleSheet.create({
 	title: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center',
-		marginLeft: 8
+		alignItems: 'center'
 	}
 });
