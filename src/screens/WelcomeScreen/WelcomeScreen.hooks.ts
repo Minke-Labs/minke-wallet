@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { walletCreate } from '@models/wallet';
+import crypto from 'crypto';
 import { useAmplitude, useNavigation } from '@hooks';
 import Intercom from '@intercom/intercom-react-native';
 import { globalWalletState, walletState } from '@stores/WalletStore';
+import { INTERCOM_KEY } from '@env';
 
 export const useWelcomeScreen = () => {
 	const navigation = useNavigation();
@@ -24,7 +26,13 @@ export const useWelcomeScreen = () => {
 		state.set(await walletState(newWallet));
 
 		// Register user on Intercom
+		const intercomKey = INTERCOM_KEY || process.env.INTERCOM_KEY;
+		const hmac = crypto.createHmac('sha256', intercomKey!);
+		hmac.update(newWallet.address);
+		const sign = hmac.digest('hex');
+		Intercom.setUserHash(sign);
 		Intercom.registerIdentifiedUser({ userId: newWallet.address });
+		//
 
 		setLoading(false);
 		navigation.navigate('WalletCreatedScreen');
