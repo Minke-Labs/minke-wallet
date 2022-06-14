@@ -1,4 +1,11 @@
-import { PayId, Interac, FasterPayments, Sepa, Pix } from './images';
+import {
+	PayId,
+	Interac,
+	FasterPayments,
+	Sepa,
+	Pix,
+	TurkeyBankTransfer
+} from './images';
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
@@ -41,6 +48,14 @@ export const chooseLocation = (loc: string) => {
 					fontColor: '#0A2138'
 				},
 				image: Pix
+			};
+		case 'TUR':
+			return {
+				locStyles: {
+					backgroundColor: '#FCFBF9',
+					fontColor: '#0A2138'
+				},
+				image: TurkeyBankTransfer
 			};
 		default:
 			return null;
