@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, View } from 'react-native';
 import { whale2Img } from '@images';
 import { useLanguage } from '@hooks';
-import { Button } from '@components';
+import Button from '../../Button/Button';
 import Text from '../../Text/Text';
 import { styles } from './NoReferralPoints.styles';
 

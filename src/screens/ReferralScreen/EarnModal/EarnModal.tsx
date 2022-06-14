@@ -22,11 +22,14 @@ const EarnModal = ({ onDismiss, code }: { onDismiss: () => void; code: string | 
 						{i18n.t('ReferralScreen.Modals.EarnModal.refer_a_friend')}
 					</Text>
 					{!!code && (
-						<TouchableOpacity onPress={onShare}>
-							<Text type="p" weight="bold" color="cta1" style={{ width: '100%' }}>
+						<TouchableOpacity
+							onPress={onShare}
+							style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+						>
+							<Text type="p" weight="bold" color="cta1">
 								{code}
-								<Icon name="shareStroke" style={{ marginLeft: 8 }} color="cta1" size={18} />
 							</Text>
+							<Icon name="shareStroke" color="cta1" size={18} />
 						</TouchableOpacity>
 					)}
 				</View>
