@@ -7,7 +7,7 @@ const MStable: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => (
 		<View style={{ width: '100%', height: '100%' }}>
 			<ModalHeader onDismiss={onDismiss} />
 			<View style={{ paddingHorizontal: 16 }}>
-				<Text marginBottom={16} type="hSmall" weight="bold">mStable savings account</Text>
+				<Text marginBottom={16} type="hSmall" weight="bold">count</Text>
 				<MStableReusables.Info marginBottom={48} />
 			</View>
 		</View>

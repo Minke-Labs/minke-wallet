@@ -198,6 +198,12 @@ export default {
 		},
 		Body: {
 			deposit: '{{source}} Deposit'
+		},
+		InfoModal: {
+			Aave: 'Aave savings account'
+		},
+		MStable: {
+			MStable: 'mStable savings account'
 		}
 	},
 	SavingAccountsScreen: {
