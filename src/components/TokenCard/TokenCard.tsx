@@ -10,7 +10,6 @@ import TokenInputInner from '../TokenInputInner/TokenInputInner';
 
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
-	// tokens,
 	onPress,
 	balance,
 	disableMax = false,
@@ -18,9 +17,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	conversionAmount = '',
 	notTouchable = false,
 	apy,
-	tokenBalance,
 	exchange = false,
-	noMax = false,
 	noInvalid = false
 }) => {
 	const styles = makeStyles();
@@ -36,7 +33,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 		<View style={styles.container}>
 
 			<CoinSelector
-				tokenBalance={tokenBalance}
+				tokenBalance={balance}
 				token={token!}
 				onPress={onPress!}
 				notTouchable={notTouchable}
@@ -64,7 +61,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
 				<View style={[styles.bottomRow, exchange && { marginBottom: 8 }]}>
 					{!!apy && <InterestBanner token apy={apy} />}
-					{isMaxEnabled && !noMax && <MaxButton onPress={onMaxPress} />}
+					{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 				</View>
 			</View>
 

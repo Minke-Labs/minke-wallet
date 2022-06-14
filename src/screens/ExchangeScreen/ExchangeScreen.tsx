@@ -26,7 +26,6 @@ import DirectionButton from './DirectionButton/DirectionButton';
 const ExchangeScreen = () => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	// const { depositableTokens } = useTokens();
 	const {
 		fromToken,
 		toToken,
@@ -70,7 +69,6 @@ const ExchangeScreen = () => {
 									token={fromToken!}
 									onPress={showModalFrom}
 									notTouchable={false}
-									tokenBalance={fromTokenBalance}
 									exchange
 								/>
 							</View>
@@ -82,9 +80,7 @@ const ExchangeScreen = () => {
 									token={toToken!}
 									notTouchable={false}
 									onPress={showModalTo}
-									tokenBalance={toTokenBalance}
 									exchange
-									noMax
 									noInvalid
 								/>
 							</View>

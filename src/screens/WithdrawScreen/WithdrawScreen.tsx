@@ -42,11 +42,9 @@ const WithdrawScreen = () => {
 				<Paper padding={16} marginBottom={42}>
 					<TokenCard
 						onPress={showModal}
-						tokens={tokens}
 						token={token}
 						balance={tokenBalance}
 						updateQuotes={debounce(updateAmount, 500)}
-						tokenBalance={tokenBalance}
 					/>
 				</Paper>
 
