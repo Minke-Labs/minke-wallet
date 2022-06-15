@@ -14,6 +14,7 @@ import NetworkWarning from './NetworkWarning';
 import ModalHeader from './ModalHeader/ModalHeader';
 import ModalReusables from './ModalReusables';
 import MStableReusables from './MStableReusables';
+import DescTransparentCard from './DescTransparentCard/DescTransparentCard';
 import SearchInput from './SearchInput/SearchInput';
 import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
@@ -85,6 +86,7 @@ export {
 	Card,
 	CoinSelector,
 	TransparentCard,
+	DescTransparentCard,
 	TokenCard,
 	PendingTransaction,
 	PercChange,

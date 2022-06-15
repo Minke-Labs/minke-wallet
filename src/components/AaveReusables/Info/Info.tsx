@@ -4,19 +4,20 @@ import { useLanguage } from '@hooks';
 import Icon from '../../Icon/Icon';
 import Text from '../../Text/Text';
 import TransparentCard from '../../TransparentCard/TransparentCard';
+import DescTransparentCard from '../../DescTransparentCard/DescTransparentCard';
 
 const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
 	const { i18n } = useLanguage();
 	return (
 		<View style={{ marginBottom }}>
-			<TransparentCard marginBottom={16}>
+			<DescTransparentCard>
 				<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
 					{i18n.t('Components.AaveReusables.Info.what_is')}
 				</Text>
 				<Text type="a">
 					{i18n.t('Components.AaveReusables.Info.aave_des')}
 				</Text>
-			</TransparentCard>
+			</DescTransparentCard>
 			<View style={{
 				flexDirection: 'row',
 				justifyContent: 'space-between'
