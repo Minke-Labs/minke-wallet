@@ -35,8 +35,8 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 				style={{
 					marginTop: 'auto',
 					width: '100%',
-					 marginBottom: 48,
-					  paddingHorizontal: 16
+					marginBottom: 48,
+					paddingHorizontal: 16
 				}}
 			>
 				<Button
