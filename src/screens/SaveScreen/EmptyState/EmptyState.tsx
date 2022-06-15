@@ -13,7 +13,7 @@ const EmptyState = () => {
 	return (
 		<SaveLayout>
 			<Text type="h3" weight="extraBold" color="text1" marginBottom={16} center>
-				{i18n.t('SaveScreen.EmptyState.open_aave_savings_account', {
+				{i18n.t('SaveScreen.EmptyState.open_savings_account', {
 					protocol: selectedProtocol?.name
 				})}
 			</Text>

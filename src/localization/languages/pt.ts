@@ -185,7 +185,7 @@ export default {
 		interest: '% de juros anuais',
 		EmptyState: {
 			save: 'Investir',
-			open_aave_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
+			open_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
 			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
 		},
 		Header: {

@@ -185,7 +185,7 @@ export default {
 		interest: '% anualized interest',
 		EmptyState: {
 			save: 'Save',
-			open_aave_savings_account: 'Open %{protocol}\nSavings Account',
+			open_savings_account: 'Open %{protocol}\nSavings Account',
 			lets_make_first_deposit: "Let's make your first deposit?"
 		},
 		Header: {
