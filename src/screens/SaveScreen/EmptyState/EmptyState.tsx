@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Text, Button } from '@components';
 import { useNavigation, useDepositProtocols, useLanguage } from '@hooks';
 import { SaveLayout } from '@layouts';
+import { View } from 'react-native';
 import { Tag } from './Tag/Tag';
 
 const EmptyState = () => {
@@ -24,7 +24,7 @@ const EmptyState = () => {
 
 			{!!apy && <Tag apy={apy} />}
 
-			<View style={{ marginTop: 'auto', width: '100%', marginBottom: 58 }}>
+			<View style={{ paddingHorizontal: 16, width: '100%' }}>
 				<Button
 					iconLeft="addStroke"
 					title={i18n.t('Components.Buttons.deposit')}

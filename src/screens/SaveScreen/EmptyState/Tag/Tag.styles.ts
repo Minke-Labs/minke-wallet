@@ -6,7 +6,7 @@ export default StyleSheet.create({
 		borderWidth: 4,
 		borderRadius: 16,
 		borderColor: addColorOpacity('#30C061', 0.3),
-		marginBottom: 68
+		marginBottom: 32
 	},
 	tagLinearGradient: {
 		flexDirection: 'row',

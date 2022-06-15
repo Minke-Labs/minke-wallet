@@ -15,7 +15,8 @@ export const makeStyles = (colors: ColorType) =>
 			width: '100%',
 			minHeight: '40%',
 			height: '100%',
-			paddingHorizontal: 24,
+			paddingBottom: 24,
+			paddingVertical: 32,
 			alignItems: 'center'
 		}
 	});

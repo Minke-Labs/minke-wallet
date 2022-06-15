@@ -12,7 +12,7 @@ export const makeStyles = (colors: ColorType) =>
 
 		// BACKGROUND
 		imagesContainer: {
-			flex: 0.6
+			flex: 0.55
 		},
 
 		bgImage: {
@@ -35,6 +35,6 @@ export const makeStyles = (colors: ColorType) =>
 
 		// CONTENT
 		contentContainer: {
-			flex: 0.4
+			flex: 0.45
 		}
 	});
