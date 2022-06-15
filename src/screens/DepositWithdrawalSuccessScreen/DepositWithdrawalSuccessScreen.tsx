@@ -31,7 +31,14 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 					? i18n.t('DepositWithdrawalSuccessScreen.you_deposited')
 					: i18n.t('DepositWithdrawalSuccessScreen.you_withdrawn')}
 			</Text>
-			<View style={{ marginTop: 'auto', width: '100%', marginBottom: 48 }}>
+			<View
+				style={{
+					marginTop: 'auto',
+					width: '100%',
+					 marginBottom: 48,
+					  paddingHorizontal: 16
+				}}
+			>
 				<Button
 					title={i18n.t('Components.Buttons.done')}
 					onPress={() => navigation.navigate('WalletScreen')}
