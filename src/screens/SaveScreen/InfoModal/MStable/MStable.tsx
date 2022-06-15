@@ -12,7 +12,7 @@ const MStable: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
 				<ModalHeader onDismiss={onDismiss} />
 				<View style={{ paddingHorizontal: 16 }}>
 					<Text marginBottom={16} type="hSmall" weight="bold">
-						{i18n.t('SaveScreen.InfoModal.Aave')}
+						{i18n.t('SaveScreen.MStable.MStable')}
 					</Text>
 					<MStableReusables.Info marginBottom={48} />
 				</View>
