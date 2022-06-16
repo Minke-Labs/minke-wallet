@@ -1,4 +1,3 @@
-import useAccountName from './useAccountName';
 import useAmplitude from './useAmplitude';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
@@ -18,10 +17,10 @@ import useWallets from './useWallets';
 import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
+import useWalletState from './useWalletState';
 import useDepositProtocols from './useDepositProtocols';
 
 export {
-	useAccountName,
 	useAmplitude,
 	useTheme,
 	useNavigation,
@@ -41,5 +40,6 @@ export {
 	useAuthentication,
 	useBiconomy,
 	useNativeToken,
+	useWalletState,
 	useDepositProtocols
 };

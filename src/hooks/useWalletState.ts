@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
-import { globalWalletState } from '@src/stores/WalletStore';
+import { globalWalletState } from '@stores/WalletStore';
 import { useState } from '@hookstate/core';
 
-export const useHeader = () => {
-	const [ensName, setEnsName] = React.useState<string | null>('');
+const useWalletState = () => {
 	const state = useState(globalWalletState());
+	const [ensName, setEnsName] = React.useState<string | null>('');
 	const { address } = state.value;
 
 	useEffect(() => {
@@ -25,7 +25,10 @@ export const useHeader = () => {
 	};
 
 	return {
-		accountName,
-		state
+		state,
+		ensName,
+		accountName: accountName()
 	};
 };
+
+export default useWalletState;

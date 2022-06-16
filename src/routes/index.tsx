@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import RNUxcam from 'react-native-ux-cam';
 import { TransactionsProvider } from '@contexts';
-import { useAccountName } from '@hooks';
+import { useWalletState } from '@hooks';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import screensObj from '@screens';
@@ -16,7 +16,7 @@ RNUxcam.setAutomaticScreenNameTagging(false);
 const screenNamesArr = Object.keys(screensObj);
 
 const Routes: React.FC = () => {
-	const accountName = useAccountName();
+	const { accountName } = useWalletState();
 	RNUxcam.setUserIdentity(accountName);
 
 	const walletState = useState(globalWalletState());

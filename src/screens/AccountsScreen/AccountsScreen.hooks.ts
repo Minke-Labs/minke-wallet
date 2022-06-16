@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
 import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
-import { walletState, globalWalletState } from '@src/stores/WalletStore';
-import { useNavigation } from '@hooks';
+import { walletState } from '@src/stores/WalletStore';
+import { useWalletState, useNavigation } from '@hooks';
 
 export const useAccountsScreen = () => {
 	const navigation = useNavigation();
@@ -10,10 +9,11 @@ export const useAccountsScreen = () => {
 	const goBack = () => navigation.goBack();
 	const onImportFinished = () => navigation.navigate('WalletCreatedScreen');
 
-	const state = useState(globalWalletState());
+	const { state } = useWalletState();
+	const { address } = state.value;
+
 	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
 	const [isModalVisible, setModalVisible] = React.useState(false);
-	const { address } = state.value;
 
 	useEffect(() => {
 		const fetchWallets = async () => {

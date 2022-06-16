@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
-import { useAmplitude, useAuthentication, useBiconomy, useNativeToken, useNavigation, useTransactions } from '@hooks';
-import { globalWalletState } from '@src/stores/WalletStore';
+import {
+	useWalletState,
+	useAmplitude,
+	useAuthentication,
+	useBiconomy,
+	useNativeToken,
+	useNavigation,
+	useTransactions
+} from '@hooks';
 import { network } from '@models/network';
 import { convertTransactionResponse } from '@models/transaction';
 import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
@@ -35,7 +41,6 @@ export const useTransactionTransfer = ({
 	token
 }: UseTransactionTransferProps) => {
 	const { track } = useAmplitude();
-	const state = useState(globalWalletState());
 	const [image, setImage] = React.useState<{ uri: string }>();
 	const [amount, onChangeAmount] = React.useState('');
 	const [number, onChangeNumber] = React.useState<Number>();
@@ -76,6 +81,7 @@ export const useTransactionTransfer = ({
 		}
 	}, [chainDefaultToken, gasPrice, balance]);
 
+	const { state } = useWalletState();
 	const {
 		address,
 		privateKey,

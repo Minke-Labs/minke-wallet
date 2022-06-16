@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
-import { useState } from '@hookstate/core';
 import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
-import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
+import { fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
 import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp } from '@models/timestamps';
 import { groupBy } from 'lodash';
+import useWalletState from '../../hooks/useWalletState';
 import useLanguage from '../../hooks/useLanguage';
 
 export interface TransactionPeriod {
@@ -29,7 +29,7 @@ export const TransactionsContext = React.createContext<TransactionContextProps>(
 
 const TransactionsProvider: React.FC = ({ children }) => {
 	const { i18n } = useLanguage();
-	const state = useState(globalWalletState());
+	const { state } = useWalletState();
 	const [loading, setLoading] = React.useState(true);
 	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
