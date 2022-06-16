@@ -34,13 +34,15 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 							<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
 								{i18n.t('WelcomeScreen.ImportWalletModal.add_wallet')}
 							</Text>
-							<View style={styles.textAreaContainer}>
+							<View
+								style={styles.textAreaContainer}
+								ref={(view: any) => RNUxcam.occludeSensitiveView(view)}
+							>
 								<TextArea
 									label={i18n.t('WelcomeScreen.ImportWalletModal.seed_or_key')}
 									value={text}
 									numberOfLines={6}
 									onChangeText={(t) => setText(t)}
-									ref={(view: any) => RNUxcam.occludeSensitiveView(view)}
 								/>
 							</View>
 							{importing ? (
