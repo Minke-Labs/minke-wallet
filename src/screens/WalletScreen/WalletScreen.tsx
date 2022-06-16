@@ -4,12 +4,14 @@ import { Text, Modal, ModalReusables } from '@components';
 import { AddFunds } from '@containers';
 import { useLanguage } from '@hooks';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import RNUxcam from 'react-native-ux-cam';
 import { SendModal, ReceiveModal } from './Modals';
 import { useWalletScreen } from './WalletScreen.hooks';
 import { ResultProps } from './WalletScreen.types';
 import { Content } from './Content/Content';
 
 const WalletScreen = () => {
+	RNUxcam.tagScreenName('WalletScreen');
 	const {
 		sendModalOpen,
 		setSendModalOpen,

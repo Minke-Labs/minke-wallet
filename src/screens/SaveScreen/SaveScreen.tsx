@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native';
 import { ScreenLoadingIndicator } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useTokens } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import EmptyState from './EmptyState/EmptyState';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
@@ -12,6 +13,8 @@ import { Background } from './Background/Background';
 const SaveScreen = () => {
 	const { apy } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useTokens();
+	RNUxcam.tagScreenName('SaveScreen');
+
 	if (!interestTokens) return <ScreenLoadingIndicator />;
 	if (interestTokens.length === 0) return <EmptyState />;
 

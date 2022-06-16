@@ -3,6 +3,7 @@ import { View, FlatList } from 'react-native';
 import { SettingsHeader, SearchInput, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import { FlagType } from '@styles';
 import { Country } from '../../contexts/LanguageContext/LanguageContext.types';
 
@@ -10,6 +11,7 @@ const ChangeCountryScreen = () => {
 	const { i18n, countries, countryCode, setCountryCode } = useLanguage();
 	const [filtered, setFiltered] = useState<any>(countries);
 	const [search, setSearch] = useState('');
+	RNUxcam.tagScreenName('ChangeCountryScreen');
 
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();

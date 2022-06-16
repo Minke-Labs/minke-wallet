@@ -4,12 +4,14 @@ import { SettingsHeader, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
 import { FlagType } from '@styles';
+import RNUxcam from 'react-native-ux-cam';
 import { languageArr } from './ChangeLanguageScreen.utils';
 
 const ChangeLanguageScreen = () => {
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 	const { i18n, language, setLanguage } = useLanguage();
+	RNUxcam.tagScreenName('ChangeLanguageScreen');
 
 	return (
 		<BasicLayout>

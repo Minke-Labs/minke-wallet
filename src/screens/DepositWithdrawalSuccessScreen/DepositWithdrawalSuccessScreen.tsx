@@ -5,6 +5,7 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import { Text, Button } from '@components';
 import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { bgSaveBackground, bgSaveBackgroundDark } from '@images';
+import RNUxcam from 'react-native-ux-cam';
 import { makeStyles } from './DepositWithdrawalSuccessScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'DepositWithdrawalSuccessScreen'>;
@@ -15,6 +16,7 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 	const styles = makeStyles(colors);
 	const scheme = useColorScheme();
 	const navigation = useNavigation();
+	RNUxcam.tagScreenName('DepositWithdrawalSuccessScreen');
 
 	return (
 		<View style={styles.container}>

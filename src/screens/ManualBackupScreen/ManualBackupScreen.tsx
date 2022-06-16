@@ -25,6 +25,7 @@ const ManualBackupScreen = ({ route }: Props) => {
 	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
 	if (seed.promised) return <ScreenLoadingIndicator />;
+	RNUxcam.tagScreenName('ManualBackupScreen');
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(seed.value || '');

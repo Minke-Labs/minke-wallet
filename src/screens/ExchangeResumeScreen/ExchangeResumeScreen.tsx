@@ -6,6 +6,7 @@ import { BasicLayout } from '@layouts';
 import { Icon, Modal, Text, ActivityIndicator, HapticButton, ModalReusables } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
+import RNUxcam from 'react-native-ux-cam';
 import { makeStyles } from './ExchangeResume.styles';
 import GasOption from '../ExchangeScreen/GasSelector/GasOption/GasOption';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
@@ -38,6 +39,8 @@ const ExchangeResumeScreen = () => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	RNUxcam.tagScreenName('ExchangeResumeScreen');
+
 	return (
 		<>
 			<BasicLayout>

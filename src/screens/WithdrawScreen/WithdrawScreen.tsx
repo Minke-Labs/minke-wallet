@@ -5,6 +5,7 @@ import { Icon, Modal, HapticButton, Text, TokenCard, ModalReusables } from '@com
 import { BasicLayout } from '@layouts';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation, useTheme, useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import { debounce } from 'lodash';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
@@ -16,6 +17,7 @@ import SearchTokens from '../ExchangeScreen/SearchTokens/SearchTokens';
 import useWithdrawScreen from './WithdrawScreen.hooks';
 
 const WithdrawScreen = () => {
+	RNUxcam.tagScreenName('WithdrawScreen');
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const navigation = useNavigation();

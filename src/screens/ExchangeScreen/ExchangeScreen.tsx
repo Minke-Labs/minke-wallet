@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
 import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
+import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SearchTokens from './SearchTokens/SearchTokens';
 import GasSelector from './GasSelector/GasSelector';
@@ -50,6 +51,8 @@ const ExchangeScreen = () => {
 		gasless
 	} = useExchangeScreen();
 	const { i18n } = useLanguage();
+	RNUxcam.tagScreenName('ExchangeScreen');
+
 	const ExchangeSummary = useCallback(() => {
 		if (fromToken && toToken) {
 			if (quote) {

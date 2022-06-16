@@ -8,10 +8,12 @@ import { useNavigation, useLanguage } from '@hooks';
 import { walletCreate } from '@models/wallet';
 import { networks } from '@models/network';
 import { globalWalletState, walletState } from '@stores/WalletStore';
+import RNUxcam from 'react-native-ux-cam';
 import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
 
 const SettingsScreen = () => {
+	RNUxcam.tagScreenName('SettingsScreen');
 	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
 	const {

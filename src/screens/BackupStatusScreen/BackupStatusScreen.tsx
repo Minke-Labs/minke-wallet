@@ -3,6 +3,7 @@ import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
+import RNUxcam from 'react-native-ux-cam';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
 import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage } from '@hooks';
@@ -13,6 +14,7 @@ import styles from './BackupStatusScreen.styles';
 
 const BackedUp: React.FC<{ address: string }> = ({ address }) => {
 	const { i18n } = useLanguage();
+	RNUxcam.tagScreenName('BackupStatusScreen');
 	return (
 		<>
 			<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
