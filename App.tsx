@@ -9,12 +9,12 @@ import { UXCAM_API_KEY } from '@env';
 import { useApp } from './App.hooks';
 import { Providers } from './Providers';
 
+Logger.initialize();
+
 const uxCamKey = UXCAM_API_KEY || process.env.UXCAM_API_KEY;
 
 RNUxcam.optIntoSchematicRecordings();
 RNUxcam.startWithKey(uxCamKey!);
-
-Logger.initialize();
 
 const App = () => {
 	const { walletState, coinList, fontsLoaded } = useApp();

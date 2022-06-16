@@ -1,3 +1,4 @@
+import useAccountName from './useAccountName';
 import useAmplitude from './useAmplitude';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
@@ -20,6 +21,7 @@ import useNativeToken from './useNativeToken';
 import useDepositProtocols from './useDepositProtocols';
 
 export {
+	useAccountName,
 	useAmplitude,
 	useTheme,
 	useNavigation,

@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import RNUxcam from 'react-native-ux-cam';
 import { TransactionsProvider } from '@contexts';
+import { useAccountName } from '@hooks';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
@@ -28,8 +29,8 @@ import {
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
-	SavingAccountsScreen,
-	Test
+	SavingAccountsScreen
+	// Test
 } from '@screens';
 import { RootStackParamList } from './types.routes';
 import { globalWalletState } from '../stores/WalletStore';
@@ -60,8 +61,8 @@ const screensObj = {
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
-	SavingAccountsScreen,
-	Test
+	SavingAccountsScreen
+	// Test
 };
 
 RNUxcam.setAutomaticScreenNameTagging(false);
@@ -72,6 +73,9 @@ screenNamesArr.forEach((screen: string) => {
 });
 
 const Routes: React.FC = () => {
+	const accountName = useAccountName();
+	RNUxcam.setUserIdentity(accountName);
+
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
 	// const initialScreen = 'Test';
