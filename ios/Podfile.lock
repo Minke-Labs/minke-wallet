@@ -34,27 +34,27 @@ PODS:
     - EXJSONUtils
   - Expo (44.0.6):
     - ExpoModulesCore
-  - expo-dev-client (0.8.4):
+  - expo-dev-client (0.8.5):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
-  - expo-dev-launcher (0.10.4):
+  - expo-dev-launcher (0.10.5):
     - EXManifests
-    - expo-dev-launcher/Main (= 0.10.4)
+    - expo-dev-launcher/Main (= 0.10.5)
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
     - React-Core
-  - expo-dev-launcher/Main (0.10.4):
+  - expo-dev-launcher/Main (0.10.5):
     - EXManifests
     - expo-dev-launcher/Unsafe
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
     - React-Core
-  - expo-dev-launcher/Unsafe (0.10.4):
+  - expo-dev-launcher/Unsafe (0.10.5):
     - EXManifests
     - expo-dev-menu
     - expo-dev-menu-interface
@@ -331,6 +331,9 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-storyteller-sdk (7.0.3):
+    - React-Core
+    - StorytellerSDK (~> 7.0.1)
   - react-native-udp (2.7.0):
     - React
   - react-native-webview (11.15.0):
@@ -454,6 +457,7 @@ PODS:
   - Sentry (7.11.0):
     - Sentry/Core (= 7.11.0)
   - Sentry/Core (7.11.0)
+  - StorytellerSDK (7.0.1)
   - TcpSockets (3.3.2):
     - React
   - UMTaskManagerInterface (7.1.1):
@@ -509,6 +513,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-storyteller-sdk (from `../node_modules/@getstoryteller/react-native-storyteller-sdk`)"
   - react-native-udp (from `../node_modules/react-native-udp`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -540,6 +545,8 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
+  https://github.com/getstoryteller/storyteller-sdk-ios-podspec.git:
+    - StorytellerSDK
   trunk:
     - Amplitude
     - AppsFlyerFramework
@@ -639,6 +646,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-storyteller-sdk:
+    :path: "../node_modules/@getstoryteller/react-native-storyteller-sdk"
   react-native-udp:
     :path: "../node_modules/react-native-udp"
   react-native-webview:
@@ -717,8 +726,8 @@ SPEC CHECKSUMS:
   EXLocation: 013b5d07cca26c2d15d998766322e70b7a228b57
   EXManifests: d3464cd2278f4a19cd80c1aa673231570b534c11
   Expo: 534e51e607aba8229293297da5585f4b26f50fa1
-  expo-dev-client: 6856be1c9b8a098a23e1099abee01a9d66bc0fa4
-  expo-dev-launcher: 875237591555e0258aa1f65442c9a557c5b61b40
+  expo-dev-client: aac6ed888f00c7e7335fedda6755df5676612f40
+  expo-dev-launcher: 0619fe27ecc91573fae69cf6d00b8e1737ef773f
   expo-dev-menu: 942ad845341d994c8dfb70c83cd840378b81650d
   expo-dev-menu-interface: 395d046704878e5de471a89102ddf361cbb7e52f
   ExpoHaptics: 0d0b69b2414755a4057ffad0a10315902c0ea1b7
@@ -729,7 +738,7 @@ SPEC CHECKSUMS:
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: bcbae1611f573cd67d2ba346fed3c358aaf6e7a9
+  FBReactNativeSpec: 196b9f7f0d2c72e408f6249251857d691a9b54ed
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
@@ -748,6 +757,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-storyteller-sdk: d3e09ec5d9e833064468362f5121e43c9f5a6270
   react-native-udp: ff9d13e523f2b58e6bc5d4d32321ac60671b5dc9
   react-native-webview: e89bf2dba26a04cda967814df3ed1be99f291233
   React-perflogger: cc76a4254d19640f1d8ad1c66fdee800414b805c
@@ -775,10 +785,11 @@ SPEC CHECKSUMS:
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
+  StorytellerSDK: 5f84236ee49305deef3c22737699cb3ee41f87de
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: 57602ad27137d70188eb62b9b65c20120de84420
+PODFILE CHECKSUM: c202ee41e9310021140c0281dd8915fb80994ac3
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

@@ -1815,6 +1815,11 @@
     lodash.pick "^4.4.0"
     lodash.template "^4.5.0"
 
+"@getstoryteller/react-native-storyteller-sdk@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@getstoryteller/react-native-storyteller-sdk/-/react-native-storyteller-sdk-7.0.3.tgz#4e91532b501ec6e60cb1d9f865cc79949b9f85b9"
+  integrity sha512-6XpYNNV+nu45GbVPT83SXW7fFhkTgcY/9GIvrvMfEgk6uGmeApRT/P31c50ePwqMFPNdaIH3j3DI4rU02QASYg==
+
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
