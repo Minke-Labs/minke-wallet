@@ -34,14 +34,10 @@ const Stories: React.FC<{ rowRef: any; }> = ({ rowRef }) => {
 			{toggle && (
 				<View style={{ width: '100%', marginTop: 12 }}>
 					<StorytellerRowView
-						ref={(ref: any) => {
-							if (ref) { rowRef = ref; }
-						}}
-						style={{
-							height: 91,
-							width: '100%'
-						}}
+						ref={(ref: any) => { if (ref) { rowRef = ref; } }}
+						style={{ height: 91, width: '100%' }}
 						uiStyle={scheme === 'dark' ? 'dark' as UIStyle : 'light' as UIStyle}
+						cellType="square"
 					/>
 				</View>
 			)}
