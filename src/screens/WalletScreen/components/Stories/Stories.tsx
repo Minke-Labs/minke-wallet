@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, Icon } from '@components';
-import { StorytellerRowView } from '@getstoryteller/react-native-storyteller-sdk';
+import { StorytellerRowView, UIStyle } from '@getstoryteller/react-native-storyteller-sdk';
 
 const Stories: React.FC<{ rowRef: any; }> = ({ rowRef }) => {
 	const [toggle, setToggle] = useState(false);
+	const scheme = useColorScheme();
 
 	return (
 		<View style={{ marginBottom: 64 }}>
@@ -40,6 +41,7 @@ const Stories: React.FC<{ rowRef: any; }> = ({ rowRef }) => {
 							height: 91,
 							width: '100%'
 						}}
+						uiStyle={scheme === 'dark' ? 'dark' as UIStyle : 'light' as UIStyle}
 					/>
 				</View>
 			)}
