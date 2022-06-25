@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
-import Storyteller, { StorytellerRowView } from '@getstoryteller/react-native-storyteller-sdk';
 import { AssetsPanel, ActionsPanel, Header, Stories } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
@@ -21,7 +20,6 @@ export const Content: React.FC<ContentProps> = ({
 	setAddFundsVisible,
 	setSendModalOpen
 }) => {
-	const rowRef = useRef<StorytellerRowView>(null);
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { loading, fetchTransactions, pendingTransactions, updatePendingTransaction } = useTransactions();
@@ -47,23 +45,6 @@ export const Content: React.FC<ContentProps> = ({
 		fetchTransactions();
 		setTx(null);
 	}, [fetchTransactions]);
-
-	const initializeStoryteller = () => {
-		Storyteller.initialize(
-			'test-key',
-			'test-user',
-			'', // URL of custom instance to run API
-			[], // Categories for which stories will be preloaded
-			(callback: { result: Boolean, message: string }) => {
-				console.log(`result: ${callback.result} message: ${callback.message}`);
-				rowRef.current?.reloadData();
-			}
-		);
-	};
-
-	useEffect(() => {
-		initializeStoryteller();
-	}, []);
 
 	return (
 		<TabLayout
@@ -97,7 +78,7 @@ export const Content: React.FC<ContentProps> = ({
 				setSendModalOpen={() => setSendModalOpen(true)}
 			/>
 
-			<Stories rowRef={rowRef} />
+			<Stories />
 
 		</TabLayout>
 	);
