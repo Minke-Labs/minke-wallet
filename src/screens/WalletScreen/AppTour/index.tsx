@@ -4,7 +4,7 @@ import { Boxes } from './Boxes/Boxes';
 import Overlay from './Overlay/Overlay';
 
 const AppTour: React.FC = ({ children }) => {
-	const [type] = useState<AppTourStepType>(5);
+	const [type] = useState<AppTourStepType>(0);
 	const bool = true;
 
 	if (bool) {
