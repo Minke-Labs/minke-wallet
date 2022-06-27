@@ -1,5 +1,3 @@
-/* eslint-disable no-tabs */
-/* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import {
@@ -7,7 +5,6 @@ import {
 	PanGestureHandlerGestureEvent
 } from 'react-native-gesture-handler';
 import Animated, {
-	// useAnimatedReaction,
 	Easing,
 	withTiming,
 	runOnJS,
