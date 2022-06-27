@@ -35,7 +35,6 @@ const getInitX = (prev: any, type: number) => {
 
 export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 	const x = useSharedValue(getInitX(previous, type));
-	const y = useSharedValue(0);
 
 	useEffect(() => {
 		const delay = 400;
@@ -53,13 +52,11 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 	const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { x: number; y: number }>({
 		onStart: (_, ctx) => {
 			ctx.x = x.value;
-			ctx.y = y.value;
 		},
-		onActive: ({ translationX, translationY }, ctx) => {
+		onActive: ({ translationX }, ctx) => {
 			x.value = ctx.x + translationX;
-			y.value = ctx.y + translationY;
 		},
-		onEnd: ({ velocityX, velocityY }) => {
+		onEnd: ({ velocityX }) => {
 			const dest = snapPoint(x.value, velocityX, SNAP_POINTS);
 			if ((type === 0 && dest > 0) || (type === 5 && dest < 0)) {
 				x.value = withSpring(0, { velocity: velocityX });
@@ -67,14 +64,12 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 				x.value = withSpring(dest, { velocity: velocityX });
 				runOnJS(updateType)(dest);
 			}
-			y.value = withSpring(0, { velocity: velocityY });
 		}
 	});
 
 	const animatedStyle = useAnimatedStyle(() => ({
 		transform: [
-			{ translateX: x.value },
-			{ translateY: y.value }
+			{ translateX: x.value }
 		]
 	}));
 
