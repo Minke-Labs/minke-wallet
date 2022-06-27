@@ -442,14 +442,11 @@ export default {
 	Components: {
 		AaveReusables: {
 			Info: {
-				open_account: 'Abrir uma Conta',
-				aave: 'Abrir uma conta na Aave',
 				what_is: 'O que é a Aave?',
 				aave_des:
 					'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
 				view_site: 'Ver o Site',
-				learn_more: 'Ver Mais',
-				this_transaction: 'Esta transação vai custar alguns centavos.'
+				learn_more: 'Ver Mais'
 			}
 		},
 		MStableReusables: {
