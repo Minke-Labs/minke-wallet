@@ -166,6 +166,9 @@ export default {
 				normal: 'Normal',
 				slow: 'Devagar'
 			}
+		},
+		validations: {
+			INSUFFICIENT_ASSET_LIQUIDITY: 'Não há liquidez insuficiente para o token'
 		}
 	},
 	ManualBackupScreen: {

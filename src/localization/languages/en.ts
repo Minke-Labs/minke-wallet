@@ -166,6 +166,9 @@ export default {
 				normal: 'Normal',
 				slow: 'Slow'
 			}
+		},
+		validations: {
+			INSUFFICIENT_ASSET_LIQUIDITY: 'Insufficient asset liquidity'
 		}
 	},
 	ManualBackupScreen: {
@@ -182,7 +185,7 @@ export default {
 		}
 	},
 	SaveScreen: {
-		interest: '% anualized interest',
+		interest: '% annualized interest',
 		EmptyState: {
 			save: 'Save',
 			open_savings_account: 'Open %{protocol}\nSavings Account',
@@ -550,7 +553,7 @@ export default {
 			available: 'Available'
 		},
 		InterestBanner: {
-			interest: '% anualized interest'
+			interest: '% annualized interest'
 		}
 	},
 	Logs: {

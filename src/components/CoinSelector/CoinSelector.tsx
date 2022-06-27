@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useLanguage, useTheme, useTokens } from '@hooks';
-import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
+import { useLanguage, useTheme } from '@hooks';
+import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { TokenType } from '@styles';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 import styles from './CoinSelector.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
@@ -21,32 +21,24 @@ const NoTokenIcon = () => {
 };
 
 interface TitlesProps {
-	token: ParaswapToken;
-	balanceUSD: string;
-	tokenBalance: string;
+	token: MinkeToken;
 	inline?: boolean;
 }
 
-const Titles: React.FC<TitlesProps> = ({ token, balanceUSD, tokenBalance, inline }) => {
+const Titles: React.FC<TitlesProps> = ({ token, inline }) => {
 	const { i18n } = useLanguage();
+	const { balance = '0', balanceUSD = 0, symbol } = token;
 	return (
 		<>
 			<View style={styles.titlesUpper}>
-				<Text
-					type="p2"
-					style={{ marginRight: inline ? 4 : 8 }}
-					weight="extraBold"
-				>
-					{token.symbol}
+				<Text type="p2" style={{ marginRight: inline ? 4 : 8 }} weight="extraBold">
+					{symbol}
 				</Text>
 				<Icon name="chevronDown" color="cta1" size={16} />
 			</View>
 			<View>
 				<Text type="span" weight="semiBold">
-					{balanceUSD}
-					{' '}
-					({tokenBalanceFormat(tokenBalance, 6)} {token.symbol})
-					{' '}
+					{numberFormat(balanceUSD)} ({tokenBalanceFormat(balance, 6)} {symbol}){' '}
 					{!inline && i18n.t('Components.TokenCard.available')}
 				</Text>
 			</View>
@@ -57,11 +49,12 @@ const Titles: React.FC<TitlesProps> = ({ token, balanceUSD, tokenBalance, inline
 const TitlesEmpty = () => {
 	const { i18n } = useLanguage();
 	return (
-		<View style={{
-			height: '100%',
-			flexDirection: 'row',
-			alignItems: 'center'
-		}}
+		<View
+			style={{
+				height: '100%',
+				flexDirection: 'row',
+				alignItems: 'center'
+			}}
 		>
 			<Text type="p2" weight="medium" style={{ marginRight: 4 }}>
 				{i18n.t('Components.TokenCard.choose_token')}
@@ -71,56 +64,32 @@ const TitlesEmpty = () => {
 	);
 };
 
-const CoinSelector: React.FC<CoinSelectorProps> = ({
-	onPress,
-	notTouchable,
-	token,
-	tokenBalance,
-	inline = false
-}) => {
-	const { tokens } = useTokens();
+const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, token, inline = false }) => (
+	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
+		<View style={styles.container}>
+			{token ? (
+				<Token name={(token.symbol || '').toLowerCase() as TokenType} size={inline ? 28 : 40} />
+			) : (
+				<NoTokenIcon />
+			)}
 
-	const getBalanceUSD = () => {
-		if (token && tokens && tokens.length > 0) {
-			const foundToken = tokens.find((t) => t.symbol === token.symbol);
-			if (foundToken) {
-				return numberFormat(foundToken.balanceUSD);
-			}
-		}
-		return '$0';
-	};
-	return (
-		<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
-			<View style={styles.container}>
-
-				{
-					!token ? (
-						<NoTokenIcon />
-					) : (
-						<Token
-							name={(token.symbol || '').toLowerCase() as TokenType}
-							size={inline ? 28 : 40}
-						/>
-					)
-				}
-
-				<View style={[styles.titlesContainer, {
-					marginLeft: inline ? 8 : 16
-				}, inline && {
-					flexDirection: 'row',
-					alignItems: 'center',
-					flex: 1
-				}]}
-				>
-					{ !token ? <TitlesEmpty /> : <Titles
-						balanceUSD={getBalanceUSD()}
-						{...{ token, tokenBalance, inline }}
-					/> }
-				</View>
-
+			<View
+				style={[
+					styles.titlesContainer,
+					{
+						marginLeft: inline ? 8 : 16
+					},
+					inline && {
+						flexDirection: 'row',
+						alignItems: 'center',
+						flex: 1
+					}
+				]}
+			>
+				{token ? <Titles {...{ token, inline }} /> : <TitlesEmpty />}
 			</View>
-		</TouchableOpacity>
-	);
-};
+		</View>
+	</TouchableOpacity>
+);
 
 export default CoinSelector;

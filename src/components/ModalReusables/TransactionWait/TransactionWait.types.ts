@@ -1,9 +1,9 @@
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 export interface TransactionWaitModalProps {
 	onDismiss: () => void;
-	fromToken: ParaswapToken;
-	toToken?: ParaswapToken | undefined;
+	fromToken: MinkeToken;
+	toToken?: MinkeToken | undefined;
 	transactionHash: string;
 	deposit?: boolean;
 	withdraw?: boolean;

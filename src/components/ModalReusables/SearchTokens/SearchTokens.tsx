@@ -3,7 +3,7 @@ import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useTokens } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
-import { paraswapTokens, ParaswapToken, exchangebleTokens } from '@models/token';
+import { paraswapTokens, exchangebleTokens, MinkeToken } from '@models/token';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import ModalHeader from '../../ModalHeader/ModalHeader';
@@ -25,43 +25,42 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	withdraw = false
 }) => {
 	const { i18n } = useLanguage();
-	const [tokens, setTokens] = useState<Array<ParaswapToken>>();
-	const [filteredTokens, setFilteredTokens] = useState<Array<ParaswapToken>>();
+	const [tokens, setTokens] = useState<Array<MinkeToken>>();
+	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
 	const { interestTokens } = useTokens();
-
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
-	const removeSelectedTokens = (allTokens: ParaswapToken[]) => {
-		let selectedTokens: ParaswapToken[] = [];
-		if (showOnlyOwnedTokens) {
-			const filter = _.filter(
-				allTokens,
-				({ symbol }) => !!symbol && ownedTokens.includes(symbol.toLocaleLowerCase())
-			);
-			selectedTokens = filter;
-		} else {
-			selectedTokens = allTokens;
-		}
+	const removeSelectedTokens = useCallback(
+		(allTokens: MinkeToken[]) => {
+			let selectedTokens: MinkeToken[] = allTokens;
 
-		if (selected && selected.length > 0) {
-			const filter = _.filter(
-				selectedTokens,
-				({ symbol }) => !!symbol && !selected.includes(symbol.toLocaleLowerCase())
-			);
-			setFilteredTokens(filter);
-		} else {
-			setFilteredTokens(selectedTokens);
-		}
-		setLoading(false);
-	};
+			if (showOnlyOwnedTokens && ownedTokens.length > 0) {
+				const owned = selectedTokens.map(({ symbol }) => !!symbol && symbol.toLowerCase());
+				selectedTokens = ownedTokens.filter(({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase()));
+			}
+
+			if (selected && selected.length > 0) {
+				const filter = _.filter(
+					selectedTokens,
+					({ symbol }) => !!symbol && !selected.includes(symbol.toLocaleLowerCase())
+				);
+				setFilteredTokens(filter);
+			} else {
+				setFilteredTokens(selectedTokens);
+			}
+			setLoading(false);
+		},
+		[ownedTokens, selected]
+	);
 
 	useEffect(() => {
 		const loadTokens = async () => {
 			setLoading(true);
 			const allTokens = withdraw ? interestTokens : (await paraswapTokens()).tokens;
+
 			setTokens(allTokens);
 			removeSelectedTokens(allTokens);
 			setLoading(false);

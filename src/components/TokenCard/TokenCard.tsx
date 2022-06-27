@@ -11,45 +11,38 @@ import TokenInputInner from '../TokenInputInner/TokenInputInner';
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
 	onPress,
-	balance,
 	disableMax = false,
 	updateQuotes,
 	conversionAmount = '',
 	notTouchable = false,
 	apy,
 	exchange = false,
-	noInvalid = false
+	disableAmountValidation = false
 }) => {
 	const styles = makeStyles();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
-		balance,
-		updateQuotes: updateQuotes!,
-		token: token!,
+		updateQuotes,
+		token,
 		conversionAmount,
 		disableMax
 	});
 
 	return (
 		<View style={styles.container}>
-
-			<CoinSelector
-				tokenBalance={balance}
-				token={token!}
-				onPress={onPress!}
-				notTouchable={notTouchable}
-				inline={exchange}
-			/>
+			<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
 
 			<View
-				style={exchange && {
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center'
-				}}
+				style={
+					exchange && {
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						alignItems: 'center'
+					}
+				}
 			>
 				<TokenInputInner
 					symbol={token ? token.symbol : ''}
-					isAmountValid={noInvalid ? true : !invalidAmount}
+					isAmountValid={disableAmountValidation || !invalidAmount}
 					placeholder="0.00"
 					autoFocus
 					showSymbol
@@ -64,7 +57,6 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 				</View>
 			</View>
-
 		</View>
 	);
 };

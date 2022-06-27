@@ -5,7 +5,7 @@ import { BasicLayout } from '@layouts';
 import { View } from 'react-native';
 import { useNavigation, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 import Warning from '../ExchangeScreen/Warning/Warning';
 import useWithdrawScreen from './WithdrawScreen.hooks';
 import styles from './WithdrawScreen.styles';
@@ -17,7 +17,6 @@ const WithdrawScreen = () => {
 		hideModal,
 		showModal,
 		token,
-		tokenBalance,
 		updateAmount,
 		nativeToken,
 		enoughForGas,
@@ -29,6 +28,7 @@ const WithdrawScreen = () => {
 		tokens,
 		gaslessEnabled,
 		selectedProtocol,
+		apy,
 		blockchainError,
 		setBlockchainError
 	} = useWithdrawScreen();
@@ -40,15 +40,12 @@ const WithdrawScreen = () => {
 				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper padding={16} marginBottom={42}>
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						balance={tokenBalance}
-						updateQuotes={debounce(updateAmount, 500)}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
-				{!gaslessEnabled && <GasSelector />}
+				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
+					<GasSelector />
+				</View>
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
@@ -66,9 +63,10 @@ const WithdrawScreen = () => {
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}
-					ownedTokens={tokens?.map((t) => t.symbol.toLowerCase())}
+					ownedTokens={tokens}
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
+					withdraw
 				/>
 			</Modal>
 
@@ -79,7 +77,7 @@ const WithdrawScreen = () => {
 				{!!token && (
 					<ModalReusables.TransactionWait
 						onDismiss={() => navigation.navigate('SaveScreen')}
-						fromToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
+						fromToken={{ symbol: selectedProtocol?.name } as MinkeToken}
 						toToken={token!}
 						transactionHash={transactionHash}
 						withdraw

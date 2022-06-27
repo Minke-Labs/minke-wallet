@@ -1,8 +1,8 @@
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 type ResultProps = {
 	hash: string;
-	token: ParaswapToken;
+	token: MinkeToken;
 };
 
 export type { ResultProps };

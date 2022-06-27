@@ -1,23 +1,10 @@
 import React from 'react';
-import {
-	View,
-	TouchableWithoutFeedback,
-	Keyboard
-} from 'react-native';
+import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useTheme, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import {
-	Button,
-	Modal,
-	ActivityIndicator,
-	ModalReusables,
-	Header,
-	GasSelector,
-	TokenCard
-} from '@components';
+import { Button, Modal, ActivityIndicator, ModalReusables, Header, GasSelector, TokenCard } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import SearchTokens from '../../components/ModalReusables/SearchTokens/SearchTokens';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
@@ -29,8 +16,6 @@ const ExchangeScreen = () => {
 	const {
 		fromToken,
 		toToken,
-		fromTokenBalance,
-		toTokenBalance,
 		fromConversionAmount,
 		toConversionAmount,
 		canChangeDirections,
@@ -45,6 +30,7 @@ const ExchangeScreen = () => {
 		searchVisible,
 		showOnlyOwnedTokens,
 		updateFromQuotes,
+		updateToQuotes,
 		enoughForGas,
 		ownedTokens,
 		error,
@@ -58,30 +44,27 @@ const ExchangeScreen = () => {
 			<BasicLayout>
 				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 					<>
-						<Header title="Exchange" marginBottom={36} />
+						<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
 
 						<View style={styles.container}>
 							<View style={styles.top}>
 								<TokenCard
-									balance={fromTokenBalance}
 									updateQuotes={debounce(updateFromQuotes, 500)}
 									conversionAmount={fromConversionAmount}
-									token={fromToken!}
+									token={fromToken}
 									onPress={showModalFrom}
-									notTouchable={false}
 									exchange
 								/>
 							</View>
 							<View style={styles.bottom}>
 								<TokenCard
-									balance={toTokenBalance}
-									updateQuotes={debounce(updateFromQuotes, 500)}
+									updateQuotes={debounce(updateToQuotes, 500)}
 									conversionAmount={toConversionAmount}
-									token={toToken!}
-									notTouchable={false}
+									token={toToken}
 									onPress={showModalTo}
+									disableMax
 									exchange
-									noInvalid
+									disableAmountValidation
 								/>
 							</View>
 
@@ -92,8 +75,8 @@ const ExchangeScreen = () => {
 							/>
 						</View>
 
-						<View style={{ marginBottom: 24 }}>
-							{!gasless && <GasSelector />}
+						<View style={{ marginBottom: 24, display: gasless ? 'none' : 'flex' }}>
+							<GasSelector />
 						</View>
 
 						<View style={{ marginHorizontal: 16 }}>
@@ -119,7 +102,7 @@ const ExchangeScreen = () => {
 			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
-				<SearchTokens
+				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}

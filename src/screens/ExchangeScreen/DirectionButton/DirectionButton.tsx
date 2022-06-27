@@ -26,16 +26,11 @@ const DirectionButton: React.FC<DirectionButtonProps> = ({ onPress, disabled, ri
 			}}
 			{...{ onPress, disabled }}
 		>
-			{
-				loading ?
-					<ActivityIndicator />
-					:
-					<Icon
-						name={right ? 'arrowRight' : 'arrowDown'}
-						size={20}
-						color="cta1"
-					/>
-			}
+			{loading ? (
+				<ActivityIndicator />
+			) : (
+				<Icon name={right ? 'arrowRight' : 'arrowDown'} size={20} color={disabled ? 'detail2' : 'cta1'} />
+			)}
 		</TouchableOpacity>
 	);
 };

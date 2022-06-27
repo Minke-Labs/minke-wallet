@@ -20,8 +20,6 @@ const ExchangeResumeScreen = () => {
 		count,
 		exchangeSummary,
 		exchangeName,
-		// exchange,
-		// gas,
 		visible,
 		hideModal,
 		transactionHash,

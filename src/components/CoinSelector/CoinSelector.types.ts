@@ -1,10 +1,8 @@
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 export interface CoinSelectorProps {
-	token: ParaswapToken;
+	token: MinkeToken | undefined;
 	onPress: () => void;
 	notTouchable: boolean;
-	balanceUSD?: string;
-	tokenBalance: string;
 	inline?: boolean;
 }

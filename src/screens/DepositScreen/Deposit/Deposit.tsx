@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
@@ -17,7 +17,6 @@ const Deposit = () => {
 	const {
 		tokens,
 		token,
-		tokenBalance,
 		updateAmount,
 		canDeposit,
 		onDeposit,
@@ -46,16 +45,12 @@ const Deposit = () => {
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper padding={16} marginBottom={42}>
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						balance={tokenBalance}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
-				{!gaslessEnabled && <GasSelector />}
+				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
+					<GasSelector />
+				</View>
 
 				<View style={styles.depositButton}>
 					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
@@ -73,7 +68,7 @@ const Deposit = () => {
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}
-					ownedTokens={tokens?.map((t) => t.symbol.toLowerCase())}
+					ownedTokens={tokens}
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
@@ -87,7 +82,7 @@ const Deposit = () => {
 					<ModalReusables.TransactionWait
 						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 						fromToken={token}
-						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
+						toToken={{ symbol: selectedProtocol?.name } as MinkeToken}
 						transactionHash={transactionHash}
 						deposit
 					/>

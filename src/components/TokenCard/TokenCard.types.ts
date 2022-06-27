@@ -1,14 +1,13 @@
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 export interface TokenCardProps {
-	token: ParaswapToken | undefined;
+	token: MinkeToken | undefined;
 	onPress?: (() => void) | undefined;
-	balance: string;
 	disableMax?: boolean;
-	updateQuotes?: Function;
+	updateQuotes: Function;
 	conversionAmount?: string;
 	notTouchable?: boolean;
 	apy?: string;
 	exchange?: boolean;
-	noInvalid?: boolean;
+	disableAmountValidation?: boolean;
 }
