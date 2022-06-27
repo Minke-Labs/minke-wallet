@@ -24,6 +24,10 @@ export default {
 		BR: {
 			name: 'Brazil',
 			currencyName: 'Brazilian Real'
+		},
+		TUR: {
+			name: 'Turkey',
+			currencyName: 'Turkish Lira'
 		}
 	},
 	AccountsScreen: {

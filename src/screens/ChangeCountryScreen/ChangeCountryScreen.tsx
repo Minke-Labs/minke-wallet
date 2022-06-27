@@ -16,8 +16,7 @@ const ChangeCountryScreen = () => {
 
 	const filterCountries = (text: string) => {
 		const newCountries = countries.filter((country: Country) =>
-			country.name.toLowerCase().includes(text.toLowerCase())
-		);
+			country.name.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCountries);
 	};
