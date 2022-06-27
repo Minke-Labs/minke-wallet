@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, Icon } from '@components';
 import { useLanguage, useWalletState } from '@hooks';
+import { STORYTELLER_KEY } from '@env';
 import Storyteller, { StorytellerRowView, UIStyle } from '@getstoryteller/react-native-storyteller-sdk';
 
 const Stories: React.FC = () => {
@@ -19,7 +20,7 @@ const Stories: React.FC = () => {
 
 	const initializeStoryteller = () => {
 		Storyteller.initialize(
-			'6bffbf54-1f06-4d5e-a971-c200e4fc3eea',
+			(STORYTELLER_KEY || process.env.STORYTELLER_KEY)!,
 			walletAddress,
 			'',
 			[],
