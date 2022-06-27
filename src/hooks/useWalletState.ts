@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
+import { globalWalletState } from '@stores/WalletStore';
+import { useState } from '@hookstate/core';
 import crypto from 'crypto';
 import { INTERCOM_KEY } from '@env';
 import Intercom from '@intercom/intercom-react-native';
 
-const useAccountName = (address: string) => {
+const useWalletState = () => {
+	const state = useState(globalWalletState());
 	const [ensName, setEnsName] = React.useState<string | null>('');
+	const { address } = state.value;
 
 	useEffect(() => {
 		const fetchENSAddress = async () => {
@@ -31,7 +35,12 @@ const useAccountName = (address: string) => {
 	Intercom.setUserHash(sign);
 	Intercom.registerIdentifiedUser({ userId: accountName() });
 	//
-	return accountName();
+
+	return {
+		state,
+		ensName,
+		accountName: accountName()
+	};
 };
 
-export default useAccountName;
+export default useWalletState;
