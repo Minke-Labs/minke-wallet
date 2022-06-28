@@ -18,7 +18,7 @@ import { snapPoint } from 'react-native-redash';
 import { AppTourStepType } from '../AppTour.types';
 import { BoxesProps } from './Boxes.types';
 import { getBox } from './Boxes.utils';
-import { Paper } from './Paper';
+import Card from './Card';
 
 const { width } = Dimensions.get('window');
 
@@ -81,9 +81,9 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 					animatedStyle
 				]}
 			>
-				<Paper>
+				<Card type={type}>
 					{getBox(type).component}
-				</Paper>
+				</Card>
 			</Animated.View>
 		</PanGestureHandler>
 	);

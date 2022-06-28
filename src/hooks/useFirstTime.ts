@@ -6,10 +6,10 @@ const useFistTime = () => {
 	const [isFirstTimeLoad, setIsFirstTimeLoad] = useState(false);
 
 	const checkForFirstTimeLoaded = async () => {
-		const result = await AsyncStorage.getItem('isFirstTime?');
+		const result = await AsyncStorage.getItem('isFirstTimeLoaded?');
 		if (result === null) {
 			setIsFirstTimeLoad(true);
-			AsyncStorage.setItem('isFirstTime?', 'no');
+			AsyncStorage.setItem('isFirstTimeLoaded?', 'no');
 		} else {
 			setIsFirstTimeLoad(false);
 		}
