@@ -3,13 +3,14 @@ import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon, ScreenLoadingIndicator } from '@components';
 import { useLanguage } from '@hooks';
 import * as Haptics from 'expo-haptics';
+import { globalWalletState } from '@src/stores/WalletStore';
+import { useState } from '@hookstate/core';
 import styles from './Header.styles';
 import { HeaderProps } from './Header.types';
-import { useHeader } from './Header.hooks';
 
-const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress }) => {
+const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress, accountName }) => {
 	const { i18n } = useLanguage();
-	const { accountName, state } = useHeader();
+	const state = useState(globalWalletState());
 
 	const handlePress = (event: any) => {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -26,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress }) => {
 						{i18n.t('WalletScreen.Header.welcome')}
 					</Text>
 					<Text weight="extraBold" type="h3">
-						{accountName()}
+						{accountName}
 					</Text>
 				</View>
 
@@ -41,12 +42,6 @@ const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress }) => {
 			</View>
 
 			<View style={styles.iconsContainer}>
-				{/* <TouchableOpacity activeOpacity={0.6}>
-					<Icon name="walletConnectStroke" style={{ marginRight: 21 }} size={20} color="text7" />
-				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6}>
-					<Icon name="waveStroke" style={{ marginRight: 21 }} size={20} color="text7" />
-				</TouchableOpacity> */}
 				<TouchableOpacity activeOpacity={0.6} onPress={onSettingsPress}>
 					<Icon size={20} color="text7" />
 				</TouchableOpacity>

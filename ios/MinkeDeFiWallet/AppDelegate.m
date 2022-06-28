@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <React/RCTConvert.h>
+#import <IntercomModule.h>
 
 #if defined(EX_DEV_MENU_ENABLED)
 @import EXDevMenu;
@@ -49,6 +50,7 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [IntercomModule initialize:@"ios_sdk-d6e29cf68756732821b74ec675ab0c7adda856b5" withAppId:@"umqk8oq3"];
 
   return YES;
  }
