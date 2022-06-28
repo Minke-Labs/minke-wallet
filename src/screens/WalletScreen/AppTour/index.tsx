@@ -35,14 +35,14 @@ const AppTour: React.FC = ({ children }) => {
 			<Overlay type={type}>
 				{children}
 			</Overlay>
-			{[0, 1, 2, 3, 4, 5].map((curr: number) => (curr === type ? (
+			{[0, 1, 2, 3, 4, 5].map((curr: number) => (curr === type && (
 				<Boxes
 					type={curr as AppTourStepType}
 					key={curr.toString()}
 					setType={(val: AppTourStepType) => setType(val)}
 					previous={prevType}
 				/>
-			) : null))}
+			)))}
 		</AppTourContext.Provider>
 	);
 };
