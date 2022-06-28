@@ -19,6 +19,7 @@ import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
 import useDepositProtocols from './useDepositProtocols';
 import useFirstTime from './useFirstTime';
+import usePrevious from './usePrevious';
 
 export {
 	useAmplitude,
@@ -41,5 +42,6 @@ export {
 	useBiconomy,
 	useNativeToken,
 	useDepositProtocols,
-	useFirstTime
+	useFirstTime,
+	usePrevious
 };

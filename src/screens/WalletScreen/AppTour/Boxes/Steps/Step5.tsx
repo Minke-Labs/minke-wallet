@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon } from '@components';
-import { AppTourContext } from '../../index';
+import { AppTourContext } from '../../Context/AppTourContext';
 
 const Button: React.FC<{ onPress: () => void }> = ({ onPress }) => (
 	<TouchableOpacity

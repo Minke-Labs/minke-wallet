@@ -1,22 +1,12 @@
-import React, { useEffect, useRef, useState, createContext, useMemo } from 'react';
-import { useFirstTime } from '@hooks';
+import React, { useState, useMemo } from 'react';
+import { useFirstTime, usePrevious } from '@hooks';
+import { AppTourContext } from './Context/AppTourContext';
 import { AppTourStepType } from './AppTour.types';
 import { Boxes } from './Boxes/Boxes';
 import Overlay from './Overlay/Overlay';
 
-const usePrevious = (val: any): any => {
-	const ref = useRef();
-	useEffect(() => {
-		ref.current = val;
-	}, [val]);
-	return ref.current;
-};
-
-export const AppTourContext = createContext<any>(null);
-
 const AppTour: React.FC = ({ children }) => {
 	const { loading, isFirstTimeLoad } = useFirstTime();
-
 	const [active, setActive] = useState(true);
 	const [type, setType] = useState<AppTourStepType>(0);
 	const prevType = usePrevious(type);
