@@ -213,15 +213,16 @@ export default {
 	},
 	SettingsScreen: {
 		title: 'Settings',
-		creating_wallet: 'Creating wallet',
+		creating_wallet: 'Creating Wallet',
 		backup: 'Backup',
 		country: 'Country',
 		language: 'Language',
 		network: 'Network',
-		new_wallet: 'New wallet',
-		usd_coin: 'US Dollar coin',
+		new_wallet: 'New Wallet',
+		usd_coin: 'US Dollar Coin',
 		contact_support: 'Contact Support',
-		switch_account: 'Switch account',
+		help_centre: 'Help Center',
+		switch_account: 'Switch Account',
 		my_wallet: 'My Wallet',
 		my_account: 'My Account',
 		help: 'Help',
@@ -341,6 +342,11 @@ export default {
 		},
 		TransactionsTable: {
 			see_all: 'See all'
+		},
+		components: {
+			Stories: {
+				whats_new: 'What’s new?'
+			}
 		},
 		screens: {
 			Accounts: {

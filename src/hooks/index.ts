@@ -20,6 +20,7 @@ import useNativeToken from './useNativeToken';
 import useDepositProtocols from './useDepositProtocols';
 import useFirstTime from './useFirstTime';
 import usePrevious from './usePrevious';
+import useWalletState from './useWalletState';
 
 export {
 	useAmplitude,
@@ -43,5 +44,6 @@ export {
 	useNativeToken,
 	useDepositProtocols,
 	useFirstTime,
-	usePrevious
+	usePrevious,
+	useWalletState
 };
