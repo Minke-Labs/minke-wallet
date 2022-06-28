@@ -285,6 +285,36 @@ export default {
 		modal_error: 'Erro de backup'
 	},
 	WalletScreen: {
+		AppTour: {
+			Boxes: {
+				Steps: {
+					Step0: {
+						welcome: 'Bem-vindo ao Minke!',
+						your_new_favorite: 'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anualizados.'
+					},
+					Step1: {
+						add_funds: 'Adicione fundos',
+						you_can_buy: 'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
+					},
+					Step2: {
+						save: 'Poupe',
+						get_up_to: 'Obtenha até 5% de juros anuais em stablecoins com mStable ou Aave.'
+					},
+					Step3: {
+						send: 'Envie',
+						send_tokens_to: 'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
+					},
+					Step4: {
+						exchange: 'Converta',
+						swap: 'Converta de um token para outro.'
+					},
+					Step5: {
+						receive: 'Receba',
+						copy_your: 'Copie seu endereço público ou use um código QR.'
+					}
+				}
+			}
+		},
 		Content: {
 			transactions: 'Transações',
 			accounts: 'Contas'

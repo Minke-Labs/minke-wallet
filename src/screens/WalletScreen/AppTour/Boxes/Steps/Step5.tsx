@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon } from '@components';
+import { useLanguage } from '@hooks';
 import { AppTourContext } from '../../Context/AppTourContext';
 
 const Button: React.FC<{ onPress: () => void }> = ({ onPress }) => (
@@ -25,6 +26,7 @@ const Button: React.FC<{ onPress: () => void }> = ({ onPress }) => (
 );
 
 export const Step5 = () => {
+	const { i18n } = useLanguage();
 	const { dismiss } = useContext(AppTourContext);
 	return (
 		<>
@@ -39,11 +41,11 @@ export const Step5 = () => {
 					type="p" // Change to tMedium after new values come from merge.
 					weight="bold"
 				>
-					Send
+					{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step3.send')}
 				</Text>
 			</View>
 			<Text width={237} type="a" marginBottom={16}>
-				Send tokens to a another wallet or to an exchange like Binance or Coinbase.
+				{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step3.send_tokens_to')}
 			</Text>
 
 			<View style={{ height: 25, flexDirection: 'row' }}>
@@ -57,11 +59,11 @@ export const Step5 = () => {
 					type="p" // Change to tMedium after new values come from merge.
 					weight="bold"
 				>
-					Exchange
+					{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step4.exchange')}
 				</Text>
 			</View>
 			<Text width={237} type="a" marginBottom={16}>
-				Swap between tokens.
+				{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step4.swap')}
 			</Text>
 
 			<View style={{ height: 25, flexDirection: 'row' }}>
@@ -75,11 +77,11 @@ export const Step5 = () => {
 					type="p" // Change to tMedium after new values come from merge.
 					weight="bold"
 				>
-					Receive
+					{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step5.receive')}
 				</Text>
 			</View>
 			<Text width={237} type="a">
-				Copy your public address or use a QR code.
+				{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step5.copy_your')}
 			</Text>
 
 			<Button onPress={dismiss} />
