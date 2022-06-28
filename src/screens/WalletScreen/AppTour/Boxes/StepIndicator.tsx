@@ -28,7 +28,7 @@ const StepIndicator: React.FC<{ type: AppTourStepType }> = ({ type }) => (
 			marginBottom: 16
 		}}
 	>
-		{[0, 1, 2, 3, 4, 5].map((item: number) => <Circle active={type === item} />)}
+		{[0, 1, 2, 3, 4, 5].map((item: number) => <Circle key={item.toString()} active={type === item} />)}
 	</View>
 );
 
