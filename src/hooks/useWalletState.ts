@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { getENSAddress, smallWalletAddress } from '@src/model/wallet';
 import { globalWalletState } from '@stores/WalletStore';
 import { useState } from '@hookstate/core';
+import crypto from 'crypto';
+import { INTERCOM_KEY } from '@env';
+import Intercom from '@intercom/intercom-react-native';
 
 const useWalletState = () => {
 	const state = useState(globalWalletState());
@@ -23,6 +26,15 @@ const useWalletState = () => {
 		}
 		return smallWalletAddress(address);
 	};
+
+	// Register user on Intercom
+	const intercomKey = INTERCOM_KEY || process.env.INTERCOM_KEY;
+	const hmac = crypto.createHmac('sha256', intercomKey!);
+	hmac.update(accountName());
+	const sign = hmac.digest('hex');
+	Intercom.setUserHash(sign);
+	Intercom.registerIdentifiedUser({ userId: accountName() });
+	//
 
 	return {
 		state,

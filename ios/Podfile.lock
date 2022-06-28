@@ -125,6 +125,10 @@ PODS:
     - React-jsi (= 0.64.3)
     - ReactCommon/turbomodule/core (= 0.64.3)
   - glog (0.3.5)
+  - Intercom (12.4.1)
+  - intercom-react-native (3.0.4):
+    - Intercom (~> 12.4.0)
+    - React-Core
   - RCT-Folly (2020.01.13.00):
     - boost-for-react-native
     - DoubleConversion
@@ -494,6 +498,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - "intercom-react-native (from `../node_modules/@intercom/intercom-react-native`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -551,6 +556,7 @@ SPEC REPOS:
     - Amplitude
     - AppsFlyerFramework
     - boost-for-react-native
+    - Intercom
     - Sentry
 
 EXTERNAL SOURCES:
@@ -612,6 +618,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  intercom-react-native:
+    :path: "../node_modules/@intercom/intercom-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -738,8 +746,10 @@ SPEC CHECKSUMS:
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 196b9f7f0d2c72e408f6249251857d691a9b54ed
+  FBReactNativeSpec: bcbae1611f573cd67d2ba346fed3c358aaf6e7a9
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  Intercom: aea29d38ff141f4a6c7707b34b5090983b8bc09b
+  intercom-react-native: f4736830a2162d0e3bde175e030aaad1dd2aec13
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
   RCTTypeSafety: 8dab4933124ed39bb0c1d88d74d61b1eb950f28f
@@ -790,6 +800,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: c202ee41e9310021140c0281dd8915fb80994ac3
+PODFILE CHECKSUM: 75de9c32a0068f6af7887a2c256a1d2108d964f7
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2
