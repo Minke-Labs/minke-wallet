@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, createContext, useMemo } from 'react';
+import { useFirstTime } from '@hooks';
 import { AppTourStepType } from './AppTour.types';
 import { Boxes } from './Boxes/Boxes';
 import Overlay from './Overlay/Overlay';
@@ -14,6 +15,8 @@ const usePrevious = (val: any): any => {
 export const AppTourContext = createContext<any>(null);
 
 const AppTour: React.FC = ({ children }) => {
+	const { loading, isFirstTimeLoad } = useFirstTime();
+
 	const [active, setActive] = useState(true);
 	const [type, setType] = useState<AppTourStepType>(0);
 	const prevType = usePrevious(type);
@@ -25,13 +28,7 @@ const AppTour: React.FC = ({ children }) => {
 		[type]
 	);
 
-	if (!active) {
-		return (
-			<>
-				{children}
-			</>
-		);
-	}
+	if (!active || loading || !isFirstTimeLoad) return <>{children}</>;
 
 	return (
 		<AppTourContext.Provider value={obj}>
@@ -41,7 +38,7 @@ const AppTour: React.FC = ({ children }) => {
 			{[0, 1, 2, 3, 4, 5].map((curr: number) => (curr === type ? (
 				<Boxes
 					type={curr as AppTourStepType}
-					key={curr}
+					key={curr.toString()}
 					setType={(val: AppTourStepType) => setType(val)}
 					previous={prevType}
 				/>

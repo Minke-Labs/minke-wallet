@@ -37,7 +37,7 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 	const x = useSharedValue(getInitX(previous, type));
 
 	useEffect(() => {
-		const delay = 400;
+		const delay = 0;
 		x.value = withDelay(
 			delay,
 			withTiming(0, { duration: DURATION, easing: Easing.inOut(Easing.ease) })
