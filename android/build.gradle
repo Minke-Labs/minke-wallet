@@ -36,5 +36,9 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url 'https://www.jitpack.io' }
+
+        // Required for Storyteller SDK native dependencies
+        maven { url 'https://www.myget.org/F/storyteller-android-sdk/maven' }
+        jcenter()
     }
 }

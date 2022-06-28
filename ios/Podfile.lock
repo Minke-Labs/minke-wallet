@@ -335,6 +335,9 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-storyteller-sdk (7.0.3):
+    - React-Core
+    - StorytellerSDK (~> 7.0.1)
   - react-native-udp (2.7.0):
     - React
   - react-native-webview (11.15.0):
@@ -458,6 +461,7 @@ PODS:
   - Sentry (7.11.0):
     - Sentry/Core (= 7.11.0)
   - Sentry/Core (7.11.0)
+  - StorytellerSDK (7.0.1)
   - TcpSockets (3.3.2):
     - React
   - UMTaskManagerInterface (7.1.1):
@@ -514,6 +518,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-storyteller-sdk (from `../node_modules/@getstoryteller/react-native-storyteller-sdk`)"
   - react-native-udp (from `../node_modules/react-native-udp`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -545,6 +550,8 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
+  https://github.com/getstoryteller/storyteller-sdk-ios-podspec.git:
+    - StorytellerSDK
   trunk:
     - Amplitude
     - AppsFlyerFramework
@@ -647,6 +654,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-storyteller-sdk:
+    :path: "../node_modules/@getstoryteller/react-native-storyteller-sdk"
   react-native-udp:
     :path: "../node_modules/react-native-udp"
   react-native-webview:
@@ -737,7 +746,7 @@ SPEC CHECKSUMS:
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 196b9f7f0d2c72e408f6249251857d691a9b54ed
+  FBReactNativeSpec: bcbae1611f573cd67d2ba346fed3c358aaf6e7a9
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   Intercom: aea29d38ff141f4a6c7707b34b5090983b8bc09b
   intercom-react-native: f4736830a2162d0e3bde175e030aaad1dd2aec13
@@ -758,6 +767,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-storyteller-sdk: d3e09ec5d9e833064468362f5121e43c9f5a6270
   react-native-udp: ff9d13e523f2b58e6bc5d4d32321ac60671b5dc9
   react-native-webview: e89bf2dba26a04cda967814df3ed1be99f291233
   React-perflogger: cc76a4254d19640f1d8ad1c66fdee800414b805c
@@ -785,10 +795,11 @@ SPEC CHECKSUMS:
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
+  StorytellerSDK: 5f84236ee49305deef3c22737699cb3ee41f87de
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: 407d62bc57c282416028bc217be85b035be89514
+PODFILE CHECKSUM: 75de9c32a0068f6af7887a2c256a1d2108d964f7
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

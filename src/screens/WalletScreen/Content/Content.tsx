@@ -3,7 +3,7 @@ import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage, useWalletState } from '@hooks';
 import { PendingTransaction } from '@components';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
-import { AssetsPanel, ActionsPanel, Header } from '../components';
+import { AssetsPanel, ActionsPanel, Header, Stories } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
 
@@ -82,6 +82,9 @@ export const Content: React.FC<ContentProps> = ({
 				}}
 				setSendModalOpen={() => setSendModalOpen(true)}
 			/>
+
+			<Stories />
+
 		</TabLayout>
 	);
 };

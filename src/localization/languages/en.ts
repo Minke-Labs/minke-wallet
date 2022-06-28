@@ -313,6 +313,11 @@ export default {
 		TransactionsTable: {
 			see_all: 'See all'
 		},
+		components: {
+			Stories: {
+				whats_new: 'What’s new?'
+			}
+		},
 		screens: {
 			Accounts: {
 				wallet: 'Wallet',
