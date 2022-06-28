@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import React, { ComponentProps, FC } from 'react';
 import { providers } from '@contexts';
 

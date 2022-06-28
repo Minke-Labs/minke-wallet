@@ -18,6 +18,8 @@ import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
 import useDepositProtocols from './useDepositProtocols';
+import useFirstTime from './useFirstTime';
+import usePrevious from './usePrevious';
 import useWalletState from './useWalletState';
 
 export {
@@ -41,5 +43,7 @@ export {
 	useBiconomy,
 	useNativeToken,
 	useDepositProtocols,
+	useFirstTime,
+	usePrevious,
 	useWalletState
 };
