@@ -17,8 +17,10 @@ import useWallets from './useWallets';
 import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
-import useWalletState from './useWalletState';
 import useDepositProtocols from './useDepositProtocols';
+import useFirstTime from './useFirstTime';
+import usePrevious from './usePrevious';
+import useWalletState from './useWalletState';
 
 export {
 	useAmplitude,
@@ -41,5 +43,7 @@ export {
 	useBiconomy,
 	useNativeToken,
 	useWalletState,
-	useDepositProtocols
+	useDepositProtocols,
+	useFirstTime,
+	usePrevious
 };

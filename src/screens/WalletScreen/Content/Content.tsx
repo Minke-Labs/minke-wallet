@@ -3,7 +3,7 @@ import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
-import { AssetsPanel, ActionsPanel, Header } from '../components';
+import { AssetsPanel, ActionsPanel, Header, Stories } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
 
@@ -55,7 +55,10 @@ export const Content: React.FC<ContentProps> = ({
 			loading={loading}
 			onRefresh={handleRefresh}
 		>
-			<Header onSettingsPress={onSettingsPress} onCopyPress={onCopyToClipboard} />
+			<Header
+				onSettingsPress={onSettingsPress}
+				onCopyPress={onCopyToClipboard}
+			/>
 
 			{!!tx && <PendingTransaction transaction={tx} />}
 
@@ -77,6 +80,9 @@ export const Content: React.FC<ContentProps> = ({
 				}}
 				setSendModalOpen={() => setSendModalOpen(true)}
 			/>
+
+			<Stories />
+
 		</TabLayout>
 	);
 };
