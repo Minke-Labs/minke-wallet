@@ -5,7 +5,7 @@ import { useTheme } from '@hooks';
 import { styles } from './SettingsOption.styles';
 import { SettingsOptionProps } from './SettingsOption.types';
 
-const SettingsOption: React.FC<SettingsOptionProps> = ({ label, onPress, icon }) => {
+const SettingsOption: React.FC<SettingsOptionProps> = ({ label, onPress, icon, newTab }) => {
 	const { colors } = useTheme();
 
 	return (
@@ -19,7 +19,11 @@ const SettingsOption: React.FC<SettingsOptionProps> = ({ label, onPress, icon })
 				</Text>
 			</View>
 
-			<Icon name="arrowBackStroke" style={{ transform: [{ rotate: '180deg' }] }} size={24} color="text7" />
+			<Icon
+				name={newTab ? 'openInNew' : 'arrowForwardStroke'}
+				size={24}
+				color="text7"
+			/>
 		</TouchableOpacity>
 	);
 };

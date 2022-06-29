@@ -8,6 +8,7 @@ import { useNavigation, useLanguage } from '@hooks';
 import { walletCreate } from '@models/wallet';
 import { networks } from '@models/network';
 import { globalWalletState, walletState } from '@stores/WalletStore';
+import Intercom from '@intercom/intercom-react-native';
 import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
 
@@ -30,6 +31,7 @@ const SettingsScreen = () => {
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
 	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
+	const onHelpCentre = () => Intercom.displayHelpCenter();
 
 	const onCreateWallet = useCallback(async () => {
 		setCreatingWallet(true);
@@ -98,6 +100,12 @@ const SettingsScreen = () => {
 						label={i18n.t('SettingsScreen.contact_support')}
 						icon="helpStroke"
 						onPress={onContactSupport}
+					/>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.help_centre')}
+						icon="questionMark"
+						onPress={onHelpCentre}
+						newTab
 					/>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.other')}

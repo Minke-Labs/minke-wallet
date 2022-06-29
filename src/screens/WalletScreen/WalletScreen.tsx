@@ -7,6 +7,7 @@ import { SendModal, ReceiveModal } from './Modals';
 import { useWalletScreen } from './WalletScreen.hooks';
 import { ResultProps } from './WalletScreen.types';
 import { Content } from './Content/Content';
+import AppTour from './AppTour';
 
 const WalletScreen = () => {
 	const {
@@ -38,7 +39,7 @@ const WalletScreen = () => {
 	const { i18n } = useLanguage();
 
 	return (
-		<>
+		<AppTour>
 			<Content
 				{...{
 					onDeleteWallet,
@@ -96,7 +97,7 @@ const WalletScreen = () => {
 					/>
 				)}
 			</Modal>
-		</>
+		</AppTour>
 	);
 };
 
