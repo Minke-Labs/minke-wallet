@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, Icon } from '@components';
@@ -201,7 +202,7 @@ const storytellerTheme: Theme = {
 
 const Stories: React.FC = () => {
 	const { state } = useWalletState();
-	const { i18n } = useLanguage();
+	const { i18n, language } = useLanguage();
 	const { address: walletAddress } = state.value;
 	const [toggle, setToggle] = useState(false);
 	const scheme = useColorScheme();
@@ -256,6 +257,7 @@ const Stories: React.FC = () => {
 					uiStyle={scheme === 'dark' ? 'dark' as UIStyle : 'light' as UIStyle}
 					onDataLoadStarted={() => console.log('STORIES LOADING...')}
 					onDataLoadCompleted={() => console.log('STORIES FULLY LOADED.')}
+					categories={[language as string, 'all']}
 				/>
 			</View>
 		</View>
