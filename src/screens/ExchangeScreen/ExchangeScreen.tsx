@@ -1,30 +1,21 @@
-import React, { useCallback } from 'react';
-import { View, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Card } from 'react-native-paper';
-import { useTheme, useNavigation, useLanguage } from '@hooks';
-import { BigNumber as BN } from 'bignumber.js';
-import { fromBn } from 'evm-bn';
+import React from 'react';
+import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { useTheme, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import { Text, Button, Icon, Modal, ActivityIndicator, ModalReusables } from '@components';
-import { tokenBalanceFormat } from '@helpers/utilities';
+import { Button, Modal, ActivityIndicator, ModalReusables, Header, GasSelector, TokenCard } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import SearchTokens from './SearchTokens/SearchTokens';
-import GasSelector from './GasSelector/GasSelector';
-import TokenCard from '../../components/TokenCard/TokenCard';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
+import DirectionButton from './DirectionButton/DirectionButton';
 
 const ExchangeScreen = () => {
-	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const {
 		fromToken,
 		toToken,
-		fromTokenBalance,
-		toTokenBalance,
 		fromConversionAmount,
 		toConversionAmount,
 		canChangeDirections,
@@ -38,110 +29,63 @@ const ExchangeScreen = () => {
 		loadingPrices,
 		searchVisible,
 		showOnlyOwnedTokens,
-		fromAmountRef,
-		toAmountRef,
 		updateFromQuotes,
 		updateToQuotes,
 		enoughForGas,
 		ownedTokens,
-		quote,
 		error,
 		setError,
 		gasless
 	} = useExchangeScreen();
 	const { i18n } = useLanguage();
-	const ExchangeSummary = useCallback(() => {
-		if (fromToken && toToken) {
-			if (quote) {
-				const destQuantity = new BN(fromBn(quote.to[toToken.symbol], toToken.decimals));
-				const sourceQuantity = new BN(fromBn(quote.from[fromToken.symbol], fromToken.decimals));
-				const division = destQuantity.dividedBy(sourceQuantity).toPrecision(toToken.decimals);
-				const destQuantityString = tokenBalanceFormat(division, 9);
-				return (
-					<Text type="span" weight="regular" color="text3">
-						1 {fromToken.symbol} = {destQuantityString} {toToken.symbol}
-					</Text>
-				);
-			}
-			return (
-				<>
-					<Text type="span" weight="regular" color="text3">
-						{i18n.t('ExchangeScreen.fetching')}
-					</Text>
-					<ActivityIndicator size={16} />
-				</>
-			);
-		}
-		return null;
-	}, [quote, error]);
 
-	// this view is needed to hide the keyboard if you press outside the inputs
 	return (
 		<>
 			<BasicLayout>
 				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-					<View style={{ flex: 1 }}>
-						<View style={styles.header}>
-							<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-								<Icon name="arrowBackStroke" color="text7" size={24} />
-							</TouchableOpacity>
-						</View>
-						<View style={styles.exchangeSection}>
-							<View style={styles.exchangeHeadlineRow}>
-								<Text type="h3" weight="extraBold">
-									{i18n.t('ExchangeScreen.exchange')}
-								</Text>
-								<ExchangeSummary />
-							</View>
-							<Card style={styles.tokenCard}>
+					<>
+						<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
+
+						<View style={styles.container}>
+							<View style={styles.top}>
 								<TokenCard
-									token={fromToken}
-									onPress={showModalFrom}
-									balance={fromTokenBalance}
-									innerRef={fromAmountRef}
 									updateQuotes={debounce(updateFromQuotes, 500)}
 									conversionAmount={fromConversionAmount}
+									token={fromToken}
+									onPress={showModalFrom}
+									exchange
 								/>
-
-								<TouchableOpacity
-									style={styles.tokenCardDivisor}
-									onPress={directionSwap}
-									disabled={!canChangeDirections}
-								>
-									<View style={styles.tokenCardDivisorBackground}>
-										{loadingPrices ? (
-											<ActivityIndicator />
-										) : (
-											<Icon
-												name="arrowDown"
-												size={24}
-												color={canChangeDirections ? 'cta1' : 'cta2'}
-											/>
-										)}
-									</View>
-								</TouchableOpacity>
-
+							</View>
+							<View style={styles.bottom}>
 								<TokenCard
-									token={toToken}
-									onPress={showModalTo}
-									balance={toTokenBalance}
-									innerRef={toAmountRef}
 									updateQuotes={debounce(updateToQuotes, 500)}
 									conversionAmount={toConversionAmount}
+									token={toToken}
+									onPress={showModalTo}
 									disableMax
+									exchange
+									disableAmountValidation
 								/>
-							</Card>
+							</View>
+
+							<DirectionButton
+								onPress={directionSwap}
+								loading={loadingPrices}
+								disabled={!canChangeDirections}
+							/>
 						</View>
 
-						<View style={{ display: gasless ? 'none' : 'flex' }}>
+						<View style={{ marginBottom: 24, display: gasless ? 'none' : 'flex' }}>
 							<GasSelector />
 						</View>
 
-						<View style={[styles.exchangeSection, styles.exchangeButton]}>
+						<View style={{ marginHorizontal: 16 }}>
 							{!loadingPrices && !enoughForGas && (
 								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
 							)}
+						</View>
 
+						<View style={styles.buttonBox}>
 							{loadingPrices ? (
 								<ActivityIndicator />
 							) : (
@@ -151,14 +95,14 @@ const ExchangeScreen = () => {
 									disabled={!canSwap()}
 								/>
 							)}
-							<KeyboardSpacer />
 						</View>
-					</View>
+						<KeyboardSpacer />
+					</>
 				</TouchableWithoutFeedback>
 			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
-				<SearchTokens
+				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}

@@ -10,6 +10,7 @@ const lightTheme = {
 	background2: '#FAF7F3',
 	background3: '#F4F6F8',
 	background4: '#FFFCF5',
+	background5: '#FFFFFF',
 
 	cta1: '#006AA6',
 	cta2: '#D0D0D0',
@@ -39,7 +40,8 @@ const lightTheme = {
 	text10: '#F3D2BB',
 	text11: '#FFFFFF',
 	text12: '#006AA6',
-	background5: '#FFFFFF'
+
+	background6: '#F4F6F8'
 };
 
 const darkTheme = {
@@ -52,10 +54,11 @@ const darkTheme = {
 
 	background1: '#0A2138',
 	background2: '#22374C',
-	background3: '#22374C',
-	background4: '#22374C', // Missing color, I just repeated above's for now.
+	background3: '#2A4967',
+	background4: '#374C63', // Missing color, I just repeated above's for now.
+	background5: '#22374C',
 
-	cta1: '#006AA6',
+	cta1: '#0090E0',
 	cta2: '#D0D0D0',
 	cta3: '#FCFBF9',
 
@@ -83,7 +86,8 @@ const darkTheme = {
 	text10: '#FFFFFF',
 	text11: '#FFFFFF',
 	text12: '#00B7CF',
-	background5: '#22374C'
+
+	background6: '#0A2138'
 };
 
 export const colors = { darkTheme, lightTheme };

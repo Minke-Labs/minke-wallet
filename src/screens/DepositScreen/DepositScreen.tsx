@@ -3,15 +3,14 @@ import { Modal, ScreenLoadingIndicator } from '@components';
 import { AddFunds } from '@containers';
 import { useDepositProtocols } from '@hooks';
 import Deposit from './Deposit/Deposit';
-import OpenAave from './OpenAave/OpenAave';
-import OpenMStable from './OpenMStable/OpenMStable';
+import OpenSavings from './OpenSavings/OpenSavings';
 import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
 	const { notAbleToSaveVisible, notAbleToSaveDismiss, addFundsVisible, dismissAddFunds, onAddFunds } =
 		useDepositScreen();
-	const { selectedProtocol, ableToDeposit, approved, setApproved } = useDepositProtocols();
+	const { ableToDeposit, approved, setApproved } = useDepositProtocols();
 
 	if (ableToDeposit === undefined) {
 		return <ScreenLoadingIndicator />;
@@ -39,11 +38,7 @@ const DepositScreen = () => {
 	}
 
 	if (approved) return <Deposit />;
-	return selectedProtocol?.id === 'aave' ? (
-		<OpenAave onApprove={() => setApproved(true)} />
-	) : (
-		<OpenMStable onApprove={() => setApproved(true)} />
-	);
+	return <OpenSavings onApprove={() => setApproved(true)} />;
 };
 
 export default DepositScreen;
