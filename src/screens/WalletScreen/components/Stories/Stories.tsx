@@ -229,6 +229,10 @@ const Stories: React.FC = () => {
 		initializeStoryteller();
 	}, []);
 
+	useEffect(() => {
+		reloadDataIfNeeded();
+	}, [language]);
+
 	return (
 		<View style={{ marginBottom: 64 }}>
 			<TouchableOpacity
