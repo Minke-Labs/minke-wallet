@@ -3,12 +3,13 @@ import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
+import RNUxcam from 'react-native-ux-cam';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
-import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage } from '@hooks';
+import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage, useWalletState } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { walletState, globalWalletState } from '@src/stores/WalletStore';
+import { walletState } from '@src/stores/WalletStore';
 import styles from './BackupStatusScreen.styles';
 
 const BackedUp: React.FC<{ address: string }> = ({ address }) => {
@@ -56,8 +57,9 @@ const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }>
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupStatusScreen'>;
 const BackupStatusScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('BackupStatusScreen');
 	const { i18n } = useLanguage();
-	const state = useState(globalWalletState());
+	const { state } = useWalletState();
 	const { address: addressState } = state.value;
 
 	const navigation = useNavigation();

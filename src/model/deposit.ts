@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
 import * as qs from 'qs';
 import { network, network as selectedNetwork, networks } from './network';
-import { ParaswapToken, stablecoins } from './token';
+import { MinkeToken, stablecoins } from './token';
 import { DepositableToken } from './types/depositTokens.types';
 import { erc20abi, estimateGas, getProvider } from './wallet';
 
@@ -26,7 +26,7 @@ export const fetchMStablePoolData = async (): Promise<MStablePoolData> => {
 	return result.json();
 };
 
-export const depositableTokenToParaswapToken = (token: DepositableToken): ParaswapToken => {
+export const depositableTokenToMinkeToken = (token: DepositableToken): MinkeToken => {
 	const { address, decimals, symbol } = token;
 	return {
 		address,

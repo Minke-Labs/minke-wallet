@@ -1,12 +1,18 @@
 import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
-import { useAmplitude, useBiconomy, useFormProgress, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
+import {
+	useAmplitude,
+	useBiconomy,
+	useFormProgress,
+	useLanguage,
+	useNavigation,
+	useWyreApplePay,
+	useWalletState
+} from '@hooks';
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder, pickPaymentMethodFromName } from '@models/banxa';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useState } from '@hookstate/core';
 
 interface UseAddFundsProps {
 	onDismiss: () => void;
@@ -25,8 +31,8 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const { track } = useAmplitude();
 	const { locationCurrency, locationCountry } = useLanguage();
 	const [orderLink, setOrderLink] = React.useState('');
-	const state = useState(globalWalletState());
 	const { gaslessEnabled } = useBiconomy();
+	const { state } = useWalletState();
 	const { address } = state.value;
 
 	const { onPurchase, orderId, error } = useWyreApplePay();

@@ -9776,6 +9776,11 @@ react-native-udp@^2.7.0:
     ip-regex "^1.0.3"
     util "^0.10.3"
 
+react-native-ux-cam@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-ux-cam/-/react-native-ux-cam-5.4.0.tgz#f8a9258118f0623828c38e1bedd0a043342ad493"
+  integrity sha512-ijuHL/aqlgvGIb1njiUNZZlFY7rdd6seaIPaDtAWVNooxvV4emfFWD8ClCa/Y0ci6b1E8vKHqvhPv0peDEpc2w==
+
 react-native-vector-icons@^9.0.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-9.1.0.tgz#52eaa205f5954d567b7048eb93d58ac854a2c59e"

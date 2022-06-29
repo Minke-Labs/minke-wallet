@@ -1,30 +1,22 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { ParaswapToken } from '@models/token';
-import { Icon, Modal, Text, TokenCard, HapticButton, ModalReusables } from '@components';
-import { Card } from 'react-native-paper';
-import { useTheme, useNavigation, useAmplitude, useLanguage } from '@hooks';
+import { MinkeToken } from '@models/token';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
+import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
-import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { tokenBalanceFormat } from '@helpers/utilities';
-import SearchTokens from '@src/screens/ExchangeScreen/SearchTokens/SearchTokens';
-import GasSelector from '../../ExchangeScreen/GasSelector/GasSelector';
 import { useDeposit } from './Deposit.hooks';
-import { makeStyles } from './Deposit.styles';
+import styles from './Deposit.styles';
 
 const Deposit = () => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const {
 		tokens,
 		token,
-		tokenBalance,
 		updateAmount,
 		canDeposit,
 		onDeposit,
@@ -50,48 +42,14 @@ const Deposit = () => {
 	return (
 		<>
 			<BasicLayout>
-				<View style={styles.header}>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-						<Icon name="arrowBackStroke" color="text7" size={24} />
-					</TouchableOpacity>
-				</View>
-				<View style={styles.deposit}>
-					<View style={styles.depositHeadline}>
-						<Text type="h3" weight="extraBold">
-							{i18n.t('DepositScreen.Deposit.deposit')}
-						</Text>
-						{token && tokenBalance && (
-							<Text type="a" weight="regular" color="text3">
-								{i18n.t('DepositScreen.Deposit.balance')}
-								<Text type="a" weight="extraBold" color="text3">
-									{tokenBalanceFormat(tokenBalance, 6)} {token.symbol}
-								</Text>
-							</Text>
-						)}
-					</View>
+				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
-					<Card style={styles.tokenCard}>
-						<TokenCard
-							onPress={showModal}
-							token={token}
-							balance={tokenBalance}
-							updateQuotes={debounce(updateAmount, 500)}
-						/>
-					</Card>
+				<Paper padding={16} marginBottom={42}>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
+				</Paper>
 
-					<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
-						<GasSelector />
-					</View>
-
-					{!!apy && (
-						<View style={styles.interestContainer}>
-							<Icon name="iconUp" color="alert3" size={14} style={{ marginRight: 8 }} />
-							<Text weight="medium" type="a" color="alert3">
-								{apy}
-								{i18n.t('SaveScreen.interest')}
-							</Text>
-						</View>
-					)}
+				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
+					<GasSelector />
 				</View>
 
 				<View style={styles.depositButton}>
@@ -104,12 +62,13 @@ const Deposit = () => {
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>
+
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
-				<SearchTokens
+				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}
-					ownedTokens={tokens?.map((t) => t.symbol.toLowerCase())}
+					ownedTokens={tokens}
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
@@ -120,10 +79,10 @@ const Deposit = () => {
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
 				{!!token && (
-					<TransactionWaitModal
+					<ModalReusables.TransactionWait
 						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 						fromToken={token}
-						toToken={{ symbol: selectedProtocol?.name } as ParaswapToken}
+						toToken={{ symbol: selectedProtocol?.name } as MinkeToken}
 						transactionHash={transactionHash}
 						deposit
 					/>

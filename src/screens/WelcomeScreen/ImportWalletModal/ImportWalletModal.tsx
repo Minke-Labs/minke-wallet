@@ -3,6 +3,7 @@ import { SafeAreaView, View } from 'react-native';
 import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
 import { useImportWalletModal } from './useImportWallet.hooks';
 import SelectImportMethodModal from './SelectImportMethodModal/SelectImportMethodModal';
@@ -33,7 +34,10 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 							<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
 								{i18n.t('WelcomeScreen.ImportWalletModal.add_wallet')}
 							</Text>
-							<View style={styles.textAreaContainer}>
+							<View
+								style={styles.textAreaContainer}
+								ref={(view: any) => RNUxcam.occludeSensitiveView(view)}
+							>
 								<TextArea
 									label={i18n.t('WelcomeScreen.ImportWalletModal.seed_or_key')}
 									value={text}

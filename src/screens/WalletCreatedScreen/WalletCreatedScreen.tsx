@@ -4,10 +4,12 @@ import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button, ScreenLoadingIndicator, LoadingScreen, Modal, ModalReusables } from '@components';
 import { iCloudBackup, useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import styles from './WalletCreatedScreen.styles';
 import { useWalletCreatedScreen } from './WalletCreatedScreen.hooks';
 
 const WalletCreatedScreen = () => {
+	RNUxcam.tagScreenName('WalletCreatedScreen');
 	const { i18n } = useLanguage();
 	const { backupManually, seed, walletId } = useWalletCreatedScreen();
 	const [error, setError] = React.useState<string | undefined>();

@@ -1,14 +1,13 @@
-import { RefObject } from 'react';
-import { TextInput } from 'react-native';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 export interface TokenCardProps {
-	token: ParaswapToken | undefined;
+	token: MinkeToken | undefined;
 	onPress?: (() => void) | undefined;
-	balance: string;
-	innerRef?: RefObject<TextInput>;
 	disableMax?: boolean;
-	updateQuotes?: Function;
+	updateQuotes: Function;
 	conversionAmount?: string;
 	notTouchable?: boolean;
+	apy?: string;
+	exchange?: boolean;
+	disableAmountValidation?: boolean;
 }

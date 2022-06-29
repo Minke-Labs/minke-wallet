@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
-import { useState } from '@hookstate/core';
-import { useAmplitude, useNavigation, useLanguage } from '@hooks';
+import { useAmplitude, useNavigation, useLanguage, useWalletState } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
-import { globalWalletState, walletState, emptyWallet } from '@stores/WalletStore';
+import { walletState, emptyWallet } from '@stores/WalletStore';
 import { walletDelete, getAllWallets } from '@models/wallet';
 import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
@@ -11,7 +10,7 @@ import { ResultProps } from './WalletScreen.types';
 export const useWalletScreen = () => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
-	const state = useState(globalWalletState());
+	const { state } = useWalletState();
 	const [error, setError] = React.useState(false);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const navigation = useNavigation();

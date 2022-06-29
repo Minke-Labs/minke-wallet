@@ -331,7 +331,7 @@ export const getZapperTransactions = async (address: string): Promise<ZapperTran
 };
 
 export const getTokenList = async (): Promise<Array<Coin>> => {
-	const result = await fetch('https://api.coingecko.com/api/v3/coins/list');
+	const result = await fetch('https://api.coingecko.com/api/v3/coins/list?include_platform=true');
 	return result.json();
 };
 
@@ -500,6 +500,9 @@ export interface Coin {
 	id: string;
 	symbol: string;
 	name: string;
+	platforms: {
+		[key: string]: string;
+	};
 }
 
 export interface EstimateConfirmationTime {

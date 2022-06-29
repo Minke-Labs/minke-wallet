@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { TabLayout } from '@layouts';
-import { useNavigation, useTransactions, useLanguage, useWalletState } from '@hooks';
+import { useNavigation, useTransactions, useLanguage } from '@hooks';
 import { PendingTransaction } from '@components';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { AssetsPanel, ActionsPanel, Header, Stories } from '../components';
@@ -24,7 +24,6 @@ export const Content: React.FC<ContentProps> = ({
 	const navigation = useNavigation();
 	const { loading, fetchTransactions, pendingTransactions, updatePendingTransaction } = useTransactions();
 	const [tx, setTx] = useState<ZapperTransaction | null>();
-	const { accountName } = useWalletState();
 
 	useEffect(() => {
 		const fetchStatus = async () => {
@@ -59,7 +58,6 @@ export const Content: React.FC<ContentProps> = ({
 			<Header
 				onSettingsPress={onSettingsPress}
 				onCopyPress={onCopyToClipboard}
-				accountName={accountName}
 			/>
 
 			{!!tx && <PendingTransaction transaction={tx} />}

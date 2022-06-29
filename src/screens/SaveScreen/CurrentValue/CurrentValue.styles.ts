@@ -18,20 +18,16 @@ export const makeStyles = (colors: ColorType) =>
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
 		},
+		interestContainer: {
+			alignItems: 'center',
+			marginBottom: 16
+		},
 		infoRow: {
 			flexDirection: 'row',
 			alignItems: 'center',
-			justifyContent: 'center'
+			marginBottom: 4
 		},
-		interestContainer: {
-			flexDirection: 'column',
-			alignItems: 'center',
-			paddingVertical: 4,
-			paddingHorizontal: 12,
-			backgroundColor: colors.alert4,
-			borderRadius: 8,
-			marginBottom: 16
-		},
+
 		depositButton: {
 			flexDirection: 'row',
 			justifyContent: 'center',

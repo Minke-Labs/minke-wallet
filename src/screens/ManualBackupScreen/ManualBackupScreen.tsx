@@ -7,6 +7,7 @@ import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
 import { Snackbar } from 'react-native-paper';
+import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import Card from './Card/Card';
@@ -24,6 +25,7 @@ const ManualBackupScreen = ({ route }: Props) => {
 	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
 	if (seed.promised) return <ScreenLoadingIndicator />;
+	RNUxcam.tagScreenName('ManualBackupScreen');
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(seed.value || '');
@@ -53,13 +55,15 @@ const ManualBackupScreen = ({ route }: Props) => {
 						{i18n.t('ManualBackupScreen.write_this_down')}
 					</Text>
 
-					<FlatList
-						keyExtractor={(item, idx) => `${item}-${idx}`}
-						data={seed.value?.split(' ')}
-						renderItem={({ item, index }) => <Card title={item} idx={index + 1} />}
-						numColumns={2}
-						style={{ flexGrow: 0, marginBottom: 24 }}
-					/>
+					<View ref={(view: any) => RNUxcam.occludeSensitiveView(view)}>
+						<FlatList
+							keyExtractor={(item, idx) => `${item}-${idx}`}
+							data={seed.value?.split(' ')}
+							renderItem={({ item, index }) => <Card title={item} idx={index + 1} />}
+							numColumns={2}
+							style={{ flexGrow: 0, marginBottom: 24 }}
+						/>
+					</View>
 
 					<Warning />
 
