@@ -27,14 +27,14 @@ const useWalletState = () => {
 		return smallWalletAddress(address);
 	};
 
-	// Register user on Intercom
-	const intercomKey = INTERCOM_KEY || process.env.INTERCOM_KEY;
-	const hmac = crypto.createHmac('sha256', intercomKey!);
-	hmac.update(accountName());
-	const sign = hmac.digest('hex');
-	Intercom.setUserHash(sign);
-	Intercom.registerIdentifiedUser({ userId: accountName() });
-	//
+	useEffect(() => {
+		const intercomKey = INTERCOM_KEY || process.env.INTERCOM_KEY;
+		const hmac = crypto.createHmac('sha256', intercomKey!);
+		hmac.update(accountName());
+		const sign = hmac.digest('hex');
+		Intercom.setUserHash(sign);
+		Intercom.registerIdentifiedUser({ userId: accountName() });
+	}, [address]);
 
 	return {
 		state,
