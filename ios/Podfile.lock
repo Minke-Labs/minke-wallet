@@ -458,9 +458,9 @@ PODS:
     - Sentry (= 7.11.0)
   - RNSVG (12.1.1):
     - React
-  - RNUxcam (5.3.4):
+  - RNUxcam (5.4.0):
     - React-Core
-    - UXCam (~> 3.3.9)
+    - UXCam (~> 3.4.1)
   - RNVectorIcons (9.1.0):
     - React-Core
   - Sentry (7.11.0):
@@ -471,7 +471,7 @@ PODS:
     - React
   - UMTaskManagerInterface (7.1.1):
     - ExpoModulesCore
-  - UXCam (3.3.9)
+  - UXCam (3.4.1)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -807,15 +807,15 @@ SPEC CHECKSUMS:
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: 3e7f2504006c19fa07027a7c4fbe83d88e69125a
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
-  RNUxcam: c4a44f41832e54db0c386b434bf9e8d0c237b326
+  RNUxcam: 18c90d2d3ed146c75938f35493cec5f68a0838d5
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   StorytellerSDK: 5f84236ee49305deef3c22737699cb3ee41f87de
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   UMTaskManagerInterface: 3184c93ecc290bd422c6e344badc89b601e9c29b
-  UXCam: fb294bf954e708fc308a645ae65bb967cac0760e
+  UXCam: eda9b3c43b59508bbb241d2c0a04e35df6856872
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: 75de9c32a0068f6af7887a2c256a1d2108d964f7
+PODFILE CHECKSUM: 5fc2113518ff6749698d0cefae285ca9f8d604ea
 
 COCOAPODS: 1.11.3
