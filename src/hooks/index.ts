@@ -42,8 +42,8 @@ export {
 	useAuthentication,
 	useBiconomy,
 	useNativeToken,
+	useWalletState,
 	useDepositProtocols,
 	useFirstTime,
-	usePrevious,
-	useWalletState
+	usePrevious
 };

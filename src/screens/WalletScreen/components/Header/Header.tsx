@@ -1,16 +1,14 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text, Icon, ScreenLoadingIndicator } from '@components';
-import { useLanguage } from '@hooks';
+import { useLanguage, useWalletState } from '@hooks';
 import * as Haptics from 'expo-haptics';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useState } from '@hookstate/core';
 import styles from './Header.styles';
 import { HeaderProps } from './Header.types';
 
-const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress, accountName }) => {
+const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress }) => {
 	const { i18n } = useLanguage();
-	const state = useState(globalWalletState());
+	const { accountName, state } = useWalletState();
 
 	const handlePress = (event: any) => {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);

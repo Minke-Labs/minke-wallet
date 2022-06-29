@@ -3,6 +3,7 @@ import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
 import { useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem/ListItem';
 import ImportWalletModal from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
@@ -10,8 +11,9 @@ import { useAccountsScreen } from './AccountsScreen.hooks';
 
 const AccountsScreen = () => {
 	const { address, wallets, goBack, onImportFinished, onSelectWallet, isModalVisible, setModalVisible } =
-		useAccountsScreen();
+	useAccountsScreen();
 	const { i18n } = useLanguage();
+	RNUxcam.tagScreenName('AccountsScreen');
 
 	return (
 		<BasicLayout>

@@ -5,6 +5,7 @@ import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
 import { Button, Modal, ActivityIndicator, ModalReusables, Header, GasSelector, TokenCard } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import RNUxcam from 'react-native-ux-cam';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
@@ -38,6 +39,7 @@ const ExchangeScreen = () => {
 		gasless
 	} = useExchangeScreen();
 	const { i18n } = useLanguage();
+	RNUxcam.tagScreenName('ExchangeScreen');
 
 	return (
 		<>

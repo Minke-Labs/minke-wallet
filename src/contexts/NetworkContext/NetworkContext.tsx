@@ -1,18 +1,17 @@
 import React, { createContext, useMemo, useEffect } from 'react';
-import { useState } from '@hookstate/core';
 import { captureException } from '@sentry/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
+import { fetchTokensAndBalances } from '@stores/WalletStore';
 import { Network, network as selectedNetwork, networkSettingsKey } from '@models/network';
 import Logger from '@utils/logger';
+import useWalletState from '../../hooks/useWalletState';
 
 export const NetworkContext = createContext<any>(null);
 
 const NetworkProvider: React.FC = ({ children }) => {
 	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
-
-	const state = useState(globalWalletState());
-	const { privateKey, address, network } = state.value;
+	const { state } = useWalletState();
+	const { privateKey, network, address } = state.value;
 
 	const selectNetwork = async (ntw: Network) => {
 		try {

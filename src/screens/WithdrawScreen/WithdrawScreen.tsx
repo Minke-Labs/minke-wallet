@@ -1,9 +1,10 @@
 import React from 'react';
+import { View } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
 import { BasicLayout } from '@layouts';
-import { View } from 'react-native';
 import { useNavigation, useLanguage } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import { debounce } from 'lodash';
 import { MinkeToken } from '@models/token';
 import Warning from '../ExchangeScreen/Warning/Warning';
@@ -11,6 +12,7 @@ import useWithdrawScreen from './WithdrawScreen.hooks';
 import styles from './WithdrawScreen.styles';
 
 const WithdrawScreen = () => {
+	RNUxcam.tagScreenName('WithdrawScreen');
 	const navigation = useNavigation();
 	const {
 		searchVisible,

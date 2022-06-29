@@ -4,6 +4,7 @@ import { Text, Header, HapticButton, Paper, Modal, ModalReusables } from '@compo
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
+import RNUxcam from 'react-native-ux-cam';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
 import { TokenDetail } from './TokenDetail/TokenDetail';
@@ -35,6 +36,8 @@ const ExchangeResumeScreen = () => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	RNUxcam.tagScreenName('ExchangeResumeScreen');
+
 	return (
 		<>
 			<BasicLayout>
