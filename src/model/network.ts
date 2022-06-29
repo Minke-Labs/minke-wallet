@@ -33,6 +33,7 @@ export interface Network {
 		saveAsset: string;
 		vault: string;
 	};
+	coingeckoPlatform: string;
 }
 
 export interface Networks {
@@ -57,7 +58,8 @@ export const networks: Networks = {
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true,
 		apiUrl0x: 'https://api.0x.org/',
-		alchemyAPIKey: (ALCHEMY_API_KEY_ETHEREUM || process.env.ALCHEMY_API_KEY_ETHEREUM)!
+		alchemyAPIKey: (ALCHEMY_API_KEY_ETHEREUM || process.env.ALCHEMY_API_KEY_ETHEREUM)!,
+		coingeckoPlatform: 'ethereum'
 	},
 	matic: {
 		chainId: 137,
@@ -82,7 +84,8 @@ export const networks: Networks = {
 			mAsset: '0xE840B73E5287865EEc17d250bFb1536704B43B21',
 			saveAsset: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
 			vault: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'
-		}
+		},
+		coingeckoPlatform: 'polygon-pos'
 	},
 	ropsten: {
 		chainId: 3,
@@ -97,7 +100,8 @@ export const networks: Networks = {
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true,
-		alchemyAPIKey: (ALCHEMY_API_KEY_ROPSTEN || process.env.ALCHEMY_API_KEY_ROPSTEN)!
+		alchemyAPIKey: (ALCHEMY_API_KEY_ROPSTEN || process.env.ALCHEMY_API_KEY_ROPSTEN)!,
+		coingeckoPlatform: 'ethereum'
 	},
 	kovan: {
 		chainId: 42,
@@ -112,7 +116,8 @@ export const networks: Networks = {
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpToken: { symbol: 'USDC', name: 'USDC' },
 		transactionTimesEndpoint: true,
-		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!
+		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
+		coingeckoPlatform: 'ethereum'
 	}
 };
 
