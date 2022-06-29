@@ -12,14 +12,14 @@ import {
 	Inter_800ExtraBold,
 	useFonts
 } from '@expo-google-fonts/inter';
-import { getTokenList } from '@models/wallet';
+import { Coin, getTokenList } from '@models/wallet';
 import appsFlyer from 'react-native-appsflyer';
 import { globalWalletState } from './src/stores/WalletStore';
 import coins from './src/utils/files/coins.json';
 
 export const useApp = () => {
 	Logger.initialize();
-	const [coinList, setCoinList] = React.useState<any>();
+	const [coinList, setCoinList] = React.useState<Coin[]>();
 
 	const walletState = useState(globalWalletState());
 	const [fontsLoaded] = useFonts({
