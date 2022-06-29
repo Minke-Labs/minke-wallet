@@ -4,12 +4,14 @@ import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
 import { Text, Button, Modal, LoadingScreen } from '@components';
 import { useLanguage, useNavigation } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import styles from './WelcomeScreen.styles';
 import ImportWalletModal from './ImportWalletModal/ImportWalletModal';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
 
 const WelcomeScreen = () => {
+	RNUxcam.tagScreenName('WelcomeScreen');
 	const { i18n } = useLanguage();
 	const { isModalVisible, setModalVisible, onImportFinished, onCreateWallet, loading } = useWelcomeScreen();
 	const navigation = useNavigation();

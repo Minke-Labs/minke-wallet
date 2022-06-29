@@ -1,5 +1,5 @@
 import { createState } from '@hookstate/core';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 export interface Gas {
 	type: 'normal' | 'fast' | 'slow';
@@ -14,8 +14,8 @@ export interface Conversion {
 }
 
 export interface ExchangeState {
-	from: ParaswapToken;
-	to: ParaswapToken;
+	from: MinkeToken;
+	to: MinkeToken;
 	fromAmount: string | undefined;
 	toAmount: string | undefined;
 	gas: Gas | undefined;

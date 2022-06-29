@@ -19,6 +19,9 @@ import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
 import useDepositProtocols from './useDepositProtocols';
 import useReferralCode from './useReferralCode';
+import useFirstTime from './useFirstTime';
+import usePrevious from './usePrevious';
+import useWalletState from './useWalletState';
 
 export {
 	useAmplitude,
@@ -41,5 +44,8 @@ export {
 	useBiconomy,
 	useNativeToken,
 	useDepositProtocols,
-	useReferralCode
+	useReferralCode,
+	useWalletState,
+	useFirstTime,
+	usePrevious
 };

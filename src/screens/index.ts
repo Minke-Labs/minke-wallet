@@ -24,9 +24,8 @@ import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
 import ReferralScreen from './ReferralScreen/ReferralScreen';
 import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCodeScreen';
-import Test from './Test/Test';
 
-export {
+const screensObj = {
 	AccountsScreen,
 	AssetsScreen,
 	ManualBackupScreen,
@@ -52,6 +51,7 @@ export {
 	WithdrawScreen,
 	SavingAccountsScreen,
 	ReferralScreen,
-	EnterReferralCodeScreen,
-	Test
+	EnterReferralCodeScreen
 };
+
+export default screensObj;

@@ -3,13 +3,15 @@ import { Snackbar } from 'react-native-paper';
 import { Text, Modal, ModalReusables } from '@components';
 import { AddFunds } from '@containers';
 import { useLanguage } from '@hooks';
-import TransactionWaitModal from '@src/components/TransactionWaitModal/TransactionWaitModal';
+import RNUxcam from 'react-native-ux-cam';
 import { SendModal, ReceiveModal } from './Modals';
 import { useWalletScreen } from './WalletScreen.hooks';
 import { ResultProps } from './WalletScreen.types';
 import { Content } from './Content/Content';
+import AppTour from './AppTour';
 
 const WalletScreen = () => {
+	RNUxcam.tagScreenName('WalletScreen');
 	const {
 		sendModalOpen,
 		setSendModalOpen,
@@ -39,7 +41,7 @@ const WalletScreen = () => {
 	const { i18n } = useLanguage();
 
 	return (
-		<>
+		<AppTour>
 			<Content
 				{...{
 					onDeleteWallet,
@@ -79,7 +81,7 @@ const WalletScreen = () => {
 
 			<Modal isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>
 				{sentTransaction && (
-					<TransactionWaitModal
+					<ModalReusables.TransactionWait
 						transactionHash={sentTransaction.hash}
 						fromToken={sentTransaction.token}
 						onDismiss={() => setSendModalFinished(false)}
@@ -97,7 +99,7 @@ const WalletScreen = () => {
 					/>
 				)}
 			</Modal>
-		</>
+		</AppTour>
 	);
 };
 

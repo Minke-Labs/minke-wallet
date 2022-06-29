@@ -18,6 +18,10 @@ import walletAssetBackImg from './wallet-asset-back.png';
 import walletAssetBackDarkImg from './wallet-asset-back-dark.png';
 import saveCongratsImg from './save-congrats-image.png';
 import mStableLogo from './mstable-logo.png';
+import wavesBackground from './wavesBackground.png';
+import krakenAave from './krakenAave.png';
+import krakenAave2 from './krakenAave2.png';
+import krakenMStable from './krakenMStable.png';
 
 export {
 	welcomeImg,
@@ -39,5 +43,9 @@ export {
 	walletAssetBackDarkImg,
 	saveCongratsImg,
 	mStableSaveBackground,
-	mStableLogo
+	mStableLogo,
+	wavesBackground,
+	krakenAave,
+	krakenAave2,
+	krakenMStable
 };

@@ -4,6 +4,7 @@ import { useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import RNUxcam from 'react-native-ux-cam';
 import Balance from './Balance/Balance';
 import MarketCap from './MarketCap/MarketCap';
 import styles from './AssetsScreen.styles';
@@ -17,6 +18,7 @@ const AssetsScreen = ({ route }: Props) => {
 	const { colors } = useTheme();
 	const { coin } = route.params;
 	const { description, tokenVolume, marketCap } = useAssetsScreen(coin);
+	RNUxcam.tagScreenName('AssetsScreen');
 
 	return (
 		<BasicLayout hideSafeAreaView bg="detail4">

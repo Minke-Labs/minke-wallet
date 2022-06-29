@@ -4,7 +4,7 @@ import { useNavigation, useLanguage } from '@hooks';
 import { Text, Icon } from '@components';
 import styles from './Header.styles';
 
-export const Header = () => {
+export const Header: React.FC<{ onInfo?: () => void }> = ({ onInfo }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	return (
@@ -15,8 +15,12 @@ export const Header = () => {
 					{i18n.t('SaveScreen.Header.save')}
 				</Text>
 			</TouchableOpacity>
-			<TouchableOpacity>
-				<Icon name="infoStroke" color="text7" size={24} />
+			<TouchableOpacity onPress={onInfo}>
+				<Icon
+					name="infoStroke"
+					color="text7"
+					size={24}
+				/>
 			</TouchableOpacity>
 		</View>
 	);

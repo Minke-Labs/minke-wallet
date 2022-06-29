@@ -4,6 +4,7 @@ import { networks } from '@models/network';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useNetwork, useLanguage } from '@hooks';
 import { SettingsHeader } from '@components';
+import RNUxcam from 'react-native-ux-cam';
 import ListItem from './ListItem/ListItem';
 import styles from './ChangeNetworkScreen.styles';
 
@@ -12,6 +13,7 @@ const ChangeNetworkScreen = () => {
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 	const { selectNetwork, network } = useNetwork();
+	RNUxcam.tagScreenName('ChangeNetworkScreen');
 
 	return (
 		<BasicLayout>

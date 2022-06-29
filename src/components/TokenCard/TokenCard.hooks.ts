@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { decimalSeparator } from 'expo-localization';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 
 interface UseTokenCardProps {
-	token: ParaswapToken;
-	balance: string;
+	token: MinkeToken | undefined;
 	updateQuotes: Function;
 	conversionAmount: string;
 	disableMax: boolean;
 }
 
-export const useTokenCard = ({ balance, updateQuotes, token, conversionAmount, disableMax }: UseTokenCardProps) => {
+export const useTokenCard = ({ updateQuotes, token, conversionAmount, disableMax }: UseTokenCardProps) => {
 	const [amount, setAmount] = useState('');
 	// if enabled always set the max according to the balance
 	const [maxModeEnabled, setMaxModeEnabled] = useState(false);
+	const { balance = '0' } = token || {};
 
 	const onChangeText = (value: string) => {
 		let lastValid = amount;

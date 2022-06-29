@@ -3,6 +3,7 @@ import { FlatList, SafeAreaView, View } from 'react-native';
 import { SettingsHeader } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useLanguage, useNavigation } from '@hooks';
+import RNUxcam from 'react-native-ux-cam';
 import { availableDepositProtocols } from '@models/deposit';
 import ListItem from '../USDCoinScreen/ListItem/ListItem';
 import styles from './SavingAccountsScreen.styles';
@@ -11,6 +12,7 @@ const SavingAccountsScreen = () => {
 	const { selectedProtocol, onChangeProtocol } = useDepositProtocols();
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
+	RNUxcam.tagScreenName('SavingAccountsScreen');
 
 	return (
 		<BasicLayout>

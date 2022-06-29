@@ -24,6 +24,10 @@ export default {
 		BR: {
 			name: 'Brazil',
 			currencyName: 'Brazilian Real'
+		},
+		TUR: {
+			name: 'Turkey',
+			currencyName: 'Turkish Lira'
 		}
 	},
 	AccountsScreen: {
@@ -121,14 +125,10 @@ export default {
 			deposit: 'Deposit',
 			balance: 'Balance: '
 		},
-		OpenAave: {
+		OpenSavings: {
 			open_account: 'Open Account',
-			open_aave: 'Open Aave\nSavings Account',
-			what_is: 'What is Aave?',
-			aave_des:
-				'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
-			view_site: 'View Site',
-			learn_more: 'Learn More',
+			aave: 'Open Aave\nSavings Account',
+			mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'This transaction will cost a few cents.'
 		},
 		OpenMStable: {
@@ -154,7 +154,7 @@ export default {
 		you_withdrawn: "You've withdrawn successfully!"
 	},
 	ExchangeResumeScreen: {
-		exchange_resume: 'Exchange Resume',
+		exchange_resume: 'Confirmation',
 		rate_fixed_for: 'Rate fixed for:',
 		rate: 'Rate',
 		swapping_via: 'Swapping via'
@@ -170,6 +170,9 @@ export default {
 				normal: 'Normal',
 				slow: 'Slow'
 			}
+		},
+		validations: {
+			INSUFFICIENT_ASSET_LIQUIDITY: 'Insufficient asset liquidity'
 		}
 	},
 	ManualBackupScreen: {
@@ -186,10 +189,10 @@ export default {
 		}
 	},
 	SaveScreen: {
-		interest: '% anualized interest',
+		interest: '% annualized interest',
 		EmptyState: {
 			save: 'Save',
-			open_aave_savings_account: 'Open %{protocol}\nSavings Account',
+			open_savings_account: 'Open %{protocol}\nSavings Account',
 			lets_make_first_deposit: "Let's make your first deposit?"
 		},
 		Header: {
@@ -202,6 +205,12 @@ export default {
 		},
 		Body: {
 			deposit: '{{source}} Deposit'
+		},
+		InfoModal: {
+			Aave: 'Aave savings account'
+		},
+		MStable: {
+			MStable: 'mStable savings account'
 		}
 	},
 	SavingAccountsScreen: {
@@ -209,15 +218,16 @@ export default {
 	},
 	SettingsScreen: {
 		title: 'Settings',
-		creating_wallet: 'Creating wallet',
+		creating_wallet: 'Creating Wallet',
 		backup: 'Backup',
 		country: 'Country',
 		language: 'Language',
 		network: 'Network',
-		new_wallet: 'New wallet',
-		usd_coin: 'US Dollar coin',
+		new_wallet: 'New Wallet',
+		usd_coin: 'US Dollar Coin',
 		contact_support: 'Contact Support',
-		switch_account: 'Switch account',
+		help_centre: 'Help Center',
+		switch_account: 'Switch Account',
 		my_wallet: 'My Wallet',
 		my_account: 'My Account',
 		help: 'Help',
@@ -282,6 +292,36 @@ export default {
 		modal_error: 'Backup error'
 	},
 	WalletScreen: {
+		AppTour: {
+			Boxes: {
+				Steps: {
+					Step0: {
+						welcome: 'Welcome to Minke!',
+						your_new_favorite: 'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
+					},
+					Step1: {
+						add_funds: 'Add funds',
+						you_can_buy: 'You can buy USDC in 3 clicks with Apple Pay or your local payment solution.'
+					},
+					Step2: {
+						save: 'Save',
+						get_up_to: 'Get up to 5% anual interest on stable coins with mStable or Aave.'
+					},
+					Step3: {
+						send: 'Send',
+						send_tokens_to: 'Send tokens to a another wallet or to an exchange like Binance or Coinbase.'
+					},
+					Step4: {
+						exchange: 'Exchange',
+						swap: 'Swap between tokens.'
+					},
+					Step5: {
+						receive: 'Receive',
+						copy_your: 'Copy your public address or use a QR code.'
+					}
+				}
+			}
+		},
 		Content: {
 			transactions: 'Transactions',
 			accounts: 'Accounts'
@@ -308,6 +348,11 @@ export default {
 		},
 		TransactionsTable: {
 			see_all: 'See all'
+		},
+		components: {
+			Stories: {
+				whats_new: 'What’s new?'
+			}
 		},
 		screens: {
 			Accounts: {
@@ -488,6 +533,24 @@ export default {
 		}
 	},
 	Components: {
+		AaveReusables: {
+			Info: {
+				what_is: 'What is Aave?',
+				aave_des:
+					'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
+			}
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'What is mStable?',
+				mstable_des:
+					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
+			}
+		},
 		PendingTransactions: {
 			pending: 'Pending',
 			success: 'Success',
@@ -556,6 +619,21 @@ export default {
 			loading: 'Loading'
 		},
 		ModalReusables: {
+			TransactionWaitModal: {
+				transaction_done: 'Transaction done',
+				processing_transaction: 'Processing Transaction',
+				sent: 'Sent',
+				deposited: 'Deposited',
+				withdrew: 'Withdrew',
+				exchanged: 'Exchanged',
+				sending: 'Sending',
+				depositing: 'Depositing',
+				withdrawing: 'Withdrawing',
+				exchanging: 'Exchanging',
+				in: 'in',
+				for: 'for',
+				transaction: 'Transaction'
+			},
 			Error: {
 				title: 'Oops!',
 				description: 'Something went wrong, our developers have been notified.',
@@ -573,22 +651,11 @@ export default {
 			done: 'Done'
 		},
 		TokenCard: {
-			choose_token: 'Choose token'
+			choose_token: 'Choose token',
+			available: 'Available'
 		},
-		TransactionWaitModal: {
-			transaction_done: 'Transaction done',
-			processing_transaction: 'Processing Transaction',
-			sent: 'Sent',
-			deposited: 'Deposited',
-			withdrew: 'Withdrew',
-			exchanged: 'Exchanged',
-			sending: 'Sending',
-			depositing: 'Depositing',
-			withdrawing: 'Withdrawing',
-			exchanging: 'Exchanging',
-			in: 'in',
-			for: 'for',
-			transaction: 'Transaction'
+		InterestBanner: {
+			interest: '% annualized interest'
 		}
 	},
 	Logs: {

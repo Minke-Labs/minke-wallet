@@ -56,6 +56,7 @@
 		"implicit-arrow-linebreak": "off",
 		"react/require-default-props": "off",
 		"operator-linebreak": ["off"],
-		"react/jsx-wrap-multilines": "off"
+		"react/jsx-wrap-multilines": "off",
+		"react/jsx-no-useless-fragment": "off"
 	}
 }

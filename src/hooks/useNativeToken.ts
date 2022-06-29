@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { NativeTokens, nativeTokens, ParaswapToken } from '@models/token';
+import { NativeTokens, nativeTokens, MinkeToken } from '@models/token';
 import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from 'ethers';
 import useTokens from './useTokens';
 
 const useNativeToken = () => {
-	const [nativeToken, setNativeToken] = useState<ParaswapToken>();
+	const [nativeToken, setNativeToken] = useState<MinkeToken>();
 	const [name, setName] = useState<string>();
 	const [balance, setBalance] = useState<BigNumber>();
 	const { tokens = [] } = useTokens();
@@ -27,7 +27,7 @@ const useNativeToken = () => {
 	useEffect(() => {
 		if (nativeToken) {
 			const token = tokens.find(({ symbol }) => symbol.toLowerCase() === nativeToken.symbol.toLowerCase());
-			if (token) {
+			if (token?.balance) {
 				setBalance(parseUnits(token.balance, token.decimals));
 			}
 		}

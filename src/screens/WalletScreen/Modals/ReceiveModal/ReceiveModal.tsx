@@ -29,7 +29,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					<QRCode value={address} size={216} color="#34769D" />
 				</View>
 				<View style={styles.textContainer}>
-					{ensName && (
+					{!!ensName && (
 						<Text weight="extraBold" type="h3">
 							{ensName}
 						</Text>
