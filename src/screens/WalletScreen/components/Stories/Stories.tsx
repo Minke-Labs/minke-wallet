@@ -236,7 +236,7 @@ const Stories: React.FC = () => {
 			<TouchableOpacity onPress={() => setToggle(!toggle)} style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<Text
 					weight="semiBold"
-					type="p2" // TODO: Change to lMedium after merging the other branches
+					type="lMedium"
 					style={{ marginRight: 8 }}
 				>
 					{i18n.t('WalletScreen.components.Stories.whats_new')}
