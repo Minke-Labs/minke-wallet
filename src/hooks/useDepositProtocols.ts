@@ -54,8 +54,8 @@ const useDepositProtocols = (withdraw = false) => {
 
 	const checkAbleToDeposit = async () => {
 		const defaultUSDCoin = await usdCoin();
-		const { depositableTokens: tokens, interestTokens } = await getTokenBalances(address);
-		const sourceTokens = withdraw ? interestTokens : tokens;
+		const { depositableTokens: tokens, withdrawableTokens } = await getTokenBalances(address);
+		const sourceTokens = withdraw ? withdrawableTokens : tokens;
 		let token = sourceTokens.find((t) => t.symbol === defaultUSDCoin);
 		const hasTheDefaultToken = !!token;
 		if (hasTheDefaultToken) {

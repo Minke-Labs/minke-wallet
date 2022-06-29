@@ -1,36 +1,28 @@
 import React from 'react';
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { TransparentCardProps } from './TransparentCard.types';
 
-interface TransparentCardProps {
-	marginBottom: number;
-	row: boolean;
-	padding: number;
-}
-
-const TransparentCard: React.FC<Partial<TransparentCardProps>> = ({ children, marginBottom = 0, row, padding }) => {
-	const scheme = useColorScheme();
-	return (
-		<View
+const TransparentCard: React.FC<Partial<TransparentCardProps>> = ({ children, marginBottom = 0, row, padding }) => (
+	<View
+		style={{
+			borderRadius: 16,
+			overflow: 'hidden',
+			marginBottom
+		}}
+	>
+		<BlurView
+			intensity={19}
+			tint="light"
 			style={{
-				borderRadius: 18,
-				overflow: 'hidden',
-				marginBottom
+				padding: padding || 24,
+				flexDirection: row ? 'row' : 'column',
+				alignItems: 'center'
 			}}
 		>
-			<BlurView
-				intensity={12}
-				tint={scheme === 'dark' ? 'dark' : 'light'}
-				style={{
-					padding: padding || 24,
-					flexDirection: row ? 'row' : 'column',
-					alignItems: 'center'
-				}}
-			>
-				{children}
-			</BlurView>
-		</View>
-	);
-};
+			{children}
+		</BlurView>
+	</View>
+);
 
 export default TransparentCard;

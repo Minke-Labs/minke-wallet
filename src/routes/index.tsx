@@ -21,20 +21,19 @@ const Routes: React.FC = () => {
 
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
+	// const initialScreen = 'ExchangeScreen';
 
 	return (
 		<NavigationContainer>
 			<TransactionsProvider>
 				<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
-					{
-						screenNamesArr.map((key: string) => (
-							<Stack.Screen
-								key={key}
-								name={key as keyof RootStackParamList}
-								component={screensObj[key as keyof typeof screensObj]}
-							/>
-						))
-					}
+					{screenNamesArr.map((key: string) => (
+						<Stack.Screen
+							key={key}
+							name={key as keyof RootStackParamList}
+							component={screensObj[key as keyof typeof screensObj]}
+						/>
+					))}
 				</Stack.Navigator>
 			</TransactionsProvider>
 		</NavigationContainer>
