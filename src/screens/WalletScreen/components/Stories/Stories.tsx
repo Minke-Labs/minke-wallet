@@ -1,11 +1,9 @@
-/* eslint-disable no-tabs */
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, Icon } from '@components';
 import { useLanguage, useWalletState } from '@hooks';
 import { STORYTELLER_KEY } from '@env';
-import Storyteller,
-{
+import Storyteller, {
 	StorytellerRowView,
 	UIStyle,
 	Theme,
@@ -218,7 +216,7 @@ const Stories: React.FC = () => {
 			walletAddress,
 			'',
 			[],
-			(callback: { result: Boolean, message: string }) => {
+			(callback: { result: Boolean; message: string }) => {
 				console.log(`\n\n\nresult: ${callback.result}. Message: ${callback.message}`);
 				reloadDataIfNeeded();
 			}
@@ -235,10 +233,7 @@ const Stories: React.FC = () => {
 
 	return (
 		<View style={{ marginBottom: 64 }}>
-			<TouchableOpacity
-				onPress={() => setToggle(!toggle)}
-				style={{ flexDirection: 'row', alignItems: 'center' }}
-			>
+			<TouchableOpacity onPress={() => setToggle(!toggle)} style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<Text
 					weight="semiBold"
 					type="p2" // TODO: Change to lMedium after merging the other branches
@@ -246,11 +241,7 @@ const Stories: React.FC = () => {
 				>
 					{i18n.t('WalletScreen.components.Stories.whats_new')}
 				</Text>
-				<Icon
-					name={toggle ? 'chevronUp' : 'chevronDown'}
-					size={24}
-					color="cta1"
-				/>
+				<Icon name={toggle ? 'chevronUp' : 'chevronDown'} size={24} color="cta1" />
 			</TouchableOpacity>
 			<View style={{ width: '100%', marginTop: 12, display: toggle ? 'flex' : 'none' }}>
 				<StorytellerRowView
@@ -258,7 +249,7 @@ const Stories: React.FC = () => {
 					theme={storytellerTheme}
 					ref={rowRef}
 					style={{ height: 91 }}
-					uiStyle={scheme === 'dark' ? 'dark' as UIStyle : 'light' as UIStyle}
+					uiStyle={scheme === 'dark' ? ('dark' as UIStyle) : ('light' as UIStyle)}
 					onDataLoadStarted={() => console.log('STORIES LOADING...')}
 					onDataLoadCompleted={() => console.log('STORIES FULLY LOADED.')}
 					categories={[language as string, 'all']}

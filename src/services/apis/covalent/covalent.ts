@@ -8,8 +8,8 @@ import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
 import { depositStablecoins, interestBearingTokens, fetchDepositProtocol } from '@models/deposit';
 import { fetchInterestBearingTokens } from '@models/depositTokens';
-import { BalanceApiResponse } from './covalent.types';
 import { Coin } from '@models/wallet';
+import { BalanceApiResponse } from './covalent.types';
 
 const instance = axios.create({
 	baseURL: 'https://api.covalenthq.com/v1',
