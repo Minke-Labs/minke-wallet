@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Icon } from '@components';
-import { Paper } from './Paper';
+import { Icon, Paper } from '@components';
 import { AppTourStepType } from '../AppTour.types';
 import StepIndicator from './StepIndicator';
 import { AppTourContext } from '../Context/AppTourContext';
@@ -18,7 +17,7 @@ const Card: React.FC<{ type: AppTourStepType }> = ({ children, type }) => {
 	const { dismiss } = useContext(AppTourContext);
 
 	return (
-		<Paper>
+		<Paper padding={24}>
 			<StepIndicator type={type} />
 			{children}
 			<TouchableOpacity onPress={dismiss} style={styles.close}>

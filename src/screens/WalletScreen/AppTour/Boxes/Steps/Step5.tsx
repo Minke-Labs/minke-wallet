@@ -14,7 +14,7 @@ const Button: React.FC<{ onPress: () => void }> = ({ onPress }) => (
 		onPress={onPress}
 	>
 		<Text
-			type="a" // TODO: Change to lMedium after merge.
+			type="lMedium"
 			weight="semiBold"
 			color="cta1"
 			style={{ marginRight: 8 }}
