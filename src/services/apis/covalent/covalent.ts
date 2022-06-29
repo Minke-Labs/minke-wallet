@@ -48,17 +48,17 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	const allInterestTokens = await fetchInterestBearingTokens(address, protocol.id);
 	let interestTokens = allInterestTokens.flat();
 	let [withdrawableTokens] = allInterestTokens;
-	interestTokens = interestTokens.filter((token) => token.balanceUSD >= 0.001);
-	withdrawableTokens = withdrawableTokens.filter((token) => token.balanceUSD >= 0.001);
+	interestTokens = interestTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
+	withdrawableTokens = withdrawableTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
 
 	const depositableTokens = allTokens.filter(
-		(token) => depositStablecoins.includes(token.symbol) && +token.balance > 0
+		(token) => depositStablecoins.includes(token.symbol) && +token.balance! > 0
 	);
 	tokens = tokens.filter((token) => !interestBearingTokens.includes(token.symbol.toLowerCase()));
-	tokens = tokens.filter(({ balance }) => +balance > 0);
-	tokens = tokens.filter((token) => !isValidDomain(token.name));
-	const walletBalance = tokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
-	const depositedBalance = interestTokens.map(({ balanceUSD }) => balanceUSD).reduce((a, b) => a + b, 0);
+	tokens = tokens.filter(({ balance = '0' }) => +balance > 0);
+	tokens = tokens.filter(({ name = '' }) => !isValidDomain(name));
+	const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
+	const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const balance = walletBalance + depositedBalance;
 
 	return {

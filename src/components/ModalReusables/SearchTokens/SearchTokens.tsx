@@ -29,7 +29,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
-	const { interestTokens } = useTokens();
+	const { withdrawableTokens } = useTokens();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 
@@ -59,14 +59,13 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	useEffect(() => {
 		const loadTokens = async () => {
 			setLoading(true);
-			const allTokens = withdraw ? interestTokens : (await paraswapTokens()).tokens;
-
+			const allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
 			setTokens(allTokens);
 			removeSelectedTokens(allTokens);
 			setLoading(false);
 		};
 		loadTokens();
-	}, [interestTokens]);
+	}, [withdrawableTokens]);
 
 	useEffect(() => {
 		setSearch('');
