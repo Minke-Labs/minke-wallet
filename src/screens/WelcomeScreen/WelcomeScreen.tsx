@@ -2,19 +2,21 @@ import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
-import { Text, Button, Modal, LoadingScreen } from '@components';
+import { Text, Button, Modal, LoadingScreen, Icon } from '@components';
 import { useLanguage, useNavigation } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import styles from './WelcomeScreen.styles';
 import ImportWalletModal from './ImportWalletModal/ImportWalletModal';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
+import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';
 
 const WelcomeScreen = () => {
 	RNUxcam.tagScreenName('WelcomeScreen');
 	const { i18n } = useLanguage();
 	const { isModalVisible, setModalVisible, onImportFinished, onCreateWallet, loading } = useWelcomeScreen();
 	const navigation = useNavigation();
+	const { disableCode } = useEnterReferralCodeScreen();
 
 	return (
 		<>
@@ -50,11 +52,22 @@ const WelcomeScreen = () => {
 										onPress={() => setModalVisible(true)}
 										marginBottom={16}
 									/>
-									<TouchableOpacity onPress={() => navigation.navigate('EnterReferralCodeScreen')}>
-										<Text type="a" weight="semiBold" color="cta1">
-											{i18n.t('WelcomeScreen.i_have_a_referral_code')}
-										</Text>
-									</TouchableOpacity>
+									{disableCode ? (
+										<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+											<Text type="a" weight="medium" center color="alert3">
+												Referral code applied
+											</Text>
+											<Icon name="checkmark" color="cta1" size={20} style={{ marginLeft: 8 }} />
+										</View>
+									) : (
+										<TouchableOpacity
+											onPress={() => navigation.navigate('EnterReferralCodeScreen')}
+										>
+											<Text type="a" weight="semiBold" color="cta1">
+												{i18n.t('WelcomeScreen.i_have_a_referral_code')}
+											</Text>
+										</TouchableOpacity>
+									)}
 								</>
 							)}
 						</View>

@@ -55,10 +55,7 @@ export const Content: React.FC<ContentProps> = ({
 			loading={loading}
 			onRefresh={handleRefresh}
 		>
-			<Header
-				onSettingsPress={onSettingsPress}
-				onCopyPress={onCopyToClipboard}
-			/>
+			<Header onSettingsPress={onSettingsPress} onCopyPress={onCopyToClipboard} />
 
 			{!!tx && <PendingTransaction transaction={tx} />}
 
@@ -82,7 +79,6 @@ export const Content: React.FC<ContentProps> = ({
 			/>
 
 			<Stories />
-
 		</TabLayout>
 	);
 };

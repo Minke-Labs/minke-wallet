@@ -297,7 +297,8 @@ export default {
 				Steps: {
 					Step0: {
 						welcome: 'Welcome to Minke!',
-						your_new_favorite: 'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
+						your_new_favorite:
+							'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
 					},
 					Step1: {
 						add_funds: 'Add funds',
@@ -465,7 +466,7 @@ export default {
 			EarnModal: {
 				earn_minke_points: 'Earn Minke points!',
 				refer_a_friend: 'Refer a friend',
-				when_your_friends_top_up: 'When your friend tops up 100 USD both get 100 Minke points.',
+				when_your_friends_top_up: 'When your friend tops up 100 USDC both get 100 Minke points.',
 				top_up: 'Top-up',
 				get_rewarded: 'Get rewarded for saving money!',
 				coming_soon: '(Coming soon)',
@@ -487,7 +488,7 @@ export default {
 		or: 'or',
 		refer_a_friend: 'Refer a friend',
 		referral_note:
-			'This code can only be used once. After topping-up 100 USD you and your friend will get each 100 Minke points.',
+			'This code can only be used once. After topping-up 100 USDC you and your friend will get each 100 Minke points.',
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
