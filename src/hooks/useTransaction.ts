@@ -60,7 +60,7 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 					const ensContact = await searchContact(ens);
 					setFormattedSource(ensContact?.name || ens);
 				} else {
-					setFormattedSource(smallWalletAddress(source, walletDigits));
+					setFormattedSource(smallWalletAddress(source));
 				}
 			}
 		};
