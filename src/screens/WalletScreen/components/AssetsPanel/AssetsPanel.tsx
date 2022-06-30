@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import { Text, Icon } from '@components';
 import { useTheme, useLanguage } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
-import { KrakenJr } from '@avatars';
+// import { KrakenJr } from '@avatars';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
@@ -35,7 +35,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({
 				<TouchableOpacity onPress={onAvatarClick}>
 					{!!address && (
 						<Image
-							source={KrakenJr}
+							source={require('../../../../avatars/DeShark.png')}
 							style={[styles.avatar, { borderColor: colors.background1 }]}
 						/>
 					)}
