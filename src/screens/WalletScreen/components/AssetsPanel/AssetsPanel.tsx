@@ -7,7 +7,14 @@ import { numberFormat } from '@helpers/utilities';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
-const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds, onSave, onWalletAssets }) => {
+const AssetsPanel: React.FC<AssetsPanelProps> = ({
+	balance,
+	address,
+	onAddFunds,
+	onSave,
+	onWalletAssets,
+	onAvatarClick
+}) => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 
@@ -25,7 +32,11 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({ balance, address, onAddFunds,
 						{numberFormat(balance || 0)}
 					</Text>
 				</View>
-				<View>{!!address && <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} />}</View>
+				<TouchableOpacity onPress={onAvatarClick}>
+					<View>
+						{!!address && <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} />}
+					</View>
+				</TouchableOpacity>
 			</TouchableOpacity>
 			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
 				<TouchableOpacity
