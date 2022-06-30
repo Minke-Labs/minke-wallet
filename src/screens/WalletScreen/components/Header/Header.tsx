@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress }) => {
 	if (state.promised) return <ScreenLoadingIndicator />;
 
 	return (
-		<View style={styles.headerContainer}>
+		<View style={styles.container}>
 			<View style={styles.leftContainer}>
 				<View>
 					<Text type="a" weight="bold">
@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress }) => {
 
 			<View style={styles.iconsContainer}>
 				<TouchableOpacity activeOpacity={0.6} onPress={onSettingsPress}>
-					<Icon size={20} color="text7" />
+					<Icon size={28} color="text7" />
 				</TouchableOpacity>
 			</View>
 		</View>
