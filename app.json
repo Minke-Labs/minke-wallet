@@ -4,7 +4,6 @@
 		"slug": "minke-wallet",
 		"owner": "minkelabs",
 		"version": "0.0.7",
-		"scheme": "com.minkeapp.minkewallet",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"splash": {
@@ -18,7 +17,7 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"buildNumber": "17",
+			"buildNumber": "18",
 			"config": {
 				"usesNonExemptEncryption": false
 			},
