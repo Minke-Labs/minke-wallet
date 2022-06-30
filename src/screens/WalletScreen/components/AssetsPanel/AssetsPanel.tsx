@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { Text, Icon } from '@components';
-import makeBlockie from 'ethereum-blockies-base64';
 import { useTheme, useLanguage } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
+import { KrakenJr } from '@avatars';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
@@ -33,9 +33,12 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({
 					</Text>
 				</View>
 				<TouchableOpacity onPress={onAvatarClick}>
-					<View>
-						{!!address && <Image source={{ uri: makeBlockie(address) }} style={styles.avatar} />}
-					</View>
+					{!!address && (
+						<Image
+							source={KrakenJr}
+							style={[styles.avatar, { borderColor: colors.background1 }]}
+						/>
+					)}
 				</TouchableOpacity>
 			</TouchableOpacity>
 			<View style={[styles.buttonsContainer, { borderTopColor: colors.background1 }]}>
