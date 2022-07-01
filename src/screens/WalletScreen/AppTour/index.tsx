@@ -14,7 +14,11 @@ const AppTour: React.FC = ({ children }) => {
 	const dismiss = () => setActive(false);
 
 	const obj = useMemo(
-		() => ({ dismiss }),
+		() => ({
+			dismiss,
+			type,
+			setType
+		}),
 		[type]
 	);
 
