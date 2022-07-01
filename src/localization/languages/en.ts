@@ -495,6 +495,10 @@ export default {
 			}
 		}
 	},
+	RedeemConfirmScreen: {
+		confirmation: 'Confirmation',
+		rate_fixed_for: 'Rate fixed for:'
+	},
 	EnterReferralCodeScreen: {
 		enter_referral_code: 'Enter referral code',
 		get_rewarded_for_saving_money: 'Get rewarded for saving money!',
@@ -630,7 +634,8 @@ export default {
 			share: 'Share',
 			pay_with: 'Pay with ',
 			use_code: 'Use code',
-			loading: 'Loading'
+			loading: 'Loading',
+			swap: 'Swap'
 		},
 		ModalReusables: {
 			TransactionWaitModal: {

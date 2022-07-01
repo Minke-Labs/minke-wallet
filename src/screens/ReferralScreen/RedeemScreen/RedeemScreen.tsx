@@ -28,7 +28,8 @@ const RedeemScreen = ({ route }: Props) => {
 	const navigation = useNavigation();
 	const dismissModal = () => navigation.navigate('ReferralScreen');
 	const { i18n } = useLanguage();
-	const { fromToken, toToken, loading, conversionAmount, canSwap, updateFromQuotes } = useRedeemScreenHooks(points);
+	const { fromToken, toToken, loading, conversionAmount, canSwap, onSwap, updateFromQuotes } =
+		useRedeemScreenHooks(points);
 
 	return (
 		<>
@@ -66,7 +67,7 @@ const RedeemScreen = ({ route }: Props) => {
 							) : (
 								<Button
 									title={i18n.t('ReferralScreen.RedeemScreen.swap')}
-									onPress={() => console.log('Swap')}
+									onPress={onSwap}
 									disabled={!canSwap}
 								/>
 							)}

@@ -53,6 +53,7 @@ const useEnterReferralCodeScreen = () => {
 					i18n.t('EnterReferralCodeScreen.your_code_is_invalid')
 				);
 			} else {
+				// @TODO: Marcos - check this call
 				console.log('Referred by', referralCode.code);
 			}
 			setLoading(false);
