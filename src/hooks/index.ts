@@ -1,4 +1,5 @@
 import useAmplitude from './useAmplitude';
+import useAvatar from './useAvatar';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
@@ -24,6 +25,7 @@ import useWalletState from './useWalletState';
 
 export {
 	useAmplitude,
+	useAvatar,
 	useTheme,
 	useNavigation,
 	useFormProgress,
