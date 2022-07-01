@@ -4,13 +4,15 @@ import { AppTourStepType } from '../AppTour.types';
 import { Step0, Step1, Step2, Step3, Step4, Step5 } from './Steps';
 
 const { height, width } = Dimensions.get('screen');
+const center = width / 2 - 153;
+
 export const getBox = (type: AppTourStepType) => {
 	switch (type) {
 		case 0:
 			return {
 				position: {
 					top: height * 0.4,
-					left: width * 0.04 + 50
+					left: center
 				},
 				component: <Step0 />
 			};
@@ -18,7 +20,7 @@ export const getBox = (type: AppTourStepType) => {
 			return {
 				position: {
 					top: height * 0.18 + 180,
-					left: width * 0.06 + 30
+					left: width * 0.02
 				},
 				component: <Step1 />
 			};
@@ -26,7 +28,7 @@ export const getBox = (type: AppTourStepType) => {
 			return {
 				position: {
 					top: height * 0.18 + 180,
-					left: width * 0.2
+					left: width * 0.16
 				},
 				component: <Step2 />
 			};
@@ -34,7 +36,7 @@ export const getBox = (type: AppTourStepType) => {
 			return {
 				position: {
 					top: height * 0.26 + 170,
-					left: width * 0.06 + 30
+					left: center
 				},
 				component: <Step3 />
 			};
@@ -42,7 +44,7 @@ export const getBox = (type: AppTourStepType) => {
 			return {
 				position: {
 					top: height * 0.26 + 170,
-					left: width * 0.06 + 30
+					left: center
 				},
 				component: <Step4 />
 			};
@@ -50,7 +52,7 @@ export const getBox = (type: AppTourStepType) => {
 			return {
 				position: {
 					top: height * 0.26 + 170,
-					left: width * 0.06 + 30
+					left: center
 				},
 				component: <Step5 />
 			};
