@@ -17,7 +17,8 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	notTouchable = false,
 	apy,
 	exchange = false,
-	disableAmountValidation = false
+	disableAmountValidation = false,
+	oneSideExchange = false
 }) => {
 	const styles = makeStyles();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
@@ -50,6 +51,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					onChangeText={onChangeText}
 					ghost={exchange}
 					marginBottom={exchange ? 0 : 8}
+					editable={!(exchange && oneSideExchange)}
 				/>
 
 				<View style={[styles.bottomRow, exchange && { marginBottom: 8 }]}>

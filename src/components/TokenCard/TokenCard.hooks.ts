@@ -4,7 +4,7 @@ import { MinkeToken } from '@models/token';
 
 interface UseTokenCardProps {
 	token: MinkeToken | undefined;
-	updateQuotes: Function;
+	updateQuotes?: Function;
 	conversionAmount: string;
 	disableMax: boolean;
 }

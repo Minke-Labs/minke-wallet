@@ -1,54 +1,37 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
-import { Icon, ModalHeader, Text } from '@components';
-import { useLanguage, useNavigation, useTheme } from '@hooks';
+import { SafeAreaView, View } from 'react-native';
+import { ModalHeader, ModalReusables } from '@components';
+import { useTheme, useWalletState } from '@hooks';
+import { networks } from '@models/network';
 import { makeStyles } from './RedeemModal.styles';
-import TokenRow from './TokenRow';
-import useRedeemModalHooks from './RedeemModal.hooks';
+import NotEnoughPoints from './NotEnoughPoints/NotEnoughPoints';
+import SelectAmount from './SelectAmount/SelectAmount';
 
-const RedeemModal = ({ onDismiss }: { onDismiss: () => void }) => {
+const RedeemModal = ({ onDismiss, code }: { onDismiss: () => void; code: string | undefined }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { i18n } = useLanguage();
-	const { tokens } = useRedeemModalHooks();
-	const navigation = useNavigation();
+	const { state } = useWalletState();
+	const {
+		network: { chainId }
+	} = state.value;
+	const points = 1000;
+	const enoughPoints = points > 0;
+	const rightNetwork = chainId === networks.matic.chainId;
 
 	return (
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.container}>
-				<Text type="h3" weight="bold" style={{ width: '100%' }} marginBottom={8}>
-					{i18n.t('ReferralScreen.Modals.RedeemModal.redeem_your_points')}
-				</Text>
-				<Text type="p2" color="text2" style={{ width: '100%' }} marginBottom={24}>
-					{i18n.t('ReferralScreen.Modals.RedeemModal.select_the_token_you_want')}
-				</Text>
-				<TouchableOpacity style={styles.random}>
-					<View style={styles.row}>
-						<View style={styles.questionMark}>
-							<Icon name="questionMark" color="cta1" />
-						</View>
-
-						<Text weight="bold" type="p" color="text2">
-							{i18n.t('ReferralScreen.Modals.RedeemModal.surprise')}
-						</Text>
-					</View>
-					<View>
-						<Text type="p2" color="text3">
-							{i18n.t('ReferralScreen.Modals.RedeemModal.randomly_selected')}
-						</Text>
-					</View>
-				</TouchableOpacity>
-
-				{tokens.map(({ id, name, usdPrice }) => (
-					<TokenRow tokenName={name} usdPrice={usdPrice} key={id} />
-				))}
-
-				<TouchableOpacity onPress={() => navigation.navigate('EnterReferralCodeScreen')}>
-					<Text type="p2" weight="semiBold" color="text4" marginBottom={32}>
-						{i18n.t('ReferralScreen.Modals.RedeemModal.i_have_a_referral_code')}
-					</Text>
-				</TouchableOpacity>
+				{enoughPoints ? (
+					rightNetwork ? (
+						<SelectAmount points={points} />
+					) : (
+						<ModalReusables.WrongNetwork />
+					)
+				) : (
+					<NotEnoughPoints code={code} />
+				)}
 			</View>
 		</SafeAreaView>
 	);

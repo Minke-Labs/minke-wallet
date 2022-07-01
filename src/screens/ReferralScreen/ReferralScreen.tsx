@@ -44,7 +44,7 @@ const ReferralScreen = () => {
 				<EarnModal onDismiss={onEarnDismiss} code={code} />
 			</Modal>
 			<Modal isVisible={redeemModalVisible} onDismiss={onRedeemDismiss}>
-				<RedeemModal onDismiss={onRedeemDismiss} />
+				<RedeemModal onDismiss={onRedeemDismiss} code={code} />
 			</Modal>
 		</>
 	);
