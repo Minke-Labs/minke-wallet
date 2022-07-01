@@ -27,6 +27,7 @@ export const makeStyles = (colors: ColorType) =>
 			width: '100%'
 		},
 		buttonBox: {
+			width: '100%',
 			marginHorizontal: 16,
 			marginTop: 'auto',
 			marginBottom: 16

@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, TokenCard } from '@components';
+import { ActivityIndicator, Button, Text, TokenCard } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import DirectionButton from '@src/screens/ExchangeScreen/DirectionButton/DirectionButton';
 import { debounce } from 'lodash';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { makeStyles } from './SelectAmount.styles';
 import useRedeemModalHooks from '../RedeemModal.hooks';
 
@@ -11,7 +12,7 @@ const SelectAmount = ({ points }: { points: number }) => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { fromToken, toToken, loading, updateFromQuotes } = useRedeemModalHooks(points);
+	const { fromToken, toToken, loading, conversionAmount, canSwap, updateFromQuotes } = useRedeemModalHooks(points);
 
 	return (
 		<>
@@ -25,6 +26,7 @@ const SelectAmount = ({ points }: { points: number }) => {
 				<View style={styles.bottom}>
 					<TokenCard
 						token={toToken}
+						conversionAmount={conversionAmount}
 						disableAmountValidation
 						disableMax
 						exchange
@@ -35,6 +37,18 @@ const SelectAmount = ({ points }: { points: number }) => {
 
 				<DirectionButton loading={loading} disabled />
 			</View>
+			<View style={styles.buttonBox}>
+				{loading ? (
+					<ActivityIndicator />
+				) : (
+					<Button
+						title={i18n.t('ReferralScreen.Modals.RedeemModal.swap')}
+						onPress={() => console.log('Swap')}
+						disabled={!canSwap}
+					/>
+				)}
+			</View>
+			<KeyboardSpacer />
 		</>
 	);
 };

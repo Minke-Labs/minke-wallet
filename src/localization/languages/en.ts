@@ -475,12 +475,13 @@ export default {
 			},
 			RedeemModal: {
 				select_the_amount_to_redeem: 'Select the amount to redeem',
+				swap: 'Swap',
 				NotEnoughPoints: {
 					referring_a_friend: 'Referring a friend',
 					topping_up: 'Topping-up',
 					get_rewarded: 'Get rewarded for saving money!',
 					what_can_you_do_with_your_points: 'What can you do with your points?',
-					you_can_redeem: 'You can redeem your points for rewards in selected tokens. '
+					you_can_redeem: 'You can redeem your points for rewards in selected tokens.'
 				}
 			}
 		}
