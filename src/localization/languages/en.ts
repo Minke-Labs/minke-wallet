@@ -452,6 +452,26 @@ export default {
 			redeem: 'Redeem',
 			earn: 'Earn'
 		},
+		RedeemScreen: {
+			redeem_minke_points: 'Redeem Minke Points',
+			swap: 'Swap',
+			Modals: {
+				WrongNetwork: {
+					wrong_network: 'Oops! It seems like you are in the wrong network',
+					please_change_network: 'Please change to Polygon to redeem your points.',
+					change_to_polygon: 'Change to Polygon'
+				},
+				NotEnoughPoints: {
+					you_dont_have_points: "Oops! You don't have any points",
+					you_can_earn: 'You can earn Minke points by:',
+					referring_a_friend: 'Referring a friend',
+					topping_up: 'Topping-up',
+					get_rewarded: 'Get rewarded for saving money!',
+					what_can_you_do_with_your_points: 'What can you do with your points?',
+					you_can_redeem: 'You can redeem your points for rewards in selected tokens.'
+				}
+			}
+		},
 		Modals: {
 			HelpModal: {
 				how_minke_points_work: 'How Minke points work?',
@@ -472,17 +492,6 @@ export default {
 				coming_soon: '(Coming soon)',
 				share_text:
 					"Hi! I've been using Minke to save and earn 20x more than my bank. We will both receive 100 Minke Reward Points (~$10 that you can buy crypto with) when you signup and make your first deposit of $100 or more. My invite code is {{code}} - signup here: https://apps.apple.com/pt/app/minke-defi-wallet/id1585144414"
-			},
-			RedeemModal: {
-				select_the_amount_to_redeem: 'Select the amount to redeem',
-				swap: 'Swap',
-				NotEnoughPoints: {
-					referring_a_friend: 'Referring a friend',
-					topping_up: 'Topping-up',
-					get_rewarded: 'Get rewarded for saving money!',
-					what_can_you_do_with_your_points: 'What can you do with your points?',
-					you_can_redeem: 'You can redeem your points for rewards in selected tokens.'
-				}
 			}
 		}
 	},
@@ -661,15 +670,6 @@ export default {
 		},
 		InterestBanner: {
 			interest: '% annualized interest'
-		},
-		WrongNetwork: {
-			wrong_network: 'Oops! It seems like you are in the wrong network',
-			please_change_network: 'Please change to Polygon to redeem your points.',
-			change_to_polygon: 'Change to Polygon',
-			NotEnoughPoints: {
-				you_dont_have_points: "Oops! You don't have any points",
-				you_can_earn: 'You can earn Minke points by:'
-			}
 		}
 	},
 	Logs: {

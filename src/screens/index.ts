@@ -23,6 +23,7 @@ import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
 import ReferralScreen from './ReferralScreen/ReferralScreen';
+import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
 import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCodeScreen';
 
 const screensObj = {
@@ -51,6 +52,7 @@ const screensObj = {
 	WithdrawScreen,
 	SavingAccountsScreen,
 	ReferralScreen,
+	RedeemScreen,
 	EnterReferralCodeScreen
 };
 

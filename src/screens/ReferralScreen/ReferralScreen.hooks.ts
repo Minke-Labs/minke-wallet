@@ -10,9 +10,6 @@ const useReferralScreen = () => {
 	const onEarnPress = () => setEarnModalVisible(true);
 	const onEarnDismiss = () => setEarnModalVisible(false);
 
-	const [redeemModalVisible, setRedeemModalVisible] = useState(false);
-	const onRedeemPress = () => setRedeemModalVisible(true);
-	const onRedeemDismiss = () => setRedeemModalVisible(false);
 	const { wallets } = useWallets();
 	const showReferralButton = (Object.values(wallets) || []).length > 0;
 
@@ -23,9 +20,6 @@ const useReferralScreen = () => {
 		earnModalVisible,
 		onEarnPress,
 		onEarnDismiss,
-		redeemModalVisible,
-		onRedeemPress,
-		onRedeemDismiss,
 		showReferralButton
 	};
 };

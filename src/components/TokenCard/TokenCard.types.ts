@@ -10,5 +10,5 @@ export interface TokenCardProps {
 	apy?: string;
 	exchange?: boolean;
 	disableAmountValidation?: boolean;
-	oneSideExchange?: boolean;
+	disableInput?: boolean;
 }

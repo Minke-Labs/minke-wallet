@@ -28,5 +28,6 @@ export type RootStackParamList = {
 	SavingAccountsScreen: undefined;
 	ReferralScreen: undefined;
 	EnterReferralCodeScreen: undefined;
+	RedeemScreen: { code: string | undefined };
 	Test: undefined;
 };

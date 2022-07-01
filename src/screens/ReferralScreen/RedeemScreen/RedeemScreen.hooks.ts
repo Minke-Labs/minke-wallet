@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const POINTS_TO_USD_CONVERSION = 0.1;
 
-const useRedeemModalHooks = (points: number) => {
+const useRedeemScreenHooks = (points: number) => {
 	const [fromToken, setFromToken] = useState<MinkeToken>();
 	const [toToken, setToToken] = useState<MinkeToken>();
 	const [conversionAmount, setConversionAmount] = useState('');
@@ -53,4 +53,4 @@ const useRedeemModalHooks = (points: number) => {
 	return { fromToken, toToken, updateFromQuotes, loading, conversionAmount, canSwap: value > 0 && value <= points };
 };
 
-export default useRedeemModalHooks;
+export default useRedeemScreenHooks;

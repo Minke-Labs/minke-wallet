@@ -1,11 +1,11 @@
 import React from 'react';
 import { SafeAreaView, View, Image, TouchableOpacity, Share } from 'react-native';
-import { Icon, Text } from '@components';
+import { Icon, ModalHeader, Text } from '@components';
 import { useLanguage } from '@hooks';
 import { whale4Img } from '@images';
-import styles from './NotEnoughPoints.styles';
+import styles from './NotEnoughPointsModal.styles';
 
-const NotEnoughPoints = ({ code }: { code: string | undefined }) => {
+const NotEnoughPointsModal = ({ code, onDismiss }: { code: string | undefined; onDismiss: () => void }) => {
 	const { i18n } = useLanguage();
 	const onShare = async () => {
 		await Share.share({ message: i18n.t('ReferralScreen.Modals.EarnModal.share_text', { code }) });
@@ -13,20 +13,19 @@ const NotEnoughPoints = ({ code }: { code: string | undefined }) => {
 
 	return (
 		<SafeAreaView>
-			<View>
+			<ModalHeader onDismiss={onDismiss} />
+			<View style={styles.container}>
 				<Image source={whale4Img} style={styles.image} />
-				<View>
-					<Text weight="bold" type="h3" marginBottom={12}>
-						{i18n.t('Components.WrongNetwork.NotEnoughPoints.you_dont_have_points')}
-					</Text>
-					<Text weight="regular" type="a" color="text2" marginBottom={32}>
-						{i18n.t('Components.WrongNetwork.NotEnoughPoints.you_can_earn')}
-					</Text>
-				</View>
+				<Text weight="bold" type="h3" marginBottom={12}>
+					{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.you_dont_have_points')}
+				</Text>
+				<Text weight="regular" type="a" color="text2" marginBottom={32}>
+					{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.you_can_earn')}
+				</Text>
 
 				<View style={styles.row}>
 					<Text type="p" weight="bold" color="text2">
-						{i18n.t('ReferralScreen.Modals.RedeemModal.NotEnoughPoints.referring_a_friend')}
+						{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.referring_a_friend')}
 					</Text>
 					{!!code && (
 						<TouchableOpacity
@@ -41,12 +40,12 @@ const NotEnoughPoints = ({ code }: { code: string | undefined }) => {
 					)}
 				</View>
 
-				<Text type="a" weight="semiBold" color="text3" marginBottom={24}>
+				<Text type="a" weight="semiBold" color="text3" marginBottom={16}>
 					{i18n.t('ReferralScreen.Modals.EarnModal.when_your_friends_top_up')}
 				</Text>
 				<View style={styles.row}>
 					<Text type="p" weight="bold" color="text2">
-						{i18n.t('ReferralScreen.Modals.RedeemModal.NotEnoughPoints.topping_up')}
+						{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.topping_up')}
 					</Text>
 					<Text type="a" weight="semiBold" color="text2">
 						{i18n.t('ReferralScreen.Modals.EarnModal.coming_soon')}
@@ -56,14 +55,14 @@ const NotEnoughPoints = ({ code }: { code: string | undefined }) => {
 					{i18n.t('ReferralScreen.Modals.EarnModal.get_rewarded')}
 				</Text>
 				<Text type="tSmall" weight="bold" color="text2">
-					{i18n.t('ReferralScreen.Modals.RedeemModal.NotEnoughPoints.what_can_you_do_with_your_points')}
+					{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.what_can_you_do_with_your_points')}
 				</Text>
 				<Text type="tSmall" weight="regular" color="text2" marginBottom={40}>
-					{i18n.t('ReferralScreen.Modals.RedeemModal.NotEnoughPoints.you_can_redeem')}
+					{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.you_can_redeem')}
 				</Text>
 			</View>
 		</SafeAreaView>
 	);
 };
 
-export default NotEnoughPoints;
+export default NotEnoughPointsModal;
