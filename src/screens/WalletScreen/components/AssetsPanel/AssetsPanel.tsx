@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { Text, Icon } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { useTheme, useLanguage, useAvatar } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
-// import { KrakenJr } from '@avatars';
 import styles from './AssetsPanel.styles';
 import { AssetsPanelProps } from './AssetsPanel.types';
 
@@ -15,6 +14,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({
 	onWalletAssets,
 	onAvatarClick
 }) => {
+	const { currentAvatar } = useAvatar();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 
@@ -35,7 +35,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({
 				<TouchableOpacity onPress={onAvatarClick}>
 					{!!address && (
 						<Image
-							source={require('../../../../avatars/DeShark.png')}
+							source={currentAvatar.image}
 							style={[styles.avatar, { borderColor: colors.background1 }]}
 						/>
 					)}

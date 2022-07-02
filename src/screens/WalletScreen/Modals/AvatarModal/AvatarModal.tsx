@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { View, SafeAreaView, Image } from 'react-native';
+import { View, SafeAreaView, Image, FlatList } from 'react-native';
 import { Text, ModalHeader, Flag, Button } from '@components';
 import { useAvatar } from '@hooks';
 import styles from './AvatarModal.styles';
+import { Item } from './Item';
 
 interface AvatarModalProps {
 	onDismiss: () => void;
 }
 
-const AvatarModal: React.FC<AvatarModalProps> = ({ onDismiss }) => {
-	const { value } = useAvatar();
-	console.log('VALOR É: ', value);
+const Chosen: React.FC<AvatarModalProps> = ({ onDismiss }) => {
+	const { currentAvatar } = useAvatar();
 	return (
-		<SafeAreaView>
+		<>
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.container}>
 				<View style={{
@@ -21,11 +22,17 @@ const AvatarModal: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 					marginBottom: 8
 				}}
 				>
-					<Text type="hMedium" weight="bold" style={{ marginRight: 8 }}>DeShark</Text>
-					<Flag name="australia" size={16} />
+					<Text
+						type="hMedium"
+						weight="bold"
+						style={{ marginRight: 8 }}
+					>
+						{currentAvatar.name}
+					</Text>
+					<Flag name={currentAvatar.flag} size={16} />
 				</View>
 				<Image
-					source={require('../../../../avatars/DeShark.png')}
+					source={currentAvatar.image}
 					style={{
 						width: 92,
 						height: 92,
@@ -39,7 +46,7 @@ const AvatarModal: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 					type="bSmall"
 					marginBottom={8}
 				>
-					The Australian shark that loves navigating the waters of DEFI.
+					{currentAvatar.desc}
 				</Text>
 				<Text
 					weight="bold"
@@ -51,8 +58,39 @@ const AvatarModal: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 				<Button title="Select a Minke avatar" marginBottom={16} />
 				<Button title="Choose from library" marginBottom={16} />
 			</View>
-		</SafeAreaView>
+		</>
 	);
 };
+
+const Select: React.FC<AvatarModalProps> = ({ onDismiss }) => {
+	const { avatarArray, setAvatarId } = useAvatar();
+	return (
+		<>
+			<ModalHeader {...{ onDismiss }} />
+			<View style={{ paddingHorizontal: 16 }}>
+				<Text
+					type="hMedium"
+					weight="bold"
+					marginBottom={16}
+				>
+					Select your avatar
+				</Text>
+				<FlatList
+					style={{ marginBottom: 20 }}
+					keyExtractor={(item) => item.name}
+					data={avatarArray}
+					renderItem={({ item, index }) => <Item avatar={item} onPress={() => setAvatarId(index)} />}
+				/>
+			</View>
+		</>
+	);
+};
+
+const AvatarModal: React.FC<AvatarModalProps> = ({ onDismiss }) => (
+	<SafeAreaView>
+		{/* <Chosen onDismiss={onDismiss} /> */}
+		<Select onDismiss={onDismiss} />
+	</SafeAreaView>
+);
 
 export default AvatarModal;
