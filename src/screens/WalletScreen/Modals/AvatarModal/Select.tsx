@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Text, ModalHeader } from '@components';
-import { useAvatar } from '@hooks';
+import { useAvatar, useLanguage } from '@hooks';
 import { Item } from './Item';
-import { AvatarModalProps } from './AvatarModal.types';
 
-export const Select: React.FC<AvatarModalProps> = ({ onDismiss }) => {
+interface SelectProps {
+	onDismiss: () => void;
+	onBack: () => void;
+}
+
+export const Select: React.FC<SelectProps> = ({ onDismiss, onBack }) => {
+	const { i18n } = useLanguage();
 	const { avatars, setAvatarId } = useAvatar();
 
 	const handleClick = (id: number) => {
@@ -15,14 +20,14 @@ export const Select: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 
 	return (
 		<>
-			<ModalHeader {...{ onDismiss }} />
+			<ModalHeader {...{ onDismiss }} onBack={onBack} />
 			<View style={{ paddingHorizontal: 16 }}>
 				<Text
 					type="hMedium"
 					weight="bold"
 					marginBottom={16}
 				>
-					Select your avatar
+					{i18n.t('WalletScreen.Modals.AvatarModal.Select.select')}
 				</Text>
 				<FlatList
 					style={{ marginBottom: 20 }}

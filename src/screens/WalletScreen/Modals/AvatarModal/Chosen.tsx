@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import { Text, ModalHeader, Flag, Button } from '@components';
-import { useAvatar } from '@hooks';
+import { useAvatar, useLanguage } from '@hooks';
 import styles from './AvatarModal.styles';
-import { AvatarModalProps } from './AvatarModal.types';
 
-export const Chosen: React.FC<AvatarModalProps> = ({ onDismiss }) => {
+interface ChosenProps {
+	onDismiss: () => void;
+	onSelectAvatar: () => void;
+}
+
+export const Chosen: React.FC<ChosenProps> = ({ onDismiss, onSelectAvatar }) => {
+	const { i18n } = useLanguage();
 	const { currentAvatar } = useAvatar();
 	return (
 		<>
@@ -48,10 +53,17 @@ export const Chosen: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 					type="hMedium"
 					marginBottom={24}
 				>
-					Edit your avatar image
+					{i18n.t('WalletScreen.Modals.AvatarModal.Chosen.edit')}
 				</Text>
-				<Button title="Select a Minke avatar" marginBottom={16} />
-				<Button title="Choose from library" marginBottom={16} />
+				<Button
+					title={i18n.t('WalletScreen.Modals.AvatarModal.Chosen.select')}
+					marginBottom={16}
+					onPress={onSelectAvatar}
+				/>
+				<Button
+					title={i18n.t('WalletScreen.Modals.AvatarModal.Chosen.choose')}
+					marginBottom={16}
+				/>
 			</View>
 		</>
 	);

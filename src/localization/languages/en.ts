@@ -393,6 +393,16 @@ export default {
 			}
 		},
 		Modals: {
+			AvatarModal: {
+				Chosen: {
+					edit: 'Edit your avatar image',
+					select: 'Select a Minke avatar',
+					choose: 'Choose from library'
+				},
+				Select: {
+					select: 'Select your avatar'
+				}
+			},
 			ReceiveModal: {
 				receive: 'Receive',
 				show_qr: 'Show your QR code or share your informations'
