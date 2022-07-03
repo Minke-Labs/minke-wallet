@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, SafeAreaView, Image, FlatList } from 'react-native';
 import { Text, ModalHeader, Flag, Button } from '@components';
 import { useAvatar } from '@hooks';
@@ -63,7 +63,13 @@ const Chosen: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 };
 
 const Select: React.FC<AvatarModalProps> = ({ onDismiss }) => {
-	const { avatarArray, setAvatarId } = useAvatar();
+	const { avatars, setAvatarId } = useAvatar();
+
+	const handleClick = (id: number) => {
+		setAvatarId(id);
+		onDismiss();
+	};
+
 	return (
 		<>
 			<ModalHeader {...{ onDismiss }} />
@@ -78,8 +84,8 @@ const Select: React.FC<AvatarModalProps> = ({ onDismiss }) => {
 				<FlatList
 					style={{ marginBottom: 20 }}
 					keyExtractor={(item) => item.name}
-					data={avatarArray}
-					renderItem={({ item, index }) => <Item avatar={item} onPress={() => setAvatarId(index)} />}
+					data={avatars}
+					renderItem={({ item, index }) => <Item avatar={item} onPress={() => handleClick(index)} />}
 				/>
 			</View>
 		</>

@@ -1,5 +1,27 @@
 /* eslint-disable max-len */
 export default {
+	AvatarContext: {
+		KrakenJr: {
+			name: 'Kraken Jr.',
+			desc: 'Um polvo amigável vindo dos EUA que está constantemente perseguindo novas moedas.'
+		},
+		DeShark: {
+			name: 'DeShark',
+			desc: 'O tubarão australiano que adora navegar nas águas do DeFi.'
+		},
+		Mateus: {
+			name: 'Mateus',
+			desc: 'Um brilhante peixe pescador brasileiro economizando em stablecoins.'
+		},
+		Fugu: {
+			name: 'Fugu',
+			desc: 'O baiacu Japonês que é novo em criptomoedas, mas está constantemente aprendendo.'
+		},
+		WowFish: {
+			name: 'Wow fish',
+			desc: 'Um peixe dourado alemão que está sempre em busca de rendimentos sustentáveis.'
+		}
+	},
 	LocationContext: {
 		US: {
 			name: 'Estados Unidos',

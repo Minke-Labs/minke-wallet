@@ -7,10 +7,10 @@ import NetworkProvider, { NetworkContext } from './NetworkContext/NetworkContext
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
 
 export {
-	AvatarContext,
 	ThemeContext,
 	AmplitudeContext,
 	LanguageContext,
+	AvatarContext,
 	BiconomyContext,
 	TransactionsContext,
 	NetworkContext,
@@ -18,10 +18,10 @@ export {
 };
 
 export const providers = [
-	AvatarProvider,
 	ThemeProvider,
 	AmplitudeProvider,
 	BiconomyProvider,
 	NetworkProvider,
-	LanguageProvider
+	LanguageProvider,
+	AvatarProvider
 ];
