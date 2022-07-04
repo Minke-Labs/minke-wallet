@@ -15,7 +15,7 @@ export const Select: React.FC<SelectProps> = ({ onDismiss, onBack }) => {
 
 	const handleClick = (id: number) => {
 		setAvatarId(id);
-		onDismiss();
+		onBack();
 	};
 
 	return (
