@@ -11,10 +11,10 @@ interface SelectProps {
 
 export const Select: React.FC<SelectProps> = ({ onDismiss, onBack }) => {
 	const { i18n } = useLanguage();
-	const { avatars, setAvatarId } = useAvatar();
+	const { avatars, setMinkeAvatarId } = useAvatar();
 
 	const handleClick = (id: number) => {
-		setAvatarId(id);
+		setMinkeAvatarId(id);
 		onBack();
 	};
 

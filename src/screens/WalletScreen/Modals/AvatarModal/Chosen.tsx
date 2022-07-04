@@ -11,7 +11,7 @@ interface ChosenProps {
 
 export const Chosen: React.FC<ChosenProps> = ({ onDismiss, onSelectAvatar }) => {
 	const { i18n } = useLanguage();
-	const { currentAvatar } = useAvatar();
+	const { currentAvatar, pickImage, avatarType } = useAvatar();
 	return (
 		<>
 			<ModalHeader {...{ onDismiss }} />
@@ -29,7 +29,7 @@ export const Chosen: React.FC<ChosenProps> = ({ onDismiss, onSelectAvatar }) => 
 					>
 						{currentAvatar.name}
 					</Text>
-					<Flag name={currentAvatar.flag} size={16} />
+					{avatarType === 'minke' && <Flag name={currentAvatar.flag} size={16} />}
 				</View>
 				<Image
 					source={currentAvatar.image}
@@ -63,6 +63,7 @@ export const Chosen: React.FC<ChosenProps> = ({ onDismiss, onSelectAvatar }) => 
 				<Button
 					title={i18n.t('WalletScreen.Modals.AvatarModal.Chosen.choose')}
 					marginBottom={16}
+					onPress={pickImage}
 				/>
 			</View>
 		</>

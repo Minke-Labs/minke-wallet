@@ -1,13 +1,20 @@
 import React, { createContext, useMemo, useState, useEffect } from 'react';
 import { KrakenJr, DeShark, Mateus, Fugu, WowFish } from '@avatars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
+import { useWalletState } from '@hooks';
 import useLanguage from '../../hooks/useLanguage';
 
 export const AvatarContext = createContext<any>(null);
 
 const AvatarProvider: React.FC = ({ children }) => {
+	const { accountName } = useWalletState();
 	const { language, i18n } = useLanguage();
-	const [avatarId, setAvatarId] = useState(0);
+
+	const [avatarType, setAvatarType] = useState<string>('minke');
+	const [userAvatarImage, setUserAvatarImage] = useState<any>(null);
+
+	const [minkeAvatarId, setMinkeAvatarId] = useState(0);
 	const avatars = useMemo(() => [
 		{
 			id: 0,
@@ -46,31 +53,77 @@ const AvatarProvider: React.FC = ({ children }) => {
 		}
 	], [language]);
 
-	const currentAvatar = useMemo(
-		() => avatars.find((avatar) => avatar.id === avatarId),
-		[avatars, avatarId]
-	);
+	const [currentAvatar, setCurrentAvatar] = useState<any>(avatars[0]);
+
+	const handleAvatarType = async (type: string) => {
+		await AsyncStorage.setItem('@avatarType', type);
+		setAvatarType(type);
+	};
+
+	// ----------------------------------------------------------------------------------------------------
+	useEffect(() => {
+		const doStuff = () => {
+			if (avatarType === 'minke') {
+				const chosenAvatar = avatars.find((avt) => avt.id === minkeAvatarId);
+				setCurrentAvatar(chosenAvatar);
+			} else if (avatarType === 'user') {
+				const avatarObj = {
+					name: accountName,
+					image: userAvatarImage
+				};
+				setCurrentAvatar(avatarObj);
+			}
+		};
+		doStuff();
+	}, [minkeAvatarId, avatarType]);
+	// ----------------------------------------------------------------------------------------------------
 
 	useEffect(() => {
 		const fetchAvatar = async () => {
-			const storedAvatarId = await AsyncStorage.getItem('@avatarId');
-			setAvatarId(Number(storedAvatarId));
+			const storedAvatarId = await AsyncStorage.getItem('@minkeAvatarId');
+			setMinkeAvatarId(Number(storedAvatarId));
+			const storedAvatarType = await AsyncStorage.getItem('@avatarType');
+			if (storedAvatarType) setAvatarType(storedAvatarType);
 		};
 		fetchAvatar();
 	}, []);
 
 	useEffect(() => {
 		const storeAvatar = async () => {
-			await AsyncStorage.setItem('@avatarId', avatarId.toString());
+			await AsyncStorage.setItem('@minkeAvatarId', minkeAvatarId.toString());
 		};
 		storeAvatar();
-	}, [avatarId]);
+	}, [minkeAvatarId]);
+
+	// ----------------------------------------------------------------------------------------------------
+	const pickImage = async () => {
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [4, 3],
+			quality: 1
+		});
+
+		if (!result.cancelled) {
+			await AsyncStorage.setItem('@userAvatarImage', `${{ uri: result.uri }}`);
+			setUserAvatarImage({ uri: result.uri });
+			handleAvatarType('user');
+		}
+	};
+	// ----------------------------------------------------------------------------------------------------
+
+	const handleMinkeAvatarSelect = (id: number) => {
+		setMinkeAvatarId(id);
+		handleAvatarType('minke');
+	};
 
 	const obj = useMemo(
 		() => ({
 			avatars,
-			setAvatarId,
-			currentAvatar
+			setMinkeAvatarId: handleMinkeAvatarSelect,
+			currentAvatar,
+			pickImage,
+			avatarType
 		}),
 		[currentAvatar]
 	);
