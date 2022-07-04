@@ -296,7 +296,8 @@ export default {
 				Steps: {
 					Step0: {
 						welcome: 'Welcome to Minke!',
-						your_new_favorite: 'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
+						your_new_favorite:
+							'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
 					},
 					Step1: {
 						add_funds: 'Add funds',
@@ -316,8 +317,13 @@ export default {
 					},
 					Step5: {
 						receive: 'Receive',
-						copy_your: 'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
+						copy_your:
+							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
 					}
+				},
+				Arrow: {
+					back: 'Back',
+					next: 'Next'
 				}
 			}
 		},
