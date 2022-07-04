@@ -317,12 +317,14 @@ export default {
 			Boxes: {
 				Steps: {
 					Step0: {
-						welcome: 'Bem-vindo ao Minke!',
-						your_new_favorite: 'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anualizados.'
+						welcome: 'Bem-vindo a Minke!',
+						your_new_favorite:
+							'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anuais.'
 					},
 					Step1: {
 						add_funds: 'Adicione fundos',
-						you_can_buy: 'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
+						you_can_buy:
+							'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
 					},
 					Step2: {
 						save: 'Poupe',
@@ -330,7 +332,8 @@ export default {
 					},
 					Step3: {
 						send: 'Envie',
-						send_tokens_to: 'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
+						send_tokens_to:
+							'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
 					},
 					Step4: {
 						exchange: 'Converta',
@@ -338,8 +341,12 @@ export default {
 					},
 					Step5: {
 						receive: 'Receba',
-						copy_your: 'Copie seu endereço público ou use um código QR.'
+						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
 					}
+				},
+				Arrow: {
+					back: 'Voltar',
+					next: 'Próximo'
 				}
 			}
 		},
@@ -359,7 +366,6 @@ export default {
 			send: 'Enviar',
 			exchange: 'Converter',
 			receive: 'Receber',
-			copy_address: 'Copiar endereço',
 			delete_wallet: 'Apagar carteira',
 			are_you_sure: 'Você tem certeza?',
 			cancel: 'Cancelar'
@@ -540,9 +546,9 @@ export default {
 			view_on: 'Ver em',
 			cancel: 'Cancelar',
 			adding_via_apple_pay: 'Adicionando via Apple Pay',
-			withdrew_from_savings: 'Retirada de investimento',
-			deposited_in_savings: 'Depósito de investimento',
-			swap: 'Converteu %{source} para %{dest}',
+			withdrew_from_savings: 'Retirou',
+			deposited_in_savings: 'Depositou',
+			swap: 'Converteu',
 			from: 'De',
 			to: 'Para',
 			today: 'Hoje',

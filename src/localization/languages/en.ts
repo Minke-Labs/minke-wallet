@@ -318,7 +318,8 @@ export default {
 				Steps: {
 					Step0: {
 						welcome: 'Welcome to Minke!',
-						your_new_favorite: 'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
+						your_new_favorite:
+							'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
 					},
 					Step1: {
 						add_funds: 'Add funds',
@@ -326,11 +327,11 @@ export default {
 					},
 					Step2: {
 						save: 'Save',
-						get_up_to: 'Get up to 5% anual interest on stable coins with mStable or Aave.'
+						get_up_to: 'Get up to 5% annual interest on stablecoins with mStable or Aave.'
 					},
 					Step3: {
 						send: 'Send',
-						send_tokens_to: 'Send tokens to a another wallet or to an exchange like Binance or Coinbase.'
+						send_tokens_to: 'Send tokens to another wallet or to an exchange like Binance or Coinbase.'
 					},
 					Step4: {
 						exchange: 'Exchange',
@@ -338,8 +339,13 @@ export default {
 					},
 					Step5: {
 						receive: 'Receive',
-						copy_your: 'Copy your public address or use a QR code.'
+						copy_your:
+							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
 					}
+				},
+				Arrow: {
+					back: 'Back',
+					next: 'Next'
 				}
 			}
 		},
@@ -359,7 +365,6 @@ export default {
 			send: 'Send',
 			exchange: 'Exchange',
 			receive: 'Receive',
-			copy_address: 'Copy address',
 			delete_wallet: 'Delete wallet',
 			are_you_sure: 'Are you sure?',
 			cancel: 'Cancel'
@@ -539,9 +544,9 @@ export default {
 			view_on: 'View on',
 			cancel: 'Cancel',
 			adding_via_apple_pay: 'Adding via Apple Pay',
-			withdrew_from_savings: 'Withdrew from Savings',
-			deposited_in_savings: 'Deposited in Savings',
-			swap: 'Swap %{source} to %{dest}',
+			withdrew_from_savings: 'Withdrew',
+			deposited_in_savings: 'Deposited',
+			swap: 'Swapped',
 			from: 'From',
 			to: 'To',
 			today: 'Today',

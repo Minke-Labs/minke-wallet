@@ -60,7 +60,7 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 					const ensContact = await searchContact(ens);
 					setFormattedSource(ensContact?.name || ens);
 				} else {
-					setFormattedSource(smallWalletAddress(source, walletDigits));
+					setFormattedSource(smallWalletAddress(source));
 				}
 			}
 		};
@@ -96,7 +96,7 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 			: deposit
 				? i18n.t('Components.Transaction.deposited_in_savings')
 				: exchange
-					? i18n.t('Components.Transaction.swap', { source: sourceToken?.symbol, dest: toToken?.symbol })
+					? i18n.t('Components.Transaction.swap')
 					: `${
 						received ? i18n.t('Components.Transaction.from') : i18n.t('Components.Transaction.to')
 					}: ${formattedSource}`;
