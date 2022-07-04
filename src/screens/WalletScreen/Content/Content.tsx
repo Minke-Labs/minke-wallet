@@ -75,8 +75,7 @@ export const Content: React.FC<ContentProps> = ({
 					onDeleteWallet,
 					onExchange,
 					onSwitchAccounts,
-					showReceive,
-					onCopyToClipboard
+					showReceive
 				}}
 				setSendModalOpen={() => setSendModalOpen(true)}
 			/>

@@ -337,7 +337,6 @@ export default {
 			send: 'Send',
 			exchange: 'Exchange',
 			receive: 'Receive',
-			copy_address: 'Copy address',
 			delete_wallet: 'Delete wallet',
 			are_you_sure: 'Are you sure?',
 			cancel: 'Cancel'

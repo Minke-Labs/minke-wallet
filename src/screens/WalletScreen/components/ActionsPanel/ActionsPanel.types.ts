@@ -7,7 +7,6 @@ interface ActionsPanelProps {
 	onExchange: (event: GestureResponderEvent) => void;
 	onSwitchAccounts: (event: GestureResponderEvent) => void;
 	showReceive: (event: GestureResponderEvent) => void;
-	onCopyToClipboard: (event: GestureResponderEvent) => void;
 }
 
 interface CardProps {
