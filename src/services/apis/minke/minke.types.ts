@@ -12,3 +12,15 @@ export interface Referral {
 	wallet: string;
 	referral_code: ReferralCode;
 }
+
+export interface RewardClaimParams {
+	address: string;
+	points: number;
+	timestamp: number;
+	signature: string;
+}
+
+export interface RewardClaim {
+	error?: 'failed_claim' | 'invalid_request';
+	transfer_id?: string;
+}
