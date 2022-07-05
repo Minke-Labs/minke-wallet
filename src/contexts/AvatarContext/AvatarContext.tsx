@@ -64,15 +64,16 @@ const AvatarProvider: React.FC = ({ children }) => {
 		const fetchAvatar = async () => {
 			const storedAvatarId = await AsyncStorage.getItem('@minkeAvatarId');
 			if (storedAvatarId) setMinkeAvatarId(Number(storedAvatarId));
+
 			const storedAvatarType = await AsyncStorage.getItem('@avatarType');
 			if (storedAvatarType) setAvatarType(storedAvatarType);
+
 			const storedUserAvatarImage = await AsyncStorage.getItem('@userAvatarImage');
-			if (storedUserAvatarImage) setAvatarType(storedUserAvatarImage);
+			if (storedUserAvatarImage) setUserAvatarImage(JSON.parse(storedUserAvatarImage));
 		};
 		fetchAvatar();
 	}, []);
 
-	// ----------------------------------------------------------------------------------------------------
 	useEffect(() => {
 		const doStuff = () => {
 			if (avatarType === 'minke') {
@@ -87,8 +88,7 @@ const AvatarProvider: React.FC = ({ children }) => {
 			}
 		};
 		doStuff();
-	}, [minkeAvatarId, avatarType]);
-	// ----------------------------------------------------------------------------------------------------
+	}, [minkeAvatarId, avatarType, userAvatarImage]);
 
 	useEffect(() => {
 		const storeAvatar = async () => {
@@ -98,6 +98,7 @@ const AvatarProvider: React.FC = ({ children }) => {
 	}, [minkeAvatarId]);
 
 	// ----------------------------------------------------------------------------------------------------
+
 	const pickImage = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -107,17 +108,19 @@ const AvatarProvider: React.FC = ({ children }) => {
 		});
 
 		if (!result.cancelled) {
-			await AsyncStorage.setItem('@userAvatarImage', `${{ uri: result.uri }}`);
-			setUserAvatarImage({ uri: result.uri });
+			const path = { uri: result.uri };
+			setUserAvatarImage(path);
+			await AsyncStorage.setItem('@userAvatarImage', JSON.stringify(path));
 			handleAvatarType('user');
 		}
 	};
-	// ----------------------------------------------------------------------------------------------------
 
 	const handleMinkeAvatarSelect = (id: number) => {
 		setMinkeAvatarId(id);
 		handleAvatarType('minke');
 	};
+
+	// ----------------------------------------------------------------------------------------------------
 
 	const obj = useMemo(
 		() => ({
