@@ -2,7 +2,7 @@ import React, { createContext, useMemo, useState, useEffect } from 'react';
 import { KrakenJr, DeShark, Mateus, Fugu, WowFish } from '@avatars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
-import { useWalletState } from '@hooks';
+import useWalletState from '../../hooks/useWalletState';
 import useLanguage from '../../hooks/useLanguage';
 
 export const AvatarContext = createContext<any>(null);
@@ -60,6 +60,18 @@ const AvatarProvider: React.FC = ({ children }) => {
 		setAvatarType(type);
 	};
 
+	useEffect(() => {
+		const fetchAvatar = async () => {
+			const storedAvatarId = await AsyncStorage.getItem('@minkeAvatarId');
+			if (storedAvatarId) setMinkeAvatarId(Number(storedAvatarId));
+			const storedAvatarType = await AsyncStorage.getItem('@avatarType');
+			if (storedAvatarType) setAvatarType(storedAvatarType);
+			const storedUserAvatarImage = await AsyncStorage.getItem('@userAvatarImage');
+			if (storedUserAvatarImage) setAvatarType(storedUserAvatarImage);
+		};
+		fetchAvatar();
+	}, []);
+
 	// ----------------------------------------------------------------------------------------------------
 	useEffect(() => {
 		const doStuff = () => {
@@ -77,16 +89,6 @@ const AvatarProvider: React.FC = ({ children }) => {
 		doStuff();
 	}, [minkeAvatarId, avatarType]);
 	// ----------------------------------------------------------------------------------------------------
-
-	useEffect(() => {
-		const fetchAvatar = async () => {
-			const storedAvatarId = await AsyncStorage.getItem('@minkeAvatarId');
-			setMinkeAvatarId(Number(storedAvatarId));
-			const storedAvatarType = await AsyncStorage.getItem('@avatarType');
-			if (storedAvatarType) setAvatarType(storedAvatarType);
-		};
-		fetchAvatar();
-	}, []);
 
 	useEffect(() => {
 		const storeAvatar = async () => {
