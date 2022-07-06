@@ -55,14 +55,19 @@ const AvatarProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchAvatar = async () => {
 			const storedAvatar = await AsyncStorage.getItem('@savedAvatar');
-			if (storedAvatar) setSavedAvatar(JSON.parse(storedAvatar));
+			if (storedAvatar) {
+				const parsedAvatar = JSON.parse(storedAvatar);
+				if ((parsedAvatar.id || parsedAvatar.customImage) !== null) {
+					setSavedAvatar(JSON.parse(storedAvatar));
+				}
+			}
 		};
 		fetchAvatar();
 	}, []);
 
 	useEffect(() => {
 		const getCurrentAvatar = () => {
-			if (typeof savedAvatar.id === 'number') {
+			if (savedAvatar.id !== null) {
 				const chosenAvatar = avatars.find((avt) => avt.id === savedAvatar.id);
 				if (chosenAvatar) setCurrentAvatar(chosenAvatar);
 			} else {
