@@ -531,7 +531,7 @@ export default {
 				get_rewarded: 'Get rewarded for saving money!',
 				coming_soon: '(Coming soon)',
 				share_text:
-					"Hi! I've been using Minke to save and earn 20x more than my bank. We will both receive 100 Minke Reward Points (~$10 that you can buy crypto with) when you signup and make your first deposit of $100 or more. My invite code is {{code}} - signup here: https://apps.apple.com/pt/app/minke-defi-wallet/id1585144414"
+					"Hi! I've been using Minke to save and earn 20x more than my bank. We will both receive 100 Minke Reward Points (~$10 that you can buy crypto with) when you signup and make your first deposit of $100 or more. My invite code is {{code}} - signup here: https://apps.apple.com/app/minke-defi-wallet/id1585144414"
 			}
 		},
 		Body: {
