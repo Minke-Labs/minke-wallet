@@ -39,6 +39,7 @@ module.exports = ({ cache }) => {
 						'@routes': './src/routes',
 						'@layouts': './src/layouts',
 						'@images': './src/images',
+						'@avatars': './src/avatars',
 						'@hooks': './src/hooks',
 						'@utils': './src/utils',
 						'@src': './src'

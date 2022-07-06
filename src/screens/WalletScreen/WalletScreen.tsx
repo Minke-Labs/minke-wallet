@@ -4,7 +4,7 @@ import { Text, Modal, ModalReusables } from '@components';
 import { AddFunds } from '@containers';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
-import { SendModal, ReceiveModal } from './Modals';
+import { SendModal, ReceiveModal, AvatarModal } from './Modals';
 import { useWalletScreen } from './WalletScreen.hooks';
 import { ResultProps } from './WalletScreen.types';
 import { Content } from './Content/Content';
@@ -23,6 +23,8 @@ const WalletScreen = () => {
 		sendModalFinished,
 		setSendModalFinished,
 		sentTransaction,
+		openAvatarModal,
+		setOpenAvatarModal,
 		onDeleteWallet,
 		onExchange,
 		onSettingsPress,
@@ -58,6 +60,7 @@ const WalletScreen = () => {
 					setSendModalOpen,
 					onPointsPress
 				}}
+				onAvatarClick={() => setOpenAvatarModal(true)}
 			/>
 
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
@@ -99,6 +102,12 @@ const WalletScreen = () => {
 						onDismiss={() => setError(false)}
 						showHeader
 					/>
+				)}
+			</Modal>
+
+			<Modal isVisible={openAvatarModal} onDismiss={() => setOpenAvatarModal(false)}>
+				{openAvatarModal && (
+					<AvatarModal onDismiss={() => setOpenAvatarModal(false)} />
 				)}
 			</Modal>
 		</AppTour>

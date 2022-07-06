@@ -1,5 +1,27 @@
 /* eslint-disable max-len */
 export default {
+	AvatarContext: {
+		KrakenJr: {
+			name: 'Kraken Jr.',
+			desc: 'Friendly Octopus from the US that is constantly chasing new coins.'
+		},
+		DeShark: {
+			name: 'DeShark',
+			desc: 'The Australian shark that loves navigating the waters of DeFi.'
+		},
+		Mateus: {
+			name: 'Mateus',
+			desc: 'Bright Brazilian anglerfish saving on stablecoins.'
+		},
+		Fugu: {
+			name: 'Fugu',
+			desc: 'Blowfish from Japan new to crypto but constantly learning.'
+		},
+		WowFish: {
+			name: 'Wow Fish',
+			desc: 'German goldfish looking for sustainable yields.'
+		}
+	},
 	LocationContext: {
 		US: {
 			name: 'United States',
@@ -383,6 +405,16 @@ export default {
 			}
 		},
 		Modals: {
+			AvatarModal: {
+				Chosen: {
+					edit: 'Edit your avatar image',
+					select: 'Select a Minke avatar',
+					choose: 'Choose from library'
+				},
+				Select: {
+					select: 'Select your avatar'
+				}
+			},
 			ReceiveModal: {
 				receive: 'Receive',
 				show_qr: 'Show your QR code or share your informations'

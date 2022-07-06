@@ -19,7 +19,8 @@ export const Content: React.FC<ContentProps> = ({
 	address,
 	balance,
 	setAddFundsVisible,
-	setSendModalOpen
+	setSendModalOpen,
+	onAvatarClick
 }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
@@ -72,6 +73,7 @@ export const Content: React.FC<ContentProps> = ({
 				onAddFunds={() => setAddFundsVisible(true)}
 				balance={balance?.usd || 0}
 				address={address}
+				onAvatarClick={onAvatarClick}
 			/>
 
 			<ActionsPanel

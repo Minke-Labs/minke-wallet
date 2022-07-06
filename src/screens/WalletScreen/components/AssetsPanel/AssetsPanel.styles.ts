@@ -40,7 +40,6 @@ export default StyleSheet.create({
 		width: 48,
 		height: 48,
 		borderRadius: 24,
-		borderColor: 'rgba(243, 247, 255, 1)',
-		borderWidth: 4
+		borderWidth: 3
 	}
 });

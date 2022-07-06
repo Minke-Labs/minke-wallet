@@ -1,10 +1,19 @@
 {
 	"expo": {
+		"plugins": [
+			[
+				"expo-image-picker",
+				{
+					"photosPermission": "The app accesses your photos to let you share them with your friends.",
+					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+				}
+			]
+		],
 		"name": "Minke",
 		"slug": "minke-wallet",
 		"owner": "minkelabs",
+		"version": "0.0.8",
 		"scheme": "com.minkeapp.minkewallet",
-		"version": "0.0.7",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"splash": {
