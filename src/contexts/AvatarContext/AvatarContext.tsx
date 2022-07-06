@@ -79,7 +79,7 @@ const AvatarProvider: React.FC = ({ children }) => {
 			}
 		};
 		getCurrentAvatar();
-	}, [savedAvatar.id, language]);
+	}, [savedAvatar, language]);
 
 	const handleMinkeAvatarSelect = async (id: AvatarId) => {
 		const avatarObj = { id, customImage: null };
