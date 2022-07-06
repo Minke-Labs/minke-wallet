@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation, useTheme, useLanguage } from '@hooks';
+import { useNavigation, useTheme, useLanguage, useMinkeRewards } from '@hooks';
 import { IconType } from '@styles';
 import { numberFormat } from '@src/helpers/utilities';
 import Image from './Image/Image';
@@ -34,6 +34,7 @@ const Accounts = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { balance } = useState(globalWalletState()).value;
+	const { points } = useMinkeRewards();
 
 	const cardArr = useMemo(
 		() => [
@@ -56,7 +57,7 @@ const Accounts = () => {
 			{
 				title: i18n.t('WalletScreen.screens.Accounts.points'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.points_earned'),
-				thirdRowText: '100',
+				thirdRowText: points,
 				image: 'gift',
 				onPress: () => navigation.navigate('ReferralScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />

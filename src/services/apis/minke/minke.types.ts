@@ -24,3 +24,13 @@ export interface RewardClaim {
 	error?: 'failed_claim' | 'invalid_request';
 	transfer_id?: string;
 }
+
+export interface Reward {
+	claimed: boolean;
+	id: number;
+	referral: Referral;
+	source: string;
+	wallet: string;
+	timestamp: number;
+	amount: number;
+}

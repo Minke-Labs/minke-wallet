@@ -2,9 +2,7 @@ import axios from 'axios';
 import { MINKE_API_KEY, MINKE_API_URL } from '@env';
 import { getUniqueId } from 'react-native-device-info';
 import Logger from '@utils/logger';
-import { ReferralCode, Referral, RewardClaimParams, RewardClaim } from './minke.types';
-
-console.log(MINKE_API_URL);
+import { ReferralCode, Referral, RewardClaimParams, RewardClaim, Reward } from './minke.types';
 
 const instance = axios.create({
 	baseURL: MINKE_API_URL || process.env.MINKE_API_URL,
@@ -33,10 +31,16 @@ const getUsedReferralCode = async (wallet: string): Promise<ReferralCode> => {
 	return data;
 };
 
+const getRewards = async (address: string): Promise<Reward[]> => {
+	const { status, data } = await instance.get('/rewards', { params: { address } });
+	if (status !== 200) Logger.sentry('Minke getRewards API failed');
+	return data;
+};
+
 const claimRewards = async (params: RewardClaimParams): Promise<RewardClaim> => {
 	const { status, data } = await instance.post('/rewards/claim', params);
 	if (status !== 200) Logger.sentry('Minke claimRewards API failed', params);
 	return data;
 };
 
-export { createReferralCode, createReferral, getUsedReferralCode, claimRewards };
+export { createReferralCode, createReferral, getUsedReferralCode, claimRewards, getRewards };

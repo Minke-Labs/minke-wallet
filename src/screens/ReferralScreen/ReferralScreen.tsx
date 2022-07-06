@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Modal } from '@components';
-import { useReferralCode, useNavigation } from '@hooks';
+import { useReferralCode, useNavigation, useMinkeRewards } from '@hooks';
 import { Background } from './Background/Background';
 import { Header } from './Header/Header';
 import { CurrentValue } from './CurrentValue/CurrentValue';
@@ -17,6 +17,7 @@ const ReferralScreen = () => {
 	const navigation = useNavigation();
 	const { code } = useReferralCode();
 	const onRedeemPress = () => navigation.navigate('RedeemScreen', { code });
+	const { rewards, points } = useMinkeRewards();
 
 	return (
 		<>
@@ -24,10 +25,10 @@ const ReferralScreen = () => {
 				<SafeAreaView>
 					<Background>
 						<Header onHelpPress={onHelpPress} />
-						<CurrentValue onEarnPress={onEarnPress} onRedeemPress={onRedeemPress} />
+						<CurrentValue points={points} onEarnPress={onEarnPress} onRedeemPress={onRedeemPress} />
 					</Background>
 				</SafeAreaView>
-				<Body onEarnPress={onEarnPress} />
+				<Body rewards={rewards} onEarnPress={onEarnPress} />
 			</BasicLayout>
 			<Modal isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
 				<HelpModal onDismiss={onHelpDismiss} />

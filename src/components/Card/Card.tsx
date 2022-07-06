@@ -27,7 +27,7 @@ const Card: React.FC<CardProps> = ({
 				<Text color="text4" style={{ fontSize: 16, ...(subtitleStyle as object) }} weight="medium">
 					{subtitle}
 				</Text>
-				{thirdRowText && (
+				{!!thirdRowText && (
 					<Text color="text2" style={{ fontSize: 16, ...(thirdRowStyle as object) }} weight="medium">
 						{thirdRowText}
 					</Text>

@@ -10,6 +10,7 @@ import { backupUserDataIntoCloud } from '@models/cloudBackup';
 import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
 import { captureException } from '@sentry/react-native';
 import Logger from '@utils/logger';
+import { ZAPPER_API_KEY } from '@env';
 import * as qs from 'qs';
 import * as keychain from './keychain';
 import { network as selectedNetwork, Networks, networks } from './network';
@@ -316,7 +317,7 @@ export const getTransactions = async (address: string, page = 1, offset = 5): Pr
 };
 
 export const getZapperTransactions = async (address: string): Promise<ZapperTransactionResponse> => {
-	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
 	const { zapperNetwork } = await selectedNetwork();
 	const baseURL = 'https://api.zapper.fi/v1/transactions';
 	const params = {

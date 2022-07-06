@@ -9765,6 +9765,11 @@ react-native-tcp@^3.3.2:
     process "^0.11.9"
     util "^0.10.3"
 
+react-native-test-flight@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-test-flight/-/react-native-test-flight-1.1.0.tgz#85e3b71daee00976b3e3cd65f6ffb27fbe896d86"
+  integrity sha512-9mAjbtnklqhpDLz5whRWjPVPO2yGpKztFvp/JKWuN236jgHN/Zdv/e+PqmnD43pg+snl+O45UjYQTLzN0+KT3g==
+
 react-native-udp@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-native-udp/-/react-native-udp-2.7.0.tgz#d04c5100fcbff343f8a2bf35a3025743d8960f93"

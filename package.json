@@ -104,6 +104,7 @@
     "react-native-svg": "12.1.1",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-tcp": "^3.3.2",
+    "react-native-test-flight": "^1.1.0",
     "react-native-udp": "^2.7.0",
     "react-native-ux-cam": "^5.4.0",
     "react-native-vector-icons": "^9.0.0",

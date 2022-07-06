@@ -3,14 +3,17 @@ import { TouchableOpacity, View, useColorScheme } from 'react-native';
 import { useTheme, useLanguage } from '@hooks';
 import { Text, Icon } from '@components';
 import { BlurView } from 'expo-blur';
+import { REFERRAL_POINTS_TO_USD_CONVERSION } from '@helpers/utilities';
 import { makeStyles } from './CurrentValue.styles';
 
 export const CurrentValue = ({
 	onEarnPress,
-	onRedeemPress
+	onRedeemPress,
+	points
 }: {
 	onEarnPress: () => void;
 	onRedeemPress: () => void;
+	points: number;
 }) => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -24,12 +27,12 @@ export const CurrentValue = ({
 					{i18n.t('ReferralScreen.CurrentValue.owned')}
 				</Text>
 				<Text type="textLarge" weight="medium" marginBottom={14}>
-					100 {i18n.t('ReferralScreen.CurrentValue.pts')}
+					{points} {i18n.t('ReferralScreen.CurrentValue.pts')}
 				</Text>
 				<View style={styles.interestContainer}>
 					<View style={[styles.infoRow, { marginBottom: 4 }]}>
 						<Text type="a" color="text4">
-							$5.00
+							${points * REFERRAL_POINTS_TO_USD_CONVERSION}
 						</Text>
 					</View>
 				</View>

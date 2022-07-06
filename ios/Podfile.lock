@@ -458,6 +458,8 @@ PODS:
     - Sentry (= 7.11.0)
   - RNSVG (12.1.1):
     - React
+  - RNTestFlight (1.1.0):
+    - React-Core
   - RNUxcam (5.4.0):
     - React-Core
     - UXCam (~> 3.4.1)
@@ -551,6 +553,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNTestFlight (from `../node_modules/react-native-test-flight`)
   - RNUxcam (from `../node_modules/react-native-ux-cam`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TcpSockets (from `../node_modules/react-native-tcp`)
@@ -717,6 +720,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@sentry/react-native"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNTestFlight:
+    :path: "../node_modules/react-native-test-flight"
   RNUxcam:
     :path: "../node_modules/react-native-ux-cam"
   RNVectorIcons:
@@ -807,6 +812,7 @@ SPEC CHECKSUMS:
   RNScreens: d6da2b9e29cf523832c2542f47bf1287318b1868
   RNSentry: 3e7f2504006c19fa07027a7c4fbe83d88e69125a
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNTestFlight: 3419178faa8527ecfe803607fd338a3803f1fb0d
   RNUxcam: 18c90d2d3ed146c75938f35493cec5f68a0838d5
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341

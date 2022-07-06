@@ -9,6 +9,7 @@ import { networks } from '@models/network';
 import RNUxcam from 'react-native-ux-cam';
 import { walletState } from '@stores/WalletStore';
 import Intercom from '@intercom/intercom-react-native';
+import RNTestFlight from 'react-native-test-flight';
 import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
 
@@ -27,6 +28,7 @@ const SettingsScreen = () => {
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onChangeCountry = () => navigation.navigate('ChangeCountryScreen');
 	const onChangeLanguage = () => navigation.navigate('ChangeLanguageScreen');
+	const onDevSettings = () => navigation.navigate('DevSettingsScreen');
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
@@ -115,6 +117,9 @@ const SettingsScreen = () => {
 						icon="siteStroke"
 						onPress={onChangeLanguage}
 					/>
+					{(RNTestFlight.isTestFlight || __DEV__) && (
+						<SettingsOption label="Development" icon="gear" onPress={onDevSettings} />
+					)}
 				</ScrollView>
 			</View>
 		</BasicLayout>

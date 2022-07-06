@@ -27,4 +27,5 @@ declare module '@env' {
 	export const UXCAM_API_KEY: string;
 	export const STORYTELLER_KEY: string;
 	export const INTERCOM_KEY: string;
+	export const ZAPPER_API_KEY: string;
 }

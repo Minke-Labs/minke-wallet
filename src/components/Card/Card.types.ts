@@ -11,6 +11,6 @@ export interface CardProps {
 	subtitleStyle?: StyleProp<TextStyle>;
 	onPress?: (event: GestureResponderEvent) => void;
 	marginBottom?: number;
-	thirdRowText?: string;
+	thirdRowText?: string | number;
 	thirdRowStyle?: StyleProp<TextStyle>;
 }

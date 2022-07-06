@@ -22,16 +22,16 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 					renderItem={({ item, index }) => (
 						<Card
 							image={<TransactionIcon received />}
-							title={item.name}
+							title={item.name!}
 							subtitle={i18n.t('SaveScreen.Body.deposit', { source: item.interestBearingToken!.source })}
 							marginBottom={index === interestTokens.length - 1 ? 0 : 32}
 							right={
 								<View>
 									<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>
-										{tokenBalanceFormat(item.balance, 4)} {item.symbol}
+										{tokenBalanceFormat(item.balance!, 4)} {item.symbol}
 									</Text>
 									<Text type="p2" weight="bold" style={{ alignSelf: 'flex-end' }}>
-										${tokenBalanceFormat(item.balance, 2)}
+										${tokenBalanceFormat(item.balance!, 2)}
 									</Text>
 								</View>
 							}
