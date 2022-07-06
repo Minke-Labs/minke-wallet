@@ -2,8 +2,8 @@
 	"expo": {
 		"name": "Minke",
 		"slug": "minke-wallet",
-		"scheme": "com.minkeapp.minkewallet",
 		"owner": "minkelabs",
+		"scheme": "com.minkeapp.minkewallet",
 		"version": "0.0.7",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
@@ -18,7 +18,7 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"buildNumber": "18",
+			"buildNumber": "19",
 			"config": {
 				"usesNonExemptEncryption": false
 			},
