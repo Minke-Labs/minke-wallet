@@ -1,4 +1,5 @@
 import ThemeProvider, { ThemeContext } from './themeContext/ThemeContext';
+import AvatarProvider, { AvatarContext } from './AvatarContext/AvatarContext';
 import AmplitudeProvider, { AmplitudeContext } from './AmplitudeContext/AmplitudeContext';
 import BiconomyProvider, { BiconomyContext } from './BiconomyContext/BiconomyContext';
 import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageContext';
@@ -9,6 +10,7 @@ export {
 	ThemeContext,
 	AmplitudeContext,
 	LanguageContext,
+	AvatarContext,
 	BiconomyContext,
 	TransactionsContext,
 	NetworkContext,
@@ -20,5 +22,6 @@ export const providers = [
 	AmplitudeProvider,
 	BiconomyProvider,
 	NetworkProvider,
-	LanguageProvider
+	LanguageProvider,
+	AvatarProvider
 ];

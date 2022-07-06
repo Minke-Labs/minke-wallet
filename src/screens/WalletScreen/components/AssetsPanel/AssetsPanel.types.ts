@@ -6,4 +6,5 @@ export interface AssetsPanelProps {
 	onSave: (event: GestureResponderEvent) => void;
 	onAddFunds: (event: GestureResponderEvent) => void;
 	onWalletAssets: (event: GestureResponderEvent) => void;
+	onAvatarClick: (event: GestureResponderEvent) => void;
 }
