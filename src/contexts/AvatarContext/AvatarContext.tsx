@@ -62,7 +62,7 @@ const AvatarProvider: React.FC = ({ children }) => {
 
 	useEffect(() => {
 		const getCurrentAvatar = () => {
-			if (savedAvatar.id) {
+			if (typeof savedAvatar.id === 'number') {
 				const chosenAvatar = avatars.find((avt) => avt.id === savedAvatar.id);
 				if (chosenAvatar) setCurrentAvatar(chosenAvatar);
 			} else {
