@@ -241,7 +241,10 @@ export default {
 		},
 		Processing: {
 			almost_there: 'Quase lá... isso pode levar um tempinho...',
-			please_wait: 'Por favor, espere enquanto processamos o seu pagamento...'
+			please_wait: {
+				transfer: 'Por favor, espere enquanto processamos a sua transferência...',
+				payment: 'Por favor, espere enquanto processamos o seu pagamento...'
+			}
 		},
 		Success: {
 			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
@@ -296,11 +299,13 @@ export default {
 				Steps: {
 					Step0: {
 						welcome: 'Bem-vindo ao Minke!',
-						your_new_favorite: 'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anualizados.'
+						your_new_favorite:
+							'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anualizados.'
 					},
 					Step1: {
 						add_funds: 'Adicione fundos',
-						you_can_buy: 'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
+						you_can_buy:
+							'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
 					},
 					Step2: {
 						save: 'Poupe',
@@ -308,7 +313,8 @@ export default {
 					},
 					Step3: {
 						send: 'Envie',
-						send_tokens_to: 'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
+						send_tokens_to:
+							'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
 					},
 					Step4: {
 						exchange: 'Converta',

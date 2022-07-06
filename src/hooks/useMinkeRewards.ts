@@ -14,7 +14,7 @@ const useMinkeRewards = () => {
 		const fetchRewards = async () => {
 			const apiRewards = await getRewards(address);
 			setRewards(apiRewards);
-			setPoints(apiRewards.length * POINTS_PER_REWARD);
+			setPoints(apiRewards.filter(({ claimed }) => !claimed).length * POINTS_PER_REWARD);
 		};
 
 		fetchRewards();

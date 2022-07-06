@@ -48,6 +48,7 @@ export const useWalletScreen = () => {
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
 	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
 	const onSeeAllTransactions = () => navigation.navigate('TransactionsScreen');
+	const onPointsPress = () => navigation.navigate('ReferralScreen');
 
 	const hideReceive = () => setReceiveVisible(false);
 	const showReceive = () => setReceiveVisible(true);
@@ -100,6 +101,7 @@ export const useWalletScreen = () => {
 		balance,
 		onError,
 		setError,
-		error
+		error,
+		onPointsPress
 	};
 };

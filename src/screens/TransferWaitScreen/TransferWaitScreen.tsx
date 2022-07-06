@@ -40,7 +40,7 @@ const TransferWaitScreen = ({ route }: Props) => {
 			onFinish();
 		};
 
-		if (transactionHash) {
+		if (transactionHash && amount) {
 			addTransaction(transactionHash);
 		}
 	}, [transactionHash]);
@@ -50,7 +50,7 @@ const TransferWaitScreen = ({ route }: Props) => {
 			<View
 				style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', padding: 10, alignItems: 'center' }}
 			>
-				<Processing transactionHash={transactionHash} />
+				<Processing transactionHash={transactionHash} transfer />
 			</View>
 		</BasicLayout>
 	);

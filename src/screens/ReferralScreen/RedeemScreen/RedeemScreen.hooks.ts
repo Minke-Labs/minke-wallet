@@ -9,6 +9,7 @@ const useRedeemScreenHooks = (points: number) => {
 	const [fromToken, setFromToken] = React.useState<MinkeToken>();
 	const [toToken, setToToken] = React.useState<MinkeToken>();
 	const [conversionAmount, setConversionAmount] = React.useState('');
+	const [fromConversionAmount, setFromConversionAmount] = React.useState('');
 	const [loading, setLoading] = React.useState(false);
 	const [value, setValue] = React.useState(0);
 	const redeemable = { id: 'matic-network', name: 'Matic' };
@@ -26,17 +27,6 @@ const useRedeemScreenHooks = (points: number) => {
 		return (amount * REFERRAL_POINTS_TO_USD_CONVERSION) / maticQuote;
 	};
 
-	useEffect(() => {
-		const setup = async () => {
-			const maticQtd = await loadPrices(points);
-			const balanceUSD = points * REFERRAL_POINTS_TO_USD_CONVERSION;
-			setFromToken({ symbol: 'Minke', address: 'minke', decimals: 18, balance: points.toString(), balanceUSD });
-			setToToken({ symbol: 'MATIC', address: 'matic', decimals: 18, balance: maticQtd.toString(), balanceUSD });
-		};
-
-		setup();
-	}, []);
-
 	const updateFromQuotes = async (amount: string) => {
 		const formatedValue = amount.replace(/,/g, '.');
 		if (
@@ -49,10 +39,21 @@ const useRedeemScreenHooks = (points: number) => {
 			const maticQtd = await loadPrices(inputValue);
 			setConversionAmount(maticQtd.toString());
 			setValue(inputValue);
-		} else {
-			setValue(0);
 		}
 	};
+
+	useEffect(() => {
+		const setup = async () => {
+			const maticQtd = await loadPrices(points);
+			const balanceUSD = points * REFERRAL_POINTS_TO_USD_CONVERSION;
+			setFromToken({ symbol: 'Minke', address: 'minke', decimals: 18, balance: points.toString(), balanceUSD });
+			setToToken({ symbol: 'MATIC', address: 'matic', decimals: 18, balance: maticQtd.toString(), balanceUSD });
+			setFromConversionAmount(points.toString());
+			updateFromQuotes(points.toString());
+		};
+
+		setup();
+	}, [points]);
 
 	const canSwap = value > 0 && value <= points;
 
@@ -69,6 +70,7 @@ const useRedeemScreenHooks = (points: number) => {
 		updateFromQuotes,
 		loading,
 		conversionAmount,
+		fromConversionAmount,
 		canSwap,
 		onSwap
 	};

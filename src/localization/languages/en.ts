@@ -242,7 +242,10 @@ export default {
 		},
 		Processing: {
 			almost_there: 'Almost there... this might take a minute...',
-			please_wait: 'Please wait while we process your payment...'
+			please_wait: {
+				payment: 'Please wait while we process your payment...',
+				transfer: 'Please wait while we process your transfer...'
+			}
 		},
 		Success: {
 			funds_being_deposited: 'Your funds are being deposited into your wallet...',
@@ -328,7 +331,8 @@ export default {
 			accounts: 'Accounts'
 		},
 		Header: {
-			welcome: 'Welcome'
+			welcome: 'Welcome',
+			points: 'Minke pts.'
 		},
 		AssetsPanel: {
 			your_total_assets: 'Your total assets',

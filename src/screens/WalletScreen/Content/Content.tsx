@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { TabLayout } from '@layouts';
-import { useNavigation, useTransactions, useLanguage } from '@hooks';
+import { useNavigation, useTransactions, useLanguage, useMinkeRewards } from '@hooks';
 import { PendingTransaction } from '@components';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { AssetsPanel, ActionsPanel, Header, Stories } from '../components';
@@ -11,6 +11,7 @@ export const Content: React.FC<ContentProps> = ({
 	onDeleteWallet,
 	onExchange,
 	onSettingsPress,
+	onPointsPress,
 	onSwitchAccounts,
 	onSeeAllTransactions,
 	onCopyToClipboard,
@@ -24,6 +25,7 @@ export const Content: React.FC<ContentProps> = ({
 	const navigation = useNavigation();
 	const { loading, fetchTransactions, pendingTransactions, updatePendingTransaction } = useTransactions();
 	const [tx, setTx] = useState<ZapperTransaction | null>();
+	const { points } = useMinkeRewards();
 
 	useEffect(() => {
 		const fetchStatus = async () => {
@@ -50,12 +52,17 @@ export const Content: React.FC<ContentProps> = ({
 		<TabLayout
 			leftTitle={i18n.t('WalletScreen.Content.accounts')}
 			rightTitle={i18n.t('WalletScreen.Content.transactions')}
-			left={<Accounts />}
+			left={<Accounts points={points} />}
 			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			loading={loading}
 			onRefresh={handleRefresh}
 		>
-			<Header onSettingsPress={onSettingsPress} onCopyPress={onCopyToClipboard} />
+			<Header
+				onPointsPress={onPointsPress}
+				onSettingsPress={onSettingsPress}
+				onCopyPress={onCopyToClipboard}
+				points={points}
+			/>
 
 			{!!tx && <PendingTransaction transaction={tx} />}
 

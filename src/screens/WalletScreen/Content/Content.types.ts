@@ -6,7 +6,8 @@ import { BigNumber } from 'ethers';
 export interface ContentProps {
 	onDeleteWallet: () => void;
 	onExchange: () => void;
-	onSettingsPress: any;
+	onSettingsPress: () => void;
+	onPointsPress: () => void;
 	onSwitchAccounts: () => void;
 	onSeeAllTransactions: () => void;
 	onCopyToClipboard: () => void;

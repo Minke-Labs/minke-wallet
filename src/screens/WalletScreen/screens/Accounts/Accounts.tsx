@@ -3,38 +3,16 @@ import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation, useTheme, useLanguage, useMinkeRewards } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { IconType } from '@styles';
 import { numberFormat } from '@src/helpers/utilities';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
-const ComingSoonTag = () => {
-	const { i18n } = useLanguage();
-	const { colors } = useTheme();
-	return (
-		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-			<View
-				style={{
-					borderRadius: 8,
-					backgroundColor: colors.background3,
-					paddingHorizontal: 8,
-					paddingVertical: 4
-				}}
-			>
-				<Text color="text2" type="span">
-					{i18n.t('WalletScreen.screens.Accounts.coming_soon')}
-				</Text>
-			</View>
-		</View>
-	);
-};
-
-const Accounts = () => {
+const Accounts = ({ points }: { points: number }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { balance } = useState(globalWalletState()).value;
-	const { points } = useMinkeRewards();
 
 	const cardArr = useMemo(
 		() => [
@@ -61,16 +39,9 @@ const Accounts = () => {
 				image: 'gift',
 				onPress: () => navigation.navigate('ReferralScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
-			},
-			{
-				title: i18n.t('WalletScreen.screens.Accounts.borrowing'),
-				subtitle: i18n.t('WalletScreen.screens.Accounts.open_loans'),
-				image: 'borrowStroke',
-				onPress: () => null,
-				right: <ComingSoonTag />
 			}
 		],
-		[balance]
+		[balance, points]
 	);
 
 	return (

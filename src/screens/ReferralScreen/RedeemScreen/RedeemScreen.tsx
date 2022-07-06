@@ -1,7 +1,7 @@
 import React from 'react';
 import { Keyboard, View, TouchableWithoutFeedback } from 'react-native';
 import { ActivityIndicator, Button, Header, Modal, ModalReusables, TokenCard } from '@components';
-import { useLanguage, useNavigation, useTheme, useWalletState } from '@hooks';
+import { useLanguage, useMinkeRewards, useNavigation, useTheme, useWalletState } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { networks } from '@models/network';
@@ -22,13 +22,13 @@ const RedeemScreen = ({ route }: Props) => {
 	const {
 		network: { chainId }
 	} = state.value;
-	const points = 100;
+	const { points } = useMinkeRewards();
 	const notEnoughPoints = points <= 0;
 	const wrongNetwork = chainId !== networks.matic.chainId;
 	const navigation = useNavigation();
 	const dismissModal = () => navigation.navigate('ReferralScreen');
 	const { i18n } = useLanguage();
-	const { fromToken, toToken, loading, conversionAmount, canSwap, onSwap, updateFromQuotes } =
+	const { fromToken, toToken, loading, fromConversionAmount, conversionAmount, canSwap, onSwap, updateFromQuotes } =
 		useRedeemScreenHooks(points);
 
 	return (
@@ -40,11 +40,13 @@ const RedeemScreen = ({ route }: Props) => {
 						<View style={styles.container}>
 							<View style={styles.top}>
 								<TokenCard
-									updateQuotes={debounce(updateFromQuotes, 500)}
 									token={fromToken}
+									conversionAmount={fromConversionAmount}
+									updateQuotes={debounce(updateFromQuotes, 500)}
 									exchange
-									disableInput={wrongNetwork || notEnoughPoints}
+									disableInput
 									notTouchable
+									disableMax
 								/>
 							</View>
 							<View style={styles.bottom}>
