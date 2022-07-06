@@ -497,7 +497,11 @@ export default {
 	},
 	RedeemConfirmScreen: {
 		confirmation: 'Confirmation',
-		rate_fixed_for: 'Rate fixed for:'
+		rate_fixed_for: 'Rate fixed for:',
+		errors: {
+			failed_claim: 'Your redeem was not completed. Please, contact our support.',
+			invalid_request: 'Invalid request'
+		}
 	},
 	EnterReferralCodeScreen: {
 		enter_referral_code: 'Enter referral code',

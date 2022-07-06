@@ -2,6 +2,7 @@
 	"expo": {
 		"name": "Minke",
 		"slug": "minke-wallet",
+		"scheme": "com.minkeapp.minkewallet",
 		"owner": "minkelabs",
 		"version": "0.0.7",
 		"orientation": "portrait",

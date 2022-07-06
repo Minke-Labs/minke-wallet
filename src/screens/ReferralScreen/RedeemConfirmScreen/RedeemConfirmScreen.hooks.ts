@@ -2,6 +2,11 @@ import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { globalRedeemState } from '@stores/RedeemStore';
 import { REFERRAL_POINTS_TO_USD_CONVERSION } from '@helpers/utilities';
+import { globalWalletState } from '@stores/WalletStore';
+import { Wallet } from 'ethers';
+import { getProvider } from '@models/wallet';
+import { claimRewards } from '@src/services/apis/minke/minke';
+import { useLanguage, useNavigation } from '@hooks';
 
 const useRedeemConfirmScreenHooks = () => {
 	const [error, setError] = React.useState('');
@@ -11,6 +16,9 @@ const useRedeemConfirmScreenHooks = () => {
 	const [toTokenAmount, setToTokenAmount] = React.useState<number>();
 	const redeemable = { id: 'matic-network', name: 'Matic' };
 	const { from: fromToken, to: toToken, value } = useState(globalRedeemState()).value;
+	const { address, privateKey } = useState(globalWalletState()).value;
+	const { i18n } = useLanguage();
+	const navigation = useNavigation();
 
 	const startCounter = useCallback(() => {
 		setCount(60);
@@ -54,7 +62,31 @@ const useRedeemConfirmScreenHooks = () => {
 	const onSwapConfirm = async () => {
 		setLoading(true);
 
-		// call the API to validate the value and generate the transaction
+		const wallet = new Wallet(privateKey, await getProvider());
+		const points = 100;
+		const timestamp = Math.floor(Date.now() / 1000 + 60); // 1 minute from now
+		const params = {
+			timestamp,
+			points
+		};
+		const message = JSON.stringify(params);
+		const signature = await wallet.signMessage(message);
+
+		const request = {
+			address,
+			points,
+			timestamp,
+			signature
+		};
+
+		const { error: apiError, transfer_id: transferId } = await claimRewards(request);
+
+		if (apiError) {
+			setError(i18n.t(`RedeemConfirmScreen.errors.${apiError}`));
+		} else if (transferId) {
+			navigation.navigate('TransferWaitScreen', { transferId });
+		}
+
 		setLoading(false);
 	};
 

@@ -35,7 +35,7 @@ const getUsedReferralCode = async (wallet: string): Promise<ReferralCode> => {
 
 const claimRewards = async (params: RewardClaimParams): Promise<RewardClaim> => {
 	const { status, data } = await instance.post('/rewards/claim', params);
-	if (status !== 200) Logger.sentry('Minke createReferral API failed');
+	if (status !== 200) Logger.sentry('Minke claimRewards API failed', params);
 	return data;
 };
 

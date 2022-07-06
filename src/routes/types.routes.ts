@@ -30,5 +30,6 @@ export type RootStackParamList = {
 	EnterReferralCodeScreen: undefined;
 	RedeemScreen: { code: string | undefined };
 	RedeemConfirmScreen: undefined;
+	TransferWaitScreen: { transferId: string };
 	Test: undefined;
 };

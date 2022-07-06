@@ -29,8 +29,8 @@ const Routes: React.FC = () => {
 	const urlRedirect = (event: any) => {
 		const { url } = event;
 		if (!url) return;
-		const lala = Linking.parse(url);
-		const { path, queryParams } = lala;
+		const parsed = Linking.parse(url);
+		const { path, queryParams } = parsed;
 		Logger.log(`Linked to app with path: ${path} and data: ${JSON.stringify(queryParams)}`);
 	};
 

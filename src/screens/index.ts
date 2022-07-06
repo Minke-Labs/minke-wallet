@@ -26,6 +26,7 @@ import ReferralScreen from './ReferralScreen/ReferralScreen';
 import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
 import RedeemConfirmScreen from './ReferralScreen/RedeemConfirmScreen/RedeemConfirmScreen';
 import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCodeScreen';
+import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
 import Test from './Test/Test';
 
 const screensObj = {
@@ -57,6 +58,7 @@ const screensObj = {
 	RedeemScreen,
 	RedeemConfirmScreen,
 	EnterReferralCodeScreen,
+	TransferWaitScreen,
 	Test
 };
 

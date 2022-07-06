@@ -52,7 +52,7 @@ const useWyreOrderStatus = () => {
 			try {
 				if (remainingTries === 0) return;
 				const network = await selectedNetwork();
-				const { transferHash } = await trackWyreTransfer(referenceInfo, transfer, network);
+				const { transferHash } = await trackWyreTransfer(transfer, network);
 				if (transferHash) {
 					setTransactionHash(transferHash);
 					getOrderStatus();
