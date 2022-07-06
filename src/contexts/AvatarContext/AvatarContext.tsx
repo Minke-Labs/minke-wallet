@@ -58,7 +58,7 @@ const AvatarProvider: React.FC = ({ children }) => {
 			if (storedAvatar) {
 				const parsedAvatar = JSON.parse(storedAvatar);
 				if ((parsedAvatar.id || parsedAvatar.customImage) !== null) {
-					setSavedAvatar(JSON.parse(storedAvatar));
+					setSavedAvatar(parsedAvatar);
 				}
 			}
 		};
