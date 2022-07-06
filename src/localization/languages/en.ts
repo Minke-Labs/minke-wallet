@@ -18,7 +18,7 @@ export default {
 			desc: 'Blowfish from Japan new to crypto but constantly learning.'
 		},
 		WowFish: {
-			name: 'Wow fish',
+			name: 'Wow Fish',
 			desc: 'German goldfish looking for sustainable yields.'
 		}
 	},

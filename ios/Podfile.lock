@@ -34,9 +34,6 @@ PODS:
     - UMTaskManagerInterface
   - EXManifests (0.2.4):
     - EXJSONUtils
-  - EXMediaLibrary (14.0.1):
-    - ExpoModulesCore
-    - React-Core
   - Expo (44.0.6):
     - ExpoModulesCore
   - expo-dev-client (0.8.6):
@@ -495,7 +492,6 @@ DEPENDENCIES:
   - EXLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
   - EXManifests (from `../node_modules/expo-manifests/ios`)
-  - EXMediaLibrary (from `../node_modules/expo-media-library/ios`)
   - Expo (from `../node_modules/expo/ios`)
   - expo-dev-client (from `../node_modules/expo-dev-client/ios`)
   - expo-dev-launcher (from `../node_modules/expo-dev-launcher`)
@@ -606,8 +602,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-location/ios"
   EXManifests:
     :path: "../node_modules/expo-manifests/ios"
-  EXMediaLibrary:
-    :path: "../node_modules/expo-media-library/ios"
   Expo:
     :path: "../node_modules/expo/ios"
   expo-dev-client:
@@ -758,7 +752,6 @@ SPEC CHECKSUMS:
   EXLocalAuthentication: 3c5f368ee954b79c3778158eb8000cbce4e2f8a2
   EXLocation: 013b5d07cca26c2d15d998766322e70b7a228b57
   EXManifests: d3464cd2278f4a19cd80c1aa673231570b534c11
-  EXMediaLibrary: 843669e1d9d38965057830138609ee99ef260cf1
   Expo: 534e51e607aba8229293297da5585f4b26f50fa1
   expo-dev-client: 0e8644a2769d75a75fba239aa854a15367849978
   expo-dev-launcher: 1e6eecef4abb3b1274f0e1ab1b576c67d17ddbfa
@@ -772,7 +765,7 @@ SPEC CHECKSUMS:
   EXSplashScreen: 21669e598804ee810547dbb6692c8deb5dd8dbf3
   EXUpdatesInterface: a9814f422d3cd6e7cfd260d13c27786148ece20e
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 196b9f7f0d2c72e408f6249251857d691a9b54ed
+  FBReactNativeSpec: bcbae1611f573cd67d2ba346fed3c358aaf6e7a9
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   Intercom: aea29d38ff141f4a6c7707b34b5090983b8bc09b
   intercom-react-native: f4736830a2162d0e3bde175e030aaad1dd2aec13

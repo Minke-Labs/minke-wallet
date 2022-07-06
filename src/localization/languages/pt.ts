@@ -18,7 +18,7 @@ export default {
 			desc: 'O baiacu Japonês que é novo em criptomoedas, mas está constantemente aprendendo.'
 		},
 		WowFish: {
-			name: 'Wow fish',
+			name: 'Wow Fish',
 			desc: 'Um peixe dourado alemão que está sempre em busca de rendimentos sustentáveis.'
 		}
 	},
