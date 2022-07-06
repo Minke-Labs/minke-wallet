@@ -4,11 +4,13 @@ import { BasicLayout } from '@layouts';
 import { SettingsHeader } from '@components';
 import { useLanguage } from '@hooks';
 import { depositStablecoins as stablecoins } from '@models/deposit';
+import RNUxcam from 'react-native-ux-cam';
 import styles from './USDCoinScreen.styles';
 import ListItem from './ListItem/ListItem';
 import { useUSDCoinScreen } from './USDCoinScreen.hooks';
 
 const USDCoinScreen = () => {
+	RNUxcam.tagScreenName('USDCoinScreen');
 	const { i18n } = useLanguage();
 	const { usdCoin, onSelectCoin, goBack } = useUSDCoinScreen();
 

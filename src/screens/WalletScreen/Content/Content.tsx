@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TabLayout } from '@layouts';
 import { useNavigation, useTransactions, useLanguage } from '@hooks';
-import { AssetsPanel, ActionsPanel, Header } from '../components';
+import { PendingTransaction } from '@components';
+import { getProvider, ZapperTransaction } from '@src/model/wallet';
+import { AssetsPanel, ActionsPanel, Header, Stories } from '../components';
 import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
 
@@ -16,41 +18,72 @@ export const Content: React.FC<ContentProps> = ({
 	address,
 	balance,
 	setAddFundsVisible,
-	setSendModalOpen
+	setSendModalOpen,
+	onAvatarClick
 }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { loading, fetchTransactions } = useTransactions();
+	const { loading, fetchTransactions, pendingTransactions, updatePendingTransaction } = useTransactions();
+	const [tx, setTx] = useState<ZapperTransaction | null>();
+
+	useEffect(() => {
+		const fetchStatus = async () => {
+			const provider = await getProvider();
+			const pending = pendingTransactions.filter((t) => t.pending)[0];
+			if (pending) {
+				setTx(pending);
+				const { status } = await provider.waitForTransaction(pending.hash);
+				const newTransaction = { ...pending, pending: false, txSuccessful: status === 1 };
+				setTx(newTransaction);
+				updatePendingTransaction(pending.hash, newTransaction);
+			}
+		};
+
+		fetchStatus();
+	}, [pendingTransactions]);
+
+	const handleRefresh = useCallback(() => {
+		fetchTransactions();
+		setTx(null);
+	}, [fetchTransactions]);
 
 	return (
 		<TabLayout
-			leftTitle={i18n.t('WalletScreen.Content.transactions')}
-			rightTitle={i18n.t('WalletScreen.Content.accounts')}
-			left={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
-			right={<Accounts />}
-			{...{ loading, fetchTransactions }}
+			leftTitle={i18n.t('WalletScreen.Content.accounts')}
+			rightTitle={i18n.t('WalletScreen.Content.transactions')}
+			left={<Accounts />}
+			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
+			loading={loading}
+			onRefresh={handleRefresh}
 		>
 			<Header
 				onSettingsPress={onSettingsPress}
 				onCopyPress={onCopyToClipboard}
 			/>
+
+			{!!tx && <PendingTransaction transaction={tx} />}
+
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
 				onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
 				onAddFunds={() => setAddFundsVisible(true)}
 				balance={balance?.usd || 0}
 				address={address}
+				onAvatarClick={onAvatarClick}
 			/>
+
 			<ActionsPanel
 				{...{
 					onDeleteWallet,
 					onExchange,
 					onSwitchAccounts,
-					showReceive,
-					onCopyToClipboard
+					showReceive
 				}}
 				setSendModalOpen={() => setSendModalOpen(true)}
 			/>
+
+			<Stories />
+
 		</TabLayout>
 	);
 };

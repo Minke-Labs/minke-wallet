@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires access to your microphone</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Send photos to support center</string>
     <key>NSCameraUsageDescription</key>
     <string>This app requires to access your photo library to do the KYC with Banxa</string>
     <key>CFBundleDevelopmentRegion</key>
@@ -19,7 +23,7 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.0.4</string>
+    <string>0.0.7</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -38,7 +42,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>7</string>
+    <string>19</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSRequiresIPhoneOS</key>

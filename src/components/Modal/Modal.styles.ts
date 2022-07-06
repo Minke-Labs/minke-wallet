@@ -21,7 +21,8 @@ export default StyleSheet.create({
 		bottom: 0,
 		position: 'absolute',
 		borderTopLeftRadius: 20,
-		borderTopRightRadius: 20
+		borderTopRightRadius: 20,
+		overflow: 'hidden'
 	},
 
 	// ... HEADER ...

@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
-import { useAmplitude, useAuthentication, useBiconomy, useNativeToken, useTransactions } from '@hooks';
-import { globalWalletState } from '@src/stores/WalletStore';
+import {
+	useWalletState,
+	useAmplitude,
+	useAuthentication,
+	useBiconomy,
+	useNativeToken,
+	useNavigation,
+	useTransactions
+} from '@hooks';
 import { network } from '@models/network';
 import { convertTransactionResponse } from '@models/transaction';
 import { estimateGas, sendTransaction, EstimateGasResponse, resolveENSAddress, imageSource } from '@models/wallet';
@@ -35,7 +41,6 @@ export const useTransactionTransfer = ({
 	token
 }: UseTransactionTransferProps) => {
 	const { track } = useAmplitude();
-	const state = useState(globalWalletState());
 	const [image, setImage] = React.useState<{ uri: string }>();
 	const [amount, onChangeAmount] = React.useState('');
 	const [number, onChangeNumber] = React.useState<Number>();
@@ -49,6 +54,7 @@ export const useTransactionTransfer = ({
 	const { gaslessEnabled, biconomy } = useBiconomy();
 	const gasless = gaslessEnabled && chainDefaultToken !== token.symbol;
 	const { balance } = useNativeToken();
+	const navigation = useNavigation();
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {
@@ -75,6 +81,7 @@ export const useTransactionTransfer = ({
 		}
 	}, [chainDefaultToken, gasPrice, balance]);
 
+	const { state } = useWalletState();
 	const {
 		address,
 		privateKey,
@@ -132,7 +139,7 @@ export const useTransactionTransfer = ({
 
 								track('Approved for sending', { token: token.symbol, name: token.name, gasless: true });
 
-								await provider.waitForTransaction(tx, 1);
+								await provider.waitForTransaction(tx);
 							}
 
 							const hash = await gaslessSend({
@@ -145,7 +152,6 @@ export const useTransactionTransfer = ({
 								to
 							});
 
-							const { status, from: src } = await provider.waitForTransaction(hash);
 							sentSuccessfully({
 								token: {
 									address: token.address,
@@ -161,10 +167,10 @@ export const useTransactionTransfer = ({
 								hash
 							});
 							addPendingTransaction({
-								from: src,
+								from: address,
 								destination: to,
 								hash,
-								txSuccessful: status === 1,
+								txSuccessful: true,
 								pending: true,
 								timeStamp: (new Date().getTime() / 1000).toString(),
 								amount: amountToSend,
@@ -181,9 +187,8 @@ export const useTransactionTransfer = ({
 								token.symbol.toLowerCase() === chainDefaultToken.toLowerCase() ? '' : token.address,
 								token.decimals
 							);
-							const { wait, hash } = transaction;
+							const { hash } = transaction;
 
-							await wait();
 							sentSuccessfully({
 								token: {
 									address: token.address,
@@ -209,6 +214,7 @@ export const useTransactionTransfer = ({
 								hash
 							});
 						}
+						navigation.navigate('WalletScreen');
 					} catch (error) {
 						onBlockchainError(error);
 					}

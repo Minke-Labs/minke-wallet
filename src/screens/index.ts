@@ -24,7 +24,7 @@ import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
 import Test from './Test/Test';
 
-export {
+const screensObj = {
 	AccountsScreen,
 	AssetsScreen,
 	ManualBackupScreen,
@@ -51,3 +51,5 @@ export {
 	SavingAccountsScreen,
 	Test
 };
+
+export default screensObj;

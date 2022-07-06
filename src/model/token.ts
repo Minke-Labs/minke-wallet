@@ -72,8 +72,8 @@ export const getExchangePrice = async ({
 		buyToken: destToken.toLowerCase(),
 		takerAddress: address.toLowerCase(),
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
-		buyTokenPercentageFee: 0.005,
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
+		buyTokenPercentageFee: 0.005,
 		skipValidation: true
 	};
 
@@ -163,17 +163,15 @@ export const createTransaction = async ({
 	return result.json();
 };
 
-export const ether: ParaswapToken = {
+export const ether: MinkeToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-	decimals: 18,
-	network: 1
+	decimals: 18
 };
 
-export const matic: ParaswapToken = {
+export const matic: MinkeToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	network: 137,
 	symbol: 'MATIC'
 };
 
@@ -183,19 +181,12 @@ export const nativeTokens: NativeTokens = {
 };
 
 export interface NativeTokens {
-	ETH: ParaswapToken;
-	MATIC: ParaswapToken;
-}
-
-export interface ParaswapToken {
-	symbol: string;
-	address: string;
-	decimals: number;
-	network?: number;
+	ETH: MinkeToken;
+	MATIC: MinkeToken;
 }
 
 export interface TokenResponse {
-	tokens: Array<ParaswapToken>;
+	tokens: Array<MinkeToken>;
 }
 
 interface BestRoute {
@@ -270,14 +261,14 @@ export interface TransactionData {
 }
 
 export interface MinkeToken {
-	id?: string;
-	decimals: number;
-	name: string;
 	symbol: string;
+	decimals: number;
 	address: string;
-	image: string;
-	balance: string;
-	balanceUSD: number;
+	id?: string;
+	name?: string;
+	image?: string; // TODO: @Marcos - Remove this field
+	balance?: string;
+	balanceUSD?: number;
 	interestBearingToken?: {
 		// withdraw: tokens that can be deposited (DAI, USDC...) will have this field pointing to
 		// the interest bearing token address (amDAI, amUSDC...)

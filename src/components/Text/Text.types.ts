@@ -1,6 +1,5 @@
 import { StyleProp, TextStyle } from 'react-native';
-import { ColorType } from '@styles';
-import { fontWeight, fontType } from './Text.utils';
+import { ColorType, fontWeight, fontType } from '@styles';
 
 type FontWeightType = keyof typeof fontWeight;
 
@@ -24,6 +23,7 @@ interface TextComponentProps {
 	width: number | string;
 	style: StyleProp<TextStyle>;
 	center: boolean;
+	numberOfLines?: number;
 }
 
 export type { FontWeightType, FontType, MakeStylesProps, TextComponentProps };

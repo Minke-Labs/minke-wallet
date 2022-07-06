@@ -11,4 +11,5 @@ export interface TokenInputInnerProps {
 	showSymbol?: boolean;
 	onChangeText?: (text: string) => void;
 	marginBottom?: number;
+	ghost?: boolean;
 }

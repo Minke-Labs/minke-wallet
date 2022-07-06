@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
-import { MinkeToken, ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import {
 	useAmplitude,
@@ -14,21 +14,20 @@ import {
 } from '@hooks';
 import Logger from '@utils/logger';
 import { globalWalletState } from '@stores/WalletStore';
-import { formatUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import WithdrawService from '@src/services/withdraw/WithdrawService';
 import { captureException } from '@sentry/react-native';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
-	const { nativeToken } = useNativeToken();
+	const { nativeToken, balance } = useNativeToken();
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [token, setToken] = React.useState<MinkeToken>();
-	const [tokenBalance, setTokenBalance] = React.useState('0');
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const { withdrawableTokens: tokens, tokens: balances } = useTokens();
+	const { withdrawableTokens: tokens } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
@@ -36,7 +35,7 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
-	const { defaultToken, selectedProtocol } = useDepositProtocols(true);
+	const { defaultToken, selectedProtocol, apy } = useDepositProtocols(true);
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -55,35 +54,19 @@ const useWithdrawScreen = () => {
 		}
 	};
 
-	const balanceFrom = useCallback(
-		(paraSwapToken: ParaswapToken | undefined, native = false): number => {
-			if (!paraSwapToken) {
-				return 0;
-			}
-			const walletToken = (native ? balances : tokens)?.find(
-				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
-			);
-			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
-			if (isNativeToken && walletToken) {
-				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(+walletToken.balance - gasPrice, 0);
-			}
-			return walletToken ? +walletToken.balance : 0;
-		},
-		[balances, tokens, nativeToken, gas]
-	);
-
 	const onTokenSelect = (selectedToken: MinkeToken) => {
 		hideModal();
 		setToken(selectedToken);
 	};
 
-	const enoughForGas = gaslessEnabled || (nativeToken && balanceFrom(nativeToken, true) > 0);
+	const enoughForGas =
+		gaslessEnabled || (balance && gweiValue && balance.gte(parseUnits(gweiValue.toString(), 'gwei')));
+
 	const canWithdraw =
 		token &&
-		+tokenBalance > 0 &&
+		token.balance &&
 		+amount > 0 &&
-		+tokenBalance >= +amount &&
+		+token.balance >= +amount &&
 		enoughForGas &&
 		(gaslessEnabled || gweiValue > 0);
 
@@ -113,11 +96,9 @@ const useWithdrawScreen = () => {
 						hash,
 						gasless: gaslessEnabled
 					});
-					const provider = biconomy.getEthersProvider();
-					const { from, to } = await provider.waitForTransaction(hash);
 					addPendingTransaction({
-						from,
-						destination: to,
+						from: token.address,
+						destination: address,
 						hash,
 						txSuccessful: true,
 						pending: true,
@@ -145,15 +126,6 @@ const useWithdrawScreen = () => {
 	};
 
 	useEffect(() => {
-		if (token && tokens && tokens.length > 0) {
-			const balance = balanceFrom(token);
-			setTokenBalance(balance.toFixed(token.interestBearingToken?.decimals));
-		} else {
-			setTokenBalance('0');
-		}
-	}, [tokens, token]);
-
-	useEffect(() => {
 		if (!!defaultToken && !token) {
 			setToken(defaultToken);
 		}
@@ -162,7 +134,6 @@ const useWithdrawScreen = () => {
 	return {
 		searchVisible,
 		token,
-		tokenBalance,
 		nativeToken,
 		canWithdraw,
 		enoughForGas,
@@ -176,6 +147,7 @@ const useWithdrawScreen = () => {
 		tokens,
 		gaslessEnabled,
 		selectedProtocol,
+		apy,
 		blockchainError,
 		setBlockchainError
 	};

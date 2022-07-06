@@ -1,12 +1,18 @@
 import React, { createRef, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
-import { useAmplitude, useFormProgress, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
+import {
+	useAmplitude,
+	useBiconomy,
+	useFormProgress,
+	useLanguage,
+	useNavigation,
+	useWyreApplePay,
+	useWalletState
+} from '@hooks';
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder, pickPaymentMethodFromName } from '@models/banxa';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useState } from '@hookstate/core';
 
 interface UseAddFundsProps {
 	onDismiss: () => void;
@@ -25,7 +31,8 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const { track } = useAmplitude();
 	const { locationCurrency, locationCountry } = useLanguage();
 	const [orderLink, setOrderLink] = React.useState('');
-	const state = useState(globalWalletState());
+	const { gaslessEnabled } = useBiconomy();
+	const { state } = useWalletState();
 	const { address } = state.value;
 
 	const { onPurchase, orderId, error } = useWyreApplePay();
@@ -45,7 +52,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const enableCustomAmount = () => {
 		setAmount(undefined);
 		customAmountRef.current?.focus();
-		goForward();
+		setCurrentStep(2);
 	};
 
 	const dismissCoin = () => {
@@ -73,7 +80,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		const params = {
 			account_reference: address,
 			source: locationCurrency,
-			target: coin.name.toUpperCase(),
+			target: coin.name.toUpperCase() === 'ETHEREUM' ? 'ETH' : coin.name.toUpperCase(),
 			source_amount: String(value),
 			return_url_on_success: '#',
 			wallet_address: address,
@@ -113,7 +120,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		amount,
 		customAmount,
 		customAmountRef,
-		currentStep,
+		currentStep: currentStep === 0 && gaslessEnabled ? currentStep + 1 : currentStep,
 		wyreError,
 		error,
 		orderLink,
@@ -128,6 +135,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		enableCustomAmount,
 		setCustomAmount,
 		banxaModalVisible,
-		setBanxaModalVisible
+		setBanxaModalVisible,
+		gaslessEnabled
 	};
 };

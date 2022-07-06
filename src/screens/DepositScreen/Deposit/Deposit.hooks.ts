@@ -1,10 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
-import { ParaswapToken } from '@models/token';
+import { MinkeToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { depositableTokenToParaswapToken, usdCoinSettingsKey } from '@models/deposit';
+import { usdCoinSettingsKey } from '@models/deposit';
 import {
 	useNavigation,
 	useTokens,
@@ -17,22 +17,20 @@ import {
 import Logger from '@utils/logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toBn } from 'evm-bn';
-import { formatUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
-import { getProvider } from '@models/wallet';
 import { captureException } from '@sentry/react-native';
 
 export const useDeposit = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
-	const { nativeToken } = useNativeToken();
+	const { nativeToken, balance } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { depositableTokens: tokens = [], tokens: allTokens = [] } = useTokens();
+	const { depositableTokens = [] } = useTokens();
 	const { address, privateKey } = globalWalletState().value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const [token, setToken] = React.useState<ParaswapToken>();
-	const [tokenBalance, setTokenBalance] = React.useState('0');
+	const [token, setToken] = React.useState<MinkeToken>();
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
@@ -41,25 +39,6 @@ export const useDeposit = () => {
 	const { addPendingTransaction } = useTransactions();
 	const { setSelectedUSDCoin, apy, depositableToken, selectedProtocol } = useDepositProtocols();
 
-	const balanceFrom = useCallback(
-		(paraSwapToken: ParaswapToken | undefined): string => {
-			if (!paraSwapToken) {
-				return '0';
-			}
-			const walletToken = [...tokens, ...allTokens].find(
-				(owned) => owned.symbol.toLowerCase() === paraSwapToken.symbol.toLowerCase()
-			);
-			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
-			if (isNativeToken && walletToken) {
-				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(+walletToken.balance - gasPrice, 0).toString();
-			}
-
-			return walletToken ? walletToken.balance : '0';
-		},
-		[tokens, allTokens, nativeToken, gas]
-	);
-
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/,/g, '.');
 		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
@@ -67,18 +46,19 @@ export const useDeposit = () => {
 		}
 	};
 
-	const enoughForGas = gaslessEnabled || (nativeToken && +balanceFrom(nativeToken) > 0);
+	const enoughForGas =
+		gaslessEnabled || (balance && gweiValue && balance.gte(parseUnits(gweiValue.toString(), 'gwei')));
 	const canDeposit =
 		token &&
-		+tokenBalance > 0 &&
+		token.balance &&
 		+amount > 0 &&
-		+tokenBalance >= +amount &&
+		+token.balance >= +amount &&
 		enoughForGas &&
 		(gaslessEnabled || gweiValue > 0); // if gasless we dont need a gwei value
 
 	const onDeposit = async () => {
 		Keyboard.dismiss();
-		if (canDeposit && depositableToken && selectedProtocol) {
+		if (canDeposit && depositableToken && selectedProtocol && token) {
 			setWaitingTransaction(true);
 			try {
 				const hash = await new Deposit(selectedProtocol.id).deposit({
@@ -101,11 +81,9 @@ export const useDeposit = () => {
 						hash,
 						gasless: gaslessEnabled
 					});
-					const provider = await getProvider();
-					const { from, to } = await provider.waitForTransaction(hash);
 					addPendingTransaction({
-						from,
-						destination: to,
+						from: token.address,
+						destination: address,
 						hash,
 						txSuccessful: true,
 						pending: true,
@@ -141,7 +119,7 @@ export const useDeposit = () => {
 		setSearchVisible(false);
 	};
 
-	const onTokenSelect = async (selectedToken: ParaswapToken) => {
+	const onTokenSelect = async (selectedToken: MinkeToken) => {
 		hideModal();
 		setToken(selectedToken);
 		await AsyncStorage.setItem(usdCoinSettingsKey, selectedToken.symbol);
@@ -149,22 +127,16 @@ export const useDeposit = () => {
 	};
 
 	useEffect(() => {
-		if (token && tokens && tokens.length > 0) {
-			setTokenBalance(balanceFrom(token));
-		} else {
-			setTokenBalance('0');
+		if (depositableToken && depositableTokens.length > 0) {
+			const balanceToken = depositableTokens.find(
+				({ symbol }) => symbol.toLowerCase() === depositableToken.symbol.toLowerCase()
+			);
+			setToken(balanceToken);
 		}
-	}, [tokens, token]);
-
-	useEffect(() => {
-		if (depositableToken && !token) {
-			setToken(depositableTokenToParaswapToken(depositableToken));
-		}
-	}, [depositableToken]);
+	}, [depositableToken, depositableTokens]);
 
 	return {
 		token,
-		tokenBalance,
 		updateAmount,
 		canDeposit,
 		onDeposit,
@@ -177,7 +149,7 @@ export const useDeposit = () => {
 		hideModal,
 		showModal,
 		onTokenSelect,
-		tokens,
+		tokens: depositableTokens,
 		apy,
 		selectedProtocol,
 		blockchainError,

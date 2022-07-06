@@ -1,26 +1,31 @@
-import React, { useEffect, createRef, useCallback } from 'react';
-import { TextInput, Keyboard } from 'react-native';
-import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols } from '@hooks';
+import React, { useEffect } from 'react';
+import Logger from '@utils/logger';
+import { Keyboard } from 'react-native';
+import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, utils } from 'ethers';
-import { ParaswapToken, Quote, getExchangePrice, ExchangeParams } from '@models/token';
+import { MinkeToken, Quote, getExchangePrice, ExchangeParams } from '@models/token';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
-import Logger from '@utils/logger';
 import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeTargetApproved } from '@models/gaslessTransaction';
+import { validatedExceptions } from '@models/exchange';
+import { parseUnits } from 'ethers/lib/utils';
+
+interface PriceParams {
+	amount?: string;
+	side?: ExchangeParams['side'];
+}
 
 export const useExchangeScreen = () => {
-	const { nativeToken } = useNativeToken();
+	const { nativeToken, balance } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const [fromToken, setFromToken] = React.useState<ParaswapToken>();
-	const [toToken, setToToken] = React.useState<ParaswapToken>();
+	const [fromToken, setFromToken] = React.useState<MinkeToken>();
+	const [toToken, setToToken] = React.useState<MinkeToken>();
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
-	const [fromTokenBalance, setFromTokenBalance] = React.useState('0');
-	const [toTokenBalance, setToTokenBalance] = React.useState('0');
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
@@ -29,61 +34,41 @@ export const useExchangeScreen = () => {
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
-	const fromAmountRef = createRef<TextInput>();
-	const toAmountRef = createRef<TextInput>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens: walletTokens } = useTokens();
 	const { defaultToken } = useDepositProtocols();
+	const { i18n } = useLanguage();
+	const { gweiValue = 0 } = exchange.gas.value || {};
 
-	const balanceFrom = useCallback(
-		(token: ParaswapToken | undefined): string => {
-			if (!token) {
-				return '0';
-			}
-			const walletToken = walletTokens?.find(
-				(owned) => owned.symbol.toLowerCase() === token.symbol.toLowerCase()
-			);
-
-			const isNativeToken = nativeToken && nativeToken.symbol === walletToken?.symbol;
-			if (isNativeToken && walletToken && !gasless) {
-				const { gweiValue } = exchange.gas.value || {};
-				const gasPrice = gweiValue ? gweiValue * 41000 * 10 ** -9 : 0;
-				return Math.max(+walletToken.balance - gasPrice, 0).toString();
-			}
-
-			return walletToken?.balance || '0';
-		},
-		[exchange.gas.value, walletTokens, nativeToken]
-	);
-
-	const updateFromToken = (token: ParaswapToken) => {
+	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
-		setFromTokenBalance(balanceFrom(token));
 		setFromConversionAmount(undefined);
 		exchange.from.set(token);
 		exchange.fromAmount.set(undefined);
-		// fromAmountRef.current?.focus();
 	};
 
-	const updateToToken = (token: ParaswapToken) => {
+	const updateToToken = (token: MinkeToken) => {
 		setToToken(token);
 		setToConversionAmount(undefined);
 		exchange.to.set(token);
 		exchange.toAmount.set(undefined);
-		// toAmountRef.current?.focus();
 	};
-
-	interface PriceParams {
-		amount?: string;
-		side?: ExchangeParams['side'];
-	}
 
 	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
 		if (fromToken && toToken) {
 			setLoadingPrices(true);
-			const { address: srcToken, decimals: srcDecimals } = fromToken;
-			const { address: destToken, decimals: destDecimals } = toToken;
-			const { reason, message, buyAmount, sellAmount, value, allowanceTarget, to } = await getExchangePrice({
+			const { symbol: srcToken, decimals: srcDecimals } = fromToken;
+			const { symbol: destToken, decimals: destDecimals } = toToken;
+			const {
+				reason,
+				message,
+				buyAmount,
+				sellAmount,
+				value,
+				allowanceTarget,
+				to,
+				validationErrors = []
+			} = await getExchangePrice({
 				address: wallet.address.value,
 				srcToken,
 				destToken,
@@ -94,11 +79,17 @@ export const useExchangeScreen = () => {
 			});
 
 			if (message || reason) {
-				Logger.error(`Load prices error: ${message || reason}`); // ESTIMATED_LOSS_GREATER_THAN_MAX_IMPACT
+				Logger.error(`Load prices error: ${message || reason}`);
 				Keyboard.dismiss();
 				setQuote(undefined);
 				setLoadingPrices(false);
-				setError(message || reason || '');
+				const validationError = validationErrors[0];
+				const { reason: errorReason } = validationError;
+				if (validationError && errorReason && validatedExceptions.includes(errorReason)) {
+					setError(i18n.t(`ExchangeScreen.validations.${errorReason}`));
+				} else {
+					setError(message || reason || '');
+				}
 				return undefined;
 			}
 
@@ -189,13 +180,18 @@ export const useExchangeScreen = () => {
 		showModal();
 	};
 
-	const onTokenSelect = (token: ParaswapToken) => {
+	const onTokenSelect = (token: MinkeToken) => {
 		hideModal();
 		setQuote(null);
+		let walletToken = token;
+		if (!token.balance) {
+			walletToken =
+				walletTokens.find(({ symbol }) => symbol.toLowerCase() === token.symbol.toLowerCase()) || token;
+		}
 		if (searchSource === 'from') {
-			updateFromToken(token);
+			updateFromToken(walletToken);
 		} else {
-			updateToToken(token);
+			updateToToken(walletToken);
 		}
 	};
 
@@ -216,8 +212,8 @@ export const useExchangeScreen = () => {
 				lastConversion: undefined
 			});
 			const backup = fromToken;
-			updateFromToken(toToken || ({} as ParaswapToken));
-			updateToToken(backup);
+			updateFromToken(toToken || ({} as MinkeToken));
+			updateToToken(backup!);
 		}
 	};
 
@@ -226,11 +222,6 @@ export const useExchangeScreen = () => {
 			setOwnedTokens(walletTokens.map(({ symbol }) => symbol.toLowerCase()));
 		}
 	}, [walletTokens]);
-
-	useEffect(() => {
-		setFromTokenBalance(balanceFrom(fromToken));
-		setToTokenBalance(balanceFrom(toToken));
-	}, [ownedTokens, exchange.gas.value]);
 
 	useEffect(() => {
 		exchange.set({} as ExchangeState);
@@ -263,24 +254,23 @@ export const useExchangeScreen = () => {
 		setGasless(gaslessEnabled && (quote ? quote.gasless : true));
 	}, [gaslessEnabled, quote]);
 
-	const enoughForGas = gasless || (nativeToken && +balanceFrom(nativeToken) > 0);
+	const enoughForGas = gasless || (balance && gweiValue && balance.gte(parseUnits(gweiValue.toString(), 'gwei')));
 
 	const canSwap = () =>
 		quote &&
 		fromToken &&
+		fromToken.balance &&
 		toToken &&
 		exchange.value.fromAmount &&
 		exchange.value.toAmount &&
 		+(exchange.value.fromAmount || 0) > 0 &&
-		+balanceFrom(fromToken) >= +(exchange.value.fromAmount || 0) &&
+		+fromToken.balance >= +(exchange.value.fromAmount || 0) &&
 		!loadingPrices &&
 		enoughForGas;
 
 	return {
 		fromToken,
 		toToken,
-		fromTokenBalance,
-		toTokenBalance,
 		fromConversionAmount,
 		toConversionAmount,
 		canChangeDirections,
@@ -294,12 +284,10 @@ export const useExchangeScreen = () => {
 		loadingPrices,
 		searchVisible,
 		showOnlyOwnedTokens,
-		fromAmountRef,
-		toAmountRef,
 		updateFromQuotes,
 		updateToQuotes,
 		enoughForGas,
-		ownedTokens,
+		ownedTokens: walletTokens,
 		quote,
 		error,
 		setError,

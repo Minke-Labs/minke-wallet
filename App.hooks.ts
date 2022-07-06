@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from '@hookstate/core';
+import RNUxcam from 'react-native-ux-cam';
+import Logger from '@utils/logger';
+import { UXCAM_API_KEY, APPS_FLYER_DEV_KEY } from '@env';
 import {
 	Inter_400Regular,
 	Inter_500Medium,
@@ -9,15 +12,14 @@ import {
 	Inter_800ExtraBold,
 	useFonts
 } from '@expo-google-fonts/inter';
-import { getTokenList } from '@models/wallet';
-import Logger from '@utils/logger';
+import { Coin, getTokenList } from '@models/wallet';
 import appsFlyer from 'react-native-appsflyer';
-import { APPS_FLYER_DEV_KEY } from '@env';
 import { globalWalletState } from './src/stores/WalletStore';
 import coins from './src/utils/files/coins.json';
 
 export const useApp = () => {
-	const [coinList, setCoinList] = React.useState<any>();
+	Logger.initialize();
+	const [coinList, setCoinList] = React.useState<Coin[]>();
 
 	const walletState = useState(globalWalletState());
 	const [fontsLoaded] = useFonts({
@@ -28,8 +30,9 @@ export const useApp = () => {
 		Inter_800ExtraBold
 	});
 
-	const initializeAppsFlyer = () => {
+	const initializeServices = () => {
 		if (!__DEV__) {
+			// APPSFLYER
 			appsFlyer.initSdk(
 				{
 					devKey: (APPS_FLYER_DEV_KEY || process.env.APPS_FLYER_DEV_KEY)!,
@@ -43,6 +46,11 @@ export const useApp = () => {
 					Logger.error(error);
 				}
 			);
+
+			// UXCAM
+			const uxCamKey = UXCAM_API_KEY || process.env.UXCAM_API_KEY;
+			RNUxcam.optIntoSchematicRecordings();
+			RNUxcam.startWithConfiguration({ userAppKey: uxCamKey! });
 		}
 	};
 
@@ -58,7 +66,7 @@ export const useApp = () => {
 			}
 		};
 		getCoinList();
-		initializeAppsFlyer();
+		initializeServices();
 	}, []);
 
 	return {

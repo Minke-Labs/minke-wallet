@@ -44,6 +44,7 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 		fetchPaymentMethodId();
 	}, []);
 
+	const isAmountValid = Number(amount) >= paymentMethodId?.minTopup;
 	return (
 		<View>
 			<Text type="h3" weight="bold" marginBottom={32}>
@@ -52,7 +53,7 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 
 			<TokenInputInner
 				symbol={locationCountry!.currency}
-				isAmountValid={amount >= paymentMethodId?.minTopup}
+				isAmountValid={isAmountValid}
 				placeholder="0.00"
 				autoFocus
 				showSymbol
@@ -60,17 +61,14 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 				amount={amount}
 				onChangeText={onChangeText}
 			/>
-
-			{
-				paymentMethodId && (
-					<Text color="text2" type="span" marginBottom={32}>
-						min {paymentMethodId!.minTopup} {locationCountry!.currency}
-					</Text>
-				)
-			}
-
+			{paymentMethodId && (
+				<Text color="text2" type="span" marginBottom={32}>
+					Min {paymentMethodId!.minTopup} {locationCountry!.currency}
+				</Text>
+			)}
 			<OnrampButton
 				marginBottom={80}
+				disabled={!isAmountValid}
 				onPress={() => onOnramp(number || 0)}
 			/>
 

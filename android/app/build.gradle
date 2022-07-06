@@ -198,6 +198,7 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")
     implementation fileTree(dir: "libs", include: ["*.jar"])
 		implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     //noinspection GradleDynamicVersion

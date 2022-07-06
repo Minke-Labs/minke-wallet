@@ -1,17 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
-import { useState } from '@hookstate/core';
 import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
-import { globalWalletState, fetchTokensAndBalances } from '@stores/WalletStore';
+import { fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
 import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
-import {
-	thisMonthTimestamp,
-	thisYearTimestamp,
-	todayTimestamp,
-	yesterdayTimestamp
-} from '@src/components/Transaction/Transaction.utils';
+import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp } from '@models/timestamps';
 import { groupBy } from 'lodash';
+import useWalletState from '../../hooks/useWalletState';
 import useLanguage from '../../hooks/useLanguage';
 
 export interface TransactionPeriod {
@@ -25,14 +20,16 @@ interface TransactionContextProps {
 	homeTransactions: TransactionPeriod[];
 	hasTransactions: boolean;
 	fetchTransactions: () => void;
+	pendingTransactions: ZapperTransaction[];
 	addPendingTransaction: (transaction: ZapperTransaction) => void;
+	updatePendingTransaction: (hash: string, newTransaction: ZapperTransaction) => void;
 }
 
 export const TransactionsContext = React.createContext<TransactionContextProps>({} as TransactionContextProps);
 
 const TransactionsProvider: React.FC = ({ children }) => {
 	const { i18n } = useLanguage();
-	const state = useState(globalWalletState());
+	const { state } = useWalletState();
 	const [loading, setLoading] = React.useState(true);
 	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
@@ -100,6 +97,12 @@ const TransactionsProvider: React.FC = ({ children }) => {
 		title: section
 	}));
 
+	const updatePendingTransaction = (hash: string, newTransaction: ZapperTransaction) => {
+		setPendingTransactions(
+			pendingTransactions.map((transaction) => (transaction.hash === hash ? newTransaction : transaction))
+		);
+	};
+
 	const obj = useMemo(
 		() => ({
 			loading,
@@ -107,7 +110,9 @@ const TransactionsProvider: React.FC = ({ children }) => {
 			homeTransactions,
 			hasTransactions: allTransactions.length > 0,
 			fetchTransactions,
-			addPendingTransaction
+			pendingTransactions,
+			addPendingTransaction,
+			updatePendingTransaction
 		}),
 		[loading, address, chainId, pendingTransactions, transactions]
 	);

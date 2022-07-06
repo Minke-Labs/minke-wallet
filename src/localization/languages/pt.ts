@@ -1,5 +1,27 @@
 /* eslint-disable max-len */
 export default {
+	AvatarContext: {
+		KrakenJr: {
+			name: 'Kraken Jr.',
+			desc: 'Um polvo amigável vindo dos EUA que está constantemente perseguindo novas moedas.'
+		},
+		DeShark: {
+			name: 'DeShark',
+			desc: 'O tubarão australiano que adora navegar nas águas do DeFi.'
+		},
+		Mateus: {
+			name: 'Mateus',
+			desc: 'Um brilhante peixe pescador brasileiro economizando em stablecoins.'
+		},
+		Fugu: {
+			name: 'Fugu',
+			desc: 'O baiacu Japonês que é novo em criptomoedas, mas está constantemente aprendendo.'
+		},
+		WowFish: {
+			name: 'Wow Fish',
+			desc: 'Um peixe dourado alemão que está sempre em busca de rendimentos sustentáveis.'
+		}
+	},
 	LocationContext: {
 		US: {
 			name: 'Estados Unidos',
@@ -24,6 +46,10 @@ export default {
 		BR: {
 			name: 'Brasil',
 			currencyName: 'Real Brasileiro'
+		},
+		TUR: {
+			name: 'Turquia',
+			currencyName: 'Lira Turca'
 		}
 	},
 	AccountsScreen: {
@@ -121,14 +147,10 @@ export default {
 			deposit: 'Depósito',
 			balance: 'Saldo: '
 		},
-		OpenAave: {
+		OpenSavings: {
 			open_account: 'Abrir uma Conta',
-			open_aave: 'Abrir uma conta na Aave',
-			what_is: 'O que é a Aave?',
-			aave_des:
-				'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
-			view_site: 'Ver o Site',
-			learn_more: 'Ver Mais',
+			aave: 'Abrir uma conta na Aave',
+			mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		OpenMStable: {
@@ -154,7 +176,7 @@ export default {
 		you_withdrawn: 'Você retirou com sucesso!'
 	},
 	ExchangeResumeScreen: {
-		exchange_resume: 'Resumo da Troca',
+		exchange_resume: 'Confirmação',
 		rate_fixed_for: 'Cotação fixa por:',
 		rate: 'Cotação',
 		swapping_via: 'Convertendo via'
@@ -170,6 +192,9 @@ export default {
 				normal: 'Normal',
 				slow: 'Devagar'
 			}
+		},
+		validations: {
+			INSUFFICIENT_ASSET_LIQUIDITY: 'Não há liquidez insuficiente para o token'
 		}
 	},
 	ManualBackupScreen: {
@@ -188,8 +213,8 @@ export default {
 	SaveScreen: {
 		interest: '% de juros anuais',
 		EmptyState: {
-			save: 'Salvar',
-			open_aave_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
+			save: 'Investir',
+			open_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
 			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
 		},
 		Header: {
@@ -202,6 +227,12 @@ export default {
 		},
 		Body: {
 			deposit: 'Depósito ({{source}})'
+		},
+		InfoModal: {
+			Aave: 'Conta de investimentos da Aave'
+		},
+		MStable: {
+			MStable: 'Conta de investimentos na mStable'
 		}
 	},
 	SavingAccountsScreen: {
@@ -209,15 +240,16 @@ export default {
 	},
 	SettingsScreen: {
 		title: 'Configurações',
-		creating_wallet: 'Criando carteira',
+		creating_wallet: 'Criando Carteira',
 		backup: 'Backup',
 		country: 'País',
 		language: 'Idioma',
 		network: 'Rede',
-		new_wallet: 'Nova carteira',
-		usd_coin: 'Moeda padrão USD',
-		contact_support: 'Contactar suporte',
-		switch_account: 'Trocar carteira',
+		new_wallet: 'Nova Carteira',
+		usd_coin: 'Moeda Padrão USD',
+		contact_support: 'Contactar Suporte',
+		help_centre: 'Central de Ajuda',
+		switch_account: 'Trocar Carteira',
 		my_wallet: 'Minha Carteira',
 		my_account: 'Minha Conta',
 		help: 'Ajuda',
@@ -281,6 +313,43 @@ export default {
 		modal_error: 'Erro de backup'
 	},
 	WalletScreen: {
+		AppTour: {
+			Boxes: {
+				Steps: {
+					Step0: {
+						welcome: 'Bem-vindo a Minke!',
+						your_new_favorite:
+							'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anuais.'
+					},
+					Step1: {
+						add_funds: 'Adicione fundos',
+						you_can_buy:
+							'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
+					},
+					Step2: {
+						save: 'Poupe',
+						get_up_to: 'Obtenha até 5% de juros anuais em stablecoins com mStable ou Aave.'
+					},
+					Step3: {
+						send: 'Envie',
+						send_tokens_to:
+							'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
+					},
+					Step4: {
+						exchange: 'Converta',
+						swap: 'Converta de um token para outro.'
+					},
+					Step5: {
+						receive: 'Receba',
+						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
+					}
+				},
+				Arrow: {
+					back: 'Voltar',
+					next: 'Próximo'
+				}
+			}
+		},
 		Content: {
 			transactions: 'Transações',
 			accounts: 'Contas'
@@ -297,7 +366,6 @@ export default {
 			send: 'Enviar',
 			exchange: 'Converter',
 			receive: 'Receber',
-			copy_address: 'Copiar endereço',
 			delete_wallet: 'Apagar carteira',
 			are_you_sure: 'Você tem certeza?',
 			cancel: 'Cancelar'
@@ -307,6 +375,11 @@ export default {
 		},
 		TransactionsTable: {
 			see_all: 'Ver todas'
+		},
+		components: {
+			Stories: {
+				whats_new: 'Quais são as novidades?'
+			}
 		},
 		screens: {
 			Accounts: {
@@ -326,6 +399,16 @@ export default {
 			}
 		},
 		Modals: {
+			AvatarModal: {
+				Chosen: {
+					edit: 'Edite seu avatar',
+					select: 'Selecione um avatar do Minke',
+					choose: 'Escolha do arquivo'
+				},
+				Select: {
+					select: 'Selecione seu avatar'
+				}
+			},
 			ReceiveModal: {
 				receive: 'Receber',
 				show_qr: 'Mostre seu código QR ou compartilhe suas informações'
@@ -435,14 +518,37 @@ export default {
 		}
 	},
 	Components: {
+		AaveReusables: {
+			Info: {
+				what_is: 'O que é a Aave?',
+				aave_des:
+					'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
+				view_site: 'Ver o Site',
+				learn_more: 'Ver Mais'
+			}
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'O que é o mStable?',
+				mstable_des:
+					'O mStable é uma infraestrutura autônoma e sem custódia para ativos criptográficos de valor atrelado. O protocolo foi criado para resolver três problemas principais: \n\nfragmentação significativa em ativos criptográficos de mesma indexação (atualmente, existem pelo menos 5 ativos criptográficos indexados em dólares principais no Ethereum, por exemplo). \n\nFalta de rendimento em moedas fiduciárias e ativos criptográficos atrelados.\n\nFalta de proteção contra perda de capital permanente em ativos criptográficos atrelados.',
+				view_site: 'Ver o Site',
+				learn_more: 'Ver Mais'
+			}
+		},
+		PendingTransactions: {
+			pending: 'Pendente',
+			success: 'Sucesso',
+			failed: 'Falhou'
+		},
 		Transaction: {
 			failed: 'Falhou',
 			view_on: 'Ver em',
 			cancel: 'Cancelar',
 			adding_via_apple_pay: 'Adicionando via Apple Pay',
-			withdrew_from_savings: 'Retirada de investimento',
-			deposited_in_savings: 'Depósito de investimento',
-			swap: 'Converteu %{source} para %{dest}',
+			withdrew_from_savings: 'Retirou',
+			deposited_in_savings: 'Depositou',
+			swap: 'Converteu',
 			from: 'De',
 			to: 'Para',
 			today: 'Hoje',
@@ -490,6 +596,21 @@ export default {
 			pay_with: 'Pagar com '
 		},
 		ModalReusables: {
+			TransactionWaitModal: {
+				transaction_done: 'Transação concluida',
+				processing_transaction: 'Processando transação',
+				sent: 'Enviou',
+				deposited: 'Depositou',
+				withdrew: 'Retirou',
+				exchanged: 'Converteu',
+				sending: 'Enviando',
+				depositing: 'Depositando',
+				withdrawing: 'Retirando',
+				exchanging: 'Convertendo',
+				in: 'em',
+				for: 'para',
+				transaction: 'Transação'
+			},
 			Error: {
 				title: 'Oops!',
 				description: 'Algo deu errado, nossos desenvolvedores foram notificados.',
@@ -507,22 +628,11 @@ export default {
 			done: 'Pronto'
 		},
 		TokenCard: {
-			choose_token: 'Escolha um token'
+			choose_token: 'Escolha um token',
+			available: 'Disponível'
 		},
-		TransactionWaitModal: {
-			transaction_done: 'Transação concluida',
-			processing_transaction: 'Processando transação',
-			sent: 'Enviou',
-			deposited: 'Depositou',
-			withdrew: 'Retirou',
-			exchanged: 'Converteu',
-			sending: 'Enviando',
-			depositing: 'Depositando',
-			withdrawing: 'Retirando',
-			exchanging: 'Convertendo',
-			in: 'em',
-			for: 'para',
-			transaction: 'Transação'
+		InterestBanner: {
+			interest: '% de juros anuais'
 		}
 	},
 	Logs: {
