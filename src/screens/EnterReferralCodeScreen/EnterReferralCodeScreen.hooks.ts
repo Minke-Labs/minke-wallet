@@ -53,12 +53,14 @@ const useEnterReferralCodeScreen = () => {
 					i18n.t('EnterReferralCodeScreen.your_code_is_invalid')
 				);
 			} else {
-				// @TODO: Marcos - check this call
-				console.log('Referred by', referralCode.code);
+				await AsyncStorage.setItem('@referralCodeInUse', referralCode.code);
+				setCode(referralCode.code);
+				setDisableCode(true);
 			}
 			setLoading(false);
 		}
 	};
+
 	return {
 		code,
 		setCode: formatCode,
