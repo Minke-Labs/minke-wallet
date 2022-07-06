@@ -332,7 +332,7 @@ export default {
 		},
 		Header: {
 			welcome: 'Welcome',
-			points: 'Minke pts.'
+			points: 'points'
 		},
 		AssetsPanel: {
 			your_total_assets: 'Your total assets',
@@ -369,7 +369,7 @@ export default {
 				open_loans: 'Open loans',
 				coming_soon: 'Coming soon',
 				points: 'Points',
-				points_earned: 'Points earned, refer a friend'
+				points_earned: 'Refer a friend, earn crypto!'
 			},
 			Transactions: {
 				NoTransactionsYet: {
@@ -472,7 +472,7 @@ export default {
 					topping_up: 'Topping-up',
 					get_rewarded: 'Get rewarded for saving money!',
 					what_can_you_do_with_your_points: 'What can you do with your points?',
-					you_can_redeem: 'You can redeem your points for rewards in selected tokens.'
+					you_can_redeem: 'You can redeem your points for MATIC tokens.'
 				}
 			}
 		},
@@ -482,10 +482,10 @@ export default {
 				rewards_explanation: 'Minke points are rewards given to you when you perform certain tasks on the app.',
 				you_can_earn_points_by: 'You can earn points by:',
 				topping_up_for_the_first_time: 'Topping up for the first time.',
-				refering_minke: 'Refering Minke to friends and family.',
+				refering_minke: 'Referring Minke to friends and family.',
 				setting_recurrent_top_ups: 'Setting recurrent top-ups.',
 				what_can_you_do: 'What can you do with your points?',
-				you_can_redeem_your_points: 'You can redeem your points for rewards in selected tokens. '
+				you_can_redeem_your_points: 'You can redeem your points for MATIC tokens. '
 			},
 			EarnModal: {
 				earn_minke_points: 'Earn Minke points!',

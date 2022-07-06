@@ -43,7 +43,7 @@ const TransferWaitScreen = ({ route }: Props) => {
 		if (transactionHash && amount) {
 			addTransaction(transactionHash);
 		}
-	}, [transactionHash]);
+	}, [transactionHash, amount]);
 
 	return (
 		<BasicLayout>
