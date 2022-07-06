@@ -4,18 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import useWalletState from '../../hooks/useWalletState';
 import useLanguage from '../../hooks/useLanguage';
+import { AvatarSaved, Avatar, AvatarId } from './AvatarContext.types';
 
 export const AvatarContext = createContext<any>(null);
 
 const AvatarProvider: React.FC = ({ children }) => {
 	const { accountName } = useWalletState();
+	const [savedAvatar, setSavedAvatar] = useState<AvatarSaved>({ id: 0, customImage: null });
 	const { language, i18n } = useLanguage();
-
-	const [avatarType, setAvatarType] = useState<string>('minke');
-	const [userAvatarImage, setUserAvatarImage] = useState<any>(null);
-
-	const [minkeAvatarId, setMinkeAvatarId] = useState(0);
-	const avatars = useMemo(() => [
+	const avatars = useMemo((): Avatar[] => [
 		{
 			id: 0,
 			name: i18n.t('AvatarContext.KrakenJr.name'),
@@ -53,51 +50,37 @@ const AvatarProvider: React.FC = ({ children }) => {
 		}
 	], [language]);
 
-	const [currentAvatar, setCurrentAvatar] = useState<any>(avatars[0]);
-
-	const handleAvatarType = async (type: string) => {
-		await AsyncStorage.setItem('@avatarType', type);
-		setAvatarType(type);
-	};
+	const [currentAvatar, setCurrentAvatar] = useState<Avatar>(avatars[0]);
 
 	useEffect(() => {
 		const fetchAvatar = async () => {
-			const storedAvatarId = await AsyncStorage.getItem('@minkeAvatarId');
-			if (storedAvatarId) setMinkeAvatarId(Number(storedAvatarId));
-
-			const storedAvatarType = await AsyncStorage.getItem('@avatarType');
-			if (storedAvatarType) setAvatarType(storedAvatarType);
-
-			const storedUserAvatarImage = await AsyncStorage.getItem('@userAvatarImage');
-			if (storedUserAvatarImage) setUserAvatarImage(JSON.parse(storedUserAvatarImage));
+			const storedAvatar = await AsyncStorage.getItem('@savedAvatar');
+			if (storedAvatar) setSavedAvatar(JSON.parse(storedAvatar));
 		};
 		fetchAvatar();
 	}, []);
 
 	useEffect(() => {
-		const doStuff = () => {
-			if (avatarType === 'minke') {
-				const chosenAvatar = avatars.find((avt) => avt.id === minkeAvatarId);
-				setCurrentAvatar(chosenAvatar);
-			} else if (avatarType === 'user') {
+		const getCurrentAvatar = () => {
+			if (savedAvatar.id) {
+				const chosenAvatar = avatars.find((avt) => avt.id === savedAvatar.id);
+				if (chosenAvatar) setCurrentAvatar(chosenAvatar);
+			} else {
 				const avatarObj = {
 					name: accountName,
-					image: userAvatarImage
+					image: savedAvatar.customImage
 				};
 				setCurrentAvatar(avatarObj);
 			}
 		};
-		doStuff();
-	}, [minkeAvatarId, avatarType, userAvatarImage]);
+		getCurrentAvatar();
+	}, [savedAvatar.id]);
 
-	useEffect(() => {
-		const storeAvatar = async () => {
-			await AsyncStorage.setItem('@minkeAvatarId', minkeAvatarId.toString());
-		};
-		storeAvatar();
-	}, [minkeAvatarId]);
-
-	// ----------------------------------------------------------------------------------------------------
+	const handleMinkeAvatarSelect = async (id: AvatarId) => {
+		const avatarObj = { id, customImage: null };
+		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
+		setSavedAvatar({ id, customImage: null });
+	};
 
 	const pickImage = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
@@ -107,28 +90,23 @@ const AvatarProvider: React.FC = ({ children }) => {
 			quality: 1
 		});
 
-		if (!result.cancelled) {
-			const path = { uri: result.uri };
-			setUserAvatarImage(path);
-			await AsyncStorage.setItem('@userAvatarImage', JSON.stringify(path));
-			handleAvatarType('user');
-		}
+		if (!result.cancelled) return { uri: result.uri };
+		return null;
 	};
 
-	const handleMinkeAvatarSelect = (id: number) => {
-		setMinkeAvatarId(id);
-		handleAvatarType('minke');
+	const handleImagePick = async () => {
+		const path = await pickImage();
+		const avatarObj = { id: null, customImage: path };
+		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
+		setSavedAvatar(avatarObj);
 	};
-
-	// ----------------------------------------------------------------------------------------------------
 
 	const obj = useMemo(
 		() => ({
 			avatars,
 			setMinkeAvatarId: handleMinkeAvatarSelect,
 			currentAvatar,
-			pickImage,
-			avatarType
+			pickImage: handleImagePick
 		}),
 		[currentAvatar]
 	);

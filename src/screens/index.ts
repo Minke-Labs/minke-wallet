@@ -22,7 +22,7 @@ import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
-// import Test from './Test/Test';
+import Test from './Test/Test';
 
 const screensObj = {
 	AccountsScreen,
@@ -48,7 +48,8 @@ const screensObj = {
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
-	SavingAccountsScreen
+	SavingAccountsScreen,
+	Test
 };
 
 export default screensObj;
