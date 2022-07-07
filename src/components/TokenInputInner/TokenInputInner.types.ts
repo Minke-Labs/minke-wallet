@@ -12,4 +12,5 @@ export interface TokenInputInnerProps {
 	onChangeText?: (text: string) => void;
 	marginBottom?: number;
 	ghost?: boolean;
+	editable?: boolean;
 }

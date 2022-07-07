@@ -1,4 +1,5 @@
 import * as qs from 'qs';
+import { ZAPPER_API_KEY } from '@env';
 import { network as selectedNetwork } from './network';
 
 const protocol = 'aave-v2';
@@ -17,7 +18,7 @@ export const withdrawTransaction = async ({
 	gasPrice: number;
 }) => {
 	const baseURL = `https://api.zapper.fi/v1/zap-out/interest-bearing/${protocol}/transaction`;
-	const apiKey = '96e0cc51-a62e-42ca-acee-910ea7d2a241';
+	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
 	const { zapperNetwork } = await selectedNetwork();
 	const gasValue = gasPrice * 1000000000;
 	const params = {

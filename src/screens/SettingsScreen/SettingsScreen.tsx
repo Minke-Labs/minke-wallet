@@ -9,6 +9,7 @@ import { networks } from '@models/network';
 import RNUxcam from 'react-native-ux-cam';
 import { walletState } from '@stores/WalletStore';
 import Intercom from '@intercom/intercom-react-native';
+import RNTestFlight from 'react-native-test-flight';
 import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
 
@@ -16,7 +17,9 @@ const SettingsScreen = () => {
 	RNUxcam.tagScreenName('SettingsScreen');
 	const { i18n } = useLanguage();
 	const { state } = useWalletState();
-	const { network: { chainId } } = state.value;
+	const {
+		network: { chainId }
+	} = state.value;
 	const navigation = useNavigation();
 	const [creatingWallet, setCreatingWallet] = React.useState(false);
 
@@ -25,11 +28,13 @@ const SettingsScreen = () => {
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onChangeCountry = () => navigation.navigate('ChangeCountryScreen');
 	const onChangeLanguage = () => navigation.navigate('ChangeLanguageScreen');
+	const onDevSettings = () => navigation.navigate('DevSettingsScreen');
 	const onChangeNetwork = () => navigation.navigate('ChangeNetworkScreen');
 	const onAccounts = () => navigation.navigate('AccountsScreen');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
 	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
+	const onEnterReferralCode = () => navigation.navigate('EnterReferralCodeScreen');
 	const onHelpCentre = () => Intercom.displayHelpCenter();
 
 	const onCreateWallet = useCallback(async () => {
@@ -46,13 +51,10 @@ const SettingsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title="" onPress={goBack} done={false} />
+			<SettingsHeader title={i18n.t('SettingsScreen.title')} onPress={goBack} done={false} />
 
 			<View style={styles.container}>
 				<ScrollView showsVerticalScrollIndicator={false}>
-					<Text weight="extraBold" marginBottom={8}>
-						{i18n.t('SettingsScreen.title')}
-					</Text>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.my_wallet')}
 					</Text>
@@ -67,14 +69,15 @@ const SettingsScreen = () => {
 						icon="walletStroke"
 						onPress={onCreateWallet}
 					/>
+					<SettingsOption
+						label={i18n.t('SettingsScreen.enter_referral_code')}
+						icon="borrowStroke"
+						onPress={onEnterReferralCode}
+					/>
 					<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 						{i18n.t('SettingsScreen.my_account')}
 					</Text>
-					<SettingsOption
-						label={i18n.t('SettingsScreen.country')}
-						icon="globe"
-						onPress={onChangeCountry}
-					/>
+					<SettingsOption label={i18n.t('SettingsScreen.country')} icon="globe" onPress={onChangeCountry} />
 					<SettingsOption
 						label={i18n.t('SettingsScreen.network')}
 						icon="networkStroke"
@@ -114,6 +117,9 @@ const SettingsScreen = () => {
 						icon="siteStroke"
 						onPress={onChangeLanguage}
 					/>
+					{(RNTestFlight.isTestFlight || __DEV__) && (
+						<SettingsOption label="Development" icon="gear" onPress={onDevSettings} />
+					)}
 				</ScrollView>
 			</View>
 		</BasicLayout>

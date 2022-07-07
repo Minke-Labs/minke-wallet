@@ -9610,10 +9610,10 @@ react-native-currency-input@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-native-currency-input/-/react-native-currency-input-1.0.1.tgz#3118a0d5347dd29568c5031320dbeb34be43415c"
   integrity sha512-1AbXXMAyNBEV2M0snh6e/B1w+rxRBgu9IARVaeF0tkUuaGX4kl/tQVXzyNa0fV2GX89U8Hyb0HaMvjaIZGniAA==
 
-react-native-device-info@^8.4.0:
-  version "8.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.5.1.tgz#40b38506d7cc1e2266da49fe7b9672166c765fc9"
-  integrity sha512-VMEP1c/X0KSOqBZDzs9/GHbacgdsoQqaBqI/fK98S5oMmKAfuIFjAjb4kvcNjC2mklD6JrlgXPnqKQQaX+kklg==
+react-native-device-info@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-9.0.2.tgz#00c7ab139a620ac9650852cd0ef0fb69d9a4418d"
+  integrity sha512-+IfYZ/OuKjnFf7SFfgIzEqynSeFngrIHc5KgHUIfXusLDXIFJ+LhRBCD7skqnraHrfmESUOMjLbNcvy4SVdwSA==
 
 react-native-dotenv@^3.3.1:
   version "3.3.1"
@@ -9772,6 +9772,11 @@ react-native-tcp@^3.3.2:
     ip-regex "^1.0.3"
     process "^0.11.9"
     util "^0.10.3"
+
+react-native-test-flight@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-test-flight/-/react-native-test-flight-1.1.0.tgz#85e3b71daee00976b3e3cd65f6ffb27fbe896d86"
+  integrity sha512-9mAjbtnklqhpDLz5whRWjPVPO2yGpKztFvp/JKWuN236jgHN/Zdv/e+PqmnD43pg+snl+O45UjYQTLzN0+KT3g==
 
 react-native-udp@^2.7.0:
   version "2.7.0"

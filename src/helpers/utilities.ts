@@ -45,3 +45,6 @@ export const addColorOpacity = (color: string, opacity: number): string => {
  */
 // eslint-disable-next-line no-promise-executor-return
 export const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const REFERRAL_POINTS_TO_USD_CONVERSION = 0.1;
+export const POINTS_PER_REWARD = 100;

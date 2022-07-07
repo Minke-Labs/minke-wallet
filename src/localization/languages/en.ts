@@ -254,7 +254,8 @@ export default {
 		my_account: 'My Account',
 		help: 'Help',
 		other: 'Other',
-		savings_account: 'Savings Account'
+		savings_account: 'Savings Account',
+		enter_referral_code: 'Enter referral code'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -263,7 +264,10 @@ export default {
 		},
 		Processing: {
 			almost_there: 'Almost there... this might take a minute...',
-			please_wait: 'Please wait while we process your payment...'
+			please_wait: {
+				payment: 'Please wait while we process your payment...',
+				transfer: 'Please wait while we process your transfer...'
+			}
 		},
 		Success: {
 			funds_being_deposited: 'Your funds are being deposited into your wallet...',
@@ -354,7 +358,8 @@ export default {
 			accounts: 'Accounts'
 		},
 		Header: {
-			welcome: 'Welcome'
+			welcome: 'Welcome',
+			points: 'points'
 		},
 		AssetsPanel: {
 			your_total_assets: 'Your total assets',
@@ -388,7 +393,9 @@ export default {
 				funds_deposited_in_savings: 'Funds deposited in savings',
 				borrowing: 'Borrowing',
 				open_loans: 'Open loans',
-				coming_soon: 'Coming soon'
+				coming_soon: 'Coming soon',
+				points: 'Points',
+				points_earned: 'Refer a friend, earn crypto!'
 			},
 			Transactions: {
 				NoTransactionsYet: {
@@ -457,6 +464,7 @@ export default {
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import or Restore Wallet',
+		i_have_a_referral_code: 'I have a referral code',
 		ImportWalletModal: {
 			add_wallet: 'Add Wallet',
 			seed_or_key: 'Seed phrase or private key',
@@ -473,6 +481,82 @@ export default {
 	WithdrawScreen: {
 		withdraw: 'Withdraw',
 		balance: 'Balance: '
+	},
+	ReferralScreen: {
+		Header: {
+			points: 'Points'
+		},
+		CurrentValue: {
+			pts: 'pts.',
+			owned: 'Owned',
+			redeem: 'Redeem',
+			earn: 'Earn'
+		},
+		RedeemScreen: {
+			redeem_minke_points: 'Redeem Minke Points',
+			swap: 'Swap',
+			Modals: {
+				WrongNetwork: {
+					wrong_network: 'Oops! It seems like you are in the wrong network',
+					please_change_network: 'Please change to Polygon to redeem your points.',
+					change_to_polygon: 'Change to Polygon'
+				},
+				NotEnoughPoints: {
+					you_dont_have_points: "Oops! You don't have any points",
+					you_can_earn: 'You can earn Minke points by:',
+					referring_a_friend: 'Referring a friend',
+					topping_up: 'Topping-up',
+					get_rewarded: 'Get rewarded for saving money!',
+					what_can_you_do_with_your_points: 'What can you do with your points?',
+					you_can_redeem: 'You can redeem your points for MATIC tokens.'
+				}
+			}
+		},
+		Modals: {
+			HelpModal: {
+				how_minke_points_work: 'How Minke points work?',
+				rewards_explanation: 'Minke points are rewards given to you when you perform certain tasks on the app.',
+				you_can_earn_points_by: 'You can earn points by:',
+				topping_up_for_the_first_time: 'Topping up for the first time.',
+				refering_minke: 'Referring Minke to friends and family.',
+				setting_recurrent_top_ups: 'Setting recurrent top-ups.',
+				what_can_you_do: 'What can you do with your points?',
+				you_can_redeem_your_points: 'You can redeem your points for MATIC tokens. '
+			},
+			EarnModal: {
+				earn_minke_points: 'Earn Minke points!',
+				refer_a_friend: 'Refer a friend',
+				when_your_friends_top_up: 'When your friend tops up 100 USDC both get 100 Minke points.',
+				top_up: 'Top-up',
+				get_rewarded: 'Get rewarded for saving money!',
+				coming_soon: '(Coming soon)',
+				share_text:
+					"Hi! I've been using Minke to save and earn 20x more than my bank. We will both receive 100 Minke Reward Points (~$10 that you can buy crypto with) when you signup and make your first deposit of $100 or more. My invite code is {{code}} - signup here: https://apps.apple.com/app/minke-defi-wallet/id1585144414"
+			}
+		},
+		Body: {
+			referral: 'Referral',
+			deposit: 'Deposit',
+			points: '{{count}} points'
+		}
+	},
+	RedeemConfirmScreen: {
+		confirmation: 'Confirmation',
+		rate_fixed_for: 'Rate fixed for:',
+		errors: {
+			failed_claim: 'Your redeem was not completed. Please, contact our support.',
+			invalid_request: 'Invalid request'
+		}
+	},
+	EnterReferralCodeScreen: {
+		enter_referral_code: 'Enter referral code',
+		get_rewarded_for_saving_money: 'Get rewarded for saving money!',
+		or: 'or',
+		refer_a_friend: 'Refer a friend',
+		referral_note:
+			'This code can only be used once. After topping-up 100 USDC you and your friend will get each 100 Minke points.',
+		invalid_code: 'Invalid code',
+		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
 	Hooks: {
 		iCloudBackup: {
@@ -567,6 +651,11 @@ export default {
 		EmptyStates: {
 			NoTokens: {
 				no_tokens_here: 'No tokens here'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Your points will appear here',
+				lets_get_started: "Let's get started?",
+				earn_points: 'Earn points'
 			}
 		},
 		Inputs: {
@@ -575,7 +664,8 @@ export default {
 			search: 'Search',
 			search_token: 'Search token',
 			name: 'Name',
-			ens_or_wallet: 'ENS or Wallet Address'
+			ens_or_wallet: 'ENS or Wallet Address',
+			enter_code: 'Enter code'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to iCloud',
@@ -591,7 +681,10 @@ export default {
 			add_contact: 'Add Contact',
 			add_funds_to_start: 'Add funds to start',
 			share: 'Share',
-			pay_with: 'Pay with '
+			pay_with: 'Pay with ',
+			use_code: 'Use code',
+			loading: 'Loading',
+			swap: 'Swap'
 		},
 		ModalReusables: {
 			TransactionWaitModal: {

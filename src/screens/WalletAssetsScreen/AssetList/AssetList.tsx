@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import { useNavigation } from '@hooks';
 import { TokenType } from '@styles';
 import { MinkeToken, stablecoins } from '@models/token';
-import NoTokens from '@src/components/EmptyStates/NoTokens';
+import { EmptyStates } from '@components';
 import Card from './Card/Card';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
@@ -40,7 +40,7 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 					)}
 				/>
 			) : (
-				<NoTokens />
+				<EmptyStates.NoTokens />
 			)}
 		</View>
 	);

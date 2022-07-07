@@ -96,8 +96,11 @@ export const sendPostRequest = async ({ query, params }: SendPostRequest) => {
 export const getPaymentMethods = async () => {
 	const query = '/api/payment-methods';
 	const res = await sendGetRequest({ query });
-	return res.data.payment_methods.map((item: any) => (
-		{ id: item.id, name: item.name, minTopup: item.transaction_limits[0].min }));
+	return res.data.payment_methods.map((item: any) => ({
+		id: item.id,
+		name: item.name,
+		minTopup: item.transaction_limits[0].min
+	}));
 };
 
 export const pickPaymentMethodFromName = async (name: string) => {
@@ -109,6 +112,12 @@ export const pickPaymentMethodFromName = async (name: string) => {
 export const getPrices = async ({ params }: GetPrices) => {
 	const query = '/api/prices';
 	const res = await sendGetRequest({ query, params });
+	return res;
+};
+
+export const getOrder = async (id: string) => {
+	const query = `/api/orders/${id}`;
+	const res = await sendGetRequest({ query });
 	return res;
 };
 
