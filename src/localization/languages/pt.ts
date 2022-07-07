@@ -120,8 +120,8 @@ export default {
 		ConfirmBackupPassword: {
 			enter_backup_password: 'Digite a senha do backup',
 			to: 'Para',
-			restore_from: 'restaurar suas carteiras do',
-			add_to: 'adicionar esta carteira ao seu',
+			restore_from: ' restaurar suas carteiras do ',
+			add_to: ' adicionar esta carteira ao seu ',
 			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
 		}
 	},

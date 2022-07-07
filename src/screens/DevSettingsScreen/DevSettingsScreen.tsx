@@ -1,11 +1,12 @@
 import React from 'react';
-import { Share, View } from 'react-native';
+import { Alert, Share, View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Button, Header, Text } from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from '@hookstate/core';
 import { getUniqueId } from 'react-native-device-info';
 import { globalWalletState } from '@stores/WalletStore';
+import { deleteAllBackups } from '@models/cloudBackup';
 
 const DevSettingsScreen = () => {
 	const { address } = useState(globalWalletState()).value;
@@ -17,7 +18,9 @@ const DevSettingsScreen = () => {
 		await AsyncStorage.removeItem(`@referral_code-${address}`);
 		await AsyncStorage.removeItem('@referralCodeInUse');
 	};
+
 	const deviceId = getUniqueId();
+
 	const shareDebugData = async () => {
 		const walletReferralCode = await AsyncStorage.getItem(`@referral_code-${address}`);
 		const referralCodeInUse = await AsyncStorage.getItem('@referralCodeInUse');
@@ -25,6 +28,21 @@ const DevSettingsScreen = () => {
 			// eslint-disable-next-line max-len
 			message: `Address: ${address} Device ID: ${deviceId} Wallet referral code: ${walletReferralCode} Referral code in use: ${referralCodeInUse}`
 		});
+	};
+
+	const deleteBackups = async () => {
+		Alert.alert('Are you sure?', '', [
+			{
+				text: 'Cancel',
+				style: 'cancel'
+			},
+			{
+				text: 'OK',
+				onPress: async () => {
+					await deleteAllBackups();
+				}
+			}
+		]);
 	};
 
 	return (
@@ -35,6 +53,7 @@ const DevSettingsScreen = () => {
 				<Text marginBottom={16}>Device ID: {deviceId}</Text>
 				<Button title="Reset app tour" onPress={resetAppTour} marginBottom={16} />
 				<Button title="Reset referral program" onPress={resetReferralProgram} marginBottom={16} />
+				<Button title="Delete all cloud backups" onPress={deleteBackups} marginBottom={16} />
 				<Button title="Share debug data" onPress={shareDebugData} />
 			</View>
 		</BasicLayout>

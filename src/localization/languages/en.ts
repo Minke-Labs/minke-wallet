@@ -120,8 +120,8 @@ export default {
 		ConfirmBackupPassword: {
 			enter_backup_password: 'Enter Backup Password',
 			to: 'To',
-			restore_from: 'restore your wallets from',
-			add_to: 'add this wallet to',
+			restore_from: ' restore your wallets from ',
+			add_to: ' add this wallet to ',
 			enter_existing: 'your iCloud backup, enter your existing backup password'
 		}
 	},
