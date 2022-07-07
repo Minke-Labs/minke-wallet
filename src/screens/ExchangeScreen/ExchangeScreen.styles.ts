@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
@@ -27,7 +27,7 @@ export const makeStyles = (colors: ColorType) =>
 		},
 		buttonBox: {
 			marginHorizontal: 16,
-			marginTop: 'auto',
+			marginTop: Platform.OS === 'android' ? undefined : 'auto',
 			marginBottom: 16
 		}
 	});

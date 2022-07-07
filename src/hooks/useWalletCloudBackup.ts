@@ -18,13 +18,16 @@ const useWalletCloudBackup = () => {
 	const { i18n } = useLanguage();
 	const [isWalletLoading, setIsWalletLoading] = useState<string | null>();
 
-	const walletLoadingStates = useMemo(() => ({
-		BACKING_UP_WALLET: i18n.t('Hooks.iCloudBackup.BACKING_UP_WALLET'),
-		CREATING_WALLET: i18n.t('Hooks.iCloudBackup.CREATING_WALLET'),
-		FETCHING_PASSWORD: i18n.t('Hooks.iCloudBackup.FETCHING_PASSWORD'),
-		IMPORTING_WALLET: i18n.t('Hooks.iCloudBackup.IMPORTING_WALLET'),
-		RESTORING_WALLET: i18n.t('Hooks.iCloudBackup.RESTORING_WALLET')
-	}), []);
+	const walletLoadingStates = useMemo(
+		() => ({
+			BACKING_UP_WALLET: i18n.t('Hooks.iCloudBackup.BACKING_UP_WALLET'),
+			CREATING_WALLET: i18n.t('Hooks.iCloudBackup.CREATING_WALLET'),
+			FETCHING_PASSWORD: i18n.t('Hooks.iCloudBackup.FETCHING_PASSWORD'),
+			IMPORTING_WALLET: i18n.t('Hooks.iCloudBackup.IMPORTING_WALLET'),
+			RESTORING_WALLET: i18n.t('Hooks.iCloudBackup.RESTORING_WALLET')
+		}),
+		[]
+	);
 
 	const getUserError = useCallback((e: any) => {
 		switch (e.message) {

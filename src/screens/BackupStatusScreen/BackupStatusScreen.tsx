@@ -140,7 +140,8 @@ const BackupStatusScreen = ({ route }: Props) => {
 							onPress={() =>
 								showAuthenticationPrompt({
 									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
-								})}
+								})
+							}
 							title={i18n.t('BackupStatusScreen.view_secret_phrase')}
 							mode="outlined"
 						/>

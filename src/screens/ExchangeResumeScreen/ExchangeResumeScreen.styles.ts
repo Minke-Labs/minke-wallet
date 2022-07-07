@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
@@ -40,7 +40,7 @@ export const makeStyles = (colors: ColorType) =>
 			justifyContent: 'space-between'
 		},
 		haptic: {
-			marginTop: 'auto',
+			marginTop: Platform.OS === 'android' ? undefined : 'auto',
 			marginBottom: 32,
 			marginHorizontal: 16
 		}

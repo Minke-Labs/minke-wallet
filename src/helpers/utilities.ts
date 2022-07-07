@@ -23,7 +23,12 @@ export const coinFromSymbol = async (symbol: string): Promise<CoingeckoToken> =>
 	return coins.find((coin: any) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
 };
 
-export const numberFormat = (value: number, digits?: number) => value.toString();
+export const numberFormat = (value: number, digits?: number) =>
+	new Intl.NumberFormat(i18n.currentLocale() || 'en-US', {
+		style: 'currency',
+		currency: 'USD',
+		minimumFractionDigits: digits || 2
+	}).format(value);
 
 export const tokenBalanceFormat = (value: number | string, digits = 5) => {
 	const regex = new RegExp(`^-?\\d+(?:\\.\\d{0,${digits}})?`, 'gi');
