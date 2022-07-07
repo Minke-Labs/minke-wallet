@@ -22,6 +22,12 @@ import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
+import ReferralScreen from './ReferralScreen/ReferralScreen';
+import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
+import RedeemConfirmScreen from './ReferralScreen/RedeemConfirmScreen/RedeemConfirmScreen';
+import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCodeScreen';
+import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
+import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
 import Test from './Test/Test';
 
 const screensObj = {
@@ -49,6 +55,12 @@ const screensObj = {
 	TopUpWaitScreen,
 	WithdrawScreen,
 	SavingAccountsScreen,
+	ReferralScreen,
+	RedeemScreen,
+	RedeemConfirmScreen,
+	EnterReferralCodeScreen,
+	TransferWaitScreen,
+	DevSettingsScreen,
 	Test
 };
 

@@ -15,7 +15,8 @@ const TokenInputInner: React.FC<TokenInputInnerProps> = ({
 	showSymbol,
 	onChangeText,
 	marginBottom = 0,
-	ghost = false
+	ghost = false,
+	editable = true
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(isAmountValid, ghost, colors);
@@ -24,29 +25,25 @@ const TokenInputInner: React.FC<TokenInputInnerProps> = ({
 		<View style={[styles.container, { marginBottom }]}>
 			<TextInput
 				keyboardType="numeric"
-				style={
-					[
-						styles.input,
-						{
-							color: ghost ?
-								!isAmountValid ? colors.alert1 : colors.text1
-								: colors.text1
-						}
-					]
-				}
+				style={[
+					styles.input,
+					{
+						color: ghost ? (!isAmountValid ? colors.alert1 : colors.text1) : colors.text1
+					}
+				]}
 				value={amount}
 				placeholder={placeholder}
 				selectionColor={colors.text7}
 				onChangeText={(text) => onChangeText!(text)}
 				autoFocus={autoFocus}
+				editable={editable}
+				selectTextOnFocus={editable}
 			/>
-			{
-				!ghost && (
-					<Text type="a" weight="bold">
-						{showSymbol ? symbol : 'USD'}
-					</Text>
-				)
-			}
+			{!ghost && (
+				<Text type="a" weight="bold">
+					{showSymbol ? symbol : 'USD'}
+				</Text>
+			)}
 		</View>
 	);
 };

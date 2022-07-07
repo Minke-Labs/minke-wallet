@@ -89,10 +89,11 @@ const AvatarProvider: React.FC = ({ children }) => {
 
 	const pickImage = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
 			allowsEditing: true,
 			aspect: [4, 3],
-			quality: 1
+			exif: false,
+			quality: 0
 		});
 
 		if (!result.cancelled) return { uri: result.uri };
@@ -101,9 +102,11 @@ const AvatarProvider: React.FC = ({ children }) => {
 
 	const handleImagePick = async () => {
 		const path = await pickImage();
-		const avatarObj = { id: null, customImage: path };
-		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
-		setSavedAvatar(avatarObj);
+		if (path) {
+			const avatarObj = { id: null, customImage: path };
+			await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
+			setSavedAvatar(avatarObj);
+		}
 	};
 
 	const obj = useMemo(

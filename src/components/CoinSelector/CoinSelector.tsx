@@ -23,9 +23,10 @@ const NoTokenIcon = () => {
 interface TitlesProps {
 	token: MinkeToken;
 	inline?: boolean;
+	notTouchable?: boolean;
 }
 
-const Titles: React.FC<TitlesProps> = ({ token, inline }) => {
+const Titles: React.FC<TitlesProps> = ({ token, inline, notTouchable = false }) => {
 	const { i18n } = useLanguage();
 	const { balance = '0', balanceUSD = 0, symbol } = token;
 	return (
@@ -34,7 +35,7 @@ const Titles: React.FC<TitlesProps> = ({ token, inline }) => {
 				<Text type="p2" style={{ marginRight: inline ? 4 : 8 }} weight="extraBold">
 					{symbol}
 				</Text>
-				<Icon name="chevronDown" color="cta1" size={16} />
+				{!notTouchable && <Icon name="chevronDown" color="cta1" size={16} />}
 			</View>
 			<View>
 				<Text type="span" weight="semiBold">
@@ -86,7 +87,7 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, toke
 					}
 				]}
 			>
-				{token ? <Titles {...{ token, inline }} /> : <TitlesEmpty />}
+				{token ? <Titles {...{ token, inline, notTouchable }} /> : <TitlesEmpty />}
 			</View>
 		</View>
 	</TouchableOpacity>

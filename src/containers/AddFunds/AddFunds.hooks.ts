@@ -13,6 +13,7 @@ import {
 import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder, pickPaymentMethodFromName } from '@models/banxa';
+import * as Linking from 'expo-linking';
 
 interface UseAddFundsProps {
 	onDismiss: () => void;
@@ -77,15 +78,19 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 
 		const paymentRes = await pickPaymentMethodFromName(locationCountry.paymentName);
 
+		const cancelURL = Linking.createURL('test');
+
 		const params = {
 			account_reference: address,
 			source: locationCurrency,
 			target: coin.name.toUpperCase() === 'ETHEREUM' ? 'ETH' : coin.name.toUpperCase(),
 			source_amount: String(value),
 			return_url_on_success: '#',
+			return_url_on_cancelled: cancelURL,
 			wallet_address: address,
 			payment_method_id: paymentRes.id,
-			blockchain: symbol
+			blockchain: symbol,
+			meta_data: JSON.stringify({ address, cancelURL })
 		};
 
 		const url = await makeOrder({ params });

@@ -195,7 +195,7 @@ export const trackWyreOrder = async (referenceInfo: any, orderId: any, network: 
 	return { data: response, orderStatus, transferId };
 };
 
-export const trackWyreTransfer = async (referenceInfo: any, transferId: any, network: Network) => {
+export const trackWyreTransfer = async (transferId: any, network: Network) => {
 	const baseUrl = getBaseUrl(network);
 	const response = await wyreApi.get(`${baseUrl}/v2/transfer/${transferId}/track`);
 	const transferHash = get(response, 'blockchainNetworkTx');

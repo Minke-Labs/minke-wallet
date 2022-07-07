@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
 import { ZAPPER_API_KEY } from '@env';
 import * as qs from 'qs';
+import { ZAPPER_API_KEY } from '@env';
 import { network, network as selectedNetwork, networks } from './network';
 import { MinkeToken, stablecoins } from './token';
 import { DepositableToken } from './types/depositTokens.types';

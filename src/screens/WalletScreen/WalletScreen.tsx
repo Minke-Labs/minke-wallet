@@ -36,6 +36,7 @@ const WalletScreen = () => {
 		onSendFinished,
 		address,
 		balance,
+		onPointsPress,
 		onError,
 		setError,
 		error
@@ -56,7 +57,8 @@ const WalletScreen = () => {
 					address,
 					balance,
 					setAddFundsVisible,
-					setSendModalOpen
+					setSendModalOpen,
+					onPointsPress
 				}}
 				onAvatarClick={() => setOpenAvatarModal(true)}
 			/>

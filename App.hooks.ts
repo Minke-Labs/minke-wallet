@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from '@hookstate/core';
 import RNUxcam from 'react-native-ux-cam';
 import Logger from '@utils/logger';
+import RNTestFlight from 'react-native-test-flight';
 import { UXCAM_API_KEY, APPS_FLYER_DEV_KEY } from '@env';
 import {
 	Inter_400Regular,
@@ -47,10 +48,12 @@ export const useApp = () => {
 				}
 			);
 
-			// UXCAM
-			const uxCamKey = UXCAM_API_KEY || process.env.UXCAM_API_KEY;
-			RNUxcam.optIntoSchematicRecordings();
-			RNUxcam.startWithConfiguration({ userAppKey: uxCamKey! });
+			if (!RNTestFlight.isTestFlight) {
+				// UXCAM
+				const uxCamKey = UXCAM_API_KEY || process.env.UXCAM_API_KEY;
+				RNUxcam.optIntoSchematicRecordings();
+				RNUxcam.startWithConfiguration({ userAppKey: uxCamKey! });
+			}
 		}
 	};
 

@@ -254,7 +254,8 @@ export default {
 		my_account: 'Minha Conta',
 		help: 'Ajuda',
 		other: 'Outros',
-		savings_account: 'Conta de Investimentos'
+		savings_account: 'Conta de Investimentos',
+		enter_referral_code: 'Inserir código de indicação'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -263,7 +264,10 @@ export default {
 		},
 		Processing: {
 			almost_there: 'Quase lá... isso pode levar um tempinho...',
-			please_wait: 'Por favor, espere enquanto processamos o seu pagamento...'
+			please_wait: {
+				payment: 'Por favor, espere enquanto processamos o seu pagamento...',
+				transfer: 'Por favor, espere enquanto processamos a sua transferência...'
+			}
 		},
 		Success: {
 			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
@@ -355,7 +359,8 @@ export default {
 			accounts: 'Contas'
 		},
 		Header: {
-			welcome: 'Olá'
+			welcome: 'Olá',
+			points: 'pontos'
 		},
 		AssetsPanel: {
 			your_total_assets: 'Seus ativos',
@@ -389,7 +394,9 @@ export default {
 				funds_deposited_in_savings: 'Fundos investidos',
 				borrowing: 'Empréstimos',
 				open_loans: 'Empréstimos em aberto',
-				coming_soon: 'Em breve'
+				coming_soon: 'Em breve',
+				points: 'Pontos',
+				points_earned: 'Indique um amigo, receba crypto'
 			},
 			Transactions: {
 				NoTransactionsYet: {
@@ -401,12 +408,12 @@ export default {
 		Modals: {
 			AvatarModal: {
 				Chosen: {
-					edit: 'Edite seu avatar',
-					select: 'Selecione um avatar do Minke',
-					choose: 'Escolha do arquivo'
+					edit: 'Editar seu avatar',
+					select: 'Selecionar um avatar da Minke',
+					choose: 'Escolher da biblioteca'
 				},
 				Select: {
-					select: 'Selecione seu avatar'
+					select: 'Selecionar seu avatar'
 				}
 			},
 			ReceiveModal: {
@@ -458,6 +465,7 @@ export default {
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
 		import_or_restore: 'Importar ou Restaurar Carteira',
+		i_have_a_referral_code: 'Eu tenho um código de indicação',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
 			seed_or_key: 'Frase de recuperação ou chave privada',
@@ -474,6 +482,83 @@ export default {
 	WithdrawScreen: {
 		withdraw: 'Retirar',
 		balance: 'Saldo: '
+	},
+	ReferralScreen: {
+		Header: {
+			points: 'Pontos'
+		},
+		CurrentValue: {
+			pts: 'pts.',
+			owned: 'Meus pontos',
+			redeem: 'Resgatar',
+			earn: 'Ganhar'
+		},
+		RedeemScreen: {
+			redeem_minke_points: 'Resgatar Pontos Minke',
+			swap: 'Resgatar',
+			Modals: {
+				WrongNetwork: {
+					wrong_network: 'Oops! Parece que você está na rede errada',
+					please_change_network: 'Por favor, mude para a rede Polygon para resgatar os seus pontos.',
+					change_to_polygon: 'Mudar para Polygon'
+				},
+				NotEnoughPoints: {
+					you_dont_have_points: 'Oops! Você não tem pontos',
+					you_can_earn: 'Você pode ganhar pontos:',
+					referring_a_friend: 'Indicando um amigo',
+					topping_up: 'Adicionando fundos',
+					get_rewarded: 'Ganhe recompensas por investir!',
+					what_can_you_do_with_your_points: 'O que você pode fazer com seus pontos?',
+					you_can_redeem: 'Você pode trocar seus pontos por MATIC.'
+				}
+			}
+		},
+		Modals: {
+			HelpModal: {
+				how_minke_points_work: 'Como os pontos Minke funcionam?',
+				rewards_explanation:
+					'Pontos Minke são recompensas que te damos quando você realiza determinadas tarefas no aplicativo.',
+				you_can_earn_points_by: 'Você pode ganhar pontos por:',
+				topping_up_for_the_first_time: 'Adicionar fundos pela primeira vez.',
+				refering_minke: 'Indicando a Minke para seus amigos e família.',
+				setting_recurrent_top_ups: 'Configurando depósitos recorrentes.',
+				what_can_you_do: 'O que você pode fazer com seus pontos?',
+				you_can_redeem_your_points: 'Você pode trocar seus pontos por MATIC.'
+			},
+			EarnModal: {
+				earn_minke_points: 'Ganhe pontos Minke!',
+				refer_a_friend: 'Indique um amigo',
+				when_your_friends_top_up: 'Quando seu amigo adicionar 100 USDC vocês dois ganham pontos Minke.',
+				top_up: 'Adicione Fundos',
+				get_rewarded: 'Ganhe recompensas por investir!',
+				coming_soon: '(Em breve)',
+				share_text:
+					'Oi! Eu tenho usado Minke para economizar e ganhar 20x mais que no meu banco. Ambos receberemos 100 pontos Minke(~ 10 USD com os quais você pode comprar criptomoedas) quando você se inscrever e fizer seu primeiro depósito de 100 USD ou mais. Meu código é {{code}} - inscreva-se aqui: https://apps.apple.com/pt/app/minke-defi-wallet/id1585144414'
+			}
+		},
+		Body: {
+			referral: 'Indicação',
+			deposit: 'Depósito',
+			points: '{{count}} pontos'
+		}
+	},
+	RedeemConfirmScreen: {
+		confirmation: 'Confirmação',
+		rate_fixed_for: 'Cotação fixa por:',
+		errors: {
+			failed_claim: 'Seu resgate não está completo. Por favor, entre em contato com o suporte.',
+			invalid_request: 'Requsição inválida'
+		}
+	},
+	EnterReferralCodeScreen: {
+		enter_referral_code: 'Código de indicação',
+		get_rewarded_for_saving_money: 'Receba recompensas por investir!',
+		or: 'ou',
+		refer_a_friend: 'Indique um amigo',
+		referral_note:
+			'Esse código pode ser usado somente uma vez. Depois de adicionar 100 USDC você e o seu amigo vão receber 100 pontos Minke cada.',
+		invalid_code: 'Código inválido',
+		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
 	},
 	Hooks: {
 		iCloudBackup: {
@@ -569,6 +654,11 @@ export default {
 		EmptyStates: {
 			NoTokens: {
 				no_tokens_here: 'Nenhum token'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Seus pontos aparecerão aqui',
+				lets_get_started: 'Vamos começar?',
+				earn_points: 'Ganhar pontos'
 			}
 		},
 		Inputs: {
@@ -577,7 +667,8 @@ export default {
 			search: 'Procurar',
 			search_token: 'Procurar token',
 			name: 'Nome',
-			ens_or_wallet: 'ENS ou Endereço da Carteira'
+			ens_or_wallet: 'ENS ou Endereço da Carteira',
+			enter_code: 'Digitar código'
 		},
 		Buttons: {
 			backup_to_icloud: 'Fazer Backup no iCloud',
@@ -593,7 +684,10 @@ export default {
 			add_contact: 'Adicionar Contato',
 			add_funds_to_start: 'Adicionar fundos para começar',
 			share: 'Compartilhar',
-			pay_with: 'Pagar com '
+			pay_with: 'Pagar com ',
+			use_code: 'Usar código',
+			loading: 'Carregando',
+			swap: 'Trocar'
 		},
 		ModalReusables: {
 			TransactionWaitModal: {

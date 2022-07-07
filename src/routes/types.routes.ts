@@ -26,5 +26,11 @@ export type RootStackParamList = {
 	TopUpWaitScreen: undefined;
 	WithdrawScreen: undefined;
 	SavingAccountsScreen: undefined;
+	ReferralScreen: undefined;
+	EnterReferralCodeScreen: undefined;
+	RedeemScreen: { code: string | undefined };
+	RedeemConfirmScreen: undefined;
+	TransferWaitScreen: { transferId: string };
+	DevSettingsScreen: undefined;
 	Test: undefined;
 };

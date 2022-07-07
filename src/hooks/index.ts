@@ -19,9 +19,11 @@ import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
 import useDepositProtocols from './useDepositProtocols';
+import useReferralCode from './useReferralCode';
 import useFirstTime from './useFirstTime';
 import usePrevious from './usePrevious';
 import useWalletState from './useWalletState';
+import useMinkeRewards from './useMinkeRewards';
 
 export {
 	useAmplitude,
@@ -44,8 +46,10 @@ export {
 	useAuthentication,
 	useBiconomy,
 	useNativeToken,
-	useWalletState,
 	useDepositProtocols,
+	useReferralCode,
+	useWalletState,
 	useFirstTime,
-	usePrevious
+	usePrevious,
+	useMinkeRewards
 };
