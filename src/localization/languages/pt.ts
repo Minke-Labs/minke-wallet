@@ -401,12 +401,12 @@ export default {
 		Modals: {
 			AvatarModal: {
 				Chosen: {
-					edit: 'Edite seu avatar',
-					select: 'Selecione um avatar do Minke',
-					choose: 'Escolha do arquivo'
+					edit: 'Editar seu avatar',
+					select: 'Selecionar um avatar da Minke',
+					choose: 'Escolher da biblioteca'
 				},
 				Select: {
-					select: 'Selecione seu avatar'
+					select: 'Selecionar seu avatar'
 				}
 			},
 			ReceiveModal: {
