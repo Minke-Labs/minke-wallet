@@ -402,7 +402,7 @@ export default {
 			AvatarModal: {
 				Chosen: {
 					edit: 'Editar seu avatar',
-					select: 'Selecionar um avatar do Minke',
+					select: 'Selecionar um avatar da Minke',
 					choose: 'Escolher da biblioteca'
 				},
 				Select: {
