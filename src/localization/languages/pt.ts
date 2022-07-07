@@ -101,10 +101,11 @@ export default {
 	},
 	BackupStatusScreen: {
 		your_wallet_is_backed_up: 'Sua carteira tem backup!',
-		if_you_lose: 'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no iCloud.',
+		if_you_lose:
+			'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no {{cloudPlatform}}.',
 		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
 		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
-		back_up_to_icloud: 'Backup no iCloud',
+		back_up_to_icloud: 'Backup no {{cloudPlatform}}',
 		backup: 'Backup',
 		done: 'Pronto',
 		go_to_wallet: 'Ir para a carteira',
@@ -122,7 +123,7 @@ export default {
 			to: 'Para',
 			restore_from: ' restaurar suas carteiras do ',
 			add_to: ' adicionar esta carteira ao seu ',
-			enter_existing: 'backup do iCloud, digite sua senha de backup existente',
+			enter_existing: 'backup do {{cloudPlatform}}, digite sua senha de backup existente',
 			importing_backups: 'Importando backups'
 		}
 	},
@@ -474,7 +475,7 @@ export default {
 			import: 'Importar Carteira',
 			SelectImportMethodModal: {
 				import_wallet: 'Importar Carteira',
-				restore_from_icloud: 'Restaurar do iCloud',
+				restore_from_icloud: 'Restaurar do {{cloudPlatform}}',
 				backup_wallets_count: 'Você tem %{count} carteira%{plural} backed up',
 				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
 			}
@@ -672,7 +673,7 @@ export default {
 			enter_code: 'Digitar código'
 		},
 		Buttons: {
-			backup_to_icloud: 'Fazer Backup no iCloud',
+			backup_to_icloud: 'Fazer Backup no {{cloudPlatform}}',
 			backup_manually: 'Fazer backup manualmente',
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',

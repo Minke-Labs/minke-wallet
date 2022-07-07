@@ -8,6 +8,7 @@ import { restoreCloudBackup } from '@models/backup';
 import { useState } from '@hookstate/core';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import { getAllWallets } from '@models/wallet';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './ConfirmBackupPassword.styles';
 
@@ -82,7 +83,7 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 					{restoreBackups
 						? i18n.t('BackupToICloudScreen.ConfirmBackupPassword.restore_from')
 						: i18n.t('BackupToICloudScreen.ConfirmBackupPassword.add_to')}
-					{i18n.t('BackupToICloudScreen.ConfirmBackupPassword.enter_existing')}
+					{i18n.t('BackupToICloudScreen.ConfirmBackupPassword.enter_existing', { cloudPlatform })}
 				</Text>
 
 				<Input

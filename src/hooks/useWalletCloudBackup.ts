@@ -1,4 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
+import { Platform } from 'react-native';
 import { CLOUD_BACKUP_ERRORS, isCloudBackupAvailable } from '@models/cloudBackup';
 import {
 	addWalletToCloudBackup,
@@ -12,7 +13,7 @@ import { getAllWallets, setWalletBackedUp } from '@models/wallet';
 import Logger from '@utils/logger';
 import useLanguage from './useLanguage';
 
-export const cloudPlatform = 'iCloud';
+export const cloudPlatform = Platform.OS === 'android' ? 'Google Drive' : 'iCloud';
 
 const useWalletCloudBackup = () => {
 	const { i18n } = useLanguage();
