@@ -35,7 +35,7 @@ const Accounts = ({ points }: { points: number }) => {
 			{
 				title: i18n.t('WalletScreen.screens.Accounts.points'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.points_earned'),
-				thirdRowText: points,
+				thirdRowText: `${points} ${i18n.t('WalletScreen.screens.Accounts.points')}`,
 				image: 'gift',
 				onPress: () => navigation.navigate('ReferralScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />

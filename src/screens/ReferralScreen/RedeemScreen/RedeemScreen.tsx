@@ -22,8 +22,8 @@ const RedeemScreen = ({ route }: Props) => {
 	const {
 		network: { chainId }
 	} = state.value;
-	const { points } = useMinkeRewards();
-	const notEnoughPoints = points <= 0;
+	const { points, loading: loadingPoints } = useMinkeRewards();
+	const notEnoughPoints = !loadingPoints && points <= 0;
 	const wrongNetwork = chainId !== networks.matic.chainId;
 	const navigation = useNavigation();
 	const dismissModal = () => navigation.navigate('ReferralScreen');
