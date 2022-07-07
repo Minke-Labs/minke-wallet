@@ -101,9 +101,11 @@ const AvatarProvider: React.FC = ({ children }) => {
 
 	const handleImagePick = async () => {
 		const path = await pickImage();
-		const avatarObj = { id: null, customImage: path };
-		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
-		setSavedAvatar(avatarObj);
+		if (path) {
+			const avatarObj = { id: null, customImage: path };
+			await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
+			setSavedAvatar(avatarObj);
+		}
 	};
 
 	const obj = useMemo(
