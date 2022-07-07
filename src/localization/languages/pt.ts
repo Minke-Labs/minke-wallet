@@ -122,7 +122,8 @@ export default {
 			to: 'Para',
 			restore_from: ' restaurar suas carteiras do ',
 			add_to: ' adicionar esta carteira ao seu ',
-			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
+			enter_existing: 'backup do iCloud, digite sua senha de backup existente',
+			importing_backups: 'Importando backups'
 		}
 	},
 	ChangeCountryScreen: {

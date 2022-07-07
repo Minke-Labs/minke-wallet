@@ -10,7 +10,7 @@ import { MINKE_MASTER_KEY } from '@env';
 import Logger from '@utils/logger';
 
 const USERDATA_FILE = 'UserData.json';
-const REMOTE_BACKUP_WALLET_DIR = 'minke.app/wallet-backups';
+export const REMOTE_BACKUP_WALLET_DIR = 'minke.app/wallet-backups';
 const encryptor = new AesEncryptor();
 
 export const CLOUD_BACKUP_ERRORS = {

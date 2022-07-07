@@ -20,7 +20,7 @@ const useEnterReferralCodeScreen = () => {
 			if (savedCode) {
 				setCode(savedCode);
 				setDisableCode(true);
-			} else {
+			} else if (address) {
 				const { code: codeInUse } = await getUsedReferralCode(address);
 				if (codeInUse) {
 					await AsyncStorage.setItem('@referralCodeInUse', codeInUse);

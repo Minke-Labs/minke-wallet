@@ -1,20 +1,25 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup, useLanguage } from '@hooks';
 import { backupImg } from '@images';
 import { restoreCloudBackup } from '@models/backup';
+import { useState } from '@hookstate/core';
+import { globalWalletState, walletState } from '@stores/WalletStore';
+import { getAllWallets } from '@models/wallet';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './ConfirmBackupPassword.styles';
 
 const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: BackupToICloudProps) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const [password, setPassword] = useState<string>();
+	const [password, setPassword] = React.useState<string>();
 	const { isWalletLoading, walletCloudBackup } = useWalletCloudBackup();
-	const [restoringBackuups, setRestoringBackups] = useState<string | null>();
+	const [restoringBackuups, setRestoringBackups] = React.useState<string | null>();
 	const keyboardVisible = useKeyboard();
+	const state = useState(globalWalletState());
+	const { address } = state.value;
 
 	const isPasswordValid = password && password.length >= 8;
 
@@ -25,11 +30,17 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 	const onConfirm = useCallback(async () => {
 		if (!isPasswordValid) return;
 		if (restoreBackups) {
-			setRestoringBackups('Importing backups');
+			setRestoringBackups(i18n.t('BackupToICloudScreen.ConfirmBackupPassword.importing_backups'));
 			const success = await restoreCloudBackup(password);
 			setRestoringBackups(null);
-
 			if (success) {
+				const allWallets = (await getAllWallets()) || {};
+				const wallets = Object.values(allWallets);
+
+				if (!address && wallets.length > 0) {
+					state.set(await walletState(wallets[0]));
+				}
+
 				navigation.navigate('WalletScreen');
 			} else {
 				onError(i18n.t('Logs.couldnt_restore_backup'));
@@ -43,7 +54,7 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 				walletId
 			});
 		}
-	}, [onError, onSuccess, password, walletCloudBackup, walletId, restoreBackups]);
+	}, [onError, onSuccess, password, walletCloudBackup, walletId, restoreBackups, address]);
 
 	if (!!isWalletLoading || !!restoringBackuups) {
 		return <LoadingScreen title={isWalletLoading! || restoringBackuups!} />;
@@ -68,9 +79,9 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 				</Text>
 				<Text type="p2" weight="medium" color="text2" marginBottom={32}>
 					{i18n.t('BackupToICloudScreen.ConfirmBackupPassword.to')}
-					{restoreBackups ?
-						i18n.t('BackupToICloudScreen.ConfirmBackupPassword.restore_from') :
-						i18n.t('BackupToICloudScreen.ConfirmBackupPassword.add_to')}
+					{restoreBackups
+						? i18n.t('BackupToICloudScreen.ConfirmBackupPassword.restore_from')
+						: i18n.t('BackupToICloudScreen.ConfirmBackupPassword.add_to')}
 					{i18n.t('BackupToICloudScreen.ConfirmBackupPassword.enter_existing')}
 				</Text>
 
@@ -86,9 +97,11 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 				/>
 
 				<Button
-					title={restoreBackups ?
-						i18n.t('Components.Buttons.confirm_restore') :
-						i18n.t('Components.Buttons.confirm_backup')}
+					title={
+						restoreBackups
+							? i18n.t('Components.Buttons.confirm_restore')
+							: i18n.t('Components.Buttons.confirm_backup')
+					}
 					iconRight="cloudStroke"
 					disabled={!isPasswordValid}
 					onPress={onConfirm}

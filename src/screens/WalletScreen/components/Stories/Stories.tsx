@@ -211,16 +211,9 @@ const Stories: React.FC = () => {
 	};
 
 	const initializeStoryteller = () => {
-		Storyteller.initialize(
-			(STORYTELLER_KEY || process.env.STORYTELLER_KEY)!,
-			walletAddress,
-			'',
-			[],
-			(callback: { result: Boolean; message: string }) => {
-				console.log(`\n\n\nresult: ${callback.result}. Message: ${callback.message}`);
-				reloadDataIfNeeded();
-			}
-		);
+		Storyteller.initialize((STORYTELLER_KEY || process.env.STORYTELLER_KEY)!, walletAddress, '', [], () => {
+			reloadDataIfNeeded();
+		});
 	};
 
 	useEffect(() => {
@@ -234,11 +227,7 @@ const Stories: React.FC = () => {
 	return (
 		<View style={{ marginBottom: 64 }}>
 			<TouchableOpacity onPress={() => setToggle(!toggle)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-				<Text
-					weight="semiBold"
-					type="lMedium"
-					style={{ marginRight: 8 }}
-				>
+				<Text weight="semiBold" type="lMedium" style={{ marginRight: 8 }}>
 					{i18n.t('WalletScreen.components.Stories.whats_new')}
 				</Text>
 				<Icon name={toggle ? 'chevronUp' : 'chevronDown'} size={24} color="cta1" />
@@ -250,8 +239,6 @@ const Stories: React.FC = () => {
 					ref={rowRef}
 					style={{ height: 91 }}
 					uiStyle={scheme === 'dark' ? ('dark' as UIStyle) : ('light' as UIStyle)}
-					onDataLoadStarted={() => console.log('STORIES LOADING...')}
-					onDataLoadCompleted={() => console.log('STORIES FULLY LOADED.')}
 					categories={[language as string, 'all']}
 				/>
 			</View>

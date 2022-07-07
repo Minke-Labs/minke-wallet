@@ -122,7 +122,8 @@ export default {
 			to: 'To',
 			restore_from: ' restore your wallets from ',
 			add_to: ' add this wallet to ',
-			enter_existing: 'your iCloud backup, enter your existing backup password'
+			enter_existing: 'your iCloud backup, enter your existing backup password',
+			importing_backups: 'Importing backups'
 		}
 	},
 	ChangeCountryScreen: {

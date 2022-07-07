@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 import { Options, requestSharedWebCredentials, setSharedWebCredentials } from 'react-native-keychain';
 import Logger from '@utils/logger';
 import * as keychain from './keychain';
-import { encryptAndSaveDataToCloud, fetchAllBackups, getDataFromCloud } from './cloudBackup';
+import { encryptAndSaveDataToCloud, fetchAllBackups, getDataFromCloud, REMOTE_BACKUP_WALLET_DIR } from './cloudBackup';
 import { AllMinkeWallets, getPrivateKey, getSeedPhrase, MinkeWallet, restoreWalletByMnemonic } from './wallet';
 
 type BackupPassword = string;
@@ -111,25 +111,27 @@ export const findLatestBackUpOnICloud = async (): Promise<string | null> => {
 	const { files } = await fetchAllBackups();
 	const filteredFiles = files.filter((file: any) => file.name.indexOf('backup_') !== -1);
 	let latestBackup: number | null = null;
-	let filename: string | null = null;
+	let filename: string = '';
 
-	forEach(filteredFiles, (file: any) => {
+	forEach(filteredFiles, ({ name }: { name: string }) => {
 		const timestamp = Number(
-			file.name
+			name
 				.replace('.backup_', '')
 				.replace('backup_', '')
 				.replace('.json', '')
 				.replace('.icloud', '')
-				.replace('minke.app/wallet-backups/', '')
+				.replace(`${REMOTE_BACKUP_WALLET_DIR}/`, '')
 		);
 		// Check if there's a wallet backed up
 		// If there is one, let's grab the latest backup
 		if (!latestBackup || timestamp > latestBackup) {
-			filename = file.name;
+			filename = name;
 			latestBackup = timestamp;
 		}
 	});
-
+	if (filename) {
+		filename = filename.replace(`${REMOTE_BACKUP_WALLET_DIR}/`, '');
+	}
 	return filename;
 };
 
