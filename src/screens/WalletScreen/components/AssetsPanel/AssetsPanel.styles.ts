@@ -37,9 +37,9 @@ export default StyleSheet.create({
 		alignItems: 'center'
 	},
 	avatar: {
-		width: 48,
-		height: 48,
-		borderRadius: 24,
+		width: 56,
+		height: 56,
+		borderRadius: 28,
 		borderWidth: 3
 	}
 });
