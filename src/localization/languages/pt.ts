@@ -152,7 +152,7 @@ export default {
 		OpenSavings: {
 			open_account: 'Abrir uma Conta',
 			aave: 'Abrir uma conta na Aave',
-			mstable: 'Open mStable\nSavings Account',
+			mstable: 'Abrir uma conta na mStable',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		OpenMStable: {
@@ -476,7 +476,7 @@ export default {
 			SelectImportMethodModal: {
 				import_wallet: 'Importar Carteira',
 				restore_from_icloud: 'Restaurar do {{cloudPlatform}}',
-				backup_wallets_count: 'Você tem %{count} carteira%{plural} backed up',
+				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
 				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
 			}
 		}
@@ -582,10 +582,11 @@ export default {
 	Containers: {
 		AddFunds: {
 			LocalCurrencyModal: {
-				choose_another_amount: 'Escolha outro valor'
+				choose_amount_in: 'Escolha o valor em {{currency}}'
 			},
 			ChooseQuantityModal: {
-				buy_some: 'Compre alguns {{symbol}} com ',
+				buy_some: 'Compre alguns {{symbol}}',
+				with: ' com',
 				to_start_using: ' para começar a usar a Minke:',
 				choose_another_amount: 'Escolha outro valor',
 				or_deposit: 'ou deposite',
@@ -595,7 +596,7 @@ export default {
 				address_copied: 'Endereço copiado!'
 			},
 			CoinSelectorModal: {
-				add_funds: 'Adicione fundos',
+				add_funds: 'Adicionar fundos',
 				choose_asset: 'Escolha qual token gostaria de comprar'
 			},
 			CustomAmountModal: {

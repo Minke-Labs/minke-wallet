@@ -23,6 +23,7 @@ interface ApplePayButtonProps {
 const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress, marginBottom, disabled = false }) => {
 	const { colors } = useTheme();
 	const { i18n } = useLanguage();
+
 	return (
 		<TouchableOpacity
 			onPress={onPress}
