@@ -94,7 +94,6 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		};
 
 		const url = await makeOrder({ params });
-		console.log(url);
 		setOrderLink(url);
 		setBanxaModalVisible(true);
 	};
