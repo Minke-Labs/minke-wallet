@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, useColorScheme } from 'react-native';
+import { View, TouchableOpacity, useColorScheme, Platform } from 'react-native';
 import { Text, Icon } from '@components';
 import { useLanguage, useWalletState } from '@hooks';
-import { STORYTELLER_KEY } from '@env';
+import { STORYTELLER_KEY, STORYTELLER_ANDROID_KEY } from '@env';
 import Storyteller, {
 	StorytellerRowView,
 	UIStyle,
@@ -205,13 +205,17 @@ const Stories: React.FC = () => {
 	const [toggle, setToggle] = useState(false);
 	const scheme = useColorScheme();
 	const rowRef = useRef<StorytellerRowView>(null);
+	const apiKey =
+		Platform.OS === 'android'
+			? STORYTELLER_ANDROID_KEY || process.env.STORYTELLER_ANDROID_KEY
+			: STORYTELLER_KEY || process.env.STORYTELLER_KEY;
 
 	const reloadDataIfNeeded = () => {
 		if (rowRef.current) rowRef.current.reloadData();
 	};
 
 	const initializeStoryteller = () => {
-		Storyteller.initialize((STORYTELLER_KEY || process.env.STORYTELLER_KEY)!, walletAddress, '', [], () => {
+		Storyteller.initialize(apiKey!, walletAddress, '', [], () => {
 			reloadDataIfNeeded();
 		});
 	};

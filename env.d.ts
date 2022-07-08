@@ -26,6 +26,7 @@ declare module '@env' {
 	export const MINKE_API_URL: string;
 	export const UXCAM_API_KEY: string;
 	export const STORYTELLER_KEY: string;
+	export const STORYTELLER_ANDROID_KEY: string;
 	export const INTERCOM_KEY: string;
 	export const ZAPPER_API_KEY: string;
 }
