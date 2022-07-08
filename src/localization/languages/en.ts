@@ -455,7 +455,8 @@ export default {
 						how_much: 'How much ',
 						wanna_send: ' do you want to send?'
 					}
-				}
+				},
+				add: '+ Add'
 			}
 		}
 	},

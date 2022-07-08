@@ -457,7 +457,8 @@ export default {
 						how_much: 'Quantos ',
 						wanna_send: ' você quer enviar?'
 					}
-				}
+				},
+				add: '+ Adicionar'
 			}
 		}
 	},

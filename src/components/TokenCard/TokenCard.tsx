@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
 import { makeStyles } from './TokenCard.styles';
@@ -29,7 +29,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	});
 
 	return (
-		<View style={styles.container}>
+		<TouchableOpacity onPress={onPress} style={styles.container}>
 			<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
 
 			<View
@@ -59,7 +59,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 

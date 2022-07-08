@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Icon, Text } from '@components';
+import { useLanguage } from '@hooks';
 import styles from './SendModal.styles';
 import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact } from './screens';
 import { SendModalProps } from './SendModal.types';
@@ -17,6 +18,7 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, onError, sentSuccessfu
 		onTokenSelected,
 		onContactsBack
 	} = useSendModal({ isVisible, onDismiss });
+	const { i18n } = useLanguage();
 
 	return (
 		<SafeAreaView>
@@ -27,7 +29,7 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, onError, sentSuccessfu
 				{currentStep === 0 && !addContactVisible ? (
 					<TouchableOpacity onPress={() => setAddContactVisible(true)} activeOpacity={0.8}>
 						<Text type="a" color="text7" weight="medium">
-							+ Add
+							{i18n.t('WalletScreen.Modals.SendModal.add')}
 						</Text>
 					</TouchableOpacity>
 				) : (
@@ -46,8 +48,7 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, onError, sentSuccessfu
 
 			{currentStep === 1 && <TransactionSelectFunds user={user} onSelected={onTokenSelected} />}
 
-			{
-				currentStep === 2 && token &&
+			{currentStep === 2 && token && (
 				<TransactionTransfer
 					{...{
 						user,
@@ -57,7 +58,7 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, onError, sentSuccessfu
 						sentSuccessfully
 					}}
 				/>
-			}
+			)}
 		</SafeAreaView>
 	);
 };
