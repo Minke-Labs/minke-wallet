@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
-import { network } from './network';
+import { network, networks } from './network';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD', 'UST'];
 export const exchangebleTokens = [
@@ -66,10 +66,21 @@ export const getExchangePrice = async ({
 	destDecimals,
 	quote = false
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { apiUrl0x } = await network();
+	const { apiUrl0x, chainId } = await network();
+	let sellToken = srcToken.toLowerCase();
+	let buyToken = destToken.toLowerCase();
+	if (chainId === networks.matic.chainId) {
+		if (sellToken === '0x0000000000000000000000000000000000001010') {
+			sellToken = 'MATIC';
+		}
+
+		if (buyToken === '0x0000000000000000000000000000000000001010') {
+			buyToken = 'MATIC';
+		}
+	}
 	const quoteParams: QuoteParams = {
-		sellToken: srcToken.toLowerCase(),
-		buyToken: destToken.toLowerCase(),
+		sellToken,
+		buyToken,
 		takerAddress: address.toLowerCase(),
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
