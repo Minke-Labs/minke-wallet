@@ -3,7 +3,7 @@ import { screenWidth } from '@styles';
 
 export const styles = StyleSheet.create({
 	container: {
-		screenWidth,
+		width: screenWidth,
 		marginBottom: 34
 	},
 
