@@ -1,5 +1,8 @@
-import { deviceHeight, deviceWidth } from '@styles';
+import { deviceHeight, deviceWidth, navigationBarHeight, screenHeight, os } from '@styles';
 import { AppTourStepType } from '../AppTour.types';
+
+const sHeight = os === 'android' ? screenHeight : 0;
+const offset = navigationBarHeight - (sHeight * 0.035);
 
 export const getHole = (type: AppTourStepType) => {
 	switch (type) {
@@ -10,7 +13,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: 110,
 				height: 110,
 				borderRadius: 55,
-				top: deviceHeight * 0.16 + 60,
+				top: deviceHeight * 0.16 + 60 - offset,
 				left: deviceWidth * 0.06 + 30
 			};
 		case 2:
@@ -18,7 +21,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: 110,
 				height: 110,
 				borderRadius: 55,
-				top: deviceHeight * 0.16 + 60,
+				top: deviceHeight * 0.16 + 60 - offset,
 				left: deviceWidth * 0.5 + 30
 			};
 		case 3:
@@ -26,7 +29,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: 104,
 				height: 64,
 				borderRadius: 24,
-				top: deviceHeight * 0.162 + 150,
+				top: deviceHeight * 0.162 + 150 - offset,
 				left: deviceWidth * 0.05
 			};
 		case 4:
@@ -34,7 +37,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: 239,
 				height: 64,
 				borderRadius: 24,
-				top: deviceHeight * 0.162 + 150,
+				top: deviceHeight * 0.162 + 150 - offset,
 				left: deviceWidth * 0.05
 			};
 		case 5:
@@ -42,7 +45,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: deviceWidth - 36,
 				height: 64,
 				borderRadius: 24,
-				top: deviceHeight * 0.162 + 150,
+				top: deviceHeight * 0.162 + 150 - offset,
 				left: deviceWidth * 0.05
 			};
 		default:

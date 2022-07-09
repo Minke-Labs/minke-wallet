@@ -9,7 +9,8 @@ import {
 	deviceHeight,
 	deviceWidth,
 	statusBarHeight,
-	navigationBarHeight
+	navigationBarHeight,
+	os
 } from './dimensions';
 
 export {
@@ -24,7 +25,8 @@ export {
 	deviceHeight,
 	deviceWidth,
 	statusBarHeight,
-	navigationBarHeight
+	navigationBarHeight,
+	os
 };
 
 export type {
