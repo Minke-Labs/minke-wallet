@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native';
+import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Animated, {
 	interpolate,
 	useAnimatedStyle,
@@ -8,9 +8,8 @@ import Animated, {
 	withTiming
 } from 'react-native-reanimated';
 import { useTheme } from '@hooks';
+import { screenHeight, navigationBarHeight } from '@styles';
 import styles from './Modal.styles';
-
-const screenHeight = Dimensions.get('window').height;
 
 interface ModalProps {
 	isVisible: boolean;
@@ -33,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 	}));
 
 	const animatedStyles = useAnimatedStyle(() => ({
-		transform: [{ translateY: top.value }]
+		transform: [{ translateY: top.value - navigationBarHeight }]
 	}));
 
 	useEffect(() => {

@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Dimensions } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { useTheme } from '@hooks';
+import { screenWidth } from '@styles';
 
 const BorderSVG = () => {
 	const { colors } = useTheme();
 	return (
 		<Svg
-			width={Dimensions.get('window').width}
+			width={screenWidth}
 			height={373}
 			fill="none"
 			viewBox="0 0 361 373"

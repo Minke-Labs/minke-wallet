@@ -1,10 +1,9 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import { screenWidth } from '@styles';
 
 export const styles = StyleSheet.create({
 	container: {
-		width,
+		screenWidth,
 		marginBottom: 34
 	},
 

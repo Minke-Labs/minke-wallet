@@ -3,6 +3,14 @@ import { token, TokenType } from './tokens';
 import { colors, ColorType } from './colors';
 import { flag, FlagType } from './flags';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
+import {
+	screenHeight,
+	screenWidth,
+	deviceHeight,
+	deviceWidth,
+	statusBarHeight,
+	navigationBarHeight
+} from './dimensions';
 
 export {
 	icon,
@@ -10,7 +18,13 @@ export {
 	colors,
 	flag,
 	fontType,
-	fontWeight
+	fontWeight,
+	screenHeight,
+	screenWidth,
+	deviceHeight,
+	deviceWidth,
+	statusBarHeight,
+	navigationBarHeight
 };
 
 export type {

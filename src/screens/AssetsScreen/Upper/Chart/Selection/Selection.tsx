@@ -1,19 +1,18 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react';
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { View, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native';
+import { View, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { Text } from '@components';
 // import { graphs } from './Graph.utils';
 import { useLanguage } from '@hooks';
+import { screenWidth } from '@styles';
 import { GraphIndex } from '../Chart.types';
 import { SelectionProps } from './Selection.types';
 import { styles } from './Selection.styles';
 
-const { width } = Dimensions.get('window');
-
 const Selection: React.FC<SelectionProps> = ({ previous, current, transition, graphs }) => {
 	const { i18n } = useLanguage();
-	const BUTTON_WIDTH = width / graphs.length;
+	const BUTTON_WIDTH = screenWidth / graphs.length;
 
 	const [using, setUsing] = useState(0);
 

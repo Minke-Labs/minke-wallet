@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Dimensions } from 'react-native';
 import {
 	PanGestureHandler,
 	PanGestureHandlerGestureEvent
@@ -15,21 +14,20 @@ import Animated, {
 	withSpring
 } from 'react-native-reanimated';
 import { snapPoint } from 'react-native-redash';
+import { screenWidth } from '@styles';
 import { AppTourStepType } from '../AppTour.types';
 import { BoxesProps } from './Boxes.types';
 import { getBox } from './Boxes.utils';
 import Card from './Card';
 
-const { width } = Dimensions.get('window');
-
 const CARD_WIDTH = 269;
-const side = (width + CARD_WIDTH + 50) / 2;
+const side = (screenWidth + CARD_WIDTH + 50) / 2;
 const SNAP_POINTS = [-side, 0, side];
 const DURATION = 250;
 
 const getInitX = (prev: any, type: number) => {
-	if (prev > type) return -width;
-	if (prev < type) return width;
+	if (prev > type) return -screenWidth;
+	if (prev < type) return screenWidth;
 	return 0;
 };
 
