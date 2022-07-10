@@ -21,7 +21,8 @@
 				"autoIncrement": "buildNumber"
 			},
 			"android": {
-				"image": "latest"
+				"image": "latest",
+				"autoIncrement": "versionCode"
 			}
 		}
 	},
