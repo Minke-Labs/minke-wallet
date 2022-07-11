@@ -1,7 +1,7 @@
 import { icon, IconType } from './icons';
 import { token, TokenType } from './tokens';
 import { colors, ColorType } from './colors';
-import { flag, FlagType } from './flags';
+import { flag, FlagType, allCountries } from './flags';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
 
 export {
@@ -9,6 +9,7 @@ export {
 	token,
 	colors,
 	flag,
+	allCountries,
 	fontType,
 	fontWeight
 };

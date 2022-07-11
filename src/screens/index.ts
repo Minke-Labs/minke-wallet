@@ -6,6 +6,7 @@ import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import ChangeCountryScreen from './ChangeCountryScreen/ChangeCountryScreen';
+import CountryScreen from './CountryScreen/CountryScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
@@ -39,6 +40,7 @@ const screensObj = {
 	BackupStatusScreen,
 	ChangeNetworkScreen,
 	ChangeCountryScreen,
+	CountryScreen,
 	DepositScreen,
 	DepositWithdrawalSuccessScreen,
 	ExchangeResumeScreen,

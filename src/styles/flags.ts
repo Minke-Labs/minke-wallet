@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 export type FlagType = keyof typeof flag;
-export const flag = {
+const flag = {
 	abkhazia: [
 		'M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z',
 		'#F0F0F0',
@@ -3778,3 +3778,16 @@ export const flag = {
 		'#FFDA44'
 	]
 };
+
+const keys = Object.keys(flag);
+const allCountries = keys.map((f: string) => {
+	const capitalized = f.charAt(0).toUpperCase() + f.slice(1);
+	const separated = capitalized.split(/(?=[A-Z])/).join(' ');
+	const country = {
+		name: separated,
+		flag: f
+	};
+	return country;
+});
+
+export { flag, allCountries };
