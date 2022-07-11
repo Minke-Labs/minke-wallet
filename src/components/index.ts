@@ -3,6 +3,7 @@ import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
 import Button from './Button/Button';
 import Icon from './Icon/Icon';
+import CountrySelector from './CountrySelector/CountrySelector';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
@@ -62,6 +63,7 @@ export {
 	FullModal,
 	GasOption,
 	GasOptionInner,
+	CountrySelector,
 	GasSelector,
 	ModalHeader,
 	SettingsHeader,
