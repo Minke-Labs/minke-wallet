@@ -17,6 +17,7 @@ const CountryScreen = () => {
 	} = useLanguage();
 	const [filtered, setFiltered] = useState<any>(countries);
 	const [search, setSearch] = useState('');
+	const [selected, setSelected] = useState('');
 
 	// const filterCountries = (text: string) => {
 	// 	const newCountries = countries.filter((country: Country) =>
@@ -24,8 +25,6 @@ const CountryScreen = () => {
 	// 	setSearch(text);
 	// 	setFiltered(newCountries);
 	// };
-
-	console.log('LISTA: ', allCountries);
 
 	return (
 		<BasicLayout>
@@ -48,11 +47,9 @@ const CountryScreen = () => {
 							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => (
 								<FlagItem
-									// onPress={() => setCountryCode(item.iso)}
-									onPress={() => null}
+									onPress={() => setSelected(item.flag)}
 									flag={item.flag as FlagType}
-									active={false}
-									// active={item.iso === countryCode}
+									active={item.flag === selected}
 									title={item.name}
 								/>
 							)}
