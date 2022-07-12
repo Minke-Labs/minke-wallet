@@ -4,9 +4,8 @@ import { MinkeToken } from '@src/model/token';
 import { formatUnits } from 'ethers/lib/utils';
 import { TokenConverterParams, TokensConverterParams } from './tokenConverter.types';
 
-const convertToken = async ({ source, token }: TokenConverterParams): Promise<MinkeToken> => {
+const convertToken = async ({ source, token, chainId }: TokenConverterParams): Promise<MinkeToken> => {
 	const { id, name } = await coinFromSymbol(token.contract_ticker_symbol);
-	const { chainId } = await network();
 	const matic = chainId === networks.matic.chainId;
 	const weth = token.contract_ticker_symbol === 'WETH';
 	const symbol = matic && weth ? 'ETH' : token.contract_ticker_symbol;
@@ -27,13 +26,13 @@ const convertToken = async ({ source, token }: TokenConverterParams): Promise<Mi
 	}
 };
 
-const convertTokens = async ({ source, tokens }: TokensConverterParams): Promise<MinkeToken[]> => {
+const convertTokens = async ({ source, tokens, chainId }: TokensConverterParams): Promise<MinkeToken[]> => {
 	const convertedTokens = [];
 
 	for (let i = 0; i < tokens.length; i += 1) {
 		const token = tokens[i];
 		// eslint-disable-next-line no-await-in-loop
-		const converted = await convertToken({ source, token });
+		const converted = await convertToken({ source, token, chainId });
 		convertedTokens.push(converted);
 	}
 	return convertedTokens;
