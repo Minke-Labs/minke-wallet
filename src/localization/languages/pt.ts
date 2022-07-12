@@ -347,7 +347,8 @@ export default {
 					},
 					Step5: {
 						receive: 'Receba',
-						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
+						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.',
+						finish: 'Finalizar'
 					}
 				},
 				Arrow: {

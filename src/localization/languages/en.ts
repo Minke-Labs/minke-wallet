@@ -345,7 +345,8 @@ export default {
 					Step5: {
 						receive: 'Receive',
 						copy_your:
-							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
+							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.',
+						finish: 'Finish'
 					}
 				},
 				Arrow: {
