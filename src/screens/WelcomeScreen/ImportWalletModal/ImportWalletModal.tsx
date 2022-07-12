@@ -9,6 +9,7 @@ import { useImportWalletModal } from './useImportWallet.hooks';
 import SelectImportMethodModal from './SelectImportMethodModal/SelectImportMethodModal';
 import { styles } from './ImportWalletModal.styles';
 
+// @TODO: Marcos - delete
 const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss, visible }) => {
 	const { i18n } = useLanguage();
 	const { text, setText, importing, onImportWallet, onBack, currentStep, goForward, onICloudBackup } =
@@ -23,10 +24,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 			<ModalHeader {...{ onDismiss }} onBack={onBack} />
 			<View style={styles.container}>
 				{currentStep === 0 && (
-					<SelectImportMethodModal
-						onImportWithSecret={goForward}
-						onICloudBackup={onICloudBackup}
-					/>
+					<SelectImportMethodModal onImportWithSecret={goForward} onICloudBackup={onICloudBackup} />
 				)}
 				{currentStep === 1 && (
 					<>
@@ -46,9 +44,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 								/>
 							</View>
 							{importing ? (
-								<LoadingScreen
-									title={i18n.t('WelcomeScreen.ImportWalletModal.importing')}
-								/>
+								<LoadingScreen title={i18n.t('WelcomeScreen.ImportWalletModal.importing')} />
 							) : (
 								<Button
 									disabled={!text.trim()}

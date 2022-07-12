@@ -22,6 +22,9 @@ import wavesBackground from './wavesBackground.png';
 import krakenAave from './krakenAave.png';
 import krakenAave2 from './krakenAave2.png';
 import krakenMStable from './krakenMStable.png';
+import metamask from './metamask.png';
+import trustWallet from './trust-wallet.png';
+import rainbow from './rainbow.png';
 
 export {
 	welcomeImg,
@@ -47,5 +50,8 @@ export {
 	wavesBackground,
 	krakenAave,
 	krakenAave2,
-	krakenMStable
+	krakenMStable,
+	metamask,
+	trustWallet,
+	rainbow
 };

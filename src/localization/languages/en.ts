@@ -561,6 +561,13 @@ export default {
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
+	ImportWalletScreen: {
+		import_wallet: 'Import Wallet',
+		import_with_secret_phrase: 'Import with secret phrase or private key',
+		connect_wallet: 'Connect Wallet',
+		restore_from_icloud: 'Restore from {{cloudPlatform}}',
+		backup_wallets_count: 'You have %{count} wallet%{plural} backed up'
+	},
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Backing up...',
