@@ -1,13 +1,12 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
-import { find } from 'lodash';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
 import { getAllWallets, getPrivateKey, MinkeWallet, saveAllWallets, ZapperTransaction } from '@models/wallet';
 import { getTokenBalances } from '@src/services/apis';
 
 export interface WalletState {
-	privateKey: string;
+	privateKey: string | null;
 	network: Network;
 	address: string;
 	walletId?: string | null;

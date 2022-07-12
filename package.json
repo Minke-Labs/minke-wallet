@@ -148,6 +148,9 @@
     "mocha": "^9.2.2",
     "typescript": "~4.3.5"
   },
+  "resolutions": {
+    "react-native-svg": "12.1.1"
+  },
   "private": true,
   "name": "crypto-bank",
   "version": "1.0.0",

@@ -85,37 +85,12 @@ export const saveAllWallets = async (wallets: AllMinkeWallets) => {
 	await saveObject(allWalletsKey, wallets, keychain.publicAccessControlOptions);
 };
 
-const clearWalletsWithoutPK = async (allWallets: AllMinkeWallets): Promise<null | AllMinkeWallets> => {
-	if (allWallets) {
-		const toKeep: string[] = [];
-		const asArray: MinkeWallet[] = Object.values(allWallets);
-		for (const index in asArray) {
-			const { address, id } = asArray[index];
-			// eslint-disable-next-line no-await-in-loop
-			const primaryKey = await getPrivateKey(address);
-			if (primaryKey) {
-				toKeep.push(id);
-			}
-		}
-
-		const filtered = Object.fromEntries(Object.entries(allWallets).filter(([id]) => toKeep.includes(id)));
-		await saveAllWallets(filtered);
-		if (filtered) {
-			return filtered as AllMinkeWallets;
-		}
-		return null;
-	}
-	return null;
-};
-
 export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	try {
 		const allWallets = await loadObject(allWalletsKey);
 		if (allWallets) {
-			const wallets = await clearWalletsWithoutPK(allWallets as AllMinkeWallets);
-			return wallets;
+			return allWallets as AllMinkeWallets;
 		}
-
 		return null;
 	} catch (error) {
 		Logger.error('Error getAllWallets');

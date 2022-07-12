@@ -566,7 +566,8 @@ export default {
 		import_with_secret_phrase: 'Import with secret phrase or private key',
 		connect_wallet: 'Connect Wallet',
 		restore_from_icloud: 'Restore from {{cloudPlatform}}',
-		backup_wallets_count: 'You have %{count} wallet%{plural} backed up'
+		backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+		disconnect_wallet: 'Disconnect Wallet'
 	},
 	Hooks: {
 		iCloudBackup: {

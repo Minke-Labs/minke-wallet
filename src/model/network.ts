@@ -127,9 +127,9 @@ export const defaultNetwork = networks.matic;
 export const network = async (): Promise<Network> => {
 	const id = await AsyncStorage.getItem(networkSettingsKey);
 	const selectedNetwork = networks[id as keyof Networks];
+
 	if (id && selectedNetwork) {
 		return selectedNetwork;
 	}
-
 	return defaultNetwork;
 };

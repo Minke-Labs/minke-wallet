@@ -1,30 +1,34 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import { Button, Modal } from '@components';
+import React from 'react';
+import { Button, Text } from '@components';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { BasicLayout } from '@layouts';
-import { AddFunds } from '@containers';
+import { View } from 'react-native';
+
+const ConnectButton = () => {
+	const connector = useWalletConnect();
+	if (!connector.connected) {
+		/**
+		 *  Connect! 🎉
+		 */
+		return <Button title="Connect" onPress={() => connector.connect()} />;
+	}
+	return <Button title="Kill Session" onPress={() => connector.killSession()} />;
+};
 
 const Test = () => {
-	const [visible, setVisible] = useState(false);
-	const test = async () => {
-		setVisible(!visible);
-	};
-
-	const dismiss = () => setVisible(false);
-
+	const { connected, accounts, chainId } = useWalletConnect();
 	return (
-		<>
-			<BasicLayout>
-				<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-					<Button title="Test" onPress={test} marginBottom={48} />
-				</View>
-			</BasicLayout>
-			{visible && (
-				<Modal isVisible={visible} onDismiss={dismiss}>
-					<AddFunds visible={visible} onDismiss={dismiss} />
-				</Modal>
-			)}
-		</>
+		<BasicLayout>
+			<View style={{ marginTop: 24 }}>
+				{!!connected && (
+					<>
+						<Text> {accounts[0]}</Text>
+						<Text> chainId: {chainId}</Text>
+					</>
+				)}
+				<ConnectButton />
+			</View>
+		</BasicLayout>
 	);
 };
 

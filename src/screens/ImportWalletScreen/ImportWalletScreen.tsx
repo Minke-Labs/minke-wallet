@@ -11,8 +11,10 @@ import useImportWalletScreen from './ImportWalletScreen.hooks';
 const ImportWalletScreen = () => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
-	const { goBack, onICloudBackup, walletsBackedUp, latestBackup } = useImportWalletScreen();
+	const { goBack, onICloudBackup, walletsBackedUp, latestBackup, connected, toggleWalletConnect } =
+		useImportWalletScreen();
 
+	// @TODO: Import with seed phrase
 	return (
 		<BasicLayout>
 			<SettingsHeader title={i18n.t('ImportWalletScreen.import_wallet')} onPress={goBack} />
@@ -28,13 +30,15 @@ const ImportWalletScreen = () => {
 						</Text>
 					</View>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.option} onPress={() => null}>
+				<TouchableOpacity style={styles.option} onPress={toggleWalletConnect}>
 					<View style={styles.leftContainer}>
 						<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 							<Icon name="helpStroke" size={24} color="text7" />
 						</View>
 						<Text weight="semiBold" type="tSmall" style={{ marginHorizontal: 16 }}>
-							{i18n.t('ImportWalletScreen.connect_wallet')}
+							{connected
+								? i18n.t('ImportWalletScreen.disconnect_wallet')
+								: i18n.t('ImportWalletScreen.connect_wallet')}
 						</Text>
 						<View style={styles.row}>
 							<Image source={metamask} style={styles.walletImage} />
