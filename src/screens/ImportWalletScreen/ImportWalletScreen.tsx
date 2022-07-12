@@ -23,7 +23,7 @@ const ImportWalletScreen = () => {
 						<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 							<Icon name="vaultStroke" size={24} color="text7" />
 						</View>
-						<Text weight="bold" type="p2" style={{ marginLeft: 16 }} width={250}>
+						<Text weight="semiBold" type="tSmall" style={{ marginLeft: 16 }} width={250}>
 							{i18n.t('ImportWalletScreen.import_with_secret_phrase')}
 						</Text>
 					</View>
@@ -33,7 +33,7 @@ const ImportWalletScreen = () => {
 						<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 							<Icon name="helpStroke" size={24} color="text7" />
 						</View>
-						<Text weight="bold" type="p2" style={{ marginHorizontal: 16 }}>
+						<Text weight="semiBold" type="tSmall" style={{ marginHorizontal: 16 }}>
 							{i18n.t('ImportWalletScreen.connect_wallet')}
 						</Text>
 						<View style={styles.row}>
@@ -50,7 +50,7 @@ const ImportWalletScreen = () => {
 								<Icon name="backupStroke" size={24} color="text7" />
 							</View>
 							<View style={{ marginLeft: 16 }}>
-								<Text type="p2" weight="bold">
+								<Text weight="semiBold" type="tSmall">
 									{i18n.t('ImportWalletScreen.restore_from_icloud', {
 										cloudPlatform
 									})}
