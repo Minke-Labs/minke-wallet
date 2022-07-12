@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Animated, { runOnJS, useDerivedValue, interpolate, SharedValue } from 'react-native-reanimated';
 import { round, Vector } from 'react-native-redash';
-import { buildGraph, width } from './Chart.utils';
+import { screenWidth } from '@styles';
+import { buildGraph } from './Chart.utils';
 import { Prices, GraphIndex } from './Chart.types';
 
 interface UseChartProps {
@@ -57,7 +58,7 @@ export const useChart = ({ tokenHistory, current, translation }: UseChartProps) 
 
 	const data = useDerivedValue(() => graphs[current.value].data);
 	const price = useDerivedValue(() => {
-		const p = interpolate(translation.y.value, [0, width], [data.value.maxPrice, data.value.minPrice]);
+		const p = interpolate(translation.y.value, [0, screenWidth], [data.value.maxPrice, data.value.minPrice]);
 		return `$ ${round(p, 2).toLocaleString('en-US', { currency: 'USD' })}`;
 	});
 

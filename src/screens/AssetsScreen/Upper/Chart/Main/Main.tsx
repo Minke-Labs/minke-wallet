@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
 import { mixPath } from 'react-native-redash';
-import { width, height } from '../Chart.utils';
+import { screenWidth } from '@styles';
+import { height } from '../Chart.utils';
 import Cursor from './Cursor/Cursor';
 import { styles } from './Main.styles';
 import { ChartProps } from './Main.types';
@@ -24,7 +25,7 @@ const Chart: React.FC<ChartProps> = ({ color, previous, current, transition, tra
 		const previousPath = graphs[previous.value].data.path;
 		const currentPath = graphs[current.value].data.path;
 		return {
-			d: `${mixPath(transition.value, previousPath, currentPath)}L ${width} ${height}L 0 ${height}`
+			d: `${mixPath(transition.value, previousPath, currentPath)}L ${screenWidth} ${height}L 0 ${height}`
 		};
 	});
 

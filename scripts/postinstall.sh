@@ -3,3 +3,6 @@ echo "✅ rn-nodeify packages hacked succesfully"
 
 yarn patch-package
 echo "✅ All patches applied"
+
+npx jetify
+echo "✅ Jetify"

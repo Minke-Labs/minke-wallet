@@ -14,7 +14,7 @@ const formatAddress = (address: string): string => {
 	if (address.includes('.')) {
 		return address;
 	}
-	return getAddress(address);
+	return (!!address && getAddress(address)) || '';
 };
 
 export const searchContact = async (address: string): Promise<ContactItem | undefined> => {

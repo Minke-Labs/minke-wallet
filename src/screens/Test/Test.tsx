@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Button } from '@components';
+import { Button, Modal } from '@components';
 import { BasicLayout } from '@layouts';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
-import { getRewards } from '@src/services/apis/minke/minke';
+import { AddFunds } from '@containers';
 
 const Test = () => {
-	const { address } = useState(globalWalletState()).value;
+	const [visible, setVisible] = useState(false);
 	const test = async () => {
-		const rewards = await getRewards(address);
-		console.log(rewards);
+		setVisible(!visible);
 	};
 
+	const dismiss = () => setVisible(false);
+
 	return (
-		<BasicLayout>
-			<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
-				<Button title="Test" onPress={test} marginBottom={48} />
-			</View>
-		</BasicLayout>
+		<>
+			<BasicLayout>
+				<View style={{ paddingTop: 160, paddingHorizontal: 24 }}>
+					<Button title="Test" onPress={test} marginBottom={48} />
+				</View>
+			</BasicLayout>
+			{visible && (
+				<Modal isVisible={visible} onDismiss={dismiss}>
+					<AddFunds visible={visible} onDismiss={dismiss} />
+				</Modal>
+			)}
+		</>
 	);
 };
 

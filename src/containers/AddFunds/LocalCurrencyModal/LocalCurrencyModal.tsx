@@ -48,7 +48,9 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 	return (
 		<View>
 			<Text type="h3" weight="bold" marginBottom={32}>
-				{i18n.t('Containers.AddFunds.LocalCurrencyModal.choose_another_amount')}
+				{i18n.t('Containers.AddFunds.LocalCurrencyModal.choose_amount_in', {
+					currency: locationCountry!.currency
+				})}
 			</Text>
 
 			<TokenInputInner
@@ -66,11 +68,7 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 					Min {paymentMethodId!.minTopup} {locationCountry!.currency}
 				</Text>
 			)}
-			<OnrampButton
-				marginBottom={80}
-				disabled={!isAmountValid}
-				onPress={() => onOnramp(number || 0)}
-			/>
+			<OnrampButton marginBottom={80} disabled={!isAmountValid} onPress={() => onOnramp(number || 0)} />
 
 			<KeyboardSpacer />
 		</View>

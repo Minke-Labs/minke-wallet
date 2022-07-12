@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { ColorType } from '@styles';
+import { StyleSheet } from 'react-native';
+import { ColorType, deviceHeight } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
@@ -33,6 +33,6 @@ export const makeStyles = (colors: ColorType) =>
 			fontSize: 16
 		},
 		list: {
-			maxHeight: Dimensions.get('screen').height * 0.3
+			maxHeight: deviceHeight * 0.3
 		}
 	});

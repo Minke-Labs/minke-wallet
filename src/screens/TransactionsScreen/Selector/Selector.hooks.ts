@@ -1,9 +1,10 @@
 import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { BUTTON_PADDING, NUM_TABS, SCREEN_WIDTH } from './Selector.utils';
+import { deviceWidth } from '@styles';
+import { BUTTON_PADDING, NUM_TABS } from './Selector.utils';
 
 export const useSelector = () => {
 	const current = useSharedValue(0);
-	const screenWidth = SCREEN_WIDTH - 48; // width - padding
+	const screenWidth = deviceWidth - 48; // width - padding
 
 	// if the index is 0 the first value will be 0
 	// otherwise it will be the width divided by 3 times the index

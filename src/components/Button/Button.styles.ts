@@ -1,4 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { deviceHeight } from '@styles';
 
 export const styles = StyleSheet.create({
 	button: {
@@ -7,12 +8,12 @@ export const styles = StyleSheet.create({
 		borderRadius: 64,
 		justifyContent: 'center',
 		alignItems: 'center',
-		maxHeight: Dimensions.get('screen').height * 0.8,
+		maxHeight: deviceHeight * 0.8,
 		flexDirection: 'row'
 	},
 	smallContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		maxHeight: Dimensions.get('screen').height * 0.5
+		maxHeight: deviceHeight * 0.5
 	}
 });

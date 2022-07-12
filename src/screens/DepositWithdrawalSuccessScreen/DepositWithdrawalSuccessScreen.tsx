@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Text, Button } from '@components';
@@ -26,7 +26,7 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 			</Text>
 			<View
 				style={{
-					marginTop: 'auto',
+					marginTop: Platform.OS === 'android' ? undefined : 'auto',
 					width: '100%',
 					marginBottom: 48,
 					paddingHorizontal: 16

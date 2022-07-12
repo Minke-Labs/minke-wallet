@@ -1,12 +1,11 @@
 import * as shape from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
-import { Dimensions } from 'react-native';
 import { parse } from 'react-native-redash';
+import { screenWidth } from '@styles';
 import { DataPoints } from './Chart.types';
 
 const POINTS = 30;
 export const height = 263;
-export const { width } = Dimensions.get('window');
 
 export const buildGraph = (datapoints: DataPoints, label?: string) => {
 	const { length } = datapoints.prices;
@@ -21,7 +20,7 @@ export const buildGraph = (datapoints: DataPoints, label?: string) => {
 	const minDate = Math.min(...dates);
 	const maxDate = Math.max(...dates);
 
-	const scaleX = scaleLinear().domain([minDate, maxDate]).range([0, width]);
+	const scaleX = scaleLinear().domain([minDate, maxDate]).range([0, screenWidth]);
 
 	const minPrice = Math.min(...prices);
 	const maxPrice = Math.max(...prices);

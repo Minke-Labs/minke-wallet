@@ -1,4 +1,5 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { deviceHeight } from '@styles';
 
 export default StyleSheet.create({
 	container: {
@@ -6,6 +7,6 @@ export default StyleSheet.create({
 		paddingHorizontal: 20
 	},
 	contactsList: {
-		maxHeight: Dimensions.get('screen').height * 0.4
+		maxHeight: deviceHeight * 0.4
 	}
 });

@@ -101,10 +101,11 @@ export default {
 	},
 	BackupStatusScreen: {
 		your_wallet_is_backed_up: 'Sua carteira tem backup!',
-		if_you_lose: 'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no iCloud.',
+		if_you_lose:
+			'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no {{cloudPlatform}}.',
 		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
 		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
-		back_up_to_icloud: 'Backup no iCloud',
+		back_up_to_icloud: 'Backup no {{cloudPlatform}}',
 		backup: 'Backup',
 		done: 'Pronto',
 		go_to_wallet: 'Ir para a carteira',
@@ -120,9 +121,10 @@ export default {
 		ConfirmBackupPassword: {
 			enter_backup_password: 'Digite a senha do backup',
 			to: 'Para',
-			restore_from: 'restaurar suas carteiras do',
-			add_to: 'adicionar esta carteira ao seu',
-			enter_existing: 'backup do iCloud, digite sua senha de backup existente'
+			restore_from: ' restaurar suas carteiras do ',
+			add_to: ' adicionar esta carteira ao seu ',
+			enter_existing: 'backup do {{cloudPlatform}}, digite sua senha de backup existente',
+			importing_backups: 'Importando backups'
 		}
 	},
 	ChangeCountryScreen: {
@@ -150,7 +152,7 @@ export default {
 		OpenSavings: {
 			open_account: 'Abrir uma Conta',
 			aave: 'Abrir uma conta na Aave',
-			mstable: 'Open mStable\nSavings Account',
+			mstable: 'Abrir uma conta na mStable',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
 		OpenMStable: {
@@ -345,7 +347,8 @@ export default {
 					},
 					Step5: {
 						receive: 'Receba',
-						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
+						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.',
+						finish: 'Finalizar'
 					}
 				},
 				Arrow: {
@@ -455,7 +458,8 @@ export default {
 						how_much: 'Quantos ',
 						wanna_send: ' você quer enviar?'
 					}
-				}
+				},
+				add: '+ Adicionar'
 			}
 		}
 	},
@@ -473,8 +477,8 @@ export default {
 			import: 'Importar Carteira',
 			SelectImportMethodModal: {
 				import_wallet: 'Importar Carteira',
-				restore_from_icloud: 'Restaurar do iCloud',
-				backup_wallets_count: 'Você tem %{count} carteira%{plural} backed up',
+				restore_from_icloud: 'Restaurar do {{cloudPlatform}}',
+				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
 				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
 			}
 		}
@@ -580,10 +584,11 @@ export default {
 	Containers: {
 		AddFunds: {
 			LocalCurrencyModal: {
-				choose_another_amount: 'Escolha outro valor'
+				choose_amount_in: 'Escolha o valor em {{currency}}'
 			},
 			ChooseQuantityModal: {
-				buy_some: 'Compre alguns {{symbol}} com ',
+				buy_some: 'Compre alguns {{symbol}}',
+				with: ' com',
 				to_start_using: ' para começar a usar a Minke:',
 				choose_another_amount: 'Escolha outro valor',
 				or_deposit: 'ou deposite',
@@ -593,7 +598,7 @@ export default {
 				address_copied: 'Endereço copiado!'
 			},
 			CoinSelectorModal: {
-				add_funds: 'Adicione fundos',
+				add_funds: 'Adicionar fundos',
 				choose_asset: 'Escolha qual token gostaria de comprar'
 			},
 			CustomAmountModal: {
@@ -671,7 +676,7 @@ export default {
 			enter_code: 'Digitar código'
 		},
 		Buttons: {
-			backup_to_icloud: 'Fazer Backup no iCloud',
+			backup_to_icloud: 'Fazer Backup no {{cloudPlatform}}',
 			backup_manually: 'Fazer backup manualmente',
 			confirm_restore: 'Confirmar restauração',
 			confirm_backup: 'Confirmar backup',
