@@ -1,10 +1,12 @@
 import React, { createContext, useMemo, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Localization from 'expo-localization';
+import { countries, CountriesType } from '@styles';
 
 export const CountryContext = createContext<any>(null);
 
 const CountryProvider: React.FC = ({ children }) => {
-	const [country, setCountry] = useState<string>('');
+	const [country, setCountry] = useState<string>(countries[Localization.region! as CountriesType]);
 
 	useEffect(() => {
 		const fetchCountry = async () => {
