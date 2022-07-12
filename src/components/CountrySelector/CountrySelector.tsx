@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { FlagType, allCountries } from '@styles';
-import { useLanguage } from '@hooks';
+import { useLanguage, useCountry } from '@hooks';
 import SettingsHeader from '../SettingsHeader/SettingsHeader';
 import SearchInput from '../SearchInput/SearchInput';
 import Text from '../Text/Text';
 import FlagItem from '../FlagItem/FlagItem';
 
 const CountrySelector = () => {
+	const { country, setCountry } = useCountry();
 	const [filtered, setFiltered] = useState<any>(allCountries);
-	const [selected, setSelected] = useState(allCountries[0].flag);
 	const { i18n } = useLanguage();
 	const [search, setSearch] = useState('');
 
 	const filteredCountries = (text: string) => {
-		const newCountries = allCountries.filter((country: any) =>
-			country.name.toLowerCase().includes(text.toLowerCase()));
+		const newCountries = allCountries.filter((item: any) =>
+			item.name.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCountries);
 	};
@@ -39,9 +39,9 @@ const CountrySelector = () => {
 						showsVerticalScrollIndicator={false}
 						renderItem={({ item }) => (
 							<FlagItem
-								onPress={() => setSelected(item.flag)}
+								onPress={() => setCountry(item.flag)}
 								flag={item.flag as FlagType}
-								active={item.flag === selected}
+								active={item.flag === country}
 								title={item.name}
 							/>
 						)}
