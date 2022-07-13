@@ -1,13 +1,16 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 import { TouchableOpacity, View, Image } from 'react-native';
 import { useLanguage, useTheme } from '@hooks';
 import { Icon, Modal, ModalReusables, SettingsHeader, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { metamask, trustWallet, rainbow } from '@images';
+import { smallWalletAddress } from '@models/wallet';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import styles from './ImportWalletScreen.styles';
 import useImportWalletScreen from './ImportWalletScreen.hooks';
-import { smallWalletAddress } from '@models/wallet';
+import ImportWalletModal from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
 
 const ImportWalletScreen = () => {
 	const { i18n } = useLanguage();
@@ -23,17 +26,19 @@ const ImportWalletScreen = () => {
 		error,
 		dismissError,
 		destNetwork,
-		dismissWrongNetwork
+		dismissWrongNetwork,
+		importSeed,
+		setImportSeed,
+		onSeedImportFinished
 	} = useImportWalletScreen();
 
-	// @TODO: Import with seed phrase
 	return (
 		<>
 			<BasicLayout>
 				<SettingsHeader title={i18n.t('ImportWalletScreen.import_wallet')} onPress={goBack} />
 
 				<View style={styles.container}>
-					<TouchableOpacity style={styles.option} onPress={() => null}>
+					<TouchableOpacity style={styles.option} onPress={() => setImportSeed(true)}>
 						<View style={styles.leftContainer}>
 							<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 								<Icon name="vaultStroke" size={24} color="text7" />
@@ -88,6 +93,9 @@ const ImportWalletScreen = () => {
 					)}
 				</View>
 			</BasicLayout>
+			<Modal isVisible={importSeed} onDismiss={() => setImportSeed(false)}>
+				<ImportWalletModal onDismiss={() => setImportSeed(false)} onImportFinished={onSeedImportFinished} />
+			</Modal>
 			<Modal isVisible={!!error} onDismiss={dismissError}>
 				<ModalReusables.Error
 					onDismiss={dismissError}

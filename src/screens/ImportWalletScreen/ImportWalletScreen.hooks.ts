@@ -16,6 +16,7 @@ const useImportWalletScreen = () => {
 	const { address, network } = state.value;
 	const [error, setError] = React.useState<'no_network'>();
 	const [destNetwork, setDestNetwork] = React.useState<Network>();
+	const [importSeed, setImportSeed] = React.useState(false);
 
 	const onICloudBackup = () => {
 		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
@@ -35,6 +36,11 @@ const useImportWalletScreen = () => {
 		if (connected) {
 			connector.killSession();
 		}
+	};
+
+	const onSeedImportFinished = () => {
+		setImportSeed(false);
+		navigation.navigate('WalletCreatedScreen');
 	};
 
 	useEffect(() => {
@@ -116,7 +122,10 @@ const useImportWalletScreen = () => {
 		error,
 		dismissError,
 		destNetwork,
-		dismissWrongNetwork
+		dismissWrongNetwork,
+		importSeed,
+		setImportSeed,
+		onSeedImportFinished
 	};
 };
 

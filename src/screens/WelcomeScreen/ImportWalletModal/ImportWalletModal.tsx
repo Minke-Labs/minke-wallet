@@ -6,57 +6,44 @@ import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { ImportWalletModalProps } from './ImportWalletModal.types';
 import { useImportWalletModal } from './useImportWallet.hooks';
-import SelectImportMethodModal from './SelectImportMethodModal/SelectImportMethodModal';
 import { styles } from './ImportWalletModal.styles';
 
-// @TODO: Marcos - delete
-const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss, visible }) => {
+const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { text, setText, importing, onImportWallet, onBack, currentStep, goForward, onICloudBackup } =
-		useImportWalletModal({
-			onImportFinished,
-			onDismiss,
-			visible
-		});
+	const { text, setText, importing, onImportWallet } = useImportWalletModal({
+		onImportFinished
+	});
 
 	return (
 		<SafeAreaView>
-			<ModalHeader {...{ onDismiss }} onBack={onBack} />
+			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.container}>
-				{currentStep === 0 && (
-					<SelectImportMethodModal onImportWithSecret={goForward} onICloudBackup={onICloudBackup} />
-				)}
-				{currentStep === 1 && (
-					<>
-						<View style={styles.addWalletContainer}>
-							<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
-								{i18n.t('WelcomeScreen.ImportWalletModal.add_wallet')}
-							</Text>
-							<View
-								style={styles.textAreaContainer}
-								ref={(view: any) => RNUxcam.occludeSensitiveView(view)}
-							>
-								<TextArea
-									label={i18n.t('WelcomeScreen.ImportWalletModal.seed_or_key')}
-									value={text}
-									numberOfLines={6}
-									onChangeText={(t) => setText(t)}
-								/>
-							</View>
-							{importing ? (
-								<LoadingScreen title={i18n.t('WelcomeScreen.ImportWalletModal.importing')} />
-							) : (
-								<Button
-									disabled={!text.trim()}
-									title={i18n.t('WelcomeScreen.ImportWalletModal.import')}
-									onPress={onImportWallet}
-									marginBottom={24}
-								/>
-							)}
+				<>
+					<View style={styles.addWalletContainer}>
+						<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
+							{i18n.t('WelcomeScreen.ImportWalletModal.add_wallet')}
+						</Text>
+						<View style={styles.textAreaContainer} ref={(view: any) => RNUxcam.occludeSensitiveView(view)}>
+							<TextArea
+								label={i18n.t('WelcomeScreen.ImportWalletModal.seed_or_key')}
+								value={text}
+								numberOfLines={6}
+								onChangeText={(t) => setText(t)}
+							/>
 						</View>
-						<KeyboardSpacer />
-					</>
-				)}
+						{importing ? (
+							<LoadingScreen title={i18n.t('WelcomeScreen.ImportWalletModal.importing')} />
+						) : (
+							<Button
+								disabled={!text.trim()}
+								title={i18n.t('WelcomeScreen.ImportWalletModal.import')}
+								onPress={onImportWallet}
+								marginBottom={24}
+							/>
+						)}
+					</View>
+					<KeyboardSpacer />
+				</>
 			</View>
 		</SafeAreaView>
 	);
