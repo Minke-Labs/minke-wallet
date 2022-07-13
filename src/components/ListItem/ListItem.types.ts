@@ -10,4 +10,5 @@ export interface ListItemProps {
 	tagColor?: keyof ColorType;
 	tagType?: TagType;
 	SvgComponent?: FC<SvgProps>;
+	onPress?: () => void;
 }

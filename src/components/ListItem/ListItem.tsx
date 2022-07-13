@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text, Icon, ItemTag } from '@components';
 import { useTheme } from '@hooks';
+import Text from '../Text/Text';
+import Icon from '../Icon/Icon';
+import ItemTag from '../ItemTag/ItemTag';
 import { ListItemProps } from './ListItem.types';
 import styles from './ListItem.styles';
 
@@ -11,13 +13,14 @@ const ListItem: React.FC<ListItemProps> = ({
 	iconName = 'arrowRight',
 	tagType = 'icon',
 	tagColor = 'background2',
-	SvgComponent
+	SvgComponent,
+	onPress
 }) => {
 	const { colors } = useTheme();
 	return (
 		<TouchableOpacity
 			style={[styles.container, { borderBottomColor: colors.detail3 }]}
-			onPress={() => null}
+			onPress={onPress}
 		>
 			<View style={{ flexDirection: 'row' }}>
 				<ItemTag
