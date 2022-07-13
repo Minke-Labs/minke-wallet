@@ -19,6 +19,7 @@ const CoinSelectorModal: React.FC<{ onSelect: Function }> = ({ onSelect }) => {
 			<Text marginBottom={32}>
 				{i18n.t('Containers.AddFunds.CoinSelectorModal.choose_asset')}
 			</Text>
+
 			{nativeToken && (
 				<CoinCard
 					coin={{

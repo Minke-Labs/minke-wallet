@@ -21,6 +21,8 @@ import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
 import InterestBanner from './InterestBanner/InterestBanner';
+import ItemTag from './ItemTag/ItemTag';
+import ListItem from './ListItem/ListItem';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
 import MaxButton from './MaxButton/MaxButton';
 import Flag from './Flag/Flag';
@@ -78,6 +80,8 @@ export {
 	TouchableShrinks,
 	Input,
 	InterestBanner,
+	ItemTag,
+	ListItem,
 	NetworkWarning,
 	LoadingScreen,
 	MaxButton,
