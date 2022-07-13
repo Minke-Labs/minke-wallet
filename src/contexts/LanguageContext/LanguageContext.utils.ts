@@ -10,9 +10,8 @@ const mockCurrency: Country = {
 };
 
 export const mock = {
-	countryCode: 'US',
+	country: 'US',
 	errorMsg: undefined,
-	setCountryCode: () => { },
 	locationCurrency: mockCurrency.currency,
 	countries: [
 		mockCurrency

@@ -603,6 +603,11 @@ export default {
 		}
 	},
 	Components: {
+		CountrySelector: {
+			country: 'País',
+			to_offer: 'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
+			select: 'Selecione um País'
+		},
 		AaveReusables: {
 			Info: {
 				what_is: 'O que é a Aave?',

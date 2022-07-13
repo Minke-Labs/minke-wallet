@@ -2,13 +2,14 @@ import React, { useState, useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { useKeyboard, useNavigation, useWalletCloudBackup, useLanguage } from '@hooks';
+import { useKeyboard, useNavigation, useWalletCloudBackup, useLanguage, useCountry } from '@hooks';
 import { backupImg } from '@images';
 import { restoreCloudBackup } from '@models/backup';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './ConfirmBackupPassword.styles';
 
 const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: BackupToICloudProps) => {
+	const { country } = useCountry();
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const [password, setPassword] = useState<string>();
@@ -30,7 +31,8 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 			setRestoringBackups(null);
 
 			if (success) {
-				navigation.navigate('WalletScreen');
+				if (country) navigation.navigate('WalletScreen');
+				else navigation.navigate('CountryScreen');
 			} else {
 				onError(i18n.t('Logs.couldnt_restore_backup'));
 			}

@@ -1,8 +1,8 @@
-/* eslint-disable max-len */
 import React, { createContext, useMemo, useState, useEffect, useCallback } from 'react';
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useCountry from '../../hooks/useCountry';
 import { availableLanguagues } from '../../localization';
 import { Country } from './LanguageContext.types';
 import { mock } from './LanguageContext.utils';
@@ -10,7 +10,7 @@ import { mock } from './LanguageContext.utils';
 export const LanguageContext = createContext<any>(null);
 
 const LanguageProvider: React.FC = ({ children }) => {
-	const [countryCode, setCountryCode] = useState<string | null>(Localization.region);
+	const { country } = useCountry();
 	const languages = Object.keys(availableLanguagues);
 	const [language, setLanguage] = useState(
 		languages.includes(Localization.locale) ? Localization.locale : languages[0]
@@ -22,9 +22,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 
 	useEffect(() => {
 		const fetchLocation = async () => {
-			const storedLocation = await AsyncStorage.getItem('@location');
 			const storedLanguage = await AsyncStorage.getItem('@language');
-			setCountryCode(storedLocation || Localization.region);
 			setLanguage(storedLanguage || Localization.locale);
 		};
 		fetchLocation();
@@ -32,11 +30,10 @@ const LanguageProvider: React.FC = ({ children }) => {
 
 	useEffect(() => {
 		const storeLocalization = async () => {
-			await AsyncStorage.setItem('@location', countryCode!);
 			await AsyncStorage.setItem('@language', language!);
 		};
 		storeLocalization();
-	}, [language, countryCode]);
+	}, [language, country]);
 
 	const countries: Country[] = useMemo(
 		() => [
@@ -101,12 +98,11 @@ const LanguageProvider: React.FC = ({ children }) => {
 	);
 
 	const countryByIso = useCallback(
-		(iso: string) => countries.find((country: Country) => country.iso === iso),
+		(iso: string) => countries.find((c: Country) => c.iso === iso),
 		[countries]
 	);
-	const locationCountry = useMemo(() => countryByIso(countryCode || mock.countryCode), [countryCode]);
 
-	const saveLocation = async (val: string) => setCountryCode(val);
+	const locationCountry = useMemo(() => countryByIso(country || mock.country), [country]);
 
 	const obj = useMemo(
 		() => ({
@@ -114,12 +110,10 @@ const LanguageProvider: React.FC = ({ children }) => {
 			language,
 			countries,
 			setLanguage,
-			countryCode,
-			setCountryCode: saveLocation,
 			locationCurrency: locationCountry?.currency ?? mock.countries[0].currency,
 			locationCountry
 		}),
-		[language, countryCode]
+		[language, country]
 	);
 
 	return <LanguageContext.Provider value={obj}>{children}</LanguageContext.Provider>;

@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { SettingsHeader, SearchInput, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation, useLanguage, useCountry } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { FlagType } from '@styles';
 import { Country } from '../../contexts/LanguageContext/LanguageContext.types';
 
 const ChangeCountryScreen = () => {
-	const { i18n, countries, countryCode, setCountryCode } = useLanguage();
+	const { setCountry, country } = useCountry();
+	const { i18n, countries } = useLanguage();
 	const [filtered, setFiltered] = useState<any>(countries);
 	const [search, setSearch] = useState('');
 	RNUxcam.tagScreenName('ChangeCountryScreen');
@@ -17,8 +18,8 @@ const ChangeCountryScreen = () => {
 	const goBack = () => navigation.goBack();
 
 	const filterCountries = (text: string) => {
-		const newCountries = countries.filter((country: Country) =>
-			country.name.toLowerCase().includes(text.toLowerCase()));
+		const newCountries = countries.filter((c: Country) =>
+			c.name.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCountries);
 	};
@@ -40,9 +41,9 @@ const ChangeCountryScreen = () => {
 							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => (
 								<FlagItem
-									onPress={() => setCountryCode(item.iso)}
+									onPress={() => setCountry(item.iso)}
 									flag={item.flag as FlagType}
-									active={item.iso === countryCode}
+									active={item.iso === country}
 									title={item.name}
 								/>
 							)}

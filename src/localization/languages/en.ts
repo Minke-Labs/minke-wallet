@@ -600,6 +600,11 @@ export default {
 		}
 	},
 	Components: {
+		CountrySelector: {
+			country: 'Country',
+			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
+			select: 'Select a Country'
+		},
 		AaveReusables: {
 			Info: {
 				what_is: 'What is Aave?',
