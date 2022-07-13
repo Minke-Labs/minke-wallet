@@ -501,8 +501,8 @@ export default {
 			Modals: {
 				WrongNetwork: {
 					wrong_network: 'Oops! It seems like you are in the wrong network',
-					please_change_network: 'Please change to Polygon to redeem your points.',
-					change_to_polygon: 'Change to Polygon'
+					please_change_network: 'Please change to {{network}} to redeem your points.',
+					change_to_network: 'Change to {{network}}'
 				},
 				NotEnoughPoints: {
 					you_dont_have_points: "Oops! You don't have any points",
@@ -567,7 +567,11 @@ export default {
 		connect_wallet: 'Connect Wallet',
 		restore_from_icloud: 'Restore from {{cloudPlatform}}',
 		backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
-		disconnect_wallet: 'Disconnect Wallet'
+		disconnect_wallet: 'Disconnect Wallet',
+		please_change_network: 'Please change to {{network}} to connect this wallet.',
+		Error: {
+			no_network: "We don't support this network. Please, select another network in the wallet app."
+		}
 	},
 	Hooks: {
 		iCloudBackup: {

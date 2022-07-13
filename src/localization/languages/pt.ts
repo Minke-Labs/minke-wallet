@@ -503,8 +503,8 @@ export default {
 			Modals: {
 				WrongNetwork: {
 					wrong_network: 'Oops! Parece que você está na rede errada',
-					please_change_network: 'Por favor, mude para a rede Polygon para resgatar os seus pontos.',
-					change_to_polygon: 'Mudar para Polygon'
+					please_change_network: 'Por favor, mude para a rede {{network}} para resgatar os seus pontos.',
+					change_to_network: 'Mudar para {{network}}'
 				},
 				NotEnoughPoints: {
 					you_dont_have_points: 'Oops! Você não tem pontos',

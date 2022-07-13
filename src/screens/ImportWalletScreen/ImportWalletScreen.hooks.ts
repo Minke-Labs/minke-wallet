@@ -1,28 +1,41 @@
 import React, { useEffect, useMemo } from 'react';
-import { useNavigation, useNetwork, useWallets } from '@hooks';
+import { useNavigation, useWallets } from '@hooks';
 import { findLatestBackUpOnICloud } from '@models/backup';
 import { forEach } from 'lodash';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { useState } from '@hookstate/core';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import { MinkeWallet } from '@models/wallet';
-import { networks } from '@models/network';
+import { Network, networks } from '@models/network';
 
 const useImportWalletScreen = () => {
 	const navigation = useNavigation();
 	const connector = useWalletConnect();
 	const { connected, accounts, chainId } = connector;
 	const state = useState(globalWalletState());
-	const { address } = state.value;
-	const { selectNetwork, network } = useNetwork();
+	const { address, network } = state.value;
+	const [error, setError] = React.useState<'no_network'>();
+	const [destNetwork, setDestNetwork] = React.useState<Network>();
 
 	const onICloudBackup = () => {
 		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
 	};
-	const goBack = () => navigation.goBack();
+	const goBack = () => navigation.navigate('WalletScreen');
 
 	const { wallets } = useWallets();
 	const [latestBackup, setLatestBackup] = React.useState<string | null>();
+
+	const dismissError = () => {
+		setError(undefined);
+	};
+
+	const dismissWrongNetwork = () => {
+		setDestNetwork(undefined);
+
+		if (connected) {
+			connector.killSession();
+		}
+	};
 
 	useEffect(() => {
 		const fetchBackupsFiles = async () => {
@@ -34,14 +47,20 @@ const useImportWalletScreen = () => {
 
 	useEffect(() => {
 		const switchWalletConnectAccount = async () => {
-			if (!accounts) return;
+			if (!accounts || accounts.length === 0) return;
 			const newNetwork = Object.values(networks).find((n) => n.chainId === chainId);
-			if (!newNetwork) return; // @TODO: @Marcos deal with it
-
-			if (chainId !== network.chainId) {
-				await selectNetwork(newNetwork);
+			if (!newNetwork) {
+				connector.killSession();
+				setError('no_network'); // we dont support the desired network
+				return;
 			}
 
+			if (chainId !== network.chainId && connected) {
+				setDestNetwork(newNetwork); // ask user to change network
+				return;
+			}
+
+			setDestNetwork(undefined);
 			const [newAccount] = accounts;
 			const isNotConnected = newAccount !== address;
 			if (newAccount && isNotConnected) {
@@ -66,7 +85,7 @@ const useImportWalletScreen = () => {
 		};
 
 		switchWalletConnectAccount();
-	}, [accounts, chainId]);
+	}, [accounts, chainId, error, network.chainId, connected]);
 
 	const walletsBackedUp = useMemo(() => {
 		let count = 0;
@@ -87,12 +106,17 @@ const useImportWalletScreen = () => {
 	};
 
 	return {
+		address,
 		onICloudBackup,
 		goBack,
 		walletsBackedUp,
 		latestBackup,
 		toggleWalletConnect,
-		connected
+		connected,
+		error,
+		dismissError,
+		destNetwork,
+		dismissWrongNetwork
 	};
 };
 

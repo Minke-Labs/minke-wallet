@@ -79,7 +79,15 @@ const RedeemScreen = ({ route }: Props) => {
 				</TouchableWithoutFeedback>
 			</BasicLayout>
 			<Modal isVisible={wrongNetwork} onDismiss={dismissModal}>
-				{wrongNetwork && <ModalReusables.WrongNetwork onDismiss={dismissModal} />}
+				{wrongNetwork && (
+					<ModalReusables.WrongNetwork
+						network={networks.matic}
+						onDismiss={dismissModal}
+						description={i18n.t('ReferralScreen.RedeemScreen.Modals.WrongNetwork.please_change_network', {
+							network: networks.matic.name
+						})}
+					/>
+				)}
 			</Modal>
 			<Modal isVisible={notEnoughPoints} onDismiss={dismissModal}>
 				{notEnoughPoints && <NotEnoughPointsModal code={code} onDismiss={dismissModal} />}
