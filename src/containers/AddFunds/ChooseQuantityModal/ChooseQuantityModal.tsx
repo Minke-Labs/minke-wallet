@@ -1,11 +1,24 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { Token, Text, PaperTouchable, ApplePayButton, Icon, OnrampButton } from '@components';
+import { Token, Text, PaperTouchable, ApplePayButton, Flag, OnrampButton, Button } from '@components';
 import { useLanguage } from '@hooks';
 import { TokenType } from '@styles';
 import { ChooseQuantityModalProps } from './ChooseQuantityModal.types';
 import { useChooseQuantityModal } from './ChooseQuantityModal.hooks';
+
+const Item = () => (
+	<View style={{ flexDirection: 'row' }}>
+		<Flag size={40} />
+		<View style={{ marginLeft: 12, flex: 1 }}>
+			<Text type="bSmall" weight="bold">Argentina</Text>
+			<Text type="bSmall" marginBottom={16}>
+				Select you country of residence to access your local payments option
+			</Text>
+			<Button title="Change country" mode="empty" />
+		</View>
+	</View>
+);
 
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
@@ -18,7 +31,7 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	const {
 		name,
 		symbol,
-		onCopyToClipboard,
+		// onCopyToClipboard,
 		snackbarVisible,
 		setSnackbarVisible
 	} = useChooseQuantityModal({ coin, setPresetAmount });
@@ -60,11 +73,15 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 
 				<ApplePayButton marginBottom={16} onPress={onPurchase} disabled={amount! <= 0} />
 				<OnrampButton
-					marginBottom={16}
+					marginBottom={24}
 					onPress={onClickBanxa}
 				/>
 
-				<View
+				<View style={{ height: 1, borderWidth: 1, borderColor: 'red', marginBottom: 24 }} />
+
+				<Item />
+
+				{/* <View
 					style={{
 						flexDirection: 'row',
 						alignItems: 'center',
@@ -87,22 +104,22 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 					<Text weight="extraBold" type="h3">
 						{i18n.t('Containers.AddFunds.ChooseQuantityModal.or_deposit')}
 					</Text>
-				</View>
+				</View> */}
 
-				<Text marginBottom={20}>
+				{/* <Text marginBottom={20}>
 					{i18n.t('Containers.AddFunds.ChooseQuantityModal.send_from')}
 					<Text weight="extraBold">coinbase</Text>
 					{i18n.t('Containers.AddFunds.ChooseQuantityModal.or_another_exchange')}
-				</Text>
+				</Text> */}
 
-				<View style={{ marginBottom: 8 }}>
+				{/* <View style={{ marginBottom: 8 }}>
 					<PaperTouchable onPress={onCopyToClipboard}>
 						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 							<Icon name="copyStroke" style={{ marginRight: 8 }} size={16} />
 							<Text>{i18n.t('Containers.AddFunds.ChooseQuantityModal.copy_address')}</Text>
 						</View>
 					</PaperTouchable>
-				</View>
+				</View> */}
 			</View>
 
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>

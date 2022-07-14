@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, ListItem } from '@components';
-import APay from './APay.svg';
+import APay from '../APay.svg';
 
 interface SelectorModalProps {
 	onBuy: () => void;

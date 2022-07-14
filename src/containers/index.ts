@@ -1,4 +1,4 @@
-import AddFunds from './Add';
-// import AddFunds from './AddFunds/AddFunds';
+// import AddFunds from './Add';
+import AddFunds from './AddFunds/AddFunds';
 
 export { AddFunds };

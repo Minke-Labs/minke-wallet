@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View, SafeAreaView } from 'react-native';
@@ -8,6 +9,8 @@ import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
 import LocalCurrencyModal from './LocalCurrencyModal/LocalCurrencyModal';
 import { useAddFunds } from './AddFunds.hooks';
 import { AddFundsProps } from './AddFunds.types';
+import { SelectorModal } from '../SelectorModal/SelectorModal';
+import { ExternalExchangeModal } from '../ExternalExchangeModal/ExternalExchangeModal';
 
 const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	const {
@@ -35,11 +38,11 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	} = useAddFunds({ visible, onDismiss });
 
 	const handleGoBack = () => {
-		if (currentStep === 0) {
+		if (currentStep === 1) {
 			dismissCoin();
 		}
-		if (currentStep === 3) {
-			setCurrentStep(1);
+		if (currentStep === 4) {
+			setCurrentStep(2);
 			return;
 		}
 		goBack();
@@ -48,7 +51,8 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	return (
 		<SafeAreaView>
 			<ModalHeader
-				onBack={currentStep === 1 && gaslessEnabled ? undefined : handleGoBack}
+				onBack={() => setCurrentStep(0)}
+				// onBack={currentStep === 2 && gaslessEnabled ? undefined : handleGoBack}
 				onDismiss={dismissCoin}
 			/>
 			<View style={{ paddingHorizontal: 24 }}>
@@ -61,8 +65,14 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					/>
 				) : (
 					<>
-						{currentStep === 0 && <CoinSelectorModal onSelect={selectCoin} />}
-						{currentStep === 1 && (
+						{currentStep === 0 && (
+							<SelectorModal
+								onBuy={() => setCurrentStep(1)}
+								onExchange={() => setCurrentStep(10)}
+							/>
+						)}
+						{currentStep === 1 && <CoinSelectorModal onSelect={selectCoin} />}
+						{currentStep === 2 && (
 							<ChooseQuantityModal
 								coin={coin}
 								amount={amount}
@@ -72,7 +82,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								onClickBanxa={() => setCurrentStep(3)}
 							/>
 						)}
-						{currentStep === 2 && (
+						{currentStep === 3 && (
 							<CustomAmountModal
 								customAmount={customAmount}
 								setCustomAmount={setCustomAmount}
@@ -80,8 +90,12 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								onPurchase={() => onApplePayPurchase(customAmount || 100)}
 							/>
 						)}
-						{currentStep === 3 && (
+						{currentStep === 4 && (
 							<LocalCurrencyModal onOnramp={(val) => onOnrampPurchase(val === 0 ? amount || 100 : val)} />
+						)}
+
+						{currentStep === 10 && (
+							<ExternalExchangeModal />
 						)}
 					</>
 				)}
