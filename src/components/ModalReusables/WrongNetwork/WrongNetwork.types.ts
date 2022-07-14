@@ -4,4 +4,5 @@ export interface WrongNetworkParams {
 	onDismiss: () => void;
 	network: Network;
 	description: string;
+	onUpdate?: () => void;
 }

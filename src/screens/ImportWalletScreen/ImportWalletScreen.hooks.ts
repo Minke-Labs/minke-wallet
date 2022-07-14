@@ -11,18 +11,18 @@ import { Network, networks } from '@models/network';
 const useImportWalletScreen = () => {
 	const navigation = useNavigation();
 	const connector = useWalletConnect();
-	const { connected, accounts, chainId } = connector;
+	const { connected, accounts: connectedAccounts } = connector;
 	const state = useState(globalWalletState());
 	const { address, network } = state.value;
 	const [error, setError] = React.useState<'no_network'>();
 	const [destNetwork, setDestNetwork] = React.useState<Network>();
 	const [importSeed, setImportSeed] = React.useState(false);
+	const [importedAccount, setImportAccount] = React.useState('');
 
 	const onICloudBackup = () => {
 		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
 	};
-	const goBack = () => navigation.navigate('WalletScreen');
-
+	const goBack = () => navigation.goBack();
 	const { wallets } = useWallets();
 	const [latestBackup, setLatestBackup] = React.useState<string | null>();
 
@@ -51,47 +51,61 @@ const useImportWalletScreen = () => {
 		fetchBackupsFiles();
 	}, []);
 
-	useEffect(() => {
-		const switchWalletConnectAccount = async () => {
-			if (!accounts || accounts.length === 0) return;
-			const newNetwork = Object.values(networks).find((n) => n.chainId === chainId);
-			if (!newNetwork) {
-				connector.killSession();
-				setError('no_network'); // we dont support the desired network
-				return;
+	const switchWallet = async (newAccount: string) => {
+		setDestNetwork(undefined);
+		const isNotConnected = newAccount !== address;
+		if (newAccount && isNotConnected) {
+			const savedWallet = Object.values(wallets).find((wallet) => wallet.address === newAccount);
+
+			if (savedWallet) {
+				state.set(await walletState(savedWallet));
+				navigation.navigate('WalletScreen');
+			} else {
+				const minkeWallet: MinkeWallet = {
+					id: `wallet_${Date.now()}`,
+					address: newAccount,
+					backedUp: false,
+					name: '',
+					network: network.id,
+					primary: false
+				};
+				state.set(await walletState(minkeWallet));
+				navigation.navigate('WalletScreen');
 			}
+		}
+	};
 
-			if (chainId !== network.chainId && connected) {
-				setDestNetwork(newNetwork); // ask user to change network
-				return;
-			}
+	const onNetworkChange = async () => {
+		await switchWallet(importedAccount);
+		navigation.navigate('WalletScreen');
+	};
 
-			setDestNetwork(undefined);
-			const [newAccount] = accounts;
-			const isNotConnected = newAccount !== address;
-			if (newAccount && isNotConnected) {
-				const savedWallet = Object.values(wallets).find((wallet) => wallet.address === newAccount);
+	const switchWalletConnectAccount = async (accounts: string[], chainId: number) => {
+		if (!accounts || accounts.length === 0) return;
+		const newNetwork = Object.values(networks).find((n) => n.chainId === chainId);
+		if (!newNetwork) {
+			connector.killSession();
+			setError('no_network'); // we dont support the desired network
+			return;
+		}
 
-				if (savedWallet) {
-					state.set(await walletState(savedWallet));
-					navigation.navigate('WalletScreen');
-				} else {
-					const minkeWallet: MinkeWallet = {
-						id: `wallet_${Date.now()}`,
-						address: newAccount,
-						backedUp: false,
-						name: '',
-						network: chainId.toString(),
-						primary: false
-					};
-					state.set(await walletState(minkeWallet));
-					navigation.navigate('WalletScreen');
-				}
-			}
-		};
+		if (chainId !== network.chainId) {
+			setImportAccount(accounts[0]);
+			setDestNetwork(newNetwork); // ask user to change network
+			return;
+		}
 
-		switchWalletConnectAccount();
-	}, [accounts, chainId, error, network.chainId, connected]);
+		await switchWallet(accounts[0]);
+	};
+
+	connector.on('connect', (e, payload) => {
+		if (e) {
+			throw e;
+		}
+
+		const { accounts, chainId } = payload.params[0];
+		switchWalletConnectAccount(accounts, chainId);
+	});
 
 	const walletsBackedUp = useMemo(() => {
 		let count = 0;
@@ -112,7 +126,7 @@ const useImportWalletScreen = () => {
 	};
 
 	return {
-		address,
+		address: connectedAccounts[0],
 		onICloudBackup,
 		goBack,
 		walletsBackedUp,
@@ -125,7 +139,8 @@ const useImportWalletScreen = () => {
 		dismissWrongNetwork,
 		importSeed,
 		setImportSeed,
-		onSeedImportFinished
+		onSeedImportFinished,
+		onNetworkChange
 	};
 };
 

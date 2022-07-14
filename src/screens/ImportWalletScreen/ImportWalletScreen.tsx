@@ -29,7 +29,8 @@ const ImportWalletScreen = () => {
 		dismissWrongNetwork,
 		importSeed,
 		setImportSeed,
-		onSeedImportFinished
+		onSeedImportFinished,
+		onNetworkChange
 	} = useImportWalletScreen();
 
 	return (
@@ -108,6 +109,7 @@ const ImportWalletScreen = () => {
 						onDismiss={dismissWrongNetwork}
 						network={destNetwork}
 						description={i18n.t('ImportWalletScreen.please_change_network', { network: destNetwork.name })}
+						onUpdate={onNetworkChange}
 					/>
 				)}
 			</Modal>
