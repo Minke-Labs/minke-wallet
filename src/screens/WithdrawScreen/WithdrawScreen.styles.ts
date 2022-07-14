@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	depositButton: {
 		paddingHorizontal: 24,
-		marginTop: 'auto',
+		marginTop: Platform.OS === 'android' ? undefined : 'auto',
 		marginBottom: 16
 	}
 });

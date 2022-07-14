@@ -49,4 +49,6 @@ interface Prices {
 
 type GraphIndex = 0 | 1 | 2 | 3 | 4 | 5;
 
-export { ChartProps, Amount, PercentChange, LatestPrice, PriceList, DataPoints, Prices, GraphIndex };
+export {
+	ChartProps, Amount, PercentChange, LatestPrice, PriceList, DataPoints, Prices, GraphIndex
+};

@@ -21,7 +21,13 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: 
 	return (
 		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
 			<View style={styles.leftContainer}>
-				{pending ? <ActivityIndicator size={26} /> : <Icon name="checkmark" size={24} color="alert3" />}
+				{pending ? (
+					<ActivityIndicator size={26} />
+				) : failed ? (
+					<Icon name="error" size={24} color="alert1" />
+				) : (
+					<Icon name="checkmark" size={24} color="alert3" />
+				)}
 
 				<View style={{ marginLeft: 8 }}>
 					<Text type="p2" weight="semiBold">

@@ -60,8 +60,8 @@ public class MainApplication extends Application implements ReactApplication {
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
-    
-    IntercomModule.initialize(this, "android_sdk-111e15fcdaa0c32ec305e20df56a5330cdaa4fb9", "umqk8oq3"); 
+
+    IntercomModule.initialize(this, "android_sdk-111e15fcdaa0c32ec305e20df56a5330cdaa4fb9", "umqk8oq3");
   }
 
   @Override

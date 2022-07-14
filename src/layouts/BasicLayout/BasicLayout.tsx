@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View, StatusBar as RNStatusBar } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { ColorType } from '@styles';
 import { StatusBar } from 'expo-status-bar';
@@ -19,6 +19,7 @@ const Base: React.FC<BaseProps> = ({ children, bg, center }) => {
 			style={{
 				flex: 1,
 				backgroundColor: colors[bg!],
+				paddingTop: RNStatusBar.currentHeight,
 				...(center && { alignItems: 'center' })
 			}}
 		>

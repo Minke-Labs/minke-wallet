@@ -6,22 +6,21 @@ import Text from '../../Text/Text';
 import TransparentCard from '../../TransparentCard/TransparentCard';
 import DescTransparentCard from '../../DescTransparentCard/DescTransparentCard';
 
-const Info: React.FC<{ marginBottom?: number }> = ({ marginBottom = 0 }) => {
+const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ marginBottom = 0, fullHeight = false }) => {
 	const { i18n } = useLanguage();
 	return (
 		<View style={{ marginBottom }}>
-			<DescTransparentCard>
+			<DescTransparentCard fullHeight={fullHeight}>
 				<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
 					{i18n.t('Components.AaveReusables.Info.what_is')}
 				</Text>
-				<Text type="a">
-					{i18n.t('Components.AaveReusables.Info.aave_des')}
-				</Text>
+				<Text type="a">{i18n.t('Components.AaveReusables.Info.aave_des')}</Text>
 			</DescTransparentCard>
-			<View style={{
-				flexDirection: 'row',
-				justifyContent: 'space-between'
-			}}
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between'
+				}}
 			>
 				<TouchableOpacity onPress={() => Linking.openURL('https://aave.com/')}>
 					<TransparentCard row padding={16}>

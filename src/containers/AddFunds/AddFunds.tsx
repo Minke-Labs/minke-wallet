@@ -103,7 +103,9 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 
 			<FullModal visible={banxaModalVisible} onClose={() => setBanxaModalVisible(false)}>
 				<WebView
-					source={{ uri: orderLink }}
+					source={{
+						uri: orderLink
+					}}
 					sharedCookiesEnabled
 					onNavigationStateChange={(e) => {
 						if (e.url.includes('#')) {

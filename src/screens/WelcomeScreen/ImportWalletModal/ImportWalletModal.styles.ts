@@ -1,13 +1,14 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { deviceHeight } from '@styles';
 
 export const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal: 24,
-		minHeight: Dimensions.get('screen').height * 0.3
+		minHeight: deviceHeight * 0.3
 	},
 	addWalletContainer: {
 		alignItems: 'center',
-		minHeight: Dimensions.get('screen').height * 0.4
+		minHeight: deviceHeight * 0.4
 	},
 
 	textAreaContainer: {

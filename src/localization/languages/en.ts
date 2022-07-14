@@ -101,10 +101,10 @@ export default {
 	},
 	BackupStatusScreen: {
 		your_wallet_is_backed_up: 'Your Wallet is Backed Up!',
-		if_you_lose: 'If you lose this device you can recover your encrypted wallet backup from iCloud.',
+		if_you_lose: 'If you lose this device you can recover your encrypted wallet backup from {{cloudPlatform}}.',
 		your_wallet_is_not_backed_up: 'Your Wallet is not Backed Up!',
 		your_keys_your_coins: 'Your keys your coins. Backup your wallet incase of loss.',
-		back_up_to_icloud: 'Back up to iCloud',
+		back_up_to_icloud: 'Back up to {{cloudPlatform}}',
 		backup: 'Backup',
 		done: 'Done',
 		go_to_wallet: 'Go to Wallet',
@@ -120,9 +120,10 @@ export default {
 		ConfirmBackupPassword: {
 			enter_backup_password: 'Enter Backup Password',
 			to: 'To',
-			restore_from: 'restore your wallets from',
-			add_to: 'add this wallet to',
-			enter_existing: 'your iCloud backup, enter your existing backup password'
+			restore_from: ' restore your wallets from ',
+			add_to: ' add this wallet to ',
+			enter_existing: 'your {{cloudPlatform}} backup, enter your existing backup password',
+			importing_backups: 'Importing backups'
 		}
 	},
 	ChangeCountryScreen: {
@@ -344,7 +345,8 @@ export default {
 					Step5: {
 						receive: 'Receive',
 						copy_your:
-							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
+							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.',
+						finish: 'Finish'
 					}
 				},
 				Arrow: {
@@ -454,7 +456,8 @@ export default {
 						how_much: 'How much ',
 						wanna_send: ' do you want to send?'
 					}
-				}
+				},
+				add: '+ Add'
 			}
 		}
 	},
@@ -472,7 +475,7 @@ export default {
 			import: 'Import Wallet',
 			SelectImportMethodModal: {
 				import_wallet: 'Import wallet',
-				restore_from_icloud: 'Restore from iCloud',
+				restore_from_icloud: 'Restore from {{cloudPlatform}}',
 				backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
 				import_with_secret_phrase: 'Import with secret phrase or private key'
 			}
@@ -577,10 +580,11 @@ export default {
 	Containers: {
 		AddFunds: {
 			LocalCurrencyModal: {
-				choose_another_amount: 'Choose another amount'
+				choose_amount_in: 'Choose the amount in {{currency}}'
 			},
 			ChooseQuantityModal: {
-				buy_some: 'Buy some {{symbol}} with ',
+				buy_some: 'Buy some {{symbol}}',
+				with: ' with',
 				to_start_using: ' to start using Minke:',
 				choose_another_amount: 'Choose another amount',
 				or_deposit: 'or deposit',
@@ -673,7 +677,7 @@ export default {
 			enter_code: 'Enter code'
 		},
 		Buttons: {
-			backup_to_icloud: 'Back up to iCloud',
+			backup_to_icloud: 'Back up to {{cloudPlatform}}',
 			backup_manually: 'Back up manually',
 			confirm_restore: 'Confirm restore',
 			confirm_backup: 'Confirm backup',

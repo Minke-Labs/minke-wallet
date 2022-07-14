@@ -61,8 +61,8 @@ const useExchangeResumeScreen = () => {
 
 	const loadPrices = async () => {
 		if (!loading) {
-			const { decimals: srcDecimals, symbol: srcToken } = from;
-			const { decimals: destDecimals, symbol: destToken } = to;
+			const { decimals: srcDecimals, address: srcToken } = from;
+			const { decimals: destDecimals, address: destToken } = to;
 			const { direction = 'from' } = lastConversion || {};
 			const result = await getExchangePrice({
 				address: wallet.address.value,

@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, Icon } from '@components';
 import { TouchableOpacity, View } from 'react-native';
 import { useLanguage } from '@hooks';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import { SelectImportMethodModalProps } from './SelectImportMethodModal.types';
 import styles from './SelectImportMethodModal.styles';
 import { useSelectImportMethodModal } from './SelectImportMethodModal.hooks';
@@ -24,14 +25,19 @@ const SelectImportMethodModal = ({ onICloudBackup, onImportWithSecret }: SelectI
 						</View>
 						<View style={{ marginLeft: 16 }}>
 							<Text type="p2" weight="bold">
-								{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.restore_from_icloud')}
+								{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.restore_from_icloud', {
+									cloudPlatform
+								})}
 							</Text>
 							{walletsBackedUp > 0 && (
 								<Text type="a">
-									{i18n.t('WelcomeScreen.ImportWalletModal.SelectImportMethodModal.backup_wallets_count', {
-										count: walletsBackedUp,
-										plural: walletsBackedUp > 1 ? 's' : ''
-									})}
+									{i18n.t(
+										'WelcomeScreen.ImportWalletModal.SelectImportMethodModal.backup_wallets_count',
+										{
+											count: walletsBackedUp,
+											plural: walletsBackedUp > 1 ? 's' : ''
+										}
+									)}
 								</Text>
 							)}
 						</View>

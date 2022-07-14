@@ -10,7 +10,7 @@ import { MINKE_MASTER_KEY } from '@env';
 import Logger from '@utils/logger';
 
 const USERDATA_FILE = 'UserData.json';
-const REMOTE_BACKUP_WALLET_DIR = 'minke.app/wallet-backups';
+export const REMOTE_BACKUP_WALLET_DIR = 'minke.app/wallet-backups';
 const encryptor = new AesEncryptor();
 
 export const CLOUD_BACKUP_ERRORS = {
@@ -123,7 +123,9 @@ export const getDataFromCloud = async (backupPassword: any, filename = '') => {
 		document = sortedBackups[0];
 	}
 
-	const encryptedData = await RNFS.readFile(document.path, 'utf8');
+	const encryptedData = ios
+		? await RNFS.readFile(document.path, 'utf8')
+		: await RNCloudFs.getGoogleDriveDocument(document.id);
 
 	if (encryptedData) {
 		const backedUpDataStringified = await encryptor.decrypt(backupPassword, encryptedData);
@@ -151,8 +153,26 @@ export async function fetchAllBackups() {
 	if (android) {
 		await RNCloudFs.loginIfNeeded();
 	}
+
 	return RNCloudFs.listFiles({
 		scope: 'hidden',
 		targetPath: REMOTE_BACKUP_WALLET_DIR
 	});
+}
+
+// DEV ONLY
+export async function deleteAllBackups() {
+	const android = Platform.OS === 'android';
+	if (android) {
+		await RNCloudFs.loginIfNeeded();
+	}
+	const backups = await RNCloudFs.listFiles({
+		scope: 'hidden',
+		targetPath: REMOTE_BACKUP_WALLET_DIR
+	});
+	await Promise.all(
+		backups.files.map(async (file: any) => {
+			await RNCloudFs.deleteFromCloud(file);
+		})
+	);
 }

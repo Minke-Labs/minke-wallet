@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { ColorType } from '@styles';
-import { BUTTON_PADDING, SCREEN_WIDTH, NUM_TABS } from './Selector.utils';
+import { ColorType, deviceWidth } from '@styles';
+import { BUTTON_PADDING, NUM_TABS } from './Selector.utils';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
@@ -17,7 +17,7 @@ export const makeStyles = (colors: ColorType) =>
 			position: 'absolute',
 			backgroundColor: '#006AA6',
 			// screen width - padding / number of tabs - button padding on both sides
-			width: (SCREEN_WIDTH - 48) / NUM_TABS - BUTTON_PADDING * 2,
+			width: (deviceWidth - 48) / NUM_TABS - BUTTON_PADDING * 2,
 			height: 32,
 			borderRadius: 16
 		},

@@ -143,6 +143,7 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^28.0.3",
+    "jetifier": "^2.0.0",
     "mocha": "^9.2.2",
     "typescript": "~4.3.5"
   },

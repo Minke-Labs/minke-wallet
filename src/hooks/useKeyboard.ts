@@ -5,16 +5,24 @@ const useKeyboard = () => {
 	const [keyboardVisible, setKeyboardVisible] = useState(false);
 
 	useEffect(() => {
-		const keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', () => {
+		const keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', () => {
 			setKeyboardVisible(true);
 		});
-		const keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', () => {
+		const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+			setKeyboardVisible(true);
+		});
+		const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => {
+			setKeyboardVisible(false);
+		});
+		const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
 			setKeyboardVisible(false);
 		});
 
 		return () => {
-			keyboardDidHideListener.remove();
+			keyboardWillShowListener.remove();
+			keyboardWillHideListener.remove();
 			keyboardDidShowListener.remove();
+			keyboardDidHideListener.remove();
 		};
 	}, []);
 

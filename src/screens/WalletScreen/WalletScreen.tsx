@@ -106,9 +106,7 @@ const WalletScreen = () => {
 			</Modal>
 
 			<Modal isVisible={openAvatarModal} onDismiss={() => setOpenAvatarModal(false)}>
-				{openAvatarModal && (
-					<AvatarModal onDismiss={() => setOpenAvatarModal(false)} />
-				)}
+				{openAvatarModal && <AvatarModal onDismiss={() => setOpenAvatarModal(false)} />}
 			</Modal>
 		</AppTour>
 	);

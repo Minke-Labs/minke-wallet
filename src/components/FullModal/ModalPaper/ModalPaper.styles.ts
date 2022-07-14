@@ -1,4 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { deviceHeight, deviceWidth } from '@styles';
 
 export default StyleSheet.create({
 	container: {
@@ -15,8 +16,8 @@ export default StyleSheet.create({
 		},
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
-		height: Dimensions.get('screen').height * 0.9,
-		width: Dimensions.get('screen').width * 0.95,
+		height: deviceHeight * 0.9,
+		width: deviceWidth * 0.95,
 		overflow: 'hidden'
 	},
 	content: {

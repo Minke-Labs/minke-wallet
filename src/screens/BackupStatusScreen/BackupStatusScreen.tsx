@@ -10,6 +10,7 @@ import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { walletState } from '@src/stores/WalletStore';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import styles from './BackupStatusScreen.styles';
 
 const BackedUp: React.FC<{ address: string }> = ({ address }) => {
@@ -23,7 +24,7 @@ const BackedUp: React.FC<{ address: string }> = ({ address }) => {
 				{smallWalletAddress(address, 9)}
 			</Text>
 			<Text weight="medium" center marginBottom={40}>
-				{i18n.t('BackupStatusScreen.if_you_lose')}
+				{i18n.t('BackupStatusScreen.if_you_lose', { cloudPlatform })}
 			</Text>
 		</>
 	);
@@ -46,7 +47,7 @@ const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }>
 				{i18n.t('BackupStatusScreen.your_keys_your_coins')}
 			</Text>
 			<Button
-				title={i18n.t('BackupStatusScreen.back_up_to_icloud')}
+				title={i18n.t('BackupStatusScreen.back_up_to_icloud', { cloudPlatform })}
 				onPress={handleIcloudBackup}
 				iconRight="cloudStroke"
 				marginBottom={24}
@@ -140,7 +141,8 @@ const BackupStatusScreen = ({ route }: Props) => {
 							onPress={() =>
 								showAuthenticationPrompt({
 									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
-								})}
+								})
+							}
 							title={i18n.t('BackupStatusScreen.view_secret_phrase')}
 							mode="outlined"
 						/>

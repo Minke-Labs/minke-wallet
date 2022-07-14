@@ -17,10 +17,7 @@ const ChangeNetworkScreen = () => {
 
 	return (
 		<BasicLayout>
-			<SettingsHeader
-				title={i18n.t('ChangeNetworkScreen.header_title')}
-				onPress={goBack}
-			/>
+			<SettingsHeader title={i18n.t('ChangeNetworkScreen.header_title')} onPress={goBack} />
 
 			<View style={styles.padding}>
 				<FlatList

@@ -1,4 +1,5 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { deviceHeight } from '@styles';
 
 export const styles = StyleSheet.create({
 	container: {
@@ -35,6 +36,6 @@ export const styles = StyleSheet.create({
 	},
 
 	tokensList: {
-		maxHeight: Dimensions.get('screen').height * 0.5
+		maxHeight: deviceHeight * 0.5
 	}
 });

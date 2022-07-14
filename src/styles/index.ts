@@ -4,6 +4,15 @@ import { colors, ColorType } from './colors';
 import { flag, FlagType, allCountries } from './flags';
 import { countries, CountriesType } from './countries';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
+import {
+	screenHeight,
+	screenWidth,
+	deviceHeight,
+	deviceWidth,
+	statusBarHeight,
+	navigationBarHeight,
+	os
+} from './dimensions';
 
 export {
 	icon,
@@ -13,7 +22,14 @@ export {
 	allCountries,
 	fontType,
 	countries,
-	fontWeight
+	fontWeight,
+	screenHeight,
+	screenWidth,
+	deviceHeight,
+	deviceWidth,
+	statusBarHeight,
+	navigationBarHeight,
+	os
 };
 
 export type {

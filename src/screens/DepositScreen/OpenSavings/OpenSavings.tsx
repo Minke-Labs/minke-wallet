@@ -45,7 +45,11 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 							{i18n.t(`DepositScreen.OpenSavings.${selectedProtocol?.id}`)}
 						</Text>
 
-						{selectedProtocol?.id === 'aave' ? <AaveReusables.Info /> : <MStableReusables.Info />}
+						{selectedProtocol?.id === 'aave' ? (
+							<AaveReusables.Info fullHeight />
+						) : (
+							<MStableReusables.Info fullHeight />
+						)}
 					</SafeAreaView>
 
 					<View style={{ bottom: 34 }}>
