@@ -35,11 +35,13 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {
-			let selectedTokens: MinkeToken[] = allTokens;
+			let selectedTokens: MinkeToken[] = allTokens || [];
 
-			if (showOnlyOwnedTokens && ownedTokens.length > 0) {
+			if (showOnlyOwnedTokens) {
 				const owned = selectedTokens.map(({ symbol }) => !!symbol && symbol.toLowerCase());
-				selectedTokens = ownedTokens.filter(({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase()));
+				selectedTokens = (ownedTokens || []).filter(
+					({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase())
+				);
 			}
 
 			if (selected && selected.length > 0) {
@@ -58,14 +60,16 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 	useEffect(() => {
 		const loadTokens = async () => {
-			setLoading(true);
-			const allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
-			setTokens(allTokens);
-			removeSelectedTokens(allTokens);
-			setLoading(false);
+			if (withdraw || (tokens || []).length === 0) {
+				setLoading(true);
+				const allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
+				setTokens(allTokens);
+				removeSelectedTokens(allTokens);
+				setLoading(false);
+			}
 		};
 		loadTokens();
-	}, [withdrawableTokens]);
+	}, [withdrawableTokens, withdraw]);
 
 	useEffect(() => {
 		setSearch('');

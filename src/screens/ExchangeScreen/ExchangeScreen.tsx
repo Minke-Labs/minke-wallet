@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { useTheme, useLanguage } from '@hooks';
+import { View, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import { useTheme, useLanguage, useKeyboard } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
 import { Button, Modal, ActivityIndicator, ModalReusables, Header, GasSelector, TokenCard } from '@components';
@@ -39,44 +39,45 @@ const ExchangeScreen = () => {
 		gasless
 	} = useExchangeScreen();
 	const { i18n } = useLanguage();
+	const keyboardVisible = useKeyboard();
 	RNUxcam.tagScreenName('ExchangeScreen');
 
 	return (
 		<>
 			<BasicLayout>
-				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-					<>
-						<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
+				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
+					<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
 
-						<View style={styles.container}>
-							<View style={styles.top}>
-								<TokenCard
-									updateQuotes={debounce(updateFromQuotes, 500)}
-									conversionAmount={fromConversionAmount}
-									token={fromToken}
-									onPress={showModalFrom}
-									exchange
-								/>
-							</View>
-							<View style={styles.bottom}>
-								<TokenCard
-									updateQuotes={debounce(updateToQuotes, 500)}
-									conversionAmount={toConversionAmount}
-									token={toToken}
-									onPress={showModalTo}
-									disableMax
-									exchange
-									disableAmountValidation
-								/>
-							</View>
-
-							<DirectionButton
-								onPress={directionSwap}
-								loading={loadingPrices}
-								disabled={!canChangeDirections}
+					<View style={styles.container}>
+						<View style={styles.top}>
+							<TokenCard
+								updateQuotes={debounce(updateFromQuotes, 500)}
+								conversionAmount={fromConversionAmount}
+								token={fromToken}
+								onPress={showModalFrom}
+								exchange
+							/>
+						</View>
+						<View style={styles.bottom}>
+							<TokenCard
+								updateQuotes={debounce(updateToQuotes, 500)}
+								conversionAmount={toConversionAmount}
+								token={toToken}
+								onPress={showModalTo}
+								disableMax
+								exchange
+								disableAmountValidation
 							/>
 						</View>
 
+						<DirectionButton
+							onPress={directionSwap}
+							loading={loadingPrices}
+							disabled={!canChangeDirections}
+						/>
+					</View>
+
+					<View style={{ display: keyboardVisible ? 'none' : 'flex' }}>
 						<View style={{ marginBottom: 24, display: gasless ? 'none' : 'flex' }}>
 							<GasSelector />
 						</View>
@@ -86,21 +87,21 @@ const ExchangeScreen = () => {
 								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
 							)}
 						</View>
+					</View>
 
-						<View style={styles.buttonBox}>
-							{loadingPrices ? (
-								<ActivityIndicator />
-							) : (
-								<Button
-									title={i18n.t('ExchangeScreen.review')}
-									onPress={goToExchangeResume}
-									disabled={!canSwap()}
-								/>
-							)}
-						</View>
-						<KeyboardSpacer />
-					</>
-				</TouchableWithoutFeedback>
+					<View style={styles.buttonBox}>
+						{loadingPrices ? (
+							<ActivityIndicator />
+						) : (
+							<Button
+								title={i18n.t('ExchangeScreen.review')}
+								onPress={goToExchangeResume}
+								disabled={!canSwap()}
+							/>
+						)}
+					</View>
+					<KeyboardSpacer />
+				</TouchableOpacity>
 			</BasicLayout>
 
 			<Modal isVisible={searchVisible} onDismiss={hideModal}>
