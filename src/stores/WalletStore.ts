@@ -41,7 +41,7 @@ export const fetchTokensAndBalances = async (address: string) => {
 	return { balance, network: blockchain };
 };
 
-export const setPrimaryWallet = async (wallet: MinkeWallet): Promise<MinkeWallet> => {
+const setPrimaryWallet = async (wallet: MinkeWallet): Promise<MinkeWallet> => {
 	const allWallets = (await getAllWallets()) || {};
 	const chosen = wallet;
 	const primaryWallet = Object.values(allWallets).find(({ primary }) => primary);

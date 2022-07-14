@@ -4,7 +4,7 @@ import { Text, Token, ActivityIndicator, TokenAmountInput, NetworkWarning, Hapti
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
-import { useKeyboard, useLanguage } from '@hooks';
+import { useKeyboard, useLanguage, useWalletManagement } from '@hooks';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
@@ -29,6 +29,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 		gasless,
 		enoughGas
 	} = useTransactionTransfer({ token, user, onError, ...props });
+	const { canSendTransactions } = useWalletManagement();
 
 	return (
 		<View style={styles.container}>
@@ -55,7 +56,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				symbol={token.symbol}
 				onAmountChange={onChangeAmount}
 				onNumberAmountChange={onChangeNumber}
-				isAmountValid={(number || 0) <= (amountType === 'token' ? Number(token.balance) : token.balanceUSD)}
+				isAmountValid={(number || 0) <= (amountType === 'token' ? Number(token.balance!) : token.balanceUSD!)}
 				autoFocus
 				placeholder={amountType === 'fiat' ? `$00${decimalSeparator}00` : `0${decimalSeparator}00`}
 				onMaxPress={onMaxPress}
@@ -83,9 +84,10 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					<HapticButton
 						title={i18n.t('Components.Buttons.send')}
 						disabled={
+							!canSendTransactions ||
 							!enoughGas ||
 							!number ||
-							number > (amountType === 'token' ? Number(token.balance) : token.balanceUSD)
+							number > (amountType === 'token' ? Number(token.balance!) : token.balanceUSD!)
 						}
 						onPress={onSend}
 					/>

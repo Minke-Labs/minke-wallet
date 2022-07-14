@@ -133,7 +133,7 @@ export const useTransactionTransfer = ({
 									address,
 									biconomy,
 									contract: token.address,
-									privateKey,
+									privateKey: privateKey!,
 									spender: sendContract
 								});
 
@@ -145,7 +145,7 @@ export const useTransactionTransfer = ({
 							const hash = await gaslessSend({
 								biconomy,
 								address,
-								privateKey,
+								privateKey: privateKey!,
 								amount: parseUnits(amountToSend, token.decimals).toString(),
 								gasPrice: gasPrice.result.ProposeGasPrice,
 								token: token.address,
@@ -178,6 +178,7 @@ export const useTransactionTransfer = ({
 								symbol: token.symbol
 							});
 						} else {
+							// @TODO: Insert wallet connection here
 							const transaction = await sendTransaction(
 								privateKey,
 								to,
@@ -225,10 +226,10 @@ export const useTransactionTransfer = ({
 
 	const onMaxPress = (tokenValue = true) => {
 		if (tokenValue) {
-			onChangeAmount(token.balance.replace(/\./g, decimalSeparator));
+			onChangeAmount(token.balance!.replace(/\./g, decimalSeparator));
 			onChangeNumber(Number(token.balance));
 		} else {
-			onChangeAmount(token.balanceUSD.toString().replace(/\./g, decimalSeparator));
+			onChangeAmount(token.balanceUSD!.toString().replace(/\./g, decimalSeparator));
 			onChangeNumber(token.balanceUSD);
 		}
 	};

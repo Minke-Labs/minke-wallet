@@ -215,6 +215,36 @@ export const erc20abi = [
 	'event Transfer(address indexed from, address indexed to, uint amount)'
 ];
 
+export const sendTransactionData = async (
+	from: string,
+	to: string,
+	amount: string,
+	gasPrice: string,
+	network: string,
+	contractAddress: string = '',
+	decimals: number = 18
+) => {
+	const formattedAmount = amount.replace(',', '.');
+	const txDefaults = {
+		from,
+		to,
+		gasPrice: parseUnits(gasPrice, 'gwei'),
+		gasLimit: 100000
+	};
+
+	let tx;
+	if (contractAddress) {
+		const erc20 = new Contract(contractAddress, erc20abi, await getProvider(network));
+		tx = await erc20.populateTransaction.transfer(to, parseUnits(formattedAmount, decimals));
+	} else {
+		tx = {
+			value: parseUnits(formattedAmount, decimals)
+		};
+	}
+
+	return { ...txDefaults, ...tx };
+};
+
 export const sendTransaction = async (
 	privateKey: string,
 	to: string,
@@ -227,32 +257,9 @@ export const sendTransaction = async (
 	const wallet = new Wallet(privateKey, await getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 	const chainId = await wallet.getChainId();
-	const formattedAmount = amount.replace(',', '.');
-	const txDefaults = {
-		chainId,
-		// @TODO (Marcos): Add chainId and EIP 1559 and gas limit
-		to,
-		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: 100000,
-		nonce
-	};
 
-	let tx;
-	if (contractAddress) {
-		// const signer = provider.getSigner(wallet.address)
-
-		const erc20 = new Contract(contractAddress, erc20abi, wallet.provider);
-		tx = await erc20.populateTransaction.transfer(to, parseUnits(formattedAmount, decimals));
-		// tx.gasPrice = await wallet.provider.estimateGas(tx);
-		// tx.gasLimit = 41000
-		// erc20.deployTransaction()
-	} else {
-		tx = {
-			value: parseUnits(formattedAmount, decimals)
-		};
-	}
-
-	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
+	const tx = await sendTransactionData(wallet.address, to, amount, gasPrice, network, contractAddress, decimals);
+	const signedTx = await wallet.signTransaction({ ...tx, nonce, chainId });
 	return wallet.provider.sendTransaction(signedTx as string);
 };
 
