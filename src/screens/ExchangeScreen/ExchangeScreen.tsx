@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import { View, Keyboard, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage, useKeyboard } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
