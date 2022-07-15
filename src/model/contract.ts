@@ -1,4 +1,4 @@
-import { Wallet, Contract, providers, BigNumber } from 'ethers';
+import { Wallet, Contract, providers, BigNumber, PopulatedTransaction } from 'ethers';
 import Logger from '@utils/logger';
 import { getProvider } from './wallet';
 import { network } from './network';
@@ -21,6 +21,38 @@ export const getAbi = async (address: string): Promise<ContractAbiResponse> => {
 		`${etherscanAPIURL}api?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
 	);
 	return result.json();
+};
+
+export const onChainApprovalData = async ({
+	address,
+	amount,
+	contractAddress,
+	spender
+}: {
+	address: string;
+	amount?: string;
+	contractAddress: string;
+	spender: string;
+}): Promise<PopulatedTransaction> => {
+	const provider = await getProvider();
+
+	const erc20 = new Contract(
+		contractAddress,
+		[
+			'function approve(address spender, uint256 amount) external returns (bool)',
+			'function balanceOf(address owner) view returns (uint256)'
+		],
+		provider
+	);
+
+	let tokenAmount = amount;
+	if (!amount) {
+		const balance: BigNumber = await erc20.balanceOf(address);
+		// @ts-ignore
+		tokenAmount = balance;
+	}
+	const tx = await erc20.populateTransaction.approve(spender, tokenAmount);
+	return tx;
 };
 
 export const onChainApproval = async ({
@@ -49,23 +81,8 @@ export const onChainApproval = async ({
 		nonce
 	};
 
-	const erc20 = new Contract(
-		contractAddress,
-		[
-			'function approve(address spender, uint256 amount) external returns (bool)',
-			'function balanceOf(address owner) view returns (uint256)'
-		],
-		wallet
-	);
-
-	let tokenAmount = amount;
-	if (!amount) {
-		const balance: BigNumber = await erc20.balanceOf(wallet.address);
-		// @ts-ignore
-		tokenAmount = balance;
-	}
 	Logger.log('onChainApproval', txDefaults);
-	const tx = await erc20.populateTransaction.approve(spender, tokenAmount);
+	const tx = await onChainApprovalData({ address: wallet.address, contractAddress, amount, spender });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	const transaction = await wallet.provider.sendTransaction(signedTx as string);
 	return { transaction };

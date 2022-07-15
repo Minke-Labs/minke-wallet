@@ -2,9 +2,41 @@ import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
-import { Contract, ethers, Wallet } from 'ethers';
+import { Contract, ethers, PopulatedTransaction, Wallet } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
 import { DepositReturn } from './deposit.types';
+
+const mStableDepositData = async ({
+	token,
+	amount,
+	minAmount
+}: {
+	token: string;
+	amount: string; // in WEI
+	minAmount: string; // in WEI, imUSD decimals
+}): Promise<PopulatedTransaction> => {
+	const { mStable } = await network();
+	const provider = await getProvider();
+
+	const abi = [
+		// eslint-disable-next-line max-len
+		'function saveViaMint(address _mAsset, address _save, address _vault, address _bAsset, uint256 _amount, uint256 _minOut, bool _stake) external'
+	];
+	const { mAsset, saveAsset, vault, depositContract } = mStable!;
+
+	const contract = new Contract(depositContract, abi, provider);
+	const tx = await contract.populateTransaction.saveViaMint(
+		mAsset, //    _mAsset = mUSD Polygon
+		saveAsset, // _save   = imUSD Polygon
+		vault, //     _vault  = imUSD Vault Polygon
+		token, //     _bAsset = stable being deposited
+		amount, //    _amount = stable quantity in WEI, stable decimals
+		minAmount, // _minOut = min quantity in WEI, imUSD decimals (18)
+		true //       _stake  = stake after minting
+	);
+
+	return tx;
+};
 
 const mStableDeposit = async ({
 	privateKey,
@@ -128,4 +160,4 @@ const gaslessMStableDeposit = async ({
 	}
 };
 
-export { mStableDeposit, gaslessMStableDeposit };
+export { mStableDeposit, gaslessMStableDeposit, mStableDepositData };

@@ -1,9 +1,11 @@
-import { onChainApproval } from '@models/contract';
+import { onChainApproval, onChainApprovalData } from '@models/contract';
 import { ApprovalState, approvalState, approvalTransaction, zapperApprovalState } from '@models/deposit';
 import { gaslessApproval } from '@models/gaslessTransaction';
 import { estimateGas, getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
+import WalletConnect from '@walletconnect/client';
 import { Wallet } from 'ethers';
+import { toBn } from 'evm-bn';
 import { DepositReturn } from '../deposit/deposit.types';
 
 class ApprovalService {
@@ -34,19 +36,23 @@ class ApprovalService {
 		privateKey,
 		contract,
 		spender,
-		biconomy
+		biconomy,
+		walletConnect,
+		connector
 	}: {
 		gasless: boolean;
 		address: string;
-		privateKey: string;
+		privateKey: string | null;
 		contract: string;
 		spender: string;
 		biconomy: any;
+		walletConnect: boolean;
+		connector: WalletConnect;
 	}): Promise<DepositReturn> {
 		if (gasless) {
 			const hash = await gaslessApproval({
 				address,
-				privateKey,
+				privateKey: privateKey!,
 				biconomy,
 				contract,
 				spender
@@ -57,17 +63,33 @@ class ApprovalService {
 			return hash;
 		}
 		if (this.protocol === 'mstable') {
-			const {
-				result: { FastGasPrice: gasPrice }
-			} = await estimateGas();
-			const { transaction } = await onChainApproval({
-				contractAddress: contract,
-				spender,
-				privateKey,
-				gasPrice: +gasPrice * 1000000000
-			});
+			let hash;
+			if (walletConnect) {
+				const tx = await onChainApprovalData({
+					address,
+					contractAddress: contract,
+					spender
+				});
 
-			const { hash } = transaction || {};
+				const { data, to } = tx;
+				hash = await connector.sendTransaction({
+					from: address,
+					to,
+					value: toBn('0').toHexString(),
+					data: data || toBn('0').toHexString()
+				});
+			} else {
+				const {
+					result: { FastGasPrice: gasPrice }
+				} = await estimateGas();
+				const { transaction } = await onChainApproval({
+					contractAddress: contract,
+					spender,
+					privateKey: privateKey!,
+					gasPrice: +gasPrice * 1000000000
+				});
+				hash = transaction?.hash;
+			}
 
 			if (hash) {
 				const provider = await getProvider();
@@ -80,8 +102,24 @@ class ApprovalService {
 		if (this.protocol === 'aave') {
 			const transaction = await approvalTransaction(address, contract);
 			const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
+
+			if (walletConnect) {
+				const hash = await connector.sendTransaction({
+					from,
+					to,
+					value: toBn('0').toHexString(),
+					data: data || toBn('0').toHexString()
+				});
+				if (hash) {
+					const provider = await getProvider();
+					await provider.waitForTransaction(hash);
+					return hash;
+				}
+				return null;
+			}
+
 			const provider = await getProvider();
-			const wallet = new Wallet(privateKey, provider);
+			const wallet = new Wallet(privateKey!, provider);
 			const chainId = await wallet.getChainId();
 			const nonce = await provider.getTransactionCount(address, 'latest');
 			Logger.log(`Approval API ${JSON.stringify(transaction)}`);

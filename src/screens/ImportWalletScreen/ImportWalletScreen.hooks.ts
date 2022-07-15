@@ -32,10 +32,6 @@ const useImportWalletScreen = () => {
 
 	const dismissWrongNetwork = () => {
 		setDestNetwork(undefined);
-
-		if (connected) {
-			connector.killSession();
-		}
 	};
 
 	const onSeedImportFinished = () => {

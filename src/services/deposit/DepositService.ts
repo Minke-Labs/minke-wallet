@@ -2,8 +2,10 @@ import { ApprovalState } from '@models/deposit';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
 import Logger from '@utils/logger';
-import { gaslessDeposit, deposit } from './aave';
-import { gaslessMStableDeposit, mStableDeposit } from './mStable';
+import WalletConnect from '@walletconnect/client';
+import { toBn } from 'evm-bn';
+import { gaslessDeposit, deposit, depositData } from './aave';
+import { gaslessMStableDeposit, mStableDeposit, mStableDepositData } from './mStable';
 import { DepositParams, DepositReturn } from './deposit.types';
 import ApprovalService from '../approval/ApprovalService';
 
@@ -22,7 +24,9 @@ class DepositService {
 		amount,
 		minAmount,
 		gasPrice,
-		biconomy
+		biconomy,
+		connector,
+		walletConnect = false
 	}: DepositParams): Promise<DepositReturn> {
 		const { isApproved } = await this.approveState(address, gasless, depositableToken.address);
 		Logger.log('Deposit approved:', isApproved);
@@ -34,7 +38,9 @@ class DepositService {
 				address,
 				privateKey,
 				contract: depositableToken.address,
-				biconomy
+				biconomy,
+				walletConnect,
+				connector
 			});
 		}
 
@@ -42,7 +48,7 @@ class DepositService {
 			if (gasless) {
 				const hash = await gaslessDeposit({
 					address,
-					privateKey,
+					privateKey: privateKey!,
 					amount,
 					minAmount,
 					biconomy,
@@ -53,9 +59,27 @@ class DepositService {
 
 				return hash;
 			}
+
+			if (walletConnect) {
+				const { from, to, data } = await depositData({
+					address,
+					amount,
+					gweiValue: gasPrice,
+					interestBearingTokenAddress: depositableToken.interestBearingToken.address,
+					tokenAddress: depositableToken.address
+				});
+
+				const hash = await connector.sendTransaction({
+					from,
+					to,
+					value: toBn('0').toHexString(),
+					data: data || toBn('0').toHexString()
+				});
+				return hash;
+			}
 			const hash = await deposit({
 				address,
-				privateKey,
+				privateKey: privateKey!,
 				amount,
 				gweiValue: gasPrice,
 				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
@@ -68,7 +92,7 @@ class DepositService {
 			if (gasless) {
 				const hash = await gaslessMStableDeposit({
 					address,
-					privateKey,
+					privateKey: privateKey!,
 					amount,
 					minAmount,
 					biconomy,
@@ -78,8 +102,24 @@ class DepositService {
 				return hash;
 			}
 
+			if (walletConnect) {
+				const { to, data } = await mStableDepositData({
+					amount,
+					minAmount,
+					token: depositableToken.address
+				});
+
+				const hash = await connector.sendTransaction({
+					from: address,
+					to,
+					value: toBn('0').toHexString(),
+					data: data || toBn('0').toHexString()
+				});
+				return hash;
+			}
+
 			const hash = await mStableDeposit({
-				privateKey,
+				privateKey: privateKey!,
 				amount,
 				minAmount,
 				gasPrice,
@@ -109,13 +149,17 @@ class DepositService {
 		address,
 		privateKey,
 		contract,
-		biconomy
+		biconomy,
+		connector,
+		walletConnect = false
 	}: {
 		gasless: boolean;
 		address: string;
-		privateKey: string;
+		privateKey: string | null;
 		contract: string;
 		biconomy: any;
+		connector: WalletConnect;
+		walletConnect?: boolean;
 	}): Promise<DepositReturn> {
 		return new ApprovalService(this.protocol).approve({
 			gasless,
@@ -123,7 +167,9 @@ class DepositService {
 			privateKey,
 			contract,
 			biconomy,
-			spender: await this.depositContract()
+			spender: await this.depositContract(),
+			connector,
+			walletConnect
 		});
 	}
 }

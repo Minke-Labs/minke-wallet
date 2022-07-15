@@ -1,7 +1,7 @@
 import React from 'react';
 import { globalWalletState } from '@src/stores/WalletStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
+import { useAmplitude, useBiconomy, useDepositProtocols, useWalletManagement } from '@hooks';
 import Logger from '@utils/logger';
 import DepositService from '@src/services/deposit/DepositService';
 import { getProvider } from '@models/wallet';
@@ -14,6 +14,8 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const { address, privateKey } = useState(globalWalletState()).value;
 	const { depositableToken, selectedProtocol, depositContract } = useDepositProtocols();
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
+
 	const { track } = useAmplitude();
 
 	const onOpenAccount = async () => {
@@ -26,7 +28,9 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 				address,
 				privateKey,
 				contract: depositableToken.address,
-				biconomy
+				biconomy,
+				walletConnect,
+				connector
 			});
 
 			if (hash) {
@@ -53,6 +57,8 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 		onOpenAccount,
 		gaslessEnabled,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		canSendTransactions,
+		needToChangeNetwork
 	};
 };

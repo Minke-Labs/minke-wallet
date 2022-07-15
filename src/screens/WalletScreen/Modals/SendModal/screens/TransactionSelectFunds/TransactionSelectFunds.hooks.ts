@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { imageSource } from '@models/wallet';
 import { useTokens } from '@hooks';
+import { exchangebleTokens } from '@models/token';
 import { UserProps } from '../../SendModal.types';
 
 interface UseTransactionSelectFundsProps {
@@ -21,6 +22,6 @@ export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsPro
 
 	return {
 		image,
-		tokens
+		tokens: tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase()))
 	};
 };
