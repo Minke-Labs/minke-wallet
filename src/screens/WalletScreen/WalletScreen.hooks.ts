@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
-import { useAmplitude, useNavigation, useLanguage, useWalletState } from '@hooks';
+import { useAmplitude, useNavigation, useLanguage, useWalletState, useAuthentication } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import { walletState, emptyWallet } from '@stores/WalletStore';
-import { walletDelete, getAllWallets } from '@models/wallet';
+import { walletDelete, getAllWallets, deletePrivateKey } from '@models/wallet';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
 
@@ -21,6 +22,9 @@ export const useWalletScreen = () => {
 	const [sendModalFinished, setSendModalFinished] = React.useState(false);
 	const [openAvatarModal, setOpenAvatarModal] = React.useState(false);
 	const [sentTransaction, setSentTransaction] = React.useState<ResultProps>();
+	const { showAuthenticationPrompt } = useAuthentication();
+	const connector = useWalletConnect();
+	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () =>
 		Alert.alert(i18n.t('WalletScreen.ActionPanel.are_you_sure'), '', [
@@ -30,17 +34,27 @@ export const useWalletScreen = () => {
 			},
 			{
 				text: 'OK',
-				onPress: async () => {
-					await walletDelete(state.value?.walletId || '');
-					const allWallets = (await getAllWallets()) || {};
-					const wallets = Object.values(allWallets);
+				onPress: () => {
+					showAuthenticationPrompt({
+						onSuccess: async () => {
+							await walletDelete(state.value?.walletId || '');
+							const allWallets = (await getAllWallets()) || {};
+							const wallets = Object.values(allWallets);
+							const { address } = state.value;
 
-					if (wallets.length > 0) {
-						state.set(await walletState(wallets[0]));
-					} else {
-						state.set(emptyWallet);
-						navigation.navigate('WelcomeScreen');
-					}
+							if (connected && accounts[0] === address) {
+								connector.killSession();
+							}
+							await deletePrivateKey(address);
+
+							if (wallets.length > 0) {
+								state.set(await walletState(wallets[0]));
+							} else {
+								state.set(emptyWallet);
+								navigation.navigate('WelcomeScreen');
+							}
+						}
+					});
 				}
 			}
 		]);
@@ -74,8 +88,9 @@ export const useWalletScreen = () => {
 	}, []);
 
 	const onError = () => {
+		setSendModalFinished(false);
 		setError(true);
-		setSendModalOpen(false);
+		setSendModalOpen(true);
 	};
 
 	return {

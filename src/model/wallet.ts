@@ -11,6 +11,7 @@ import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainCons
 import { captureException } from '@sentry/react-native';
 import Logger from '@utils/logger';
 import { ZAPPER_API_KEY } from '@env';
+import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import * as keychain from './keychain';
 import { network as selectedNetwork, Networks, networks } from './network';
@@ -79,6 +80,11 @@ export const savePrivateKey = async (address: string, privateKey: null | string)
 	const privateAccessControlOptions = await keychain.getPrivateAccessControlOptions();
 
 	await saveObject(key, val, privateAccessControlOptions);
+};
+
+export const deletePrivateKey = async (address: string) => {
+	const key = `${address}_${privateKeyKey}`;
+	await keychain.remove(key);
 };
 
 export const saveAllWallets = async (wallets: AllMinkeWallets) => {
@@ -229,7 +235,7 @@ export const sendTransactionData = async (
 		from,
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: 100000
+		gasLimit: toBn('100000')
 	};
 
 	let tx;

@@ -1,10 +1,18 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Text, Token, ActivityIndicator, TokenAmountInput, NetworkWarning, HapticButton } from '@components';
+import {
+	Text,
+	Token,
+	ActivityIndicator,
+	TokenAmountInput,
+	NetworkWarning,
+	HapticButton,
+	WatchModeTag
+} from '@components';
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
-import { useKeyboard, useLanguage, useWalletManagement } from '@hooks';
+import { useKeyboard, useLanguage } from '@hooks';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
@@ -20,16 +28,17 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 		number,
 		gasPrice,
 		sending,
+		amountType,
+		gasless,
+		enoughGas,
+		canSendTransactions,
+		needToChangeNetwork,
 		onChangeAmount,
 		onChangeNumber,
 		onSend,
 		onMaxPress,
-		onTypeChange,
-		amountType,
-		gasless,
-		enoughGas
+		onTypeChange
 	} = useTransactionTransfer({ token, user, onError, ...props });
-	const { canSendTransactions } = useWalletManagement();
 
 	return (
 		<View style={styles.container}>
@@ -93,6 +102,12 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					/>
 				)}
 			</View>
+
+			{!canSendTransactions && (
+				<View style={{ marginTop: 8 }}>
+					<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+				</View>
+			)}
 			<KeyboardSpacer />
 		</View>
 	);

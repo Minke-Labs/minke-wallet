@@ -6,7 +6,7 @@ import { ItemProps } from './Item.types';
 
 const Item: React.FC<ItemProps> = ({ firstLine, secondLine, imageSource, onSelected }) => (
 	<TouchableOpacity style={styles.itemContainer} onPress={onSelected}>
-		{imageSource && <Image source={imageSource} style={styles.avatar} />}
+		<Image source={imageSource!} style={styles.avatar} />
 		<View style={styles.contactTitleContainer}>
 			<Text type="p2" weight="bold">
 				{firstLine}

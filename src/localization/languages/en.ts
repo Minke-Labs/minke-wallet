@@ -666,7 +666,7 @@ export default {
 		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'No tokens here'
+				no_tokens_here: 'No tokens here ({{network}})'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Your points will appear here',
@@ -740,6 +740,10 @@ export default {
 		},
 		InterestBanner: {
 			interest: '% annualized interest'
+		},
+		WatchModeTag: {
+			this_wallet_needs_to_be_reconnected: 'This wallet needs to be reconnected to {{network}}.',
+			import_wallet: 'Import wallet to send transaction'
 		}
 	},
 	Logs: {

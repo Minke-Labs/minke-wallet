@@ -18,7 +18,7 @@ const useWalletState = () => {
 		};
 
 		fetchENSAddress();
-	}, []);
+	}, [address]);
 
 	const accountName = () => {
 		if (ensName) {

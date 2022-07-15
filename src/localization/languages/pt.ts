@@ -658,7 +658,7 @@ export default {
 		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'Nenhum token'
+				no_tokens_here: 'Nenhum token {{network}}'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Seus pontos aparecerão aqui',

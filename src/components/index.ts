@@ -47,6 +47,7 @@ import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndica
 import ProgressButton from './ProgressButton/ProgressButton';
 import TransactionPeriod from './TransactionPeriod/TransactionPeriod';
 import EmptyStates from './EmptyStates';
+import WatchModeTag from './WatchModeTag/WatchModeTag';
 
 export {
 	AaveReusables,
@@ -97,5 +98,6 @@ export {
 	TransactionIcon,
 	ProgressButton,
 	TransactionPeriod,
-	EmptyStates
+	EmptyStates,
+	WatchModeTag
 };
