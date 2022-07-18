@@ -3,10 +3,11 @@ import React from 'react';
 import { View, Share } from 'react-native';
 import { Text, WhiteButton } from '@components';
 import QRCode from 'react-native-qrcode-svg';
-import { useLanguage, useWalletState } from '@hooks';
+import { useLanguage, useNetwork, useWalletState } from '@hooks';
 import styles from './ExternalExchangeModal.styles';
 
 export const ExternalExchangeModal = () => {
+	const { network } = useNetwork();
 	const { state } = useWalletState();
 	const { i18n } = useLanguage();
 	const { address } = state.value;
@@ -16,20 +17,15 @@ export const ExternalExchangeModal = () => {
 	};
 
 	return (
-		<View
-			style={{
-				alignItems: 'center'
-			}}
-		>
+		<View style={{ alignItems: 'center' }}>
 			<Text width="100%" weight="bold" type="hMedium">External exchange</Text>
 			<Text width="100%" type="bMedium" marginBottom={16}>
 				Send from Binance, Coinbase, Kraken or another centralized exchange.
-				*Make sure the network selected is Polygon.
 			</Text>
 			<Text width="100%" type="bMedium" color="alert1" marginBottom={56}>
 				*Make sure the network selected is{' '}
 				<Text type="bMedium" color="alert1" weight="bold">
-					Polygon
+					{network?.name}.
 				</Text>
 			</Text>
 			<View style={styles.container}>

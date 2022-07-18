@@ -9,7 +9,7 @@ import {
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
-		case 'AU':
+		case 'australia':
 			return {
 				locStyles: {
 					backgroundColor: '#FFFFFF',
@@ -17,7 +17,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: PayId
 			};
-		case 'UK':
+		case 'unitedKingdom':
 			return {
 				locStyles: {
 					backgroundColor: '#FFFFFF',
@@ -25,7 +25,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: FasterPayments
 			};
-		case 'CA':
+		case 'canada':
 			return {
 				locStyles: {
 					backgroundColor: '#FFB92A',
@@ -33,7 +33,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: Interac
 			};
-		case 'EU':
+		case 'europeanUnion':
 			return {
 				locStyles: {
 					backgroundColor: '#004899',
@@ -41,7 +41,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: Sepa
 			};
-		case 'BR':
+		case 'brazil':
 			return {
 				locStyles: {
 					backgroundColor: '#FFFFFF',
@@ -49,7 +49,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: Pix
 			};
-		case 'TUR':
+		case 'turkey':
 			return {
 				locStyles: {
 					backgroundColor: '#FCFBF9',

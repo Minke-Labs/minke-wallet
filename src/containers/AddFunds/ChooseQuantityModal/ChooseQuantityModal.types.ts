@@ -8,4 +8,5 @@ export interface ChooseQuantityModalProps {
 	onPurchase: () => void;
 	// onOnramp: () => void;
 	onClickBanxa: () => void;
+	onChangeCountry: () => void;
 }

@@ -60,6 +60,7 @@ const countries = {
 	DO: 'dominicanRepublic',
 	EC: 'ecuador',
 	TL: 'eastTimor',
+	EU: 'europeanUnion',
 	EG: 'egypt',
 	SV: 'elSalvador',
 	GQ: 'equatorialGuinea',

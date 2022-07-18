@@ -1,24 +1,38 @@
 import React from 'react';
-import { View, FlatList, Platform } from 'react-native';
+import { View, FlatList, Platform, TouchableOpacity } from 'react-native';
 import { Snackbar } from 'react-native-paper';
-import { Token, Text, PaperTouchable, ApplePayButton, Flag, OnrampButton, Button } from '@components';
-import { useLanguage } from '@hooks';
-import { TokenType } from '@styles';
+import { Token, Text, PaperTouchable, ApplePayButton, Flag, OnrampButton } from '@components';
+import { useLanguage, useTheme, useCountry } from '@hooks';
+import { TokenType, allCountries, FlagType } from '@styles';
 import { ChooseQuantityModalProps } from './ChooseQuantityModal.types';
 import { useChooseQuantityModal } from './ChooseQuantityModal.hooks';
 
-const Item = () => (
-	<View style={{ flexDirection: 'row' }}>
-		<Flag size={40} />
-		<View style={{ marginLeft: 12, flex: 1 }}>
-			<Text type="bSmall" weight="bold">Argentina</Text>
-			<Text type="bSmall" marginBottom={16}>
-				Select you country of residence to access your local payments option
-			</Text>
-			<Button title="Change country" mode="empty" />
+const Item: React.FC<{ onPress: () => void }> = ({ onPress }) => {
+	const { country } = useCountry();
+	const foundCountry = allCountries.find((c) => c.flag === country);
+	const flag = foundCountry?.flag as FlagType;
+	return (
+		<View style={{ flexDirection: 'row' }}>
+			{ flag && <Flag size={40} name={flag} /> }
+			<View style={{ marginLeft: 12, flex: 1 }}>
+				<Text type="bSmall" weight="bold">{foundCountry?.name}</Text>
+				<Text type="bSmall" marginBottom={16}>
+					Select you country of residence to access your local payments option
+				</Text>
+
+				<TouchableOpacity onPress={onPress}>
+					<Text
+						type="lLarge"
+						weight="semiBold"
+						color="cta1"
+					>
+						Change country
+					</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
-	</View>
-);
+	);
+};
 
 const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	coin,
@@ -26,7 +40,8 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 	setPresetAmount,
 	enableCustomAmount,
 	onPurchase,
-	onClickBanxa
+	onClickBanxa,
+	onChangeCountry
 }) => {
 	const {
 		name,
@@ -36,6 +51,7 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 		setSnackbarVisible
 	} = useChooseQuantityModal({ coin, setPresetAmount });
 	const { i18n } = useLanguage();
+	const { colors } = useTheme();
 	const showApplePay = Platform.OS === 'ios';
 	return (
 		<>
@@ -86,11 +102,10 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 						/>
 					</>
 				)}
-				<OnrampButton marginBottom={16} onPress={onClickBanxa} />
 
-				<View style={{ height: 1, borderWidth: 1, borderColor: 'red', marginBottom: 24 }} />
+				<View style={{ height: 1, borderWidth: 1, borderColor: colors.detail2, marginBottom: 24 }} />
 
-				<Item />
+				<Item onPress={onChangeCountry} />
 
 				{/* <View
 					style={{

@@ -1,11 +1,34 @@
-import React from 'react';
-import { CountrySelector } from '@components';
+import React, { useState } from 'react';
+import { Snackbar } from 'react-native-paper';
+import { CountrySelector, SettingsHeader, Text } from '@components';
 import { BasicLayout } from '@layouts';
+import { useCountry, useLanguage, useNavigation } from '@hooks';
 
-const CountryScreen = () => (
-	<BasicLayout>
-		<CountrySelector />
-	</BasicLayout>
-);
+const CountryScreen = () => {
+	const { i18n } = useLanguage();
+	const navigation = useNavigation();
+	const { country } = useCountry();
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
+
+	const handlePress = () => {
+		if (!country) setSnackbarVisible(true);
+		else navigation.navigate('WalletScreen');
+	};
+
+	return (
+		<>
+			<BasicLayout>
+				<SettingsHeader
+					title={i18n.t('Components.CountrySelector.country')}
+					onPress={handlePress}
+				/>
+				<CountrySelector />
+			</BasicLayout>
+			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
+				<Text color="text11">{i18n.t('Components.CountrySelector.select')}</Text>
+			</Snackbar>
+		</>
+	);
+};
 
 export default CountryScreen;

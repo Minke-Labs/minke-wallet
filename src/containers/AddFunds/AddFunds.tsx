@@ -2,11 +2,12 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View, SafeAreaView } from 'react-native';
-import { ModalHeader, ModalReusables, FullModal } from '@components';
+import { ModalHeader, ModalReusables, FullModal, Text } from '@components';
 import CoinSelectorModal from './CoinSelectorModal/CoinSelectorModal';
 import ChooseQuantityModal from './ChooseQuantityModal/ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
 import LocalCurrencyModal from './LocalCurrencyModal/LocalCurrencyModal';
+import CountryModal from './CountryModal/CountryModal';
 import { useAddFunds } from './AddFunds.hooks';
 import { AddFundsProps } from './AddFunds.types';
 import { SelectorModal } from '../SelectorModal/SelectorModal';
@@ -54,6 +55,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 				onBack={() => setCurrentStep(0)}
 				// onBack={currentStep === 2 && gaslessEnabled ? undefined : handleGoBack}
 				onDismiss={dismissCoin}
+				title={currentStep === 5 ? 'Country' : ''}
 			/>
 			<View style={{ paddingHorizontal: 24 }}>
 				{wyreError && error ? (
@@ -80,6 +82,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								enableCustomAmount={enableCustomAmount}
 								onPurchase={() => onApplePayPurchase(amount || 100)}
 								onClickBanxa={() => setCurrentStep(3)}
+								onChangeCountry={() => setCurrentStep(5)}
 							/>
 						)}
 						{currentStep === 3 && (
@@ -93,7 +96,9 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 						{currentStep === 4 && (
 							<LocalCurrencyModal onOnramp={(val) => onOnrampPurchase(val === 0 ? amount || 100 : val)} />
 						)}
-
+						{currentStep === 5 && (
+							<CountryModal />
+						)}
 						{currentStep === 10 && (
 							<ExternalExchangeModal />
 						)}
