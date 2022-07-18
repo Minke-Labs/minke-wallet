@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../Text/Text';
-import styles from '../Modal/Modal.styles';
+import styles from './ModalHeader.styles';
 import Icon from '../Icon/Icon';
 
 interface ModalHeaderProps {
@@ -11,7 +11,7 @@ interface ModalHeaderProps {
 }
 
 const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = '' }) => (
-	<View style={styles.header}>
+	<View style={styles.container}>
 		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 			{onBack ? (
 				<TouchableOpacity onPress={onBack} activeOpacity={0.8}>

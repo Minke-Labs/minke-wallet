@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { CountrySelector, SettingsHeader, Text } from '@components';
 import { BasicLayout } from '@layouts';
@@ -22,7 +23,9 @@ const CountryScreen = () => {
 					title={i18n.t('Components.CountrySelector.country')}
 					onPress={handlePress}
 				/>
-				<CountrySelector />
+				<View style={{ flex: 1, paddingHorizontal: 16 }}>
+					<CountrySelector />
+				</View>
 			</BasicLayout>
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
 				<Text color="text11">{i18n.t('Components.CountrySelector.select')}</Text>
