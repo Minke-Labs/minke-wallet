@@ -5,6 +5,7 @@ import BiconomyProvider, { BiconomyContext } from './BiconomyContext/BiconomyCon
 import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageContext';
 import NetworkProvider, { NetworkContext } from './NetworkContext/NetworkContext';
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
+import WalletConnectProvider from './WalletConnectContext/WalletConnectContext';
 
 export {
 	ThemeContext,
@@ -23,5 +24,6 @@ export const providers = [
 	BiconomyProvider,
 	NetworkProvider,
 	LanguageProvider,
-	AvatarProvider
+	AvatarProvider,
+	WalletConnectProvider
 ];
