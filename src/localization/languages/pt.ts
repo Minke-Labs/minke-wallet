@@ -564,6 +564,18 @@ export default {
 		invalid_code: 'Código inválido',
 		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
 	},
+	ImportWalletScreen: {
+		import_wallet: 'Importar Carteira',
+		import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada',
+		connect_wallet: 'Conectar Carteira',
+		restore_from_icloud: 'Recuperar do {{cloudPlatform}}',
+		backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
+		disconnect_wallet: 'Disconectar Carteira',
+		please_change_network: 'Por favor, mude para a rede {{network}} para usar essa carteira.',
+		Error: {
+			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
+		}
+	},
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Fazendo backup...',
@@ -732,6 +744,10 @@ export default {
 		},
 		InterestBanner: {
 			interest: '% de juros anuais'
+		},
+		WatchModeTag: {
+			this_wallet_needs_to_be_reconnected: 'Essa carteira precisa ser reconectada à rede {{network}}.',
+			import_wallet: 'Importe essa carteira para fazer transações'
 		}
 	},
 	Logs: {
