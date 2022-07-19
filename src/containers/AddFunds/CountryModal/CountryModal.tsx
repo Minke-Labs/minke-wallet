@@ -4,7 +4,7 @@ import { CountrySelector } from '@components';
 
 const CountryModal = () => (
 	<View>
-		<CountrySelector limitHeight />
+		<CountrySelector limitHeight desc />
 	</View>
 );
 

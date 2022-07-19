@@ -8,6 +8,7 @@ import { ChooseQuantityModalProps } from './ChooseQuantityModal.types';
 import { useChooseQuantityModal } from './ChooseQuantityModal.hooks';
 
 const Item: React.FC<{ onPress: () => void }> = ({ onPress }) => {
+	const { i18n } = useLanguage();
 	const { country } = useCountry();
 	const foundCountry = allCountries.find((c) => c.flag === country);
 	const flag = foundCountry?.flag as FlagType;
@@ -17,7 +18,7 @@ const Item: React.FC<{ onPress: () => void }> = ({ onPress }) => {
 			<View style={{ marginLeft: 12, flex: 1 }}>
 				<Text type="bSmall" weight="bold">{foundCountry?.name}</Text>
 				<Text type="bSmall" marginBottom={16}>
-					Select you country of residence to access your local payments option
+					{i18n.t('Containers.AddFunds.ChooseQuantityModal.select_country')}
 				</Text>
 
 				<TouchableOpacity onPress={onPress}>
@@ -26,7 +27,7 @@ const Item: React.FC<{ onPress: () => void }> = ({ onPress }) => {
 						weight="semiBold"
 						color="cta1"
 					>
-						Change country
+						{i18n.t('Containers.AddFunds.ChooseQuantityModal.change_country')}
 					</Text>
 				</TouchableOpacity>
 			</View>

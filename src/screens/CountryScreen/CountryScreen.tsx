@@ -23,8 +23,8 @@ const CountryScreen = () => {
 					title={i18n.t('Components.CountrySelector.country')}
 					onPress={handlePress}
 				/>
-				<View style={{ flex: 1, paddingHorizontal: 16 }}>
-					<CountrySelector />
+				<View style={{ flex: 1, paddingHorizontal: 16, marginTop: 16 }}>
+					<CountrySelector desc />
 				</View>
 			</BasicLayout>
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>

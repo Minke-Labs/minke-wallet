@@ -583,10 +583,22 @@ export default {
 	},
 	Containers: {
 		AddFunds: {
+			Header: {
+				country: 'País'
+			},
 			LocalCurrencyModal: {
 				choose_amount_in: 'Escolha o valor em {{currency}}'
 			},
+			ExternalExchangeModal: {
+				external: 'Exchange externa',
+				send_from: 'Envie da Binance, Coinbase, Kraken ou outra exchange centralizada.',
+				make_sure: '*Se certifique que a rede selecionada seja a ',
+				or: 'ou',
+				copy: 'Copiar endereço da carteira'
+			},
 			ChooseQuantityModal: {
+				select_country: 'Selecione seu país de residência para acessar sua opção de pagamento local',
+				change_country: 'Mude o país',
 				buy_some: 'Compre alguns {{symbol}}',
 				with: ' com',
 				to_start_using: ' para começar a usar a Minke:',
@@ -597,9 +609,11 @@ export default {
 				copy_address: 'Copiar o endereço',
 				address_copied: 'Endereço copiado!'
 			},
-			CoinSelectorModal: {
+			SelectorModal: {
 				add_funds: 'Adicionar fundos',
-				choose_asset: 'Escolha qual token gostaria de comprar'
+				buy_crypto: 'Comprar cripto',
+				apple_card_transfer: 'Apple Pay, cartão ou transferência',
+				external: 'Exchange externa'
 			},
 			CustomAmountModal: {
 				choose_another_amount: 'Escolha outro valor entre {{min}} e {{max}}',

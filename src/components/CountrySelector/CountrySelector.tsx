@@ -6,7 +6,12 @@ import SearchInput from '../SearchInput/SearchInput';
 import Text from '../Text/Text';
 import FlagItem from '../FlagItem/FlagItem';
 
-const CountrySelector: React.FC<{ limitHeight?: boolean }> = ({ limitHeight }) => {
+interface CountrySelectorProps {
+	limitHeight?: boolean;
+	desc?: boolean;
+}
+
+const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc }) => {
 	const { country, setCountry } = useCountry();
 	const [filtered, setFiltered] = useState<any>(allCountries);
 	const { i18n } = useLanguage();
@@ -21,9 +26,11 @@ const CountrySelector: React.FC<{ limitHeight?: boolean }> = ({ limitHeight }) =
 
 	return (
 		<View style={{ flex: 1 }}>
-			<Text type="bMedium" marginBottom={24}>
-				{i18n.t('Components.CountrySelector.to_offer')}
-			</Text>
+			{desc && (
+				<Text type="bMedium" marginBottom={24}>
+					{i18n.t('Components.CountrySelector.to_offer')}
+				</Text>
+			)}
 			<SearchInput
 				marginBottom={24}
 				placeholder={i18n.t('Components.Inputs.search')}
