@@ -11,7 +11,6 @@ import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainCons
 import { captureException } from '@sentry/react-native';
 import Logger from '@utils/logger';
 import { ZAPPER_API_KEY } from '@env';
-import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import * as keychain from './keychain';
 import { network as selectedNetwork, Networks, networks } from './network';

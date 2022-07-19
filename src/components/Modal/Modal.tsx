@@ -8,7 +8,7 @@ import Animated, {
 	withTiming
 } from 'react-native-reanimated';
 import { useTheme } from '@hooks';
-import { screenHeight, navigationBarHeight } from '@styles';
+import { screenHeight, navigationBarHeight, statusBarHeight } from '@styles';
 import styles from './Modal.styles';
 
 interface ModalProps {
@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 	}));
 
 	const animatedStyles = useAnimatedStyle(() => ({
-		transform: [{ translateY: top.value - navigationBarHeight }]
+		transform: [{ translateY: top.value - navigationBarHeight - (statusBarHeight || 0) }]
 	}));
 
 	useEffect(() => {

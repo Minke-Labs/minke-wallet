@@ -30,7 +30,7 @@ const ValueBox: React.FC<ValueBoxProps> = ({ balance, title }) => {
 			<View style={styles.textContainer}>
 				<Text marginBottom={10}>{i18n.t('WalletAssetsScreen.ValueBox.current_value')}</Text>
 				<Text weight="medium" type="textLarge" marginBottom={10}>
-					{balance ? numberFormat(balance || 0) : <ActivityIndicator />}
+					{balance === undefined ? <ActivityIndicator /> : numberFormat(balance || 0)}
 				</Text>
 			</View>
 		</Background>
