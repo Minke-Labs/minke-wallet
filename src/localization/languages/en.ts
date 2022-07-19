@@ -299,7 +299,7 @@ export default {
 			},
 			Selector: {
 				all_coins: 'All coins',
-				stable_coins: 'Stable coins'
+				stable_coins: 'Stablecoins'
 			},
 			Card: {
 				your_wallet_balance: 'Your wallet balance'

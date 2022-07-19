@@ -1,8 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useTokens } from '@hooks';
 import { AddFunds } from '@containers';
-import { Modal } from '@components';
+import { ActivityIndicator, Modal } from '@components';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import AssetList from './AssetList/AssetList';
@@ -21,7 +22,11 @@ const WalletAssetsScreen = () => {
 			<BasicLayout hideSafeAreaView bg="detail4">
 				<ValueBox {...{ balance }} />
 				<View style={[styles.assetListContainer, { backgroundColor: colors.background1 }]}>
-					{tokens && tokens.length > 0 ? (
+					{tokens === undefined ? (
+						<View style={{ marginTop: 24 }}>
+							<ActivityIndicator />
+						</View>
+					) : tokens.length > 0 ? (
 						<AssetList walletTokens={tokens} />
 					) : (
 						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />

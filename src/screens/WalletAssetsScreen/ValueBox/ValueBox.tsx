@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, useColorScheme, SafeAreaView } from 'react-native';
-import { Text } from '@components';
+import { ActivityIndicator, Text } from '@components';
 import { walletAssetBackImg, walletAssetBackDarkImg } from '@images';
 import { useLanguage } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
@@ -30,7 +30,7 @@ const ValueBox: React.FC<ValueBoxProps> = ({ balance, title }) => {
 			<View style={styles.textContainer}>
 				<Text marginBottom={10}>{i18n.t('WalletAssetsScreen.ValueBox.current_value')}</Text>
 				<Text weight="medium" type="textLarge" marginBottom={10}>
-					{numberFormat(balance || 0)}
+					{balance ? numberFormat(balance || 0) : <ActivityIndicator />}
 				</Text>
 			</View>
 		</Background>
