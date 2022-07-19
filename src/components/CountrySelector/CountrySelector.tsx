@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { FlagType, allCountries } from '@styles';
+import { FlagType, allCountries, deviceHeight } from '@styles';
 import { useLanguage, useCountry } from '@hooks';
 import SearchInput from '../SearchInput/SearchInput';
 import Text from '../Text/Text';
@@ -39,7 +39,7 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc }) 
 			/>
 			<View style={{ flex: 1 }}>
 				<FlatList
-					style={{ ...(limitHeight && { maxHeight: 500 }) }}
+					style={{ maxHeight: limitHeight ? deviceHeight * 0.6 : '100%' }}
 					data={filtered}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
