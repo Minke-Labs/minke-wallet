@@ -593,7 +593,7 @@ export default {
 				copy: 'Copy wallet address'
 			},
 			ChooseQuantityModal: {
-				select_country: 'Select you country of residence to access your local payments option',
+				select_country: 'Select your country of residence to access your local payments option',
 				change_country: 'Change country',
 				buy_some: 'Buy some {{symbol}}',
 				with: ' with',

@@ -45,7 +45,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	return (
 		<SafeAreaView>
 			<ModalHeader
-				onBack={() => handleReturn()}
+				onBack={handleReturn}
 				onDismiss={dismissCoin}
 				title={currentStep === 4 ? i18n.t('Containers.AddFunds.Header.country') : ''}
 			/>
@@ -60,10 +60,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 				) : (
 					<>
 						{currentStep === 0 && (
-							<SelectorModal
-								onBuy={selectCoin}
-								onExchange={() => setCurrentStep(10)}
-							/>
+							<SelectorModal onBuy={selectCoin} onExchange={() => setCurrentStep(10)} />
 						)}
 						{currentStep === 1 && (
 							<ChooseQuantityModal
@@ -87,12 +84,8 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 						{currentStep === 3 && (
 							<LocalCurrencyModal onOnramp={(val) => onOnrampPurchase(val === 0 ? amount || 100 : val)} />
 						)}
-						{currentStep === 4 && (
-							<CountryModal />
-						)}
-						{currentStep === 10 && (
-							<ExternalExchangeModal />
-						)}
+						{currentStep === 4 && <CountryModal onCountrySelected={handleReturn} />}
+						{currentStep === 10 && <ExternalExchangeModal />}
 					</>
 				)}
 			</View>

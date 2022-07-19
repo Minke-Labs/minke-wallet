@@ -14,23 +14,21 @@ const Item: React.FC<{ onPress: () => void }> = ({ onPress }) => {
 	const flag = foundCountry?.flag as FlagType;
 	return (
 		<View style={{ flexDirection: 'row' }}>
-			{ flag && <Flag size={40} name={flag} /> }
-			<View style={{ marginLeft: 12, flex: 1 }}>
-				<Text type="bSmall" weight="bold">{foundCountry?.name}</Text>
-				<Text type="bSmall" marginBottom={16}>
-					{i18n.t('Containers.AddFunds.ChooseQuantityModal.select_country')}
-				</Text>
+			{flag && <Flag size={40} name={flag} />}
+			<TouchableOpacity onPress={onPress} style={{ marginLeft: 12, flex: 1 }}>
+				<View>
+					<Text type="bSmall" weight="bold">
+						{foundCountry?.name}
+					</Text>
+					<Text type="bSmall" marginBottom={16}>
+						{i18n.t('Containers.AddFunds.ChooseQuantityModal.select_country')}
+					</Text>
 
-				<TouchableOpacity onPress={onPress}>
-					<Text
-						type="lLarge"
-						weight="semiBold"
-						color="cta1"
-					>
+					<Text type="lLarge" weight="semiBold" color="cta1">
 						{i18n.t('Containers.AddFunds.ChooseQuantityModal.change_country')}
 					</Text>
-				</TouchableOpacity>
-			</View>
+				</View>
+			</TouchableOpacity>
 		</View>
 	);
 };
@@ -97,10 +95,7 @@ const ChooseQuantityModal: React.FC<ChooseQuantityModalProps> = ({
 						</PaperTouchable>
 
 						<ApplePayButton marginBottom={16} onPress={onPurchase} disabled={amount! <= 0} />
-						<OnrampButton
-							marginBottom={24}
-							onPress={onClickBanxa}
-						/>
+						<OnrampButton marginBottom={24} onPress={onClickBanxa} />
 					</>
 				)}
 

@@ -1,11 +1,4 @@
-import {
-	PayId,
-	Interac,
-	FasterPayments,
-	Sepa,
-	Pix,
-	TurkeyBankTransfer
-} from './images';
+import { PayId, Interac, FasterPayments, Sepa, Pix, TurkeyBankTransfer } from './images';
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
@@ -34,6 +27,33 @@ export const chooseLocation = (loc: string) => {
 				image: Interac
 			};
 		case 'europeanUnion':
+		case 'austria':
+		case 'belgium':
+		case 'bulgaria':
+		case 'croatia':
+		case 'cyprus':
+		case 'czechRepublic':
+		case 'denmark':
+		case 'estonia':
+		case 'finland':
+		case 'france':
+		case 'germany':
+		case 'greece':
+		case 'hungary':
+		case 'ireland':
+		case 'italy':
+		case 'latvia':
+		case 'lithuania':
+		case 'luxembourg':
+		case 'malta':
+		case 'netherlands':
+		case 'poland':
+		case 'portugal':
+		case 'romania':
+		case 'slovakia':
+		case 'slovenia':
+		case 'spain':
+		case 'sweden':
 			return {
 				locStyles: {
 					backgroundColor: '#004899',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Keyboard } from 'react-native';
 import { FlagType, allCountries, deviceHeight } from '@styles';
 import { useLanguage, useCountry } from '@hooks';
 import SearchInput from '../SearchInput/SearchInput';
@@ -9,19 +9,27 @@ import FlagItem from '../FlagItem/FlagItem';
 interface CountrySelectorProps {
 	limitHeight?: boolean;
 	desc?: boolean;
+	onCountrySelected?: () => void;
 }
 
-const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc }) => {
+const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc, onCountrySelected }) => {
 	const { country, setCountry } = useCountry();
 	const [filtered, setFiltered] = useState<any>(allCountries);
 	const { i18n } = useLanguage();
 	const [search, setSearch] = useState('');
 
 	const filteredCountries = (text: string) => {
-		const newCountries = allCountries.filter((item: any) =>
-			item.name.toLowerCase().includes(text.toLowerCase()));
+		const newCountries = allCountries.filter((item: any) => item.name.toLowerCase().includes(text.toLowerCase()));
 		setSearch(text);
 		setFiltered(newCountries);
+	};
+
+	const selectCountry = (item: any) => {
+		setCountry(item.flag);
+		if (onCountrySelected) {
+			Keyboard.dismiss();
+			onCountrySelected();
+		}
 	};
 
 	return (
@@ -39,12 +47,12 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc }) 
 			/>
 			<View style={{ flex: 1 }}>
 				<FlatList
-					style={{ maxHeight: limitHeight ? deviceHeight * 0.6 : '100%' }}
+					style={{ maxHeight: limitHeight ? deviceHeight * 0.25 : '100%' }}
 					data={filtered}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
 						<FlagItem
-							onPress={() => setCountry(item.flag)}
+							onPress={() => selectCountry(item)}
 							flag={item.flag as FlagType}
 							active={item.flag === country}
 							title={item.name}

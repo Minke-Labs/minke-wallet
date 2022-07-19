@@ -97,10 +97,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 		[language]
 	);
 
-	const countryByIso = useCallback(
-		(iso: string) => countries.find((c: Country) => c.iso === iso),
-		[countries]
-	);
+	const countryByIso = useCallback((iso: string) => countries.find((c: Country) => c.iso === iso), [countries]);
 
 	const locationCountry = useMemo(() => countryByIso(country || mock.country), [country]);
 
