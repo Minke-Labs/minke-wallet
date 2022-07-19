@@ -23,7 +23,7 @@ export const ExternalExchangeModal = () => {
 			<Text width="100%" type="bMedium" marginBottom={16}>
 				{i18n.t('Containers.AddFunds.ExternalExchangeModal.send_from')}
 			</Text>
-			<Text width="100%" type="bMedium" color="alert1" marginBottom={56}>
+			<Text width="100%" type="bMedium" color="alert1" marginBottom={24}>
 				{i18n.t('Containers.AddFunds.ExternalExchangeModal.make_sure')}{' '}
 				<Text type="bMedium" color="alert1" weight="bold">
 					{network?.name}.
@@ -32,11 +32,11 @@ export const ExternalExchangeModal = () => {
 			<View style={styles.container}>
 				<QRCode
 					value={address}
-					size={216}
+					size={160}
 					color="#34769D"
 				/>
 			</View>
-			<Text marginBottom={16}>{i18n.t('Containers.AddFunds.ExternalExchangeModal.or')}</Text>
+			<Text>{i18n.t('Containers.AddFunds.ExternalExchangeModal.or')}</Text>
 			<WhiteButton
 				title={i18n.t('Containers.AddFunds.ExternalExchangeModal.copy')}
 				icon="copy"

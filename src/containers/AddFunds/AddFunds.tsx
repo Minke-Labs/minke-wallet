@@ -10,7 +10,7 @@ import CountryModal from './CountryModal/CountryModal';
 import { useAddFunds } from './AddFunds.hooks';
 import { AddFundsProps } from './AddFunds.types';
 import { SelectorModal } from '../SelectorModal/SelectorModal';
-import { ExternalExchangeModal } from '../ExternalExchangeModal/ExternalExchangeModal';
+import { ExternalExchangeModal } from './ExternalExchangeModal/ExternalExchangeModal';
 
 const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	const { i18n } = useLanguage();

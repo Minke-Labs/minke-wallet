@@ -6,8 +6,8 @@ export default StyleSheet.create({
 		backgroundColor: '#FFFFFF',
 		alignItems: 'center',
 		justifyContent: 'center',
-		width: 280,
-		height: 280,
-		marginBottom: 16
+		width: 200,
+		height: 200,
+		marginBottom: 12
 	}
 });
