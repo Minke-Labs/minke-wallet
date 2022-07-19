@@ -36,10 +36,16 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		setBanxaModalVisible
 	} = useAddFunds({ visible, onDismiss });
 
+	const handleReturn = () => {
+		if (currentStep === 4) setCurrentStep(1);
+		else if (currentStep === 0) dismissCoin();
+		else setCurrentStep(0);
+	};
+
 	return (
 		<SafeAreaView>
 			<ModalHeader
-				onBack={() => setCurrentStep(currentStep === 4 ? 1 : 0)}
+				onBack={() => handleReturn()}
 				onDismiss={dismissCoin}
 				title={currentStep === 4 ? i18n.t('Containers.AddFunds.Header.country') : ''}
 			/>
