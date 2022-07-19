@@ -77,7 +77,7 @@ class ApprovalService {
 					to,
 					value: toBn('0').toHexString(),
 					data: data || toBn('0').toHexString(),
-					gasLimit: toBn('100000').toHexString()
+					gasLimit: '100000'
 				});
 			} else {
 				const {

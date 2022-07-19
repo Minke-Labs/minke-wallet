@@ -125,7 +125,7 @@ class WithdrawService {
 					to,
 					value: toBn('0').toHexString(),
 					data: data || toBn('0').toHexString(),
-					gasLimit: toBn('800000').toHexString()
+					gasLimit: '800000'
 				});
 				return hash;
 			}
