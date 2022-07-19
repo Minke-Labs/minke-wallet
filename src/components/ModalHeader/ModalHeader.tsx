@@ -13,19 +13,16 @@ interface ModalHeaderProps {
 const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = '' }) => (
 	<View style={styles.container}>
 		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-			{onBack ? (
+			{!!onBack && (
 				<TouchableOpacity onPress={onBack} activeOpacity={0.8}>
 					<Icon name="arrowBackStroke" size={24} color="text7" />
 				</TouchableOpacity>
-			) : <View />}
-
-			{
-				title ? (
-					<Text type="hSmall" weight="bold" style={{ marginLeft: 8 }}>
-						{title}
-					</Text>
-				) : null
-			}
+			)}
+			{!!title && (
+				<Text type="hSmall" weight="bold" style={{ marginLeft: 8 }}>
+					{title}
+				</Text>
+			)}
 		</View>
 
 		<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
