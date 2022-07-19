@@ -100,6 +100,31 @@ const mStableGaslessWithdraw = async ({
 	return txHash;
 };
 
+const mStableWithdrawData = async ({
+	address,
+	amount,
+	minAmount,
+	token
+}: {
+	address: string;
+	amount: BigNumber;
+	minAmount: string;
+	token: string;
+}) => {
+	const abi = [
+		// eslint-disable-next-line max-len
+		'function withdrawAndUnwrap(uint256 _amount, uint256 _minAmountOut, address _output, address _beneficiary, address _router, bool _isBassetOut, bytes calldata _permitSig) external returns (uint256 outputQuantity)'
+	];
+	const provider = await getProvider();
+	const { mStable } = await network();
+	const { withdrawContract, mAsset } = mStable!;
+
+	const erc20 = new Contract(withdrawContract, abi, provider);
+	const tx = await erc20.populateTransaction.withdrawAndUnwrap(amount, minAmount, token, address, mAsset, true, []);
+
+	return tx;
+};
+
 const mStableWithdraw = async ({
 	address,
 	privateKey,
@@ -141,4 +166,4 @@ const mStableWithdraw = async ({
 	return hash;
 };
 
-export { mStableGaslessWithdraw, mStableWithdraw };
+export { mStableGaslessWithdraw, mStableWithdraw, mStableWithdrawData };

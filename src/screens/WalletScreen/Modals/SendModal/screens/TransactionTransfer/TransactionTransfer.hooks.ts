@@ -203,7 +203,8 @@ export const useTransactionTransfer = ({
 							from,
 							to: addressTo,
 							value: (value || toBn('0')).toHexString(),
-							data: data || toBn('0').toHexString()
+							data: data || toBn('0').toHexString(),
+							gasLimit: toBn('100000').toHexString()
 						});
 
 						addPendingTransaction({

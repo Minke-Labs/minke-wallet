@@ -22,6 +22,6 @@ export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsPro
 
 	return {
 		image,
-		tokens: tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase()))
+		tokens: tokens ? tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase())) : undefined
 	};
 };

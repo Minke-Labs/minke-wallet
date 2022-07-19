@@ -17,8 +17,9 @@ const useWalletManagement = (): UseWalletManagement => {
 	const connector = useWalletConnect();
 	const { connected, accounts, chainId } = connector;
 
-	const needToChangeNetwork = chainId !== network.chainId;
-	const canSendTransactions = !!privateKey || (connected && accounts[0] === address);
+	const connectedToWalletConnect = connected && accounts[0] === address;
+	const needToChangeNetwork = connectedToWalletConnect && chainId !== network.chainId;
+	const canSendTransactions = !!privateKey || connectedToWalletConnect;
 	const rightNetwork = Object.values(networks).find((n) => n.chainId === chainId);
 	const walletConnect = canSendTransactions && !needToChangeNetwork && !privateKey && connected;
 

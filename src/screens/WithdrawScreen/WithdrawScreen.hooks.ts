@@ -10,7 +10,8 @@ import {
 	useNativeToken,
 	useBiconomy,
 	useTransactions,
-	useDepositProtocols
+	useDepositProtocols,
+	useWalletManagement
 } from '@hooks';
 import Logger from '@utils/logger';
 import { globalWalletState } from '@stores/WalletStore';
@@ -36,6 +37,7 @@ const useWithdrawScreen = () => {
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = globalWalletState().value;
 	const { defaultToken, selectedProtocol, apy } = useDepositProtocols(true);
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -60,9 +62,10 @@ const useWithdrawScreen = () => {
 	};
 
 	const enoughForGas =
-		gaslessEnabled || (balance && gweiValue && balance.gte(parseUnits(gweiValue.toString(), 'gwei')));
+		gaslessEnabled || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
 
 	const canWithdraw =
+		canSendTransactions &&
 		token &&
 		token.balance &&
 		+amount > 0 &&
@@ -84,7 +87,9 @@ const useWithdrawScreen = () => {
 					token: token.address,
 					interestBearingToken: token.interestBearingToken.address,
 					gasPrice: gweiValue.toString(),
-					biconomy
+					biconomy,
+					connector,
+					walletConnect
 				});
 
 				if (hash) {
@@ -149,7 +154,9 @@ const useWithdrawScreen = () => {
 		selectedProtocol,
 		apy,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		canSendTransactions,
+		needToChangeNetwork
 	};
 };
 
