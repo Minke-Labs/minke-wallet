@@ -23,6 +23,114 @@ export default {
 		}
 	},
 	LocationContext: {
+		AUT: {
+			name: 'Austria',
+			currencyName: 'Euro'
+		},
+		BEL: {
+			name: 'Belgium',
+			currencyName: 'Euro'
+		},
+		BGR: {
+			name: 'Bulgaria',
+			currencyName: 'Euro'
+		},
+		HRV: {
+			name: 'Croatia',
+			currencyName: 'Euro'
+		},
+		CY: {
+			name: 'Cyprus',
+			currencyName: 'Euro'
+		},
+		CZE: {
+			name: 'Czech Republic',
+			currencyName: 'Euro'
+		},
+		DNK: {
+			name: 'Denmark',
+			currencyName: 'Euro'
+		},
+		EST: {
+			name: 'Estonia',
+			currencyName: 'Euro'
+		},
+		FIN: {
+			name: 'Finland',
+			currencyName: 'Euro'
+		},
+		FRA: {
+			name: 'France',
+			currencyName: 'Euro'
+		},
+		DEU: {
+			name: 'Germany',
+			currencyName: 'Euro'
+		},
+		GRC: {
+			name: 'Greece',
+			currencyName: 'Euro'
+		},
+		HUN: {
+			name: 'Hungary',
+			currencyName: 'Euro'
+		},
+		IRL: {
+			name: 'Ireland',
+			currencyName: 'Euro'
+		},
+		ITA: {
+			name: 'Italy',
+			currencyName: 'Euro'
+		},
+		LVA: {
+			name: 'Latvia',
+			currencyName: 'Euro'
+		},
+		LTU: {
+			name: 'Lithuania',
+			currencyName: 'Euro'
+		},
+		LUX: {
+			name: 'Luxembourg',
+			currencyName: 'Euro'
+		},
+		MLT: {
+			name: 'Malta',
+			currencyName: 'Euro'
+		},
+		NLD: {
+			name: 'Netherlands',
+			currencyName: 'Euro'
+		},
+		POL: {
+			name: 'Poland',
+			currencyName: 'Euro'
+		},
+		PRT: {
+			name: 'Portugal',
+			currencyName: 'Euro'
+		},
+		ROU: {
+			name: 'Romania',
+			currencyName: 'Euro'
+		},
+		SVK: {
+			name: 'Slovakia',
+			currencyName: 'Euro'
+		},
+		SVN: {
+			name: 'Slovenia',
+			currencyName: 'Euro'
+		},
+		ESP: {
+			name: 'Spain',
+			currencyName: 'Euro'
+		},
+		SWE: {
+			name: 'Sweden',
+			currencyName: 'Euro'
+		},
 		US: {
 			name: 'United States',
 			currencyName: 'United States Dollar'

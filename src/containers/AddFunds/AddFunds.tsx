@@ -38,6 +38,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 
 	const handleReturn = () => {
 		if (currentStep === 4) setCurrentStep(1);
+		else if (currentStep === 3) setCurrentStep(1);
 		else if (currentStep === 0) dismissCoin();
 		else setCurrentStep(0);
 	};
