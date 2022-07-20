@@ -85,7 +85,7 @@ export const useTransactionTransfer = ({
 	useEffect(() => {
 		if (chainDefaultToken && gasPrice?.result.ProposeGasPrice) {
 			const requiredGas = parseUnits(gasPrice?.result.ProposeGasPrice, 'gwei');
-			setEnoughGas(gasless || !!(balance && balance.gte(requiredGas)));
+			setEnoughGas(gasless || !!(balance && gasPrice ? balance.gte(requiredGas) : true));
 		}
 	}, [chainDefaultToken, gasPrice, balance]);
 
