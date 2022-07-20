@@ -27,7 +27,7 @@ const EnterReferralCodeScreen = () => {
 							{i18n.t('EnterReferralCodeScreen.enter_referral_code')}
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
 						<Icon name="closeStroke" color="text7" size={24} />
 					</TouchableOpacity>
 				</View>
