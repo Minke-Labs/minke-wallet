@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
-import { Alert } from 'react-native';
-import { useAmplitude, useNavigation, useLanguage, useWalletState } from '@hooks';
+import { useAmplitude, useNavigation, useWalletState } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
-import { walletState, emptyWallet } from '@stores/WalletStore';
-import { walletDelete, getAllWallets } from '@models/wallet';
 import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
 
 export const useWalletScreen = () => {
-	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const { state } = useWalletState();
 	const [error, setError] = React.useState(false);
@@ -21,29 +17,6 @@ export const useWalletScreen = () => {
 	const [sendModalFinished, setSendModalFinished] = React.useState(false);
 	const [openAvatarModal, setOpenAvatarModal] = React.useState(false);
 	const [sentTransaction, setSentTransaction] = React.useState<ResultProps>();
-
-	const onDeleteWallet = () =>
-		Alert.alert(i18n.t('WalletScreen.ActionPanel.are_you_sure'), '', [
-			{
-				text: i18n.t('WalletScreen.ActionPanel.cancel'),
-				style: 'cancel'
-			},
-			{
-				text: 'OK',
-				onPress: async () => {
-					await walletDelete(state.value?.walletId || '');
-					const allWallets = (await getAllWallets()) || {};
-					const wallets = Object.values(allWallets);
-
-					if (wallets.length > 0) {
-						state.set(await walletState(wallets[0]));
-					} else {
-						state.set(emptyWallet);
-						navigation.navigate('WelcomeScreen');
-					}
-				}
-			}
-		]);
 
 	const onExchange = () => navigation.navigate('ExchangeScreen');
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
@@ -89,7 +62,6 @@ export const useWalletScreen = () => {
 		sendModalFinished,
 		setSendModalFinished,
 		sentTransaction,
-		onDeleteWallet,
 		onExchange,
 		onSettingsPress,
 		onSwitchAccounts,

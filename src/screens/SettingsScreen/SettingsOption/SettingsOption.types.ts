@@ -6,4 +6,5 @@ export interface SettingsOptionProps {
 	icon: IconType;
 	onPress: (event: GestureResponderEvent) => void;
 	newTab?: boolean;
+	alert?: boolean;
 }

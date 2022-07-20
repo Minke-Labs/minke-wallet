@@ -240,6 +240,12 @@ export default {
 		title: 'Savings account'
 	},
 	SettingsScreen: {
+		DeleteModal: {
+			delete_wallet: 'Delete wallet',
+			keep_wallet: 'Keep wallet',
+			are_you_sure: 'Are you sure you want to delete this wallet?',
+			recover: 'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
+		},
 		title: 'Settings',
 		creating_wallet: 'Creating Wallet',
 		backup: 'Backup',
@@ -256,7 +262,8 @@ export default {
 		help: 'Help',
 		other: 'Other',
 		savings_account: 'Savings Account',
-		enter_referral_code: 'Enter referral code'
+		enter_referral_code: 'Enter referral code',
+		delete_wallet: 'Delete wallet'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -372,7 +379,6 @@ export default {
 			send: 'Send',
 			exchange: 'Exchange',
 			receive: 'Receive',
-			delete_wallet: 'Delete wallet',
 			are_you_sure: 'Are you sure?',
 			cancel: 'Cancel'
 		},

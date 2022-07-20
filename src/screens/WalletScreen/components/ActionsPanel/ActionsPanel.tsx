@@ -8,7 +8,6 @@ import { ActionsPanelProps } from './ActionsPanel.types';
 
 const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	setSendModalOpen,
-	onDeleteWallet,
 	onExchange,
 	onSwitchAccounts,
 	showReceive
@@ -18,8 +17,7 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	const actions = [
 		{ name: i18n.t('WalletScreen.ActionPanel.send'), icon: 'sendStroke' },
 		{ name: i18n.t('WalletScreen.ActionPanel.exchange'), icon: 'exchangeStroke' },
-		{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receiveStroke' },
-		{ name: i18n.t('WalletScreen.ActionPanel.delete_wallet'), icon: 'closeStroke' }
+		{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receiveStroke' }
 	];
 
 	const chooseFnc = (name: string) => {
@@ -32,8 +30,6 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 				return showReceive;
 			case i18n.t('WalletScreen.ActionPanel.switch_accounts'):
 				return onSwitchAccounts;
-			case i18n.t('WalletScreen.ActionPanel.delete_wallet'):
-				return onDeleteWallet;
 			default:
 				return () => {};
 		}

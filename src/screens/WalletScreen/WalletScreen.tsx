@@ -25,7 +25,6 @@ const WalletScreen = () => {
 		sentTransaction,
 		openAvatarModal,
 		setOpenAvatarModal,
-		onDeleteWallet,
 		onExchange,
 		onSettingsPress,
 		onSwitchAccounts,
@@ -47,7 +46,6 @@ const WalletScreen = () => {
 		<AppTour>
 			<Content
 				{...{
-					onDeleteWallet,
 					onExchange,
 					onSettingsPress,
 					onSwitchAccounts,
