@@ -19,15 +19,19 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.container}>
+
 				<Text type="h3" weight="extraBold" style={{ width: '100%' }}>
 					{i18n.t('WalletScreen.Modals.ReceiveModal.receive')}
 				</Text>
+
 				<Text marginBottom={44} width="100%">
 					{i18n.t('WalletScreen.Modals.ReceiveModal.show_qr')}
 				</Text>
+
 				<View style={styles.QRCodeContainer}>
 					<QRCode value={address} size={216} color="#34769D" />
 				</View>
+
 				<View style={styles.textContainer}>
 					{!!ensName && (
 						<Text weight="extraBold" type="h3">

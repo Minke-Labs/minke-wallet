@@ -5,6 +5,7 @@ import useNavigation from './useNavigation';
 import useFormProgress from './useFormProgress';
 import useNetwork from './useNetwork';
 import useKeyboard from './useKeyboard';
+import useCountry from './useCountry';
 import useLanguage from './useLanguage';
 import useTimeout from './useTimeout';
 import useTransactions from './useTransactions';
@@ -26,6 +27,7 @@ import useWalletState from './useWalletState';
 import useMinkeRewards from './useMinkeRewards';
 
 export {
+	useCountry,
 	useAmplitude,
 	useAvatar,
 	useTheme,
