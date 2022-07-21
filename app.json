@@ -29,7 +29,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "29",
+      "buildNumber": "32",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -41,7 +41,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.minkeapp.minkewallet",
-      "versionCode": 3
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/favicon.png"
