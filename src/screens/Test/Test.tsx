@@ -1,58 +1,44 @@
 import React from 'react';
-import { Button, Text } from '@components';
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
+import * as qs from 'qs';
+import WebView from 'react-native-webview';
+import { useColorScheme, View } from 'react-native';
+import { ON_RAMPER_API_KEY } from '@env';
+import { Button, FullModal } from '@components';
 import { BasicLayout } from '@layouts';
-import { View } from 'react-native';
-import { sendTransactionData } from '@models/wallet';
-
-const ConnectButton = () => {
-	const connector = useWalletConnect();
-	if (!connector.connected) {
-		return <Button title="Connect" onPress={() => connector.connect()} />;
-	}
-	return <Button title="Kill Session" onPress={() => connector.killSession()} />;
-};
 
 const Test = () => {
-	const connector = useWalletConnect();
-	const { connected, accounts, chainId } = connector;
+	const [visible, setVisible] = React.useState(false);
+	const apiKey = ON_RAMPER_API_KEY || process.env.ON_RAMPER_API_KEY;
+	const scheme = useColorScheme();
 
-	const sendTransaction = async () => {
-		const to = '0x5F5e3148532d1682866131A1971Bb74a92D96376';
-		const amount = '0.01';
-		const tx = await sendTransactionData(accounts[0], to, amount, '100', 'matic', '', 18);
-		// Send transaction
-		try {
-			const { from, value, data, gasPrice } = tx;
-			const result = await connector.sendTransaction({
-				from,
-				to,
-				value: value?.toHexString(),
-				data,
-				gasPrice: gasPrice.toHexString()
-			});
-			console.log({ result });
-		} catch (error) {
-			// Error returned when rejected
-			console.error({ error });
-		}
+	const params = {
+		apiKey,
+		supportSell: false,
+		defaultCrypto: 'ETH',
+		defaultFiat: 'USD',
+		defaultAmount: 100,
+		wallets: 'ETH:0xad0637645341a160c4621a5ae22a709feca37234', // wallet in downcase
+		onlyCryptos: 'ETH, MATIC, USDC, USDC_POLYGON', // split by network
+		isAddressEditable: false,
+		isAmountEditable: false,
+		color: '0A2138',
+		fontFamily: 'Inter',
+		darkMode: scheme === 'dark'
 	};
+	const url = `https://widget.onramper.com?${qs.stringify(params)}`;
+	console.log(url);
 
 	return (
-		<BasicLayout>
-			<View style={{ marginTop: 24 }}>
-				{connected ? (
-					<>
-						<Text> {accounts[0]}</Text>
-						<Text> chainId: {chainId}</Text>
-						<Button title="Send transaction" onPress={sendTransaction} marginBottom={48} />
-					</>
-				) : (
-					<Button title="TRY!" onPress={() => null} marginBottom={48} />
-				)}
-				<ConnectButton />
-			</View>
-		</BasicLayout>
+		<>
+			<BasicLayout>
+				<View style={{ marginTop: 40 }}>
+					<Button title={visible.toString()} onPress={() => setVisible(true)} />
+				</View>
+			</BasicLayout>
+			<FullModal visible={visible} onClose={() => setVisible(false)}>
+				{visible && <WebView enableApplePay useWebKit source={{ uri: url }} sharedCookiesEnabled />}
+			</FullModal>
+		</>
 	);
 };
 

@@ -29,4 +29,5 @@ declare module '@env' {
 	export const STORYTELLER_ANDROID_KEY: string;
 	export const INTERCOM_KEY: string;
 	export const ZAPPER_API_KEY: string;
+	export const ON_RAMPER_API_KEY: string;
 }
