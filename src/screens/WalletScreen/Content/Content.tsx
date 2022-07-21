@@ -8,7 +8,6 @@ import { Transactions, Accounts } from '../screens';
 import { ContentProps } from './Content.types';
 
 export const Content: React.FC<ContentProps> = ({
-	onDeleteWallet,
 	onExchange,
 	onSettingsPress,
 	onPointsPress,
@@ -78,7 +77,6 @@ export const Content: React.FC<ContentProps> = ({
 
 			<ActionsPanel
 				{...{
-					onDeleteWallet,
 					onExchange,
 					onSwitchAccounts,
 					showReceive

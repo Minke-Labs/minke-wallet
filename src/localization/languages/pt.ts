@@ -349,6 +349,12 @@ export default {
 		title: 'Conta de investimentos'
 	},
 	SettingsScreen: {
+		DeleteModal: {
+			delete_wallet: 'Deletar carteira',
+			keep_wallet: 'Manter carteira',
+			are_you_sure: 'Você tem certeza que quer deletar esta carteira?',
+			recover: 'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
+		},
 		title: 'Configurações',
 		creating_wallet: 'Criando Carteira',
 		backup: 'Backup',
@@ -365,7 +371,8 @@ export default {
 		help: 'Ajuda',
 		other: 'Outros',
 		savings_account: 'Conta de Investimentos',
-		enter_referral_code: 'Inserir código de indicação'
+		enter_referral_code: 'Inserir código de indicação',
+		delete_wallet: 'Deletar carteira'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -482,7 +489,6 @@ export default {
 			send: 'Enviar',
 			exchange: 'Converter',
 			receive: 'Receber',
-			delete_wallet: 'Apagar carteira',
 			are_you_sure: 'Você tem certeza?',
 			cancel: 'Cancelar'
 		},

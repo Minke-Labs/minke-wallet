@@ -8,6 +8,7 @@ interface ButtonProps {
 	mode?: string;
 	marginBottom?: number;
 	onPress?: () => void;
+	alert?: boolean;
 }
 
 export type { ButtonProps };
