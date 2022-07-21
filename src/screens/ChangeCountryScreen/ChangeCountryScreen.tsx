@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { SettingsHeader, CountrySelector } from '@components';
+import { SettingsHeader, CountrySelector, Text } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
+import { Snackbar } from 'react-native-paper';
+import { useNavigation, useLanguage, useCountry } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 
 const ChangeCountryScreen = () => {
 	const { i18n } = useLanguage();
+	const { country } = useCountry();
+	const navigation = useNavigation();
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
+
 	RNUxcam.tagScreenName('ChangeCountryScreen');
 
-	const navigation = useNavigation();
-	const goBack = () => navigation.goBack();
+	const handlePress = () => {
+		if (!country) setSnackbarVisible(true);
+		else navigation.goBack();
+	};
 
 	return (
-		<BasicLayout>
-			<View style={{ flex: 1 }}>
-				<SettingsHeader title={i18n.t('ChangeCountryScreen.header_title')} onPress={goBack} />
-				<View style={{ paddingHorizontal: 16, flex: 1, marginTop: 16 }}>
-					<CountrySelector />
+		<>
+			<BasicLayout>
+				<View style={{ flex: 1 }}>
+					<SettingsHeader
+						title={i18n.t('ChangeCountryScreen.header_title')}
+						onPress={handlePress}
+					/>
+					<View style={{ paddingHorizontal: 16, flex: 1, marginTop: 16 }}>
+						<CountrySelector desc />
+					</View>
 				</View>
-			</View>
-		</BasicLayout>
+			</BasicLayout>
+			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
+				<Text color="text11">{i18n.t('Components.CountrySelector.select')}</Text>
+			</Snackbar>
+		</>
 	);
 };
 

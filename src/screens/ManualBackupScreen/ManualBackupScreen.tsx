@@ -34,7 +34,7 @@ const ManualBackupScreen = ({ route }: Props) => {
 
 	const onFinish = () => {
 		if (country) navigation.navigate('WalletScreen');
-		else navigation.navigate('CountryScreen');
+		else navigation.navigate('ChangeCountryScreen');
 	};
 
 	return (

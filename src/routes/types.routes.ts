@@ -9,7 +9,6 @@ export type RootStackParamList = {
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };
 	ChangeNetworkScreen: undefined;
 	ChangeCountryScreen: undefined;
-	CountryScreen: undefined;
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
 	ExchangeScreen: undefined;
