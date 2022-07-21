@@ -14,7 +14,7 @@ const SettingsOption: React.FC<SettingsOptionProps> = ({ label, onPress, icon, n
 				<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
 					<Icon name={icon} size={24} color={alert ? 'alert1' : 'text7'} />
 				</View>
-				<Text color={alert ? 'alert1' : undefined} weight="bold" style={{ fontSize: 16, marginLeft: 16 }}>
+				<Text color={alert ? 'alert1' : 'text1'} weight="bold" style={{ fontSize: 16, marginLeft: 16 }}>
 					{label}
 				</Text>
 			</View>
