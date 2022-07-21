@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Icon, ScreenLoadingIndicator, Text } from '@components';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation, useLanguage, useCountry } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
@@ -23,6 +23,7 @@ const ManualBackupScreen = ({ route }: Props) => {
 	const { walletId } = route.params;
 	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
+	const { country } = useCountry();
 	if (seed.promised) return <ScreenLoadingIndicator />;
 	RNUxcam.tagScreenName('ManualBackupScreen');
 
@@ -32,7 +33,8 @@ const ManualBackupScreen = ({ route }: Props) => {
 	};
 
 	const onFinish = () => {
-		navigation.navigate('SettingsScreen');
+		if (country) navigation.navigate('WalletScreen');
+		else navigation.navigate('ChangeCountryScreen');
 	};
 
 	return (
