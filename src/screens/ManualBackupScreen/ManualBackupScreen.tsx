@@ -17,13 +17,13 @@ import styles from './ManualBackupScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const ManualBackupScreen = ({ route }: Props) => {
-	const { country } = useCountry();
 	const { i18n } = useLanguage();
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();
 	const { walletId } = route.params;
 	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
+	const { country } = useCountry();
 	if (seed.promised) return <ScreenLoadingIndicator />;
 	RNUxcam.tagScreenName('ManualBackupScreen');
 
