@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper, WatchModeTag } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
@@ -32,7 +32,9 @@ const WithdrawScreen = () => {
 		selectedProtocol,
 		apy,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		canSendTransactions,
+		needToChangeNetwork
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
@@ -56,6 +58,11 @@ const WithdrawScreen = () => {
 						disabled={!canWithdraw}
 						onPress={onWithdraw}
 					/>
+					{!canSendTransactions && (
+						<View style={{ marginTop: 8 }}>
+							<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+						</View>
+					)}
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>

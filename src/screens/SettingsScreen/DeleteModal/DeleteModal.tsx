@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Alert } from 'react-native';
 import { walletState, emptyWallet } from '@stores/WalletStore';
-import { walletDelete, getAllWallets } from '@models/wallet';
-import { useLanguage, useNavigation, useWalletState } from '@hooks';
+import { walletDelete, getAllWallets, deletePrivateKey } from '@models/wallet';
+import { useAuthentication, useLanguage, useNavigation, useWalletState } from '@hooks';
 import { Text, ModalHeader, Button } from '@components';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
 interface DeleteModalProps {
 	onDismiss: () => void;
@@ -14,6 +15,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 	const { i18n } = useLanguage();
 	const { state, accountName } = useWalletState();
 	const navigation = useNavigation();
+	const { showAuthenticationPrompt } = useAuthentication();
+	const connector = useWalletConnect();
+	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () => {
 		Alert.alert(i18n.t('WalletScreen.ActionPanel.are_you_sure'), '', [
@@ -23,18 +27,29 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 			},
 			{
 				text: 'OK',
-				onPress: async () => {
-					await walletDelete(state.value?.walletId || '');
-					const allWallets = (await getAllWallets()) || {};
-					const wallets = Object.values(allWallets);
+				onPress: () => {
+					showAuthenticationPrompt({
+						onSuccess: async () => {
+							await walletDelete(state.value?.walletId || '');
+							const allWallets = (await getAllWallets()) || {};
+							const wallets = Object.values(allWallets);
 
-					if (wallets.length > 0) {
-						state.set(await walletState(wallets[0]));
-						navigation.navigate('WalletScreen');
-					} else {
-						state.set(emptyWallet);
-						navigation.navigate('WelcomeScreen');
-					}
+							const { address } = state.value;
+
+							if (connected && accounts[0] === address) {
+								connector.killSession();
+							}
+							await deletePrivateKey(address);
+
+							if (wallets.length > 0) {
+								state.set(await walletState(wallets[0]));
+								navigation.navigate('WalletScreen');
+							} else {
+								state.set(emptyWallet);
+								navigation.navigate('WelcomeScreen');
+							}
+						}
+					});
 				}
 			}
 		]);

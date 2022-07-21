@@ -8,6 +8,7 @@ import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
 import { depositStablecoins, interestBearingTokens, fetchDepositProtocol } from '@models/deposit';
 import { fetchInterestBearingTokens } from '@models/depositTokens';
+import { isEmpty } from 'lodash';
 import { Coin } from '@models/wallet';
 import { BalanceApiResponse } from './covalent.types';
 
@@ -42,9 +43,9 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 
 	const coinList = await AsyncStorage.getItem('@listCoins');
 	let coins: Coin[] = JSON.parse(coinList!);
-	coins = coins.filter(({ platforms }) => platforms === {} || !!platforms[coingeckoPlatform]);
+	coins = coins.filter(({ platforms }) => isEmpty(platforms) || !!platforms[coingeckoPlatform]);
 	const curated = coins.map(({ symbol }) => symbol.toLowerCase());
-	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens });
+	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens, chainId: networkId });
 
 	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
 	const allInterestTokens = await fetchInterestBearingTokens(address, protocol.id);

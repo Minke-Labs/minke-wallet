@@ -414,7 +414,7 @@ export default {
 			},
 			Selector: {
 				all_coins: 'All coins',
-				stable_coins: 'Stable coins'
+				stable_coins: 'Stablecoins'
 			},
 			Card: {
 				your_wallet_balance: 'Your wallet balance'
@@ -615,8 +615,8 @@ export default {
 			Modals: {
 				WrongNetwork: {
 					wrong_network: 'Oops! It seems like you are in the wrong network',
-					please_change_network: 'Please change to Polygon to redeem your points.',
-					change_to_polygon: 'Change to Polygon'
+					please_change_network: 'Please change to {{network}} to redeem your points.',
+					change_to_network: 'Change to {{network}}'
 				},
 				NotEnoughPoints: {
 					you_dont_have_points: "Oops! You don't have any points",
@@ -674,6 +674,18 @@ export default {
 			'This code can only be used once. After topping-up 100 USDC you and your friend will get each 100 Minke points.',
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
+	},
+	ImportWalletScreen: {
+		import_wallet: 'Import Wallet',
+		import_with_secret_phrase: 'Import with secret phrase or private key',
+		connect_wallet: 'Connect Wallet',
+		restore_from_icloud: 'Restore from {{cloudPlatform}}',
+		backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+		disconnect_wallet: 'Disconnect Wallet',
+		please_change_network: 'Please change to {{network}} to connect this wallet.',
+		Error: {
+			no_network: "We don't support this network. Please, select another network in the wallet app."
+		}
 	},
 	Hooks: {
 		iCloudBackup: {
@@ -787,7 +799,7 @@ export default {
 		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'No tokens here'
+				no_tokens_here: 'No tokens here ({{network}})'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Your points will appear here',
@@ -861,6 +873,10 @@ export default {
 		},
 		InterestBanner: {
 			interest: '% annualized interest'
+		},
+		WatchModeTag: {
+			this_wallet_needs_to_be_reconnected: 'This wallet needs to be reconnected to {{network}}.',
+			import_wallet: 'Import wallet to send transaction'
 		}
 	},
 	Logs: {

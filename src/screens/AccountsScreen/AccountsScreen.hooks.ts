@@ -5,15 +5,13 @@ import { useWalletState, useNavigation } from '@hooks';
 
 export const useAccountsScreen = () => {
 	const navigation = useNavigation();
-
 	const goBack = () => navigation.goBack();
-	const onImportFinished = () => navigation.navigate('WalletCreatedScreen');
+	const onImportWallet = () => navigation.navigate('ImportWalletScreen');
 
 	const { state } = useWalletState();
 	const { address } = state.value;
 
 	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
-	const [isModalVisible, setModalVisible] = React.useState(false);
 
 	useEffect(() => {
 		const fetchWallets = async () => {
@@ -30,10 +28,8 @@ export const useAccountsScreen = () => {
 	return {
 		address,
 		wallets,
+		onImportWallet,
 		goBack,
-		onImportFinished,
-		onSelectWallet,
-		isModalVisible,
-		setModalVisible
+		onSelectWallet
 	};
 };

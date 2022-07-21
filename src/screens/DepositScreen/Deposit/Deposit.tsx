@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/token';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper } from '@components';
+import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper, WatchModeTag } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
@@ -32,7 +32,9 @@ const Deposit = () => {
 		apy,
 		selectedProtocol,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		canSendTransactions,
+		needToChangeNetwork
 	} = useDeposit();
 
 	useEffect(() => {
@@ -59,6 +61,11 @@ const Deposit = () => {
 						disabled={!canDeposit}
 						onPress={onDeposit}
 					/>
+					{!canSendTransactions && (
+						<View style={{ marginTop: 8 }}>
+							<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+						</View>
+					)}
 				</View>
 				<KeyboardSpacer />
 			</BasicLayout>

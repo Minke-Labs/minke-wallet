@@ -35,7 +35,6 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 	const {
 		address,
-		privateKey,
 		network: { chainId },
 		transactions = []
 	} = state.value;
@@ -43,16 +42,12 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const fetchTransactions = async () => {
 		setLoading(true);
 		const { data = [] } = await getZapperTransactions(address!);
-		const { balance } = await fetchTokensAndBalances(privateKey, address);
+		const { balance } = await fetchTokensAndBalances(address);
 		state.merge({ transactions: data, balance });
 		setLoading(false);
 		setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
 		setLastTransationsFetch(new Date().getTime());
 	};
-
-	useEffect(() => {
-		fetchTransactions();
-	}, []);
 
 	useFocusEffect(() => {
 		if (
@@ -65,6 +60,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	});
 
 	useEffect(() => {
+		fetchTransactions();
 		setPendingTransactions([]);
 	}, [chainId, address]);
 

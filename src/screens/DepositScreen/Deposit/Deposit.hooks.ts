@@ -12,7 +12,8 @@ import {
 	useBiconomy,
 	useNativeToken,
 	useTransactions,
-	useDepositProtocols
+	useDepositProtocols,
+	useWalletManagement
 } from '@hooks';
 import Logger from '@utils/logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,6 +39,7 @@ export const useDeposit = () => {
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const { addPendingTransaction } = useTransactions();
 	const { setSelectedUSDCoin, apy, depositableToken, selectedProtocol } = useDepositProtocols();
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/,/g, '.');
@@ -47,7 +49,7 @@ export const useDeposit = () => {
 	};
 
 	const enoughForGas =
-		gaslessEnabled || (balance && gweiValue && balance.gte(parseUnits(gweiValue.toString(), 'gwei')));
+		gaslessEnabled || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
 	const canDeposit =
 		token &&
 		token.balance &&
@@ -69,7 +71,9 @@ export const useDeposit = () => {
 					gasPrice: gweiValue.toString(),
 					depositableToken,
 					gasless: gaslessEnabled,
-					biconomy
+					biconomy,
+					walletConnect,
+					connector
 				});
 
 				if (hash) {
@@ -153,6 +157,8 @@ export const useDeposit = () => {
 		apy,
 		selectedProtocol,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		canSendTransactions,
+		needToChangeNetwork
 	};
 };

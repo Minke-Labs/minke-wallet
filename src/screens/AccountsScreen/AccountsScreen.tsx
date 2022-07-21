@@ -1,17 +1,15 @@
 import React from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Text, Icon, Modal } from '@components';
+import { Text, Icon } from '@components';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import styles from './AccountsScreen.styles';
 import ListItem from './ListItem/ListItem';
-import ImportWalletModal from '../WelcomeScreen/ImportWalletModal/ImportWalletModal';
 import { useAccountsScreen } from './AccountsScreen.hooks';
 
 const AccountsScreen = () => {
-	const { address, wallets, goBack, onImportFinished, onSelectWallet, isModalVisible, setModalVisible } =
-	useAccountsScreen();
+	const { address, wallets, goBack, onSelectWallet, onImportWallet } = useAccountsScreen();
 	const { i18n } = useLanguage();
 	RNUxcam.tagScreenName('AccountsScreen');
 
@@ -21,7 +19,7 @@ const AccountsScreen = () => {
 				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} onPress={() => setModalVisible(true)}>
+				<TouchableOpacity activeOpacity={0.6} onPress={onImportWallet}>
 					<Text weight="medium" color="text7" type="a">
 						{i18n.t('AccountsScreen.import_or_restore')}
 					</Text>
@@ -48,13 +46,6 @@ const AccountsScreen = () => {
 					/>
 				</SafeAreaView>
 			</View>
-			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<ImportWalletModal
-					visible={isModalVisible}
-					onImportFinished={onImportFinished}
-					onDismiss={() => setModalVisible(false)}
-				/>
-			</Modal>
 		</BasicLayout>
 	);
 };

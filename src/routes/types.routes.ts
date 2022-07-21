@@ -32,5 +32,6 @@ export type RootStackParamList = {
 	RedeemConfirmScreen: undefined;
 	TransferWaitScreen: { transferId: string };
 	DevSettingsScreen: undefined;
+	ImportWalletScreen: undefined;
 	Test: undefined;
 };

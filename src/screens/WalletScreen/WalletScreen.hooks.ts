@@ -47,8 +47,9 @@ export const useWalletScreen = () => {
 	}, []);
 
 	const onError = () => {
+		setSendModalFinished(false);
 		setError(true);
-		setSendModalOpen(false);
+		setSendModalOpen(true);
 	};
 
 	return {

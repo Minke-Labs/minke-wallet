@@ -11,7 +11,8 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	const wallet = useState(globalWalletState());
 	const {
 		network: { jsonRpcProvider, biconomyAPIKey },
-		address
+		address,
+		privateKey
 	} = wallet.value;
 
 	const [biconomyClient, setBiconomyClient] = React.useState<any | null>();
@@ -19,7 +20,7 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	const [gaslessEnabled, setGaslessEnabled] = React.useState(true);
 
 	const canSubmitGaslessTransaction = async () => {
-		if (biconomyAPIKey && address) {
+		if (biconomyAPIKey && address && privateKey) {
 			try {
 				const { allowed } = await (
 					await fetch(`https://api.biconomy.io/api/v1/dapp/checkLimits?userAddress=${address}`, {
@@ -72,14 +73,14 @@ const BiconomyProvider: React.FC = ({ children }) => {
 
 	useEffect(() => {
 		canSubmitGaslessTransaction();
-	}, [status, address]);
+	}, [status, address, privateKey]);
 
 	const obj = useMemo(
 		() => ({
 			biconomy: biconomyClient,
 			gaslessEnabled: !!biconomyClient && biconomyClient.status === biconomyClient.READY && gaslessEnabled
 		}),
-		[biconomyClient, status, biconomyAPIKey, address, gaslessEnabled]
+		[biconomyClient, status, biconomyAPIKey, address, gaslessEnabled, privateKey]
 	);
 
 	return <BiconomyContext.Provider value={obj}>{children}</BiconomyContext.Provider>;

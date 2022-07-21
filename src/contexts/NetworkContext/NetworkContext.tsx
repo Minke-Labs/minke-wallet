@@ -11,13 +11,13 @@ export const NetworkContext = createContext<any>(null);
 const NetworkProvider: React.FC = ({ children }) => {
 	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
 	const { state } = useWalletState();
-	const { privateKey, network, address } = state.value;
+	const { network, address } = state.value;
 
 	const selectNetwork = async (ntw: Network) => {
 		try {
 			await AsyncStorage.setItem(networkSettingsKey, ntw.id);
 			setConnectedNetwork(ntw);
-			const { balance } = await fetchTokensAndBalances(privateKey, address);
+			const { balance } = await fetchTokensAndBalances(address);
 			state.merge({ network: ntw, balance, transactions: undefined });
 		} catch (e) {
 			Logger.error('Error saving settings');

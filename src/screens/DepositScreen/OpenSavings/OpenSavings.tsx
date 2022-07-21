@@ -1,7 +1,14 @@
-/* eslint-disable max-len */
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View, SafeAreaView } from 'react-native';
-import { Icon, Text, HapticButton, ActivityIndicator, AaveReusables, MStableReusables } from '@components';
+import {
+	Icon,
+	Text,
+	HapticButton,
+	ActivityIndicator,
+	AaveReusables,
+	MStableReusables,
+	WatchModeTag
+} from '@components';
 import { useAmplitude, useNavigation, useLanguage, useDepositProtocols } from '@hooks';
 import { BasicLayout } from '@layouts';
 import styles from './OpenSavings.styles';
@@ -22,7 +29,9 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { selectedProtocol } = useDepositProtocols();
-	const { loading, onOpenAccount, gaslessEnabled } = useOpenDepositAccount({ onApprove });
+	const { loading, onOpenAccount, gaslessEnabled, canSendTransactions, needToChangeNetwork } = useOpenDepositAccount({
+		onApprove
+	});
 
 	useEffect(() => {
 		track('OpenSavings Screen Opened', {
@@ -53,11 +62,16 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 					</SafeAreaView>
 
 					<View style={{ bottom: 34 }}>
+						{!canSendTransactions && (
+							<View style={{ marginBottom: 8 }}>
+								<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+							</View>
+						)}
 						<HapticButton
 							title={i18n.t('DepositScreen.OpenSavings.open_account')}
 							marginBottom={16}
 							onPress={onOpenAccount}
-							disabled={loading}
+							disabled={loading || !canSendTransactions}
 						/>
 						{!gaslessEnabled && (
 							<Text type="span" color="text2" style={{ textAlign: 'center' }}>

@@ -91,11 +91,14 @@ const TransactionWaitModal = ({
 				<Text type="a" weight="medium" color="text3">
 					{i18n.t('Components.ModalReusables.TransactionWaitModal.transaction')}:
 				</Text>
-				<Button mode="text" onPress={openTransaction}>
-					<Text type="a" weight="medium" color="text3">
-						{transactionHash && smallWalletAddress(transactionHash)} <ActivityIndicator />
-					</Text>
-				</Button>
+				{!!transactionHash && (
+					<Button mode="text" onPress={openTransaction}>
+						<Text type="a" weight="medium" color="text3">
+							{smallWalletAddress(transactionHash)}
+						</Text>
+					</Button>
+				)}
+				<ActivityIndicator style={{ marginLeft: 8 }} />
 			</View>
 		</SafeAreaView>
 	);

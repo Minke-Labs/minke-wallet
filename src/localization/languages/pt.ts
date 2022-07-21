@@ -617,8 +617,8 @@ export default {
 			Modals: {
 				WrongNetwork: {
 					wrong_network: 'Oops! Parece que você está na rede errada',
-					please_change_network: 'Por favor, mude para a rede Polygon para resgatar os seus pontos.',
-					change_to_polygon: 'Mudar para Polygon'
+					please_change_network: 'Por favor, mude para a rede {{network}} para resgatar os seus pontos.',
+					change_to_network: 'Mudar para {{network}}'
 				},
 				NotEnoughPoints: {
 					you_dont_have_points: 'Oops! Você não tem pontos',
@@ -677,6 +677,18 @@ export default {
 			'Esse código pode ser usado somente uma vez. Depois de adicionar 100 USDC você e o seu amigo vão receber 100 pontos Minke cada.',
 		invalid_code: 'Código inválido',
 		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
+	},
+	ImportWalletScreen: {
+		import_wallet: 'Importar Carteira',
+		import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada',
+		connect_wallet: 'Conectar Carteira',
+		restore_from_icloud: 'Recuperar do {{cloudPlatform}}',
+		backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
+		disconnect_wallet: 'Disconectar Carteira',
+		please_change_network: 'Por favor, mude para a rede {{network}} para usar essa carteira.',
+		Error: {
+			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
+		}
 	},
 	Hooks: {
 		iCloudBackup: {
@@ -791,7 +803,7 @@ export default {
 		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'Nenhum token'
+				no_tokens_here: 'Nenhum token {{network}}'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Seus pontos aparecerão aqui',
@@ -865,6 +877,10 @@ export default {
 		},
 		InterestBanner: {
 			interest: '% de juros anuais'
+		},
+		WatchModeTag: {
+			this_wallet_needs_to_be_reconnected: 'Essa carteira precisa ser reconectada à rede {{network}}.',
+			import_wallet: 'Importe essa carteira para fazer transações'
 		}
 	},
 	Logs: {

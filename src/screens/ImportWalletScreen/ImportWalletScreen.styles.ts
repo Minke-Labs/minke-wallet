@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
+		marginTop: 32,
+		padding: 24
+	},
+	option: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
@@ -9,7 +13,6 @@ export default StyleSheet.create({
 	},
 	leftContainer: {
 		flexDirection: 'row',
-		justifyContent: 'space-between',
 		alignItems: 'center'
 	},
 	imageBg: {
@@ -18,5 +21,14 @@ export default StyleSheet.create({
 		height: 40,
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+	row: {
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
+	walletImage: {
+		width: 24,
+		height: 24,
+		marginRight: 8
 	}
 });

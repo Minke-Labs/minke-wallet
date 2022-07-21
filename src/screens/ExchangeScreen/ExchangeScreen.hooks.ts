@@ -186,7 +186,7 @@ export const useExchangeScreen = () => {
 		let walletToken = token;
 		if (!token.balance) {
 			walletToken =
-				walletTokens.find(({ symbol }) => symbol.toLowerCase() === token.symbol.toLowerCase()) || token;
+				(walletTokens || []).find(({ symbol }) => symbol.toLowerCase() === token.symbol.toLowerCase()) || token;
 		}
 		if (searchSource === 'from') {
 			updateFromToken(walletToken);
@@ -254,7 +254,8 @@ export const useExchangeScreen = () => {
 		setGasless(gaslessEnabled && (quote ? quote.gasless : true));
 	}, [gaslessEnabled, quote]);
 
-	const enoughForGas = gasless || (balance && gweiValue && balance.gte(parseUnits(gweiValue.toString(), 'gwei')));
+	const enoughForGas =
+		gasless || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
 
 	const canSwap = () =>
 		quote &&

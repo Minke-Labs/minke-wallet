@@ -1,4 +1,4 @@
-import { depositTransaction } from '@models/deposit';
+import { DepositTransaction, depositTransaction } from '@models/deposit';
 import { aaveDepositContract } from '@models/gaslessTransaction';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
@@ -74,6 +74,30 @@ export const gaslessDeposit = async ({
 	return hash;
 };
 
+export const depositData = async ({
+	address,
+	amount,
+	tokenAddress,
+	interestBearingTokenAddress,
+	gweiValue
+}: {
+	address: string;
+	amount: string;
+	tokenAddress: string;
+	interestBearingTokenAddress: string;
+	gweiValue: string;
+}): Promise<DepositTransaction> => {
+	const transaction = await depositTransaction({
+		address,
+		amount,
+		token: tokenAddress,
+		interestBearingToken: interestBearingTokenAddress,
+		gweiValue: Number(gweiValue)
+	});
+
+	return transaction;
+};
+
 export const deposit = async ({
 	address,
 	privateKey,
@@ -89,12 +113,12 @@ export const deposit = async ({
 	interestBearingTokenAddress: string;
 	gweiValue: string;
 }): Promise<DepositReturn> => {
-	const transaction = await depositTransaction({
+	const transaction = await depositData({
 		address,
 		amount,
-		token: tokenAddress,
-		interestBearingToken: interestBearingTokenAddress,
-		gweiValue: Number(gweiValue)
+		tokenAddress,
+		interestBearingTokenAddress,
+		gweiValue
 	});
 	Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
 

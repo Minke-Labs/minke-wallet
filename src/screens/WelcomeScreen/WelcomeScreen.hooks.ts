@@ -6,15 +6,11 @@ import { globalWalletState, walletState } from '@stores/WalletStore';
 
 export const useWelcomeScreen = () => {
 	const navigation = useNavigation();
-	const [isModalVisible, setModalVisible] = React.useState(false);
 	const [loading, setLoading] = React.useState(false);
 	const state = useState(globalWalletState());
 	const { track } = useAmplitude();
 
-	const onImportFinished = () => {
-		setModalVisible(false);
-		navigation.navigate('WalletCreatedScreen');
-	};
+	const onImportWallet = () => navigation.navigate('ImportWalletScreen');
 
 	const onCreateWallet = useCallback(async () => {
 		setLoading(true);
@@ -30,10 +26,8 @@ export const useWelcomeScreen = () => {
 	}, []);
 
 	return {
-		isModalVisible,
-		setModalVisible,
-		onImportFinished,
 		onCreateWallet,
+		onImportWallet,
 		loading
 	};
 };

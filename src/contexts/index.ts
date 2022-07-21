@@ -6,6 +6,7 @@ import CountryProvider, { CountryContext } from './CountryContext/CountryContext
 import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageContext';
 import NetworkProvider, { NetworkContext } from './NetworkContext/NetworkContext';
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
+import WalletConnectProvider from './WalletConnectContext/WalletConnectContext';
 
 export {
 	ThemeContext,
@@ -26,5 +27,6 @@ export const providers = [
 	CountryProvider,
 	NetworkProvider,
 	LanguageProvider,
-	AvatarProvider
+	AvatarProvider,
+	WalletConnectProvider
 ];

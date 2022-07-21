@@ -28,6 +28,8 @@
     "@tradle/react-native-http": "^2.0.1",
     "@types/d3-scale": "^4.0.2",
     "@types/d3-shape": "^3.0.2",
+    "@walletconnect/client": "^1.7.8",
+    "@walletconnect/react-native-dapp": "^1.7.8",
     "assert": "^1.5.0",
     "axios": "^0.26.1",
     "babel-plugin-inline-dotenv": "^1.6.0",
@@ -146,6 +148,9 @@
     "jetifier": "^2.0.0",
     "mocha": "^9.2.2",
     "typescript": "~4.3.5"
+  },
+  "resolutions": {
+    "react-native-svg": "12.1.1"
   },
   "private": true,
   "name": "crypto-bank",
