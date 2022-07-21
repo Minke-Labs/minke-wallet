@@ -4,7 +4,7 @@ import { walletState, emptyWallet } from '@stores/WalletStore';
 import { walletDelete, getAllWallets } from '@models/wallet';
 import { useLanguage, useNavigation, useWalletState } from '@hooks';
 import { Text, ModalHeader, Button } from '@components';
-import { os } from '@styles';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 
 interface DeleteModalProps {
 	onDismiss: () => void;
@@ -30,6 +30,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 
 					if (wallets.length > 0) {
 						state.set(await walletState(wallets[0]));
+						navigation.navigate('WalletScreen');
 					} else {
 						state.set(emptyWallet);
 						navigation.navigate('WelcomeScreen');
@@ -43,23 +44,13 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 		<View>
 			<ModalHeader {...{ onDismiss }} />
 			<View style={{ paddingHorizontal: 16 }}>
-				<Text
-					type="hMedium"
-					weight="bold"
-					marginBottom={24}
-				>
+				<Text type="hMedium" weight="bold" marginBottom={24}>
 					{i18n.t('SettingsScreen.DeleteModal.delete_wallet')}
 				</Text>
-				<Text
-					type="tSmall"
-					weight="bold"
-					marginBottom={8}
-				>
+				<Text type="tSmall" weight="bold" marginBottom={8}>
 					{i18n.t('SettingsScreen.DeleteModal.are_you_sure')} ({accountName})
 				</Text>
-				<Text marginBottom={32}>
-					{i18n.t('SettingsScreen.DeleteModal.recover', { os: os === 'ios' ? 'iCloud' : 'Google Drive' })}
-				</Text>
+				<Text marginBottom={32}>{i18n.t('SettingsScreen.DeleteModal.recover', { os: cloudPlatform })}</Text>
 
 				<View style={{ flexDirection: 'row', marginBottom: 62 }}>
 					<View style={{ flex: 1 }}>
@@ -72,10 +63,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 					</View>
 					<View style={{ width: 24 }} />
 					<View style={{ flex: 1 }}>
-						<Button
-							title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')}
-							onPress={onDismiss}
-						/>
+						<Button title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')} onPress={onDismiss} />
 					</View>
 				</View>
 			</View>
