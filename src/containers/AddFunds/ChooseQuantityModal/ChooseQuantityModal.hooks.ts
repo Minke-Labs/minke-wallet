@@ -1,7 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
-import * as Clipboard from 'expo-clipboard';
-import { globalWalletState } from '@stores/WalletStore';
+import { useEffect } from 'react';
 import { ICoin } from '@helpers/coins';
 
 const DEFAULT_VALUE = 100;
@@ -17,13 +14,6 @@ export const useChooseQuantityModal = ({ coin, setPresetAmount }: UseChooseQuant
 	if (symbol === 'MUSDC') {
 		symbol = 'USDC';
 	}
-	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
-	const { address } = useState(globalWalletState()).value;
-
-	const onCopyToClipboard = () => {
-		Clipboard.setString(address || '');
-		setSnackbarVisible(true);
-	};
 
 	useEffect(() => {
 		setPresetAmount(DEFAULT_VALUE);
@@ -31,9 +21,6 @@ export const useChooseQuantityModal = ({ coin, setPresetAmount }: UseChooseQuant
 
 	return {
 		name,
-		symbol,
-		onCopyToClipboard,
-		snackbarVisible,
-		setSnackbarVisible
+		symbol
 	};
 };

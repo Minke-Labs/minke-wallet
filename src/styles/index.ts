@@ -1,7 +1,8 @@
 import { icon, IconType } from './icons';
 import { token, TokenType } from './tokens';
 import { colors, ColorType } from './colors';
-import { flag, FlagType } from './flags';
+import { flag, FlagType, allCountries } from './flags';
+import { countries, CountriesType } from './countries';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
 import {
 	screenHeight,
@@ -18,7 +19,9 @@ export {
 	token,
 	colors,
 	flag,
+	allCountries,
 	fontType,
+	countries,
 	fontWeight,
 	screenHeight,
 	screenWidth,
@@ -35,5 +38,6 @@ export type {
 	ColorType,
 	FlagType,
 	FontTypeType,
+	CountriesType,
 	FontWeightType
 };

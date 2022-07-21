@@ -5,7 +5,6 @@ import { BigNumber } from 'ethers';
 import { GestureResponderEvent } from 'react-native';
 
 export interface ContentProps {
-	onDeleteWallet: () => void;
 	onExchange: () => void;
 	onSettingsPress: () => void;
 	onPointsPress: () => void;

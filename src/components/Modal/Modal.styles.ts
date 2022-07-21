@@ -21,14 +21,5 @@ export default StyleSheet.create({
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
 		overflow: 'hidden'
-	},
-
-	// ... HEADER ...
-	header: {
-		height: 64,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		paddingHorizontal: 32
 	}
 });

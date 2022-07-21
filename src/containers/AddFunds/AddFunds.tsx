@@ -2,14 +2,18 @@ import React from 'react';
 import { WebView } from 'react-native-webview';
 import { View, SafeAreaView } from 'react-native';
 import { ModalHeader, ModalReusables, FullModal } from '@components';
-import CoinSelectorModal from './CoinSelectorModal/CoinSelectorModal';
+import { useLanguage } from '@hooks';
 import ChooseQuantityModal from './ChooseQuantityModal/ChooseQuantityModal';
 import CustomAmountModal from './CustomAmountModal/CustomAmountModal';
 import LocalCurrencyModal from './LocalCurrencyModal/LocalCurrencyModal';
+import CountryModal from './CountryModal/CountryModal';
 import { useAddFunds } from './AddFunds.hooks';
 import { AddFundsProps } from './AddFunds.types';
+import { SelectorModal } from '../SelectorModal/SelectorModal';
+import { ExternalExchangeModal } from './ExternalExchangeModal/ExternalExchangeModal';
 
 const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
+	const { i18n } = useLanguage();
 	const {
 		coin,
 		amount,
@@ -22,7 +26,6 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		orderLink,
 		selectCoin,
 		dismissError,
-		goBack,
 		dismissCoin,
 		setPresetAmount,
 		onApplePayPurchase,
@@ -30,26 +33,22 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 		enableCustomAmount,
 		setCustomAmount,
 		banxaModalVisible,
-		setBanxaModalVisible,
-		gaslessEnabled
+		setBanxaModalVisible
 	} = useAddFunds({ visible, onDismiss });
 
-	const handleGoBack = () => {
-		if (currentStep === 0) {
-			dismissCoin();
-		}
-		if (currentStep === 3) {
-			setCurrentStep(1);
-			return;
-		}
-		goBack();
+	const handleReturn = () => {
+		if (currentStep === 4) setCurrentStep(1);
+		else if (currentStep === 3) setCurrentStep(1);
+		else if (currentStep === 0) dismissCoin();
+		else setCurrentStep(0);
 	};
 
 	return (
 		<SafeAreaView>
 			<ModalHeader
-				onBack={currentStep === 1 && gaslessEnabled ? undefined : handleGoBack}
+				onBack={handleReturn}
 				onDismiss={dismissCoin}
+				title={currentStep === 4 ? i18n.t('Containers.AddFunds.Header.country') : ''}
 			/>
 			<View style={{ paddingHorizontal: 24 }}>
 				{wyreError && error ? (
@@ -61,7 +60,9 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 					/>
 				) : (
 					<>
-						{currentStep === 0 && <CoinSelectorModal onSelect={selectCoin} />}
+						{currentStep === 0 && (
+							<SelectorModal onBuy={selectCoin} onExchange={() => setCurrentStep(10)} />
+						)}
 						{currentStep === 1 && (
 							<ChooseQuantityModal
 								coin={coin}
@@ -70,6 +71,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 								enableCustomAmount={enableCustomAmount}
 								onPurchase={() => onApplePayPurchase(amount || 100)}
 								onClickBanxa={() => setCurrentStep(3)}
+								onChangeCountry={() => setCurrentStep(4)}
 							/>
 						)}
 						{currentStep === 2 && (
@@ -83,15 +85,15 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 						{currentStep === 3 && (
 							<LocalCurrencyModal onOnramp={(val) => onOnrampPurchase(val === 0 ? amount || 100 : val)} />
 						)}
+						{currentStep === 4 && <CountryModal onCountrySelected={handleReturn} />}
+						{currentStep === 10 && <ExternalExchangeModal />}
 					</>
 				)}
 			</View>
 
 			<FullModal visible={banxaModalVisible} onClose={() => setBanxaModalVisible(false)}>
 				<WebView
-					source={{
-						uri: orderLink
-					}}
+					source={{ uri: orderLink }}
 					sharedCookiesEnabled
 					onNavigationStateChange={(e) => {
 						if (e.url.includes('#')) {

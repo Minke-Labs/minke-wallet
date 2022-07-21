@@ -23,6 +23,114 @@ export default {
 		}
 	},
 	LocationContext: {
+		AUT: {
+			name: 'Áustria',
+			currencyName: 'Euro'
+		},
+		BEL: {
+			name: 'Bélgica',
+			currencyName: 'Euro'
+		},
+		BGR: {
+			name: 'Bulgária',
+			currencyName: 'Euro'
+		},
+		HRV: {
+			name: 'Croácia',
+			currencyName: 'Euro'
+		},
+		CY: {
+			name: 'Chipre',
+			currencyName: 'Euro'
+		},
+		CZE: {
+			name: 'República Tcheca',
+			currencyName: 'Euro'
+		},
+		DNK: {
+			name: 'Dinamarca',
+			currencyName: 'Euro'
+		},
+		EST: {
+			name: 'Estônia',
+			currencyName: 'Euro'
+		},
+		FIN: {
+			name: 'Finlândia',
+			currencyName: 'Euro'
+		},
+		FRA: {
+			name: 'França',
+			currencyName: 'Euro'
+		},
+		DEU: {
+			name: 'Alemanha',
+			currencyName: 'Euro'
+		},
+		GRC: {
+			name: 'Grécia',
+			currencyName: 'Euro'
+		},
+		HUN: {
+			name: 'Hungária',
+			currencyName: 'Euro'
+		},
+		IRL: {
+			name: 'Irlanda',
+			currencyName: 'Euro'
+		},
+		ITA: {
+			name: 'Itália',
+			currencyName: 'Euro'
+		},
+		LVA: {
+			name: 'Letônia',
+			currencyName: 'Euro'
+		},
+		LTU: {
+			name: 'Lituânia',
+			currencyName: 'Euro'
+		},
+		LUX: {
+			name: 'Luxemburgo',
+			currencyName: 'Euro'
+		},
+		MLT: {
+			name: 'Malta',
+			currencyName: 'Euro'
+		},
+		NLD: {
+			name: 'Países Baixos',
+			currencyName: 'Euro'
+		},
+		POL: {
+			name: 'Polônia',
+			currencyName: 'Euro'
+		},
+		PRT: {
+			name: 'Portugal',
+			currencyName: 'Euro'
+		},
+		ROU: {
+			name: 'Roménia',
+			currencyName: 'Euro'
+		},
+		SVK: {
+			name: 'Eslováquia',
+			currencyName: 'Euro'
+		},
+		SVN: {
+			name: 'Eslovênia',
+			currencyName: 'Euro'
+		},
+		ESP: {
+			name: 'Espanha',
+			currencyName: 'Euro'
+		},
+		SWE: {
+			name: 'Suécia',
+			currencyName: 'Euro'
+		},
 		US: {
 			name: 'Estados Unidos',
 			currencyName: 'Dólar Americano'
@@ -241,6 +349,12 @@ export default {
 		title: 'Conta de investimentos'
 	},
 	SettingsScreen: {
+		DeleteModal: {
+			delete_wallet: 'Deletar carteira',
+			keep_wallet: 'Manter carteira',
+			are_you_sure: 'Você tem certeza que quer deletar esta carteira?',
+			recover: 'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
+		},
 		title: 'Configurações',
 		creating_wallet: 'Criando Carteira',
 		backup: 'Backup',
@@ -257,7 +371,8 @@ export default {
 		help: 'Ajuda',
 		other: 'Outros',
 		savings_account: 'Conta de Investimentos',
-		enter_referral_code: 'Inserir código de indicação'
+		enter_referral_code: 'Inserir código de indicação',
+		delete_wallet: 'Deletar carteira'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -374,7 +489,6 @@ export default {
 			send: 'Enviar',
 			exchange: 'Converter',
 			receive: 'Receber',
-			delete_wallet: 'Apagar carteira',
 			are_you_sure: 'Você tem certeza?',
 			cancel: 'Cancelar'
 		},
@@ -595,10 +709,22 @@ export default {
 	},
 	Containers: {
 		AddFunds: {
+			Header: {
+				country: 'País'
+			},
 			LocalCurrencyModal: {
 				choose_amount_in: 'Escolha o valor em {{currency}}'
 			},
+			ExternalExchangeModal: {
+				external: 'Exchange externa',
+				send_from: 'Envie da Binance, Coinbase, Kraken ou outra exchange centralizada.',
+				make_sure: '*Se certifique que a rede selecionada seja a ',
+				or: 'ou',
+				copy: 'Copiar endereço da carteira'
+			},
 			ChooseQuantityModal: {
+				select_country: 'Selecione seu país de residência para acessar sua opção de pagamento local',
+				change_country: 'Mude o país',
 				buy_some: 'Compre alguns {{symbol}}',
 				with: ' com',
 				to_start_using: ' para começar a usar a Minke:',
@@ -609,9 +735,11 @@ export default {
 				copy_address: 'Copiar o endereço',
 				address_copied: 'Endereço copiado!'
 			},
-			CoinSelectorModal: {
+			SelectorModal: {
 				add_funds: 'Adicionar fundos',
-				choose_asset: 'Escolha qual token gostaria de comprar'
+				buy_crypto: 'Comprar cripto',
+				apple_card_transfer: 'Apple Pay, cartão ou transferência',
+				external: 'Exchange externa'
 			},
 			CustomAmountModal: {
 				choose_another_amount: 'Escolha outro valor entre {{min}} e {{max}}',
@@ -620,6 +748,11 @@ export default {
 		}
 	},
 	Components: {
+		CountrySelector: {
+			country: 'País',
+			to_offer: 'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
+			select: 'Selecione um País'
+		},
 		AaveReusables: {
 			Info: {
 				what_is: 'O que é a Aave?',

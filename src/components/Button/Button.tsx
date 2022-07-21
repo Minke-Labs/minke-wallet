@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useTheme } from '@hooks';
 import { ColorType } from '@styles';
@@ -19,10 +20,12 @@ const Button: React.FC<ButtonProps> = ({
 	iconRight,
 	disabled = false,
 	marginBottom = 0,
-	onPress
+	onPress,
+	alert
 }) => {
 	const { colors } = useTheme();
-	const color = mode === 'contained' ? colors.text11 : colors.text7;
+	const color = alert ? colors.alert1 : mode === 'contained' ? colors.text11 : colors.text7;
+
 	const backgroundColor = () => {
 		if (disabled) return colors.detail2;
 		if (mode === 'contained') return colors.cta1;

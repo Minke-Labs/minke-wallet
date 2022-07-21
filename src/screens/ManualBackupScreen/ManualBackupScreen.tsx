@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
 import { Icon, ScreenLoadingIndicator, Text } from '@components';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation, useLanguage, useCountry } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
@@ -17,10 +17,10 @@ import styles from './ManualBackupScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const ManualBackupScreen = ({ route }: Props) => {
+	const { country } = useCountry();
 	const { i18n } = useLanguage();
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();
-	const onFinish = () => navigation.navigate('WalletScreen');
 	const { walletId } = route.params;
 	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
@@ -30,6 +30,11 @@ const ManualBackupScreen = ({ route }: Props) => {
 	const onCopyToClipboard = () => {
 		Clipboard.setString(seed.value || '');
 		setSnackbarVisible(true);
+	};
+
+	const onFinish = () => {
+		if (country) navigation.navigate('WalletScreen');
+		else navigation.navigate('ChangeCountryScreen');
 	};
 
 	return (

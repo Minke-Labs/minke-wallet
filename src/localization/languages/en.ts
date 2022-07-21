@@ -23,6 +23,114 @@ export default {
 		}
 	},
 	LocationContext: {
+		AUT: {
+			name: 'Austria',
+			currencyName: 'Euro'
+		},
+		BEL: {
+			name: 'Belgium',
+			currencyName: 'Euro'
+		},
+		BGR: {
+			name: 'Bulgaria',
+			currencyName: 'Euro'
+		},
+		HRV: {
+			name: 'Croatia',
+			currencyName: 'Euro'
+		},
+		CY: {
+			name: 'Cyprus',
+			currencyName: 'Euro'
+		},
+		CZE: {
+			name: 'Czech Republic',
+			currencyName: 'Euro'
+		},
+		DNK: {
+			name: 'Denmark',
+			currencyName: 'Euro'
+		},
+		EST: {
+			name: 'Estonia',
+			currencyName: 'Euro'
+		},
+		FIN: {
+			name: 'Finland',
+			currencyName: 'Euro'
+		},
+		FRA: {
+			name: 'France',
+			currencyName: 'Euro'
+		},
+		DEU: {
+			name: 'Germany',
+			currencyName: 'Euro'
+		},
+		GRC: {
+			name: 'Greece',
+			currencyName: 'Euro'
+		},
+		HUN: {
+			name: 'Hungary',
+			currencyName: 'Euro'
+		},
+		IRL: {
+			name: 'Ireland',
+			currencyName: 'Euro'
+		},
+		ITA: {
+			name: 'Italy',
+			currencyName: 'Euro'
+		},
+		LVA: {
+			name: 'Latvia',
+			currencyName: 'Euro'
+		},
+		LTU: {
+			name: 'Lithuania',
+			currencyName: 'Euro'
+		},
+		LUX: {
+			name: 'Luxembourg',
+			currencyName: 'Euro'
+		},
+		MLT: {
+			name: 'Malta',
+			currencyName: 'Euro'
+		},
+		NLD: {
+			name: 'Netherlands',
+			currencyName: 'Euro'
+		},
+		POL: {
+			name: 'Poland',
+			currencyName: 'Euro'
+		},
+		PRT: {
+			name: 'Portugal',
+			currencyName: 'Euro'
+		},
+		ROU: {
+			name: 'Romania',
+			currencyName: 'Euro'
+		},
+		SVK: {
+			name: 'Slovakia',
+			currencyName: 'Euro'
+		},
+		SVN: {
+			name: 'Slovenia',
+			currencyName: 'Euro'
+		},
+		ESP: {
+			name: 'Spain',
+			currencyName: 'Euro'
+		},
+		SWE: {
+			name: 'Sweden',
+			currencyName: 'Euro'
+		},
 		US: {
 			name: 'United States',
 			currencyName: 'United States Dollar'
@@ -240,6 +348,12 @@ export default {
 		title: 'Savings account'
 	},
 	SettingsScreen: {
+		DeleteModal: {
+			delete_wallet: 'Delete wallet',
+			keep_wallet: 'Keep wallet',
+			are_you_sure: 'Are you sure you want to delete this wallet?',
+			recover: 'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
+		},
 		title: 'Settings',
 		creating_wallet: 'Creating Wallet',
 		backup: 'Backup',
@@ -256,7 +370,8 @@ export default {
 		help: 'Help',
 		other: 'Other',
 		savings_account: 'Savings Account',
-		enter_referral_code: 'Enter referral code'
+		enter_referral_code: 'Enter referral code',
+		delete_wallet: 'Delete wallet'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -372,7 +487,6 @@ export default {
 			send: 'Send',
 			exchange: 'Exchange',
 			receive: 'Receive',
-			delete_wallet: 'Delete wallet',
 			are_you_sure: 'Are you sure?',
 			cancel: 'Cancel'
 		},
@@ -591,10 +705,22 @@ export default {
 	},
 	Containers: {
 		AddFunds: {
+			Header: {
+				country: 'Country'
+			},
 			LocalCurrencyModal: {
 				choose_amount_in: 'Choose the amount in {{currency}}'
 			},
+			ExternalExchangeModal: {
+				external: 'External exchange',
+				send_from: 'Send from Binance, Coinbase, Kraken or another centralized exchange.',
+				make_sure: '*Make sure the network selected is',
+				or: 'or',
+				copy: 'Copy wallet address'
+			},
 			ChooseQuantityModal: {
+				select_country: 'Select your country of residence to access your local payments option',
+				change_country: 'Change country',
 				buy_some: 'Buy some {{symbol}}',
 				with: ' with',
 				to_start_using: ' to start using Minke:',
@@ -605,9 +731,11 @@ export default {
 				copy_address: 'Copy address',
 				address_copied: 'Address copied!'
 			},
-			CoinSelectorModal: {
+			SelectorModal: {
 				add_funds: 'Add funds',
-				choose_asset: "Choose which asset you'd like to buy"
+				buy_crypto: 'Buy crypto',
+				apple_card_transfer: 'Apple Pay, card or bank transfer',
+				external: 'External exchange'
 			},
 			CustomAmountModal: {
 				choose_another_amount: 'Choose another amount between {{min}} and {{max}}',
@@ -616,6 +744,11 @@ export default {
 		}
 	},
 	Components: {
+		CountrySelector: {
+			country: 'Country',
+			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
+			select: 'Select a Country'
+		},
 		AaveReusables: {
 			Info: {
 				what_is: 'What is Aave?',

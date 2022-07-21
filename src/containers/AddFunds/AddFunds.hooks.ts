@@ -3,7 +3,6 @@ import { TextInput } from 'react-native';
 import { ICoin, coins } from '@helpers/coins';
 import {
 	useAmplitude,
-	useBiconomy,
 	useFormProgress,
 	useLanguage,
 	useNavigation,
@@ -14,6 +13,8 @@ import { network } from '@src/model/network';
 import { UseWyreApplePayError } from '@src/hooks/useWyreApplePay/types';
 import { makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import * as Linking from 'expo-linking';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
 
 interface UseAddFundsProps {
 	onDismiss: () => void;
@@ -22,7 +23,10 @@ interface UseAddFundsProps {
 
 export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const navigation = useNavigation();
-	const { currentStep, reset, goForward, goBack, setCurrentStep } = useFormProgress();
+	const {
+		network: { topUpToken }
+	} = useState(globalWalletState()).value;
+	const { currentStep, reset, goForward, setCurrentStep } = useFormProgress();
 	const [banxaModalVisible, setBanxaModalVisible] = React.useState(false);
 	const [coin, setCoin] = React.useState<ICoin>(coins.usdc);
 	const [amount, setAmount] = React.useState<number | undefined>(undefined);
@@ -32,15 +36,19 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 	const { track } = useAmplitude();
 	const { locationCurrency, locationCountry } = useLanguage();
 	const [orderLink, setOrderLink] = React.useState('');
-	const { gaslessEnabled } = useBiconomy();
 	const { state } = useWalletState();
 	const { address } = state.value;
 
 	const { onPurchase, orderId, error } = useWyreApplePay();
 
-	const selectCoin = (selectedCoin: ICoin) => {
-		track('Add Funds Modal - Token selected', selectedCoin);
-		setCoin(selectedCoin);
+	const selectCoin = () => {
+		track('Add Funds Modal - Buy USDC');
+		const coinObj = {
+			symbol: topUpToken.symbol,
+			image: topUpToken.name.toLowerCase(),
+			name: topUpToken.name
+		};
+		setCoin(coinObj);
 		goForward();
 	};
 
@@ -125,11 +133,10 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		amount,
 		customAmount,
 		customAmountRef,
-		currentStep: currentStep === 0 && gaslessEnabled ? currentStep + 1 : currentStep,
+		currentStep,
 		wyreError,
 		error,
 		orderLink,
-		goBack,
 		setCurrentStep,
 		dismissError,
 		selectCoin,
@@ -140,7 +147,6 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 		enableCustomAmount,
 		setCustomAmount,
 		banxaModalVisible,
-		setBanxaModalVisible,
-		gaslessEnabled
+		setBanxaModalVisible
 	};
 };

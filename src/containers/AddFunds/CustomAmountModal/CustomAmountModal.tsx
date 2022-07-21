@@ -1,7 +1,10 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Text, ApplePayButton, Icon } from '@components';
-import { decimalSeparator as separator, digitGroupingSeparator as delimiter } from 'expo-localization';
+import {
+	decimalSeparator as separator,
+	digitGroupingSeparator as delimiter
+} from 'expo-localization';
 import CurrencyInput from 'react-native-currency-input';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useTheme, useLanguage } from '@hooks';

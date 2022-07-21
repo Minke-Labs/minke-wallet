@@ -52,7 +52,6 @@ const LocalCurrencyModal: React.FC<LocalCurrencyModalProps> = ({ onOnramp }) => 
 					currency: locationCountry!.currency
 				})}
 			</Text>
-
 			<TokenInputInner
 				symbol={locationCountry!.currency}
 				isAmountValid={isAmountValid}
