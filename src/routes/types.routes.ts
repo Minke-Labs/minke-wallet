@@ -33,5 +33,6 @@ export type RootStackParamList = {
 	TransferWaitScreen: { transferId: string };
 	DevSettingsScreen: undefined;
 	ImportWalletScreen: undefined;
+	AddFundsScreen: undefined;
 	Test: undefined;
 };

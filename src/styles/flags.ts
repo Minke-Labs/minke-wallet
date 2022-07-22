@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 export type FlagType = keyof typeof flag;
-const flag = {
+const flag: { [key: string]: string[] } = {
 	australia: [
 		'M32 16C32 24.8365 24.8365 32 16 32C7.1635 32 0 24.8365 0 16C0 16.0037 16 0.0018125 16 0C24.8365 0 32 7.1635 32 16Z',
 		'#0052B4',

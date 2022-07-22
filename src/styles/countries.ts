@@ -1,5 +1,5 @@
 export type CountriesType = keyof typeof countries;
-const countries = {
+const countries: { [key: string]: string } = {
 	AF: 'afghanistan',
 	AX: 'alandIslands',
 	AL: 'albania',

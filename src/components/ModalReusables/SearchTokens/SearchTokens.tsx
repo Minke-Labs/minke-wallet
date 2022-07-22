@@ -109,7 +109,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 	return (
 		<SafeAreaView>
-			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
+			<ModalHeader {...{ onDismiss }} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
 				<SearchInput
 					marginBottom={24}

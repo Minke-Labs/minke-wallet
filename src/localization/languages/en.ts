@@ -143,6 +143,10 @@ export default {
 			name: 'United Kingdom',
 			currencyName: 'British Pound'
 		},
+		GB: {
+			name: 'United Kingdom',
+			currencyName: 'British Pound'
+		},
 		AU: {
 			name: 'Australia',
 			currencyName: 'Australian Dollar'
@@ -158,6 +162,26 @@ export default {
 		TUR: {
 			name: 'Turkey',
 			currencyName: 'Turkish Lira'
+		},
+		TR: {
+			name: 'Turkey',
+			currencyName: 'Turkish Lira'
+		},
+		AR: {
+			name: 'Argentina',
+			currencyName: 'Argentine Peso'
+		},
+		LK: {
+			name: 'Sri Lanka',
+			currencyName: 'Sri Lankan Rupee'
+		},
+		NG: {
+			name: 'Nigeria',
+			currencyName: 'Nigerian Naira'
+		},
+		PK: {
+			name: 'Pakistan',
+			currencyName: 'Pakistani Rupee'
 		}
 	},
 	AccountsScreen: {
@@ -352,7 +376,8 @@ export default {
 			delete_wallet: 'Delete wallet',
 			keep_wallet: 'Keep wallet',
 			are_you_sure: 'Are you sure you want to delete this wallet?',
-			recover: 'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
+			recover:
+				'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
 		},
 		title: 'Settings',
 		creating_wallet: 'Creating Wallet',
@@ -686,6 +711,11 @@ export default {
 		Error: {
 			no_network: "We don't support this network. Please, select another network in the wallet app."
 		}
+	},
+	AddFundsScreen: {
+		header: 'Add funds',
+		you_pay: 'You pay',
+		you_receive: 'You receive'
 	},
 	Hooks: {
 		iCloudBackup: {
