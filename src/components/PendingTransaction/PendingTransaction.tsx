@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
-import { useLanguage, useTheme, useTransaction } from '@hooks';
+import { TouchableOpacity, View } from 'react-native';
+import { useLanguage, useNavigation, useTheme, useTransaction } from '@hooks';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
@@ -16,9 +16,13 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: 
 		[transaction]
 	);
 	const { pending, timestamp, subtitle, value, token, failed } = useTransaction({ transaction, walletDigits: 4 });
+	const navigation = useNavigation();
 
 	return (
-		<View style={[styles.container, { backgroundColor: colors.detail4 }]}>
+		<TouchableOpacity
+			style={[styles.container, { backgroundColor: colors.detail4 }]}
+			onPress={() => navigation.navigate('TransactionScreen', { transaction })}
+		>
 			<View style={styles.leftContainer}>
 				{pending ? (
 					<ActivityIndicator size={26} />
@@ -54,7 +58,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: 
 					{value} {token}
 				</Text>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
