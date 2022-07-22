@@ -3,7 +3,7 @@ import Box from '../Box/Box';
 import SettingsHeader from '../../SettingsHeader/SettingsHeader';
 import BlankLayout from '../BlankLayout/BlankLayout';
 
-const WalletAssets = () => (
+const Save = () => (
 	<BlankLayout>
 		<SettingsHeader title="Wallet" onPress={() => null} />
 		<Box mt={136} mb={16} w={105} h={14} br={20} />
@@ -12,4 +12,4 @@ const WalletAssets = () => (
 	</BlankLayout>
 );
 
-export default WalletAssets;
+export default Save;
