@@ -3,7 +3,7 @@ import { View, Keyboard, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage, useKeyboard } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import { Button, Modal, ActivityIndicator, ModalReusables, Header, GasSelector, TokenCard } from '@components';
+import { Button, Modal, ModalReusables, Header, GasSelector, TokenCard, BlankStates } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
 import { makeStyles } from './ExchangeScreen.styles';
@@ -41,6 +41,8 @@ const ExchangeScreen = () => {
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
 	RNUxcam.tagScreenName('ExchangeScreen');
+
+	if (loadingPrices || (fromToken === undefined)) return <BlankStates.Exchange />;
 
 	return (
 		<>
@@ -83,22 +85,18 @@ const ExchangeScreen = () => {
 						</View>
 
 						<View style={{ marginHorizontal: 16 }}>
-							{!loadingPrices && !enoughForGas && (
+							{!enoughForGas && (
 								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
 							)}
 						</View>
 					</View>
 
 					<View style={styles.buttonBox}>
-						{loadingPrices ? (
-							<ActivityIndicator />
-						) : (
-							<Button
-								title={i18n.t('ExchangeScreen.review')}
-								onPress={goToExchangeResume}
-								disabled={!canSwap()}
-							/>
-						)}
+						<Button
+							title={i18n.t('ExchangeScreen.review')}
+							onPress={goToExchangeResume}
+							disabled={!canSwap()}
+						/>
 					</View>
 					<KeyboardSpacer />
 				</TouchableOpacity>

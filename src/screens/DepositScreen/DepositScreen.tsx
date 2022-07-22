@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ScreenLoadingIndicator } from '@components';
+import { Modal, BlankStates } from '@components';
 import { AddFunds } from '@containers';
 import { useDepositProtocols } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
@@ -15,7 +15,7 @@ const DepositScreen = () => {
 	RNUxcam.tagScreenName('DepositScreen');
 
 	if (ableToDeposit === undefined) {
-		return <ScreenLoadingIndicator />;
+		return <BlankStates.Deposit />;
 	}
 
 	if (!ableToDeposit) {
@@ -36,7 +36,7 @@ const DepositScreen = () => {
 	}
 
 	if (approved === undefined) {
-		return <ScreenLoadingIndicator />;
+		return <BlankStates.Deposit />;
 	}
 
 	if (approved) return <Deposit />;

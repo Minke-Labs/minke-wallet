@@ -10,7 +10,7 @@ import { screenWidth } from '@styles';
 import { Gradient } from './Gradient';
 import styles from './BlankLayout.styles';
 
-const timing = { duration: 900 };
+const timing = { duration: 1000 };
 
 const BlankLayout: React.FC = ({ children }) => {
 	const left = useSharedValue(-screenWidth);
