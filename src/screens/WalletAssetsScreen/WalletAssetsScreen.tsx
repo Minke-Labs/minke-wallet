@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useTokens } from '@hooks';

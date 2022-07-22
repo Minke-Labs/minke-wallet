@@ -241,7 +241,6 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 				<Animated.View
 					style={[
 						{
-							// eslint-disable-next-line no-nested-ternary
 							borderColor: error ? colors.alert1 : isFocusedState ? colors.cta1 : colors.cta2
 						},
 						styles.container

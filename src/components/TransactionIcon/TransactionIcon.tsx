@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 import { useTheme } from '@hooks';

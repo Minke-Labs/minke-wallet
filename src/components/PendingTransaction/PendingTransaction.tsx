@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable no-nested-ternary */
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { useLanguage, useTheme, useTransaction } from '@hooks';

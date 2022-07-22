@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, FlatList, Image } from 'react-native';
 import { Text, EmptyStates, ActivityIndicator } from '@components';
