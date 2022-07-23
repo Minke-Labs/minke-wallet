@@ -1,7 +1,17 @@
 import React from 'react';
 import { View } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper, WatchModeTag } from '@components';
+import {
+	Modal,
+	TokenCard,
+	HapticButton,
+	ModalReusables,
+	Header,
+	GasSelector,
+	Paper,
+	WatchModeTag,
+	BlankStates
+} from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
@@ -38,13 +48,20 @@ const WithdrawScreen = () => {
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
+	if (!apy) return <BlankStates.Withdraw />;
+
 	return (
 		<>
 			<BasicLayout>
 				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper padding={16} marginBottom={42}>
-					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
+					<TokenCard
+						onPress={showModal}
+						token={token}
+						updateQuotes={debounce(updateAmount, 500)}
+						apy={apy}
+					/>
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
