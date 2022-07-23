@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BasicLayout } from '@layouts';
+import { View } from 'react-native';
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -7,12 +7,16 @@ import Animated, {
 	withRepeat
 } from 'react-native-reanimated';
 import { screenWidth } from '@styles';
+import MaskedView from '@react-native-masked-view/masked-view';
+import { useTheme } from '@hooks';
+import BasicLayout from '../../../layouts/BasicLayout/BasicLayout';
 import { Gradient } from './Gradient';
 import styles from './BlankLayout.styles';
 
 const timing = { duration: 1000 };
 
 const BlankLayout: React.FC = ({ children }) => {
+	const { colors } = useTheme();
 	const left = useSharedValue(-screenWidth);
 
 	const animatedStyle = useAnimatedStyle(() => ({
@@ -24,12 +28,28 @@ const BlankLayout: React.FC = ({ children }) => {
 	}, []);
 
 	return (
-		<BasicLayout hideSafeAreaView center bg="background5">
-			{children}
-			<Animated.View style={[styles.container, animatedStyle]}>
-				<Gradient />
-			</Animated.View>
-		</BasicLayout>
+		<View style={{
+			backgroundColor: colors.background5,
+			flex: 1
+		}}
+		>
+			<MaskedView
+				androidRenderingMode="software"
+				style={{ flex: 1 }}
+				maskElement={
+					<View style={{ alignItems: 'center', flex: 1 }}>
+						{children}
+					</View>
+				}
+			>
+				<BasicLayout hideSafeAreaView center bg="background5">
+					{children}
+					<Animated.View style={[styles.container, animatedStyle]}>
+						<Gradient />
+					</Animated.View>
+				</BasicLayout>
+			</MaskedView>
+		</View>
 	);
 };
 
