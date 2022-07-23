@@ -11,10 +11,18 @@ import { useDepositScreen } from './DepositScreen.hooks';
 const DepositScreen = () => {
 	const { notAbleToSaveVisible, notAbleToSaveDismiss, addFundsVisible, dismissAddFunds, onAddFunds } =
 		useDepositScreen();
-	const { ableToDeposit, approved, setApproved } = useDepositProtocols();
+	const {
+		setSelectedUSDCoin,
+		depositableToken,
+		selectedProtocol,
+		ableToDeposit,
+		approved,
+		setApproved,
+		apy
+	} = useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
 
-	if (ableToDeposit === undefined) {
+	if ((ableToDeposit === undefined) || (approved === undefined) || !apy) {
 		return <BlankStates.Deposit />;
 	}
 
@@ -35,11 +43,7 @@ const DepositScreen = () => {
 		);
 	}
 
-	if (approved === undefined) {
-		return <BlankStates.Deposit />;
-	}
-
-	if (approved) return <Deposit />;
+	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;
 };
 

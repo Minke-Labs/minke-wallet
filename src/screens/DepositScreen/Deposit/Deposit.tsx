@@ -7,10 +7,19 @@ import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { DepositableToken } from '@models/types/depositTokens.types';
+import { DepositProtocol } from '@models/deposit';
 import { useDeposit } from './Deposit.hooks';
 import styles from './Deposit.styles';
 
-const Deposit = () => {
+interface DepositProps {
+	apy: string;
+	depositableToken: DepositableToken | undefined;
+	selectedProtocol: DepositProtocol | undefined;
+	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtocol, setSelectedUSDCoin }) => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
@@ -29,13 +38,11 @@ const Deposit = () => {
 		hideModal,
 		showModal,
 		onTokenSelect,
-		apy,
-		selectedProtocol,
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
 		needToChangeNetwork
-	} = useDeposit();
+	} = useDeposit({ depositableToken, selectedProtocol, setSelectedUSDCoin });
 
 	useEffect(() => {
 		track('Deposit Screen Opened');
