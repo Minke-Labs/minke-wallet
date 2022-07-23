@@ -13,18 +13,18 @@ import BasicLayout from '../../../layouts/BasicLayout/BasicLayout';
 import { Gradient } from './Gradient';
 import styles from './BlankLayout.styles';
 
-const timing = { duration: 1000 };
+const timing = { duration: 1200 };
 
 const BlankLayout: React.FC = ({ children }) => {
 	const { colors } = useTheme();
-	const left = useSharedValue(-screenWidth);
+	const posX = useSharedValue(-screenWidth);
 
 	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [{ translateX: left.value }]
+		transform: [{ translateX: posX.value }]
 	}));
 
 	useEffect(() => {
-		left.value = withRepeat(withTiming(screenWidth, timing), -1);
+		posX.value = withRepeat(withTiming(screenWidth, timing), -1);
 	}, []);
 
 	return (

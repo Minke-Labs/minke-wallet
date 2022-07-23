@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from '../Box/Box';
-import BlankLayout from '../BlankLayout/BlankLayout';
+import Box from '../../Box/Box';
+import BlankLayout from '../../BlankLayout/BlankLayout';
 
 const Exchange = () => (
 	<BlankLayout>
