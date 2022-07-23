@@ -1,12 +1,26 @@
 import React from 'react';
+import { View } from 'react-native';
+import { deviceWidth } from '@styles';
 import Box from '../../Box/Box';
 import BlankLayout from '../../BlankLayout/BlankLayout';
 
 const Exchange = () => (
 	<BlankLayout>
-		<Box mt={136} mb={16} w={105} h={14} br={20} />
-		<Box mb={64} w={191} h={42} br={60} />
-		<Box w="100%" style={{ flex: 1, borderTopLeftRadius: 22, borderTopRightRadius: 22 }} />
+		<View style={{ marginTop: 136, marginBottom: 32 }}>
+			<Box w={deviceWidth - 32} h={228} br={16} />
+		</View>
+		<View
+			style={{
+				marginBottom: 8,
+				paddingLeft: 16,
+				width: '100%',
+				flexDirection: 'row'
+			}}
+		>
+			<Box w={343} h={75} br={16} style={{ marginRight: 8 }} />
+			<Box w={343} h={75} br={16} />
+		</View>
+		<Box mb={8} w={56} h={16} br={16} />
 	</BlankLayout>
 );
 
