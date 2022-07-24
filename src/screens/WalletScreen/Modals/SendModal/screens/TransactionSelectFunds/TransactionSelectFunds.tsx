@@ -1,16 +1,22 @@
-/* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList, Image } from 'react-native';
-import { Text, EmptyStates, ActivityIndicator } from '@components';
+import { Text, EmptyStates } from '@components';
 import { useLanguage } from '@hooks';
+import { imageSource } from '@models/wallet';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
 import { TransactionSelectFundsProps } from './TransactionSelectFunds.types';
-import { useTransactionSelectFunds } from './TransactionSelectFunds.hooks';
 
-const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected }) => {
+const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, onSelected, tokens }) => {
 	const { i18n } = useLanguage();
-	const { image, tokens } = useTransactionSelectFunds({ user });
+	const [image, setImage] = React.useState<{ uri: string }>();
+
+	useEffect(() => {
+		const fetchImage = async () => {
+			setImage(await imageSource(user.address));
+		};
+		fetchImage();
+	}, []);
 
 	return (
 		<View style={styles.container}>
@@ -26,14 +32,17 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				</Text>
 				?
 			</Text>
-			{tokens === undefined ? (
-				<ActivityIndicator />
-			) : tokens.length > 0 ? (
+			{tokens.length > 0 ? (
 				<FlatList
 					style={styles.tokensList}
 					keyExtractor={(item) => item.symbol}
 					data={tokens}
-					renderItem={({ item }) => <Card token={item} onSelected={() => onSelected(item)} />}
+					renderItem={({ item }) => (
+						<Card
+							token={item}
+							onSelected={() => onSelected(item)}
+						/>
+					)}
 				/>
 			) : (
 				<EmptyStates.NoTokens />
