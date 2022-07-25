@@ -5,8 +5,8 @@ import Box from '../../Box/Box';
 import BlankLayout from '../../BlankLayout/BlankLayout';
 
 const Exchange = () => (
-	<BlankLayout>
-		<View style={{ marginTop: 136, marginBottom: 32 }}>
+	<BlankLayout title="Exchange">
+		<View style={{ marginTop: 32, marginBottom: 32 }}>
 			<Box w={deviceWidth - 32} h={228} br={16} />
 		</View>
 		<View

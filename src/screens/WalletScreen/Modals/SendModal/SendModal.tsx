@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Icon, Text, BlankStates } from '@components';
 import { useLanguage, useTokens } from '@hooks';
 import { exchangebleTokens } from '@models/token';
@@ -69,7 +69,7 @@ const SendModal: React.FC<SendModalProps> = (
 						onSelected={onTokenSelected}
 						{...{ user, tokens }}
 					/> :
-					<BlankStates.Send />
+					<BlankStates.Send name={user.name} />
 				: null}
 
 			{currentStep === 2 && token && (
@@ -83,6 +83,7 @@ const SendModal: React.FC<SendModalProps> = (
 					}}
 				/>
 			)}
+			<SafeAreaView />
 		</View>
 	);
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -8,14 +8,16 @@ import Animated, {
 } from 'react-native-reanimated';
 import { screenWidth } from '@styles';
 import MaskedView from '@react-native-masked-view/masked-view';
-import { useTheme } from '@hooks';
+import { useNavigation, useTheme } from '@hooks';
+import ModalHeader from '../../ModalHeader/ModalHeader';
 import BasicLayout from '../../../layouts/BasicLayout/BasicLayout';
 import { Gradient } from './Gradient';
 import styles from './BlankLayout.styles';
 
 const timing = { duration: 1200 };
 
-const BlankLayout: React.FC = ({ children }) => {
+const BlankLayout: React.FC<{ title: string }> = ({ children, title }) => {
+	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const posX = useSharedValue(-screenWidth);
 
@@ -33,6 +35,12 @@ const BlankLayout: React.FC = ({ children }) => {
 			flex: 1
 		}}
 		>
+			<SafeAreaView />
+			<ModalHeader
+				onDismiss={() => navigation.goBack()}
+				onBack={() => navigation.goBack()}
+				title={title}
+			/>
 			<MaskedView
 				androidRenderingMode="software"
 				style={{ flex: 1 }}
