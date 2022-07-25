@@ -145,7 +145,7 @@ const countries: { [key: string]: string } = {
 	NR: 'nauru',
 	NP: 'nepal',
 	NL: 'netherlands',
-	NZ: 'new Zealand',
+	NZ: 'newZealand',
 	NI: 'nicaragua',
 	NE: 'niger',
 	NG: 'nigeria',

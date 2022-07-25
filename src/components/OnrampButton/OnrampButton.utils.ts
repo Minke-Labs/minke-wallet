@@ -29,11 +29,7 @@ export const chooseLocation = (loc: string) => {
 		case 'europeanUnion':
 		case 'austria':
 		case 'belgium':
-		case 'bulgaria':
-		case 'croatia':
 		case 'cyprus':
-		case 'czechRepublic':
-		case 'denmark':
 		case 'estonia':
 		case 'finland':
 		case 'france':
@@ -47,13 +43,10 @@ export const chooseLocation = (loc: string) => {
 		case 'luxembourg':
 		case 'malta':
 		case 'netherlands':
-		case 'poland':
 		case 'portugal':
-		case 'romania':
 		case 'slovakia':
 		case 'slovenia':
 		case 'spain':
-		case 'sweden':
 			return {
 				locStyles: {
 					backgroundColor: '#004899',

@@ -95,50 +95,10 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.BGR.name'),
-				flag: 'bulgaria',
-				iso: 'BGR',
-				currencyName: i18n.t('LocationContext.BGR.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.HRV.name'),
-				flag: 'croatia',
-				iso: 'HRV',
-				currencyName: i18n.t('LocationContext.HRV.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
 				name: i18n.t('LocationContext.CY.name'),
 				flag: 'cyprus',
 				iso: 'CY',
 				currencyName: i18n.t('LocationContext.CY.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.CY.name'),
-				flag: 'cyprus',
-				iso: 'CY',
-				currencyName: i18n.t('LocationContext.CY.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.CZE.name'),
-				flag: 'czechRepublic',
-				iso: 'CZE',
-				currencyName: i18n.t('LocationContext.CZE.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.DNK.name'),
-				flag: 'denmark',
-				iso: 'DNK',
-				currencyName: i18n.t('LocationContext.DNK.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
@@ -247,26 +207,10 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.POL.name'),
-				flag: 'poland',
-				iso: 'POL',
-				currencyName: i18n.t('LocationContext.POL.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
 				name: i18n.t('LocationContext.PRT.name'),
 				flag: 'portugal',
 				iso: 'PRT',
 				currencyName: i18n.t('LocationContext.PRT.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.ROU.name'),
-				flag: 'romania',
-				iso: 'ROU',
-				currencyName: i18n.t('LocationContext.ROU.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
@@ -291,14 +235,6 @@ const LanguageProvider: React.FC = ({ children }) => {
 				flag: 'spain',
 				iso: 'ESP',
 				currencyName: i18n.t('LocationContext.ESP.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.SWE.name'),
-				flag: 'sweden',
-				iso: 'SWE',
-				currencyName: i18n.t('LocationContext.SWE.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},

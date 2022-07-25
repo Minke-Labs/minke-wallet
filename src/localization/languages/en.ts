@@ -33,11 +33,15 @@ export default {
 		},
 		BGR: {
 			name: 'Bulgaria',
-			currencyName: 'Euro'
+			currencyName: 'Bulgarian Lev'
 		},
-		HRV: {
+		BG: {
+			name: 'Bulgaria',
+			currencyName: 'Bulgarian Lev'
+		},
+		HR: {
 			name: 'Croatia',
-			currencyName: 'Euro'
+			currencyName: 'Croatian Kuna'
 		},
 		CY: {
 			name: 'Cyprus',
@@ -45,11 +49,15 @@ export default {
 		},
 		CZE: {
 			name: 'Czech Republic',
-			currencyName: 'Euro'
+			currencyName: 'Czech Koruna'
 		},
-		DNK: {
+		CZ: {
+			name: 'Czech Republic',
+			currencyName: 'Czech Koruna'
+		},
+		DK: {
 			name: 'Denmark',
-			currencyName: 'Euro'
+			currencyName: 'Danish Krone'
 		},
 		EST: {
 			name: 'Estonia',
@@ -103,17 +111,17 @@ export default {
 			name: 'Netherlands',
 			currencyName: 'Euro'
 		},
-		POL: {
+		PL: {
 			name: 'Poland',
-			currencyName: 'Euro'
+			currencyName: 'Polish Złoty'
 		},
 		PRT: {
 			name: 'Portugal',
 			currencyName: 'Euro'
 		},
-		ROU: {
+		RO: {
 			name: 'Romania',
-			currencyName: 'Euro'
+			currencyName: 'Romanian Leu'
 		},
 		SVK: {
 			name: 'Slovakia',
@@ -127,9 +135,9 @@ export default {
 			name: 'Spain',
 			currencyName: 'Euro'
 		},
-		SWE: {
+		SE: {
 			name: 'Sweden',
-			currencyName: 'Euro'
+			currencyName: 'Swedish Krona'
 		},
 		US: {
 			name: 'United States',
@@ -182,6 +190,106 @@ export default {
 		PK: {
 			name: 'Pakistan',
 			currencyName: 'Pakistani Rupee'
+		},
+		CH: {
+			name: 'Switzerland',
+			currencyName: 'Swiss Franc'
+		},
+		CO: {
+			name: 'Colombia Peso',
+			currencyName: 'Colombia Peso'
+		},
+		DO: {
+			name: 'Dominican Republic',
+			currencyName: 'Dominican Peso'
+		},
+		EG: {
+			name: 'Egypt',
+			currencyName: 'Egyptian Pound'
+		},
+		HK: {
+			name: 'Hong Kong',
+			currencyName: 'Hong Kong Dollar'
+		},
+		ID: {
+			name: 'Indonesia',
+			currencyName: 'Indonesian Rupiah'
+		},
+		JP: {
+			name: 'Japan',
+			currencyName: 'Japanese Yen'
+		},
+		JO: {
+			name: 'Jordan',
+			currencyName: 'Jordanian Dollar'
+		},
+		KE: {
+			name: 'Kenya',
+			currencyName: 'Kenyan Shilling'
+		},
+		KR: {
+			name: 'South Korea',
+			currencyName: 'South Korean Won'
+		},
+		KW: {
+			name: 'Kuwait',
+			currencyName: 'Kuwaiti Dinar'
+		},
+		MA: {
+			name: 'Morocco',
+			currencyName: 'Moroccan Dirham'
+		},
+		MX: {
+			name: 'Mexico',
+			currencyName: 'Mexican Peso'
+		},
+		MY: {
+			name: 'Malaysia',
+			currencyName: 'Malaysian Ringgit'
+		},
+		NO: {
+			name: 'Norway',
+			currencyName: 'Norwegian Krone'
+		},
+		NZ: {
+			name: 'New Zealand',
+			currencyName: 'New Zealand Dollar'
+		},
+		OM: {
+			name: 'Oman',
+			currencyName: 'Omani Rial'
+		},
+		PE: {
+			name: 'Peru',
+			currencyName: 'Peruvian Sol'
+		},
+		SG: {
+			name: 'Singapore',
+			currencyName: 'Singapore Dollar'
+		},
+		TH: {
+			name: 'Thailand',
+			currencyName: 'Thai Baht'
+		},
+		TW: {
+			name: 'Taiwan',
+			currencyName: 'Taiwan Dollar'
+		},
+		VN: {
+			name: 'Vietnam',
+			currencyName: 'Vietnamese Dong'
+		},
+		ZA: {
+			name: 'South Africa',
+			currencyName: 'South African Rand'
+		},
+		IL: {
+			name: 'Israel',
+			currencyName: 'Israeli New Shekel'
+		},
+		CN: {
+			name: 'China',
+			currencyName: 'Chinese Yuan'
 		}
 	},
 	AccountsScreen: {
@@ -859,6 +967,7 @@ export default {
 			repeat_password: 'Repeat password',
 			search: 'Search',
 			search_token: 'Search token',
+			search_currency: 'Search currency',
 			name: 'Name',
 			ens_or_wallet: 'ENS or Wallet Address',
 			enter_code: 'Enter code'

@@ -66,7 +66,7 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
 				<SearchInput
 					marginBottom={24}
-					placeholder={i18n.t('Components.Inputs.search_token')}
+					placeholder={i18n.t('Components.Inputs.search_currency')}
 					{...{ search, onSearch }}
 				/>
 				<FlatList
