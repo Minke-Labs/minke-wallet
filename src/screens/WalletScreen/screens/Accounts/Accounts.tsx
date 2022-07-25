@@ -39,6 +39,14 @@ const Accounts = ({ points }: { points: number }) => {
 				image: 'gift',
 				onPress: () => navigation.navigate('ReferralScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
+			},
+			{
+				title: i18n.t('WalletScreen.screens.Accounts.nfts'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.estimated_value'),
+				thirdRowText: `${i18n.t('WalletScreen.screens.Accounts.value')}`,
+				image: 'robotStroke',
+				onPress: () => navigation.navigate('NFTScreen'),
+				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
 			}
 		],
 		[balance, points]

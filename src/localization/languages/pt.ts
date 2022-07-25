@@ -513,7 +513,10 @@ export default {
 				open_loans: 'Empréstimos em aberto',
 				coming_soon: 'Em breve',
 				points: 'Pontos',
-				points_earned: 'Indique um amigo, receba crypto'
+				points_earned: 'Indique um amigo, receba crypto',
+				nfts: 'NFTs',
+				estimated_value: 'Valor estimado',
+				value: '$29,214.63'
 			},
 			Transactions: {
 				NoTransactionsYet: {
