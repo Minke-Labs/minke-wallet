@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/indent */
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';

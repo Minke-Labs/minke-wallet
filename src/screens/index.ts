@@ -29,6 +29,7 @@ import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCode
 import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
 import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
 import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
+import TransactionScreen from './TransactionScreen/TransactionScreen';
 import Test from './Test/Test';
 
 const screensObj = {
@@ -63,6 +64,7 @@ const screensObj = {
 	TransferWaitScreen,
 	DevSettingsScreen,
 	ImportWalletScreen,
+	TransactionScreen,
 	Test
 };
 

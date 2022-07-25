@@ -57,6 +57,7 @@
 		"react/require-default-props": "off",
 		"operator-linebreak": ["off"],
 		"react/jsx-wrap-multilines": "off",
-		"react/jsx-no-useless-fragment": "off"
+		"react/jsx-no-useless-fragment": "off",
+		"no-nested-ternary": "off"
 	}
 }

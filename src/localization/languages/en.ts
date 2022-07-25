@@ -352,7 +352,8 @@ export default {
 			delete_wallet: 'Delete wallet',
 			keep_wallet: 'Keep wallet',
 			are_you_sure: 'Are you sure you want to delete this wallet?',
-			recover: 'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
+			recover:
+				'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
 		},
 		title: 'Settings',
 		creating_wallet: 'Creating Wallet',
@@ -687,6 +688,17 @@ export default {
 			no_network: "We don't support this network. Please, select another network in the wallet app."
 		}
 	},
+	TransactionScreen: {
+		transaction_type: 'Transaction type:',
+		date: 'Date:',
+		sent_to: 'Sent to:',
+		exchanged: 'Exchanged:',
+		exchange_details: '{{fromAmount}} {{from}} for {{toAmount}} {{to}}',
+		hash: 'Hash',
+		exchange_rate: 'Exchange rate',
+		savings_account: 'Savings Account:',
+		received_from: 'Received from:'
+	},
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Backing up...',
@@ -784,7 +796,13 @@ export default {
 			to: 'To',
 			today: 'Today',
 			yesterday: 'Yesterday',
-			this_month: 'This Month'
+			this_month: 'This Month',
+			top_up: 'Top Up',
+			savings_withdrew: 'Savings (withdrew)',
+			savings_deposited: 'Savings (deposited)',
+			exchanged: 'Exchanged',
+			received: 'Received',
+			sent: 'Sent'
 		},
 		LoadingScreen: {
 			this_can_take_a_few_seconds: 'This can take a few seconds'

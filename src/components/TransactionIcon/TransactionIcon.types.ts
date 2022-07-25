@@ -6,6 +6,8 @@ interface TransactionIconProps {
 	exchange?: boolean;
 	deposit?: boolean;
 	withdraw?: boolean;
+	size?: number;
+	arrowSize?: number;
 }
 
 export type { TransactionIconProps };
