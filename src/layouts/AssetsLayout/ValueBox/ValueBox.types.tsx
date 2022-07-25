@@ -1,6 +1,6 @@
 interface ValueBoxProps {
-	title?: string;
-	balance?: number | undefined;
+	title?: JSX.Element;
+	value: string;
 }
 
 export { ValueBoxProps };
