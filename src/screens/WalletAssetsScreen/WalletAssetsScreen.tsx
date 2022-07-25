@@ -1,35 +1,50 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme, useTokens } from '@hooks';
-import { BlankStates, Modal } from '@components';
-import { BasicLayout } from '@layouts';
+import { useLanguage, useTokens } from '@hooks';
 import { AddFunds } from '@containers';
+import { AssetsLayout } from '@layouts';
+import { ActivityIndicator, Modal, Text, BlankStates } from '@components';
+import { numberFormat } from '@helpers/utilities';
 import RNUxcam from 'react-native-ux-cam';
+import { MinkeToken } from '@models/types/token.types';
 import AssetList from './AssetList/AssetList';
-import ValueBox from './ValueBox/ValueBox';
 import AssetListEmpty from './AssetListEmpty/AssetListEmpty';
-import styles from './WalletAssetsScreen.styles';
+
+interface ContentProps {
+	tokens: MinkeToken[];
+	onPress: () => void;
+}
+
+const Content: React.FC<ContentProps> = ({ tokens, onPress }) => (
+	<>
+		{tokens === undefined ? (
+			<View style={{ marginTop: 24 }}>
+				<ActivityIndicator />
+			</View>
+		) : tokens.length > 0 ? (
+			<AssetList walletTokens={tokens} />
+		) : (
+			<AssetListEmpty onPress={onPress} />
+		)}
+	</>
+);
 
 const WalletAssetsScreen = () => {
+	const { i18n } = useLanguage();
 	RNUxcam.tagScreenName('WalletAssetsScreen');
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
-	const { colors } = useTheme();
 	const { tokens, walletBalance: balance } = useTokens();
 
 	if (tokens === undefined) return <BlankStates.WalletAssets />;
 
 	return (
 		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
-				<ValueBox {...{ balance }} />
-				<View style={[styles.assetListContainer, { backgroundColor: colors.background1 }]}>
-					{tokens.length > 0 ? (
-						<AssetList walletTokens={tokens} />
-					) : (
-						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />
-					)}
-				</View>
-			</BasicLayout>
+			<AssetsLayout
+				headerValue={balance === undefined ? '' : numberFormat(balance || 0)}
+				headerTitle={<Text marginBottom={10}>{i18n.t('WalletAssetsScreen.ValueBox.current_value')}</Text>}
+			>
+				<Content tokens={tokens} onPress={() => setAddFundsVisible(true)} />
+			</AssetsLayout>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</Modal>
