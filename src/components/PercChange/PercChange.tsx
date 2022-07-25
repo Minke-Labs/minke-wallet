@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View } from 'react-native';
 import { useDerivedValue, useAnimatedStyle } from 'react-native-reanimated';

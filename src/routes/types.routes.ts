@@ -1,4 +1,5 @@
 import { MinkeToken } from '@models/token';
+import { ZapperTransaction } from '@models/wallet';
 
 export type RootStackParamList = {
 	AccountsScreen: undefined;
@@ -34,5 +35,6 @@ export type RootStackParamList = {
 	DevSettingsScreen: undefined;
 	ImportWalletScreen: undefined;
 	AddFundsScreen: undefined;
+	TransactionScreen: { transaction: ZapperTransaction };
 	Test: undefined;
 };

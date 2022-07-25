@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import { useTheme } from '@hooks';
