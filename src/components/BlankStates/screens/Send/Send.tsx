@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from 'react';
 import { View } from 'react-native';
 import { useLanguage } from '@hooks';
@@ -8,10 +7,7 @@ import BlankLayout from '../../BlankLayout/BlankLayout';
 const Send: React.FC<{ name: string }> = ({ name }) => {
 	const { i18n } = useLanguage();
 	return (
-		<BlankLayout title={
-			`${i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.which')}${i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.asset')}${i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.want_to_send')}${name}`
-		}
-		>
+		<BlankLayout title={i18n.t('Components.BlankStates.Send', { to: name })}>
 			<View style={{ paddingHorizontal: 24, width: '100%' }}>
 				<View
 					style={{

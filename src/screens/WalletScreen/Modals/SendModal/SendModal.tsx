@@ -83,7 +83,7 @@ const SendModal: React.FC<SendModalProps> = (
 					}}
 				/>
 			)}
-			<SafeAreaView />
+			{(tokens !== undefined) && <SafeAreaView />}
 		</View>
 	);
 };
