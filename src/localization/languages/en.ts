@@ -628,7 +628,10 @@ export default {
 				open_loans: 'Open loans',
 				coming_soon: 'Coming soon',
 				points: 'Points',
-				points_earned: 'Refer a friend, earn crypto!'
+				points_earned: 'Refer a friend, earn crypto!',
+				nfts: 'NFTs',
+				estimated_value: 'Estimated value',
+				value: '$29,214.63'
 			},
 			Transactions: {
 				NoTransactionsYet: {
