@@ -5,6 +5,7 @@ export type RootStackParamList = {
 	AssetsScreen: { coin: MinkeToken };
 	ManualBackupScreen: { walletId: string };
 	NFTScreen: undefined;
+	NFTDetailScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };

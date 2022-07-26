@@ -1,5 +1,6 @@
+import { useNavigation } from '@hooks';
 import React from 'react';
-import { View, Image, StyleSheet, FlatList } from 'react-native';
+import { View, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { ItemHeader } from '../ItemHeader/ItemHeader';
 
 const styles = StyleSheet.create({
@@ -20,26 +21,31 @@ const images = [
 	require('../mockImages/7.png')
 ];
 
-const Item = () => (
-	<View style={{ marginBottom: 24 }}>
-		<ItemHeader />
-		<View style={{ flexDirection: 'row' }}>
+const Item = () => {
+	const navigation = useNavigation();
+	return (
+		<View style={{ marginBottom: 24 }}>
+			<ItemHeader />
+			<View style={{ flexDirection: 'row' }}>
 
-			<FlatList
-				data={images}
-				keyExtractor={(item) => item.toString()}
-				renderItem={({ item }) => (
-					<Image
-						style={styles.image}
-						source={item}
-					/>
-				)}
-				horizontal
-				showsHorizontalScrollIndicator={false}
-			/>
+				<FlatList
+					data={images}
+					keyExtractor={(item) => item.toString()}
+					renderItem={({ item }) => (
+						<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen')}>
+							<Image
+								style={styles.image}
+								source={item}
+							/>
+						</TouchableOpacity>
+					)}
+					horizontal
+					showsHorizontalScrollIndicator={false}
+				/>
 
+			</View>
 		</View>
-	</View>
-);
+	);
+};
 
 export default Item;

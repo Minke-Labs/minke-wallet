@@ -2,6 +2,7 @@ import AccountsScreen from './AccountsScreen/AccountsScreen';
 import AssetsScreen from './AssetsScreen/AssetsScreen';
 import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
 import NFTScreen from './NFTScreen/NFTScreen';
+import NFTDetailScreen from './NFTDetailScreen/NFTDetailScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
@@ -37,6 +38,7 @@ const screensObj = {
 	AssetsScreen,
 	ManualBackupScreen,
 	NFTScreen,
+	NFTDetailScreen,
 	BackupSettingsScreen,
 	ChangeLanguageScreen,
 	BackupStatusScreen,
