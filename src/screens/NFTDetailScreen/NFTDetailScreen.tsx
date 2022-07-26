@@ -1,11 +1,32 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { View, Image, SafeAreaView } from 'react-native';
-import { Text, NetworkWarning, Button } from '@components';
-import { useTheme } from '@hooks';
+import { View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, NetworkWarning, Button, Icon } from '@components';
+import { useNavigation, useTheme } from '@hooks';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
+import styles from './NFTDetailScreen.styles';
+
+const Header = () => {
+	const navigation = useNavigation();
+	return (
+		<View
+			style={{
+				width: '100%',
+				flexDirection: 'row',
+				alignItems: 'center',
+				paddingHorizontal: 16,
+				marginBottom: 24
+			}}
+		>
+			<TouchableOpacity onPress={() => navigation.goBack()}>
+				<Icon name="chevronLeft" size={20} color="cta1" style={{ marginRight: 16 }} />
+			</TouchableOpacity>
+			<Text type="hMedium" weight="bold">Doodle #3842</Text>
+		</View>
+	);
+};
 
 const NFTDetailScreen = () => {
 	const { colors } = useTheme();
@@ -13,18 +34,14 @@ const NFTDetailScreen = () => {
 		<View style={{ flex: 1, backgroundColor: colors.background5 }}>
 			<SafeAreaView />
 
-			<View style={{ alignItems: 'center', paddingBottom: 16 }}>
+			<View style={styles.topContainer}>
+				<Header />
 				<Image
 					source={require('../NFTScreen/mockImages/2.png')}
-					style={{
-						width: 216,
-						height: 216,
-						borderRadius: 8,
-						marginBottom: 8
-					}}
+					style={styles.image}
 				/>
 				<Text type="hMedium" weight="bold">Doodle #3842</Text>
-				<View style={{ flexDirection: 'row', marginBottom: 16 }}>
+				<View style={styles.byContainer}>
 					<Text type="tSmall" weight="bold">by </Text>
 					<Text type="tSmall" weight="bold" color="cta1">Doodles</Text>
 				</View>
