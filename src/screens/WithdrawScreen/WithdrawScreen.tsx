@@ -43,7 +43,7 @@ const WithdrawScreen = () => {
 			<BasicLayout>
 				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
-				<Paper padding={16} marginBottom={42}>
+				<Paper padding={16} marginBottom={42} margin={16}>
 					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
