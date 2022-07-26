@@ -43,7 +43,7 @@ const ExchangeResumeScreen = () => {
 			<BasicLayout>
 				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} marginBottom={36} />
 
-				<Paper marginBottom={24}>
+				<Paper marginBottom={24} margin={16}>
 					<View style={styles.container}>
 						<View style={styles.containerLeft}>
 							<TokenDetail
@@ -71,7 +71,7 @@ const ExchangeResumeScreen = () => {
 					</View>
 				</Paper>
 
-				<Paper marginBottom={24} padding={24}>
+				<Paper marginBottom={24} padding={24} margin={16}>
 					<View style={styles.infoTop}>
 						<Text weight="semiBold" color="text3" type="lMedium">
 							{i18n.t('ExchangeResumeScreen.rate')}

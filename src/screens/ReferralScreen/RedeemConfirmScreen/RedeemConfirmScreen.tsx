@@ -33,7 +33,7 @@ const RedeemConfirmScreen = () => {
 			<BasicLayout>
 				<Header title={i18n.t('RedeemConfirmScreen.confirmation')} marginBottom={36} />
 
-				<Paper marginBottom={24}>
+				<Paper marginBottom={24} margin={16}>
 					<View style={styles.container}>
 						<View style={styles.containerLeft}>
 							{!!fromToken && (
