@@ -218,7 +218,7 @@ export default {
 		by: 'por ',
 		Panel: {
 			floor_price: 'Preço mínimo',
-			last_sale_price: 'Último preço promocional'
+			last_sale_price: 'Última venda'
 		},
 		view_on_openSea: 'Ver na OpenSea',
 		about: 'Sobre',
