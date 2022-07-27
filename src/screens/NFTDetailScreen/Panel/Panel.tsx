@@ -17,10 +17,18 @@ export const Panel: React.FC<PanelProps> = ({ floor, lastSale }) => {
 				<Text type="hSmall" weight="bold">{floor}</Text>
 			</View>
 			<View style={styles.right}>
-				<Text type="bMedium" color="text4">
+				<Text
+					type="bMedium"
+					color="text4"
+				>
 					{i18n.t('NFTDetailScreen.Panel.last_sale_price')}
 				</Text>
-				<Text type="hSmall" weight="bold">{lastSale}</Text>
+				<Text
+					type="hSmall"
+					weight="bold"
+				>
+					{lastSale}
+				</Text>
 			</View>
 		</View>
 	);
