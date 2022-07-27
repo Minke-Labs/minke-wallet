@@ -5,10 +5,7 @@ interface SendRequest {
 }
 
 export const sendGetRequest = async ({ collectionSlug }: SendRequest) => {
-	const res = await axios.request({
-		method: 'GET',
-		url: `https://api.opensea.io/api/v1/collection/${collectionSlug}`
-	});
+	const res = await axios.get(`https://api.opensea.io/api/v1/collection/${collectionSlug}`);
 	return res.data;
 };
 

@@ -52,14 +52,12 @@ const NFTDetailScreen = () => {
 					floor="$200.00"
 					lastSale="$20.12"
 				/>
-
 				<Button
 					iconRight="openInNew"
 					title={i18n.t('NFTDetailScreen.view_on_openSea')}
 					marginBottom={16}
 					onPress={() => null}
 				/>
-
 				<Expander
 					title={`${i18n.t('NFTDetailScreen.about')} ${collectionInfo?.name || ''}`}
 					desc={collectionInfo?.desc || ''}
