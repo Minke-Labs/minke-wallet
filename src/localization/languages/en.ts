@@ -320,6 +320,9 @@ export default {
 			}
 		}
 	},
+	NFTDetailScreen: {
+		this_nft: 'This NFT is on the'
+	},
 	BackupSettingsScreen: {
 		title: 'Backup'
 	},
@@ -652,6 +655,7 @@ export default {
 				}
 			},
 			ReceiveModal: {
+				sending_on: 'Sending on the',
 				receive: 'Receive',
 				show_qr: 'Show your QR code or share your informations'
 			},
@@ -950,7 +954,7 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Sending on the {{network}} network'
+				sending_on: '{{network}} network'
 			}
 		},
 		EmptyStates: {

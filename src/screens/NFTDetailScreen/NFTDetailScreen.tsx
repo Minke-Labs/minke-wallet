@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Text, NetworkWarning, Button, Icon } from '@components';
-import { useNavigation, useTheme } from '@hooks';
+import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
@@ -30,6 +30,7 @@ const Header = () => {
 
 const NFTDetailScreen = () => {
 	const { colors } = useTheme();
+	const { i18n } = useLanguage();
 	return (
 		<View style={{ flex: 1, backgroundColor: colors.background5 }}>
 			<SafeAreaView />
@@ -45,7 +46,7 @@ const NFTDetailScreen = () => {
 					<Text type="tSmall" weight="bold">by </Text>
 					<Text type="tSmall" weight="bold" color="cta1">Doodles</Text>
 				</View>
-				<NetworkWarning.Tag />
+				<NetworkWarning.Tag title={i18n.t('NFTDetailScreen.this_nft')} />
 			</View>
 
 			<Bottom>
