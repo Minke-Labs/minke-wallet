@@ -1,19 +1,19 @@
 import axios from 'axios';
 
 interface SendRequest {
-	collectionName: string;
+	collectionSlug: string;
 }
 
-export const sendGetRequest = async ({ collectionName }: SendRequest) => {
+export const sendGetRequest = async ({ collectionSlug }: SendRequest) => {
 	const res = await axios.request({
 		method: 'GET',
-		url: `https://api.opensea.io/api/v1/collection/${collectionName}`
+		url: `https://api.opensea.io/api/v1/collection/${collectionSlug}`
 	});
 	return res.data;
 };
 
-export const getCollectionInfo = async ({ name }: { name: string }) => {
-	const res = await sendGetRequest({ collectionName: name });
+export const getCollectionInfo = async ({ slug }: { slug: string }) => {
+	const res = await sendGetRequest({ collectionSlug: slug });
 	const resObj = ({
 		image: res.collection.featured_image_url,
 		name: res.collection.name,

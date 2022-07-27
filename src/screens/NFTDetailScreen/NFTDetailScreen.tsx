@@ -10,7 +10,7 @@ import styles from './NFTDetailScreen.styles';
 import { Header } from './Header/Header';
 
 const id = '#3842';
-const collectionName = 'doodles-official';
+const collectionSlug = 'doodles-official';
 
 const NFTDetailScreen = () => {
 	const [collectionInfo, setCollectionInfo] = useState<any>();
@@ -21,7 +21,7 @@ const NFTDetailScreen = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await getCollectionInfo({ name: collectionName });
+			const res = await getCollectionInfo({ slug: collectionSlug });
 			if (res) setCollectionInfo(res);
 		};
 		fetchData();
