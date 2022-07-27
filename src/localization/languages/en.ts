@@ -320,8 +320,28 @@ export default {
 			}
 		}
 	},
+	NFTScreen: {
+		assets: 'Assets',
+		estimated_value: 'Estimated value',
+		InfoModal: {
+			floor_price: 'What is floor price?',
+			estimated_value: '• The estimated value of your collection is based on the floor price of each NFT.',
+			term: '• The floor price is a term given to represent the current lowest price for which one can own an NFT in a certain collection or project.'
+		}
+	},
 	NFTDetailScreen: {
-		this_nft: 'This NFT is on the'
+		this_nft: 'This NFT is on the',
+		by: 'by ',
+		Panel: {
+			floor_price: 'Floor price',
+			last_sale_price: 'Last sale price'
+		},
+		view_on_openSea: 'View on OpenSea',
+		about: 'About',
+		Expander: {
+			show_less: 'Show less',
+			show_more: 'Show more'
+		}
 	},
 	BackupSettingsScreen: {
 		title: 'Backup'

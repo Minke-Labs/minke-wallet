@@ -320,8 +320,28 @@ export default {
 			}
 		}
 	},
+	NFTScreen: {
+		assets: 'Ativos',
+		estimated_value: 'Valor estimado',
+		InfoModal: {
+			floor_price: 'O que é o valor de base?',
+			estimated_value: '• O valor estimado de sua coleção é baseado no preço mínimo de cada NFT.',
+			term: '• O preço mínimo é um termo dado para representar o preço atual mais baixo pelo qual se pode possuir uma NFT em uma determinada coleção ou projeto.'
+		}
+	},
 	NFTDetailScreen: {
-		this_nft: 'Este NFT está na'
+		this_nft: 'Este NFT está na',
+		by: 'por ',
+		Panel: {
+			floor_price: 'Preço de base',
+			last_sale_price: 'Último preço promocional'
+		},
+		view_on_openSea: 'Ver na OpenSea',
+		about: 'Sobre',
+		Expander: {
+			show_less: 'Ver menos',
+			show_more: 'Ver mais'
+		}
 	},
 	BackupSettingsScreen: {
 		title: 'Backup'

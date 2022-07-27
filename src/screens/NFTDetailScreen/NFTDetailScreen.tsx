@@ -1,32 +1,18 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Text, NetworkWarning, Button, Icon } from '@components';
-import { useLanguage, useNavigation, useTheme } from '@hooks';
+import { View, Image, SafeAreaView } from 'react-native';
+import { Text, NetworkWarning, Button } from '@components';
+import { useLanguage, useTheme } from '@hooks';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
 import styles from './NFTDetailScreen.styles';
+import { Header } from './Header/Header';
 
-const Header = () => {
-	const navigation = useNavigation();
-	return (
-		<View
-			style={{
-				width: '100%',
-				flexDirection: 'row',
-				alignItems: 'center',
-				paddingHorizontal: 16,
-				marginBottom: 24
-			}}
-		>
-			<TouchableOpacity onPress={() => navigation.goBack()}>
-				<Icon name="chevronLeft" size={20} color="cta1" style={{ marginRight: 16 }} />
-			</TouchableOpacity>
-			<Text type="hMedium" weight="bold">Doodle #3842</Text>
-		</View>
-	);
-};
+const collection = 'Doodles';
+const id = '#3842';
+const title = `${collection} ${id}`;
+const desc = 'A community-driven collectibles project featuring art by Burnt Toast. Doodles come in a joyful range of colors, traits and sizes with a collection size of 10,000. Each Doodle allows its owner to vote for experiences and activations paid for by the Doodles Community Treasury.';
 
 const NFTDetailScreen = () => {
 	const { colors } = useTheme();
@@ -36,15 +22,17 @@ const NFTDetailScreen = () => {
 			<SafeAreaView />
 
 			<View style={styles.topContainer}>
-				<Header />
+				<Header title={title} />
 				<Image
 					source={require('../NFTScreen/mockImages/2.png')}
 					style={styles.image}
 				/>
-				<Text type="hMedium" weight="bold">Doodle #3842</Text>
+				<Text type="hMedium" weight="bold">{title}</Text>
 				<View style={styles.byContainer}>
-					<Text type="tSmall" weight="bold">by </Text>
-					<Text type="tSmall" weight="bold" color="cta1">Doodles</Text>
+					<Text type="tSmall" weight="bold">
+						{i18n.t('NFTDetailScreen.by')}
+					</Text>
+					<Text type="tSmall" weight="bold" color="cta1">{collection}</Text>
 				</View>
 				<NetworkWarning.Tag title={i18n.t('NFTDetailScreen.this_nft')} />
 			</View>
@@ -57,14 +45,14 @@ const NFTDetailScreen = () => {
 
 				<Button
 					iconRight="openInNew"
-					title="View on OpenSea"
+					title={i18n.t('NFTDetailScreen.view_on_openSea')}
 					marginBottom={16}
 					onPress={() => null}
 				/>
 
 				<Expander
-					title="About Doodles"
-					desc="A community-driven collectibles project featuring art by Burnt Toast. Doodles come in a joyful range of colors, traits and sizes with a collection size of 10,000. Each Doodle allows its owner to vote for experiences and activations paid for by the Doodles Community Treasury."
+					title={`${i18n.t('NFTDetailScreen.about')} ${collection}`}
+					desc={desc}
 				/>
 				<SafeAreaView />
 			</Bottom>
