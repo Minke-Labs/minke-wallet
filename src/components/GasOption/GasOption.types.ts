@@ -5,5 +5,5 @@ export interface GasOptionProps {
 	selected?: boolean;
 	gasPrice: number;
 	usdPrice: number;
-	waiting: () => string | JSX.Element;
+	waiting: string | null;
 }

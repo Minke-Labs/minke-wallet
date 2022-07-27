@@ -5,12 +5,13 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import { makeStyles } from './GasOptionInner.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
+import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 
 interface GasOptionInnerProps {
 	type: 'normal' | 'fast' | 'slow';
 	gasPrice: number;
 	usdPrice: number;
-	waiting: () => string | JSX.Element;
+	waiting: string | null;
 }
 
 const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice, usdPrice }) => {
@@ -20,27 +21,21 @@ const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice
 	return (
 		<>
 			<View style={styles.icon}>
-				<Icon
-					name={type === 'fast' ? 'boltStroke' : 'clockStroke'}
-					size={20}
-					color="cta1"
-				/>
+				<Icon name={type === 'fast' ? 'boltStroke' : 'clockStroke'} size={20} color="cta1" />
 			</View>
 
 			<View style={{ marginRight: 16, flex: 1 }}>
 				<Text type="span" weight="bold">
 					{i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
 				</Text>
-				<Text type="span">{waiting()}</Text>
+				<Text type="span">{waiting}</Text>
 			</View>
 
 			<View style={{ alignItems: 'flex-end', flex: 1 }}>
 				<Text type="span" weight="bold">
 					${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}
 				</Text>
-				<Text type="span">
-					{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}
-				</Text>
+				<Text type="span">{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}</Text>
 			</View>
 		</>
 	);

@@ -22,29 +22,28 @@ const defaultWait: Wait = {
 };
 
 type Speeds = 'fast' | 'normal' | 'slow';
+type Price = { [key: string]: number };
+type WaitTime = { [key: string]: number | null };
 
 const GasSelector = () => {
 	const [type, setType] = React.useState<Speeds>('fast');
 	const { colors } = useTheme();
 
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
-	const [gasPrice, setGasPrice] = React.useState<number>();
+	const [gasPrice, setGasPrice] = React.useState<Price>({});
 	const [usdPrice, setUsdPrice] = React.useState<number>();
-	const [wait, setWait] = React.useState<number>(0);
+	const [wait, setWait] = React.useState<WaitTime>({});
+
+	const { type: selectedType } = exchange.gas.value || {};
+	const selected = selectedType === type;
 
 	const fetchGas = async () => {
 		const gas = await estimateGas();
 		const {
-			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, SafeGasPrice: slow }
+			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast }
 		} = gas;
 
-		let gasValue = normal;
-		if (type === 'fast') {
-			gasValue = fast;
-		} else if (type === 'slow') {
-			gasValue = slow;
-		}
-		setGasPrice(+gasValue);
+		setGasPrice({ normal: +normal, fast: +fast });
 		if (!exchange.gas.value && type === 'fast') {
 			exchange.gas.set({
 				type: 'fast',
@@ -63,45 +62,51 @@ const GasSelector = () => {
 		}
 	};
 
-	const waiting = useCallback(() => {
-		if (wait) {
-			if (wait > 60) {
-				return `~ ${wait / 60} min`;
+	const waiting = useCallback(
+		(waitType: string) => {
+			const waitValue = wait[waitType];
+			if (waitValue) {
+				if (waitValue > 60) {
+					return `~ ${waitValue / 60} min`;
+				}
+				return `~ ${waitValue} secs`;
 			}
-			return `~ ${wait} secs`;
-		}
-		return <ActivityIndicator size={16} />;
-	}, [wait]);
+
+			return null;
+		},
+		[wait]
+	);
 
 	useEffect(() => {
 		fetchGas();
 	}, []);
 
 	useEffect(() => {
+		const fetchConfirmation = async (gasType: string) => {
+			const value = gasPrice[gasType];
+			const { result } = await estimateConfirmationTime(value * 1000000000);
+			if (!Number.isNaN(+result)) {
+				return +result;
+			}
+			return null;
+		};
+
 		// ethereum network has this endpoint to check the times
 		const fetchConfirmationTimes = async () => {
 			if (gasPrice) {
 				const { transactionTimesEndpoint } = await network();
 				if (transactionTimesEndpoint) {
-					const { result } = await estimateConfirmationTime(gasPrice * 1000000000);
-					if (Number.isNaN(+result)) {
-						setTimeout(() => {
-							fetchConfirmationTimes();
-						}, 5000);
-					} else {
-						setWait(+result);
-					}
+					const result = await fetchConfirmation(type);
+					setWait({ [type]: result });
 				} else {
-					setWait(defaultWait[type as keyof Wait]);
+					const allWait = defaultWait[type as keyof Wait];
+					setWait({ normal: allWait, fast: allWait });
 				}
 			}
 		};
 
 		fetchConfirmationTimes();
-	}, [gasPrice]);
-
-	const { type: selectedType } = exchange.gas.value || {};
-	const selected = selectedType === type;
+	}, [selectedType]);
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -113,16 +118,20 @@ const GasSelector = () => {
 
 	useEffect(() => {
 		if (selected) {
-			exchange.gas.merge({ usdPrice, wait: wait || defaultWait[type as keyof Wait], gweiValue: gasPrice });
+			exchange.gas.merge({
+				usdPrice,
+				wait: wait[type] || defaultWait[type as keyof Wait],
+				gweiValue: gasPrice[type]
+			});
 		}
 	}, [gasPrice, usdPrice, wait]);
 
 	const onSelectGas = (val: Speeds) => {
 		exchange.gas.set({
 			type: val,
-			gweiValue: gasPrice,
+			gweiValue: gasPrice[val],
 			usdPrice,
-			wait: wait || defaultWait[type as keyof Wait]
+			wait: wait[val] || defaultWait[type as keyof Wait]
 		} as Gas);
 	};
 
@@ -132,14 +141,16 @@ const GasSelector = () => {
 	};
 
 	if (!gasPrice || !usdPrice) {
-		return <ActivityIndicator
-			size={24}
-			style={{
-				marginTop: 24,
-				marginBottom: 24,
-				paddingLeft: 0
-			}}
-		/>;
+		return (
+			<ActivityIndicator
+				size={24}
+				style={{
+					marginTop: 24,
+					marginBottom: 24,
+					paddingLeft: 0
+				}}
+			/>
+		);
 	}
 
 	return (
@@ -155,25 +166,37 @@ const GasSelector = () => {
 						type="fast"
 						onSelectGas={() => handleClick('fast')}
 						selected={type === 'fast'}
-						{...{ gasPrice, usdPrice, waiting }}
+						gasPrice={gasPrice.fast}
+						waiting={waiting('fast')}
+						usdPrice={usdPrice}
 					/>
 					<GasOption
 						type="normal"
 						onSelectGas={() => handleClick('normal')}
 						selected={type === 'normal'}
-						{...{ gasPrice, usdPrice, waiting }}
+						gasPrice={gasPrice.normal}
+						waiting={waiting('normal')}
+						usdPrice={usdPrice}
 					/>
 				</View>
 			</ScrollView>
 
 			<View style={styles.indicatorContainer}>
-				<View style={[styles.indicatorLeft, {
-					backgroundColor: type === 'fast' ? colors.cta1 : colors.text5
-				}]}
+				<View
+					style={[
+						styles.indicatorLeft,
+						{
+							backgroundColor: type === 'fast' ? colors.cta1 : colors.text5
+						}
+					]}
 				/>
-				<View style={[styles.indicatorRight, {
-					backgroundColor: type === 'normal' ? colors.cta1 : colors.text5
-				}]}
+				<View
+					style={[
+						styles.indicatorRight,
+						{
+							backgroundColor: type === 'normal' ? colors.cta1 : colors.text5
+						}
+					]}
 				/>
 			</View>
 		</View>
