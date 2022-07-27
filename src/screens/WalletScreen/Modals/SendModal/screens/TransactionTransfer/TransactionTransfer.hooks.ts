@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useEffect } from 'react';
 import {
 	useWalletState,
@@ -23,7 +24,7 @@ import { MinkeToken } from '@models/token';
 import { decimalSeparator } from 'expo-localization';
 import { approvalState } from '@models/deposit';
 import { gaslessApproval, gaslessSend, sendContract } from '@models/gaslessTransaction';
-import { parseUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureEvent } from '@sentry/react-native';
 import { toBn } from 'evm-bn';
@@ -88,6 +89,26 @@ export const useTransactionTransfer = ({
 			setEnoughGas(gasless || !!(balance && gasPrice ? balance.gte(requiredGas) : true));
 		}
 	}, [chainDefaultToken, gasPrice, balance]);
+
+	useEffect(() => {
+		if (
+			!gasless &&
+			token &&
+			chainDefaultToken &&
+			gasPrice?.result.ProposeGasPrice &&
+			!!token.balance &&
+			+token.balance > 0
+		) {
+			const isNativeToken = token.symbol === chainDefaultToken;
+			if (isNativeToken) {
+				const transactionPrice = +gasPrice.result.ProposeGasPrice * 120000; // gas price * gas limit
+				const gasValueInEth = formatUnits(parseUnits(transactionPrice.toString(), 'gwei'));
+				const newBalance = +token.balance - +gasValueInEth;
+				token.balanceUSD = (newBalance * token.balanceUSD!) / +token.balance;
+				token.balance = String(newBalance);
+			}
+		}
+	}, [gasPrice, token, chainDefaultToken]);
 
 	const { state } = useWalletState();
 	const {

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { View } from 'react-native';
-import { Paper, GasOptionInner, ActivityIndicator } from '@components';
+import { Paper, GasOptionInner } from '@components';
 import { State, useState } from '@hookstate/core';
 import { estimateGas, getEthLastPrice, estimateConfirmationTime } from '@models/wallet';
 import { ExchangeState, globalExchangeState, Gas } from '@stores/ExchangeStore';
@@ -67,7 +67,7 @@ export const GasSelected = () => {
 			}
 			return `~ ${wait} secs`;
 		}
-		return <ActivityIndicator size={16} />;
+		return null;
 	}, [wait]);
 
 	useEffect(() => {
@@ -100,12 +100,7 @@ export const GasSelected = () => {
 	return (
 		<Paper padding={16}>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-				<GasOptionInner
-					type={selectedType!}
-					gasPrice={gasPrice!}
-					usdPrice={usdPrice!}
-					waiting={waiting}
-				/>
+				<GasOptionInner type={selectedType!} gasPrice={gasPrice!} usdPrice={usdPrice!} waiting={waiting()} />
 			</View>
 		</Paper>
 	);

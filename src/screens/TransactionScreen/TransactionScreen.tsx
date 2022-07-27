@@ -67,13 +67,15 @@ const TransactionScreen = ({ route }: Props) => {
 				<Header title={description} />
 				<View style={styles.container}>
 					<View style={styles.titleRow}>
-						<Token name={token.toLowerCase() as TokenType} size={32} glow />
-						<Text color="text1" type="dMedium" weight="bold" style={styles.titleText}>
-							{token}
-						</Text>
-						<Text color="text1" type="dMedium" weight="bold" style={styles.titleText}>
+						<Text color="text1" type="dMedium" weight="bold">
 							{received || topUp || exchange || withdraw ? '+' : '-'}
 							{value}
+						</Text>
+						<View style={styles.titleText}>
+							<Token name={token.toLowerCase() as TokenType} size={32} glow />
+						</View>
+						<Text color="text1" type="dMedium" weight="bold" style={styles.titleText}>
+							{token}
 						</Text>
 					</View>
 				</View>

@@ -9,7 +9,7 @@ import { ExchangeState, Conversion, globalExchangeState } from '@stores/Exchange
 import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeTargetApproved } from '@models/gaslessTransaction';
 import { validatedExceptions } from '@models/exchange';
-import { parseUnits } from 'ethers/lib/utils';
+import { formatUnits, parseUnits } from 'ethers/lib/utils';
 
 interface PriceParams {
 	amount?: string;
@@ -253,6 +253,20 @@ export const useExchangeScreen = () => {
 	useEffect(() => {
 		setGasless(gaslessEnabled && (quote ? quote.gasless : true));
 	}, [gaslessEnabled, quote]);
+
+	useEffect(() => {
+		if (!gasless && fromToken && nativeToken && gweiValue && !!fromToken.balance && +fromToken.balance > 0) {
+			const isNativeToken = fromToken.symbol === nativeToken.symbol;
+			if (isNativeToken) {
+				const transactionPrice = gweiValue * 300000; // gas price * gas limit
+				const gasValueInEth = formatUnits(parseUnits(transactionPrice.toString(), 'gwei'));
+				const newBalance = +fromToken.balance - +gasValueInEth;
+				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
+				fromToken.balance = String(newBalance);
+				setFromToken(fromToken);
+			}
+		}
+	}, [gweiValue, fromToken, nativeToken]);
 
 	const enoughForGas =
 		gasless || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
