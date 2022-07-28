@@ -22,7 +22,7 @@ const DepositScreen = () => {
 	} = useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
 
-	if ((ableToDeposit === undefined) || (approved === undefined) || !apy) {
+	if ((ableToDeposit === undefined) || !apy) {
 		return <BlankStates.Deposit />;
 	}
 
@@ -41,6 +41,10 @@ const DepositScreen = () => {
 				</Modal>
 			</>
 		);
+	}
+
+	if ((approved === undefined) || !apy) {
+		return <BlankStates.Deposit />;
 	}
 
 	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
