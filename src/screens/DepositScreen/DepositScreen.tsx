@@ -42,7 +42,6 @@ const DepositScreen = () => {
 	}
 
 	if (approved === undefined) return <BlankStates.Deposit />;
-	if (!apy) return <BlankStates.Deposit />;
 
 	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;
