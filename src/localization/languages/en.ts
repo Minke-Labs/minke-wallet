@@ -1025,6 +1025,7 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Choose token',
+			choose_currency: 'Choose currency',
 			available: 'Available'
 		},
 		InterestBanner: {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Currency } from '@models/types/currency.types';
 import { useCountry, useCurrencies } from '@hooks';
+import { countries } from '@styles';
 
 const useAddFundsScreen = () => {
 	const [currency, setCurrency] = React.useState<Currency>();
@@ -9,9 +10,10 @@ const useAddFundsScreen = () => {
 	const { country } = useCountry();
 
 	useEffect(() => {
-		const defaultCurrency = currencies.find((c) => c.country === country);
+		const countryLetters = Object.keys(countries).find((key) => countries[key] === country);
+		const defaultCurrency = currencies.find((c) => c.country === countryLetters);
 		setCurrency(defaultCurrency || currencies[0]);
-	}, [country]);
+	}, [country, currencies]);
 
 	const openCurrencySearch = () => setCurrencySearchVisible(true);
 	const dismissCurrencySearch = () => setCurrencySearchVisible(false);

@@ -1,59 +1,20 @@
 import { Currency } from '@models/types/currency.types';
-import { countries, flag } from '@styles';
-import useLanguage from './useLanguage';
+import { useEffect, useState } from 'react';
+import { getCurrencies } from '@src/services/apis';
+import { fiatCurrencies } from '@models/currency';
 
 const useCurrencies = () => {
-	const { i18n } = useLanguage();
-	const enabled = [
-		'AU',
-		'AR',
-		'BR',
-		'CA',
-		'EU',
-		'GB',
-		'LK',
-		'NG',
-		'PK',
-		'TR',
-		'US',
-		'BG',
-		'CH',
-		'CO',
-		'CZ',
-		'DK',
-		'DO',
-		'EG',
-		'HK',
-		'HR',
-		'ID',
-		'JP',
-		'JO',
-		'KE',
-		'KR',
-		'KW',
-		'MA',
-		'MX',
-		'MY',
-		'NO',
-		'NZ',
-		'OM',
-		'PE',
-		'PL',
-		'RO',
-		'SG',
-		'SE',
-		'TH',
-		'TW',
-		'VN',
-		'ZA',
-		'IL',
-		'CN'
-	].sort();
-	const currencies: Currency[] = enabled.map((country) => ({
-		country: countries[country],
-		flag: flag[country],
-		name: i18n.t(`LocationContext.${country}.currencyName`)
-	}));
+	const [currencies, setCurrencies] = useState<Currency[]>([]);
+
+	useEffect(() => {
+		const fetchCurrencies = async () => {
+			const moonpayCurrencies = await getCurrencies();
+			const enabled = moonpayCurrencies.filter(({ type }) => type === 'fiat');
+			setCurrencies(enabled.map(({ code }) => fiatCurrencies[code.toUpperCase()]));
+		};
+
+		fetchCurrencies();
+	}, []);
 
 	return {
 		currencies

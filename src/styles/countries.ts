@@ -37,7 +37,7 @@ const countries: { [key: string]: string } = {
 	KH: 'cambodia',
 	CM: 'cameroon',
 	CA: 'canada',
-	CV: 'cape Verde',
+	CV: 'capeVerde',
 	KY: 'caymanIslands',
 	CF: 'centralAfricanRepublic',
 	TD: 'chad',

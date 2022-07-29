@@ -4,7 +4,7 @@ import { useTheme, useLanguage, useCurrencies } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Currency } from '@models/types/currency.types';
-import { FlagType } from '@src/styles';
+import { countries, FlagType } from '@src/styles';
 import Flag from '../../Flag/Flag';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
@@ -30,7 +30,7 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 
 	useEffect(() => {
 		filter();
-	}, [selected]);
+	}, [selected, currencies]);
 
 	useEffect(() => {
 		setSearch('');
@@ -40,16 +40,19 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 		setSearch(text);
 		let source;
 		if (text) {
-			source = currencies.filter(({ name }) => name.toLowerCase().includes(text.toLowerCase()));
+			source = currencies.filter(({ code }) => code.toLowerCase().includes(text.toLowerCase()));
 		} else {
 			source = currencies;
 		}
 		setFilteredCurrencies((source || []).filter(({ country }) => country !== selected?.country));
 	};
 
-	const countryName = (id: string) => {
-		const capitalized = id.charAt(0).toUpperCase() + id.slice(1);
-		return capitalized.split(/(?=[A-Z])/).join(' ');
+	const countryName = ({ country }: Currency) => {
+		if (!country) return '';
+
+		const capitalized = country.charAt(0).toUpperCase() + country.slice(1);
+		const defaultValue = capitalized.split(/(?=[A-Z])/).join(' ');
+		return i18n.t(`LocationContext.${country}.name`, { defaultValue });
 	};
 
 	if (!visible) {
@@ -72,15 +75,19 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 				<FlatList
 					style={styles.list}
 					data={filteredCurrencies}
-					keyExtractor={(currency) => currency.name}
+					keyExtractor={(currency) => currency.code}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => onCurrencySelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>
-								<Flag size={40} name={item.country as FlagType} />
+								<Flag size={40} name={countries[item.country] as FlagType} />
 							</View>
 							<View style={styles.tokenItemNameContainer}>
-								<Text style={styles.tokenItemSymbol}>{countryName(item.country)}</Text>
-								<Text style={styles.tokenItemName}>{item.name}</Text>
+								<Text style={styles.tokenItemSymbol}>{countryName(item)}</Text>
+								<Text style={styles.tokenItemName}>
+									{i18n.t(`LocationContext.${item.country}.currencyName`, {
+										defaultValue: item.name
+									})}
+								</Text>
 							</View>
 						</TouchableOpacity>
 					)}

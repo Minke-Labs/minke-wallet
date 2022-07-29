@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLanguage, useTheme } from '@hooks';
-import { FlagType } from '@styles';
+import { countries, FlagType } from '@styles';
 import { Currency } from '@models/types/currency.types';
 import styles from './CurrencySelector.styles';
 import Text from '../Text/Text';
@@ -25,12 +25,14 @@ interface TitlesProps {
 }
 
 const Titles: React.FC<TitlesProps> = ({ currency, notTouchable = false }) => {
-	const { name } = currency;
+	const { i18n } = useLanguage();
 	return (
 		<>
 			<View style={styles.titlesUpper}>
 				<Text type="p2" style={{ marginRight: 4 }} weight="extraBold">
-					{name}
+					{i18n.t(`LocationContext.${currency.country}.currencyName`, {
+						defaultValue: currency.name
+					})}
 				</Text>
 				{!notTouchable && <Icon name="chevronDown" color="cta1" size={16} />}
 			</View>
@@ -49,7 +51,7 @@ const TitlesEmpty = () => {
 			}}
 		>
 			<Text type="p2" weight="medium" style={{ marginRight: 4 }}>
-				{i18n.t('Components.TokenCard.choose_token')}
+				{i18n.t('Components.TokenCard.choose_currency')}
 			</Text>
 			<Icon name="chevronDown" color="cta1" size={16} />
 		</View>
@@ -59,7 +61,7 @@ const TitlesEmpty = () => {
 const CurrencySelector: React.FC<CurrencySelectorProps> = ({ onPress, notTouchable, currency }) => (
 	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
 		<View style={styles.container}>
-			{currency ? <Flag size={28} name={currency.country as FlagType} /> : <NoTokenIcon />}
+			{currency ? <Flag size={28} name={countries[currency.country] as FlagType} /> : <NoTokenIcon />}
 
 			<View style={styles.titlesContainer}>
 				{currency ? <Titles {...{ currency, notTouchable }} /> : <TitlesEmpty />}
