@@ -5,6 +5,7 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import { useKeyboard, useNavigation, useWalletCloudBackup, useLanguage } from '@hooks';
 import { backupImg } from '@images';
 import { saveBackupPassword } from '@models/backup';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import { BackupToICloudProps } from '../BackupToICloudScreen.types';
 import styles from './CreateBackupPassword.styles';
 
@@ -88,7 +89,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 				/>
 
 				<Button
-					title={i18n.t('Components.Buttons.backup_to_icloud')}
+					title={i18n.t('Components.Buttons.backup_to_icloud', { cloudPlatform })}
 					iconRight="cloudStroke"
 					disabled={!isPasswordValid}
 					onPress={onConfirmBackup}
