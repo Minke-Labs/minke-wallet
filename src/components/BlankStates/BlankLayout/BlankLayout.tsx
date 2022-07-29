@@ -16,7 +16,12 @@ import styles from './BlankLayout.styles';
 
 const timing = { duration: 1200 };
 
-const BlankLayout: React.FC<{ title: string }> = ({ children, title }) => {
+interface BlankLayoutProps {
+	title?: string;
+	br?: number;
+}
+
+const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) => {
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const posX = useSharedValue(-screenWidth);
@@ -32,15 +37,20 @@ const BlankLayout: React.FC<{ title: string }> = ({ children, title }) => {
 	return (
 		<View style={{
 			backgroundColor: colors.background5,
-			flex: 1
+			flex: 1,
+			borderRadius: br
 		}}
 		>
 			<SafeAreaView />
-			<ModalHeader
-				onDismiss={() => navigation.goBack()}
-				onBack={() => navigation.goBack()}
-				title={title}
-			/>
+			{
+				title && (
+					<ModalHeader
+						onDismiss={() => navigation.goBack()}
+						onBack={() => navigation.goBack()}
+						title={title}
+					/>
+				)
+			}
 			<MaskedView
 				androidRenderingMode="software"
 				style={{ flex: 1 }}
