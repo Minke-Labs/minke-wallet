@@ -43,7 +43,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 		>
 			<SafeAreaView />
 			{
-				title && (
+				!!title && (
 					<ModalHeader
 						onDismiss={() => navigation.goBack()}
 						onBack={() => navigation.goBack()}
