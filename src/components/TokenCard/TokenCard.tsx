@@ -30,7 +30,12 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
 	return (
 		<TouchableOpacity onPress={onPress} style={styles.container}>
-			<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
+			<CoinSelector
+				token={token}
+				onPress={onPress!}
+				notTouchable={notTouchable}
+				inline={exchange}
+			/>
 
 			<View
 				style={

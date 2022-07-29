@@ -760,6 +760,14 @@ export default {
 		}
 	},
 	Components: {
+		BlankStates: {
+			WalletAssets: 'Carteira',
+			Exchange: 'Converter',
+			Save: 'Investir',
+			Deposit: 'Depositar',
+			Withdraw: 'Retirar',
+			Send: 'Qual token você deseja enviar para {{to}}?'
+		},
 		CountrySelector: {
 			country: 'País',
 			to_offer:

@@ -4,7 +4,7 @@ import { useState } from '@hookstate/core';
 import { MinkeToken } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { usdCoinSettingsKey } from '@models/deposit';
+import { DepositProtocol, usdCoinSettingsKey } from '@models/deposit';
 import {
 	useNavigation,
 	useTokens,
@@ -12,7 +12,6 @@ import {
 	useBiconomy,
 	useNativeToken,
 	useTransactions,
-	useDepositProtocols,
 	useWalletManagement
 } from '@hooks';
 import Logger from '@utils/logger';
@@ -21,8 +20,15 @@ import { toBn } from 'evm-bn';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
 import { captureException } from '@sentry/react-native';
+import { DepositableToken } from '@models/types/depositTokens.types';
 
-export const useDeposit = () => {
+interface UseDepositProps {
+	depositableToken: DepositableToken | undefined;
+	selectedProtocol: DepositProtocol | undefined;
+	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDCoin }: UseDepositProps) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const { nativeToken, balance } = useNativeToken();
 	const { track } = useAmplitude();
@@ -38,7 +44,6 @@ export const useDeposit = () => {
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const { addPendingTransaction } = useTransactions();
-	const { setSelectedUSDCoin, apy, depositableToken, selectedProtocol } = useDepositProtocols();
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 
 	const updateAmount = (value: string) => {
@@ -154,7 +159,6 @@ export const useDeposit = () => {
 		showModal,
 		onTokenSelect,
 		tokens: depositableTokens,
-		apy,
 		selectedProtocol,
 		blockchainError,
 		setBlockchainError,

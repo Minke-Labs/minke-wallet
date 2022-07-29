@@ -756,6 +756,14 @@ export default {
 		}
 	},
 	Components: {
+		BlankStates: {
+			WalletAssets: 'Wallet',
+			Exchange: 'Exchange',
+			Save: 'Save',
+			Deposit: 'Deposit',
+			Withdraw: 'Withdraw',
+			Send: 'Which asset do you want to send to {{to}}?'
+		},
 		CountrySelector: {
 			country: 'Country',
 			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',

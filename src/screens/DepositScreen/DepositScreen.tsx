@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ScreenLoadingIndicator } from '@components';
+import { Modal, BlankStates } from '@components';
 import { AddFunds } from '@containers';
 import { useDepositProtocols } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
@@ -11,12 +11,18 @@ import { useDepositScreen } from './DepositScreen.hooks';
 const DepositScreen = () => {
 	const { notAbleToSaveVisible, notAbleToSaveDismiss, addFundsVisible, dismissAddFunds, onAddFunds } =
 		useDepositScreen();
-	const { ableToDeposit, approved, setApproved } = useDepositProtocols();
+	const {
+		setSelectedUSDCoin,
+		depositableToken,
+		selectedProtocol,
+		ableToDeposit,
+		approved,
+		setApproved,
+		apy
+	} = useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
 
-	if (ableToDeposit === undefined) {
-		return <ScreenLoadingIndicator />;
-	}
+	if (ableToDeposit === undefined) return <BlankStates.Deposit />;
 
 	if (!ableToDeposit) {
 		return (
@@ -35,11 +41,9 @@ const DepositScreen = () => {
 		);
 	}
 
-	if (approved === undefined) {
-		return <ScreenLoadingIndicator />;
-	}
+	if (approved === undefined) return <BlankStates.Deposit />;
 
-	if (approved) return <Deposit />;
+	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;
 };
 
