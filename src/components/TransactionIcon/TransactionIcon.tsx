@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 import { useTheme } from '@hooks';
@@ -15,12 +14,20 @@ const TransactionIcon: React.FC<TransactionIconProps> = ({
 	topUp,
 	exchange,
 	deposit,
-	withdraw
+	withdraw,
+	size = 32,
+	arrowSize = 20
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	return (
-		<View style={[styles.container, { ...((received || deposit) && { borderColor: colors.alert3 }) }]}>
+		<View
+			style={[
+				styles.container,
+				{ ...((received || deposit) && { borderColor: colors.alert3 }) },
+				{ width: size, height: size }
+			]}
+		>
 			<Icon
 				name={
 					deposit || withdraw
@@ -34,7 +41,7 @@ const TransactionIcon: React.FC<TransactionIconProps> = ({
 						: 'arrowUp'
 				}
 				color={received || deposit ? 'alert3' : 'text3'}
-				size={20}
+				size={arrowSize}
 			/>
 			<IconInner {...{ pending, failed }} />
 		</View>

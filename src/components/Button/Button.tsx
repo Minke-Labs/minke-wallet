@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useTheme } from '@hooks';
 import { ColorType } from '@styles';

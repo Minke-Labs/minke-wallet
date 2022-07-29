@@ -353,7 +353,8 @@ export default {
 			delete_wallet: 'Deletar carteira',
 			keep_wallet: 'Manter carteira',
 			are_you_sure: 'Você tem certeza que quer deletar esta carteira?',
-			recover: 'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
+			recover:
+				'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
 		},
 		title: 'Configurações',
 		creating_wallet: 'Criando Carteira',
@@ -690,6 +691,17 @@ export default {
 			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
 		}
 	},
+	TransactionScreen: {
+		transaction_type: 'Transação:',
+		date: 'Data:',
+		sent_to: 'Enviou para:',
+		exchanged: 'Converteu:',
+		exchange_details: '{{fromAmount}} {{from}} para {{toAmount}} {{to}}',
+		hash: 'Hash',
+		exchange_rate: 'Cotação',
+		savings_account: 'Conta de investimentos:',
+		received_from: 'Recebido de:'
+	},
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Fazendo backup...',
@@ -758,7 +770,8 @@ export default {
 		},
 		CountrySelector: {
 			country: 'País',
-			to_offer: 'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
+			to_offer:
+				'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
 			select: 'Selecione um País'
 		},
 		AaveReusables: {
@@ -796,7 +809,13 @@ export default {
 			to: 'Para',
 			today: 'Hoje',
 			yesterday: 'Ontem',
-			this_month: 'Nesse mês'
+			this_month: 'Nesse mês',
+			top_up: 'Adicionou Fundos',
+			savings_withdrew: 'Retirada',
+			savings_deposited: 'Investimento',
+			exchanged: 'Converteu',
+			received: 'Recebeu',
+			sent: 'Enviou'
 		},
 		LoadingScreen: {
 			this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'

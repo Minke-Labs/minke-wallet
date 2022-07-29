@@ -4,8 +4,6 @@ import { StyleSheet } from 'react-native';
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
 		container: {
-			width: 32,
-			height: 32,
 			borderRadius: 16,
 			borderWidth: 1,
 			justifyContent: 'center',
