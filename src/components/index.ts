@@ -1,4 +1,5 @@
 import AaveReusables from './AaveReusables';
+import BlankStates from './BlankStates';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
 import Button from './Button/Button';
@@ -54,6 +55,7 @@ import WatchModeTag from './WatchModeTag/WatchModeTag';
 
 export {
 	AaveReusables,
+	BlankStates,
 	ActivityIndicator,
 	Text,
 	AnimatedText,
