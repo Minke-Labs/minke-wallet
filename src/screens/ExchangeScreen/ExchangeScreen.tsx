@@ -42,7 +42,7 @@ const ExchangeScreen = () => {
 	const keyboardVisible = useKeyboard();
 	RNUxcam.tagScreenName('ExchangeScreen');
 
-	if (loadingPrices || (fromToken === undefined)) return <BlankStates.Exchange />;
+	if (fromToken === undefined) return <BlankStates.Exchange />;
 
 	return (
 		<>
