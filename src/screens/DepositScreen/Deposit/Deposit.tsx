@@ -2,7 +2,17 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/token';
-import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper, WatchModeTag } from '@components';
+import {
+	Modal,
+	TokenCard,
+	HapticButton,
+	ModalReusables,
+	Header,
+	GasSelector,
+	Paper,
+	WatchModeTag,
+	BlankStates
+} from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
@@ -47,6 +57,10 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 	useEffect(() => {
 		track('Deposit Screen Opened');
 	}, []);
+
+	if (!token) {
+		return <BlankStates.Deposit />;
+	}
 
 	return (
 		<>
