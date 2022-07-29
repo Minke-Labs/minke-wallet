@@ -1,151 +1,48 @@
 import React, { useEffect } from 'react';
-import { View, Keyboard } from 'react-native';
+import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/token';
 import { Modal, TokenCard, HapticButton, ModalReusables, Header, GasSelector, Paper, WatchModeTag } from '@components';
-import {
-	useNavigation,
-	useAmplitude,
-	useLanguage,
-	useBiconomy,
-	useNativeToken,
-	useTransactions,
-	useWalletManagement
-} from '@hooks';
+import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
-import { globalExchangeState } from '@stores/ExchangeStore';
-import { usdCoinSettingsKey } from '@models/deposit';
-import Logger from '@utils/logger';
-import { toBn } from 'evm-bn';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
-import Deposit from '@src/services/deposit/DepositService';
-import { captureException } from '@sentry/react-native';
-import { DepositProps } from './Deposit.types';
+import { DepositableToken } from '@models/types/depositTokens.types';
+import { DepositProtocol } from '@models/deposit';
+import { useDeposit } from './Deposit.hooks';
 import styles from './Deposit.styles';
 
-const DepositS: React.FC<DepositProps> = ({
-	apy,
-	depositableToken,
-	selectedProtocol,
-	setSelectedUSDCoin,
-	token,
-	setToken,
-	depositableTokens
-}) => {
+interface DepositProps {
+	apy: string;
+	depositableToken: DepositableToken | undefined;
+	selectedProtocol: DepositProtocol | undefined;
+	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtocol, setSelectedUSDCoin }) => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { biconomy, gaslessEnabled } = useBiconomy();
-	const { nativeToken, balance } = useNativeToken();
-	const { address, privateKey } = globalWalletState().value;
-	const { gas } = useState(globalExchangeState()).value;
-	const { gweiValue = 0 } = gas || {};
-	const [amount, setAmount] = React.useState('0');
-	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
-	const [blockchainError, setBlockchainError] = React.useState(false);
-	const [transactionHash, setTransactionHash] = React.useState('');
-	const [searchVisible, setSearchVisible] = React.useState(false);
-	const { addPendingTransaction } = useTransactions();
 	const {
+		tokens,
+		token,
+		updateAmount,
+		canDeposit,
+		onDeposit,
+		waitingTransaction,
+		transactionHash,
+		nativeToken,
+		enoughForGas,
+		gaslessEnabled,
+		searchVisible,
+		hideModal,
+		showModal,
+		onTokenSelect,
+		blockchainError,
+		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork,
-		walletConnect,
-		connector
-	} = useWalletManagement();
-
-	const updateAmount = (value: string) => {
-		const formatedValue = value.replace(/,/g, '.');
-		if (!formatedValue || (!formatedValue.endsWith('.') && !formatedValue.startsWith('.'))) {
-			setAmount(formatedValue);
-		}
-	};
-
-	const enoughForGas =
-		gaslessEnabled || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
-	const canDeposit =
-		token &&
-		token.balance &&
-		+amount > 0 &&
-		+token.balance >= +amount &&
-		enoughForGas &&
-		(gaslessEnabled || gweiValue > 0); // if gasless we dont need a gwei value
-
-	const onDeposit = async () => {
-		Keyboard.dismiss();
-		if (canDeposit && depositableToken && selectedProtocol && token) {
-			setWaitingTransaction(true);
-			try {
-				const hash = await new Deposit(selectedProtocol.id).deposit({
-					address,
-					privateKey,
-					amount: formatUnits(toBn(amount, token.decimals), 'wei'),
-					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
-					gasPrice: gweiValue.toString(),
-					depositableToken,
-					gasless: gaslessEnabled,
-					biconomy,
-					walletConnect,
-					connector
-				});
-
-				if (hash) {
-					Logger.log(`Deposit ${JSON.stringify(hash)}`);
-					setTransactionHash(hash);
-					track('Deposited', {
-						token: token.symbol,
-						amount,
-						hash,
-						gasless: gaslessEnabled
-					});
-					addPendingTransaction({
-						from: token.address,
-						destination: address,
-						hash,
-						txSuccessful: true,
-						pending: true,
-						timeStamp: (new Date().getTime() / 1000).toString(),
-						amount,
-						direction: 'exchange',
-						symbol: token.symbol,
-						subTransactions: [
-							{ type: 'outgoing', symbol: token.symbol, amount: +amount },
-							{ type: 'incoming', symbol: depositableToken.interestBearingToken.symbol, amount: +amount }
-						]
-					});
-					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
-				} else {
-					Logger.error('Error depositing');
-				}
-			} catch (error) {
-				setWaitingTransaction(false);
-				captureException(error);
-				Logger.error('Deposit blockchain error', error);
-				setBlockchainError(true);
-			}
-		}
-	};
-
-	const showModal = () => {
-		Keyboard.dismiss();
-		setSearchVisible(true);
-	};
-
-	const hideModal = () => {
-		Keyboard.dismiss();
-		setSearchVisible(false);
-	};
-
-	const onTokenSelect = async (selectedToken: MinkeToken) => {
-		hideModal();
-		setToken(selectedToken);
-		await AsyncStorage.setItem(usdCoinSettingsKey, selectedToken.symbol);
-		setSelectedUSDCoin(selectedToken.symbol);
-	};
+		needToChangeNetwork
+	} = useDeposit({ depositableToken, selectedProtocol, setSelectedUSDCoin });
 
 	useEffect(() => {
 		track('Deposit Screen Opened');
@@ -190,7 +87,7 @@ const DepositS: React.FC<DepositProps> = ({
 					visible={searchVisible}
 					onDismiss={hideModal}
 					onTokenSelect={onTokenSelect}
-					ownedTokens={depositableTokens}
+					ownedTokens={tokens}
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
@@ -223,4 +120,4 @@ const DepositS: React.FC<DepositProps> = ({
 	);
 };
 
-export default DepositS;
+export default Deposit;
