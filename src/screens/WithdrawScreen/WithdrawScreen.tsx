@@ -48,7 +48,7 @@ const WithdrawScreen = () => {
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
-	if (!apy || (token === undefined)) return <BlankStates.Withdraw />;
+	if (token === undefined) return <BlankStates.Withdraw />;
 
 	return (
 		<>
