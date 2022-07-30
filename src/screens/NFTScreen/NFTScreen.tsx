@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, FlatList } from 'react-native';
 import { AssetsLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
 import { useLanguage } from '@hooks';
@@ -32,15 +32,13 @@ const NFTScreen = () => {
 						{i18n.t('NFTScreen.assets')}
 					</Text>
 
-					<ScrollView>
-
-						{
-							collectionArr.map((item: string) => (
-								<Item slug={item} key={item} />
-							))
-						}
-
-					</ScrollView>
+					<FlatList
+						data={collectionArr}
+						keyExtractor={(item) => item.toString()}
+						renderItem={({ item }) => (
+							<Item slug={item} />
+						)}
+					/>
 
 				</View>
 			</AssetsLayout>
