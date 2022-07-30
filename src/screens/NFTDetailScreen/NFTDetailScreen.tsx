@@ -34,7 +34,7 @@ const NFTDetailScreen = () => {
 			<View style={styles.topContainer}>
 				<Header title={title} />
 				<Image
-					source={require('../NFTScreen/mockImages/2.png')}
+					source={require('../NFTScreen/mockImages/1.png')}
 					style={styles.image}
 				/>
 				<Text type="hMedium" weight="bold">{title}</Text>

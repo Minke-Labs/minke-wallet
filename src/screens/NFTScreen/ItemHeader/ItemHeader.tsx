@@ -1,8 +1,13 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import { Text } from '@components';
+import { getCollectionBySlug } from '@models/openSea';
 
-export const ItemHeader = () => (
+interface ItemHeaderProps {
+	slug: string;
+}
+
+export const ItemHeader: React.FC<ItemHeaderProps> = ({ slug }) => (
 	<View style={{
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -10,7 +15,7 @@ export const ItemHeader = () => (
 	}}
 	>
 		<Image
-			source={require('../mockImages/1.png')}
+			source={{ uri: getCollectionBySlug(slug).image }}
 			style={{
 				width: 32,
 				height: 32,
@@ -18,6 +23,6 @@ export const ItemHeader = () => (
 				marginRight: 8
 			}}
 		/>
-		<Text type="lMedium" weight="semiBold">Doodles</Text>
+		<Text type="lMedium" weight="semiBold">{getCollectionBySlug(slug).name}</Text>
 	</View>
 );
