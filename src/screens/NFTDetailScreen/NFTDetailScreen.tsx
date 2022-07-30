@@ -1,48 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, SafeAreaView } from 'react-native';
+import React from 'react';
+import { View, Image, SafeAreaView, Linking } from 'react-native';
 import { Text, NetworkWarning, Button } from '@components';
 import { useLanguage, useTheme } from '@hooks';
-import { getCollectionInfo } from '@models/openSea';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
 import styles from './NFTDetailScreen.styles';
 import { Header } from './Header/Header';
 
-const id = '#3842';
-const collectionSlug = 'doodles-official';
-
-const NFTDetailScreen = () => {
-	const [collectionInfo, setCollectionInfo] = useState<any>();
+type Props = NativeStackScreenProps<RootStackParamList, 'NFTDetailScreen'>;
+const NFTDetailScreen = ({ route }: Props) => {
+	const { nft } = route.params;
 	const { colors } = useTheme();
 	const { i18n } = useLanguage();
-
-	const title = `${collectionInfo?.name || ''} ${id}`;
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const res = await getCollectionInfo({ slug: collectionSlug });
-			if (res) setCollectionInfo(res);
-		};
-		fetchData();
-	}, []);
 
 	return (
 		<View style={{ flex: 1, backgroundColor: colors.background5 }}>
 			<SafeAreaView />
 
 			<View style={styles.topContainer}>
-				<Header title={title} />
+				<Header title={nft.name} />
 				<Image
-					source={require('../NFTScreen/mockImages/1.png')}
+					source={{ uri: nft.image }}
 					style={styles.image}
 				/>
-				<Text type="hMedium" weight="bold">{title}</Text>
+				<Text type="hMedium" weight="bold">{nft.name}</Text>
 				<View style={styles.byContainer}>
 					<Text type="tSmall" weight="bold">
 						{i18n.t('NFTDetailScreen.by')}
 					</Text>
-					<Text type="tSmall" weight="bold" color="cta1">{collectionInfo?.name || ''}</Text>
+					<Text type="tSmall" weight="bold" color="cta1">
+						{nft.collection.name}
+					</Text>
 				</View>
 				<NetworkWarning.Tag title={i18n.t('NFTDetailScreen.this_nft')} />
 			</View>
@@ -56,11 +47,11 @@ const NFTDetailScreen = () => {
 					iconRight="openInNew"
 					title={i18n.t('NFTDetailScreen.view_on_openSea')}
 					marginBottom={16}
-					onPress={() => null}
+					onPress={() => Linking.openURL(nft.permalink)}
 				/>
 				<Expander
-					title={`${i18n.t('NFTDetailScreen.about')} ${collectionInfo?.name || ''}`}
-					desc={collectionInfo?.desc || ''}
+					title={`${i18n.t('NFTDetailScreen.about')} ${nft.collection.name}`}
+					desc={nft.collection.desc}
 				/>
 				<SafeAreaView />
 			</Bottom>

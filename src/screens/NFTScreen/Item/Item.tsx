@@ -29,7 +29,7 @@ const Item: React.FC<ItemProps> = ({ slug }) => {
 					data={nfts}
 					keyExtractor={(item) => item.toString()}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen')}>
+						<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
 							<Image
 								style={styles.image}
 								source={{ uri: item.thumb }}
