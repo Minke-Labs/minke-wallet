@@ -1,10 +1,9 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View } from 'react-native';
 import { useLanguage, useTokens } from '@hooks';
 import { AddFunds } from '@containers';
 import { AssetsLayout } from '@layouts';
-import { ActivityIndicator, Modal, Text } from '@components';
+import { ActivityIndicator, Modal, Text, BlankStates } from '@components';
 import { numberFormat } from '@helpers/utilities';
 import RNUxcam from 'react-native-ux-cam';
 import { MinkeToken } from '@models/token';
@@ -35,6 +34,8 @@ const WalletAssetsScreen = () => {
 	RNUxcam.tagScreenName('WalletAssetsScreen');
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const { tokens, walletBalance: balance } = useTokens();
+
+	if (tokens === undefined) return <BlankStates.WalletAssets />;
 
 	return (
 		<>

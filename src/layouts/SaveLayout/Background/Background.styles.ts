@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
@@ -7,7 +7,8 @@ export const makeStyles = (colors: ColorType) =>
 		backgroundContainer: {
 			height: '100%',
 			backgroundColor: colors.background1,
-			justifyContent: 'space-between'
+			justifyContent: 'space-between',
+			paddingTop: StatusBar.currentHeight
 		},
 
 		// BACKGROUND

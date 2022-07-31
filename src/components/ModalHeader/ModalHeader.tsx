@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { deviceWidth } from '@styles';
 import Text from '../Text/Text';
 import styles from './ModalHeader.styles';
 import Icon from '../Icon/Icon';
@@ -19,7 +20,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = ''
 				</TouchableOpacity>
 			)}
 			{!!title && (
-				<Text type="hSmall" weight="bold" style={{ marginLeft: 8 }}>
+				<Text type="hSmall" weight="bold" style={{ marginLeft: 8, maxWidth: deviceWidth * 0.8 }}>
 					{title}
 				</Text>
 			)}

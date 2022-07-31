@@ -1,7 +1,6 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, FlatList, Image } from 'react-native';
-import { Text, EmptyStates, ActivityIndicator } from '@components';
+import { Text, EmptyStates, BlankStates } from '@components';
 import { useLanguage } from '@hooks';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';
@@ -27,7 +26,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				?
 			</Text>
 			{tokens === undefined ? (
-				<ActivityIndicator />
+				<BlankStates.Send />
 			) : tokens.length > 0 ? (
 				<FlatList
 					style={styles.tokensList}

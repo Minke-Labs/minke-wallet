@@ -46,7 +46,12 @@ const SendModal: React.FC<SendModalProps> = ({ onDismiss, onError, sentSuccessfu
 					<TransactionContacts onSelected={onUserSelected} />
 				))}
 
-			{currentStep === 1 && <TransactionSelectFunds user={user} onSelected={onTokenSelected} />}
+			{currentStep === 1 && (
+				<TransactionSelectFunds
+					user={user}
+					onSelected={onTokenSelected}
+				/>
+			)}
 
 			{currentStep === 2 && token && (
 				<TransactionTransfer
