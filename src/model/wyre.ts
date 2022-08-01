@@ -1,7 +1,7 @@
 // @ts-expect-error
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
 import { captureException } from '@sentry/react-native';
-import { get, split } from 'lodash';
+import { get, pick, split } from 'lodash';
 import {
 	WYRE_MERCHANT_ID_TEST,
 	WYRE_MERCHANT_ID,
@@ -13,6 +13,8 @@ import {
 import { WyreReferenceInfo } from '@stores/TopUpStore';
 import { Network } from './network';
 import { ApplePayResponse } from './types/wyre.types';
+import { Currency } from './types/currency.types';
+import { fiatCurrencies } from './currency';
 
 const SOURCE_CURRENCY_USD = 'USD';
 const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';
@@ -328,3 +330,37 @@ export const getOrderId = async (
 		};
 	}
 };
+
+export const availableFiatCurrencies: { [key: string]: Currency } = pick(
+	fiatCurrencies,
+	'USD',
+	'EUR',
+	'GBP',
+	'AUD',
+	'CAD',
+	'NZD',
+	'CNY',
+	'ARS',
+	'BRL',
+	'CHF',
+	'CLP',
+	'COP',
+	'CZK',
+	'DKK',
+	'HKD',
+	'ILS',
+	'INR',
+	'ISK',
+	'JPY',
+	'KRW',
+	'MXN',
+	'MYR',
+	'NOK',
+	'PHP',
+	'PLN',
+	'SEK',
+	'SGD',
+	'THB',
+	'VND',
+	'ZAR'
+);
