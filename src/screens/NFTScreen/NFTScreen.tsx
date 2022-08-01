@@ -3,14 +3,13 @@ import { View, TouchableOpacity, FlatList } from 'react-native';
 import { AssetsLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
 import { useLanguage } from '@hooks';
-import { collectionArr } from '@models/openSea';
+import { nftsByCollection } from '@models/openSea';
 import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
 
 const NFTScreen = () => {
 	const [infoModal, setInfoModal] = useState(false);
 	const { i18n } = useLanguage();
-
 	return (
 		<>
 			<AssetsLayout
@@ -31,15 +30,13 @@ const NFTScreen = () => {
 					<Text type="tMedium" weight="bold" marginBottom={24}>
 						{i18n.t('NFTScreen.assets')}
 					</Text>
-
 					<FlatList
-						data={collectionArr}
+						data={Object.keys(nftsByCollection)}
 						keyExtractor={(item) => item.toString()}
 						renderItem={({ item }) => (
-							<Item slug={item} />
+							<Item collection={nftsByCollection[item]} />
 						)}
 					/>
-
 				</View>
 			</AssetsLayout>
 

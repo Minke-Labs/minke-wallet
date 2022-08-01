@@ -1,33 +1,19 @@
 import { useNavigation } from '@hooks';
 import React from 'react';
-import { View, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { nftsByCollection } from '@models/openSea';
+import { View, Image, FlatList, TouchableOpacity } from 'react-native';
 import { ItemHeader } from '../ItemHeader/ItemHeader';
+import styles from './Item.styles';
+import { ItemProps } from './Item.types';
 
-const styles = StyleSheet.create({
-	image: {
-		width: 56,
-		height: 56,
-		borderRadius: 8,
-		marginRight: 8
-	}
-});
-
-interface ItemProps {
-	slug: string;
-}
-
-const Item: React.FC<ItemProps> = ({ slug }) => {
+const Item: React.FC<ItemProps> = ({ collection }) => {
 	const navigation = useNavigation();
-	const nfts = nftsByCollection[slug];
 	return (
-		<View style={{ marginBottom: 24 }}>
-			<ItemHeader slug={slug} />
-			<View style={{ flexDirection: 'row' }}>
-
+		<View style={styles.container}>
+			<ItemHeader collection={collection} />
+			<View style={styles.body}>
 				<FlatList
-					data={nfts}
-					keyExtractor={(item) => item.toString()}
+					data={collection}
+					keyExtractor={(item) => item.id.toString()}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
 							<Image
@@ -39,7 +25,6 @@ const Item: React.FC<ItemProps> = ({ slug }) => {
 					horizontal
 					showsHorizontalScrollIndicator={false}
 				/>
-
 			</View>
 		</View>
 	);

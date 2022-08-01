@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-console */
 import axios from 'axios';
 import { mock } from './mockRes';
 
@@ -21,26 +23,22 @@ export const getCollectionInfo = async ({ slug }: { slug: string }) => {
 };
 
 // Assets object created from the data retrieved from the api.
-export const assets = mock.assets.map((item: any) => ({
-	name: item.name,
-	id: item.id,
-	image: item.image_url,
-	thumb: item.image_thumbnail_url,
-	permalink: item.permalink,
-	last_sale: item.last_sale,
+const assets = mock.assets.map((asset: any) => ({
+	name: asset.name,
+	id: asset.id,
+	image: asset.image_url,
+	thumb: asset.image_thumbnail_url,
+	permalink: asset.permalink,
+	last_sale: asset.last_sale,
 	collection: {
-		name: item.collection.name,
-		desc: item.collection.description,
-		slug: item.collection.slug,
-		image: item.collection.image_url
+		name: asset.collection.name,
+		desc: asset.collection.description,
+		slug: asset.collection.slug,
+		image: asset.collection.image_url
 	}
 }));
 
-const collections = assets.map((item: any) => item.collection);
-export const nftsByCollection = collections.reduce((acc: any, item: any) => ({
-	...acc,
-	[item.slug]: assets.filter((nft: any) => nft.collection.slug === item.slug)
-}), []);
-
-export const collectionArr = Object.keys(nftsByCollection);
-export const getCollectionBySlug = (slug: string) => nftsByCollection[slug][0].collection;
+export const nftsByCollection = assets.reduce((acc: any, curr: any) => {
+	acc[curr.collection.slug] = [...acc[curr.collection.slug] || [], curr];
+	return acc;
+}, {});
