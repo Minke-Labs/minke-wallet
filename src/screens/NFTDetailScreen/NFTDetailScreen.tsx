@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, SafeAreaView, Linking } from 'react-native';
 import { Text, NetworkWarning, Button } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
+import { getCollectionStats } from '@models/openSea';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
@@ -12,9 +13,18 @@ import { Header } from './Header/Header';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'NFTDetailScreen'>;
 const NFTDetailScreen = ({ route }: Props) => {
+	const [stats, setStats] = useState<any>();
 	const { nft } = route.params;
 	const { colors } = useTheme();
 	const { i18n } = useLanguage();
+
+	useEffect(() => {
+		const fetchAssets = async () => {
+			const NFTstats = await getCollectionStats('doodles-official');
+			setStats(NFTstats);
+		};
+		fetchAssets();
+	}, []);
 
 	return (
 		<View style={{ flex: 1, backgroundColor: colors.background5 }}>
@@ -40,7 +50,7 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 			<Bottom>
 				<Panel
-					floor="$200.00"
+					floor={`$${stats?.floor_price ?? 0}`}
 					lastSale="$20.12"
 				/>
 				<Button
