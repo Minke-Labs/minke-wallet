@@ -29,6 +29,9 @@ const useNativeToken = () => {
 			const token = tokens.find(({ symbol }) => symbol.toLowerCase() === nativeToken.symbol.toLowerCase());
 			if (token?.balance) {
 				setBalance(parseUnits(token.balance, token.decimals));
+				if (!nativeToken.balance) {
+					setNativeToken(token);
+				}
 			}
 		}
 	}, [nativeToken, tokens]);
