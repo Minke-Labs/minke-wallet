@@ -22,6 +22,11 @@ export const getCollectionInfo = async ({ slug }: { slug: string }) => {
 	return resObj;
 };
 
+export const getCollectionStats = async (slug: string) => {
+	const res = await axios.get(`https://api.opensea.io/api/v1/collection/${slug}/stats`);
+	return res.data.stats;
+};
+
 // Assets object created from the data retrieved from the api.
 const assets = mock.assets.map((asset: any) => ({
 	name: asset.name,
