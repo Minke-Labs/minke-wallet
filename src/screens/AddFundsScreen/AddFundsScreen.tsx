@@ -5,17 +5,24 @@ import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { debounce } from 'lodash';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import { makeStyles } from './AddFundsScreen.styles';
 import useAddFundsScreen from './AddFundsScreen.hooks';
 
 const AddFundsScreen = () => {
 	const { i18n } = useLanguage();
-	const loading = false;
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { currency, selectCurrency, currencySearchVisible, openCurrencySearch, dismissCurrencySearch } =
-		useAddFundsScreen();
+	const {
+		currency,
+		selectCurrency,
+		currencySearchVisible,
+		openCurrencySearch,
+		dismissCurrencySearch,
+		loadingPrices,
+		updateFiat
+	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
 	return (
@@ -31,7 +38,7 @@ const AddFundsScreen = () => {
 							</Text>
 							<FiatCard
 								currency={currency}
-								updateQuotes={() => console.log('Update quotes FIAT')}
+								updateQuotes={debounce(updateFiat, 500)}
 								onPress={openCurrencySearch}
 								disableAmountValidation
 							/>
@@ -50,7 +57,7 @@ const AddFundsScreen = () => {
 							/>
 						</View>
 
-						<DirectionButton loading={loading} disabled />
+						<DirectionButton loading={loadingPrices} disabled />
 					</View>
 
 					<KeyboardSpacer />

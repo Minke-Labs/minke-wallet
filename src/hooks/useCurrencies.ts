@@ -11,7 +11,7 @@ type CurrencyProvider = {
 };
 
 const useCurrencies = () => {
-	const [, setCurrencyProviders] = useState<CurrencyProvider>({ moonpay: [], wyre: [] });
+	const [providers, setProviders] = useState<CurrencyProvider>({ moonpay: [], wyre: [] });
 	const [currencies, setCurrencies] = useState<Currency[]>([]);
 
 	useEffect(() => {
@@ -23,7 +23,7 @@ const useCurrencies = () => {
 			const fiat: CurrencyProvider = { moonpay, wyre };
 			let all = Object.values(fiat).flat();
 			all = [...new Set(all)];
-			setCurrencyProviders(fiat);
+			setProviders(fiat);
 			setCurrencies(all);
 		};
 
@@ -31,7 +31,8 @@ const useCurrencies = () => {
 	}, []);
 
 	return {
-		currencies
+		currencies,
+		providers
 	};
 };
 

@@ -128,19 +128,34 @@ export const getWalletOrderQuotation = async (
 	amount: any,
 	destCurrency: any,
 	accountAddress: any,
-	network: Network
+	network: Network,
+	country = PAYMENT_PROCESSOR_COUNTRY_CODE,
+	sourceCurrency = SOURCE_CURRENCY_USD,
+	amountIncludeFees = false
 ) => {
 	const partnerId = network.testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	const dest = `${network.wyreSRN}:${accountAddress}`;
 	const data = {
 		accountId: partnerId,
-		amount,
-		country: PAYMENT_PROCESSOR_COUNTRY_CODE,
+		country,
 		dest,
 		destCurrency,
-		sourceCurrency: SOURCE_CURRENCY_USD,
-		walletType: 'APPLE_PAY'
+		sourceCurrency,
+		walletType: 'APPLE_PAY',
+		sourceAmount: undefined,
+		amount: undefined,
+		amountIncludeFees: undefined
 	};
+
+	if (amountIncludeFees) {
+		data.sourceAmount = amount;
+		// @ts-ignore
+		data.amountIncludeFees = true;
+	} else {
+		data.amount = amount;
+	}
+
+	console.log({ data });
 	const baseUrl = getBaseUrl(network);
 	const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
 	const headers = {
@@ -149,7 +164,8 @@ export const getWalletOrderQuotation = async (
 		Authorization: `Bearer ${wyreAuthToken}`
 	};
 	const response = await wyreApi.post(`${baseUrl}/v3/orders/quote/partner`, data, headers);
-	const purchaseFee = response?.fees[SOURCE_CURRENCY_USD];
+	console.log(response);
+	const purchaseFee = response?.fees[sourceCurrency];
 	return {
 		purchaseFee,
 		sourceAmountWithFees: response?.sourceAmount
