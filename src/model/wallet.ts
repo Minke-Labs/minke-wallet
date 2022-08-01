@@ -232,7 +232,7 @@ export const sendTransactionData = async (
 		from,
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: '100000'
+		gasLimit: 100000
 	};
 
 	let tx;
