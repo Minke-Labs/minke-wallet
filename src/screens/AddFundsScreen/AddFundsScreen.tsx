@@ -21,7 +21,13 @@ const AddFundsScreen = () => {
 		openCurrencySearch,
 		dismissCurrencySearch,
 		loadingPrices,
-		updateFiat
+		updateFiat,
+		token,
+		tokenSearchVisible,
+		openTokenSearch,
+		dismissTokenSearch,
+		topUpTokens,
+		selectToken
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -49,8 +55,8 @@ const AddFundsScreen = () => {
 							</Text>
 							<TokenCard
 								updateQuotes={() => console.log('Update quotes TOKEN')}
-								token={{ address: 'a', decimals: 18, symbol: 'MATIC' }}
-								onPress={() => console.log('on press')}
+								token={token}
+								onPress={openTokenSearch}
 								disableMax
 								exchange
 								disableAmountValidation
@@ -69,6 +75,16 @@ const AddFundsScreen = () => {
 					onDismiss={dismissCurrencySearch}
 					onCurrencySelect={selectCurrency}
 					selected={currency}
+				/>
+			</Modal>
+			<Modal isVisible={tokenSearchVisible} onDismiss={dismissTokenSearch}>
+				<ModalReusables.SearchTokens
+					visible={tokenSearchVisible}
+					onDismiss={dismissTokenSearch}
+					onTokenSelect={selectToken}
+					ownedTokens={topUpTokens}
+					showOnlyOwnedTokens
+					selected={[token?.symbol.toLowerCase()]}
 				/>
 			</Modal>
 		</>
