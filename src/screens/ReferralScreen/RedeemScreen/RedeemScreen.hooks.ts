@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigation } from '@hooks';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
 import { globalRedeemState } from '@stores/RedeemStore';
 import { REFERRAL_POINTS_TO_USD_CONVERSION } from '@helpers/utilities';

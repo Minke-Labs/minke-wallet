@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { decimalSeparator } from 'expo-localization';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 
 interface UseTokenCardProps {
 	token: MinkeToken | undefined;

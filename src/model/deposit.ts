@@ -3,7 +3,8 @@ import { BigNumber, Contract } from 'ethers';
 import { ZAPPER_API_KEY } from '@env';
 import * as qs from 'qs';
 import { network, network as selectedNetwork, networks } from './network';
-import { MinkeToken, stablecoins } from './token';
+import { stablecoins } from './token';
+import { MinkeToken } from './types/token.types';
 import { DepositableToken } from './types/depositTokens.types';
 import { erc20abi, estimateGas, getProvider } from './wallet';
 

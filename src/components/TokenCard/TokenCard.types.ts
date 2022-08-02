@@ -1,4 +1,4 @@
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 
 export interface TokenCardProps {
 	token: MinkeToken | undefined;

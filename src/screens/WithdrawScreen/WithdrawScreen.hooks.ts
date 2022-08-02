@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import {
 	useAmplitude,
