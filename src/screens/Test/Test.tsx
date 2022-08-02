@@ -4,6 +4,7 @@ import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { BasicLayout } from '@layouts';
 import { View } from 'react-native';
 import { sendTransactionData } from '@models/wallet';
+import Logger from '@utils/logger';
 
 const ConnectButton = () => {
 	const connector = useWalletConnect();
@@ -31,7 +32,7 @@ const Test = () => {
 				data,
 				gasPrice: gasPrice.toHexString()
 			});
-			console.log({ result });
+			Logger.log({ result });
 		} catch (error) {
 			// Error returned when rejected
 			console.error({ error });
