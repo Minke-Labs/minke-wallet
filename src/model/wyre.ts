@@ -176,7 +176,7 @@ export const getWalletOrderQuotation = async ({
 		destCurrency,
 		sourceCurrency,
 		walletType: 'APPLE_PAY',
-		amountIncludeFees: true,
+		amountIncludeFees: !!sourceAmount,
 		sourceAmount,
 		destAmount
 	};
@@ -227,7 +227,7 @@ export const reserveWyreOrder = async ({
 		destCurrency,
 		referrerAccountId: partnerId,
 		sourceCurrency,
-		amountIncludeFees: true,
+		amountIncludeFees: !!sourceAmount,
 		country,
 		paymentMethod: 'apple-pay',
 		destAmount

@@ -13,7 +13,7 @@ export interface UseWyreApplePayError {
 
 export interface UseWyreApplePay {
 	isPaymentComplete: boolean;
-	onPurchase: ({ currency, value }: OnPurchaseParams) => Promise<void>;
+	onPurchase: (params: OnPurchaseParams) => Promise<void>;
 	orderCurrency?: string | null;
 	orderId?: string | null;
 	error?: null | UseWyreApplePayError;

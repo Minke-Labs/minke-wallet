@@ -68,7 +68,6 @@ export default function useWyreApplePay(): UseWyreApplePay {
 			}
 			track('Created Wyre Quotation', quotation);
 			const { sourceAmountWithFees, purchaseFee, destAmount: quoteDestAmount } = quotation;
-			console.log({ quotation });
 
 			const { paymentResponse: applePayResponse, error: appleRequestError } = await showApplePayRequest({
 				sourceCurrency,
