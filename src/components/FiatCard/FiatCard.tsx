@@ -18,7 +18,8 @@ const FiatCard: React.FC<FiatCardProps> = ({
 	const styles = makeStyles();
 	const { amount, onChangeText, invalidAmount } = useFiatCard({
 		updateQuotes,
-		conversionAmount
+		conversionAmount,
+		currency
 	});
 
 	return (

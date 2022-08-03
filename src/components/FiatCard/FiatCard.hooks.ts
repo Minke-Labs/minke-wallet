@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { decimalSeparator } from 'expo-localization';
+import { Currency } from '@models/types/currency.types';
 
 interface UseFiatCardProps {
+	currency: Currency | undefined;
 	updateQuotes?: Function;
 	conversionAmount: string;
 }
 
-export const useFiatCard = ({ updateQuotes, conversionAmount }: UseFiatCardProps) => {
+export const useFiatCard = ({ updateQuotes, conversionAmount, currency }: UseFiatCardProps) => {
 	const [amount, setAmount] = useState('');
 	// if enabled always set the max according to the balance
 
@@ -25,6 +27,13 @@ export const useFiatCard = ({ updateQuotes, conversionAmount }: UseFiatCardProps
 		}
 		setAmount(lastValid);
 	};
+
+	useEffect(() => {
+		// setAmount('');
+		if (updateQuotes) {
+			updateQuotes(amount);
+		}
+	}, [currency]);
 
 	useEffect(() => {
 		if (updateQuotes && !(conversionAmount && conversionAmount.replace(/\./g, decimalSeparator) === amount)) {

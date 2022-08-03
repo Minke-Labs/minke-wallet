@@ -823,7 +823,11 @@ export default {
 	AddFundsScreen: {
 		header: 'Add funds',
 		you_pay: 'You pay',
-		you_receive: 'You receive'
+		you_receive: 'You receive',
+		Errors: {
+			validation_snapx_min: 'Does not meet minimum transaction size',
+			exchange_sourceAmountTooSmall: 'The amount is too small'
+		}
 	},
 	TransactionScreen: {
 		transaction_type: 'Transaction type:',

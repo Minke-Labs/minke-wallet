@@ -1,6 +1,9 @@
 export interface OnPurchaseParams {
-	currency: string;
+	sourceCurrency: string;
+	destCurrency: string;
 	value: number;
+	country: string;
+	fiat?: boolean;
 }
 
 export interface UseWyreApplePayError {

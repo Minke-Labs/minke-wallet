@@ -16,7 +16,7 @@ export const makeStyles = (colors: ColorType) =>
 			borderBottomColor: colors.background1,
 			paddingHorizontal: 16,
 			paddingTop: 16,
-			paddingBottom: 16 + 8,
+			paddingBottom: 24,
 			width: '100%'
 		},
 		bottom: {
@@ -24,5 +24,8 @@ export const makeStyles = (colors: ColorType) =>
 			paddingBottom: 16,
 			paddingTop: 24,
 			width: '100%'
+		},
+		buttons: {
+			marginHorizontal: 16
 		}
 	});

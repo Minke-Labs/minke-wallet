@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, TouchableOpacity, View } from 'react-native';
-import { FiatCard, Header, Modal, ModalReusables, Text, TokenCard } from '@components';
+import { ApplePayButton, FiatCard, Header, Modal, ModalReusables, Text, TokenCard } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
@@ -27,7 +27,15 @@ const AddFundsScreen = () => {
 		openTokenSearch,
 		dismissTokenSearch,
 		topUpTokens,
-		selectToken
+		selectToken,
+		tokenAmount,
+		updateToken,
+		fiatAmount,
+		error,
+		setError,
+		showApplePay,
+		disableApplePay,
+		onApplePayPurchase
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -44,8 +52,9 @@ const AddFundsScreen = () => {
 							</Text>
 							<FiatCard
 								currency={currency}
-								updateQuotes={debounce(updateFiat, 500)}
+								updateQuotes={debounce(updateFiat, 800)}
 								onPress={openCurrencySearch}
+								conversionAmount={fiatAmount}
 								disableAmountValidation
 							/>
 						</View>
@@ -54,9 +63,10 @@ const AddFundsScreen = () => {
 								{i18n.t('AddFundsScreen.you_receive')}
 							</Text>
 							<TokenCard
-								updateQuotes={() => console.log('Update quotes TOKEN')}
+								updateQuotes={debounce(updateToken, 800)}
 								token={token}
 								onPress={openTokenSearch}
+								conversionAmount={tokenAmount}
 								disableMax
 								exchange
 								disableAmountValidation
@@ -65,7 +75,11 @@ const AddFundsScreen = () => {
 
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
-
+					<View style={styles.buttons}>
+						{showApplePay && (
+							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
+						)}
+					</View>
 					<KeyboardSpacer />
 				</TouchableOpacity>
 			</BasicLayout>
@@ -86,6 +100,9 @@ const AddFundsScreen = () => {
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
+			</Modal>
+			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
 			</Modal>
 		</>
 	);
