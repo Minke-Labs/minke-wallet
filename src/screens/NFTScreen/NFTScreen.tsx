@@ -3,7 +3,7 @@ import { View, TouchableOpacity, FlatList } from 'react-native';
 import { AssetsLayout } from '@layouts';
 import { Text, Icon, Modal } from '@components';
 import { useLanguage } from '@hooks';
-import { nftsByCollection } from '@models/openSea';
+import { nftsByCollection, totalEstimatedValue } from '@models/openSea';
 import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
 
@@ -13,7 +13,7 @@ const NFTScreen = () => {
 	return (
 		<>
 			<AssetsLayout
-				headerValue="5000"
+				headerValue={totalEstimatedValue || 0}
 				headerTitle={(
 					<TouchableOpacity
 						style={{ flexDirection: 'row', alignItems: 'center' }}
