@@ -35,44 +35,60 @@ export const getAavePools = async (): Promise<CovalentAavePool[]> => {
 export const getTokenBalances = async (address: string): Promise<AccountBalance> => {
 	const { chainId: networkId, coingeckoPlatform } = await network();
 	const protocol = await fetchDepositProtocol();
-	const { status, data } = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
-	if (status !== 200) Logger.sentry('Balances API failed');
-	const {
-		data: { items: apiTokens }
-	}: BalanceApiResponse = data;
 
-	const coinList = await AsyncStorage.getItem('@listCoins');
-	let coins: Coin[] = JSON.parse(coinList!);
-	coins = coins.filter(({ platforms }) => isEmpty(platforms) || !!platforms[coingeckoPlatform]);
-	const curated = coins.map(({ symbol }) => symbol.toLowerCase());
-	const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens, chainId: networkId });
+	try {
+		const { status, data } = await instance.get(`/${networkId}/address/${address}/balances_v2/`);
+		if (status !== 200) Logger.sentry('Balances API failed');
+		const {
+			data: { items: apiTokens }
+		}: BalanceApiResponse = data;
 
-	let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
-	const allInterestTokens = await fetchInterestBearingTokens(address, protocol.id);
-	let interestTokens = allInterestTokens.flat();
-	let [withdrawableTokens] = allInterestTokens;
-	interestTokens = interestTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
-	withdrawableTokens = withdrawableTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
+		const coinList = await AsyncStorage.getItem('@listCoins');
+		let coins: Coin[] = JSON.parse(coinList!);
+		coins = coins.filter(({ platforms }) => isEmpty(platforms) || !!platforms[coingeckoPlatform]);
+		const curated = coins.map(({ symbol }) => symbol.toLowerCase());
+		const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens, chainId: networkId });
 
-	const depositableTokens = allTokens.filter(
-		(token) => depositStablecoins.includes(token.symbol) && +token.balance! > 0
-	);
-	tokens = tokens.filter(
-		({ symbol, balance = '0', name = '' }) =>
-			!interestBearingTokens.includes(symbol.toLowerCase()) && +balance > 0 && !isValidDomain(name)
-	);
-	const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
-	const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
-	const balance = walletBalance + depositedBalance;
+		let tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
+		const allInterestTokens = await fetchInterestBearingTokens(address, protocol.id);
+		let interestTokens = allInterestTokens.flat();
+		let [withdrawableTokens] = allInterestTokens;
+		interestTokens = interestTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
+		withdrawableTokens = withdrawableTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
 
-	return {
-		address,
-		tokens,
-		balance,
-		depositedBalance,
-		walletBalance,
-		interestTokens,
-		depositableTokens,
-		withdrawableTokens
-	};
+		const depositableTokens = allTokens.filter(
+			(token) => depositStablecoins.includes(token.symbol) && +token.balance! > 0
+		);
+		tokens = tokens.filter(
+			({ symbol, balance = '0', name = '' }) =>
+				!interestBearingTokens.includes(symbol.toLowerCase()) && +balance > 0 && !isValidDomain(name)
+		);
+		const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
+		const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
+		const balance = walletBalance + depositedBalance;
+
+		return {
+			address,
+			tokens,
+			balance,
+			depositedBalance,
+			walletBalance,
+			interestTokens,
+			depositableTokens,
+			withdrawableTokens
+		};
+	} catch (error) {
+		Logger.error('Error loading tokens', error);
+
+		return {
+			address,
+			tokens: [],
+			balance: 0,
+			depositedBalance: 0,
+			walletBalance: 0,
+			interestTokens: [],
+			depositableTokens: [],
+			withdrawableTokens: []
+		};
+	}
 };

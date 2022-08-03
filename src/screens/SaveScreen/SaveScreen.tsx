@@ -17,7 +17,7 @@ const SaveScreen = () => {
 	const { interestTokens, depositedBalance } = useTokens();
 	RNUxcam.tagScreenName('SaveScreen');
 
-	if (!interestTokens || !apy) return <BlankStates.Save />;
+	if (!interestTokens) return <BlankStates.Save />;
 	if (interestTokens.length === 0) return <EmptyState />;
 
 	return (
@@ -26,7 +26,7 @@ const SaveScreen = () => {
 				<SafeAreaView>
 					<Background>
 						<Header onInfo={() => setModalVisible(true)} />
-						<CurrentValue depositsBalance={depositedBalance} apy={apy!} />
+						<CurrentValue depositsBalance={depositedBalance} apy={apy} />
 					</Background>
 				</SafeAreaView>
 				<Body {...{ interestTokens }} />
