@@ -5,45 +5,43 @@ import {
 	View,
 	Animated as ReactAnimated,
 	TextInput,
-	Text,
-	TouchableOpacity,
 	TextStyle,
+	Text as NativeText,
 	TouchableWithoutFeedback,
 	LayoutChangeEvent
 } from 'react-native';
 import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
 import Icon from '../Icon/Icon';
-import { makeStyles } from './Input.styles';
-import { InputProps, InputRef } from './Input.types';
+import Flag from '../Flag/Flag';
+import Text from '../Text/Text';
+import { makeStyles } from './TelephoneInput.styles';
+import { InputProps, InputRef } from './TelephoneInput.types';
 
-const AnimatedText = Animated.createAnimatedComponent(Text);
+const HEIGHT = 56;
 
-const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
+const AnimatedText = Animated.createAnimatedComponent(NativeText);
+
+const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	{
 		label,
-		isPassword,
-		onChangeText,
-		isFocused,
-		onBlur,
-		onFocus,
-		onTogglePassword,
-		togglePassword,
 		onSubmit,
+		isFocused,
 		multiline,
 		error,
-		small,
-		value = '',
 		style,
+		onChangeText,
+		onBlur,
+		onFocus,
+		value = '',
 		...rest
 	},
 	ref
 ) => {
 	const { colors } = useTheme();
-	const styles = makeStyles(colors, small!);
+	const styles = makeStyles(colors, HEIGHT);
 
 	const [halfTop, setHalfTop] = useState(0);
 	const [isFocusedState, setIsFocused] = useState(false);
-	const [secureText, setSecureText] = useState(true);
 	const inputRef = useRef<any>(null);
 
 	const [fontColorAnimated] = useState(new Animated.Value(0));
@@ -52,25 +50,6 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	const [topAnimated] = useState(new Animated.Value(0));
 
 	const setFocus = () => inputRef.current?.focus();
-	const setBlur = () => inputRef.current?.blur();
-
-	const toggleVisibility = (toggle?: boolean) => {
-		if (toggle === undefined) {
-			if (onTogglePassword) {
-				onTogglePassword(!secureText);
-			}
-			setSecureText(!secureText);
-			if (secureText) setFocus();
-			else setBlur();
-		} else if (!((secureText && !toggle) || (!secureText && toggle))) {
-			if (onTogglePassword) {
-				onTogglePassword(!toggle);
-			}
-			setSecureText(!toggle);
-			if (toggle) setFocus();
-			else setBlur();
-		}
-	};
 
 	const animateFocus = () => {
 		ReactAnimated.parallel([
@@ -78,7 +57,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 			timing(leftAnimated, {
 				duration: 300,
 				easing: EasingNode.linear,
-				toValue: 0
+				toValue: -62
 			}),
 			// @ts-ignore
 			timing(fontSizeAnimated, {
@@ -149,12 +128,6 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 			}
 		}
 	}, [isFocused, value]);
-
-	useEffect(() => {
-		if (togglePassword !== undefined) {
-			toggleVisibility(togglePassword);
-		}
-	}, [togglePassword]);
 
 	useEffect(() => {
 		if (isFocusedState || value !== '') {
@@ -237,7 +210,11 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 				<Animated.View
 					style={[
 						{
-							borderColor: error ? colors.alert1 : isFocusedState ? colors.cta1 : colors.cta2
+							borderColor: error ?
+								colors.alert1 :
+								isFocusedState ?
+									colors.cta1 :
+									colors.cta2
 						},
 						styles.container
 					]}
@@ -246,28 +223,42 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 						style={{
 							flex: 1,
 							flexDirection: 'row',
-							alignItems: 'center'
+							alignItems: isFocusedState ? 'flex-end' : 'center'
 						}}
 					>
-						{!small && (
-							<AnimatedText
-								onPress={setFocus}
-								style={[
-									labelStyle,
-									styles.label,
-									{
-										fontSize: fontSizeAnimated,
-										transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
-									}
-								]}
+
+						<View
+							style={{
+								flexDirection: 'row',
+								alignItems: 'center'
+							}}
+						>
+							<Flag name="unitedStates" size={24} />
+							<Text
+								type="bMedium"
+								color="text4"
+								style={{ marginLeft: 4 }}
 							>
-								{label}
-							</AnimatedText>
-						)}
+								(+1)
+							</Text>
+						</View>
+
+						<AnimatedText
+							onPress={setFocus}
+							style={[
+								labelStyle,
+								styles.label,
+								{
+									fontSize: fontSizeAnimated,
+									transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
+								}
+							]}
+						>
+							{label}
+						</AnimatedText>
 
 						<TextInput
 							onSubmitEditing={onSubmitEditing}
-							secureTextEntry={isPassword !== undefined ? isPassword && secureText : false}
 							onFocus={onFocus !== undefined ? onFocus : handleFocus}
 							onBlur={onBlur !== undefined ? onBlur : handleBlur}
 							ref={inputRef}
@@ -276,22 +267,28 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							{...{ value, multiline, ...rest }}
 						/>
 
-						{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
-
-						{isPassword && (
-							<TouchableOpacity style={styles.toggleButton} onPress={() => toggleVisibility()}>
-								{secureText ? (
-									<Icon name="eyeCross" size={24} color="cta1" />
-								) : (
-									<Icon name="eyeStroke" size={24} color="cta1" />
-								)}
-							</TouchableOpacity>
-						)}
 					</View>
+
+					{error && (
+						<View
+							style={{
+								height: HEIGHT,
+								position: 'absolute',
+								right: 16,
+								justifyContent: 'center'
+							}}
+						>
+							<Icon
+								name="errorStroke"
+								size={24}
+								color="alert1"
+							/>
+						</View>
+					)}
 				</Animated.View>
 			</View>
 		</TouchableWithoutFeedback>
 	);
 };
 
-export default forwardRef(Input);
+export default forwardRef(TelephoneInput);

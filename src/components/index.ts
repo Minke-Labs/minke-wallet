@@ -21,6 +21,7 @@ import SearchInput from './SearchInput/SearchInput';
 import TextArea from './TextArea/TextArea';
 import AnimatedText from './AnimatedText/AnimatedText';
 import Input from './Input/Input';
+import TelephoneInput from './TelephoneInput/TelephoneInput';
 import InterestBanner from './InterestBanner/InterestBanner';
 import ItemTag from './ItemTag/ItemTag';
 import ListItem from './ListItem/ListItem';
@@ -82,6 +83,7 @@ export {
 	TokenInputInner,
 	TouchableShrinks,
 	Input,
+	TelephoneInput,
 	InterestBanner,
 	ItemTag,
 	ListItem,
