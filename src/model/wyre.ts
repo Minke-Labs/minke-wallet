@@ -11,7 +11,7 @@ import {
 	WYRE_TOKEN_TEST
 } from '@env';
 import { WyreReferenceInfo } from '@stores/TopUpStore';
-import { Network } from './network';
+import { Network, networks } from './network';
 import { ApplePayResponse } from './types/wyre.types';
 import { Currency } from './types/currency.types';
 import { fiatCurrencies } from './currency';
@@ -167,6 +167,10 @@ export const getWalletOrderQuotation = async ({
 	country: string;
 	sourceCurrency: string;
 }) => {
+	if (destCurrency === 'USDC' && network.id === networks.matic.id) {
+		// eslint-disable-next-line no-param-reassign
+		destCurrency = 'MUSDC';
+	}
 	const partnerId = network.testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	const dest = `${network.wyreSRN}:${accountAddress}`;
 	const data = {

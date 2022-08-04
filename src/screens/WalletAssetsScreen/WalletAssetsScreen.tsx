@@ -1,8 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme, useTokens } from '@hooks';
-import { AddFunds } from '@containers';
-import { BlankStates, Modal } from '@components';
+import { useNavigation, useTheme, useTokens } from '@hooks';
+import { BlankStates } from '@components';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import AssetList from './AssetList/AssetList';
@@ -13,27 +12,22 @@ import styles from './WalletAssetsScreen.styles';
 const WalletAssetsScreen = () => {
 	RNUxcam.tagScreenName('WalletAssetsScreen');
 	const { colors } = useTheme();
-	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
+	const navigation = useNavigation();
 	const { tokens, walletBalance: balance } = useTokens();
 
 	if (tokens === undefined) return <BlankStates.WalletAssets />;
 
 	return (
-		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
-				<ValueBox {...{ balance }} />
-				<View style={[styles.assetListContainer, { backgroundColor: colors.background1 }]}>
-					{tokens.length > 0 ? (
-						<AssetList walletTokens={tokens} />
-					) : (
-						<AssetListEmpty onPress={() => setAddFundsVisible(true)} />
-					)}
-				</View>
-			</BasicLayout>
-			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
-			</Modal>
-		</>
+		<BasicLayout hideSafeAreaView bg="detail4">
+			<ValueBox {...{ balance }} />
+			<View style={[styles.assetListContainer, { backgroundColor: colors.background1 }]}>
+				{tokens.length > 0 ? (
+					<AssetList walletTokens={tokens} />
+				) : (
+					<AssetListEmpty onPress={() => navigation.navigate('AddFundsScreen')} />
+				)}
+			</View>
+		</BasicLayout>
 	);
 };
 

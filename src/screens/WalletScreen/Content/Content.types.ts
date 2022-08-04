@@ -21,7 +21,6 @@ export interface ContentProps {
 				walletBalance?: number | undefined;
 		  }
 		| undefined;
-	setAddFundsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	setSendModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	onAvatarClick: (event: GestureResponderEvent) => void;
 }

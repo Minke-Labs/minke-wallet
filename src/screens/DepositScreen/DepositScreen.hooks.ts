@@ -4,7 +4,6 @@ import { useNavigation } from '@hooks';
 export const useDepositScreen = () => {
 	const navigation = useNavigation();
 	const [notAbleToSaveVisible, setNotAbleToSaveVisible] = React.useState(true);
-	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 
 	const notAbleToSaveDismiss = () => {
 		setNotAbleToSaveVisible(false);
@@ -12,19 +11,12 @@ export const useDepositScreen = () => {
 	};
 
 	const onAddFunds = () => {
-		setAddFundsVisible(true);
-	};
-
-	const dismissAddFunds = () => {
-		setAddFundsVisible(false);
-		navigation.goBack();
+		navigation.navigate('AddFundsScreen');
 	};
 
 	return {
 		notAbleToSaveVisible,
 		notAbleToSaveDismiss,
-		addFundsVisible,
-		dismissAddFunds,
 		onAddFunds
 	};
 };

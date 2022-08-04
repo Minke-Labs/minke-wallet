@@ -43,7 +43,6 @@ const useAddFundsScreen = () => {
 		const value = fiat ? +fiatAmount! : +tokenAmount!;
 		const { code } = currency!;
 		track('Started Apple Pay Payment', { currency: code, value });
-		console.log({ countryLetters });
 		onPurchase({
 			sourceCurrency: code,
 			destCurrency: token!.symbol,
@@ -120,8 +119,6 @@ const useAddFundsScreen = () => {
 				}
 				setLoadingPrices(false);
 			}
-		} else {
-			setTokenAmount('');
 		}
 	};
 
@@ -148,7 +145,6 @@ const useAddFundsScreen = () => {
 					sourceCurrency: currency.code
 				});
 				const { errorCode, message, sourceAmountWithFees } = quotation;
-
 				if (errorCode) {
 					addError(i18n.t(`AddFundsScreen.Errors.${errorCode.replace('.', '_')}`, { defaultValue: message }));
 					setFiatAmount('');
@@ -158,8 +154,6 @@ const useAddFundsScreen = () => {
 				}
 				setLoadingPrices(false);
 			}
-		} else {
-			setFiatAmount('');
 		}
 	};
 
@@ -183,6 +177,18 @@ const useAddFundsScreen = () => {
 	useEffect(() => {
 		setToken(topUpTokens[0]);
 	}, []);
+
+	useEffect(() => {
+		if (fiatAmount) {
+			updateFiat(fiatAmount);
+		}
+	}, [token]);
+
+	useEffect(() => {
+		if (token && currency && !tokenAmount && !fiatAmount) {
+			updateToken('100');
+		}
+	}, [token, currency]);
 
 	useEffect(() => {
 		if (applePayError) {

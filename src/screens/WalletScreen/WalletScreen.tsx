@@ -1,7 +1,6 @@
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
 import { Text, Modal, ModalReusables } from '@components';
-import { AddFunds } from '@containers';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { SendModal, ReceiveModal, AvatarModal } from './Modals';
@@ -16,8 +15,6 @@ const WalletScreen = () => {
 		sendModalOpen,
 		setSendModalOpen,
 		receiveVisible,
-		addFundsVisible,
-		setAddFundsVisible,
 		snackbarVisible,
 		setSnackbarVisible,
 		sendModalFinished,
@@ -54,7 +51,6 @@ const WalletScreen = () => {
 					showReceive,
 					address,
 					balance,
-					setAddFundsVisible,
 					setSendModalOpen,
 					onPointsPress
 				}}
@@ -64,10 +60,6 @@ const WalletScreen = () => {
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
 				<Text color="text11">{i18n.t('WalletScreen.ModalsImport.address_copied')}</Text>
 			</Snackbar>
-
-			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
-				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
-			</Modal>
 
 			<Modal isVisible={sendModalOpen} onDismiss={() => setSendModalOpen(false)}>
 				<SendModal
