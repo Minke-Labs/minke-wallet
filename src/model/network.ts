@@ -4,6 +4,7 @@ import {
 	ALCHEMY_API_URL_POLYGON_MAINNET,
 	BICONOMY_API_KEY_POLYGON_MAINNET,
 	ALCHEMY_API_KEY_ETHEREUM,
+	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_KEY_MATIC
 } from '@env';
 import { MinkeToken } from './types/token.types';
