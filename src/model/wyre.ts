@@ -412,7 +412,7 @@ export const getOrderId = async ({
 export const availableFiatCurrencies: { [key: string]: Currency } = pick(
 	fiatCurrencies,
 	'USD',
-	'EUR', // @TODO: Marcos
+	'EUR',
 	'GBP',
 	'AUD',
 	'CAD',

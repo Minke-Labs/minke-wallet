@@ -1,11 +1,22 @@
 import React from 'react';
-import { Keyboard, TouchableOpacity, View } from 'react-native';
-import { ApplePayButton, FiatCard, Header, Modal, ModalReusables, Text, TokenCard } from '@components';
+import { Keyboard, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import {
+	ApplePayButton,
+	FiatCard,
+	Flag,
+	Header,
+	Modal,
+	ModalHeader,
+	ModalReusables,
+	Text,
+	TokenCard
+} from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { debounce } from 'lodash';
+import CountryModal from '@src/containers/AddFunds/CountryModal/CountryModal';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import { makeStyles } from './AddFundsScreen.styles';
 import useAddFundsScreen from './AddFundsScreen.hooks';
@@ -35,7 +46,11 @@ const AddFundsScreen = () => {
 		setError,
 		showApplePay,
 		disableApplePay,
-		onApplePayPurchase
+		onApplePayPurchase,
+		countrySearchVisible,
+		openCountrySearch,
+		dismissCountrySearch,
+		country
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -75,6 +90,25 @@ const AddFundsScreen = () => {
 
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
+					{!!country && (
+						<View style={[styles.buttons, { flexDirection: 'row' }]}>
+							<Flag size={40} name={country?.flag} />
+							<TouchableOpacity onPress={openCountrySearch} style={{ marginLeft: 12, flex: 1 }}>
+								<View>
+									<Text type="bSmall" weight="bold">
+										{country.name}
+									</Text>
+									<Text type="bSmall" marginBottom={16}>
+										{i18n.t('Containers.AddFunds.ChooseQuantityModal.select_country')}
+									</Text>
+
+									<Text type="lLarge" weight="semiBold" color="cta1">
+										{i18n.t('Containers.AddFunds.ChooseQuantityModal.change_country')}
+									</Text>
+								</View>
+							</TouchableOpacity>
+						</View>
+					)}
 					<View style={styles.buttons}>
 						{showApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
@@ -103,6 +137,17 @@ const AddFundsScreen = () => {
 			</Modal>
 			<Modal isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
+			</Modal>
+			<Modal isVisible={countrySearchVisible} onDismiss={dismissCountrySearch}>
+				<SafeAreaView>
+					<ModalHeader
+						onDismiss={dismissCountrySearch}
+						title={i18n.t('Containers.AddFunds.Header.country')}
+					/>
+					<View style={{ paddingHorizontal: 24 }}>
+						<CountryModal onCountrySelected={dismissCountrySearch} />
+					</View>
+				</SafeAreaView>
 			</Modal>
 		</>
 	);

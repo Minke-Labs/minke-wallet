@@ -26,6 +26,7 @@ export const makeStyles = (colors: ColorType) =>
 			width: '100%'
 		},
 		buttons: {
-			marginHorizontal: 16
+			marginHorizontal: 16,
+			marginBottom: 16
 		}
 	});

@@ -1,3 +1,5 @@
+import { pick } from 'lodash';
+
 export type CountriesType = keyof typeof countries;
 const countries: { [key: string]: string } = {
 	AF: 'afghanistan',
@@ -228,4 +230,27 @@ const countries: { [key: string]: string } = {
 	ZW: 'zimbabwe'
 };
 
-export { countries };
+const euroCountries = pick(
+	countries,
+	'BE',
+	'DE',
+	'IE',
+	'ES',
+	'FR',
+	'IT',
+	'LU',
+	'NL',
+	'AT',
+	'PT',
+	'FI',
+	'GR',
+	'SK',
+	'SI',
+	'CY',
+	'MT',
+	'EE',
+	'LV',
+	'LT'
+);
+
+export { countries, euroCountries };
