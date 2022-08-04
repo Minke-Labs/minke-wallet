@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Keyboard, Platform } from 'react-native';
 import { Currency } from '@models/types/currency.types';
 import { useAmplitude, useCountry, useCurrencies, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
-import { allCountries, countries } from '@styles';
+import { countries } from '@styles';
 import { getWalletOrderQuotation } from '@models/wyre';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -16,13 +16,11 @@ const useAddFundsScreen = () => {
 	const [token, setToken] = React.useState<MinkeToken>();
 	const [currencySearchVisible, setCurrencySearchVisible] = React.useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = React.useState(false);
-	const [countrySearchVisible, setCountrySearchVisible] = React.useState(false);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [tokenAmount, setTokenAmount] = React.useState<string | undefined>();
 	const [fiatAmount, setFiatAmount] = React.useState<string | undefined>();
 	const [fiat, setFiat] = React.useState(true);
 	const [error, setError] = React.useState('');
-	const [countryLetters, setCountryLetters] = React.useState('');
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n } = useLanguage();
@@ -31,7 +29,15 @@ const useAddFundsScreen = () => {
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
 	const { track } = useAmplitude();
-	const foundCountry = allCountries.find((c) => c.flag === country);
+	const countryCode = Object.keys(countries).find((key) => countries[key] === country);
+	// @ts-ignore
+	const euCountry = countryCode && euroCountries[countryCode];
+	const countryIso =
+		currency?.country === 'EU'
+			? euCountry && countryCode !== 'EU'
+				? countryCode
+				: 'DE'
+			: currency?.country || countryCode || 'US';
 
 	const addError = (err: string) => {
 		Keyboard.dismiss();
@@ -48,31 +54,22 @@ const useAddFundsScreen = () => {
 			destCurrency: token!.symbol,
 			value,
 			fiat,
-			country: countryLetters
+			country: countryIso
 		});
 	};
 
 	const dismissCurrencySearch = () => setCurrencySearchVisible(false);
 	const dismissTokenSearch = () => setTokenSearchVisible(false);
-	const dismissCountrySearch = () => setCountrySearchVisible(false);
 
 	const openTokenSearch = () => {
 		dismissCurrencySearch();
-		dismissCountrySearch();
 		Keyboard.dismiss();
 		setTokenSearchVisible(true);
 	};
 	const openCurrencySearch = () => {
 		dismissTokenSearch();
-		dismissCountrySearch();
 		Keyboard.dismiss();
 		setCurrencySearchVisible(true);
-	};
-	const openCountrySearch = () => {
-		dismissCurrencySearch();
-		dismissTokenSearch();
-		Keyboard.dismiss();
-		setCountrySearchVisible(true);
 	};
 
 	const selectCurrency = (c: Currency) => {
@@ -104,7 +101,7 @@ const useAddFundsScreen = () => {
 					destCurrency: token.symbol,
 					accountAddress: address,
 					network,
-					country: countryLetters,
+					country: countryIso,
 					sourceCurrency: currency.code
 				});
 
@@ -141,7 +138,7 @@ const useAddFundsScreen = () => {
 					accountAddress: address,
 					network,
 					destAmount: +formatedValue,
-					country: countryLetters,
+					country: countryIso,
 					sourceCurrency: currency.code
 				});
 				const { errorCode, message, sourceAmountWithFees } = quotation;
@@ -163,14 +160,10 @@ const useAddFundsScreen = () => {
 	const disableApplePay = !(showApplePay && paymentEnabled);
 
 	useEffect(() => {
-		const countryInitials = Object.keys(countries).find((key) => countries[key] === country);
-		let defaultCurrency = currencies.find((c) => c.country === countryInitials);
-		// @ts-ignore
-		if (!defaultCurrency && countryInitials && euroCountries[countryInitials]) {
+		let defaultCurrency = currencies.find((c) => c.country === countryCode);
+		if (!defaultCurrency && euCountry) {
 			defaultCurrency = currencies.find(({ code }) => code === 'EUR');
 		}
-
-		setCountryLetters(countryInitials || 'US');
 		setCurrency(defaultCurrency || currencies[0]);
 	}, [country, currencies]);
 
@@ -185,10 +178,10 @@ const useAddFundsScreen = () => {
 	}, [token]);
 
 	useEffect(() => {
-		if (token && currency && !tokenAmount && !fiatAmount) {
+		if (token && currency && countryIso && !tokenAmount && !fiatAmount) {
 			updateToken('100');
 		}
-	}, [token, currency]);
+	}, [token, currency, countryIso]);
 
 	useEffect(() => {
 		if (applePayError) {
@@ -223,11 +216,7 @@ const useAddFundsScreen = () => {
 		setError,
 		showApplePay,
 		disableApplePay,
-		onApplePayPurchase,
-		countrySearchVisible,
-		openCountrySearch,
-		dismissCountrySearch,
-		country: foundCountry
+		onApplePayPurchase
 	};
 };
 
