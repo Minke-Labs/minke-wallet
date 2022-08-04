@@ -66,6 +66,8 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 		const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 		const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 		const balance = walletBalance + depositedBalance;
+		const balances = { walletBalance, depositedBalance, balance };
+		AsyncStorage.setItem('@balances', JSON.stringify(balances));
 
 		return {
 			address,
@@ -80,12 +82,15 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 	} catch (error) {
 		Logger.error('Error loading tokens', error);
 
+		const balances = await AsyncStorage.getItem('@balances');
+		const { walletBalance, depositedBalance, balance } = JSON.parse(balances || '{}');
+
 		return {
 			address,
 			tokens: [],
-			balance: 0,
-			depositedBalance: 0,
-			walletBalance: 0,
+			balance: balance || 0,
+			depositedBalance: depositedBalance || 0,
+			walletBalance: walletBalance || 0,
 			interestTokens: [],
 			depositableTokens: [],
 			withdrawableTokens: []
