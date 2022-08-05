@@ -17,7 +17,7 @@ const Box: React.FC<Partial<BoxProps>> = ({ br = 0, mt = 0, mb = 0, w, h, style 
 	return (
 		<View
 			style={{
-				backgroundColor: colors.background3,
+				backgroundColor: colors.background2,
 				height: h,
 				width: w,
 				borderRadius: br,

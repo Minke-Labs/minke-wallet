@@ -17,11 +17,11 @@ import styles from './BlankLayout.styles';
 const timing = { duration: 1200 };
 
 interface BlankLayoutProps {
-	title?: string;
-	br?: number;
+	title: string;
+	br: number;
 }
 
-const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) => {
+const BlankLayout: React.FC<Partial<BlankLayoutProps>> = ({ children, title, br = 0 }) => {
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const posX = useSharedValue(-screenWidth);
@@ -36,7 +36,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 
 	return (
 		<View style={{
-			backgroundColor: colors.background5,
+			backgroundColor: colors.background1,
 			flex: 1,
 			borderRadius: br
 		}}
