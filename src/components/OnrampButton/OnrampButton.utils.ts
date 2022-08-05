@@ -2,7 +2,7 @@ import { PayId, Interac, FasterPayments, Sepa, Pix, TurkeyBankTransfer } from '.
 
 export const chooseLocation = (loc: string) => {
 	switch (loc) {
-		case 'australia':
+		case 'AU':
 			return {
 				locStyles: {
 					backgroundColor: '#FFFFFF',
@@ -10,7 +10,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: PayId
 			};
-		case 'unitedKingdom':
+		case 'GB':
 			return {
 				locStyles: {
 					backgroundColor: '#FFFFFF',
@@ -18,7 +18,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: FasterPayments
 			};
-		case 'canada':
+		case 'CA':
 			return {
 				locStyles: {
 					backgroundColor: '#FFB92A',
@@ -26,27 +26,26 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: Interac
 			};
-		case 'europeanUnion':
-		case 'austria':
-		case 'belgium':
-		case 'cyprus':
-		case 'estonia':
-		case 'finland':
-		case 'france':
-		case 'germany':
-		case 'greece':
-		case 'hungary':
-		case 'ireland':
-		case 'italy':
-		case 'latvia':
-		case 'lithuania':
-		case 'luxembourg':
-		case 'malta':
-		case 'netherlands':
-		case 'portugal':
-		case 'slovakia':
-		case 'slovenia':
-		case 'spain':
+		case 'EU':
+		case 'AT':
+		case 'BE':
+		case 'CY':
+		case 'EE':
+		case 'FI':
+		case 'FR':
+		case 'DE':
+		case 'GR':
+		case 'IE':
+		case 'IT':
+		case 'LV':
+		case 'LT':
+		case 'LU':
+		case 'MT':
+		case 'NE':
+		case 'PT':
+		case 'SK':
+		case 'SI':
+		case 'ES':
 			return {
 				locStyles: {
 					backgroundColor: '#004899',
@@ -54,7 +53,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: Sepa
 			};
-		case 'brazil':
+		case 'BR':
 			return {
 				locStyles: {
 					backgroundColor: '#FFFFFF',
@@ -62,7 +61,7 @@ export const chooseLocation = (loc: string) => {
 				},
 				image: Pix
 			};
-		case 'turkey':
+		case 'TR':
 			return {
 				locStyles: {
 					backgroundColor: '#FCFBF9',

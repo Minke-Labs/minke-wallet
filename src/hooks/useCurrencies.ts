@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react';
 // import { getCurrencies } from '@src/services/apis';
 // import { fiatCurrencies } from '@models/currency';
 import { availableFiatCurrencies } from '@models/wyre';
+import { availableFiatCurrencies as banxaAvailableFiatCurrencies } from '@models/banxa';
+import { Platform } from 'react-native';
 
-type Providers = 'moonpay' | 'wyre';
+type Providers = 'moonpay' | 'wyre' | 'banxa';
 
 type CurrencyProvider = {
 	[key in Providers]: Currency[];
 };
 
 const useCurrencies = () => {
-	const [providers, setProviders] = useState<CurrencyProvider>({ moonpay: [], wyre: [] });
+	const [providers, setProviders] = useState<CurrencyProvider>({ moonpay: [], wyre: [], banxa: [] });
 	const [currencies, setCurrencies] = useState<Currency[]>([]);
 
 	useEffect(() => {
@@ -19,8 +21,9 @@ const useCurrencies = () => {
 			// const moonpayCurrencies = await getCurrencies();
 			// const enabled = moonpayCurrencies.filter(({ type }) => type === 'fiat');
 			const moonpay: Currency[] = []; // enabled.map(({ code }) => fiatCurrencies[code.toUpperCase()]);
-			const wyre = Object.values(availableFiatCurrencies);
-			const fiat: CurrencyProvider = { moonpay, wyre };
+			const wyre = Platform.OS === 'android' ? [] : Object.values(availableFiatCurrencies);
+			const banxa = Object.values(banxaAvailableFiatCurrencies);
+			const fiat: CurrencyProvider = { moonpay, wyre, banxa };
 			let all = Object.values(fiat).flat();
 			all = [...new Set(all)];
 			setProviders(fiat);

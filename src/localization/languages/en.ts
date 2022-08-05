@@ -73,7 +73,7 @@ export default {
 		},
 		HU: {
 			name: 'Hungary',
-			currencyName: 'Euro'
+			currencyName: 'Hungarian Forint'
 		},
 		IE: {
 			name: 'Ireland',

@@ -3,6 +3,9 @@ import axios from 'axios';
 import * as qs from 'qs';
 import crypto from 'crypto';
 import { BANXA_ENDPOINT_URL, BANXA_KEY, BANXA_SECRET } from '@env';
+import { pick } from 'lodash';
+import { Currency } from './types/currency.types';
+import { fiatCurrencies } from './currency';
 
 interface GenerateHmac {
 	data: string;
@@ -126,3 +129,13 @@ export const makeOrder = async ({ params }: MakeOrder) => {
 	const res = await sendPostRequest({ query, params });
 	return res.data.data.order.checkout_url;
 };
+
+export const availableFiatCurrencies: { [key: string]: Currency } = pick(
+	fiatCurrencies,
+	'AUD',
+	'GBP',
+	'CAD',
+	'EUR',
+	'BRL',
+	'TRY'
+);

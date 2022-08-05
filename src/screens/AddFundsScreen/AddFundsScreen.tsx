@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, TouchableOpacity, View } from 'react-native';
-import { ApplePayButton, FiatCard, Header, Modal, ModalReusables, Text, TokenCard } from '@components';
+import { ApplePayButton, FiatCard, Header, Modal, ModalReusables, OnrampButton, Text, TokenCard } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
@@ -79,6 +79,11 @@ const AddFundsScreen = () => {
 						{showApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
+						<OnrampButton
+							marginBottom={24}
+							currency={currency}
+							onPress={() => console.log('onClickBanxa')}
+						/>
 					</View>
 					<KeyboardSpacer />
 				</TouchableOpacity>
