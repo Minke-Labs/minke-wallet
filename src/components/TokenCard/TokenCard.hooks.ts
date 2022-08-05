@@ -62,7 +62,7 @@ export const useTokenCard = ({ updateQuotes, token, conversionAmount, disableMax
 	}, [balance]);
 
 	const isMaxEnabled = !disableMax && token && balance;
-	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/,/g, '.');
+	const invalidAmount = +balance < +amount.replace(/,/g, '.');
 
 	return {
 		amount,

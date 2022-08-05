@@ -810,7 +810,8 @@ export default {
 		you_receive: 'You receive',
 		Errors: {
 			validation_snapx_min: 'Does not meet minimum transaction size',
-			exchange_sourceAmountTooSmall: 'The amount is too small'
+			exchange_sourceAmountTooSmall: 'The amount is too small',
+			minimal_topup_amount: 'The minimum amount is {{amount}} {{currency}}'
 		}
 	},
 	TransactionScreen: {

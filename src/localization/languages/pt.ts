@@ -813,7 +813,8 @@ export default {
 		you_receive: 'Você recebe',
 		Errors: {
 			validation_snapx_min: 'O valor é menor que o mínimo',
-			exchange_sourceAmountTooSmall: 'O valor é muito pequeno'
+			exchange_sourceAmountTooSmall: 'O valor é muito pequeno',
+			minimal_topup_amount: 'O valor mínimo é {{amount}} {{currency}}'
 		}
 	},
 	TransactionScreen: {

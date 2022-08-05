@@ -15,7 +15,10 @@ interface GenerateHmac {
 interface QuoteParams {
 	source: string;
 	target: string;
-	amount: number;
+	source_amount: number | undefined;
+	target_amount: number | undefined;
+	payment_method_id: number;
+	blockchain: string;
 }
 
 interface SendRequest {
@@ -34,8 +37,8 @@ interface GetPrices {
 interface OrderParams {
 	account_reference: string;
 	source: string;
-	source_amount: string;
-	// target_amount: string;
+	source_amount: string | undefined;
+	target_amount: string | undefined;
 	target: string;
 	wallet_address: string;
 	return_url_on_success: string;
@@ -108,8 +111,7 @@ export const getPaymentMethods = async () => {
 
 export const pickPaymentMethodFromName = async (name: string) => {
 	const paymentMethods = await getPaymentMethods();
-	const paymentMethod = paymentMethods.find((item: any) => item.name === name);
-	return paymentMethod;
+	return paymentMethods.find((item: any) => item.name === name);
 };
 
 export const getPrices = async ({ params }: GetPrices) => {

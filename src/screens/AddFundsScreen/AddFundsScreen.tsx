@@ -1,14 +1,25 @@
 import React from 'react';
 import { Keyboard, TouchableOpacity, View } from 'react-native';
-import { ApplePayButton, FiatCard, Header, Modal, ModalReusables, OnrampButton, Text, TokenCard } from '@components';
+import {
+	ApplePayButton,
+	FiatCard,
+	FullModal,
+	Header,
+	Modal,
+	ModalReusables,
+	OnrampButton,
+	Text,
+	TokenCard
+} from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { debounce } from 'lodash';
+import WebView from 'react-native-webview';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
-import { makeStyles } from './AddFundsScreen.styles';
 import useAddFundsScreen from './AddFundsScreen.hooks';
+import { makeStyles } from './AddFundsScreen.styles';
 
 const AddFundsScreen = () => {
 	const { i18n } = useLanguage();
@@ -35,7 +46,11 @@ const AddFundsScreen = () => {
 		setError,
 		showApplePay,
 		disableApplePay,
-		onApplePayPurchase
+		onApplePayPurchase,
+		disableBanxa,
+		onOnrampPurchase,
+		orderLink,
+		setOrderLink
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -82,7 +97,8 @@ const AddFundsScreen = () => {
 						<OnrampButton
 							marginBottom={24}
 							currency={currency}
-							onPress={() => console.log('onClickBanxa')}
+							onPress={onOnrampPurchase}
+							disabled={disableBanxa}
 						/>
 					</View>
 					<KeyboardSpacer />
@@ -109,6 +125,17 @@ const AddFundsScreen = () => {
 			<Modal isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
 			</Modal>
+			<FullModal visible={!!orderLink} onClose={() => setOrderLink('')}>
+				<WebView
+					source={{ uri: orderLink }}
+					sharedCookiesEnabled
+					onNavigationStateChange={(e) => {
+						if (e.url.includes('#')) {
+							setOrderLink('');
+						}
+					}}
+				/>
+			</FullModal>
 		</>
 	);
 };

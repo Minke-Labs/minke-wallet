@@ -1,13 +1,19 @@
-import React, { createContext, useMemo, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useMemo, useState, useEffect } from 'react';
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useCountry from '../../hooks/useCountry';
 import { availableLanguagues } from '../../localization';
 import { Country } from './LanguageContext.types';
-import { mock } from './LanguageContext.utils';
 
-export const LanguageContext = createContext<any>(null);
+interface LanguageContextProps {
+	i18n: any;
+	language: string;
+	countries: Country[];
+	setLanguage: (l: string) => void;
+}
+
+export const LanguageContext = createContext<LanguageContextProps>({} as LanguageContextProps);
 
 const LanguageProvider: React.FC = ({ children }) => {
 	const { country } = useCountry();
@@ -244,24 +250,18 @@ const LanguageProvider: React.FC = ({ children }) => {
 				iso: 'TR',
 				currencyName: i18n.t('LocationContext.TR.currencyName'),
 				currency: 'TRY',
-				paymentName: 'Turkey Bank Transfer'
+				paymentName: 'Turkish Bank Transfer'
 			}
 		],
 		[language]
 	);
-
-	const countryByIso = useCallback((flag: string) => countries.find((c: Country) => c.flag === flag), [countries]);
-
-	const locationCountry = useMemo(() => countryByIso(country || mock.country), [country]);
 
 	const obj = useMemo(
 		() => ({
 			i18n,
 			language,
 			countries,
-			setLanguage,
-			locationCurrency: locationCountry?.currency ?? mock.countries[0].currency,
-			locationCountry
+			setLanguage
 		}),
 		[language, country]
 	);

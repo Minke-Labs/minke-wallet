@@ -8,10 +8,11 @@ import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
+import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 
 const useAddFundsScreen = () => {
 	const { address, network } = useState(globalWalletState()).value;
-	const { topUpTokens } = network;
+	const { topUpTokens, nativeToken } = network;
 	const [currency, setCurrency] = React.useState<Currency>();
 	const [token, setToken] = React.useState<MinkeToken>();
 	const [currencySearchVisible, setCurrencySearchVisible] = React.useState(false);
@@ -19,17 +20,19 @@ const useAddFundsScreen = () => {
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [tokenAmount, setTokenAmount] = React.useState<string | undefined>();
 	const [fiatAmount, setFiatAmount] = React.useState<string | undefined>();
-	const [fiat, setFiat] = React.useState(true);
+	const [fiat, setFiat] = React.useState(false);
 	const [error, setError] = React.useState('');
+	const [orderLink, setOrderLink] = React.useState('');
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
-	const { i18n } = useLanguage();
-	const isWyreCurrency = currency && providers.wyre.includes(currency);
-	const showApplePay = isWyreCurrency && Platform.OS === 'ios';
+	const { i18n, countries: banxaCountries } = useLanguage();
+	const useApplePay = currency && providers.wyre.includes(currency);
+	const useBanxa = !useApplePay && currency && providers.banxa.includes(currency);
+	const showApplePay = useApplePay && Platform.OS === 'ios';
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
 	const { track } = useAmplitude();
-	const countryCode = Object.keys(countries).find((key) => countries[key] === country);
+	const countryCode = Object.keys(countries).find((key) => countries[key] === country) || 'US';
 	// @ts-ignore
 	const euCountry = countryCode && euroCountries[countryCode];
 	const countryIso =
@@ -58,6 +61,36 @@ const useAddFundsScreen = () => {
 		});
 	};
 
+	const onOnrampPurchase = async () => {
+		const { country: currencyCountry, code } = currency!;
+		const { symbol } = token!;
+		const locationCountry = banxaCountries.find(({ iso }) => iso === currencyCountry);
+		const { id, minTopup } = await pickPaymentMethodFromName(locationCountry!.paymentName!);
+
+		if (+minTopup > +fiatAmount!) {
+			addError(i18n.t('AddFundsScreen.Errors.minimal_topup_amount', { currency: code, amount: minTopup }));
+			return;
+		}
+
+		setLoadingPrices(true);
+
+		const params = {
+			account_reference: address,
+			source: code,
+			target: symbol.toUpperCase(),
+			source_amount: fiat ? fiatAmount : undefined,
+			target_amount: fiat ? undefined : tokenAmount,
+			return_url_on_success: '#',
+			wallet_address: address,
+			payment_method_id: id,
+			blockchain: nativeToken.symbol
+		};
+
+		const url = await makeOrder({ params });
+		setOrderLink(url);
+		setLoadingPrices(false);
+	};
+
 	const dismissCurrencySearch = () => setCurrencySearchVisible(false);
 	const dismissTokenSearch = () => setTokenSearchVisible(false);
 
@@ -83,7 +116,6 @@ const useAddFundsScreen = () => {
 	};
 
 	const updateFiat = async (amount: string) => {
-		setFiat(true);
 		const formatedValue = amount.replace(/,/g, '.');
 		if (
 			token &&
@@ -93,7 +125,9 @@ const useAddFundsScreen = () => {
 			!formatedValue.startsWith('.') &&
 			Number(formatedValue) > 0
 		) {
-			if (isWyreCurrency) {
+			setFiat(true);
+
+			if (useApplePay) {
 				setLoadingPrices(true);
 				const quotation = await getWalletOrderQuotation({
 					sourceAmount: +formatedValue,
@@ -116,11 +150,31 @@ const useAddFundsScreen = () => {
 				}
 				setLoadingPrices(false);
 			}
+
+			if (useBanxa) {
+				setLoadingPrices(true);
+				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
+				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
+				const params = {
+					blockchain: nativeToken.symbol,
+					source: currency.code,
+					source_amount: +formatedValue,
+					target: token.symbol.toUpperCase(),
+					target_amount: undefined,
+					payment_method_id: paymentMethod.id
+				};
+				const {
+					data: { prices }
+				} = await getPrices({ params });
+				const [price] = prices;
+				setTokenAmount(price.coin_amount);
+				setFiatAmount(formatedValue);
+				setLoadingPrices(false);
+			}
 		}
 	};
 
 	const updateToken = async (amount: string) => {
-		setFiat(false);
 		const formatedValue = amount.replace(/,/g, '.');
 		if (
 			token &&
@@ -130,7 +184,8 @@ const useAddFundsScreen = () => {
 			!formatedValue.startsWith('.') &&
 			Number(formatedValue) > 0
 		) {
-			if (isWyreCurrency) {
+			setFiat(false);
+			if (useApplePay) {
 				setLoadingPrices(true);
 				const quotation = await getWalletOrderQuotation({
 					sourceAmount: undefined,
@@ -151,6 +206,27 @@ const useAddFundsScreen = () => {
 				}
 				setLoadingPrices(false);
 			}
+
+			if (useBanxa) {
+				setLoadingPrices(true);
+				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
+				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
+				const params = {
+					blockchain: nativeToken.symbol,
+					source: currency.code,
+					source_amount: undefined,
+					target: token.symbol.toUpperCase(),
+					target_amount: +formatedValue,
+					payment_method_id: paymentMethod.id
+				};
+				const {
+					data: { prices }
+				} = await getPrices({ params });
+				const [price] = prices;
+				setFiatAmount(price.fiat_amount);
+				setTokenAmount(formatedValue);
+				setLoadingPrices(false);
+			}
 		}
 	};
 
@@ -158,6 +234,7 @@ const useAddFundsScreen = () => {
 		!loadingPrices && token && currency && fiatAmount && tokenAmount && +fiatAmount > 0 && +tokenAmount > 0;
 
 	const disableApplePay = !(showApplePay && paymentEnabled);
+	const disableBanxa = !paymentEnabled;
 
 	useEffect(() => {
 		let defaultCurrency = currencies.find((c) => c.country === countryCode);
@@ -216,7 +293,11 @@ const useAddFundsScreen = () => {
 		setError,
 		showApplePay,
 		disableApplePay,
-		onApplePayPurchase
+		onApplePayPurchase,
+		disableBanxa,
+		onOnrampPurchase,
+		orderLink,
+		setOrderLink
 	};
 };
 

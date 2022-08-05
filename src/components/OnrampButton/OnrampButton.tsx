@@ -7,7 +7,7 @@ import { OnrampButtonProps } from './OnrampButton.types';
 
 const OnrampButton: React.FC<OnrampButtonProps> = ({ onPress, currency, marginBottom = 0, disabled = false }) => {
 	const { i18n } = useLanguage();
-	const location = currency ? chooseLocation(currency.country) : null;
+	const location = chooseLocation(currency?.country || '');
 	if (!location) return null;
 
 	const { locStyles, image: Image } = location;
