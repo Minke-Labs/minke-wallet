@@ -23,17 +23,13 @@ export default {
 		}
 	},
 	LocationContext: {
-		AUT: {
+		AT: {
 			name: 'Austria',
 			currencyName: 'Euro'
 		},
-		BEL: {
+		BE: {
 			name: 'Belgium',
 			currencyName: 'Euro'
-		},
-		BGR: {
-			name: 'Bulgaria',
-			currencyName: 'Bulgarian Lev'
 		},
 		BG: {
 			name: 'Bulgaria',
@@ -47,10 +43,6 @@ export default {
 			name: 'Cyprus',
 			currencyName: 'Euro'
 		},
-		CZE: {
-			name: 'Czech Republic',
-			currencyName: 'Czech Koruna'
-		},
 		CZ: {
 			name: 'Czech Republic',
 			currencyName: 'Czech Koruna'
@@ -59,55 +51,55 @@ export default {
 			name: 'Denmark',
 			currencyName: 'Danish Krone'
 		},
-		EST: {
+		EE: {
 			name: 'Estonia',
 			currencyName: 'Euro'
 		},
-		FIN: {
+		FI: {
 			name: 'Finland',
 			currencyName: 'Euro'
 		},
-		FRA: {
+		FR: {
 			name: 'France',
 			currencyName: 'Euro'
 		},
-		DEU: {
+		DE: {
 			name: 'Germany',
 			currencyName: 'Euro'
 		},
-		GRC: {
+		GR: {
 			name: 'Greece',
 			currencyName: 'Euro'
 		},
-		HUN: {
+		HU: {
 			name: 'Hungary',
 			currencyName: 'Euro'
 		},
-		IRL: {
+		IE: {
 			name: 'Ireland',
 			currencyName: 'Euro'
 		},
-		ITA: {
+		IT: {
 			name: 'Italy',
 			currencyName: 'Euro'
 		},
-		LVA: {
+		LV: {
 			name: 'Latvia',
 			currencyName: 'Euro'
 		},
-		LTU: {
+		LT: {
 			name: 'Lithuania',
 			currencyName: 'Euro'
 		},
-		LUX: {
+		LU: {
 			name: 'Luxembourg',
 			currencyName: 'Euro'
 		},
-		MLT: {
+		MT: {
 			name: 'Malta',
 			currencyName: 'Euro'
 		},
-		NLD: {
+		NL: {
 			name: 'Netherlands',
 			currencyName: 'Euro'
 		},
@@ -115,7 +107,7 @@ export default {
 			name: 'Poland',
 			currencyName: 'Polish Złoty'
 		},
-		PRT: {
+		PT: {
 			name: 'Portugal',
 			currencyName: 'Euro'
 		},
@@ -123,15 +115,15 @@ export default {
 			name: 'Romania',
 			currencyName: 'Romanian Leu'
 		},
-		SVK: {
+		SK: {
 			name: 'Slovakia',
 			currencyName: 'Euro'
 		},
-		SVN: {
+		SI: {
 			name: 'Slovenia',
 			currencyName: 'Euro'
 		},
-		ESP: {
+		ES: {
 			name: 'Spain',
 			currencyName: 'Euro'
 		},
@@ -146,10 +138,6 @@ export default {
 		EU: {
 			name: 'European Union',
 			currencyName: 'Euro'
-		},
-		UK: {
-			name: 'United Kingdom',
-			currencyName: 'British Pound'
 		},
 		GB: {
 			name: 'United Kingdom',
@@ -166,10 +154,6 @@ export default {
 		BR: {
 			name: 'Brazil',
 			currencyName: 'Brazilian Real'
-		},
-		TUR: {
-			name: 'Turkey',
-			currencyName: 'Turkish Lira'
 		},
 		TR: {
 			name: 'Turkey',
@@ -196,7 +180,7 @@ export default {
 			currencyName: 'Swiss Franc'
 		},
 		CO: {
-			name: 'Colombia Peso',
+			name: 'Colombia',
 			currencyName: 'Colombia Peso'
 		},
 		DO: {
@@ -888,6 +872,7 @@ export default {
 				add_funds: 'Add funds',
 				buy_crypto: 'Buy crypto',
 				apple_card_transfer: 'Apple Pay, card or bank transfer',
+				send_from_exchange: 'Send from Binance, Coinbase, others',
 				external: 'External exchange'
 			},
 			CustomAmountModal: {

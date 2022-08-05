@@ -17,6 +17,7 @@ export const Content: React.FC<ContentProps> = ({
 	showReceive,
 	address,
 	balance,
+	setAddFundsVisible,
 	setSendModalOpen,
 	onAvatarClick
 }) => {
@@ -52,12 +53,7 @@ export const Content: React.FC<ContentProps> = ({
 			leftTitle={i18n.t('WalletScreen.Content.accounts')}
 			rightTitle={i18n.t('WalletScreen.Content.transactions')}
 			left={<Accounts points={points} />}
-			right={
-				<Transactions
-					onAddFunds={() => navigation.navigate('AddFundsScreen')}
-					{...{ onSeeAllTransactions, loading }}
-				/>
-			}
+			right={<Transactions onAddFunds={() => setAddFundsVisible(true)} {...{ onSeeAllTransactions, loading }} />}
 			loading={loading}
 			onRefresh={handleRefresh}
 		>
@@ -73,7 +69,7 @@ export const Content: React.FC<ContentProps> = ({
 			<AssetsPanel
 				onSave={() => navigation.navigate('SaveScreen')}
 				onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
-				onAddFunds={() => navigation.navigate('AddFundsScreen')}
+				onAddFunds={() => setAddFundsVisible(true)}
 				balance={balance?.usd || 0}
 				address={address}
 				onAvatarClick={onAvatarClick}

@@ -12,6 +12,7 @@ export const useWalletScreen = () => {
 	const navigation = useNavigation();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
+	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const [sendModalFinished, setSendModalFinished] = React.useState(false);
 	const [openAvatarModal, setOpenAvatarModal] = React.useState(false);
@@ -55,6 +56,8 @@ export const useWalletScreen = () => {
 		sendModalOpen,
 		setSendModalOpen,
 		receiveVisible,
+		addFundsVisible,
+		setAddFundsVisible,
 		snackbarVisible,
 		setSnackbarVisible,
 		sendModalFinished,

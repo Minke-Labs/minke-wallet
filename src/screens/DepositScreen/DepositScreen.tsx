@@ -2,13 +2,15 @@ import React from 'react';
 import { Modal, BlankStates } from '@components';
 import { useDepositProtocols } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
+import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
 import OpenSavings from './OpenSavings/OpenSavings';
 import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
-	const { notAbleToSaveVisible, notAbleToSaveDismiss, onAddFunds } = useDepositScreen();
+	const { notAbleToSaveVisible, notAbleToSaveDismiss, dismissAddFunds, addFundsVisible, onAddFunds } =
+		useDepositScreen();
 	const { setSelectedUSDCoin, depositableToken, selectedProtocol, ableToDeposit, approved, setApproved, apy } =
 		useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
@@ -17,13 +19,18 @@ const DepositScreen = () => {
 
 	if (!ableToDeposit) {
 		return (
-			<Modal isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
-				<NotAbleToSaveModal
-					visible={notAbleToSaveVisible}
-					onDismiss={notAbleToSaveDismiss}
-					onAddFunds={onAddFunds}
-				/>
-			</Modal>
+			<>
+				<Modal isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
+					<NotAbleToSaveModal
+						visible={notAbleToSaveVisible}
+						onDismiss={notAbleToSaveDismiss}
+						onAddFunds={onAddFunds}
+					/>
+				</Modal>
+				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
+					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
+				</Modal>
+			</>
 		);
 	}
 

@@ -12,11 +12,7 @@ export const SelectorModal: React.FC<SelectorModalProps> = ({ onBuy, onExchange 
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<Text
-				marginBottom={16}
-				weight="bold"
-				type="hMedium"
-			>
+			<Text marginBottom={16} weight="bold" type="hMedium">
 				{i18n.t('Containers.AddFunds.SelectorModal.add_funds')}
 			</Text>
 			<ListItem
@@ -28,7 +24,7 @@ export const SelectorModal: React.FC<SelectorModalProps> = ({ onBuy, onExchange 
 			/>
 			<ListItem
 				title={i18n.t('Containers.AddFunds.SelectorModal.external')}
-				desc={i18n.t('Containers.AddFunds.SelectorModal.apple_card_transfer')}
+				desc={i18n.t('Containers.AddFunds.SelectorModal.send_from_exchange')}
 				onPress={onExchange}
 			/>
 		</>
