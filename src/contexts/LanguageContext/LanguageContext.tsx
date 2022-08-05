@@ -143,14 +143,6 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.HU.name'),
-				flag: 'hungary',
-				iso: 'HU',
-				currencyName: i18n.t('LocationContext.HU.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
 				name: i18n.t('LocationContext.IE.name'),
 				flag: 'ireland',
 				iso: 'IE',
