@@ -234,7 +234,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	return (
 		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
 			<View style={{ flexDirection: 'row', ...(style as object) }}>
-				<Animated.View
+				<View
 					style={[
 						{
 							borderColor: error ? colors.alert1 : isFocusedState ? colors.cta1 : colors.cta2
@@ -288,7 +288,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							</TouchableOpacity>
 						)}
 					</View>
-				</Animated.View>
+				</View>
 			</View>
 		</TouchableWithoutFeedback>
 	);

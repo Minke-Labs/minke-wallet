@@ -48,6 +48,7 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	const [fontSizeAnimated] = useState(new Animated.Value(isFocused ? 12 : 16));
 	const [leftAnimated] = useState(new Animated.Value(0));
 	const [topAnimated] = useState(new Animated.Value(0));
+	const [flagAnimated] = useState(new Animated.Value(0));
 
 	const setFocus = () => inputRef.current?.focus();
 
@@ -67,7 +68,13 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 			}),
 			// @ts-ignore
 			timing(topAnimated, {
-				toValue: -halfTop + (isFocusedState ? 16 : 14),
+				toValue: -halfTop + (isFocusedState ? 6 : 14),
+				duration: 300,
+				easing: EasingNode.linear
+			}),
+			// @ts-ignore
+			timing(flagAnimated, {
+				toValue: 8,
 				duration: 300,
 				easing: EasingNode.linear
 			}),
@@ -96,6 +103,12 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 			}),
 			// @ts-ignore
 			timing(topAnimated, {
+				toValue: 0,
+				duration: 300,
+				easing: EasingNode.linear
+			}),
+			// @ts-ignore
+			timing(flagAnimated, {
 				toValue: 0,
 				duration: 300,
 				easing: EasingNode.linear
@@ -205,49 +218,49 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	};
 
 	return (
-		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
-			<View style={{ flexDirection: 'row', ...(style as object) }}>
-				<Animated.View
-					style={[
-						{
-							borderColor: error ?
-								colors.alert1 :
-								isFocusedState ?
-									colors.cta1 :
-									colors.cta2
-						},
-						styles.container
-					]}
-				>
-					<View
+		<View style={{ flexDirection: 'row', ...(style as object) }}>
+			<View
+				style={[
+					{
+						borderColor: error ?
+							colors.alert1 :
+							isFocusedState ?
+								colors.cta1 :
+								colors.cta2
+					},
+					styles.container
+				]}
+			>
+				<View style={{ flexDirection: 'row' }}>
+
+					<Animated.View
 						style={{
-							flex: 1,
 							flexDirection: 'row',
-							alignItems: isFocusedState ? 'flex-end' : 'center'
+							alignItems: 'center',
+							transform: [{ translateY: flagAnimated }]
 						}}
 					>
+						<Flag name="unitedStates" size={24} />
+						<Text type="bMedium" color="text4" style={{ marginLeft: 4 }}>
+							(+1)
+						</Text>
+					</Animated.View>
 
-						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-							<Flag name="unitedStates" size={24} />
-							<Text type="bMedium" color="text4" style={{ marginLeft: 4 }}>
-								(+1)
-							</Text>
-						</View>
+					<AnimatedText
+						onPress={setFocus}
+						style={[
+							labelStyle,
+							styles.label,
+							{
+								fontSize: fontSizeAnimated,
+								transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
+							}
+						]}
+					>
+						{label}
+					</AnimatedText>
 
-						<AnimatedText
-							onPress={setFocus}
-							style={[
-								labelStyle,
-								styles.label,
-								{
-									fontSize: fontSizeAnimated,
-									transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
-								}
-							]}
-						>
-							{label}
-						</AnimatedText>
-
+					<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
 						<TextInput
 							onSubmitEditing={onSubmitEditing}
 							onFocus={onFocus !== undefined ? onFocus : handleFocus}
@@ -257,29 +270,29 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							style={styles.input}
 							{...{ value, multiline, ...rest }}
 						/>
+					</TouchableWithoutFeedback>
 
+				</View>
+
+				{error && (
+					<View
+						style={{
+							height: HEIGHT,
+							position: 'absolute',
+							right: 16,
+							justifyContent: 'center'
+						}}
+					>
+						<Icon
+							name="errorStroke"
+							size={24}
+							color="alert1"
+						/>
 					</View>
+				)}
 
-					{error && (
-						<View
-							style={{
-								height: HEIGHT,
-								position: 'absolute',
-								right: 16,
-								justifyContent: 'center'
-							}}
-						>
-							<Icon
-								name="errorStroke"
-								size={24}
-								color="alert1"
-							/>
-						</View>
-					)}
-
-				</Animated.View>
 			</View>
-		</TouchableWithoutFeedback>
+		</View>
 	);
 };
 
