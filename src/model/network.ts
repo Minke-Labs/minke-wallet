@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
+	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_URL_POLYGON_MAINNET,
 	BICONOMY_API_KEY_POLYGON_MAINNET,
 	ALCHEMY_API_KEY_ETHEREUM,
@@ -38,6 +39,7 @@ export interface Network {
 export interface Networks {
 	mainnet: Network;
 	matic: Network;
+	kovan: Network;
 }
 
 export const networks: Networks = {
@@ -90,6 +92,22 @@ export const networks: Networks = {
 			vault: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'
 		},
 		coingeckoPlatform: 'polygon-pos'
+	},
+	kovan: {
+		chainId: 42,
+		name: 'Kovan',
+		id: 'kovan',
+		wyreSRN: 'ethereum',
+		testnet: true,
+		etherscanURL: 'https://kovan.etherscan.io/',
+		etherscanAPIURL: 'https://api-kovan.etherscan.io/',
+		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
+		zapperNetwork: 'ethereum',
+		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+		topUpTokens: [{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }],
+		transactionTimesEndpoint: true,
+		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
+		coingeckoPlatform: 'ethereum'
 	}
 };
 
