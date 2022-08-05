@@ -11,9 +11,8 @@ import {
 	LayoutChangeEvent
 } from 'react-native';
 import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
-import Icon from '../Icon/Icon';
-import Flag from '../Flag/Flag';
-import Text from '../Text/Text';
+import AreaCode from './AreaCode/AreaCode';
+import Icon from '../../Icon/Icon';
 import { makeStyles } from './TelephoneInput.styles';
 import { InputProps, InputRef } from './TelephoneInput.types';
 
@@ -33,6 +32,7 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		onBlur,
 		onFocus,
 		value = '',
+		openModal,
 		...rest
 	},
 	ref
@@ -232,18 +232,13 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 				]}
 			>
 				<View style={{ flexDirection: 'row' }}>
-
 					<Animated.View
 						style={{
-							flexDirection: 'row',
-							alignItems: 'center',
+							justifyContent: 'center',
 							transform: [{ translateY: flagAnimated }]
 						}}
 					>
-						<Flag name="unitedStates" size={24} />
-						<Text type="bMedium" color="text4" style={{ marginLeft: 4 }}>
-							(+1)
-						</Text>
+						<AreaCode iso="US" openModal={openModal} />
 					</Animated.View>
 
 					<AnimatedText

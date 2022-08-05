@@ -18,7 +18,7 @@ export const makeStyles = (colors: ColorType, height: number) =>
 		},
 
 		label: {
-			left: 62,
+			left: 70,
 			alignSelf: 'center',
 			position: 'absolute',
 			flex: 1

@@ -7,6 +7,7 @@ interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	multiline?: true | false;
 	error?: boolean;
 	style?: StyleProp<ViewStyle>;
+	openModal: () => void;
 }
 
 interface InputRef {
