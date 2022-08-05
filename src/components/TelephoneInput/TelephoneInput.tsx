@@ -227,18 +227,9 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 						}}
 					>
 
-						<View
-							style={{
-								flexDirection: 'row',
-								alignItems: 'center'
-							}}
-						>
+						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 							<Flag name="unitedStates" size={24} />
-							<Text
-								type="bMedium"
-								color="text4"
-								style={{ marginLeft: 4 }}
-							>
+							<Text type="bMedium" color="text4" style={{ marginLeft: 4 }}>
 								(+1)
 							</Text>
 						</View>
@@ -285,6 +276,7 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							/>
 						</View>
 					)}
+
 				</Animated.View>
 			</View>
 		</TouchableWithoutFeedback>
