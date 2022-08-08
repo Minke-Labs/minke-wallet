@@ -584,7 +584,7 @@ export default {
 		easily: 'Economize, gaste e invista facilmente com a Minke',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
-		import_or_restore: 'Importar ou Restaurar Carteira',
+		import_or_restore: 'Importar Carteira',
 		i_have_a_referral_code: 'Eu tenho um código de indicação',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
