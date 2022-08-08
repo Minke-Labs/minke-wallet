@@ -261,6 +261,12 @@ const useAddFundsScreen = () => {
 	}, [token, currency, countryIso]);
 
 	useEffect(() => {
+		if (currency && tokenAmount) {
+			updateToken(tokenAmount);
+		}
+	}, [currency]);
+
+	useEffect(() => {
 		if (applePayError) {
 			addError(applePayError.description);
 		}

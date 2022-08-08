@@ -8,7 +8,7 @@ interface UseFiatCardProps {
 	conversionAmount: string;
 }
 
-export const useFiatCard = ({ updateQuotes, conversionAmount, currency }: UseFiatCardProps) => {
+export const useFiatCard = ({ updateQuotes, conversionAmount }: UseFiatCardProps) => {
 	const [amount, setAmount] = useState('');
 	// if enabled always set the max according to the balance
 
@@ -27,13 +27,6 @@ export const useFiatCard = ({ updateQuotes, conversionAmount, currency }: UseFia
 		}
 		setAmount(lastValid);
 	};
-
-	useEffect(() => {
-		// setAmount('');
-		if (updateQuotes) {
-			updateQuotes(amount);
-		}
-	}, [currency]);
 
 	useEffect(() => {
 		if (updateQuotes && !(conversionAmount && conversionAmount.replace(/\./g, decimalSeparator) === amount)) {

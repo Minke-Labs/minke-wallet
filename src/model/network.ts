@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_URL_POLYGON_MAINNET,
 	BICONOMY_API_KEY_POLYGON_MAINNET,
 	ALCHEMY_API_KEY_ETHEREUM,
