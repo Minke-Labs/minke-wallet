@@ -9,4 +9,5 @@ export interface FiatCardProps {
 	notTouchable?: boolean;
 	disableAmountValidation?: boolean;
 	disableInput?: boolean;
+	autoFocus?: boolean;
 }

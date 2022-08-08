@@ -71,6 +71,7 @@ const AddFundsScreen = () => {
 								onPress={openCurrencySearch}
 								conversionAmount={fiatAmount}
 								disableAmountValidation
+								autoFocus={false}
 							/>
 						</View>
 						<View style={styles.bottom}>
@@ -85,6 +86,7 @@ const AddFundsScreen = () => {
 								disableMax
 								exchange
 								disableAmountValidation
+								autoFocus={false}
 							/>
 						</View>
 

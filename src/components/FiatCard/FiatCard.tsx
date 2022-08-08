@@ -13,7 +13,8 @@ const FiatCard: React.FC<FiatCardProps> = ({
 	conversionAmount = '',
 	notTouchable = false,
 	disableAmountValidation = false,
-	disableInput = false
+	disableInput = false,
+	autoFocus = true
 }) => {
 	const styles = makeStyles();
 	const { amount, onChangeText, invalidAmount } = useFiatCard({
@@ -37,7 +38,7 @@ const FiatCard: React.FC<FiatCardProps> = ({
 					symbol={currency?.name || ''}
 					isAmountValid={disableAmountValidation || !invalidAmount}
 					placeholder="0.00"
-					autoFocus
+					autoFocus={autoFocus}
 					showSymbol
 					amount={amount}
 					onChangeText={onChangeText}

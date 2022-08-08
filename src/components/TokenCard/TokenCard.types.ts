@@ -11,4 +11,5 @@ export interface TokenCardProps {
 	exchange?: boolean;
 	disableAmountValidation?: boolean;
 	disableInput?: boolean;
+	autoFocus?: boolean;
 }
