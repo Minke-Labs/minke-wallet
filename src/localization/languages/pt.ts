@@ -579,8 +579,9 @@ export default {
 		}
 	},
 	WelcomeScreen: {
-		wave_goodbye: 'Diga adeus ao seu banco!',
-		easily: 'Economize, gaste e invista facilmente com a',
+		referral_code_applied: 'Código de referência aplicado',
+		wave_goodbye: 'Diga olá para um dinheiro melhor!',
+		easily: 'Economize, gaste e invista facilmente com a Minke',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
 		import_or_restore: 'Importar ou Restaurar Carteira',

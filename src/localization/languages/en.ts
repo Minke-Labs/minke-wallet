@@ -577,6 +577,7 @@ export default {
 		}
 	},
 	WelcomeScreen: {
+		referral_code_applied: 'Referral code applied',
 		wave_goodbye: 'Wave hello\nto better money!',
 		easily: 'Easily save, spend and invest with Minke',
 		creating: 'Creating wallet',

@@ -54,7 +54,7 @@ const WelcomeScreen = () => {
 								{disableCode ? (
 									<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 										<Text type="a" weight="medium" center color="alert3">
-											Referral code applied
+											{i18n.t('WelcomeScreen.referral_code_applied')}
 										</Text>
 										<Icon name="checkmark" color="cta1" size={20} style={{ marginLeft: 8 }} />
 									</View>
