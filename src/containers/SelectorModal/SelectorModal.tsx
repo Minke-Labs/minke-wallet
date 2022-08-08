@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, ListItem } from '@components';
 import { useLanguage } from '@hooks';
-import APay from '../APay.svg';
+// import APay from '../APay.svg';
+import APay from '../APay';
 
 interface SelectorModalProps {
 	onBuy: () => void;

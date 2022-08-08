@@ -41,7 +41,9 @@ const lightTheme = {
 	text11: '#FFFFFF',
 	text12: '#006AA6',
 
-	background6: '#F4F6F8'
+	background6: '#F4F6F8',
+
+	bw: '#000000'
 };
 
 const darkTheme = {
@@ -87,7 +89,9 @@ const darkTheme = {
 	text11: '#FFFFFF',
 	text12: '#00B7CF',
 
-	background6: '#0A2138'
+	background6: '#0A2138',
+
+	bw: '#FFFFFF'
 };
 
 export const colors = { darkTheme, lightTheme };
