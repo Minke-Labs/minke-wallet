@@ -13,14 +13,14 @@ import {
 import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
 import AreaCode from './AreaCode/AreaCode';
 import Icon from '../../Icon/Icon';
-import { makeStyles } from './TelephoneInput.styles';
-import { InputProps, InputRef } from './TelephoneInput.types';
+import { makeStyles } from './Input.styles';
+import { InputProps, InputRef } from './Input.types';
 
 const HEIGHT = 56;
 
 const AnimatedText = Animated.createAnimatedComponent(NativeText);
 
-const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
+const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	{
 		label,
 		onSubmit,
@@ -33,6 +33,7 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		onFocus,
 		value = '',
 		openModal,
+		iso,
 		...rest
 	},
 	ref
@@ -238,7 +239,7 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							transform: [{ translateY: flagAnimated }]
 						}}
 					>
-						<AreaCode iso="US" openModal={openModal} />
+						<AreaCode iso={iso} openModal={openModal} />
 					</Animated.View>
 
 					<AnimatedText
@@ -291,4 +292,4 @@ const TelephoneInput: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	);
 };
 
-export default forwardRef(TelephoneInput);
+export default forwardRef(Input);

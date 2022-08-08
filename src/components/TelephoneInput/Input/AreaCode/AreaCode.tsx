@@ -1,15 +1,10 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { countries, FlagType } from '@styles';
+import { areaObj } from '../../TelephoneInput.utils';
+import { AreaObjType } from '../../TelephoneInput.types';
 import Flag from '../../../Flag/Flag';
 import Text from '../../../Text/Text';
-
-type AreaObjType = keyof typeof areaObj;
-const areaObj = {
-	US: '(+1)',
-	BR: '(+55)',
-	AU: '(+61)'
-};
 
 interface AreaCodeProps {
 	iso: AreaObjType;

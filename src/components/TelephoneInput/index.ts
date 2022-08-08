@@ -1,5 +1,5 @@
-import Input from './Input/TelephoneInput';
-import Modal from './Modal/TelephoneInputModal';
+import Input from './Input/Input';
+import Modal from './Modal/Modal';
 
 export default {
 	Input,

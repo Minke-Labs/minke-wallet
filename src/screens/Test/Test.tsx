@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { TelephoneInput } from '@components';
 import { BasicLayout } from '@layouts';
-
-type AreaObjType = 'US' | 'AU' | 'BR';
+import { AreaObjType } from '../../components/TelephoneInput/TelephoneInput.types';
 
 const Test = () => {
 	const [iso, setIso] = useState<AreaObjType>('US');
 	const [visible, setVisible] = useState(false);
 	const [text, setText] = useState('');
+
 	return (
 		<>
 			<BasicLayout>
@@ -19,11 +18,13 @@ const Test = () => {
 						value={text}
 						onChangeText={(t) => setText(t)}
 						openModal={() => setVisible(true)}
-					// error
+						iso={iso}
+						// error
 					/>
 				</View>
 			</BasicLayout>
 			<TelephoneInput.Modal
+				setValue={(val: AreaObjType) => setIso(val)}
 				isVisible={visible}
 				onDismiss={() => setVisible(false)}
 			/>
