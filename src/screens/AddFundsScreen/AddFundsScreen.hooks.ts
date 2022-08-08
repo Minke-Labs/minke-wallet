@@ -9,6 +9,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
+import { buyQuote } from '@src/services/apis/moonpay/moonpay';
 
 const useAddFundsScreen = () => {
 	const { address, network } = useState(globalWalletState()).value;
@@ -28,6 +29,7 @@ const useAddFundsScreen = () => {
 	const { i18n, countries: banxaCountries } = useLanguage();
 	const useApplePay = currency && providers.wyre.includes(currency);
 	const useBanxa = !useApplePay && currency && providers.banxa.includes(currency);
+	const useMoonpay = !useBanxa && currency && providers.moonpay.includes(currency);
 	const showApplePay = useApplePay && Platform.OS === 'ios';
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
@@ -61,7 +63,7 @@ const useAddFundsScreen = () => {
 		});
 	};
 
-	const onOnrampPurchase = async () => {
+	const onOnrampBanxaPurchase = async () => {
 		const { country: currencyCountry, code } = currency!;
 		const { symbol } = token!;
 		const locationCountry = banxaCountries.find(({ iso }) => iso === currencyCountry);
@@ -149,9 +151,7 @@ const useAddFundsScreen = () => {
 					setFiatAmount(formatedValue);
 				}
 				setLoadingPrices(false);
-			}
-
-			if (useBanxa) {
+			} else if (useBanxa) {
 				setLoadingPrices(true);
 				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
 				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
@@ -170,6 +170,26 @@ const useAddFundsScreen = () => {
 				setTokenAmount(price.coin_amount);
 				setFiatAmount(formatedValue);
 				setLoadingPrices(false);
+			} else if (useMoonpay) {
+				const { minBuyAmount, maxBuyAmount } = currency;
+				if (minBuyAmount && maxBuyAmount && +formatedValue >= minBuyAmount && +formatedValue <= maxBuyAmount) {
+					setLoadingPrices(true);
+					const params = {
+						currencyCode: token.symbol.toLowerCase(),
+						quoteCurrencyCode: token.symbol.toLowerCase(),
+						baseCurrencyCode: currency.code.toLowerCase(),
+						baseCurrencyAmount: formatedValue,
+						quoteCurrencyAmount: undefined,
+						areFeesIncluded: true
+					};
+					const { quoteCurrencyAmount } = await buyQuote(params);
+
+					setTokenAmount(quoteCurrencyAmount.toString());
+					setFiatAmount(formatedValue);
+					setLoadingPrices(false);
+				} else {
+					console.log({ minBuyAmount, maxBuyAmount });
+				}
 			}
 		}
 	};
@@ -185,6 +205,7 @@ const useAddFundsScreen = () => {
 			Number(formatedValue) > 0
 		) {
 			setFiat(false);
+			console.log({ useApplePay, useBanxa, useMoonpay });
 			if (useApplePay) {
 				setLoadingPrices(true);
 				const quotation = await getWalletOrderQuotation({
@@ -205,9 +226,7 @@ const useAddFundsScreen = () => {
 					setTokenAmount(formatedValue);
 				}
 				setLoadingPrices(false);
-			}
-
-			if (useBanxa) {
+			} else if (useBanxa) {
 				setLoadingPrices(true);
 				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
 				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
@@ -224,6 +243,23 @@ const useAddFundsScreen = () => {
 				} = await getPrices({ params });
 				const [price] = prices;
 				setFiatAmount(price.fiat_amount);
+				setTokenAmount(formatedValue);
+				setLoadingPrices(false);
+			} else if (useMoonpay) {
+				setLoadingPrices(true);
+				const params = {
+					currencyCode: token.symbol.toLowerCase(),
+					quoteCurrencyCode: token.symbol.toLowerCase(),
+					baseCurrencyCode: currency.code.toLowerCase(),
+					baseCurrencyAmount: undefined,
+					quoteCurrencyAmount: formatedValue,
+					areFeesIncluded: true
+				};
+				console.log('params', params);
+				const quotation = await buyQuote(params);
+
+				console.log(quotation);
+				setFiatAmount(quotation.totalAmount.toString());
 				setTokenAmount(formatedValue);
 				setLoadingPrices(false);
 			}
@@ -301,9 +337,11 @@ const useAddFundsScreen = () => {
 		disableApplePay,
 		onApplePayPurchase,
 		disableBanxa,
-		onOnrampPurchase,
+		onOnrampBanxaPurchase,
 		orderLink,
-		setOrderLink
+		setOrderLink,
+		useBanxa,
+		useMoonpay
 	};
 };
 

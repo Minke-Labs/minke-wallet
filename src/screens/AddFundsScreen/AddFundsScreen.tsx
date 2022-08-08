@@ -48,9 +48,11 @@ const AddFundsScreen = () => {
 		disableApplePay,
 		onApplePayPurchase,
 		disableBanxa,
-		onOnrampPurchase,
+		onOnrampBanxaPurchase,
 		orderLink,
-		setOrderLink
+		setOrderLink,
+		useBanxa,
+		useMoonpay
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -96,12 +98,16 @@ const AddFundsScreen = () => {
 						{showApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
-						<OnrampButton
-							marginBottom={24}
-							currency={currency}
-							onPress={onOnrampPurchase}
-							disabled={disableBanxa}
-						/>
+						{useBanxa ? (
+							<OnrampButton
+								marginBottom={24}
+								currency={currency}
+								onPress={onOnrampBanxaPurchase}
+								disabled={disableBanxa}
+							/>
+						) : (
+							!!useMoonpay && <Text>Moonpay</Text>
+						)}
 					</View>
 					<KeyboardSpacer />
 				</TouchableOpacity>
