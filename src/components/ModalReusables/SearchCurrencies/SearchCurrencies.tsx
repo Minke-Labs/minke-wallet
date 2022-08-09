@@ -36,11 +36,16 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 		setSearch('');
 	}, [visible]);
 
+	const currencyName = ({ country, name }: Currency) =>
+		i18n.t(`LocationContext.${country}.currencyName`, {
+			defaultValue: name
+		});
+
 	const onSearch = (text: string) => {
 		setSearch(text);
 		let source;
 		if (text) {
-			source = currencies.filter(({ code }) => code.toLowerCase().includes(text.toLowerCase()));
+			source = currencies.filter((c) => currencyName(c).toLowerCase().includes(text.toLowerCase()));
 		} else {
 			source = currencies;
 		}
@@ -83,11 +88,7 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 							</View>
 							<View style={styles.tokenItemNameContainer}>
 								<Text style={styles.tokenItemSymbol}>{countryName(item)}</Text>
-								<Text style={styles.tokenItemName}>
-									{i18n.t(`LocationContext.${item.country}.currencyName`, {
-										defaultValue: item.name
-									})}
-								</Text>
+								<Text style={styles.tokenItemName}>{currencyName(item)}</Text>
 							</View>
 						</TouchableOpacity>
 					)}
