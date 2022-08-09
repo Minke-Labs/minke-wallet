@@ -214,7 +214,6 @@ export default {
 		}
 	},
 	NFTDetailScreen: {
-		this_nft: 'This NFT is on the',
 		by: 'by ',
 		Panel: {
 			floor_price: 'Floor price',
