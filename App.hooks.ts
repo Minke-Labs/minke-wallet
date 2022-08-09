@@ -61,11 +61,11 @@ export const useApp = () => {
 		const getCoinList = async () => {
 			try {
 				const data = await getTokenList();
+				await AsyncStorage.setItem('@listCoins', JSON.stringify(data));
 				setCoinList(data);
-				AsyncStorage.setItem('@listCoins', JSON.stringify(data));
 			} catch (error) {
+				await AsyncStorage.setItem('@listCoins', JSON.stringify(coins));
 				setCoinList(coins);
-				AsyncStorage.setItem('@listCoins', JSON.stringify(coins));
 			}
 		};
 		getCoinList();
