@@ -4,6 +4,7 @@ import { networks } from '@models/network';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useNetwork, useLanguage } from '@hooks';
 import { SettingsHeader } from '@components';
+import RNTestFlight from 'react-native-test-flight';
 import RNUxcam from 'react-native-ux-cam';
 import ListItem from './ListItem/ListItem';
 import styles from './ChangeNetworkScreen.styles';
@@ -21,7 +22,9 @@ const ChangeNetworkScreen = () => {
 
 			<View style={styles.padding}>
 				<FlatList
-					data={Object.values(networks).filter(({ testnet }) => __DEV__ || !testnet)}
+					data={Object.values(networks).filter(
+						({ testnet }) => RNTestFlight.isTestFlight || __DEV__ || !testnet
+					)}
 					renderItem={({ item }) => (
 						<ListItem
 							label={item.name}

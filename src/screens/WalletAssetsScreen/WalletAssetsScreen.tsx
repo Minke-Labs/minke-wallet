@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useTokens } from '@hooks';
-import { AddFunds } from '@containers';
 import { BlankStates, Modal } from '@components';
 import { BasicLayout } from '@layouts';
+import { AddFunds } from '@containers';
 import RNUxcam from 'react-native-ux-cam';
 import AssetList from './AssetList/AssetList';
 import ValueBox from './ValueBox/ValueBox';
@@ -12,8 +12,8 @@ import styles from './WalletAssetsScreen.styles';
 
 const WalletAssetsScreen = () => {
 	RNUxcam.tagScreenName('WalletAssetsScreen');
-	const { colors } = useTheme();
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
+	const { colors } = useTheme();
 	const { tokens, walletBalance: balance } = useTokens();
 
 	if (tokens === undefined) return <BlankStates.WalletAssets />;

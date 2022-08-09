@@ -22,7 +22,7 @@ export const makeStyles = (colors: ColorType) =>
 		bottom: {
 			paddingHorizontal: 16,
 			paddingBottom: 16,
-			paddingTop: 16 + 8,
+			paddingTop: 24,
 			width: '100%'
 		},
 		buttonBox: {

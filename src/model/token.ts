@@ -3,8 +3,9 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { network, networks } from './network';
+import { MinkeToken } from './types/token.types';
 
-export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD', 'UST'];
+export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD'];
 export const exchangebleTokens = [
 	'ETH',
 	'MATIC',
@@ -269,25 +270,6 @@ export interface TransactionData {
 	to: string;
 	value: string;
 	error: string;
-}
-
-export interface MinkeToken {
-	symbol: string;
-	decimals: number;
-	address: string;
-	id?: string;
-	name?: string;
-	image?: string; // TODO: @Marcos - Remove this field
-	balance?: string;
-	balanceUSD?: number;
-	interestBearingToken?: {
-		// withdraw: tokens that can be deposited (DAI, USDC...) will have this field pointing to
-		// the interest bearing token address (amDAI, amUSDC...)
-		address: string;
-		symbol: string;
-		decimals: number;
-		source: string;
-	};
 }
 
 export interface AccountBalance {

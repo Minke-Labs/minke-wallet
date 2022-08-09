@@ -11,7 +11,7 @@ import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { getDepositToken } from '@models/depositTokens';
 import { network } from '@models/network';
 import { aaveDepositContract } from '@models/gaslessTransaction';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { getTokenBalances } from '@src/services/apis';

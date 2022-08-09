@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { globalWalletState } from '@stores/WalletStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { DepositProtocol, usdCoinSettingsKey } from '@models/deposit';
@@ -25,7 +25,7 @@ import { DepositableToken } from '@models/types/depositTokens.types';
 interface UseDepositProps {
 	depositableToken: DepositableToken | undefined;
 	selectedProtocol: DepositProtocol | undefined;
-	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>
+	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDCoin }: UseDepositProps) => {

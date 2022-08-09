@@ -1,6 +1,6 @@
-import { network, networks } from '@models/network';
+import { networks } from '@models/network';
 import { coinFromSymbol } from '@src/helpers/utilities';
-import { MinkeToken } from '@src/model/token';
+import { MinkeToken } from '@models/types/token.types';
 import { formatUnits } from 'ethers/lib/utils';
 import { TokenConverterParams, TokensConverterParams } from './tokenConverter.types';
 
