@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, SafeAreaView, Linking } from 'react-native';
-import { Text, NetworkWarning, Button } from '@components';
+import { Text, Button } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -46,7 +46,6 @@ const NFTDetailScreen = ({ route }: Props) => {
 						{nft?.collection.name || ''}
 					</Text>
 				</View>
-				<NetworkWarning.Tag title={i18n.t('NFTDetailScreen.this_nft')} />
 			</View>
 
 			<Bottom>
