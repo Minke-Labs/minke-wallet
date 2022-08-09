@@ -1,4 +1,4 @@
 export interface PanelProps {
-	floor: string;
-	lastSale: string;
+	floor: number | string;
+	lastSale: number | string;
 }
