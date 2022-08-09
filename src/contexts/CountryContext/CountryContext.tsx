@@ -6,12 +6,12 @@ import { countries, CountriesType } from '@styles';
 export const CountryContext = createContext<any>(null);
 
 const CountryProvider: React.FC = ({ children }) => {
-	const [country, setCountry] = useState<string>(countries[Localization.region! as CountriesType]);
+	const [country, setCountry] = useState<string>();
 
 	useEffect(() => {
 		const fetchCountry = async () => {
 			const storedLocation = await AsyncStorage.getItem('@country');
-			if (storedLocation) setCountry(storedLocation);
+			setCountry(storedLocation || countries[Localization.region! as CountriesType]);
 		};
 		fetchCountry();
 	}, []);
@@ -20,7 +20,7 @@ const CountryProvider: React.FC = ({ children }) => {
 		const storeCountry = async () => {
 			await AsyncStorage.setItem('@country', country!);
 		};
-		storeCountry();
+		if (country) storeCountry();
 	}, [country]);
 
 	const obj = useMemo(

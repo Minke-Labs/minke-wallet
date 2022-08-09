@@ -6,7 +6,7 @@ import { AssetsLayout } from '@layouts';
 import { ActivityIndicator, Modal, Text, BlankStates } from '@components';
 import { numberFormat } from '@helpers/utilities';
 import RNUxcam from 'react-native-ux-cam';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import AssetList from './AssetList/AssetList';
 import AssetListEmpty from './AssetListEmpty/AssetListEmpty';
 
@@ -41,16 +41,9 @@ const WalletAssetsScreen = () => {
 		<>
 			<AssetsLayout
 				headerValue={balance === undefined ? '' : numberFormat(balance || 0)}
-				headerTitle={(
-					<Text marginBottom={10}>
-						{i18n.t('WalletAssetsScreen.ValueBox.current_value')}
-					</Text>
-				)}
+				headerTitle={<Text marginBottom={10}>{i18n.t('WalletAssetsScreen.ValueBox.current_value')}</Text>}
 			>
-				<Content
-					tokens={tokens}
-					onPress={() => setAddFundsVisible(true)}
-				/>
+				<Content tokens={tokens} onPress={() => setAddFundsVisible(true)} />
 			</AssetsLayout>
 			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />

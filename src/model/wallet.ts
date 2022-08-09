@@ -36,14 +36,12 @@ export const getProvider = async (network?: string) => {
 };
 
 export const getENSAddress = async (address: string) => {
-	const { testnet } = await selectedNetwork();
-	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).lookupAddress(address);
+	const name = (await getProvider(networks.mainnet.id)).lookupAddress(address);
 	return name;
 };
 
 export const resolveENSAddress = async (ensAddress: string) => {
-	const { testnet } = await selectedNetwork();
-	const name = (await getProvider(testnet ? networks.ropsten.id : networks.mainnet.id)).resolveName(ensAddress);
+	const name = (await getProvider(networks.mainnet.id)).resolveName(ensAddress);
 	return name;
 };
 

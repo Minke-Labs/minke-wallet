@@ -30,4 +30,8 @@ declare module '@env' {
 	export const INTERCOM_KEY: string;
 	export const ZAPPER_API_KEY: string;
 	export const OPENSEA_API_KEY: string;
+	export const MOONPAY_BUY_URL: string;
+	export const MOONPAY_API_URL: string;
+	export const MOONPAY_API_KEY: string;
+	export const MOONPAY_SECRET_KEY: string;
 }

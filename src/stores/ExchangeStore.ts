@@ -1,5 +1,5 @@
 import { createState } from '@hookstate/core';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 
 export interface Gas {
 	type: 'normal' | 'fast' | 'slow';

@@ -1,4 +1,4 @@
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 
 export interface TokenCardProps {
 	token: MinkeToken | undefined;
@@ -11,4 +11,5 @@ export interface TokenCardProps {
 	exchange?: boolean;
 	disableAmountValidation?: boolean;
 	disableInput?: boolean;
+	autoFocus?: boolean;
 }

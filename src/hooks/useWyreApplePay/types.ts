@@ -1,6 +1,9 @@
 export interface OnPurchaseParams {
-	currency: string;
+	sourceCurrency: string;
+	destCurrency: string;
 	value: number;
+	country: string;
+	fiat?: boolean;
 }
 
 export interface UseWyreApplePayError {
@@ -10,7 +13,7 @@ export interface UseWyreApplePayError {
 
 export interface UseWyreApplePay {
 	isPaymentComplete: boolean;
-	onPurchase: ({ currency, value }: OnPurchaseParams) => Promise<void>;
+	onPurchase: (params: OnPurchaseParams) => Promise<void>;
 	orderCurrency?: string | null;
 	orderId?: string | null;
 	error?: null | UseWyreApplePayError;

@@ -3,6 +3,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { useState } from '@hookstate/core';
 import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@models/wyre';
 import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
+import { networks } from '@models/network';
 import useTimeout from '../useTimeout';
 import { OnPurchaseParams, UseWyreApplePay, UseWyreApplePayError } from './types';
 import useAmplitude from '../useAmplitude';
@@ -26,12 +27,28 @@ export default function useWyreApplePay(): UseWyreApplePay {
 	}, [startPaymentCompleteTimeout]);
 
 	const onPurchase = useCallback(
-		async ({ currency, value }: OnPurchaseParams) => {
+		async ({ sourceCurrency, destCurrency, value, country, fiat = true }: OnPurchaseParams) => {
+			if (destCurrency === 'USDC' && network.id === networks.matic.id) {
+				// eslint-disable-next-line no-param-reassign
+				destCurrency = 'MUSDC';
+			}
+
 			const referenceInfo: WyreReferenceInfo = {
 				referenceId: accountAddress.toLowerCase().substr(-12)
 			};
 
-			const { reservation: reservationId } = await reserveWyreOrder(value, currency, accountAddress, network);
+			const sourceAmount = fiat ? value : undefined;
+			const destAmount = fiat ? undefined : value;
+
+			const { reservation: reservationId } = await reserveWyreOrder({
+				sourceAmount,
+				destAmount,
+				sourceCurrency,
+				destCurrency,
+				accountAddress,
+				network,
+				country
+			});
 
 			if (!reservationId) {
 				setError({ description: 'We were unable to reserve your purchase order. Please try again later.' });
@@ -39,7 +56,15 @@ export default function useWyreApplePay(): UseWyreApplePay {
 			}
 
 			track('Created Wyre Reservation', { id: reservationId });
-			const quotation = await getWalletOrderQuotation(value, currency, accountAddress, network);
+			const quotation = await getWalletOrderQuotation({
+				sourceCurrency,
+				destCurrency,
+				sourceAmount,
+				destAmount,
+				accountAddress,
+				network,
+				country
+			});
 
 			if (!quotation) {
 				setError({
@@ -48,34 +73,37 @@ export default function useWyreApplePay(): UseWyreApplePay {
 				return;
 			}
 			track('Created Wyre Quotation', quotation);
-			const { sourceAmountWithFees, purchaseFee } = quotation;
+			const { sourceAmountWithFees, purchaseFee, destAmount: quoteDestAmount } = quotation;
 
-			const { paymentResponse: applePayResponse, error: appleRequestError } = await showApplePayRequest(
-				referenceInfo,
-				currency,
+			const { paymentResponse: applePayResponse, error: appleRequestError } = await showApplePayRequest({
+				sourceCurrency,
+				destCurrency,
 				sourceAmountWithFees,
 				purchaseFee,
-				value,
-				network
-			);
+				sourceAmount: fiat ? value : sourceAmountWithFees,
+				network,
+				destAmount: quoteDestAmount,
+				country
+			});
 
-			setOrderCurrency(currency);
+			setOrderCurrency(sourceCurrency);
 
 			if (applePayResponse) {
 				track('Confirmed Apple Pay Payment');
-				const { orderId: id, errorMessage } = await getOrderId(
+				const { orderId: id, errorMessage } = await getOrderId({
 					referenceInfo,
-					applePayResponse,
-					sourceAmountWithFees,
+					paymentResponse: applePayResponse,
+					amount: sourceAmountWithFees,
 					accountAddress,
-					currency,
+					sourceCurrency,
+					destCurrency,
 					network,
 					reservationId
-				);
+				});
 				if (id) {
-					track('Apple Pay Payment - Done', { id, currency, value });
+					track('Apple Pay Payment - Done', { id, sourceCurrency, value });
 					topUpState.merge({
-						currency,
+						currency: sourceCurrency,
 						orderId: id,
 						paymentResponse: applePayResponse,
 						referenceInfo,

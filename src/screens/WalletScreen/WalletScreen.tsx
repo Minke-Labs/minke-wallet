@@ -1,9 +1,9 @@
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
 import { Text, Modal, ModalReusables } from '@components';
-import { AddFunds } from '@containers';
-import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
+import { useLanguage } from '@hooks';
+import { AddFunds } from '@containers';
 import { SendModal, ReceiveModal, AvatarModal } from './Modals';
 import { useWalletScreen } from './WalletScreen.hooks';
 import { ResultProps } from './WalletScreen.types';

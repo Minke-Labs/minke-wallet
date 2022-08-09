@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import {
 	Modal,
 	TokenCard,
@@ -26,7 +26,7 @@ interface DepositProps {
 	apy: string;
 	depositableToken: DepositableToken | undefined;
 	selectedProtocol: DepositProtocol | undefined;
-	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>
+	setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtocol, setSelectedUSDCoin }) => {
@@ -68,12 +68,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper padding={16} marginBottom={42}>
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
