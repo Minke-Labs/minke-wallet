@@ -26,7 +26,7 @@ export const getCollectionStats = async (slug: string) => {
 	return res.data.stats;
 };
 
-export const getAssets = async () => {
+export const getAssets = async (address: string) => {
 	const options = {
 		headers: {
 			Accept: 'application/json',
@@ -34,9 +34,7 @@ export const getAssets = async () => {
 		}
 	};
 
-	const walletAddress = '0x6391DD8C71E2dB08ba3CCf3e3911423fF41Fa8ed';
-
-	const res = await axios.get(`https://api.opensea.io/api/v1/assets?owner=${walletAddress}&order_direction=desc&include_orders=false`, options);
+	const res = await axios.get(`https://api.opensea.io/api/v1/assets?owner=${address}&order_direction=desc&include_orders=false`, options);
 
 	const assets = res.data.assets.map((asset: any) => ({
 		name: asset.name,

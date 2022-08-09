@@ -3,14 +3,14 @@ import { View } from 'react-native';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation, useLanguage } from '@hooks';
+import { useNavigation, useLanguage, useNFT } from '@hooks';
 import { IconType } from '@styles';
 import { numberFormat } from '@src/helpers/utilities';
-// import { getEstimatedValue } from '@models/openSea';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
 const Accounts = ({ points }: { points: number }) => {
+	const { estimatedValue } = useNFT();
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { balance } = useState(globalWalletState()).value;
@@ -44,8 +44,7 @@ const Accounts = ({ points }: { points: number }) => {
 			{
 				title: i18n.t('WalletScreen.screens.Accounts.nfts'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.estimated_value'),
-				thirdRowText: 0,
-				// thirdRowText: totalEstimatedValue || 0,
+				thirdRowText: estimatedValue,
 				image: 'robotStroke',
 				onPress: (): any => navigation.navigate('NFTScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />

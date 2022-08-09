@@ -1,14 +1,16 @@
 import React, { createContext, useMemo, useEffect, useState } from 'react';
 import { getAssets } from '@models/openSea';
+import useWallets from '../../hooks/useWallets';
 
 export const NFTContext = createContext<any>(null);
 
 const NFTProvider: React.FC = ({ children }) => {
+	const { address } = useWallets();
 	const [assets, setAssets] = useState<any>();
 
 	useEffect(() => {
 		const fetchAssets = async () => {
-			const res = await getAssets();
+			const res = await getAssets(address);
 			setAssets(res);
 		};
 		fetchAssets();
