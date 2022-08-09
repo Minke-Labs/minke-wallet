@@ -788,6 +788,7 @@ export default {
 	},
 	Components: {
 		BlankStates: {
+			NFT: 'NFTs',
 			WalletAssets: 'Carteira',
 			Exchange: 'Converter',
 			Save: 'Investir',
