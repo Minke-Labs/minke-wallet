@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { AssetsLayout } from '@layouts';
 import { Text, Icon, Modal, BlankStates } from '@components';
-import { useLanguage } from '@hooks';
-import { getEstimatedValue, getAssets, getNftsByCollection } from '@models/openSea';
+import { useLanguage, useNFT } from '@hooks';
 import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
 
 const NFTScreen = () => {
-	const [assets, setAssets] = useState<any>();
+	const { assets, estimatedValue, nftsByCollection } = useNFT();
 	const [infoModal, setInfoModal] = useState(false);
 	const { i18n } = useLanguage();
-
-	useEffect(() => {
-		const fetchAssets = async () => {
-			const res = await getAssets();
-			setAssets(res);
-		};
-		fetchAssets();
-	}, []);
 
 	if (!assets) return <BlankStates.NFT />;
 
 	return (
 		<>
 			<AssetsLayout
-				headerValue={getEstimatedValue(assets) || '0'}
+				headerValue={estimatedValue}
 				headerTitle={(
 					<TouchableOpacity
 						style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -43,10 +34,10 @@ const NFTScreen = () => {
 						{i18n.t('NFTScreen.assets')}
 					</Text>
 					<FlatList
-						data={Object.keys(getNftsByCollection(assets))}
+						data={Object.keys(nftsByCollection)}
 						keyExtractor={(item) => item.toString()}
 						renderItem={({ item }) => (
-							<Item collection={getNftsByCollection(assets)[item]} />
+							<Item collection={nftsByCollection[item]} />
 						)}
 					/>
 				</View>

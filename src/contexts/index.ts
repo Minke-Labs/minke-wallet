@@ -6,6 +6,7 @@ import CountryProvider, { CountryContext } from './CountryContext/CountryContext
 import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageContext';
 import NetworkProvider, { NetworkContext } from './NetworkContext/NetworkContext';
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
+import NFTProvider, { NFTContext } from './NFTContext/NFTContext';
 import WalletConnectProvider from './WalletConnectContext/WalletConnectContext';
 
 export {
@@ -17,7 +18,8 @@ export {
 	CountryContext,
 	TransactionsContext,
 	NetworkContext,
-	TransactionsProvider
+	TransactionsProvider,
+	NFTContext
 };
 
 export const providers = [
@@ -28,5 +30,6 @@ export const providers = [
 	NetworkProvider,
 	LanguageProvider,
 	AvatarProvider,
-	WalletConnectProvider
+	WalletConnectProvider,
+	NFTProvider
 ];

@@ -55,19 +55,3 @@ export const getAssets = async () => {
 
 	return assets;
 };
-
-export const getNftsByCollection = (assets: any) => assets.reduce((acc: any, curr: any) => {
-	acc[curr.collection.slug] = [...acc[curr.collection.slug] || [], curr];
-	return acc;
-}, {});
-
-export const getEstimatedValue = (assets: any) => {
-	const totalEstimatedValue = assets.reduce((acc: any, curr: any) => {
-		if (curr.last_sale) {
-			return acc + Number(curr.last_sale.payment_token.usd_price);
-		}
-		return acc;
-	}, 0);
-
-	return totalEstimatedValue.toString();
-};
