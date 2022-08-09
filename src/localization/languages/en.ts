@@ -911,6 +911,7 @@ export default {
 	},
 	Components: {
 		BlankStates: {
+			NFT: 'NFTs',
 			WalletAssets: 'Wallet',
 			Exchange: 'Exchange',
 			Save: 'Save',

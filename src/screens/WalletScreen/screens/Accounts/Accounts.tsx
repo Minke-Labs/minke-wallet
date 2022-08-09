@@ -6,7 +6,7 @@ import { Card, Text, Icon } from '@components';
 import { useNavigation, useLanguage } from '@hooks';
 import { IconType } from '@styles';
 import { numberFormat } from '@src/helpers/utilities';
-import { totalEstimatedValue } from '@models/openSea';
+// import { getEstimatedValue } from '@models/openSea';
 import Image from './Image/Image';
 import styles from './Accounts.styles';
 
@@ -44,9 +44,10 @@ const Accounts = ({ points }: { points: number }) => {
 			{
 				title: i18n.t('WalletScreen.screens.Accounts.nfts'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.estimated_value'),
-				thirdRowText: totalEstimatedValue || 0,
+				thirdRowText: 0,
+				// thirdRowText: totalEstimatedValue || 0,
 				image: 'robotStroke',
-				onPress: () => navigation.navigate('NFTScreen'),
+				onPress: (): any => navigation.navigate('NFTScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
 			}
 		],

@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
-/* eslint-disable no-console */
 import axios from 'axios';
-import { mock } from './mockRes';
+import { OPENSEA_API_KEY } from '@env';
 
 interface SendRequest {
 	collectionSlug: string;
@@ -27,30 +26,48 @@ export const getCollectionStats = async (slug: string) => {
 	return res.data.stats;
 };
 
-// Assets object created from the data retrieved from the api.
-const assets = mock.assets.map((asset: any) => ({
-	name: asset.name,
-	id: asset.id,
-	image: asset.image_url,
-	thumb: asset.image_thumbnail_url,
-	permalink: asset.permalink,
-	last_sale: asset.last_sale,
-	collection: {
-		name: asset.collection.name,
-		desc: asset.collection.description,
-		slug: asset.collection.slug,
-		image: asset.collection.image_url
-	}
-}));
+export const getAssets = async () => {
+	const options = {
+		headers: {
+			Accept: 'application/json',
+			'X-API-KEY': OPENSEA_API_KEY || process.env.OPENSEA_API_KEY as string
+		}
+	};
 
-export const nftsByCollection = assets.reduce((acc: any, curr: any) => {
+	const walletAddress = '0x6391DD8C71E2dB08ba3CCf3e3911423fF41Fa8ed';
+
+	const res = await axios.get(`https://api.opensea.io/api/v1/assets?owner=${walletAddress}&order_direction=desc&include_orders=false`, options);
+
+	const assets = res.data.assets.map((asset: any) => ({
+		name: asset.name,
+		id: asset.id,
+		image: asset.image_url,
+		thumb: asset.image_thumbnail_url,
+		permalink: asset.permalink,
+		last_sale: asset.last_sale,
+		collection: {
+			name: asset.collection.name,
+			desc: asset.collection.description,
+			slug: asset.collection.slug,
+			image: asset.collection.image_url
+		}
+	}));
+
+	return assets;
+};
+
+export const getNftsByCollection = (assets: any) => assets.reduce((acc: any, curr: any) => {
 	acc[curr.collection.slug] = [...acc[curr.collection.slug] || [], curr];
 	return acc;
 }, {});
 
-export const totalEstimatedValue = assets.reduce((acc: any, curr: any) => {
-	if (curr.last_sale) {
-		return acc + Number(curr.last_sale.payment_token.usd_price);
-	}
-	return acc;
-}, 0);
+export const getEstimatedValue = (assets: any) => {
+	const totalEstimatedValue = assets.reduce((acc: any, curr: any) => {
+		if (curr.last_sale) {
+			return acc + Number(curr.last_sale.payment_token.usd_price);
+		}
+		return acc;
+	}, 0);
+
+	return totalEstimatedValue.toString();
+};
