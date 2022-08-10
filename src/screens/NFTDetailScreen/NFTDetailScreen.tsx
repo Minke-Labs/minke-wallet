@@ -50,7 +50,7 @@ const NFTDetailScreen = ({ route }: Props) => {
 			<SafeAreaView />
 
 			<View style={styles.topContainer}>
-				<Header title={nft.name} />
+				<Header title={nft.collection.name} />
 				{nft.image_url.endsWith('.svg') ? (
 					<View style={{ borderRadius: 8, overflow: 'hidden' }}>
 						<SvgUri uri={nft.image_url} width={256} height={256} />
