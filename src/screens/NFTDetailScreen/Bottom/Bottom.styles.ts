@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export const styles = StyleSheet.create({
 	container: {
-		height: '100%'
-	},
-	assetListContainer: {
+		flex: 1,
 		borderTopLeftRadius: 24,
 		borderTopRightRadius: 24,
-		flex: 1
+		paddingHorizontal: 16,
+		paddingTop: 16
 	}
 });

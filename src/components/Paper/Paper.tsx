@@ -1,23 +1,26 @@
-import { View } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
 import React from 'react';
 import { useTheme } from '@hooks';
 
 interface PaperProps {
 	marginBottom?: number;
 	padding?: number;
+	margin?: number;
+	style?: StyleProp<ViewStyle>;
 }
 
-const Paper: React.FC<PaperProps> = ({ children, marginBottom, padding }) => {
+const Paper: React.FC<PaperProps> = ({ children, marginBottom, padding, margin = 0, style }) => {
 	const { colors } = useTheme();
 	return (
 		<View
 			style={{
-				marginHorizontal: 16,
 				backgroundColor: colors.background5,
 				borderRadius: 16,
 				marginBottom,
 				padding,
-				overflow: 'hidden'
+				overflow: 'hidden',
+				...(style as object),
+				margin
 			}}
 		>
 			{children}

@@ -320,6 +320,27 @@ export default {
 			}
 		}
 	},
+	NFTScreen: {
+		assets: 'Assets',
+		estimated_value: 'Estimated value',
+		InfoModal: {
+			how_are_valued: 'How are my NFTs valued?',
+			desc: 'Your NFTs are valued based on a combination of the collection floor price, last sale price and the individual unique attributes.'
+		}
+	},
+	NFTDetailScreen: {
+		by: 'by ',
+		Panel: {
+			floor_price: 'Floor price',
+			last_sale_price: 'Last sale price'
+		},
+		view_on_openSea: 'View on OpenSea',
+		about: 'About',
+		Expander: {
+			show_less: 'Show less',
+			show_more: 'Show more'
+		}
+	},
 	BackupSettingsScreen: {
 		title: 'Backup'
 	},
@@ -628,7 +649,10 @@ export default {
 				open_loans: 'Open loans',
 				coming_soon: 'Coming soon',
 				points: 'Points',
-				points_earned: 'Refer a friend, earn crypto!'
+				points_earned: 'Refer a friend, earn crypto!',
+				nfts: 'NFTs',
+				estimated_value: 'Estimated value',
+				value: '$29,214.63'
 			},
 			Transactions: {
 				NoTransactionsYet: {
@@ -649,6 +673,7 @@ export default {
 				}
 			},
 			ReceiveModal: {
+				sending_on: 'Sending on the',
 				receive: 'Receive',
 				show_qr: 'Show your QR code or share your informations'
 			},
@@ -884,6 +909,7 @@ export default {
 	},
 	Components: {
 		BlankStates: {
+			NFT: 'NFTs',
 			WalletAssets: 'Wallet',
 			Exchange: 'Exchange',
 			Save: 'Save',
@@ -947,7 +973,7 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Sending on the {{network}} network'
+				sending_on: '{{network}} network'
 			}
 		},
 		EmptyStates: {

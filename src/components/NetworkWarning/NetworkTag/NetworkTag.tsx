@@ -8,7 +8,7 @@ import Icon from '../../Icon/Icon';
 import styles from './NetworkTag.styles';
 import { NetworkTagProps } from './NetworkTag.types';
 
-const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, info }) => {
+const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, info, title }) => {
 	const { network } = useNetwork();
 	const { i18n } = useLanguage();
 	return (
@@ -16,6 +16,7 @@ const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, info }) => {
 			<View style={styles.left}>
 				<Token size={16} name={network?.id as TokenType} />
 				<Text type="span" style={{ marginLeft: 8 }}>
+					{title}{' '}
 					{i18n.t('Components.NetworkWarning.NetworkTag.sending_on', { network: network?.name })}
 				</Text>
 			</View>

@@ -1,3 +1,4 @@
+import { NFT } from '@models/types/nft.types';
 import { MinkeToken } from '@models/types/token.types';
 import { ZapperTransaction } from '@models/wallet';
 
@@ -5,6 +6,8 @@ export type RootStackParamList = {
 	AccountsScreen: undefined;
 	AssetsScreen: { coin: MinkeToken };
 	ManualBackupScreen: { walletId: string };
+	NFTScreen: undefined;
+	NFTDetailScreen: { nft: NFT };
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };
