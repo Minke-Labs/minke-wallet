@@ -20,7 +20,7 @@ const Item: React.FC<ItemProps> = ({ collection }) => {
 						return (
 							<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
 								{thumb.endsWith('.svg') ? (
-									<View style={{ borderRadius: 8, overflow: 'hidden' }}>
+									<View style={{ borderRadius: 8, overflow: 'hidden', marginRight: 8 }}>
 										<SvgUri uri={thumb} width={56} height={56} />
 									</View>
 								) : (
