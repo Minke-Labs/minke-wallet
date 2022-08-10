@@ -1,1 +1,4 @@
-<resources/>
+<resources>
+  <color name="splashscreen_background">#0A2138</color>
+	<color name="splashscreen_statusbar_color">#0A2138</color>
+</resources>

@@ -39,7 +39,7 @@
       android:windowSoftInputMode="adjustResize"
       android:theme="@style/Theme.App.SplashScreen"
       android:screenOrientation="portrait"
-			android:exported="true"
+      android:exported="true"
     >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
