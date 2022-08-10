@@ -872,7 +872,7 @@ export default {
 			SelectorModal: {
 				add_funds: 'Add funds',
 				buy_crypto: 'Buy crypto',
-				apple_card_transfer: 'Apple Pay, card or bank transfer',
+				apple_card_transfer: '{{pay}}, card or bank transfer',
 				send_from_exchange: 'Send from Binance, Coinbase, others',
 				external: 'External exchange'
 			},

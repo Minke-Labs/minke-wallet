@@ -6,4 +6,6 @@ const statusBarHeight = StatusBar.currentHeight;
 const navigationBarHeight = Platform.OS === 'android' ? deviceHeight - screenHeight - statusBarHeight! : 0;
 const os = Platform.OS;
 
-export { os, screenHeight, screenWidth, deviceHeight, deviceWidth, statusBarHeight, navigationBarHeight };
+export {
+	os, screenHeight, screenWidth, deviceHeight, deviceWidth, statusBarHeight, navigationBarHeight
+};
