@@ -34,19 +34,19 @@ const Accounts = ({ points }: { points: number }) => {
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
 			},
 			{
-				title: i18n.t('WalletScreen.screens.Accounts.points'),
-				subtitle: i18n.t('WalletScreen.screens.Accounts.points_earned'),
-				thirdRowText: `${points} ${i18n.t('WalletScreen.screens.Accounts.points')}`,
-				image: 'gift',
-				onPress: () => navigation.navigate('ReferralScreen'),
-				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
-			},
-			{
 				title: i18n.t('WalletScreen.screens.Accounts.nfts'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.estimated_value'),
 				thirdRowText: estimatedValue,
 				image: 'robotStroke',
 				onPress: (): any => navigation.navigate('NFTScreen'),
+				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
+			},
+			{
+				title: i18n.t('WalletScreen.screens.Accounts.points'),
+				subtitle: i18n.t('WalletScreen.screens.Accounts.points_earned'),
+				thirdRowText: `${points} ${i18n.t('WalletScreen.screens.Accounts.points')}`,
+				image: 'gift',
+				onPress: () => navigation.navigate('ReferralScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
 			}
 		],
