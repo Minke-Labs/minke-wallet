@@ -18,7 +18,13 @@ export const Header: React.FC<{ title: string; }> = ({ title }) => {
 			<TouchableOpacity onPress={() => navigation.goBack()}>
 				<Icon name="chevronLeft" size={20} color="cta1" style={{ marginRight: 16 }} />
 			</TouchableOpacity>
-			<Text type="hMedium" weight="bold">{title}</Text>
+			<Text
+				type="hMedium"
+				weight="bold"
+				style={{ width: 311 }}
+			>
+				{title}
+			</Text>
 		</View>
 	);
 };
