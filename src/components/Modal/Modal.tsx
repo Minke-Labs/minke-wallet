@@ -31,8 +31,9 @@ const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center })
 		opacity: interpolate(top.value, [0, screenHeight], [1, 0])
 	}));
 
+	const statusBar = navigationBarHeight === 0 ? statusBarHeight || 0 : 0;
 	const animatedStyles = useAnimatedStyle(() => ({
-		transform: [{ translateY: top.value - navigationBarHeight - (statusBarHeight || 0) }]
+		transform: [{ translateY: top.value - navigationBarHeight - statusBar }]
 	}));
 
 	useEffect(() => {

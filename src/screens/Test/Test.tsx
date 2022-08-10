@@ -1,59 +1,48 @@
 import React from 'react';
-import { Button, Text } from '@components';
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
-import { BasicLayout } from '@layouts';
+import * as qs from 'qs';
+import WebView from 'react-native-webview';
 import { View } from 'react-native';
-import { sendTransactionData } from '@models/wallet';
-import Logger from '@utils/logger';
-
-const ConnectButton = () => {
-	const connector = useWalletConnect();
-	if (!connector.connected) {
-		return <Button title="Connect" onPress={() => connector.connect()} />;
-	}
-	return <Button title="Kill Session" onPress={() => connector.killSession()} />;
-};
+import { MOONPAY_API_URL, MOONPAY_API_KEY, MOONPAY_SECRET_KEY } from '@env';
+import { Button, FullModal } from '@components';
+import { BasicLayout } from '@layouts';
+import { useState } from '@hookstate/core';
+import crypto from 'crypto';
+import { globalWalletState } from '@stores/WalletStore';
 
 const Test = () => {
-	const connector = useWalletConnect();
-	const { connected, accounts, chainId } = connector;
+	const [visible, setVisible] = React.useState(false);
+	const apiKey = MOONPAY_API_KEY || process.env.MOONPAY_API_KEY;
+	const { address } = useState(globalWalletState()).value;
 
-	const sendTransaction = async () => {
-		const to = '0x5F5e3148532d1682866131A1971Bb74a92D96376';
-		const amount = '0.01';
-		const tx = await sendTransactionData(accounts[0], to, amount, '100', 'matic', '', 18);
-		// Send transaction
-		try {
-			const { from, value, data, gasPrice } = tx;
-			const result = await connector.sendTransaction({
-				from,
-				to,
-				value: value?.toHexString(),
-				data,
-				gasPrice: gasPrice.toHexString()
-			});
-			Logger.log({ result });
-		} catch (error) {
-			// Error returned when rejected
-			console.error({ error });
-		}
+	const params = {
+		apiKey,
+		currencyCode: 'ETH',
+		walletAddress: address,
+		baseCurrencyCode: 'usd',
+		baseCurrencyAmount: 159,
+		lockAmount: true
 	};
 
+	const query = `?${qs.stringify(params)}`;
+	const host = MOONPAY_API_URL || process.env.MOONPAY_API_URL;
+	const originalUrl = `${host}${query}`;
+	const secret = MOONPAY_SECRET_KEY || process.env.MOONPAY_SECRET_KEY;
+	const signature = crypto.createHmac('sha256', secret!).update(query).digest('base64');
+	const urlWithSignature = `${originalUrl}&signature=${encodeURIComponent(signature)}`;
+
 	return (
-		<BasicLayout>
-			<View style={{ marginTop: 24 }}>
-				{connected ? (
-					<>
-						<Text> {accounts[0]}</Text>
-						<Text> chainId: {chainId}</Text>
-						<Button title="Send transaction" onPress={sendTransaction} marginBottom={48} />
-					</>
-				) : (
-					<Button title="TRY!" onPress={() => null} marginBottom={48} />
+		<>
+			<BasicLayout>
+				<View style={{ marginTop: 40 }}>
+					<Button title={visible.toString()} onPress={() => setVisible(true)} />
+				</View>
+			</BasicLayout>
+			<FullModal visible={visible} onClose={() => setVisible(false)}>
+				{visible && (
+					<WebView enableApplePay useWebKit source={{ uri: urlWithSignature }} sharedCookiesEnabled />
 				)}
-				<ConnectButton />
-			</View>
-		</BasicLayout>
+			</FullModal>
+		</>
 	);
 };
 

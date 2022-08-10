@@ -2,13 +2,17 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	container: {
-		paddingHorizontal: 32,
+		marginTop: 8,
+		paddingHorizontal: 16,
 		flexDirection: 'row',
 		alignItems: 'center'
 	},
-	title: {
+	row: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center'
+	},
+	title: {
+		marginLeft: 8
 	}
 });

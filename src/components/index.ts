@@ -52,6 +52,8 @@ import ProgressButton from './ProgressButton/ProgressButton';
 import TransactionPeriod from './TransactionPeriod/TransactionPeriod';
 import EmptyStates from './EmptyStates';
 import WatchModeTag from './WatchModeTag/WatchModeTag';
+import FiatCard from './FiatCard/FiatCard';
+import CurrencySelector from './CurrencySelector/CurrencySelector';
 
 export {
 	AaveReusables,
@@ -107,5 +109,7 @@ export {
 	ProgressButton,
 	TransactionPeriod,
 	EmptyStates,
-	WatchModeTag
+	WatchModeTag,
+	FiatCard,
+	CurrencySelector
 };

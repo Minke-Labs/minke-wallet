@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAmplitude, useFormProgress } from '@hooks';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { UserProps } from './SendModal.types';
 
-export const useSendModal = ({ isVisible, onDismiss }: { isVisible: boolean; onDismiss: () => void; }) => {
+export const useSendModal = ({ isVisible, onDismiss }: { isVisible: boolean; onDismiss: () => void }) => {
 	const { track } = useAmplitude();
 	const { currentStep, reset, goForward, goBack } = useFormProgress();
 	const [user, setUser] = useState<UserProps>(null!);

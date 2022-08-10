@@ -23,8 +23,8 @@ export const useDepositScreen = () => {
 	return {
 		notAbleToSaveVisible,
 		notAbleToSaveDismiss,
-		addFundsVisible,
 		dismissAddFunds,
+		addFundsVisible,
 		onAddFunds
 	};
 };

@@ -1,13 +1,19 @@
-import React, { createContext, useMemo, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useMemo, useState, useEffect } from 'react';
 import * as Localization from 'expo-localization';
 import i18n from 'i18n-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useCountry from '../../hooks/useCountry';
 import { availableLanguagues } from '../../localization';
 import { Country } from './LanguageContext.types';
-import { mock } from './LanguageContext.utils';
 
-export const LanguageContext = createContext<any>(null);
+interface LanguageContextProps {
+	i18n: any;
+	language: string;
+	countries: Country[];
+	setLanguage: (l: string) => void;
+}
+
+export const LanguageContext = createContext<LanguageContextProps>({} as LanguageContextProps);
 
 const LanguageProvider: React.FC = ({ children }) => {
 	const { country } = useCountry();
@@ -46,10 +52,10 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'PayID'
 			},
 			{
-				name: i18n.t('LocationContext.UK.name'),
+				name: i18n.t('LocationContext.GB.name'),
 				flag: 'unitedKingdom',
-				iso: 'UK',
-				currencyName: i18n.t('LocationContext.UK.currencyName'),
+				iso: 'GB',
+				currencyName: i18n.t('LocationContext.GB.currencyName'),
 				currency: 'GBP',
 				paymentName: 'Bank Transfer'
 			},
@@ -79,34 +85,18 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.AUT.name'),
+				name: i18n.t('LocationContext.AT.name'),
 				flag: 'austria',
-				iso: 'AUT',
-				currencyName: i18n.t('LocationContext.AUT.currencyName'),
+				iso: 'AT',
+				currencyName: i18n.t('LocationContext.AT.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.BEL.name'),
+				name: i18n.t('LocationContext.BE.name'),
 				flag: 'belgium',
-				iso: 'BEL',
-				currencyName: i18n.t('LocationContext.BEL.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.BGR.name'),
-				flag: 'bulgaria',
-				iso: 'BGR',
-				currencyName: i18n.t('LocationContext.BGR.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.HRV.name'),
-				flag: 'croatia',
-				iso: 'HRV',
-				currencyName: i18n.t('LocationContext.HRV.currencyName'),
+				iso: 'BE',
+				currencyName: i18n.t('LocationContext.BE.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
@@ -119,186 +109,130 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.CY.name'),
-				flag: 'cyprus',
-				iso: 'CY',
-				currencyName: i18n.t('LocationContext.CY.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.CZE.name'),
-				flag: 'czechRepublic',
-				iso: 'CZE',
-				currencyName: i18n.t('LocationContext.CZE.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.DNK.name'),
-				flag: 'denmark',
-				iso: 'DNK',
-				currencyName: i18n.t('LocationContext.DNK.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.EST.name'),
+				name: i18n.t('LocationContext.EE.name'),
 				flag: 'estonia',
-				iso: 'EST',
-				currencyName: i18n.t('LocationContext.EST.currencyName'),
+				iso: 'EE',
+				currencyName: i18n.t('LocationContext.EE.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.FIN.name'),
+				name: i18n.t('LocationContext.FI.name'),
 				flag: 'finland',
-				iso: 'FIN',
-				currencyName: i18n.t('LocationContext.FIN.currencyName'),
+				iso: 'FI',
+				currencyName: i18n.t('LocationContext.FI.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.FRA.name'),
+				name: i18n.t('LocationContext.FR.name'),
 				flag: 'france',
-				iso: 'FRA',
+				iso: 'FR',
 				currencyName: i18n.t('LocationContext.FRA.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.DEU.name'),
+				name: i18n.t('LocationContext.DE.name'),
 				flag: 'germany',
-				iso: 'DEU',
-				currencyName: i18n.t('LocationContext.DEU.currencyName'),
+				iso: 'DE',
+				currencyName: i18n.t('LocationContext.DE.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.GRC.name'),
+				name: i18n.t('LocationContext.GR.name'),
 				flag: 'greece',
-				iso: 'GRC',
-				currencyName: i18n.t('LocationContext.GRC.currencyName'),
+				iso: 'GR',
+				currencyName: i18n.t('LocationContext.GR.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.HUN.name'),
-				flag: 'hungary',
-				iso: 'HUN',
-				currencyName: i18n.t('LocationContext.HUN.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.IRL.name'),
+				name: i18n.t('LocationContext.IE.name'),
 				flag: 'ireland',
-				iso: 'IRL',
-				currencyName: i18n.t('LocationContext.IRL.currencyName'),
+				iso: 'IE',
+				currencyName: i18n.t('LocationContext.IE.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.ITA.name'),
+				name: i18n.t('LocationContext.IT.name'),
 				flag: 'italy',
-				iso: 'ITA',
-				currencyName: i18n.t('LocationContext.ITA.currencyName'),
+				iso: 'IT',
+				currencyName: i18n.t('LocationContext.IT.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.LVA.name'),
+				name: i18n.t('LocationContext.LV.name'),
 				flag: 'latvia',
-				iso: 'LVA',
-				currencyName: i18n.t('LocationContext.LVA.currencyName'),
+				iso: 'LV',
+				currencyName: i18n.t('LocationContext.LV.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.LTU.name'),
+				name: i18n.t('LocationContext.LT.name'),
 				flag: 'lithuania',
-				iso: 'LTU',
-				currencyName: i18n.t('LocationContext.LTU.currencyName'),
+				iso: 'LT',
+				currencyName: i18n.t('LocationContext.LT.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.LUX.name'),
+				name: i18n.t('LocationContext.LU.name'),
 				flag: 'luxembourg',
-				iso: 'LUX',
-				currencyName: i18n.t('LocationContext.LUX.currencyName'),
+				iso: 'LU',
+				currencyName: i18n.t('LocationContext.LU.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.MLT.name'),
+				name: i18n.t('LocationContext.MT.name'),
 				flag: 'malta',
-				iso: 'MLT',
-				currencyName: i18n.t('LocationContext.MLT.currencyName'),
+				iso: 'MT',
+				currencyName: i18n.t('LocationContext.MT.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.NLD.name'),
+				name: i18n.t('LocationContext.NL.name'),
 				flag: 'netherlands',
-				iso: 'NLD',
-				currencyName: i18n.t('LocationContext.NLD.currencyName'),
+				iso: 'NL',
+				currencyName: i18n.t('LocationContext.NL.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.POL.name'),
-				flag: 'poland',
-				iso: 'POL',
-				currencyName: i18n.t('LocationContext.POL.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.PRT.name'),
+				name: i18n.t('LocationContext.PT.name'),
 				flag: 'portugal',
-				iso: 'PRT',
-				currencyName: i18n.t('LocationContext.PRT.currencyName'),
+				iso: 'PT',
+				currencyName: i18n.t('LocationContext.PT.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.ROU.name'),
-				flag: 'romania',
-				iso: 'ROU',
-				currencyName: i18n.t('LocationContext.ROU.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.SVK.name'),
+				name: i18n.t('LocationContext.SK.name'),
 				flag: 'slovakia',
-				iso: 'SVK',
-				currencyName: i18n.t('LocationContext.SVK.currencyName'),
+				iso: 'SK',
+				currencyName: i18n.t('LocationContext.SK.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.SVN.name'),
+				name: i18n.t('LocationContext.SI.name'),
 				flag: 'slovenia',
-				iso: 'SVN',
-				currencyName: i18n.t('LocationContext.SVN.currencyName'),
+				iso: 'SI',
+				currencyName: i18n.t('LocationContext.SI.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
 			{
-				name: i18n.t('LocationContext.ESP.name'),
+				name: i18n.t('LocationContext.ES.name'),
 				flag: 'spain',
-				iso: 'ESP',
-				currencyName: i18n.t('LocationContext.ESP.currencyName'),
-				currency: 'EUR',
-				paymentName: 'SEPA'
-			},
-			{
-				name: i18n.t('LocationContext.SWE.name'),
-				flag: 'sweden',
-				iso: 'SWE',
-				currencyName: i18n.t('LocationContext.SWE.currencyName'),
+				iso: 'ES',
+				currencyName: i18n.t('LocationContext.ES.currencyName'),
 				currency: 'EUR',
 				paymentName: 'SEPA'
 			},
@@ -311,29 +245,23 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'PIX'
 			},
 			{
-				name: i18n.t('LocationContext.TUR.name'),
+				name: i18n.t('LocationContext.TR.name'),
 				flag: 'turkey',
-				iso: 'TUR',
-				currencyName: i18n.t('LocationContext.TUR.currencyName'),
+				iso: 'TR',
+				currencyName: i18n.t('LocationContext.TR.currencyName'),
 				currency: 'TRY',
-				paymentName: 'Turkey Bank Transfer'
+				paymentName: 'Turkish Bank Transfer'
 			}
 		],
 		[language]
 	);
-
-	const countryByIso = useCallback((flag: string) => countries.find((c: Country) => c.flag === flag), [countries]);
-
-	const locationCountry = useMemo(() => countryByIso(country || mock.country), [country]);
 
 	const obj = useMemo(
 		() => ({
 			i18n,
 			language,
 			countries,
-			setLanguage,
-			locationCurrency: locationCountry?.currency ?? mock.countries[0].currency,
-			locationCountry
+			setLanguage
 		}),
 		[language, country]
 	);

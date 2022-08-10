@@ -20,7 +20,7 @@ import {
 	sendTransactionData
 } from '@models/wallet';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { decimalSeparator } from 'expo-localization';
 import { approvalState } from '@models/deposit';
 import { gaslessApproval, gaslessSend, sendContract } from '@models/gaslessTransaction';

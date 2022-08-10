@@ -3,6 +3,9 @@ import axios from 'axios';
 import * as qs from 'qs';
 import crypto from 'crypto';
 import { BANXA_ENDPOINT_URL, BANXA_KEY, BANXA_SECRET } from '@env';
+import { pick } from 'lodash';
+import { Currency } from './types/currency.types';
+import { fiatCurrencies } from './currency';
 
 interface GenerateHmac {
 	data: string;
@@ -12,7 +15,10 @@ interface GenerateHmac {
 interface QuoteParams {
 	source: string;
 	target: string;
-	amount: number;
+	source_amount: number | undefined;
+	target_amount: number | undefined;
+	payment_method_id: number;
+	blockchain: string;
 }
 
 interface SendRequest {
@@ -31,8 +37,8 @@ interface GetPrices {
 interface OrderParams {
 	account_reference: string;
 	source: string;
-	source_amount: string;
-	// target_amount: string;
+	source_amount: string | undefined;
+	target_amount: string | undefined;
 	target: string;
 	wallet_address: string;
 	return_url_on_success: string;
@@ -105,8 +111,7 @@ export const getPaymentMethods = async () => {
 
 export const pickPaymentMethodFromName = async (name: string) => {
 	const paymentMethods = await getPaymentMethods();
-	const paymentMethod = paymentMethods.find((item: any) => item.name === name);
-	return paymentMethod;
+	return paymentMethods.find((item: any) => item.name === name);
 };
 
 export const getPrices = async ({ params }: GetPrices) => {
@@ -126,3 +131,13 @@ export const makeOrder = async ({ params }: MakeOrder) => {
 	const res = await sendPostRequest({ query, params });
 	return res.data.data.order.checkout_url;
 };
+
+export const availableFiatCurrencies: { [key: string]: Currency } = pick(
+	fiatCurrencies,
+	'AUD',
+	'GBP',
+	'CAD',
+	'EUR',
+	'BRL',
+	'TRY'
+);

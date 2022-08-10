@@ -4,7 +4,7 @@ import { toBn } from 'evm-bn';
 import { partition } from 'lodash';
 import { usdCoin } from './deposit';
 import { network } from './network';
-import { MinkeToken } from './token';
+import { MinkeToken } from './types/token.types';
 import { DepositableToken, DepositTokens, Stables } from './types/depositTokens.types';
 import { erc20abi, getProvider } from './wallet';
 
