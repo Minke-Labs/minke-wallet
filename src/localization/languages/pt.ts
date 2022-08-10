@@ -324,9 +324,8 @@ export default {
 		assets: 'Ativos',
 		estimated_value: 'Valor estimado',
 		InfoModal: {
-			floor_price: 'O que é o valor mínimo?',
-			estimated_value: '• O valor estimado de sua coleção é baseado no preço mínimo de cada NFT.',
-			term: '• O preço mínimo é um termo dado para representar o preço atual mais baixo pelo qual se pode possuir uma NFT em uma determinada coleção ou projeto.'
+			how_are_valued: 'Como minhas NFTs são avaliadas?',
+			desc: 'Seus NFTs são avaliados com base em uma combinação do preço mínimo da coleção, último preço de venda e atributos únicos individuais.'
 		}
 	},
 	NFTDetailScreen: {

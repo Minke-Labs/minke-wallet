@@ -324,9 +324,8 @@ export default {
 		assets: 'Assets',
 		estimated_value: 'Estimated value',
 		InfoModal: {
-			floor_price: 'What is floor price?',
-			estimated_value: '• The estimated value of your collection is based on the floor price of each NFT.',
-			term: '• The floor price is a term given to represent the current lowest price for which one can own an NFT in a certain collection or project.'
+			how_are_valued: 'How are my NFTs valued?',
+			desc: 'Your NFTs are valued based on a combination of the collection floor price, last sale price and the individual unique attributes.'
 		}
 	},
 	NFTDetailScreen: {
