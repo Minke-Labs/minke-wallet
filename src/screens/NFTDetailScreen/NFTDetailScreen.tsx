@@ -5,7 +5,6 @@ import { Text, Button } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { truncate } from '@src/hooks/useTransaction';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { Stats } from '@models/types/nft.types';
