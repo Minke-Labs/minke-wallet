@@ -15,7 +15,7 @@ const instance = axios.create({
 
 export const getAssets = async (owner: string): Promise<NFT[]> => {
 	const params = {
-		owner: '0xfe6b7a4494b308f8c0025dcc635ac22630ec7330',
+		owner,
 		order_direction: 'desc',
 		limit: 50,
 		include_orders: false
