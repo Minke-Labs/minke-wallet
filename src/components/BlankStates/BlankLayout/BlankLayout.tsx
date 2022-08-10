@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, SafeAreaView } from 'react-native';
-import Animated, {
-	useSharedValue,
-	useAnimatedStyle,
-	withTiming,
-	withRepeat
-} from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withRepeat } from 'react-native-reanimated';
 import { screenWidth } from '@styles';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { useNavigation, useTheme } from '@hooks';
@@ -35,32 +30,23 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 	}, []);
 
 	return (
-		<View style={{
-			backgroundColor: colors.background5,
-			flex: 1,
-			borderRadius: br
-		}}
+		<View
+			style={{
+				backgroundColor: colors.background1,
+				flex: 1,
+				borderRadius: br
+			}}
 		>
 			<SafeAreaView />
-			{
-				!!title && (
-					<ModalHeader
-						onDismiss={() => navigation.goBack()}
-						onBack={() => navigation.goBack()}
-						title={title}
-					/>
-				)
-			}
+			{!!title && (
+				<ModalHeader onDismiss={() => navigation.goBack()} onBack={() => navigation.goBack()} title={title} />
+			)}
 			<MaskedView
 				androidRenderingMode="software"
 				style={{ flex: 1 }}
-				maskElement={
-					<View style={{ alignItems: 'center', flex: 1 }}>
-						{children}
-					</View>
-				}
+				maskElement={<View style={{ alignItems: 'center', flex: 1 }}>{children}</View>}
 			>
-				<BasicLayout hideSafeAreaView center bg="background5">
+				<BasicLayout hideSafeAreaView center bg="background2">
 					{children}
 					<Animated.View style={[styles.container, animatedStyle]}>
 						<Gradient />
