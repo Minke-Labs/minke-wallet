@@ -36,7 +36,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 
 	return (
 		<View style={{
-			backgroundColor: colors.background5,
+			backgroundColor: colors.background1,
 			flex: 1,
 			borderRadius: br
 		}}
