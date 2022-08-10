@@ -15,15 +15,25 @@ const instance = axios.create({
 
 export const getAssets = async (owner: string): Promise<NFT[]> => {
 	const params = {
-		owner,
+		owner: '0xfe6b7a4494b308f8c0025dcc635ac22630ec7330',
 		order_direction: 'desc',
+		limit: 50,
 		include_orders: false
 	};
 
+	const assets = [];
 	const { status, data } = await instance.get(`/assets?${qs.stringify(params)}`);
 	if (status !== 200) Logger.sentry('AAVE Pools API failed');
-
-	return data.assets;
+	assets.push(data.assets);
+	let cursor = data.next;
+	while (cursor) {
+		// eslint-disable-next-line no-await-in-loop
+		const { status: st, data: dt } = await instance.get(`/assets?${qs.stringify({ ...params, ...{ cursor } })}`);
+		if (st !== 200) Logger.sentry('AAVE Pools API failed. Cursor', cursor);
+		assets.push(dt.assets);
+		cursor = dt.next;
+	}
+	return assets.flat();
 };
 
 export const getCollectionStats = async (slug: string): Promise<Stats> => {

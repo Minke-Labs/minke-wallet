@@ -37,10 +37,10 @@ const NFTDetailScreen = ({ route }: Props) => {
 			const {
 				quantity,
 				total_price: totalPrice,
-				payment_token: { decimals, usd_price: usdPrice }
+				payment_token: { decimals, symbol }
 			} = lastSale;
 			const pricePerToken = toBn(totalPrice, decimals).div(toBn(quantity));
-			return `$${truncate(+formatUnits(pricePerToken, decimals) * +usdPrice, 2)}`;
+			return `${formatUnits(pricePerToken, decimals)} ${symbol}`;
 		}
 
 		return 'N/A';
@@ -73,7 +73,10 @@ const NFTDetailScreen = ({ route }: Props) => {
 			</View>
 
 			<Bottom>
-				<Panel floor={stats?.floor_price > 0.00001 ? stats!.floor_price : 'N/A'} lastSale={lastSalePrice()} />
+				<Panel
+					floor={stats?.floor_price > 0.00001 ? `${stats!.floor_price} ETH` : 'N/A'}
+					lastSale={lastSalePrice()}
+				/>
 				<Button
 					iconRight="openInNew"
 					title={i18n.t('NFTDetailScreen.view_on_openSea')}
