@@ -8,6 +8,9 @@ const instance = axios.create({
 	timeout: 5000,
 	params: {
 		apiKey: MOONPAY_API_KEY || process.env.MOONPAY_API_KEY
+	},
+	validateStatus() {
+		return true;
 	}
 });
 

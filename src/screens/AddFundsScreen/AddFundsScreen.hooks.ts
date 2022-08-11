@@ -27,7 +27,7 @@ const useAddFundsScreen = () => {
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();
-	const useApplePay = currency && providers.wyre.includes(currency);
+	const useApplePay = Platform.OS === 'ios' && currency && providers.wyre.includes(currency);
 	const useBanxa = !useApplePay && currency && providers.banxa.includes(currency);
 	const useMoonpay = !useBanxa && currency && providers.moonpay.includes(currency);
 	const showApplePay = useApplePay && Platform.OS === 'ios';
@@ -246,6 +246,7 @@ const useAddFundsScreen = () => {
 				setTokenAmount(formatedValue);
 				setLoadingPrices(false);
 			} else if (useMoonpay) {
+				// @TODO: Marcos USDC on Polygon
 				setLoadingPrices(true);
 				const params = {
 					currencyCode: token.symbol.toLowerCase(),
