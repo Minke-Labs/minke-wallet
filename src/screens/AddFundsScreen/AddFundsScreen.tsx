@@ -4,6 +4,7 @@ import {
 	ApplePayButton,
 	FiatCard,
 	FullModal,
+	GenericPayButton,
 	Header,
 	Modal,
 	ModalReusables,
@@ -106,7 +107,7 @@ const AddFundsScreen = () => {
 								disabled={disableBanxa}
 							/>
 						) : (
-							!!useMoonpay && <Text>Moonpay</Text>
+							!!useMoonpay && <GenericPayButton />
 						)}
 					</View>
 					<KeyboardSpacer />

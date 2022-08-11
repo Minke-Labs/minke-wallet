@@ -908,7 +908,7 @@ export default {
 		}
 	},
 	Components: {
-		GenericButton: {
+		GenericPayButton: {
 			debit_credit: 'Debit/Credit card'
 		},
 		BlankStates: {

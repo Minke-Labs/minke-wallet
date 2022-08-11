@@ -912,7 +912,7 @@ export default {
 		}
 	},
 	Components: {
-		GenericButton: {
+		GenericPayButton: {
 			debit_credit: 'Cartão de Débito/Crédito'
 		},
 		BlankStates: {
