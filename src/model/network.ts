@@ -6,7 +6,7 @@ import {
 	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_KEY_MATIC
 } from '@env';
-import { MinkeToken } from './types/token.types';
+import { TopupToken } from './types/token.types';
 
 export interface Network {
 	chainId: number;
@@ -19,7 +19,7 @@ export interface Network {
 	gasURL?: string;
 	zapperNetwork: string;
 	nativeToken: { symbol: string; name: string };
-	topUpTokens: MinkeToken[];
+	topUpTokens: TopupToken[];
 	transactionTimesEndpoint: boolean;
 	wyreSRN: string;
 	alchemyAPIKey: string;
@@ -79,8 +79,19 @@ export const networks: Networks = {
 		jsonRpcProvider: ALCHEMY_API_URL_POLYGON_MAINNET || process.env.ALCHEMY_API_URL_POLYGON_MAINNET,
 		biconomyAPIKey: BICONOMY_API_KEY_POLYGON_MAINNET || process.env.BICONOMY_API_KEY_POLYGON_MAINNET,
 		topUpTokens: [
-			{ symbol: 'USDC', address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', decimals: 6 },
-			{ symbol: 'MATIC', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }
+			{
+				symbol: 'USDC',
+				// moonpaySymbol: 'USDC_POLYGON', @TODO: @marcosteixeira Change values once live
+				wyreSymbol: 'MUSDC',
+				address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+				decimals: 6
+			},
+			{
+				symbol: 'MATIC',
+				// moonpaySymbol: 'MATIC_POLYGON',  @TODO: @marcosteixeira Change values once live
+				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+				decimals: 18
+			}
 		],
 		apiUrl0x: 'https://polygon.api.0x.org/',
 		alchemyAPIKey: (ALCHEMY_API_KEY_MATIC || process.env.ALCHEMY_API_KEY_MATIC)!,

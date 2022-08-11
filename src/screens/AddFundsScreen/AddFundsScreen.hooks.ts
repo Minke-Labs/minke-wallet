@@ -6,7 +6,7 @@ import { countries } from '@styles';
 import { getWalletOrderQuotation } from '@models/wyre';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { MinkeToken } from '@models/types/token.types';
+import { TopupToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { buyQuote } from '@src/services/apis/moonpay/moonpay';
@@ -15,7 +15,7 @@ const useAddFundsScreen = () => {
 	const { address, network } = useState(globalWalletState()).value;
 	const { topUpTokens, nativeToken } = network;
 	const [currency, setCurrency] = React.useState<Currency>();
-	const [token, setToken] = React.useState<MinkeToken>();
+	const [token, setToken] = React.useState<TopupToken>();
 	const [currencySearchVisible, setCurrencySearchVisible] = React.useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = React.useState(false);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
@@ -53,10 +53,11 @@ const useAddFundsScreen = () => {
 		Keyboard.dismiss();
 		const value = fiat ? +fiatAmount! : +tokenAmount!;
 		const { code } = currency!;
+		const { symbol, wyreSymbol } = token!;
 		track('Started Apple Pay Payment', { currency: code, value });
 		onPurchase({
 			sourceCurrency: code,
-			destCurrency: token!.symbol,
+			destCurrency: wyreSymbol || symbol,
 			value,
 			fiat,
 			country: countryIso
@@ -112,7 +113,7 @@ const useAddFundsScreen = () => {
 		dismissCurrencySearch();
 	};
 
-	const selectToken = (t: MinkeToken) => {
+	const selectToken = (t: TopupToken) => {
 		setToken(t);
 		dismissTokenSearch();
 	};
@@ -134,7 +135,7 @@ const useAddFundsScreen = () => {
 				const quotation = await getWalletOrderQuotation({
 					sourceAmount: +formatedValue,
 					destAmount: undefined,
-					destCurrency: token.symbol,
+					destCurrency: token.wyreSymbol || token.symbol,
 					accountAddress: address,
 					network,
 					country: countryIso,
@@ -173,17 +174,21 @@ const useAddFundsScreen = () => {
 			} else if (useMoonpay) {
 				setLoadingPrices(true);
 				const params = {
-					currencyCode: token.symbol.toLowerCase(),
-					quoteCurrencyCode: token.symbol.toLowerCase(),
+					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
+					quoteCurrencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
 					baseCurrencyCode: currency.code.toLowerCase(),
 					baseCurrencyAmount: formatedValue,
 					quoteCurrencyAmount: undefined,
 					areFeesIncluded: true
 				};
-				const { quoteCurrencyAmount } = await buyQuote(params);
-
-				setTokenAmount(quoteCurrencyAmount.toString());
-				setFiatAmount(formatedValue);
+				const { message, quoteCurrencyAmount } = await buyQuote(params);
+				if (message) {
+					addError(message);
+					setTokenAmount('');
+				} else {
+					setTokenAmount(quoteCurrencyAmount.toString());
+					setFiatAmount(formatedValue);
+				}
 				setLoadingPrices(false);
 			}
 		}
@@ -200,12 +205,11 @@ const useAddFundsScreen = () => {
 			Number(formatedValue) > 0
 		) {
 			setFiat(false);
-			console.log({ useApplePay, useBanxa, useMoonpay });
 			if (useApplePay) {
 				setLoadingPrices(true);
 				const quotation = await getWalletOrderQuotation({
 					sourceAmount: undefined,
-					destCurrency: token.symbol,
+					destCurrency: token.wyreSymbol || token.symbol,
 					accountAddress: address,
 					network,
 					destAmount: +formatedValue,
@@ -241,22 +245,24 @@ const useAddFundsScreen = () => {
 				setTokenAmount(formatedValue);
 				setLoadingPrices(false);
 			} else if (useMoonpay) {
-				// @TODO: Marcos USDC on Polygon
 				setLoadingPrices(true);
 				const params = {
-					currencyCode: token.symbol.toLowerCase(),
-					quoteCurrencyCode: token.symbol.toLowerCase(),
+					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
+					quoteCurrencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
 					baseCurrencyCode: currency.code.toLowerCase(),
 					baseCurrencyAmount: undefined,
 					quoteCurrencyAmount: formatedValue,
 					areFeesIncluded: true
 				};
-				console.log('params', params);
-				const quotation = await buyQuote(params);
+				const { message, totalAmount } = await buyQuote(params);
 
-				console.log(quotation);
-				setFiatAmount(quotation.totalAmount.toString());
-				setTokenAmount(formatedValue);
+				if (message) {
+					addError(message);
+					setFiatAmount('');
+				} else {
+					setFiatAmount(totalAmount.toString());
+					setTokenAmount(formatedValue);
+				}
 				setLoadingPrices(false);
 			}
 		}

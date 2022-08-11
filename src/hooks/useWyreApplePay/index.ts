@@ -28,11 +28,6 @@ export default function useWyreApplePay(): UseWyreApplePay {
 
 	const onPurchase = useCallback(
 		async ({ sourceCurrency, destCurrency, value, country, fiat = true }: OnPurchaseParams) => {
-			if (destCurrency === 'USDC' && network.id === networks.matic.id) {
-				// eslint-disable-next-line no-param-reassign
-				destCurrency = 'MUSDC';
-			}
-
 			const referenceInfo: WyreReferenceInfo = {
 				referenceId: accountAddress.toLowerCase().substr(-12)
 			};
