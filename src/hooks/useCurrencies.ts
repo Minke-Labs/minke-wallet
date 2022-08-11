@@ -20,11 +20,7 @@ const useCurrencies = () => {
 		const fetchCurrencies = async () => {
 			const moonpayCurrencies = await getCurrencies();
 			const enabled = moonpayCurrencies.filter(({ type }) => type === 'fiat');
-			const moonpay = enabled.map(({ code, minBuyAmount, maxBuyAmount }) => ({
-				...fiatCurrencies[code.toUpperCase()],
-				minBuyAmount,
-				maxBuyAmount
-			}));
+			const moonpay = enabled.map(({ code }) => fiatCurrencies[code.toUpperCase()]);
 			const wyre = Platform.OS === 'android' ? [] : Object.values(availableFiatCurrencies);
 			const banxa = Object.values(banxaAvailableFiatCurrencies);
 			const fiat: CurrencyProvider = { moonpay, wyre, banxa };

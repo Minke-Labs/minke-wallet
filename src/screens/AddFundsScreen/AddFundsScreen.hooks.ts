@@ -171,25 +171,20 @@ const useAddFundsScreen = () => {
 				setFiatAmount(formatedValue);
 				setLoadingPrices(false);
 			} else if (useMoonpay) {
-				const { minBuyAmount, maxBuyAmount } = currency;
-				if (minBuyAmount && maxBuyAmount && +formatedValue >= minBuyAmount && +formatedValue <= maxBuyAmount) {
-					setLoadingPrices(true);
-					const params = {
-						currencyCode: token.symbol.toLowerCase(),
-						quoteCurrencyCode: token.symbol.toLowerCase(),
-						baseCurrencyCode: currency.code.toLowerCase(),
-						baseCurrencyAmount: formatedValue,
-						quoteCurrencyAmount: undefined,
-						areFeesIncluded: true
-					};
-					const { quoteCurrencyAmount } = await buyQuote(params);
+				setLoadingPrices(true);
+				const params = {
+					currencyCode: token.symbol.toLowerCase(),
+					quoteCurrencyCode: token.symbol.toLowerCase(),
+					baseCurrencyCode: currency.code.toLowerCase(),
+					baseCurrencyAmount: formatedValue,
+					quoteCurrencyAmount: undefined,
+					areFeesIncluded: true
+				};
+				const { quoteCurrencyAmount } = await buyQuote(params);
 
-					setTokenAmount(quoteCurrencyAmount.toString());
-					setFiatAmount(formatedValue);
-					setLoadingPrices(false);
-				} else {
-					console.log({ minBuyAmount, maxBuyAmount });
-				}
+				setTokenAmount(quoteCurrencyAmount.toString());
+				setFiatAmount(formatedValue);
+				setLoadingPrices(false);
 			}
 		}
 	};
