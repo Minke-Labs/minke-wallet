@@ -37,6 +37,9 @@ export interface ViewType {
 	// background color
 	bg: keyof ColorType;
 
+	// full
+	fw: boolean;
+
 	// flexbox
 	row: boolean;
 	main: 'flex-start' | 'center' | 'flex-end';

@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { fontWeight, fontType } from '@styles';
+import { fontWeight, fontType, spacing } from '@styles';
 import { MakeStylesProps } from './Text.types';
 
-export const makeStyles = ({ weight, type, chosenColor, marginBottom, width, center, style }: MakeStylesProps) =>
+export const makeStyles = ({ weight, type, chosenColor, marginBottom, width, center, mb, style }: MakeStylesProps) =>
 	StyleSheet.create({
 		text: {
 			fontFamily: fontWeight[weight],
@@ -11,6 +11,7 @@ export const makeStyles = ({ weight, type, chosenColor, marginBottom, width, cen
 			color: chosenColor,
 			...(width && { width }),
 			...fontType[type],
+			...(!!mb && { marginBottom: spacing[mb] }),
 			...{ ...(style as object) }
 		}
 	});
