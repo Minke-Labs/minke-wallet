@@ -1,10 +1,9 @@
 import React from 'react';
 import { View as RNView } from 'react-native';
-import { spacing } from '@styles';
+import { spacing, ViewType } from '@styles';
 import { useTheme } from '@hooks';
-import { ViewProps } from './View.types';
 
-const View: React.FC<Partial<ViewProps>> = ({
+const View: React.FC<Partial<ViewType>> = ({
 	children,
 	ph = 0,
 	pv = 0,

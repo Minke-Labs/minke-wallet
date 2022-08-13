@@ -14,6 +14,7 @@ import {
 	navigationBarHeight,
 	os
 } from './dimensions';
+import { ViewType } from './types';
 
 export {
 	icon,
@@ -42,5 +43,6 @@ export type {
 	FlagType,
 	FontTypeType,
 	CountriesType,
-	FontWeightType
+	FontWeightType,
+	ViewType
 };

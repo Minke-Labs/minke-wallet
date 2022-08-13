@@ -32,6 +32,7 @@ import Card from './Card/Card';
 import CoinSelector from './CoinSelector/CoinSelector';
 import OnrampButton from './OnrampButton/OnrampButton';
 import Paper from './Paper/Paper';
+import Paper2 from './Paper2/Paper';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import HapticButton from './HapticButton/HapticButton';
@@ -93,6 +94,7 @@ export {
 	MaxButton,
 	OnrampButton,
 	Paper,
+	Paper2,
 	Flag,
 	FlagItem,
 	Card,

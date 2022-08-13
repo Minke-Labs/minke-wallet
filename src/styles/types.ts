@@ -1,7 +1,8 @@
 import { StyleProp, ViewStyle } from 'react-native';
-import { SpacingType, ColorType } from '@styles';
+import { ColorType } from './colors';
+import { SpacingType } from './spacing';
 
-export interface ViewProps {
+export interface ViewType {
 	// paddings
 	ph: SpacingType;
 	pv: SpacingType;
