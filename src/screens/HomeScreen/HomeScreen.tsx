@@ -1,12 +1,13 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Paper2, Text, View, Button } from '@components';
+import { Paper2, Text, View, Button, Icon } from '@components';
+import { spacing } from '@styles';
 
 const AssetsBox = () => (
 	<Paper2 br={3} p={3} mb={3}>
 		<Text>Assets</Text>
-		<View h={250} />
+		<View h={150} />
 	</Paper2>
 );
 
@@ -50,14 +51,28 @@ const Selector = () => (
 		style={{
 			position: 'absolute',
 			width: '100%',
-			bottom: 40
+			bottom: spacing[6]
 		}}
 	>
 		<Paper2
 			w={196}
 			h={52}
 			br={6}
-		/>
+			row
+			main="space-between"
+			cross="center"
+			ph={4}
+		>
+			<TouchableOpacity onPress={() => null}>
+				<Icon name="home" size={28} color="cta1" />
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => null}>
+				<Icon name="exchange" size={28} color="cta2" />
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => null}>
+				<Icon name="hub" size={28} color="cta2" />
+			</TouchableOpacity>
+		</Paper2>
 	</View>
 );
 
