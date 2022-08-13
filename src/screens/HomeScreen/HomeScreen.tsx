@@ -1,15 +1,22 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Paper } from '@components';
+import { View } from '@components';
 
 const HomeScreen = () => (
 	<BasicLayout>
-		<Paper>
-			<Text>HomeScreen</Text>
-			<Text>HomeScreen</Text>
-			<Text>HomeScreen</Text>
-		</Paper>
+		<View
+			h={200}
+			bw={3}
+			row
+			main="flex-end"
+		>
+			<View
+				w={80}
+				h={80}
+				br={3}
+				color="alert1"
+			/>
+		</View>
 	</BasicLayout>
 );
 

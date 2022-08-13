@@ -3,6 +3,7 @@ import { token, TokenType } from './tokens';
 import { colors, ColorType } from './colors';
 import { flag, FlagType, allCountries } from './flags';
 import { countries, CountriesType } from './countries';
+import { spacing, SpacingType } from './spacing';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
 import {
 	screenHeight,
@@ -20,6 +21,7 @@ export {
 	colors,
 	flag,
 	allCountries,
+	spacing,
 	fontType,
 	countries,
 	fontWeight,
@@ -36,6 +38,7 @@ export type {
 	IconType,
 	TokenType,
 	ColorType,
+	SpacingType,
 	FlagType,
 	FontTypeType,
 	CountriesType,

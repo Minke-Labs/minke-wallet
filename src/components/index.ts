@@ -54,6 +54,7 @@ import EmptyStates from './EmptyStates';
 import WatchModeTag from './WatchModeTag/WatchModeTag';
 import FiatCard from './FiatCard/FiatCard';
 import CurrencySelector from './CurrencySelector/CurrencySelector';
+import View from './View/View';
 
 export {
 	AaveReusables,
@@ -111,5 +112,6 @@ export {
 	EmptyStates,
 	WatchModeTag,
 	FiatCard,
-	CurrencySelector
+	CurrencySelector,
+	View
 };
