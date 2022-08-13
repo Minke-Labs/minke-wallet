@@ -8,6 +8,7 @@ export type RootStackParamList = {
 	ManualBackupScreen: { walletId: string };
 	NFTScreen: undefined;
 	NFTDetailScreen: { nft: NFT };
+	HomeScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };

@@ -9,6 +9,7 @@ import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import ChangeCountryScreen from './ChangeCountryScreen/ChangeCountryScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
+import HomeScreen from './HomeScreen/HomeScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
@@ -43,6 +44,7 @@ const screensObj = {
 	NFTDetailScreen,
 	BackupSettingsScreen,
 	ChangeLanguageScreen,
+	HomeScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,
 	ChangeCountryScreen,
