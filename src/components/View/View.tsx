@@ -1,6 +1,6 @@
 import React from 'react';
 import { View as RNView } from 'react-native';
-import { spacing, ViewType } from '@styles';
+import { spacing, ViewType, shadow } from '@styles';
 import { useTheme } from '@hooks';
 
 const View: React.FC<Partial<ViewType>> = ({
@@ -21,11 +21,11 @@ const View: React.FC<Partial<ViewType>> = ({
 	m = 0,
 	h = 0,
 	w = 0,
+	s,
 	br = 0,
 	bw = 0,
 	round,
-	bg = 'background1',
-	fw = false,
+	bg,
 	row = false,
 	main,
 	cross,
@@ -51,11 +51,11 @@ const View: React.FC<Partial<ViewType>> = ({
 				...(!!m && { marginR: spacing[m] }),
 				...(!!h && { height: h }),
 				...(!!w && { width: w }),
+				...(!!s && { ...shadow[s] }),
 				...(!!br && { borderRadius: spacing[br] }),
 				...(!!bw && { borderWidth: bw }),
 				...(!!round && { height: round, width: round, borderRadius: round / 2 }),
 				...(!!bg && { backgroundColor: colors[bg] }),
-				...(!!fw && { width: '100%' }),
 				...(!!row && { flexDirection: 'row' }),
 				...(!!main && { justifyContent: main }),
 				...(!!cross && { alignItems: cross }),

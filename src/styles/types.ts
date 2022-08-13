@@ -1,5 +1,6 @@
 import { StyleProp, ViewStyle } from 'react-native';
 import { ColorType } from './colors';
+import { ShadowType } from './shadow';
 import { SpacingType } from './spacing';
 
 export interface ViewType {
@@ -25,6 +26,9 @@ export interface ViewType {
 	h: number;
 	w: number;
 
+	// shadow
+	s: ShadowType;
+
 	// border radius
 	br: SpacingType;
 
@@ -36,9 +40,6 @@ export interface ViewType {
 
 	// background color
 	bg: keyof ColorType;
-
-	// full
-	fw: boolean;
 
 	// flexbox
 	row: boolean;

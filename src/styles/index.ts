@@ -4,6 +4,7 @@ import { colors, ColorType } from './colors';
 import { flag, FlagType, allCountries } from './flags';
 import { countries, CountriesType } from './countries';
 import { spacing, SpacingType } from './spacing';
+import { shadow, ShadowType } from './shadow';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
 import {
 	screenHeight,
@@ -19,6 +20,7 @@ import { ViewType } from './types';
 export {
 	icon,
 	token,
+	shadow,
 	colors,
 	flag,
 	allCountries,
@@ -38,6 +40,7 @@ export {
 export type {
 	IconType,
 	TokenType,
+	ShadowType,
 	ColorType,
 	SpacingType,
 	FlagType,

@@ -4,14 +4,14 @@ import { BasicLayout } from '@layouts';
 import { Paper2, Text, View, Button } from '@components';
 
 const AssetsBox = () => (
-	<Paper2 w={80} br={3} p={3} mb={3} fw>
+	<Paper2 br={3} p={3} mb={3}>
 		<Text>Assets</Text>
 		<View h={250} />
 	</Paper2>
 );
 
 const BuyBox = () => (
-	<Paper2 w={80} br={3} p={3} mb={3} fw>
+	<Paper2 br={3} p={3} mb={3}>
 		<Text type="tSmall" weight="bold" color="cta1" mb={3}>
 			Buy USDC now!{'\n'}No personal ID required.
 		</Text>
@@ -26,12 +26,13 @@ const BuyBox = () => (
 		<Button
 			title="Buy USDC now"
 			mode="outlined"
+			onPress={() => null}
 		/>
 	</Paper2>
 );
 
 const StoriesBox = () => (
-	<Paper2 w={80} br={3} p={3} fw>
+	<Paper2 br={3} p={3}>
 		<Text type="lMedium" weight="semiBold" mb={3}>
 			Learn about Minke
 		</Text>
@@ -40,6 +41,24 @@ const StoriesBox = () => (
 			bg="alert3"
 		/>
 	</Paper2>
+);
+
+const Selector = () => (
+	<View
+		cross="center"
+		s={1}
+		style={{
+			position: 'absolute',
+			width: '100%',
+			bottom: 40
+		}}
+	>
+		<Paper2
+			w={196}
+			h={52}
+			br={6}
+		/>
+	</View>
 );
 
 const HomeScreen = () => (
@@ -51,6 +70,7 @@ const HomeScreen = () => (
 				<StoriesBox />
 			</View>
 		</ScrollView>
+		<Selector />
 	</BasicLayout>
 );
 
