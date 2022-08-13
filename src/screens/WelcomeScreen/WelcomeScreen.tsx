@@ -28,7 +28,7 @@ const WelcomeScreen = () => {
 							{i18n.t('WelcomeScreen.wave_goodbye')}
 						</Text>
 						<Text center color="text2" width={198}>
-							{i18n.t('WelcomeScreen.easily')} <Text weight="extraBold">Minke</Text>
+							{i18n.t('WelcomeScreen.easily')}
 						</Text>
 					</View>
 

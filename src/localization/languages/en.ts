@@ -718,11 +718,11 @@ export default {
 		}
 	},
 	WelcomeScreen: {
-		wave_goodbye: 'Wave goodbye to your bank!',
-		easily: 'Easily save, spend and invest with',
+		wave_goodbye: 'Wave hello to better money!',
+		easily: 'Easily send, save and invest with Minke',
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
-		import_or_restore: 'Import or Restore Wallet',
+		import_or_restore: 'Import Wallet',
 		i_have_a_referral_code: 'I have a referral code',
 		ImportWalletModal: {
 			add_wallet: 'Add Wallet',
