@@ -6,15 +6,13 @@ const HomeScreen = () => (
 	<BasicLayout>
 		<View
 			h={200}
-			bw={3}
-			row
-			main="flex-end"
+			bw={4}
 		>
 			<View
 				w={80}
 				h={80}
 				br={3}
-				color="alert1"
+				bg="alert3"
 			/>
 		</View>
 	</BasicLayout>

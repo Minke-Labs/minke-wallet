@@ -33,8 +33,8 @@ export interface ViewProps {
 	// circle
 	round: number;
 
-	// color
-	color: keyof ColorType;
+	// background color
+	bg: keyof ColorType;
 
 	// flexbox
 	row: boolean;
