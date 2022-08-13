@@ -1,6 +1,7 @@
-import { View, StyleProp, ViewStyle } from 'react-native';
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from '@hooks';
+import View from '../View/View';
 
 interface PaperProps {
 	marginBottom?: number;
