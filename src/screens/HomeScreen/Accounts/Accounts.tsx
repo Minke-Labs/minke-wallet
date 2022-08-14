@@ -12,7 +12,7 @@ export const Accounts = () => (
 		<Text type="lSmall" weight="semiBold" mb={3}>
 			Purchase in a few clicks with:
 		</Text>
-		<View h={30} mb={4} row>
+		<View mb={4} row>
 			<APay />
 			<View mr={3} />
 			<Debit />
