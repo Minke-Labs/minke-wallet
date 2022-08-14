@@ -19,7 +19,7 @@ const AssetListEmpty: React.FC<AssetListEmptyProps> = ({ onPress }) => {
 			</Text>
 			<Button
 				title={i18n.t('WalletAssetsScreen.AssetListEmpty.add_funds_to_start')}
-				iconLeft="addStroke"
+				iconLeft="add"
 				onPress={onPress}
 			/>
 		</View>

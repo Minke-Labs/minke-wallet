@@ -19,7 +19,7 @@ export const NoTransactionsYet: React.FC<NoTransactionsYetProps> = ({ onAddFunds
 			</Text>
 			<Button
 				onPress={onAddFunds}
-				iconLeft="addStroke"
+				iconLeft="add"
 				title={i18n.t('Components.Buttons.add_funds_to_start')}
 				marginBottom={14}
 			/>

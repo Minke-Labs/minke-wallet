@@ -50,7 +50,7 @@ const AssetsPanel: React.FC<AssetsPanelProps> = ({
 						{ backgroundColor: colors.background2, borderRightColor: colors.background1 }
 					]}
 				>
-					<Icon name="addStroke" color="cta1" size={20} style={{ marginRight: 8 }} />
+					<Icon name="add" color="cta1" size={20} style={{ marginRight: 8 }} />
 					<Text type="a">{i18n.t('WalletScreen.AssetsPanel.add_funds')}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity

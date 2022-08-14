@@ -19,7 +19,7 @@ const NoReferralPoints = ({ onEarnPress }: { onEarnPress: () => void }) => {
 			</Text>
 			<Button
 				title={i18n.t('Components.EmptyStates.NoReferralPoints.earn_points')}
-				iconLeft="addStroke"
+				iconLeft="add"
 				onPress={onEarnPress}
 			/>
 		</View>

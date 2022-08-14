@@ -16,6 +16,7 @@ export const Assets = () => (
 		</View>
 		<View row>
 			<Button
+				iconLeft="add"
 				title="Add funds"
 				onPress={() => null}
 			/>

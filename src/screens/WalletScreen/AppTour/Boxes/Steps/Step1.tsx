@@ -13,7 +13,7 @@ export const Step1 = () => {
 		<>
 			<View style={{ height: 25, marginBottom: 8, flexDirection: 'row' }}>
 				<Icon
-					name="addStroke"
+					name="add"
 					size={20}
 					color="cta1"
 					style={{ marginRight: 8 }}
