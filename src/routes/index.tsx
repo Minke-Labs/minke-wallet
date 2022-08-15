@@ -54,7 +54,10 @@ const Routes: React.FC = () => {
 	return (
 		<NavigationContainer linking={linking}>
 			<TransactionsProvider>
-				<Stack.Navigator initialRouteName={initialScreen} screenOptions={{ headerShown: false }}>
+				<Stack.Navigator
+					initialRouteName={initialScreen}
+					screenOptions={{ headerShown: false, animation: 'none' }}
+				>
 					{screenNamesArr.map((key: string) => (
 						<Stack.Screen
 							key={key}

@@ -24,14 +24,9 @@ const HomeScreen = () => {
 						<Stories />
 					</View>
 				</ScrollView>
-				<Selector
-					onActionPressed={() => setVisible(true)}
-				/>
+				<Selector onActionPressed={() => setVisible(true)} />
 			</BasicLayout>
-			<Modal
-				isVisible={visible}
-				onDismiss={() => setVisible(false)}
-			>
+			<Modal isVisible={visible} onDismiss={() => setVisible(false)}>
 				<ActionsModal />
 			</Modal>
 		</>
