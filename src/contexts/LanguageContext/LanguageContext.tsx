@@ -9,6 +9,7 @@ import { Country } from './LanguageContext.types';
 interface LanguageContextProps {
 	i18n: any;
 	language: string;
+	languages: string[];
 	countries: Country[];
 	setLanguage: (l: string) => void;
 }
@@ -29,7 +30,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchLocation = async () => {
 			const storedLanguage = await AsyncStorage.getItem('@language');
-			setLanguage(storedLanguage || Localization.locale);
+			if (storedLanguage) setLanguage(storedLanguage);
 		};
 		fetchLocation();
 	}, []);
@@ -75,6 +76,7 @@ const LanguageProvider: React.FC = ({ children }) => {
 		() => ({
 			i18n,
 			language,
+			languages,
 			countries,
 			setLanguage
 		}),

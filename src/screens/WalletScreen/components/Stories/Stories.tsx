@@ -200,7 +200,7 @@ const storytellerTheme: Theme = {
 
 const Stories: React.FC = () => {
 	const { state } = useWalletState();
-	const { i18n, language } = useLanguage();
+	const { i18n, language, languages } = useLanguage();
 	const { address: walletAddress } = state.value;
 	const [toggle, setToggle] = useState(false);
 	const scheme = useColorScheme();
@@ -243,7 +243,7 @@ const Stories: React.FC = () => {
 					ref={rowRef}
 					style={{ height: 91 }}
 					uiStyle={scheme === 'dark' ? ('dark' as UIStyle) : ('light' as UIStyle)}
-					categories={[language as string, 'all']}
+					categories={[languages.includes(language) ? language : languages[0], 'all']}
 				/>
 			</View>
 		</View>
