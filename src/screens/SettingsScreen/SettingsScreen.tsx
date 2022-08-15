@@ -95,13 +95,13 @@ const SettingsScreen = () => {
 						/>
 						<SettingsOption
 							label={i18n.t('SettingsScreen.usd_coin')}
-							icon="dollarStroke"
+							icon="dollar"
 							onPress={onDollarSettings}
 						/>
 						{chainId !== networks.mainnet.chainId && (
 							<SettingsOption
 								label={i18n.t('SettingsScreen.savings_account')}
-								icon="vaultStroke"
+								icon="vault"
 								onPress={onSavingAccount}
 							/>
 						)}

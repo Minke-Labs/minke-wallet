@@ -43,7 +43,7 @@ export interface ViewType {
 
 	// flexbox
 	row: boolean;
-	main: 'flex-start' | 'center' | 'flex-end' | 'space-between';
+	main: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-evenly';
 	cross: 'flex-start' | 'center' | 'flex-end';
 
 	style: StyleProp<ViewStyle>;

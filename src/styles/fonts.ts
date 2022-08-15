@@ -101,6 +101,10 @@ const fontType = {
 	bSmall: {
 		fontSize: 14,
 		lineHeight: 19.6
+	},
+	bDetail: {
+		fontSize: 12,
+		lineHeight: 16.8
 	}
 };
 

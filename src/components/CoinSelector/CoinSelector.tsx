@@ -15,7 +15,7 @@ const NoTokenIcon = () => {
 	const { colors } = useTheme();
 	return (
 		<View style={[styles.noTokenIcon, { backgroundColor: colors.background6 }]}>
-			<Icon name="dollarStroke" color="cta1" size={30} />
+			<Icon name="dollar" color="cta1" size={30} />
 		</View>
 	);
 };

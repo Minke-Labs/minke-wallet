@@ -29,7 +29,7 @@ const Accounts = ({ points }: { points: number }) => {
 				title: i18n.t('WalletScreen.screens.Accounts.savings'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.funds_deposited_in_savings'),
 				thirdRowText: numberFormat(balance?.depositedBalance || 0),
-				image: 'vaultStroke',
+				image: 'vault',
 				onPress: () => navigation.navigate('SaveScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
 			},

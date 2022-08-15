@@ -42,7 +42,7 @@ const ImportWalletScreen = () => {
 					<TouchableOpacity style={styles.option} onPress={() => setImportSeed(true)}>
 						<View style={styles.leftContainer}>
 							<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
-								<Icon name="vaultStroke" size={24} color="text7" />
+								<Icon name="vault" size={24} color="text7" />
 							</View>
 							<Text weight="semiBold" type="tSmall" style={{ marginLeft: 16 }} width={250}>
 								{i18n.t('ImportWalletScreen.import_with_secret_phrase')}
