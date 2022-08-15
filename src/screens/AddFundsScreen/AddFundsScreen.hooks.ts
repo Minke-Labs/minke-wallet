@@ -183,25 +183,6 @@ const useAddFundsScreen = () => {
 					setFiatAmount(formatedValue);
 				}
 				setLoadingPrices(false);
-			} else if (useBanxa) {
-				setLoadingPrices(true);
-				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
-				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
-				const params = {
-					blockchain: nativeToken.symbol,
-					source: currency.code,
-					source_amount: +formatedValue,
-					target: token.symbol.toUpperCase(),
-					target_amount: undefined,
-					payment_method_id: paymentMethod.id
-				};
-				const {
-					data: { prices }
-				} = await getPrices({ params });
-				const [price] = prices;
-				setTokenAmount(price.coin_amount);
-				setFiatAmount(formatedValue);
-				setLoadingPrices(false);
 			} else if (useMoonpay) {
 				setLoadingPrices(true);
 				const params = {
@@ -220,6 +201,25 @@ const useAddFundsScreen = () => {
 					setTokenAmount(quoteCurrencyAmount.toString());
 					setFiatAmount(formatedValue);
 				}
+				setLoadingPrices(false);
+			} else if (useBanxa) {
+				setLoadingPrices(true);
+				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
+				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
+				const params = {
+					blockchain: nativeToken.symbol,
+					source: currency.code,
+					source_amount: +formatedValue,
+					target: token.symbol.toUpperCase(),
+					target_amount: undefined,
+					payment_method_id: paymentMethod.id
+				};
+				const {
+					data: { prices }
+				} = await getPrices({ params });
+				const [price] = prices;
+				setTokenAmount(price.coin_amount);
+				setFiatAmount(formatedValue);
 				setLoadingPrices(false);
 			}
 		}
@@ -256,25 +256,6 @@ const useAddFundsScreen = () => {
 					setTokenAmount(formatedValue);
 				}
 				setLoadingPrices(false);
-			} else if (useBanxa) {
-				setLoadingPrices(true);
-				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
-				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
-				const params = {
-					blockchain: nativeToken.symbol,
-					source: currency.code,
-					source_amount: undefined,
-					target: token.symbol.toUpperCase(),
-					target_amount: +formatedValue,
-					payment_method_id: paymentMethod.id
-				};
-				const {
-					data: { prices }
-				} = await getPrices({ params });
-				const [price] = prices;
-				setFiatAmount(price.fiat_amount);
-				setTokenAmount(formatedValue);
-				setLoadingPrices(false);
 			} else if (useMoonpay) {
 				setLoadingPrices(true);
 				const params = {
@@ -295,6 +276,25 @@ const useAddFundsScreen = () => {
 					setFiatAmount(totalAmount.toString());
 					setTokenAmount(formatedValue);
 				}
+				setLoadingPrices(false);
+			} else if (useBanxa) {
+				setLoadingPrices(true);
+				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
+				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
+				const params = {
+					blockchain: nativeToken.symbol,
+					source: currency.code,
+					source_amount: undefined,
+					target: token.symbol.toUpperCase(),
+					target_amount: +formatedValue,
+					payment_method_id: paymentMethod.id
+				};
+				const {
+					data: { prices }
+				} = await getPrices({ params });
+				const [price] = prices;
+				setFiatAmount(price.fiat_amount);
+				setTokenAmount(formatedValue);
 				setLoadingPrices(false);
 			}
 		}
