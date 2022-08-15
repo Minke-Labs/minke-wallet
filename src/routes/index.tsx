@@ -46,7 +46,8 @@ const Routes: React.FC = () => {
 		prefixes: [prefix],
 		config: {
 			screens: {
-				Test: 'test'
+				Test: 'test',
+				MoonpayWaitScreen: 'moonpayWaitScreen'
 			}
 		}
 	};

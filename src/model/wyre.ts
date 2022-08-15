@@ -11,7 +11,7 @@ import {
 	WYRE_TOKEN_TEST
 } from '@env';
 import { WyreReferenceInfo } from '@stores/TopUpStore';
-import { Network, networks } from './network';
+import { Network } from './network';
 import { ApplePayResponse } from './types/wyre.types';
 import { Currency } from './types/currency.types';
 import { fiatCurrencies } from './currency';

@@ -10,6 +10,10 @@ import { TopupToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { buyQuote } from '@src/services/apis/moonpay/moonpay';
+import { MOONPAY_API_KEY, MOONPAY_BUY_URL, MOONPAY_SECRET_KEY } from '@env';
+import crypto from 'crypto';
+import * as qs from 'qs';
+import * as Linking from 'expo-linking';
 
 const useAddFundsScreen = () => {
 	const { address, network } = useState(globalWalletState()).value;
@@ -28,9 +32,8 @@ const useAddFundsScreen = () => {
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();
 	const useApplePay = Platform.OS === 'ios' && currency && providers.wyre.includes(currency);
-	const useBanxa = !useApplePay && currency && providers.banxa.includes(currency);
-	const useMoonpay = !useBanxa && currency && providers.moonpay.includes(currency);
-	const showApplePay = useApplePay && Platform.OS === 'ios';
+	const useBanxa = currency && providers.banxa.includes(currency);
+	const useMoonpay = (!useBanxa || !useApplePay) && currency && providers.moonpay.includes(currency);
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
 	const { track } = useAmplitude();
@@ -91,6 +94,34 @@ const useAddFundsScreen = () => {
 
 		const url = await makeOrder({ params });
 		setOrderLink(url);
+		setLoadingPrices(false);
+	};
+
+	const onMoonpayPurchase = async () => {
+		const { code } = currency!;
+		const { symbol } = token!;
+
+		setLoadingPrices(true);
+		const apiKey = MOONPAY_API_KEY || process.env.MOONPAY_API_KEY;
+		const params = {
+			apiKey,
+			currencyCode: symbol,
+			walletAddress: address,
+			baseCurrencyCode: code,
+			baseCurrencyAmount: fiat ? fiatAmount : undefined,
+			quoteCurrencyAmount: fiat ? undefined : tokenAmount,
+			lockAmount: true,
+			language: i18n.locale,
+			redirectURL: Linking.createURL('/moonpayWaitScreen')
+		};
+
+		const query = `?${qs.stringify(params)}`;
+		const host = MOONPAY_BUY_URL || process.env.MOONPAY_BUY_URL;
+		const originalUrl = `${host}${query}`;
+		const secret = MOONPAY_SECRET_KEY || process.env.MOONPAY_SECRET_KEY;
+		const signature = crypto.createHmac('sha256', secret!).update(query).digest('base64');
+		const urlWithSignature = `${originalUrl}&signature=${encodeURIComponent(signature)}`;
+		setOrderLink(urlWithSignature);
 		setLoadingPrices(false);
 	};
 
@@ -254,6 +285,7 @@ const useAddFundsScreen = () => {
 					quoteCurrencyAmount: formatedValue,
 					areFeesIncluded: true
 				};
+
 				const { message, totalAmount } = await buyQuote(params);
 
 				if (message) {
@@ -271,8 +303,9 @@ const useAddFundsScreen = () => {
 	const paymentEnabled =
 		!loadingPrices && token && currency && fiatAmount && tokenAmount && +fiatAmount > 0 && +tokenAmount > 0;
 
-	const disableApplePay = !(showApplePay && paymentEnabled);
+	const disableApplePay = !(useApplePay && paymentEnabled);
 	const disableBanxa = !paymentEnabled;
+	const disableMoonPay = !disableBanxa && !paymentEnabled;
 
 	useEffect(() => {
 		let defaultCurrency = currencies.find((c) => c.country === countryCode);
@@ -335,15 +368,17 @@ const useAddFundsScreen = () => {
 		fiatAmount,
 		error,
 		setError,
-		showApplePay,
 		disableApplePay,
 		onApplePayPurchase,
 		disableBanxa,
 		onOnrampBanxaPurchase,
 		orderLink,
 		setOrderLink,
+		useApplePay,
 		useBanxa,
-		useMoonpay
+		useMoonpay,
+		disableMoonPay,
+		onMoonpayPurchase
 	};
 };
 

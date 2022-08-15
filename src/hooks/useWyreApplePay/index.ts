@@ -3,7 +3,6 @@ import { globalWalletState } from '@stores/WalletStore';
 import { useState } from '@hookstate/core';
 import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@models/wyre';
 import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
-import { networks } from '@models/network';
 import useTimeout from '../useTimeout';
 import { OnPurchaseParams, UseWyreApplePay, UseWyreApplePayError } from './types';
 import useAmplitude from '../useAmplitude';

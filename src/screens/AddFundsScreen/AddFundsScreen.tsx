@@ -45,15 +45,17 @@ const AddFundsScreen = () => {
 		fiatAmount,
 		error,
 		setError,
-		showApplePay,
 		disableApplePay,
 		onApplePayPurchase,
 		disableBanxa,
 		onOnrampBanxaPurchase,
 		orderLink,
 		setOrderLink,
+		useApplePay,
 		useBanxa,
-		useMoonpay
+		useMoonpay,
+		disableMoonPay,
+		onMoonpayPurchase
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -96,18 +98,20 @@ const AddFundsScreen = () => {
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
 					<View style={styles.buttons}>
-						{showApplePay && (
+						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
-						{useBanxa ? (
+						{!!useMoonpay && (
+							<GenericPayButton disabled={disableMoonPay} marginBottom={16} onPress={onMoonpayPurchase} />
+						)}
+
+						{!!useBanxa && (
 							<OnrampButton
-								marginBottom={24}
+								marginBottom={16}
 								currency={currency}
 								onPress={onOnrampBanxaPurchase}
 								disabled={disableBanxa}
 							/>
-						) : (
-							!!useMoonpay && <GenericPayButton />
 						)}
 					</View>
 					<KeyboardSpacer />
@@ -143,6 +147,8 @@ const AddFundsScreen = () => {
 							setOrderLink('');
 						}
 					}}
+					enableApplePay
+					useWebKit
 				/>
 			</FullModal>
 		</>

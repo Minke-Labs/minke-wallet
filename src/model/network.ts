@@ -4,7 +4,8 @@ import {
 	BICONOMY_API_KEY_POLYGON_MAINNET,
 	ALCHEMY_API_KEY_ETHEREUM,
 	ALCHEMY_API_KEY_KOVAN,
-	ALCHEMY_API_KEY_MATIC
+	ALCHEMY_API_KEY_MATIC,
+	ALCHEMY_API_KEY_GOERLI
 } from '@env';
 import { TopupToken } from './types/token.types';
 
@@ -40,6 +41,7 @@ export interface Networks {
 	mainnet: Network;
 	matic: Network;
 	kovan: Network;
+	goerli: Network;
 }
 
 export const networks: Networks = {
@@ -118,6 +120,25 @@ export const networks: Networks = {
 		topUpTokens: [{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }],
 		transactionTimesEndpoint: true,
 		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
+		coingeckoPlatform: 'ethereum'
+	},
+	goerli: {
+		chainId: 5,
+		name: 'Goerli',
+		id: 'goerli',
+		wyreSRN: 'ethereum',
+		testnet: true,
+		etherscanURL: 'https://goerli.etherscan.io/',
+		etherscanAPIURL: 'https://api-goerli.etherscan.io/',
+		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
+		zapperNetwork: 'ethereum',
+		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+		topUpTokens: [
+			{ symbol: 'USDC', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 },
+			{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }
+		],
+		transactionTimesEndpoint: true,
+		alchemyAPIKey: (ALCHEMY_API_KEY_GOERLI || process.env.ALCHEMY_API_KEY_GOERLI)!,
 		coingeckoPlatform: 'ethereum'
 	}
 };
