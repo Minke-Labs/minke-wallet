@@ -21,7 +21,7 @@ const Card: React.FC<{ type: AppTourStepType }> = ({ children, type }) => {
 			<StepIndicator type={type} />
 			{children}
 			<TouchableOpacity onPress={dismiss} style={styles.close}>
-				<Icon name="closeStroke" size={20} color="cta1" />
+				<Icon name="close" size={20} color="cta1" />
 			</TouchableOpacity>
 		</Paper>
 	);

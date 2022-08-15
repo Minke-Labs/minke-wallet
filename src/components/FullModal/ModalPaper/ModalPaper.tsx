@@ -20,7 +20,7 @@ const ModalPaper: React.FC<ModalPaperProps> = ({ children, onPress }) => (
 			activeOpacity={0.6}
 			{...{ onPress }}
 		>
-			<Icon name="closeStroke" style={{ marginRight: 8 }} color="text4" size={24} />
+			<Icon name="close" style={{ marginRight: 8 }} color="text4" size={24} />
 			<Text color="text4">Close</Text>
 		</TouchableOpacity>
 		<View style={styles.content}>

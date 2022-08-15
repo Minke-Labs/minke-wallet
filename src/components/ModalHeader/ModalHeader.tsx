@@ -27,7 +27,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = ''
 		</View>
 
 		<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
-			<Icon name="closeStroke" size={24} color="text7" />
+			<Icon name="close" size={24} color="text7" />
 		</TouchableOpacity>
 	</View>
 );

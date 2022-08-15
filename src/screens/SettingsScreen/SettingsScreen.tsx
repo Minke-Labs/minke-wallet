@@ -132,7 +132,7 @@ const SettingsScreen = () => {
 						)}
 						<SettingsOption
 							label={i18n.t('SettingsScreen.delete_wallet')}
-							icon="closeStroke"
+							icon="close"
 							onPress={() => setDeleteModal(true)}
 							alert
 						/>

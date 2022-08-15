@@ -3,7 +3,11 @@ import { TouchableOpacity } from 'react-native';
 import { Paper2, View, Icon } from '@components';
 import { spacing } from '@styles';
 
-export const Selector = () => (
+interface SelectorProps {
+	onActionPressed: () => void;
+}
+
+export const Selector: React.FC<SelectorProps> = ({ onActionPressed }) => (
 	<View
 		cross="center"
 		s={1}
@@ -25,7 +29,7 @@ export const Selector = () => (
 			<TouchableOpacity onPress={() => null}>
 				<Icon name="home" size={28} color="cta1" />
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => null}>
+			<TouchableOpacity onPress={onActionPressed}>
 				<Icon name="exchange" size={28} color="cta2" />
 			</TouchableOpacity>
 			<TouchableOpacity onPress={() => null}>

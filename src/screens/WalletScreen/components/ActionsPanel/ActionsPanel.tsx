@@ -15,9 +15,9 @@ const ActionsPanel: React.FC<ActionsPanelProps> = ({
 	const { i18n } = useLanguage();
 
 	const actions = [
-		{ name: i18n.t('WalletScreen.ActionPanel.send'), icon: 'sendStroke' },
+		{ name: i18n.t('WalletScreen.ActionPanel.send'), icon: 'send' },
 		{ name: i18n.t('WalletScreen.ActionPanel.exchange'), icon: 'exchangeStroke' },
-		{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receiveStroke' }
+		{ name: i18n.t('WalletScreen.ActionPanel.receive'), icon: 'receive' }
 	];
 
 	const chooseFnc = (name: string) => {

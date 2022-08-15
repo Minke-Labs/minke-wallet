@@ -17,7 +17,7 @@ const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => 
 			<View style={styles.container}>
 				<View style={styles.closeContainer}>
 					<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
-						<Icon name="closeStroke" size={24} color="text7" />
+						<Icon name="close" size={24} color="text7" />
 					</TouchableOpacity>
 				</View>
 

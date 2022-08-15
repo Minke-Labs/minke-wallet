@@ -13,7 +13,7 @@ export const Step4 = () => {
 		<>
 			<View style={{ height: 25, marginBottom: 8, flexDirection: 'row' }}>
 				<Icon
-					name="sendStroke"
+					name="send"
 					size={20}
 					color="cta1"
 					style={{ marginRight: 8 }}
