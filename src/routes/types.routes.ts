@@ -11,6 +11,7 @@ export type RootStackParamList = {
 	HomeScreen: undefined;
 	MinkeHubScreen: undefined;
 	StablecoinsScreen: undefined;
+	AssetDetailScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };

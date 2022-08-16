@@ -1,5 +1,6 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
 import AssetsScreen from './AssetsScreen/AssetsScreen';
+import AssetDetailScreen from './AssetDetailScreen/AssetDetailScreen';
 import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
 import NFTScreen from './NFTScreen/NFTScreen';
 import NFTDetailScreen from './NFTDetailScreen/NFTDetailScreen';
@@ -41,6 +42,7 @@ import Test from './Test/Test';
 const screensObj = {
 	AccountsScreen,
 	AssetsScreen,
+	AssetDetailScreen,
 	ManualBackupScreen,
 	NFTScreen,
 	NFTDetailScreen,
