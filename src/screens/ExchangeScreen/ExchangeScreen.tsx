@@ -3,7 +3,15 @@ import { View, Keyboard, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage, useKeyboard } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import { Button, Modal, ModalReusables, Header, GasSelector, TokenCard, BlankStates } from '@components';
+import {
+	Button,
+	ModalBase,
+	ModalReusables,
+	Header,
+	GasSelector,
+	TokenCard,
+	BlankStates
+} from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
 import { makeStyles } from './ExchangeScreen.styles';
@@ -102,7 +110,7 @@ const ExchangeScreen = () => {
 				</TouchableOpacity>
 			</BasicLayout>
 
-			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+			<ModalBase isVisible={searchVisible} onDismiss={hideModal}>
 				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
@@ -111,10 +119,10 @@ const ExchangeScreen = () => {
 					showOnlyOwnedTokens={showOnlyOwnedTokens}
 					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
 				/>
-			</Modal>
-			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+			</ModalBase>
+			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

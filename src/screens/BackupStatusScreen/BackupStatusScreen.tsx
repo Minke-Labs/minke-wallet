@@ -2,7 +2,15 @@ import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
+import {
+	Button,
+	Text,
+	Icon,
+	ScreenLoadingIndicator,
+	LoadingScreen,
+	ModalReusables,
+	ModalBase
+} from '@components';
 import RNUxcam from 'react-native-ux-cam';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
@@ -141,8 +149,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 							onPress={() =>
 								showAuthenticationPrompt({
 									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
-								})
-							}
+								})}
 							title={i18n.t('BackupStatusScreen.view_secret_phrase')}
 							mode="outlined"
 						/>
@@ -150,13 +157,13 @@ const BackupStatusScreen = ({ route }: Props) => {
 				</ScrollView>
 			</BasicLayout>
 
-			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
+			<ModalBase isVisible={!!error} onDismiss={() => setError(undefined)}>
 				<ModalReusables.Error
 					onDismiss={() => setError(undefined)}
 					title={i18n.t('BackupStatusScreen.backup_error')}
 					description={error}
 				/>
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

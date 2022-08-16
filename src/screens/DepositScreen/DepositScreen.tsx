@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, BlankStates } from '@components';
+import { ModalBase, BlankStates } from '@components';
 import { useDepositProtocols } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { AddFunds } from '@containers';
@@ -20,16 +20,16 @@ const DepositScreen = () => {
 	if (!ableToDeposit) {
 		return (
 			<>
-				<Modal isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
+				<ModalBase isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
 					<NotAbleToSaveModal
 						visible={notAbleToSaveVisible}
 						onDismiss={notAbleToSaveDismiss}
 						onAddFunds={onAddFunds}
 					/>
-				</Modal>
-				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
+				</ModalBase>
+				<ModalBase isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
 					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
-				</Modal>
+				</ModalBase>
 			</>
 		);
 	}

@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
-	Modal,
+	ModalBase,
 	TokenCard,
 	HapticButton,
 	ModalReusables,
@@ -79,7 +79,7 @@ const WithdrawScreen = () => {
 				<KeyboardSpacer />
 			</BasicLayout>
 
-			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+			<ModalBase isVisible={searchVisible} onDismiss={hideModal}>
 				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
@@ -89,9 +89,9 @@ const WithdrawScreen = () => {
 					selected={[token?.symbol.toLowerCase()]}
 					withdraw
 				/>
-			</Modal>
+			</ModalBase>
 
-			<Modal
+			<ModalBase
 				isVisible={waitingTransaction}
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
@@ -104,8 +104,8 @@ const WithdrawScreen = () => {
 						withdraw
 					/>
 				)}
-			</Modal>
-			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+			</ModalBase>
+			<ModalBase isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
@@ -113,7 +113,7 @@ const WithdrawScreen = () => {
 						showHeader
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

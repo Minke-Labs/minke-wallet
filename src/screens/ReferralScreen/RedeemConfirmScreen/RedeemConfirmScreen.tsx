@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Header, HapticButton, Paper, Modal, ModalReusables } from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
@@ -70,9 +70,9 @@ const RedeemConfirmScreen = () => {
 				</View>
 			</BasicLayout>
 
-			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

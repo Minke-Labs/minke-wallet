@@ -5,7 +5,7 @@ import {
 	FiatCard,
 	FullModal,
 	Header,
-	Modal,
+	ModalBase,
 	ModalReusables,
 	OnrampButton,
 	Text,
@@ -106,15 +106,15 @@ const AddFundsScreen = () => {
 					<KeyboardSpacer />
 				</TouchableOpacity>
 			</BasicLayout>
-			<Modal isVisible={currencySearchVisible} onDismiss={dismissCurrencySearch}>
+			<ModalBase isVisible={currencySearchVisible} onDismiss={dismissCurrencySearch}>
 				<ModalReusables.SearchCurrencies
 					visible={currencySearchVisible}
 					onDismiss={dismissCurrencySearch}
 					onCurrencySelect={selectCurrency}
 					selected={currency}
 				/>
-			</Modal>
-			<Modal isVisible={tokenSearchVisible} onDismiss={dismissTokenSearch}>
+			</ModalBase>
+			<ModalBase isVisible={tokenSearchVisible} onDismiss={dismissTokenSearch}>
 				<ModalReusables.SearchTokens
 					visible={tokenSearchVisible}
 					onDismiss={dismissTokenSearch}
@@ -123,10 +123,10 @@ const AddFundsScreen = () => {
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
-			</Modal>
-			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+			</ModalBase>
+			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
-			</Modal>
+			</ModalBase>
 			<FullModal visible={!!orderLink} onClose={() => setOrderLink('')}>
 				<WebView
 					source={{ uri: orderLink }}

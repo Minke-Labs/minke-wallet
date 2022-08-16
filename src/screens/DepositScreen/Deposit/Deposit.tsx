@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/types/token.types';
 import {
-	Modal,
+	ModalBase,
 	TokenCard,
 	HapticButton,
 	ModalReusables,
@@ -91,7 +91,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 				<KeyboardSpacer />
 			</BasicLayout>
 
-			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+			<ModalBase isVisible={searchVisible} onDismiss={hideModal}>
 				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
@@ -100,9 +100,9 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
-			</Modal>
+			</ModalBase>
 
-			<Modal
+			<ModalBase
 				isVisible={waitingTransaction}
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
@@ -115,8 +115,8 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 						deposit
 					/>
 				)}
-			</Modal>
-			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+			</ModalBase>
+			<ModalBase isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
@@ -124,7 +124,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 						showHeader
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

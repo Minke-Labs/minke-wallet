@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Modal } from '@components';
+import { ModalBase } from '@components';
 import { useReferralCode, useNavigation, useMinkeRewards } from '@hooks';
 import { Background } from './Background/Background';
 import { Header } from './Header/Header';
@@ -30,12 +30,12 @@ const ReferralScreen = () => {
 				</SafeAreaView>
 				<Body rewards={rewards} onEarnPress={onEarnPress} />
 			</BasicLayout>
-			<Modal isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
+			<ModalBase isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
 				<HelpModal onDismiss={onHelpDismiss} />
-			</Modal>
-			<Modal isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
+			</ModalBase>
+			<ModalBase isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
 				<EarnModal onDismiss={onEarnDismiss} code={code} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

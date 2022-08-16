@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { Modal, BlankStates } from '@components';
+import { ModalBase, BlankStates } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useTokens } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
@@ -32,13 +32,13 @@ const SaveScreen = () => {
 				<Body {...{ interestTokens }} />
 			</BasicLayout>
 
-			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
+			<ModalBase isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
 				{selectedProtocol?.id === 'aave' ? (
 					<InfoModal.Aave onDismiss={() => setModalVisible(false)} />
 				) : (
 					<InfoModal.MStable onDismiss={() => setModalVisible(false)} />
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

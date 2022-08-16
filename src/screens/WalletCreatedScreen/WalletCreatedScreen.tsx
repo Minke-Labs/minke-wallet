@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Image, View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
-import { Text, Button, ScreenLoadingIndicator, LoadingScreen, Modal, ModalReusables } from '@components';
+import { Text, Button, ScreenLoadingIndicator, LoadingScreen, ModalBase, ModalReusables } from '@components';
 import { iCloudBackup, useLanguage } from '@hooks';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import RNUxcam from 'react-native-ux-cam';
@@ -53,13 +53,13 @@ const WalletCreatedScreen = () => {
 					</View>
 				</View>
 			</BasicLayout>
-			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
+			<ModalBase isVisible={!!error} onDismiss={() => setError(undefined)}>
 				<ModalReusables.Error
 					onDismiss={() => setError(undefined)}
 					title={i18n.t('WalletCreatedScreen.modal_error')}
 					description={error}
 				/>
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

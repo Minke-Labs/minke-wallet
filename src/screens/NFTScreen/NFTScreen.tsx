@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { AssetsLayout } from '@layouts';
-import { Text, Icon, Modal, BlankStates, EmptyStates } from '@components';
+import { Text, Icon, ModalBase, BlankStates, EmptyStates } from '@components';
 import { useLanguage, useNFT } from '@hooks';
 import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
@@ -44,9 +44,9 @@ const NFTScreen = () => {
 				</View>
 			</AssetsLayout>
 
-			<Modal isVisible={infoModal} onDismiss={() => setInfoModal(false)}>
+			<ModalBase isVisible={infoModal} onDismiss={() => setInfoModal(false)}>
 				<InfoModal onPress={() => setInfoModal(false)} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

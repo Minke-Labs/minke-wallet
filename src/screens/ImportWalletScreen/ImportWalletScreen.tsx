@@ -3,7 +3,7 @@
 import React from 'react';
 import { TouchableOpacity, View, Image } from 'react-native';
 import { useLanguage, useTheme } from '@hooks';
-import { Icon, Modal, ModalReusables, SettingsHeader, Text } from '@components';
+import { Icon, ModalBase, ModalReusables, SettingsHeader, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { metamask, trustWallet, rainbow } from '@images';
 import { smallWalletAddress } from '@models/wallet';
@@ -94,16 +94,16 @@ const ImportWalletScreen = () => {
 					)}
 				</View>
 			</BasicLayout>
-			<Modal isVisible={importSeed} onDismiss={() => setImportSeed(false)}>
+			<ModalBase isVisible={importSeed} onDismiss={() => setImportSeed(false)}>
 				<ImportWalletModal onDismiss={() => setImportSeed(false)} onImportFinished={onSeedImportFinished} />
-			</Modal>
-			<Modal isVisible={!!error} onDismiss={dismissError}>
+			</ModalBase>
+			<ModalBase isVisible={!!error} onDismiss={dismissError}>
 				<ModalReusables.Error
 					onDismiss={dismissError}
 					description={i18n.t(`ImportWalletScreen.Error.${error}`)}
 				/>
-			</Modal>
-			<Modal isVisible={!!destNetwork} onDismiss={dismissWrongNetwork}>
+			</ModalBase>
+			<ModalBase isVisible={!!destNetwork} onDismiss={dismissWrongNetwork}>
 				{!!destNetwork && (
 					<ModalReusables.WrongNetwork
 						onDismiss={dismissWrongNetwork}
@@ -112,7 +112,7 @@ const ImportWalletScreen = () => {
 						onUpdate={onNetworkChange}
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

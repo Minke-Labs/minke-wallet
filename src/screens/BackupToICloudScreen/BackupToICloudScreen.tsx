@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Modal, ModalReusables } from '@components';
+import { ModalBase, ModalReusables } from '@components';
 import { RootStackParamList } from '@src/routes/types.routes';
 import RNUxcam from 'react-native-ux-cam';
 import CreateBackupPassword from './CreateBackupPassword/CreateBackupPassword';
@@ -28,9 +28,9 @@ const BackupToICloudScreen = ({ route }: Props) => {
 			) : (
 				<ConfirmBackupPassword walletId={walletId} onError={onError} restoreBackups={restoreBackups} />
 			)}
-			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
+			<ModalBase isVisible={!!error} onDismiss={() => setError(undefined)}>
 				<ModalReusables.Error onDismiss={() => setError(undefined)} description={error} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

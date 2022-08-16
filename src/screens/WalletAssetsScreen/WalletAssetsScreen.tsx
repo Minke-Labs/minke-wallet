@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useLanguage, useTokens } from '@hooks';
 import { AddFunds } from '@containers';
 import { AssetsLayout } from '@layouts';
-import { ActivityIndicator, Modal, Text, BlankStates } from '@components';
+import { ActivityIndicator, ModalBase, Text, BlankStates } from '@components';
 import { numberFormat } from '@helpers/utilities';
 import RNUxcam from 'react-native-ux-cam';
 import { MinkeToken } from '@models/types/token.types';
@@ -45,9 +45,9 @@ const WalletAssetsScreen = () => {
 			>
 				<Content tokens={tokens} onPress={() => setAddFundsVisible(true)} />
 			</AssetsLayout>
-			<Modal isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
+			<ModalBase isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

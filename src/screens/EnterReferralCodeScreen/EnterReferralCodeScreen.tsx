@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Button, Icon, Input, Modal, Text } from '@components';
+import { Button, Icon, Input, ModalBase, Text } from '@components';
 import { useLanguage, useNavigation, useReferralCode } from '@hooks';
 import { whale5Img as whaleImage } from '@images';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -89,9 +89,9 @@ const EnterReferralCodeScreen = () => {
 				</ScrollView>
 				<KeyboardSpacer />
 			</BasicLayout>
-			<Modal isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
+			<ModalBase isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
 				<EarnModal onDismiss={onEarnDismiss} code={referralCode} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

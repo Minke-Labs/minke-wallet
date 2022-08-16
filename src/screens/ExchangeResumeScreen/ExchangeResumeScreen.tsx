@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Header, HapticButton, Paper, Modal, ModalReusables } from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
@@ -97,18 +97,18 @@ const ExchangeResumeScreen = () => {
 				</View>
 			</BasicLayout>
 
-			<Modal isVisible={visible} onDismiss={hideModal}>
+			<ModalBase isVisible={visible} onDismiss={hideModal}>
 				<ModalReusables.TransactionWait
 					onDismiss={hideModal}
 					fromToken={from}
 					toToken={to}
 					transactionHash={transactionHash}
 				/>
-			</Modal>
-			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+			</ModalBase>
+			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
-			</Modal>
-			<Modal isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
+			</ModalBase>
+			<ModalBase isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
@@ -116,7 +116,7 @@ const ExchangeResumeScreen = () => {
 						showHeader
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

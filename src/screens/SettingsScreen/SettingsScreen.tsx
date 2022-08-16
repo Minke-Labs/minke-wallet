@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { View, ScrollView } from 'react-native';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
-import { LoadingScreen, SettingsHeader, Text, Modal } from '@components';
+import { LoadingScreen, SettingsHeader, Text, ModalBase } from '@components';
 import { useNavigation, useLanguage, useWalletState } from '@hooks';
 import { networks } from '@models/network';
 import RNUxcam from 'react-native-ux-cam';
@@ -139,9 +139,9 @@ const SettingsScreen = () => {
 					</ScrollView>
 				</View>
 			</BasicLayout>
-			<Modal isVisible={deleteModal} onDismiss={() => setDeleteModal(false)}>
+			<ModalBase isVisible={deleteModal} onDismiss={() => setDeleteModal(false)}>
 				<DeleteModal onDismiss={() => setDeleteModal(false)} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

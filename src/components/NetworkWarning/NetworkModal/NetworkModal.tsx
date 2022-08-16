@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
 import { useNetwork } from '@hooks';
-import Modal from '../../Modal/Modal';
+import ModalBase from '../../ModalBase/ModalBase';
 import Token from '../../Token/Token';
 import Text from '../../Text/Text';
 import Icon from '../../Icon/Icon';
@@ -13,7 +13,7 @@ const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => 
 	const { network } = useNetwork();
 
 	return (
-		<Modal {...{ isVisible, onDismiss }}>
+		<ModalBase {...{ isVisible, onDismiss }}>
 			<View style={styles.container}>
 				<View style={styles.closeContainer}>
 					<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
@@ -30,7 +30,7 @@ const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => 
 					{network?.name} network.
 				</Text>
 			</View>
-		</Modal>
+		</ModalBase>
 	);
 };
 

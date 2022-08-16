@@ -7,6 +7,7 @@ import Icon from './Icon/Icon';
 import CountrySelector from './CountrySelector/CountrySelector';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
+import ModalBase from './ModalBase/ModalBase';
 import Modal from './Modal/Modal';
 import FullModal from './FullModal/FullModal';
 import GasOption from './GasOption/GasOption';
@@ -70,7 +71,7 @@ export {
 	Icon,
 	Token,
 	TokenAmountInput,
-	Modal,
+	ModalBase,
 	FullModal,
 	GasOption,
 	GasOptionInner,
@@ -80,6 +81,7 @@ export {
 	SettingsHeader,
 	Snackbar,
 	ModalReusables,
+	Modal,
 	MStableReusables,
 	SearchInput,
 	TextArea,
