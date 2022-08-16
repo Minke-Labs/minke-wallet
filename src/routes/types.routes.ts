@@ -10,6 +10,7 @@ export type RootStackParamList = {
 	NFTDetailScreen: { nft: NFT };
 	HomeScreen: undefined;
 	MinkeHubScreen: undefined;
+	StablecoinsScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };
