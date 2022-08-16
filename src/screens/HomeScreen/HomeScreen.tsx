@@ -34,7 +34,7 @@ const HomeScreen = () => {
 			<Modal
 				isVisible={openAvatarModal}
 				onDismiss={() => setOpenAvatarModal(false)}
-				onBack={goBack}
+				{...(currentStep !== 0 && { onBack: goBack })}
 			>
 				<AvatarModal
 					currentStep={currentStep}
