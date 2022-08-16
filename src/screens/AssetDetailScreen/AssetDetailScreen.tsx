@@ -5,6 +5,7 @@ import { BasicLayout } from '@layouts';
 import { Header } from './Header/Header';
 import { Balance } from './Balance/Balance';
 import ByNetworks from './ByNetworks/ByNetworks';
+import About from './About/About';
 
 const AssetDetailScreen = () => (
 	<BasicLayout>
@@ -13,6 +14,7 @@ const AssetDetailScreen = () => (
 				<Header onPress={() => null} />
 				<Balance />
 				<ByNetworks />
+				<About />
 			</View>
 		</ScrollView>
 	</BasicLayout>

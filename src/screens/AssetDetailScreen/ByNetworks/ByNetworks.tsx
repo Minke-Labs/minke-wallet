@@ -3,7 +3,7 @@ import { Text, Paper2 } from '@components';
 import { TokenCard } from './TokenCard/TokenCard';
 
 const ByNetworks = () => (
-	<Paper2 br={3} p={3}>
+	<Paper2 br={3} p={3} mb={3}>
 		<Text type="tMedium" weight="bold" mb={4}>
 			By networks
 		</Text>
