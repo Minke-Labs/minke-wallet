@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useTheme } from '@hooks';
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import {

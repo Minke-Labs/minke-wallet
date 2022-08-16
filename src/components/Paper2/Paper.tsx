@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { ViewType } from '@styles';
 import React from 'react';
 import View from '../View/View';

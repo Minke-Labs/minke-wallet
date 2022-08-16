@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
@@ -22,7 +21,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => {
 					{token.name}
 				</Text>
 				<Text type="span" weight="bold">
-					${tokenBalanceFormat(token.balanceUSD, 2)} ({tokenBalanceFormat(token.balance, 9)} {token.symbol})
+					${tokenBalanceFormat(token.balanceUSD!, 2)} ({tokenBalanceFormat(token.balance!, 9)} {token.symbol})
 					<Text weight="regular" type="span">
 						{i18n.t('WalletScreen.Modals.SendModal.components.Card.available')}
 					</Text>
