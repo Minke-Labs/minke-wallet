@@ -1,24 +1,24 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useTheme } from '@hooks';
+import { View } from '@components';
+import { spacing } from '@styles';
 import BasicLayout from '../BasicLayout/BasicLayout';
 import ValueBox from './ValueBox/ValueBox';
-import styles from './AssetsLayout.styles';
 import { AssetsLayoutProps } from './AssetsLayout.types';
 
-const AssetsLayout: React.FC<AssetsLayoutProps> = ({ children, headerValue, headerTitle }) => {
-	const { colors } = useTheme();
-	return (
-		<BasicLayout hideSafeAreaView bg="detail4">
-			<ValueBox
-				value={headerValue}
-				title={headerTitle}
-			/>
-			<View style={[styles.container, { backgroundColor: colors.background1 }]}>
-				{children}
-			</View>
-		</BasicLayout>
-	);
-};
+const AssetsLayout: React.FC<AssetsLayoutProps> = ({ children, headerValue, headerTitle }) => (
+	<BasicLayout hideSafeAreaView bg="detail4">
+		<ValueBox value={headerValue} title={headerTitle} />
+		<View
+			bg="background1"
+			style={{
+				borderTopLeftRadius: spacing[4],
+				borderTopRightRadius: spacing[4],
+				flex: 1
+			}}
+		>
+			{children}
+		</View>
+	</BasicLayout>
+);
 
 export default AssetsLayout;
