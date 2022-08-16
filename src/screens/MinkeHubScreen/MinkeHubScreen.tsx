@@ -29,7 +29,7 @@ const MinkeHubScreen = () => {
 					</Text>
 					<View mb={3} row main="center">
 						<Card
-							onPress={() => null}
+							onPress={() => navigation.navigate('StablecoinsScreen')}
 							icon="dollar"
 							title="Stablecoins"
 							desc="Coins pegged to the US dollar"

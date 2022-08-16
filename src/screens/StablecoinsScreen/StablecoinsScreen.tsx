@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { Icon, Text, View } from '@components';
 import { AssetsLayout } from '@layouts';
+import { useNavigation } from '@hooks';
 import { TokenItemCard } from './TokenItemCard/TokenItemCard';
 import Selector from './Selector/Selector';
 
 const StablecoinsScreen = () => {
 	const [active, setActive] = useState(0);
-
+	const navigation = useNavigation();
 	return (
 		<AssetsLayout
 			headerValue="5000"
@@ -41,7 +42,7 @@ const StablecoinsScreen = () => {
 							symbol="USDC"
 							subtitle="All networks"
 							rightValue="$1023.08"
-							onPress={() => null}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 						<TokenItemCard
 							token="usdt"
@@ -50,7 +51,7 @@ const StablecoinsScreen = () => {
 							subtitle="All networks"
 							rightValue="+ Buy"
 							link
-							onPress={() => null}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 						<TokenItemCard
 							token="dai"
@@ -59,7 +60,7 @@ const StablecoinsScreen = () => {
 							subtitle="All networks"
 							rightValue="+ Buy"
 							link
-							onPress={() => null}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 						<TokenItemCard
 							token="bnb"
@@ -68,7 +69,7 @@ const StablecoinsScreen = () => {
 							subtitle="All networks"
 							rightValue="+ Buy"
 							link
-							onPress={() => null}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 					</View>
 
