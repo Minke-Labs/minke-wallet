@@ -43,14 +43,14 @@ const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible, c
 		}
 	}, [isVisible]);
 
-	if (!isVisible) {
-		return <View />;
-	}
-
 	return (
 		<View style={styles.fullScreen}>
 			<TouchableWithoutFeedback onPress={onDismiss}>
-				<Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
+				<Animated.View style={[
+					styles.backdrop,
+					backdropAnimatedStyle
+				]}
+				/>
 			</TouchableWithoutFeedback>
 			<Animated.View
 				style={[
@@ -62,7 +62,7 @@ const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible, c
 					}
 				]}
 			>
-				{children}
+				{isVisible && children}
 			</Animated.View>
 		</View>
 	);

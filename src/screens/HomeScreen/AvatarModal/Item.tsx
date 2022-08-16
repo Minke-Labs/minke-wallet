@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image } from 'react-native';
 import { Text, Flag } from '@components';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './Item.styles';
 
 interface ItemProps {

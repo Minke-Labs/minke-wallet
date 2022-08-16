@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { View, Modal, ModalReusables, ModalBase } from '@components';
+import { View, Modal, ModalReusables } from '@components';
+import { useFormProgress } from '@hooks';
 import { Selector } from './Selector/Selector';
 import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
@@ -10,9 +11,9 @@ import Header from './Header/Header';
 import AvatarModal from './AvatarModal/AvatarModal';
 
 const HomeScreen = () => {
+	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
 	const [openAvatarModal, setOpenAvatarModal] = useState(false);
-
 	return (
 		<>
 			<BasicLayout>
@@ -30,11 +31,17 @@ const HomeScreen = () => {
 			<Modal isVisible={visible} onDismiss={() => setVisible(false)}>
 				<ModalReusables.Actions />
 			</Modal>
-			<ModalBase isVisible={openAvatarModal} onDismiss={() => setOpenAvatarModal(false)}>
-				{openAvatarModal && (
-					<AvatarModal onDismiss={() => setOpenAvatarModal(false)} />
-				)}
-			</ModalBase>
+			<Modal
+				isVisible={openAvatarModal}
+				onDismiss={() => setOpenAvatarModal(false)}
+				onBack={goBack}
+			>
+				<AvatarModal
+					currentStep={currentStep}
+					onBack={goBack}
+					onSelectAvatar={goForward}
+				/>
+			</Modal>
 		</>
 	);
 };

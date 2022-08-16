@@ -1,3 +1,5 @@
 export interface AvatarModalProps {
-	onDismiss: () => void;
+	onSelectAvatar: () => void;
+	onBack: () => void;
+	currentStep: number;
 }
