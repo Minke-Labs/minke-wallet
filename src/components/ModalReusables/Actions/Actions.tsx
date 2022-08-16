@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from '@components';
-import { IconItem } from '../components';
+import IconItem from '../../IconItem/IconItem';
 
 const ActionsModal = () => (
 	<View>

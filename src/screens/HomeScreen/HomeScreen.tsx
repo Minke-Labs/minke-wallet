@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { View, Modal } from '@components';
+import { View, Modal, ModalReusables } from '@components';
 import { Selector } from './Selector/Selector';
 import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
-import ActionsModal from './ActionsModal/ActionsModal';
 
 const HomeScreen = () => {
 	const [visible, setVisible] = useState(false);
@@ -26,7 +25,7 @@ const HomeScreen = () => {
 				<Selector onActionPressed={() => setVisible(true)} />
 			</BasicLayout>
 			<Modal isVisible={visible} onDismiss={() => setVisible(false)}>
-				<ActionsModal />
+				<ModalReusables.Actions />
 			</Modal>
 		</>
 	);

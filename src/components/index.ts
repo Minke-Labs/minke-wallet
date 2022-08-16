@@ -36,6 +36,7 @@ import Paper from './Paper/Paper';
 import Paper2 from './Paper2/Paper';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
+import IconItem from './IconItem/IconItem';
 import TokenItem from './TokenItem/TokenItem';
 import HapticButton from './HapticButton/HapticButton';
 import Header from './Header/Header';
@@ -73,6 +74,7 @@ export {
 	Token,
 	TokenAmountInput,
 	ModalBase,
+	IconItem,
 	FullModal,
 	GasOption,
 	GasOptionInner,
