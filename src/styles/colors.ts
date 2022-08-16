@@ -43,7 +43,8 @@ const lightTheme = {
 
 	background6: '#F4F6F8',
 
-	bw: '#000000'
+	bw: '#000000',
+	transparent: null
 };
 
 const darkTheme = {
@@ -91,7 +92,8 @@ const darkTheme = {
 
 	background6: '#0A2138',
 
-	bw: '#FFFFFF'
+	bw: '#FFFFFF',
+	transparent: null
 };
 
 export const colors = { darkTheme, lightTheme };
