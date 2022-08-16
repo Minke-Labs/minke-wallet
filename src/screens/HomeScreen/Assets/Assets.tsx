@@ -1,28 +1,50 @@
 import React from 'react';
+import { TouchableOpacity, Image } from 'react-native';
 import { Paper2, Text, View, Button } from '@components';
+import { useAvatar, useTheme, useWalletState } from '@hooks';
 
-export const Assets = () => (
-	<Paper2 br={3} p={3} mb={3}>
-		<View row main="space-between" cross="center" mb={4}>
-			<View>
-				<Text type="lMedium" weight="semiBold" color="text3">
-					Your total assets
-				</Text>
-				<Text type="dMedium">
-					$200.00
-				</Text>
+interface AssetsProps {
+	setOpenAvatarModal: () => void;
+}
+
+export const Assets: React.FC<AssetsProps> = ({ setOpenAvatarModal }) => {
+	const { colors } = useTheme();
+	const { state } = useWalletState();
+	const { address } = state.value;
+	const { currentAvatar } = useAvatar();
+	return (
+		<Paper2 br={3} p={3} mb={3}>
+			<View row main="space-between" cross="center" mb={4}>
+				<View>
+					<Text type="lMedium" weight="semiBold" color="text3">
+						Your total assets
+					</Text>
+					<Text type="dMedium">
+						$200.00
+					</Text>
+				</View>
+				<TouchableOpacity onPress={setOpenAvatarModal}>
+					{!!address && (
+						<Image
+							source={currentAvatar.image}
+							style={{
+								width: 56,
+								height: 56,
+								borderRadius: 28,
+								borderWidth: 3,
+								borderColor: colors.background1
+							}}
+						/>
+					)}
+				</TouchableOpacity>
 			</View>
-			<View round={57} bg="alert3" />
-		</View>
-		<View row>
-			<Button
-				iconLeft="add"
-				title="Add funds"
-				onPress={() => null}
-			/>
-			{/* <Button
-				title="..."
-			/> */}
-		</View>
-	</Paper2>
-);
+			<View row>
+				<Button
+					iconLeft="add"
+					title="Add funds"
+					onPress={() => null}
+				/>
+			</View>
+		</Paper2>
+	);
+};
