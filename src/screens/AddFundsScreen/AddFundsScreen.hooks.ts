@@ -33,7 +33,12 @@ const useAddFundsScreen = () => {
 	const { i18n, countries: banxaCountries } = useLanguage();
 	const useApplePay = Platform.OS === 'ios' && currency && providers.wyre.includes(currency);
 	const useBanxa = currency && providers.banxa.includes(currency);
-	const useMoonpay = (!useBanxa || !useApplePay) && currency && providers.moonpay.includes(currency);
+	const useMoonpay =
+		currency &&
+		!useBanxa &&
+		(!useApplePay || ['BRL', 'CAD', 'EUR'].includes(currency.code)) &&
+		providers.moonpay.includes(currency);
+	const moonPaySpecialButton = useMoonpay && ['BRL', 'CAD', 'EUR'].includes(currency.code);
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
 	const { track } = useAmplitude();
@@ -378,7 +383,8 @@ const useAddFundsScreen = () => {
 		useBanxa,
 		useMoonpay,
 		disableMoonPay,
-		onMoonpayPurchase
+		onMoonpayPurchase,
+		moonPaySpecialButton
 	};
 };
 
