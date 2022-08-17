@@ -20,6 +20,7 @@ interface LastSale {
 
 export interface Stats {
 	floor_price: number;
+	symbol?: string | undefined;
 }
 
 export interface NFT {

@@ -8,6 +8,7 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { Stats } from '@models/types/nft.types';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import { getCollectionStats } from '@src/services/apis';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
@@ -73,7 +74,11 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 			<Bottom>
 				<Panel
-					floor={stats?.floor_price > 0.00001 ? `${stats!.floor_price} ETH` : 'N/A'}
+					floor={
+						stats?.floor_price > 0.00001
+							? `${tokenBalanceFormat(stats!.floor_price, 4)} ${nft.stats?.symbol || 'ETH'}`
+							: 'N/A'
+					}
 					lastSale={lastSalePrice()}
 				/>
 				<Button
