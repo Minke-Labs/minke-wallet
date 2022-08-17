@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
-import { Icon, Text, View } from '@components';
+import { ScrollView } from 'react-native';
+import { Text, View } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation } from '@hooks';
 import { TokenItemCard } from './TokenItemCard/TokenItemCard';
 import Selector from './Selector/Selector';
 
-const StablecoinsScreen = () => {
+const InvestmentsScreen = () => {
 	const [active, setActive] = useState(0);
 	const navigation = useNavigation();
 	return (
@@ -21,21 +21,12 @@ const StablecoinsScreen = () => {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl={3} pt={4}>
 					<Text type="tSmall" weight="bold" mb={4}>
-						Stablecoins
+						Investments
 					</Text>
 
 					<Selector {...{ active, setActive }} />
 
-					<TouchableOpacity onPress={() => null}>
-						<View row>
-							<Text type="lMedium" weight="semiBold" color="cta1" mb={3}>
-								Get 3.26% annualized interest
-							</Text>
-							<Icon name="chevronRight" size={20} color="cta1" />
-						</View>
-					</TouchableOpacity>
-
-					<View pr={3}>
+					<View pr={3} mt={3}>
 						<TokenItemCard
 							token="eth"
 							name="USD Coin"
@@ -79,4 +70,4 @@ const StablecoinsScreen = () => {
 	);
 };
 
-export default StablecoinsScreen;
+export default InvestmentsScreen;

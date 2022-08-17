@@ -39,7 +39,7 @@ const MinkeHubScreen = () => {
 							/>
 							<View mr={3} />
 							<Card
-								onPress={() => null}
+								onPress={() => navigation.navigate('InvestmentsScreen')}
 								icon="crypto"
 								title="Investments"
 								desc="Coins with fluctuating value"

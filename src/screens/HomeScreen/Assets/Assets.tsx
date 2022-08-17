@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Image } from 'react-native';
-import { Paper2, Text, View, Button } from '@components';
+import { Paper2, Text, View, Button2 } from '@components';
 import { useAvatar, useTheme, useWalletState } from '@hooks';
 
 interface AssetsProps {
@@ -38,8 +38,14 @@ export const Assets: React.FC<AssetsProps> = ({ setOpenAvatarModal }) => {
 					)}
 				</TouchableOpacity>
 			</View>
-			<View row>
-				<Button
+			<View row bw={2}>
+				<Button2
+					iconLeft="add"
+					title="Add funds"
+					onPress={() => null}
+				/>
+				<View mr={2} />
+				<Button2
 					iconLeft="add"
 					title="Add funds"
 					onPress={() => null}

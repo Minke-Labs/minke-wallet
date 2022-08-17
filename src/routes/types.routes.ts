@@ -11,6 +11,7 @@ export type RootStackParamList = {
 	HomeScreen: undefined;
 	MinkeHubScreen: undefined;
 	StablecoinsScreen: undefined;
+	InvestmentsScreen: undefined;
 	AssetDetailScreen: undefined;
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;

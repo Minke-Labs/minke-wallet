@@ -3,6 +3,7 @@ import BlankStates from './BlankStates';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
 import Button from './Button/Button';
+import Button2 from './Button2/Button';
 import Icon from './Icon/Icon';
 import CountrySelector from './CountrySelector/CountrySelector';
 import Token from './Token/Token';
@@ -69,6 +70,7 @@ export {
 	Text,
 	AnimatedText,
 	Button,
+	Button2,
 	WhiteButton,
 	Icon,
 	Token,
