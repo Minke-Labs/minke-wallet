@@ -45,6 +45,8 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 		return 'N/A';
 	}, [nft]);
+	const { image_original_url: original, image_url: imageUrl } = nft;
+	const image = imageUrl || original;
 
 	return (
 		<View style={{ flex: 1, backgroundColor: colors.background5, paddingTop: StatusBar.currentHeight }}>
@@ -52,12 +54,12 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 			<View style={styles.topContainer}>
 				<Header title={nft.collection.name} />
-				{nft.image_url.endsWith('.svg') ? (
+				{image.endsWith('.svg') ? (
 					<View style={{ borderRadius: 8, overflow: 'hidden' }}>
-						<SvgUri uri={nft.image_url} width={256} height={256} />
+						<SvgUri uri={image} width={256} height={256} />
 					</View>
 				) : (
-					<Image source={{ uri: nft.image_url }} style={styles.image} />
+					<Image source={{ uri: image }} style={styles.image} />
 				)}
 				<Text type="hMedium" weight="bold">
 					{nft.name}

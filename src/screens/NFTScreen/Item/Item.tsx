@@ -16,15 +16,16 @@ const Item: React.FC<ItemProps> = ({ collection }) => {
 					data={collection}
 					keyExtractor={(item) => item.id.toString()}
 					renderItem={({ item }) => {
-						const { image_thumbnail_url: thumb } = item;
+						const { image_thumbnail_url: thumb, image_original_url: original, image_url: imageUrl } = item;
+						const image = thumb || imageUrl || original;
 						return (
 							<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
-								{thumb.endsWith('.svg') ? (
+								{image?.endsWith('.svg') ? (
 									<View style={{ borderRadius: 8, overflow: 'hidden', marginRight: 8 }}>
-										<SvgUri uri={thumb} width={56} height={56} />
+										<SvgUri uri={image} width={56} height={56} />
 									</View>
 								) : (
-									<Image source={{ uri: thumb }} style={styles.image} />
+									<Image source={{ uri: image }} style={styles.image} />
 								)}
 							</TouchableOpacity>
 						);

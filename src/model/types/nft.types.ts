@@ -26,6 +26,7 @@ export interface Stats {
 export interface NFT {
 	id: string;
 	name: string;
+	image_original_url: string;
 	image_url: string;
 	image_thumbnail_url: string;
 	last_sale: LastSale | null;
