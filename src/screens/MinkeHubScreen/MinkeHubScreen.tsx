@@ -73,7 +73,7 @@ const MinkeHubScreen = () => {
 						/>
 						<View mr={3} />
 						<Card
-							onPress={() => null}
+							onPress={() => navigation.navigate('ReferralScreen')}
 							icon="vault"
 							title="Referral"
 							desc="Refer a friend and earn free crypto"

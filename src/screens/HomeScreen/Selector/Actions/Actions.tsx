@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, IconItem } from '@components';
 import { useNavigation } from '@hooks';
+import { RootStackParamList } from '@src/routes/types.routes';
 
 interface ActionsModalProps {
 	onDismiss: () => void;
@@ -11,15 +12,15 @@ interface ActionsModalProps {
 const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onReceivePress }) => {
 	const navigation = useNavigation();
 
-	const handleNavigate = () => {
+	const handleNavigate = (path: keyof RootStackParamList) => {
 		onDismiss();
-		navigation.navigate('ExchangeScreen');
+		navigation.navigate(path);
 	};
 
 	return (
 		<View>
 			<IconItem
-				onPress={handleNavigate}
+				onPress={() => handleNavigate('ExchangeScreen')}
 				mb={4}
 				title="Exchange"
 				desc="Swap one token for another"
@@ -40,7 +41,7 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onR
 				icon="receive"
 			/>
 			<IconItem
-				onPress={() => null}
+				onPress={() => handleNavigate('TransactionsScreen')}
 				mb={4}
 				title="Transactions"
 				desc="To another wallet or an exchange"
