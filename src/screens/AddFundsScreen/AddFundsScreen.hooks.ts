@@ -36,9 +36,9 @@ const useAddFundsScreen = () => {
 	const useMoonpay =
 		currency &&
 		!useBanxa &&
-		(!useApplePay || ['BRL', 'CAD', 'EUR', 'AUD'].includes(currency.code)) &&
+		(!useApplePay || ['BRL', 'CAD', 'EUR'].includes(currency.code)) &&
 		providers.moonpay.includes(currency);
-	const moonPaySpecialButton = useMoonpay && ['BRL', 'CAD', 'EUR', 'AUD'].includes(currency.code);
+	const moonPaySpecialButton = useMoonpay && ['BRL', 'CAD', 'EUR'].includes(currency.code);
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
 	const { track } = useAmplitude();

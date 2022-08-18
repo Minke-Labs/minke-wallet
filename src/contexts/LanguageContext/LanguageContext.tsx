@@ -45,6 +45,14 @@ const LanguageProvider: React.FC = ({ children }) => {
 	const countries: Country[] = useMemo(
 		() => [
 			{
+				name: i18n.t('LocationContext.AU.name'),
+				flag: 'australia',
+				iso: 'AU',
+				currencyName: i18n.t('LocationContext.AU.currencyName'),
+				currency: 'AUD',
+				paymentName: 'PayID'
+			},
+			{
 				name: i18n.t('LocationContext.CA.name'),
 				flag: 'canada',
 				iso: 'CA',
