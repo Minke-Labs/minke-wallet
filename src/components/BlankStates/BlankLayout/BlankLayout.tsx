@@ -46,7 +46,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 				style={{ flex: 1 }}
 				maskElement={<View style={{ alignItems: 'center', flex: 1 }}>{children}</View>}
 			>
-				<BasicLayout hideSafeAreaView center bg="background2">
+				<BasicLayout hideSafeAreaView center bgc="background2">
 					{children}
 					<Animated.View style={[styles.container, animatedStyle]}>
 						<Gradient />

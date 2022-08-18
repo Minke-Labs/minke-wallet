@@ -13,7 +13,7 @@ const TransactionsScreen = () => {
 	const { transactions, active, setActive } = useTransactionsScreen();
 
 	return (
-		<BasicLayout bg="background3" hideSafeAreaView>
+		<BasicLayout bgc="background3" hideSafeAreaView>
 			<HeaderContainer>
 				<SafeAreaView />
 				<Header />

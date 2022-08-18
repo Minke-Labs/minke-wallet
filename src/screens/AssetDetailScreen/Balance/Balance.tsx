@@ -8,7 +8,7 @@ export const Balance = () => {
 	return (
 		<Paper2 br={3} style={{ overflow: 'hidden' }} mb={3}>
 			<View
-				bg="background2"
+				bgc="background2"
 				ph={4}
 				pv={3}
 				style={{

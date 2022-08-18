@@ -54,7 +54,7 @@ const Header: React.FC = () => {
 							pv={1}
 							row
 							cross="center"
-							bg="background3"
+							bgc="background3"
 						>
 							<Text weight="semiBold" type="lSmall" color="cta1">
 								{points} points

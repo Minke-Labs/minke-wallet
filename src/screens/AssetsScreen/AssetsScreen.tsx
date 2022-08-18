@@ -21,7 +21,7 @@ const AssetsScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('AssetsScreen');
 
 	return (
-		<BasicLayout hideSafeAreaView bg="detail4">
+		<BasicLayout hideSafeAreaView bgc="detail4">
 			<ScrollView style={styles.container}>
 				<SafeAreaView>
 					<Upper {...{ coin }} />
@@ -30,7 +30,7 @@ const AssetsScreen = ({ route }: Props) => {
 						{marketCap > 0 && !!tokenVolume && (
 							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
 						)}
-						{!!description && <AboutCoin description={description} name={coin.name} />}
+						{!!description && <AboutCoin description={description} name={coin.name!} />}
 					</ScrollView>
 				</SafeAreaView>
 			</ScrollView>

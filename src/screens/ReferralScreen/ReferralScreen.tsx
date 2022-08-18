@@ -21,7 +21,7 @@ const ReferralScreen = () => {
 
 	return (
 		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
+			<BasicLayout hideSafeAreaView bgc="detail4">
 				<SafeAreaView>
 					<Background>
 						<Header onHelpPress={onHelpPress} />

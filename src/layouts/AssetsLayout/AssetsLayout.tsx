@@ -6,10 +6,10 @@ import ValueBox from './ValueBox/ValueBox';
 import { AssetsLayoutProps } from './AssetsLayout.types';
 
 const AssetsLayout: React.FC<AssetsLayoutProps> = ({ children, headerValue, headerTitle }) => (
-	<BasicLayout hideSafeAreaView bg="detail4">
+	<BasicLayout hideSafeAreaView bgc="detail4">
 		<ValueBox value={headerValue} title={headerTitle} />
 		<View
-			bg="background1"
+			bgc="background1"
 			style={{
 				borderTopLeftRadius: spacing[4],
 				borderTopRightRadius: spacing[4],

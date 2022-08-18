@@ -3,6 +3,6 @@ import { ColorType } from '@styles';
 export interface BasicLayoutProps {
 	style?: any;
 	center?: boolean;
-	bg?: keyof ColorType;
+	bgc?: keyof ColorType;
 	hideSafeAreaView?: boolean;
 }

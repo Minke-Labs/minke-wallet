@@ -5,16 +5,16 @@ import View from '../View/View';
 
 interface IconBoxProps {
 	icon: IconType;
-	bg?: keyof ColorType;
+	bgc?: keyof ColorType;
 	mb?: SpacingType;
 }
 
-const IconBox: React.FC<IconBoxProps> = ({ icon, bg, mb }) => (
+const IconBox: React.FC<IconBoxProps> = ({ icon, bgc, mb }) => (
 	<View
 		h={40}
 		w={40}
 		br={2}
-		bgc={bg || 'background2'}
+		bgc={'background5' || 'background2'}
 		main="center"
 		cross="center"
 		mr={3}

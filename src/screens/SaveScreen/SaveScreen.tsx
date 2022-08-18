@@ -22,7 +22,7 @@ const SaveScreen = () => {
 
 	return (
 		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
+			<BasicLayout hideSafeAreaView bgc="detail4">
 				<SafeAreaView>
 					<Background>
 						<Header onInfo={() => setModalVisible(true)} />
