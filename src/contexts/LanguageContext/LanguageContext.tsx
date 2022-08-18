@@ -53,6 +53,14 @@ const LanguageProvider: React.FC = ({ children }) => {
 				paymentName: 'PayID'
 			},
 			{
+				name: i18n.t('LocationContext.GB.name'),
+				flag: 'unitedKingdom',
+				iso: 'GB',
+				currencyName: i18n.t('LocationContext.GB.currencyName'),
+				currency: 'GBP',
+				paymentName: 'Bank Transfer'
+			},
+			{
 				name: i18n.t('LocationContext.CA.name'),
 				flag: 'canada',
 				iso: 'CA',
