@@ -3,7 +3,7 @@ import { ScrollView, SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Snackbar } from 'react-native-paper';
 import { View, Modal, ModalReusables, Text } from '@components';
-import { useFormProgress, useMinkeRewards, useNavigation, useWalletState } from '@hooks';
+import { useMinkeRewards, useNavigation, useWalletState } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { Selector } from './Selector/Selector';
@@ -11,12 +11,9 @@ import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
-import AvatarModal from './AvatarModal/AvatarModal';
 
 const HomeScreen = () => {
-	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
-	const [openAvatarModal, setOpenAvatarModal] = useState(false);
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
 
 	const { state } = useWalletState();
@@ -44,7 +41,7 @@ const HomeScreen = () => {
 							onCopyPress={onCopyToClipboard}
 							points={points}
 						/>
-						<Assets setOpenAvatarModal={() => setOpenAvatarModal(true)} />
+						<Assets />
 						<Accounts />
 						<Stories />
 					</View>
@@ -54,17 +51,6 @@ const HomeScreen = () => {
 
 			<Modal isVisible={visible} onDismiss={() => setVisible(false)}>
 				<ModalReusables.Actions />
-			</Modal>
-			<Modal
-				isVisible={openAvatarModal}
-				onDismiss={() => setOpenAvatarModal(false)}
-				{...(currentStep !== 0 && { onBack: goBack })}
-			>
-				<AvatarModal
-					currentStep={currentStep}
-					onBack={goBack}
-					onSelectAvatar={goForward}
-				/>
 			</Modal>
 
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
