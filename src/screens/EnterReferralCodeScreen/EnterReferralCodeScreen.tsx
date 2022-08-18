@@ -5,12 +5,15 @@ import { Button, Icon, Input, ModalBase, Text } from '@components';
 import { useLanguage, useNavigation, useReferralCode } from '@hooks';
 import { whale5Img as whaleImage } from '@images';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import styles from './EnterReferralCodeScreen.styles';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
 import useEnterReferralCodeScreen from './EnterReferralCodeScreen.hooks';
 import EarnModal from '../ReferralScreen/EarnModal/EarnModal';
 import useReferralScreen from '../ReferralScreen/ReferralScreen.hooks';
+import styles from './EnterReferralCodeScreen.styles';
 
 const EnterReferralCodeScreen = () => {
+	const { address } = useState(globalWalletState()).value;
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const { code, setCode, invalidCode, onConfirm, loading, disableCode } = useEnterReferralCodeScreen();
@@ -27,7 +30,10 @@ const EnterReferralCodeScreen = () => {
 							{i18n.t('EnterReferralCodeScreen.enter_referral_code')}
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
+					<TouchableOpacity
+						activeOpacity={0.6}
+						onPress={() => (address ? navigation.navigate('WalletScreen') : navigation.goBack())}
+					>
 						<Icon name="close" color="text7" size={24} />
 					</TouchableOpacity>
 				</View>
@@ -55,6 +61,7 @@ const EnterReferralCodeScreen = () => {
 								autoCompleteType="off"
 								error={code !== undefined && invalidCode}
 								style={{ marginBottom: 32 }}
+								autoCapitalize="characters"
 							/>
 							<Button
 								title={
