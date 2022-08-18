@@ -1,6 +1,6 @@
-import { IconType, SpacingType } from '@styles';
+import { IconType } from '@styles';
 
-export interface ButtonProps {
+interface ButtonProps {
 	title: string;
 	iconLeft?: IconType;
 	iconRight?: IconType;
@@ -9,5 +9,6 @@ export interface ButtonProps {
 	marginBottom?: number;
 	onPress?: () => void;
 	alert?: boolean;
-	br?: SpacingType;
 }
+
+export type { ButtonProps };

@@ -7,7 +7,7 @@ const Paper: React.FC<Partial<ViewType>> = ({
 	...rest
 }) => (
 	<View
-		bg="background5"
+		bgc="background5"
 		{...{ ...rest }}
 	>
 		{children}

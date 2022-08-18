@@ -23,8 +23,8 @@ export interface ViewType {
 	m: SpacingType;
 
 	// sizes
-	h: number;
-	w: number;
+	h: number | string;
+	w: number | string;
 
 	// shadow
 	s: ShadowType;
@@ -35,11 +35,14 @@ export interface ViewType {
 	// border width
 	bw: number;
 
+	// bordercolor
+	bc: keyof ColorType;
+
 	// circle
 	round: number;
 
 	// background color
-	bg: keyof ColorType;
+	bgc: keyof ColorType;
 
 	// flexbox
 	row: boolean;

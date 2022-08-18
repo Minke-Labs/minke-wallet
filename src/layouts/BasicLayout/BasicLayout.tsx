@@ -47,7 +47,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = ({
 	if (hideSafeAreaView) {
 		return (
 			<View style={style ?? styles.container}>
-				<Base bg={bg as keyof ColorType} center={center}>
+				<Base bgc={bg as keyof ColorType} center={center}>
 					{children}
 				</Base>
 			</View>
@@ -57,7 +57,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = ({
 	return (
 		<View style={{ flex: 1, backgroundColor: colors[bg!] }}>
 			<SafeAreaView style={[style || styles.container]}>
-				<Base bg={bg as keyof ColorType} center={center}>
+				<Base bgc={bg as keyof ColorType} center={center}>
 					{children}
 				</Base>
 			</SafeAreaView>

@@ -9,7 +9,7 @@ export const Button: React.FC<ButtonProps> = ({ children, active, onPress }) => 
 	return (
 		<TouchableOpacity activeOpacity={0.6} onPress={onPress}>
 			<View
-				bg={active ? 'text6' : 'transparent'}
+				bgc={active ? 'text6' : 'transparent'}
 				ph={3}
 				br={4}
 				bw={1}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
-import { Paper2, Text, View, Button2, Modal } from '@components';
+import { Paper2, Text, View, Button, Modal } from '@components';
 import { useAvatar, useFormProgress, useTheme, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
 
@@ -38,18 +38,21 @@ export const Assets: React.FC = () => {
 						)}
 					</TouchableOpacity>
 				</View>
-				<View row bw={2}>
-					<Button2
-						iconLeft="add"
-						title="Add funds"
-						onPress={() => null}
-					/>
-					<View mr={2} />
-					<Button2
-						iconLeft="add"
-						title="Add funds"
-						onPress={() => null}
-					/>
+				<View row main="space-between">
+					<View w={255}>
+						<Button
+							iconLeft="add"
+							title="Add funds"
+							onPress={() => null}
+						/>
+					</View>
+					<View w={48}>
+						<Button
+							title="..."
+							onPress={() => null}
+							br={3}
+						/>
+					</View>
 				</View>
 			</Paper2>
 			<Modal
