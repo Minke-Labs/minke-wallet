@@ -579,7 +579,7 @@ export default {
 		}
 	},
 	WelcomeScreen: {
-		referral_code_applied: 'Código de referência aplicado',
+		referral_code_applied: 'Código de indicação aplicado',
 		wave_goodbye: 'Diga olá para um dinheiro melhor!',
 		easily: 'Economize, gaste e invista facilmente com a Minke',
 		creating: 'Criando carteira',
