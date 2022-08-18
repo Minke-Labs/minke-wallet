@@ -25,10 +25,10 @@ export const Selector: React.FC = () => {
 					w={196}
 					h={52}
 					br={6}
+					ph={4}
 					row
 					main="space-between"
 					cross="center"
-					ph={4}
 				>
 					<TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
 						<Icon
@@ -54,7 +54,7 @@ export const Selector: React.FC = () => {
 				</Paper2>
 			</View>
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<Actions onPress={() => setModalVisible(false)} />
+				<Actions onDismiss={() => setModalVisible(false)} />
 			</Modal>
 		</>
 	);

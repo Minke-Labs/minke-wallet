@@ -3,14 +3,14 @@ import { View, IconItem } from '@components';
 import { useNavigation } from '@hooks';
 
 interface ActionsModalProps {
-	onPress: () => void;
+	onDismiss: () => void;
 }
 
-const ActionsModal: React.FC<ActionsModalProps> = ({ onPress }) => {
+const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss }) => {
 	const navigation = useNavigation();
 
 	const handleNavigate = () => {
-		onPress();
+		onDismiss();
 		navigation.navigate('ExchangeScreen');
 	};
 
