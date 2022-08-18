@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Snackbar } from 'react-native-paper';
-import { View, Modal, ModalReusables, Text } from '@components';
+import { View, Text } from '@components';
 import { useMinkeRewards, useNavigation, useWalletState } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
@@ -13,7 +13,6 @@ import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
 
 const HomeScreen = () => {
-	const [visible, setVisible] = useState(false);
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
 
 	const { state } = useWalletState();
@@ -46,12 +45,8 @@ const HomeScreen = () => {
 						<Stories />
 					</View>
 				</ScrollView>
-				<Selector onActionPressed={() => setVisible(true)} />
+				<Selector />
 			</BasicLayout>
-
-			<Modal isVisible={visible} onDismiss={() => setVisible(false)}>
-				<ModalReusables.Actions />
-			</Modal>
 
 			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
 				<Text color="text11">

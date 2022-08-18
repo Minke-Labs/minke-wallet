@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Icon } from '@components';
 import { IconType, ColorType, SpacingType } from '@styles';
+import Icon from '../Icon/Icon';
+import View from '../View/View';
 
 interface IconBoxProps {
 	icon: IconType;

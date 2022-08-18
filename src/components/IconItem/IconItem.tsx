@@ -1,7 +1,9 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { View, Text, IconBox } from '@components';
 import { SpacingType, IconType } from '@styles';
+import IconBox from '../IconBox/IconBox';
+import Text from '../Text/Text';
+import View from '../View/View';
 
 interface IconItemProps {
 	mb?: SpacingType;

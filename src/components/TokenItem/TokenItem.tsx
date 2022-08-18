@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View, Token } from '@components';
 import { TokenType } from '@styles';
+import Text from '../Text/Text';
+import Token from '../Token/Token';
+import View from '../View/View';
 
 interface TokenItemProps {
 	token: TokenType;

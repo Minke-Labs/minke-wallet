@@ -1,7 +1,6 @@
 import React from 'react';
-import { View } from '@components';
+import { View, IconItem } from '@components';
 import { useNavigation } from '@hooks';
-import IconItem from '../../IconItem/IconItem';
 
 const ActionsModal = () => {
 	const navigation = useNavigation();

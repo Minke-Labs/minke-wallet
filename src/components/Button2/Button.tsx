@@ -2,8 +2,8 @@
 import React from 'react';
 import { Text, Keyboard } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View } from '@components';
 import { IconType } from '@styles';
+import View from '../View/View';
 
 interface ButtonProps {
 	title: string;
