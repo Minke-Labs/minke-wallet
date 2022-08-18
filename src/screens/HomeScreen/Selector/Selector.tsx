@@ -54,7 +54,7 @@ export const Selector: React.FC = () => {
 				</Paper2>
 			</View>
 			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
-				<Actions />
+				<Actions onPress={() => setModalVisible(false)} />
 			</Modal>
 		</>
 	);

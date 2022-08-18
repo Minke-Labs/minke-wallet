@@ -2,12 +2,22 @@ import React from 'react';
 import { View, IconItem } from '@components';
 import { useNavigation } from '@hooks';
 
-const ActionsModal = () => {
+interface ActionsModalProps {
+	onPress: () => void;
+}
+
+const ActionsModal: React.FC<ActionsModalProps> = ({ onPress }) => {
 	const navigation = useNavigation();
+
+	const handleNavigate = () => {
+		onPress();
+		navigation.navigate('ExchangeScreen');
+	};
+
 	return (
 		<View>
 			<IconItem
-				onPress={() => navigation.navigate('ExchangeScreen')}
+				onPress={handleNavigate}
 				mb={4}
 				title="Exchange"
 				desc="Swap one token for another"
