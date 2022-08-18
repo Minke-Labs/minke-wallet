@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, Image, View } from 'react-native';
 import ModalHeader from '@src/components/ModalHeader/ModalHeader';
 import Text from '@src/components/Text/Text';
-import Button from '@src/components/ButtonOLD/Button';
+import Button from '@src/components/Button/Button';
 import { whale3Img } from '@images';
 import { useLanguage } from '@hooks';
 import { ErrorModalProps } from './Error.types';

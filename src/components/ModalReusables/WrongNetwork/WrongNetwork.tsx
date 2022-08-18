@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Image, View } from 'react-native';
 import Text from '@src/components/Text/Text';
-import Button from '@src/components/ButtonOLD/Button';
+import Button from '@src/components/Button/Button';
 import ModalHeader from '@src/components/ModalHeader/ModalHeader';
 import { whale4Img } from '@images';
 import { useLanguage, useNetwork } from '@hooks';
