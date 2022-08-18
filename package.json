@@ -30,6 +30,7 @@
     "@types/d3-shape": "^3.0.2",
     "@walletconnect/client": "^1.7.8",
     "@walletconnect/react-native-dapp": "^1.7.8",
+    "alchemy-sdk": "^2.0.2",
     "assert": "^1.5.0",
     "axios": "^0.26.1",
     "babel-plugin-inline-dotenv": "^1.6.0",
