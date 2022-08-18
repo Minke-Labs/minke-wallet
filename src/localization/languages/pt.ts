@@ -720,11 +720,11 @@ export default {
 		}
 	},
 	WelcomeScreen: {
-		wave_goodbye: 'Diga adeus ao seu banco!',
-		easily: 'Economize, gaste e invista facilmente com a',
+		wave_goodbye: 'Diga olá para um dinheiro melhor!',
+		easily: 'Envie, economize e invista facilmente com a Minke',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
-		import_or_restore: 'Importar ou Restaurar Carteira',
+		import_or_restore: 'Importar Carteira',
 		i_have_a_referral_code: 'Eu tenho um código de indicação',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
@@ -793,7 +793,7 @@ export default {
 				get_rewarded: 'Ganhe recompensas por investir!',
 				coming_soon: '(Em breve)',
 				share_text:
-					'Oi! Eu tenho usado Minke para economizar e ganhar 20x mais que no meu banco. Ambos receberemos 100 pontos Minke(~ 10 USD com os quais você pode comprar criptomoedas) quando você se inscrever e fizer seu primeiro depósito de 100 USD ou mais. Meu código é {{code}} - inscreva-se aqui: https://apps.apple.com/pt/app/minke-defi-wallet/id1585144414'
+					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins lastreados em dólar. Ambos receberemos 100 pontos Minke (~ 10 USD com os quais você pode comprar criptomoedas) quando você se inscrever e fizer seu primeiro depósito de 100 USDC ou mais. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
 			}
 		},
 		Body: {

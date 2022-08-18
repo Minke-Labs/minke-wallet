@@ -8,6 +8,7 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { Stats } from '@models/types/nft.types';
+import { tokenBalanceFormat } from '@helpers/utilities';
 import { getCollectionStats } from '@src/services/apis';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
@@ -44,6 +45,8 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 		return 'N/A';
 	}, [nft]);
+	const { image_original_url: original, image_url: imageUrl } = nft;
+	const image = imageUrl || original;
 
 	return (
 		<View style={{ flex: 1, backgroundColor: colors.background5, paddingTop: StatusBar.currentHeight }}>
@@ -51,12 +54,12 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 			<View style={styles.topContainer}>
 				<Header title={nft.collection.name} />
-				{nft.image_url.endsWith('.svg') ? (
+				{image.endsWith('.svg') ? (
 					<View style={{ borderRadius: 8, overflow: 'hidden' }}>
-						<SvgUri uri={nft.image_url} width={256} height={256} />
+						<SvgUri uri={image} width={256} height={256} />
 					</View>
 				) : (
-					<Image source={{ uri: nft.image_url }} style={styles.image} />
+					<Image source={{ uri: image }} style={styles.image} />
 				)}
 				<Text type="hMedium" weight="bold">
 					{nft.name}
@@ -73,7 +76,11 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 			<Bottom>
 				<Panel
-					floor={stats?.floor_price > 0.00001 ? `${stats!.floor_price} ETH` : 'N/A'}
+					floor={
+						stats?.floor_price > 0.00001
+							? `${tokenBalanceFormat(stats!.floor_price, 4)} ${nft.stats?.symbol || 'ETH'}`
+							: 'N/A'
+					}
 					lastSale={lastSalePrice()}
 				/>
 				<Button
