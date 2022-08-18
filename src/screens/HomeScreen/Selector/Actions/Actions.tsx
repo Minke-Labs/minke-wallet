@@ -4,9 +4,11 @@ import { useNavigation } from '@hooks';
 
 interface ActionsModalProps {
 	onDismiss: () => void;
+	onReceivePress: () => void;
+	onSendPress: () => void;
 }
 
-const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss }) => {
+const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onReceivePress }) => {
 	const navigation = useNavigation();
 
 	const handleNavigate = () => {
@@ -24,14 +26,14 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss }) => {
 				icon="exchange"
 			/>
 			<IconItem
-				onPress={() => null}
+				onPress={onSendPress}
 				mb={4}
 				title="Send"
 				desc="To another wallet or an exchange"
 				icon="send"
 			/>
 			<IconItem
-				onPress={() => null}
+				onPress={onReceivePress}
 				mb={4}
 				title="Receive"
 				desc="From another wallet or exchange"
