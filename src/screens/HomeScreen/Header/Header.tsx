@@ -34,7 +34,6 @@ const Header: React.FC = () => {
 					<Text type="lMedium" weight="semiBold">
 						Welcome
 					</Text>
-
 					<TouchableOpacity activeOpacity={0.6} onPress={handlePress}>
 						<View row cross="center">
 							<Text type="hMedium" weight="bold">
@@ -45,10 +44,8 @@ const Header: React.FC = () => {
 							</View>
 						</View>
 					</TouchableOpacity>
-
 				</View>
 				<View row cross="center">
-
 					<TouchableOpacity activeOpacity={0.6} onPress={onPointsPress}>
 						<View
 							br={2}
@@ -64,7 +61,6 @@ const Header: React.FC = () => {
 							</Text>
 						</View>
 					</TouchableOpacity>
-
 					<TouchableOpacity onPress={onSettingsPress}>
 						<Icon
 							name="gear"
@@ -74,6 +70,7 @@ const Header: React.FC = () => {
 					</TouchableOpacity>
 				</View>
 			</View>
+
 			<Snackbar
 				onDismiss={() => setSnackbarVisible(false)}
 				visible={snackbarVisible}
