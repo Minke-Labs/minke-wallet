@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 import { Paper2, Text, View, Button, Modal } from '@components';
-import { useAvatar, useFormProgress, useTheme, useWalletState } from '@hooks';
+import { useAvatar, useFormProgress, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
 
 export const Assets: React.FC = () => {
 	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
-	const { colors } = useTheme();
 	const { state } = useWalletState();
 	const { address } = state.value;
 	const { currentAvatar } = useAvatar();
@@ -30,9 +29,7 @@ export const Assets: React.FC = () => {
 								style={{
 									width: 56,
 									height: 56,
-									borderRadius: 28,
-									borderWidth: 3,
-									borderColor: colors.background1
+									borderRadius: 28
 								}}
 							/>
 						)}
