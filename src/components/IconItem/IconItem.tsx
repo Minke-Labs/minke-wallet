@@ -8,11 +8,12 @@ interface IconItemProps {
 	title: string;
 	desc: string;
 	icon: IconType;
+	onPress: () => void;
 }
 
-const IconItem: React.FC<IconItemProps> = ({ mb, title, desc, icon }) => (
+const IconItem: React.FC<IconItemProps> = ({ mb, title, desc, icon, onPress }) => (
 	<View mb={mb}>
-		<TouchableOpacity onPress={() => null}>
+		<TouchableOpacity onPress={onPress}>
 			<View row>
 				<IconBox icon={icon} />
 				<View>

@@ -24,7 +24,16 @@ export const TokenItemCard: React.FC<TokenItemCardProps> = ({
 }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
 		<View mb={5}>
-			<TokenItem {...{ token, name, symbol, subtitle, rightValue, link }} />
+			<TokenItem
+				{...{
+					token,
+					name,
+					symbol,
+					subtitle,
+					rightValue,
+					link
+				}}
+			/>
 		</View>
 	</TouchableOpacity>
 );

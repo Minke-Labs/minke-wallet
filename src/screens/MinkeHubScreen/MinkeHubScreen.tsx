@@ -48,7 +48,7 @@ const MinkeHubScreen = () => {
 						</View>
 						<View mb={3} row main="center">
 							<Card
-								onPress={() => null}
+								onPress={() => navigation.navigate('SaveScreen')}
 								icon="dollar"
 								title="Savings"
 								desc="Earn passive income from your stablecoins"
