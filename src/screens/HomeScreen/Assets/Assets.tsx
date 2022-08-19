@@ -40,13 +40,14 @@ export const Assets: React.FC = () => {
 					</TouchableOpacity>
 				</View>
 				<View row main="space-between">
-					<View w={255}>
+					<View style={{ flex: 1 }}>
 						<Button
 							iconLeft="add"
 							title="Add funds"
 							onPress={() => setAddFundsVisible(true)}
 						/>
 					</View>
+					<View mr={2} />
 					<View w={48}>
 						<Button
 							title="..."
