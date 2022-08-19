@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper2, Text, View, Button } from '@components';
 import APay from './APay.svg';
-import Debit from './Debit.svg';
+import Debit from './Debit';
 import Pix from './Pix.svg';
 
 export const Accounts = () => (
