@@ -17,7 +17,7 @@ const IconItem: React.FC<IconItemProps> = ({ mb, title, desc, icon, onPress }) =
 	<View mb={mb}>
 		<TouchableOpacity onPress={onPress}>
 			<View row>
-				<IconBox icon={icon} />
+				<IconBox icon={icon} bgc="background2" />
 				<View>
 					<Text type="lLarge" weight="semiBold">
 						{title}
