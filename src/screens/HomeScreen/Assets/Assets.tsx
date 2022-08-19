@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
-import { Paper2, Text, View, Button, Modal } from '@components';
+import { Paper2, Text, View, Button, Modal, ModalBase } from '@components';
+import { AddFunds } from '@containers';
 import { useAvatar, useFormProgress, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
 
 export const Assets: React.FC = () => {
+	const [addFundsVisible, setAddFundsVisible] = useState(false);
 	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
 	const { state } = useWalletState();
@@ -40,7 +42,7 @@ export const Assets: React.FC = () => {
 						<Button
 							iconLeft="add"
 							title="Add funds"
-							onPress={() => null}
+							onPress={() => setAddFundsVisible(true)}
 						/>
 					</View>
 					<View w={48}>
@@ -63,6 +65,9 @@ export const Assets: React.FC = () => {
 					onSelectAvatar={goForward}
 				/>
 			</Modal>
+			<ModalBase isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
+				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
+			</ModalBase>
 		</>
 	);
 };
