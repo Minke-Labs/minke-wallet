@@ -105,7 +105,7 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 							? i18n.t('Components.Buttons.confirm_restore')
 							: i18n.t('Components.Buttons.confirm_backup')
 					}
-					iconRight="cloudStroke"
+					iconRight="cloud"
 					disabled={!isPasswordValid}
 					onPress={onConfirm}
 				/>

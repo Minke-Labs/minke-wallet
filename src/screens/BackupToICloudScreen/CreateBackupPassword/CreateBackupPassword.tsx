@@ -90,7 +90,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 
 				<Button
 					title={i18n.t('Components.Buttons.backup_to_icloud', { cloudPlatform })}
-					iconRight="cloudStroke"
+					iconRight="cloud"
 					disabled={!isPasswordValid}
 					onPress={onConfirmBackup}
 				/>

@@ -4,8 +4,10 @@ import { Paper2, Text, View, Button, Modal, ModalBase } from '@components';
 import { AddFunds } from '@containers';
 import { useAvatar, useFormProgress, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
+import ImportModal from './ImportModal/ImportModal';
 
 export const Assets: React.FC = () => {
+	const [importModal, setImportModal] = useState(false);
 	const [addFundsVisible, setAddFundsVisible] = useState(false);
 	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
@@ -48,7 +50,7 @@ export const Assets: React.FC = () => {
 					<View w={48}>
 						<Button
 							title="..."
-							onPress={() => null}
+							onPress={() => setImportModal(true)}
 							br={3}
 						/>
 					</View>
@@ -68,6 +70,9 @@ export const Assets: React.FC = () => {
 			<ModalBase isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</ModalBase>
+			<Modal isVisible={importModal} onDismiss={() => setImportModal(false)}>
+				<ImportModal />
+			</Modal>
 		</>
 	);
 };

@@ -57,7 +57,7 @@ const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }>
 			<Button
 				title={i18n.t('BackupStatusScreen.back_up_to_icloud', { cloudPlatform })}
 				onPress={handleIcloudBackup}
-				iconRight="cloudStroke"
+				iconRight="cloud"
 				marginBottom={24}
 			/>
 		</>

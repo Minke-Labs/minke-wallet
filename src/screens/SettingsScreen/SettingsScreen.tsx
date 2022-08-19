@@ -110,7 +110,7 @@ const SettingsScreen = () => {
 						</Text>
 						<SettingsOption
 							label={i18n.t('SettingsScreen.contact_support')}
-							icon="helpStroke"
+							icon="help"
 							onPress={onContactSupport}
 						/>
 						<SettingsOption

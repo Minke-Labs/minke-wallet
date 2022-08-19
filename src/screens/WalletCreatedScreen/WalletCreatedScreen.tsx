@@ -41,7 +41,7 @@ const WalletCreatedScreen = () => {
 					<View style={styles.buttonContainer}>
 						<Button
 							title={i18n.t('Components.Buttons.backup_to_icloud', { cloudPlatform })}
-							iconRight="cloudStroke"
+							iconRight="cloud"
 							onPress={handleIcloudBackup}
 							marginBottom={14}
 						/>

@@ -52,7 +52,7 @@ const ImportWalletScreen = () => {
 					<TouchableOpacity style={styles.option} onPress={toggleWalletConnect}>
 						<View style={styles.leftContainer}>
 							<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
-								<Icon name="helpStroke" size={24} color="text7" />
+								<Icon name="help" size={24} color="text7" />
 							</View>
 							<Text weight="semiBold" type="tSmall" style={{ marginHorizontal: 16 }}>
 								{connected
