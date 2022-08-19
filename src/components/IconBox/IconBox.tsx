@@ -14,7 +14,7 @@ const IconBox: React.FC<IconBoxProps> = ({ icon, bgc, mb }) => (
 		h={40}
 		w={40}
 		br="xxs"
-		bgc={'background5' || 'background2'}
+		bgc={bgc}
 		main="center"
 		cross="center"
 		mr="xs"
