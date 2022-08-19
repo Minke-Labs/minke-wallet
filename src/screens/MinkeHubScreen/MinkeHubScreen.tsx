@@ -15,21 +15,21 @@ const MinkeHubScreen = () => {
 			<BasicLayout>
 				<SafeAreaView />
 				<ScrollView showsVerticalScrollIndicator={false}>
-					<View ph={3}>
-						<View row cross="center" mb={4}>
+					<View ph="xs">
+						<View row cross="center" mb="s">
 							<Text type="hMedium" weight="bold">
 								Minke Hub
 							</Text>
-							<View mr={2} />
+							<View mr="xxs" />
 							<MinkeLogo />
 						</View>
-						<Text type="lMedium" weight="semiBold" color="text3" mb={2}>
+						<Text type="lMedium" weight="semiBold" color="text3" mb="xxs">
 							Accounts
 						</Text>
-						<Text type="hSmall" weight="bold" color="text2" mb={3}>
+						<Text type="hSmall" weight="bold" color="text2" mb="xs">
 							Total: $1223.98
 						</Text>
-						<View mb={3} row main="center">
+						<View mb="xs" row main="center">
 							<Card
 								onPress={() => navigation.navigate('StablecoinsScreen')}
 								icon="dollar"
@@ -37,7 +37,7 @@ const MinkeHubScreen = () => {
 								desc="Coins pegged to the US dollar"
 								number="$193.29"
 							/>
-							<View mr={3} />
+							<View mr="xs" />
 							<Card
 								onPress={() => navigation.navigate('InvestmentsScreen')}
 								icon="crypto"
@@ -46,7 +46,7 @@ const MinkeHubScreen = () => {
 								number="$193.29"
 							/>
 						</View>
-						<View mb={3} row main="center">
+						<View mb="xs" row main="center">
 							<Card
 								onPress={() => navigation.navigate('SaveScreen')}
 								icon="dollar"
@@ -54,7 +54,7 @@ const MinkeHubScreen = () => {
 								desc="Earn passive income from your stablecoins"
 								number="$193.29"
 							/>
-							<View mr={3} />
+							<View mr="xs" />
 							<Card
 								onPress={() => navigation.navigate('NFTScreen')}
 								icon="crypto"
@@ -63,17 +63,17 @@ const MinkeHubScreen = () => {
 								number="$193.29"
 							/>
 						</View>
-						<Text type="lMedium" weight="semiBold" color="text3" mb={3}>
+						<Text type="lMedium" weight="semiBold" color="text3" mb="xs">
 							Others
 						</Text>
-						<View mb={3} row main="center">
+						<View mb="xs" row main="center">
 							<Card
 								onPress={() => setModal(true)}
 								icon="vault"
 								title="Send to bank"
 								desc="Convert to your local currency"
 							/>
-							<View mr={3} />
+							<View mr="xs" />
 							<Card
 								onPress={() => navigation.navigate('ReferralScreen')}
 								icon="vault"

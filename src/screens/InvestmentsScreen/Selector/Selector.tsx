@@ -5,7 +5,7 @@ import { SelectorProps } from './Selector.types';
 import { Button } from './Button/Button';
 
 const Selector: React.FC<SelectorProps> = ({ active, setActive }) => (
-	<View row mb={3}>
+	<View row mb="xs">
 		<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 			<Button active={active === 0} onPress={() => setActive(0)}>
 				All Networks

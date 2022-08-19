@@ -12,11 +12,11 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ isVisible, onDismiss, onBack, children }) => (
 	<ModalBase isVisible={isVisible} onDismiss={onDismiss}>
-		<View p={3}>
+		<View p="xs">
 			<View
 				row
 				main={onBack ? 'space-between' : 'flex-end'}
-				mb={3}
+				mb="xs"
 			>
 				{!!onBack && (
 					<TouchableOpacity onPress={onBack}>

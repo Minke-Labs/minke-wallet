@@ -12,7 +12,7 @@ const HomeScreen = () => (
 	<BasicLayout>
 		<SafeAreaView />
 		<ScrollView showsVerticalScrollIndicator={false}>
-			<View ph={3}>
+			<View ph="xs">
 				<Header />
 				<Assets />
 				<Accounts />

@@ -3,8 +3,8 @@ import { Text, Paper2 } from '@components';
 import { TokenCard } from './TokenCard/TokenCard';
 
 const ByNetworks = () => (
-	<Paper2 br={3} p={3} mb={3}>
-		<Text type="tMedium" weight="bold" mb={4}>
+	<Paper2 br="xs" p="xs" mb="xs">
+		<Text type="tMedium" weight="bold" mb="s">
 			By networks
 		</Text>
 		<TokenCard
@@ -13,7 +13,7 @@ const ByNetworks = () => (
 			symbol="USDC"
 			subtitle="Polygon"
 			rightValue="$512.08"
-			mb={4}
+			mb="s"
 		/>
 		<TokenCard
 			token="usdc"
@@ -21,7 +21,7 @@ const ByNetworks = () => (
 			symbol="USDC"
 			subtitle="Ethereum"
 			rightValue="$134.08"
-			mb={4}
+			mb="s"
 		/>
 		<TokenCard
 			token="usdc"

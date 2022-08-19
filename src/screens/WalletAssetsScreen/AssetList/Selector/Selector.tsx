@@ -7,7 +7,7 @@ import { Button } from './Button/Button';
 const Selector: React.FC<SelectorProps> = ({ active, setActive }) => {
 	const { i18n } = useLanguage();
 	return (
-		<View h={31} ph={4} row mb={3}>
+		<View h={31} ph="s" row mb="xs">
 			<Button active={active === 0} onPress={() => setActive(0)}>
 				{i18n.t('WalletAssetsScreen.AssetList.Selector.all_coins')}
 			</Button>

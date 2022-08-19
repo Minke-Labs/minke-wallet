@@ -36,8 +36,8 @@ export const Stories = () => {
 	}, [language]);
 
 	return (
-		<Paper2 br={3} p={3}>
-			<Text type="lMedium" weight="semiBold" mb={3}>
+		<Paper2 br="xs" p="xs">
+			<Text type="lMedium" weight="semiBold" mb="xs">
 				Learn about Minke
 			</Text>
 			<StorytellerRowView

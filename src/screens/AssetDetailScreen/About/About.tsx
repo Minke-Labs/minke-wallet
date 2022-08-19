@@ -3,8 +3,8 @@ import React from 'react';
 import { Text, Paper2 } from '@components';
 
 const About = () => (
-	<Paper2 p={4} br={3}>
-		<Text type="tMedium" weight="bold" mb={2}>
+	<Paper2 p="s" br="xs">
+		<Text type="tMedium" weight="bold" mb="xxs">
 			About USD Coin
 		</Text>
 		<Text type="bSmall" color="text3">

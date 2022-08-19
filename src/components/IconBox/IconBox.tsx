@@ -13,11 +13,11 @@ const IconBox: React.FC<IconBoxProps> = ({ icon, bgc, mb }) => (
 	<View
 		h={40}
 		w={40}
-		br={2}
+		br="xxs"
 		bgc={'background5' || 'background2'}
 		main="center"
 		cross="center"
-		mr={3}
+		mr="xs"
 		mb={mb}
 	>
 		<Icon

@@ -5,18 +5,18 @@ import Debit from './Debit.svg';
 import Pix from './Pix.svg';
 
 export const Accounts = () => (
-	<Paper2 br={3} p={3} mb={3}>
-		<Text type="tSmall" weight="bold" color="cta1" mb={3}>
+	<Paper2 br="xs" p="xs" mb="xs">
+		<Text type="tSmall" weight="bold" color="cta1" mb="xs">
 			Buy USDC now!{'\n'}No personal ID required.
 		</Text>
-		<Text type="lSmall" weight="semiBold" mb={3}>
+		<Text type="lSmall" weight="semiBold" mb="xs">
 			Purchase in a few clicks with:
 		</Text>
-		<View mb={4} row>
+		<View mb="s" row>
 			<APay />
-			<View mr={3} />
+			<View mr="xs" />
 			<Debit />
-			<View mr={3} />
+			<View mr="xs" />
 			<Pix />
 		</View>
 		<Button

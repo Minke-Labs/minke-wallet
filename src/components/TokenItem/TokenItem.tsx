@@ -26,13 +26,13 @@ const TokenItem: React.FC<TokenItemProps> = (
 	<View row main="space-between">
 		<View row>
 			<Token name={token} size={39} />
-			<View mr={2} />
+			<View mr="xxs" />
 			<View>
 				<View row cross="center">
 					<Text type="lLarge" weight="semiBold">
 						{name}
 					</Text>
-					<View mr={2} />
+					<View mr="xxs" />
 					<Text type="bSmall" color="text3">
 						{symbol}
 					</Text>

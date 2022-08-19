@@ -12,16 +12,16 @@ interface CardProps {
 }
 export const Card: React.FC<CardProps> = ({ title, desc, number, icon, onPress }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
-		<Paper2 br={3} p={4}>
+		<Paper2 br="xs" p="s">
 			<IconBox
 				icon={icon}
 				bgc="background3"
-				mb={2}
+				mb="xxs"
 			/>
 			<Text type="lLarge" weight="semiBold">
 				{title}
 			</Text>
-			<Text type="bDetail" color="text4" mb={2} width={127}>
+			<Text type="bDetail" color="text4" mb="xxs" width={127}>
 				{desc}
 			</Text>
 			{!!number && (

@@ -9,7 +9,7 @@ const ValueBox: React.FC<ValueBoxProps> = ({ value, title }) => (
 		<Header />
 		<View h={207} cross="center">
 			{title}
-			<Text type="dLarge" mb={2}>
+			<Text type="dLarge" mb="xxs">
 				{value}
 			</Text>
 		</View>

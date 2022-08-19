@@ -15,19 +15,19 @@ interface ItemProps {
 
 export const Item: React.FC<ItemProps> = ({ title, icon, onPress, first }) => (
 	<TouchableOpacity onPress={onPress}>
-		<View row cross="center" mb={5}>
-			<Paper2 br={2} p={2} mr={3}>
+		<View row cross="center" mb="m">
+			<Paper2 br="xxs" p="xxs" mr="xs">
 				<Icon name={icon} size={24} color="cta1" />
 			</Paper2>
 			<Text type="lLarge" weight="semiBold">
 				{title}
 			</Text>
 			{first && (
-				<View row pl={2}>
+				<View row pl="xxs">
 					<Image source={Metamask} />
-					<View mr={2} />
+					<View mr="xxs" />
 					<Image source={Rainbow} />
-					<View mr={2} />
+					<View mr="xxs" />
 					<Image source={Twt} />
 				</View>
 			)}

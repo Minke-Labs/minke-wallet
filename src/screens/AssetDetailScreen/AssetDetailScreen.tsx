@@ -13,7 +13,7 @@ const AssetDetailScreen = () => {
 	return (
 		<BasicLayout>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View ph={3}>
+				<View ph="xs">
 					<Header onPress={() => navigation.goBack()} />
 					<Balance />
 					<ByNetworks />

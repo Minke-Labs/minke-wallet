@@ -16,8 +16,8 @@ export const Assets: React.FC = () => {
 	const { currentAvatar } = useAvatar();
 	return (
 		<>
-			<Paper2 br={3} p={3} mb={3}>
-				<View row main="space-between" cross="center" mb={4}>
+			<Paper2 br="xs" p="xs" mb="xs">
+				<View row main="space-between" cross="center" mb="s">
 					<View>
 						<Text type="lMedium" weight="semiBold" color="text3">
 							Your total assets
@@ -47,12 +47,12 @@ export const Assets: React.FC = () => {
 							onPress={() => setAddFundsVisible(true)}
 						/>
 					</View>
-					<View mr={2} />
+					<View mr="xxs" />
 					<View w={48}>
 						<Button
 							title="..."
 							onPress={() => setImportModal(true)}
-							br={3}
+							br="xs"
 						/>
 					</View>
 				</View>

@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({
 	iconLeft,
 	iconRight,
 	marginBottom = 0,
-	br = 4,
+	br = 's',
 	alert,
 	onPress
 }) => {
@@ -60,7 +60,7 @@ const Button: React.FC<ButtonProps> = ({
 					<Icon
 						name={iconLeft}
 						size={18}
-						style={{ marginRight: spacing[2] }}
+						style={{ marginRight: spacing.xxs }}
 						color={color}
 					/>
 				)}
@@ -75,7 +75,7 @@ const Button: React.FC<ButtonProps> = ({
 					<Icon
 						name={iconRight}
 						size={18}
-						style={{ marginRight: spacing[2] }}
+						style={{ marginRight: spacing.xxs }}
 						color={color}
 					/>
 				)}

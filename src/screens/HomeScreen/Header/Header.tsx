@@ -29,7 +29,7 @@ const Header: React.FC = () => {
 
 	return (
 		<>
-			<View row main="space-between" cross="flex-end" mb={3}>
+			<View row main="space-between" cross="flex-end" mb="xs">
 				<View>
 					<Text type="lMedium" weight="semiBold">
 						Welcome
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
 							<Text type="hMedium" weight="bold">
 								{accountName}
 							</Text>
-							<View ml={3}>
+							<View ml="xs">
 								<Icon name="copy" size={24} color="text7" />
 							</View>
 						</View>
@@ -48,10 +48,10 @@ const Header: React.FC = () => {
 				<View row cross="center">
 					<TouchableOpacity activeOpacity={0.6} onPress={onPointsPress}>
 						<View
-							br={2}
-							mr={2}
-							ph={2}
-							pv={1}
+							br="xxs"
+							mr="xxs"
+							ph="xxs"
+							pv="xxxs"
 							row
 							cross="center"
 							bgc="background3"

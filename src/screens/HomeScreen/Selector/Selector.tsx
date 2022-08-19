@@ -53,14 +53,14 @@ export const Selector: React.FC = () => {
 				style={{
 					position: 'absolute',
 					width: '100%',
-					bottom: spacing[6]
+					bottom: spacing.l
 				}}
 			>
 				<Paper2
 					w={196}
 					h={52}
-					br={6}
-					ph={4}
+					br="l"
+					ph="s"
 					row
 					main="space-between"
 					cross="center"

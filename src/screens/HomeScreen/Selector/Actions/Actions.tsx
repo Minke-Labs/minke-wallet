@@ -21,28 +21,28 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onR
 		<View>
 			<IconItem
 				onPress={() => handleNavigate('ExchangeScreen')}
-				mb={4}
+				mb="s"
 				title="Exchange"
 				desc="Swap one token for another"
 				icon="exchange"
 			/>
 			<IconItem
 				onPress={onSendPress}
-				mb={4}
+				mb="s"
 				title="Send"
 				desc="To another wallet or an exchange"
 				icon="send"
 			/>
 			<IconItem
 				onPress={onReceivePress}
-				mb={4}
+				mb="s"
 				title="Receive"
 				desc="From another wallet or exchange"
 				icon="receive"
 			/>
 			<IconItem
 				onPress={() => handleNavigate('TransactionsScreen')}
-				mb={4}
+				mb="s"
 				title="Transactions"
 				desc="To another wallet or an exchange"
 				icon="transactions"

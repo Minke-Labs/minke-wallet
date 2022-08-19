@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { FlatList, ScrollView } from 'react-native';
 import { Text, View } from '@components';
@@ -22,14 +23,14 @@ const InvestmentsScreen = () => {
 			}
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View pl={3} pt={4}>
-					<Text type="tSmall" weight="bold" mb={4}>
+				<View pl="xs" pt="s">
+					<Text type="tSmall" weight="bold" mb="s">
 						Investments
 					</Text>
 
 					<Selector {...{ active, setActive }} />
 
-					<View pr={3} mt={3}>
+					<View pr="xs" mt="xs">
 
 						<FlatList
 							showsVerticalScrollIndicator={false}

@@ -19,8 +19,8 @@ const StablecoinsScreen = () => {
 			}
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View pl={3} pt={4}>
-					<Text type="tSmall" weight="bold" mb={4}>
+				<View pl="xs" pt="s">
+					<Text type="tSmall" weight="bold" mb="s">
 						Stablecoins
 					</Text>
 
@@ -28,14 +28,14 @@ const StablecoinsScreen = () => {
 
 					<TouchableOpacity onPress={() => null}>
 						<View row>
-							<Text type="lMedium" weight="semiBold" color="cta1" mb={3}>
+							<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
 								Get 3.26% annualized interest
 							</Text>
 							<Icon name="chevronRight" size={20} color="cta1" />
 						</View>
 					</TouchableOpacity>
 
-					<View pr={3}>
+					<View pr="xs">
 						<TokenItemCard
 							token="eth"
 							name="USD Coin"

@@ -10,10 +10,10 @@ export const Button: React.FC<ButtonProps> = ({ children, active, onPress }) => 
 		<TouchableOpacity activeOpacity={0.6} onPress={onPress}>
 			<View
 				bgc={active ? 'text6' : 'transparent'}
-				ph={3}
-				br={4}
+				ph="xs"
+				br="s"
 				bw={1}
-				mr={2}
+				mr="xxs"
 				h={32}
 				main="center"
 				cross="center"
