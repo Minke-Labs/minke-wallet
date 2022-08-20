@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
+import { numberFormat } from '@helpers/utilities';
 import { Paper2, Text, View, Button, Modal, ModalBase } from '@components';
 import { AddFunds } from '@containers';
-import { useAvatar, useFormProgress, useWalletState } from '@hooks';
+import { useAvatar, useFormProgress, useLanguage, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
 import ImportModal from './ImportModal/ImportModal';
 
 export const Assets: React.FC = () => {
+	const { i18n } = useLanguage();
 	const [importModal, setImportModal] = useState(false);
 	const [addFundsVisible, setAddFundsVisible] = useState(false);
 	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
 	const { state } = useWalletState();
-	const { address } = state.value;
+	const { address, balance } = state.value;
 	const { currentAvatar } = useAvatar();
+
 	return (
 		<>
 			<Paper2 br="xs" p="xs" mb="xs">
 				<View row main="space-between" cross="center" mb="s">
 					<View>
 						<Text type="lMedium" weight="semiBold" color="text3">
-							Your total assets
+							{i18n.t('WalletScreen.AssetsPanel.your_total_assets')}
+							{/* @@@  - CHANGE LOCAL OF TRANSLATIONS  */}
 						</Text>
 						<Text type="dMedium">
-							$200.00
+							{numberFormat(balance?.usd || 0)}
 						</Text>
 					</View>
 					<TouchableOpacity onPress={() => setVisible(true)}>
