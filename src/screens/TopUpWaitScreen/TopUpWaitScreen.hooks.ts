@@ -20,7 +20,7 @@ export const useTopUpWaitScreen = () => {
 
 	const onFinish = () => {
 		topUpState.set({} as TopUpState);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	useEffect(() => {

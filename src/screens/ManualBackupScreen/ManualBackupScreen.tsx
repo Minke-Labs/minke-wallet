@@ -33,7 +33,7 @@ const ManualBackupScreen = ({ route }: Props) => {
 	};
 
 	const onFinish = () => {
-		if (country) navigation.navigate('WalletScreen');
+		if (country) navigation.navigate('HomeScreen');
 		else navigation.navigate('ChangeCountryScreen');
 	};
 

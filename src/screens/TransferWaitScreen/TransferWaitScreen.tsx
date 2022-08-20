@@ -21,7 +21,7 @@ const TransferWaitScreen = ({ route }: Props) => {
 
 	const onFinish = () => {
 		redeemState.set({} as RedeemState);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	useEffect(() => {

@@ -101,7 +101,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 
 	const onSelectWallet = async (walletIn: MinkeWallet) => {
 		state.set(await walletState(walletIn));
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	return (
@@ -111,7 +111,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 						<Icon name="arrowBackStroke" color="text7" size={24} />
 					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
+					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('HomeScreen')}>
 						<Text weight="medium" color="text7" type="a">
 							{i18n.t('BackupStatusScreen.done')}
 						</Text>

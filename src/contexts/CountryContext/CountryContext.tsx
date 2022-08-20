@@ -8,6 +8,8 @@ export const CountryContext = createContext<any>(null);
 const CountryProvider: React.FC = ({ children }) => {
 	const [country, setCountry] = useState<string>();
 
+	const countryCode = Object.keys(countries).find((key) => countries[key] === country);
+
 	useEffect(() => {
 		const fetchCountry = async () => {
 			const storedLocation = await AsyncStorage.getItem('@country');
@@ -26,7 +28,8 @@ const CountryProvider: React.FC = ({ children }) => {
 	const obj = useMemo(
 		() => ({
 			country,
-			setCountry
+			setCountry,
+			countryCode
 		}),
 		[country]
 	);

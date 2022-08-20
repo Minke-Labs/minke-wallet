@@ -43,7 +43,7 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 					state.set(await walletState(wallets[0]));
 				}
 
-				if (country) navigation.navigate('WalletScreen');
+				if (country) navigation.navigate('HomeScreen');
 				else navigation.navigate('ChangeCountryScreen');
 			} else {
 				onError(i18n.t('Logs.couldnt_restore_backup'));

@@ -45,7 +45,7 @@ const useExchangeResumeScreen = () => {
 		exchange.toAmount.set(undefined);
 		exchange.gas.set(undefined);
 		setVisible(false);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	const startCounter = useCallback(() => {
@@ -222,7 +222,7 @@ const useExchangeResumeScreen = () => {
 						]
 					});
 
-					navigation.navigate('WalletScreen');
+					navigation.navigate('HomeScreen');
 				} else {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
 					const { gweiValue = 30 } = exchange.gas.value || {};
@@ -269,7 +269,7 @@ const useExchangeResumeScreen = () => {
 					const { hash } = transaction;
 					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: false, hash });
 					setTransactionHash(hash);
-					navigation.navigate('WalletScreen');
+					navigation.navigate('HomeScreen');
 				}
 			} catch (e) {
 				onBlockchainError(e);

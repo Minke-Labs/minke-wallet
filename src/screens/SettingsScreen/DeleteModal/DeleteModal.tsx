@@ -43,7 +43,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 
 							if (wallets.length > 0) {
 								state.set(await walletState(wallets[0]));
-								navigation.navigate('WalletScreen');
+								navigation.navigate('HomeScreen');
 							} else {
 								state.set(emptyWallet);
 								navigation.navigate('WelcomeScreen');

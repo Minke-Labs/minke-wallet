@@ -22,7 +22,7 @@ export const useAccountsScreen = () => {
 
 	const onSelectWallet = async (wallet: MinkeWallet) => {
 		state.set(await walletState(wallet));
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	return {

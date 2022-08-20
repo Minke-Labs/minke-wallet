@@ -285,7 +285,7 @@ export const useTransactionTransfer = ({
 						hash
 					});
 				}
-				navigation.navigate('WalletScreen');
+				navigation.navigate('HomeScreen');
 			} catch (error) {
 				onBlockchainError(error);
 			}

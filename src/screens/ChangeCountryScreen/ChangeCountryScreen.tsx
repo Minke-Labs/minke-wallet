@@ -16,7 +16,7 @@ const ChangeCountryScreen = () => {
 
 	const handlePress = () => {
 		if (!country) setSnackbarVisible(true);
-		else navigation.navigate('WalletScreen');
+		else navigation.navigate('HomeScreen');
 	};
 
 	return (

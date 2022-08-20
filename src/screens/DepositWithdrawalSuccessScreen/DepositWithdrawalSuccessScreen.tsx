@@ -32,7 +32,7 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 					paddingHorizontal: 16
 				}}
 			>
-				<Button title={i18n.t('Components.Buttons.done')} onPress={() => navigation.navigate('WalletScreen')} />
+				<Button title={i18n.t('Components.Buttons.done')} onPress={() => navigation.navigate('HomeScreen')} />
 			</View>
 		</SaveLayout>
 	);

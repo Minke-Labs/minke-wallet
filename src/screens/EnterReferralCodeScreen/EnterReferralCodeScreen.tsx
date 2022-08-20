@@ -32,7 +32,7 @@ const EnterReferralCodeScreen = () => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						activeOpacity={0.6}
-						onPress={() => (address ? navigation.navigate('WalletScreen') : navigation.goBack())}
+						onPress={() => (address ? navigation.navigate('HomeScreen') : navigation.goBack())}
 					>
 						<Icon name="close" color="text7" size={24} />
 					</TouchableOpacity>
