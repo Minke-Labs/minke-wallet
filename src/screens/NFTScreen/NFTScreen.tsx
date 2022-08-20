@@ -14,6 +14,7 @@ const NFTScreen = () => {
 	if (!assets) return <BlankStates.NFT />;
 
 	const data = Object.keys(nftsByCollection);
+
 	return (
 		<>
 			<AssetsLayout

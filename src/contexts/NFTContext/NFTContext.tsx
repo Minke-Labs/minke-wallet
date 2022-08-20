@@ -28,7 +28,7 @@ const NFTProvider: React.FC = ({ children }) => {
 		};
 		fetchAssets();
 		fetchEstimatedValue();
-	}, []);
+	}, [address]);
 
 	const nftsByCollection = assets?.reduce((acc: any, curr: any) => {
 		acc[curr.collection.slug] = [...(acc[curr.collection.slug] || []), curr];
@@ -41,7 +41,7 @@ const NFTProvider: React.FC = ({ children }) => {
 			nftsByCollection,
 			estimatedValue
 		}),
-		[assets, estimatedValue]
+		[assets, estimatedValue, address]
 	);
 
 	return <NFTContext.Provider value={obj}>{children}</NFTContext.Provider>;
