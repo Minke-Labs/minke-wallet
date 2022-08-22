@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Paper2, Text, View, Button, ModalBase } from '@components';
 import { useCountry } from '@hooks';
 import { AddFunds } from '@containers';
-import APay from './APay.svg';
+import APay from './APay';
 import Debit from './Debit';
 import { chooseLocation } from './chooseLocation';
 
