@@ -11,8 +11,8 @@ const AssetsLayout: React.FC<AssetsLayoutProps> = ({ children, headerValue, head
 		<View
 			bgc="background1"
 			style={{
-				borderTopLeftRadius: spacing[4],
-				borderTopRightRadius: spacing[4],
+				borderTopLeftRadius: spacing.s,
+				borderTopRightRadius: spacing.s,
 				flex: 1
 			}}
 		>

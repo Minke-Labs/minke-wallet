@@ -7,11 +7,11 @@ export const makeStyles = ({ weight, type, chosenColor, marginBottom, width, cen
 		text: {
 			fontFamily: fontWeight[weight],
 			textAlign: center ? 'center' : 'left',
-			marginBottom,
 			color: chosenColor,
 			...(width && { width }),
 			...fontType[type],
 			...(!!mb && { marginBottom: spacing[mb] }),
+			...(!!marginBottom && { marginBottom }), // @@@ TEMP - For the older components
 			...{ ...(style as object) }
 		}
 	});

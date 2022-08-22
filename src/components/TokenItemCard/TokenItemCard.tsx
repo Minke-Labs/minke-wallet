@@ -1,7 +1,9 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { View, TokenItem, Paper2 } from '@components';
 import { TokenType } from '@styles';
+import View from '../View/View';
+import TokenItem from '../TokenItem/TokenItem';
+import Paper2 from '../Paper2/Paper';
 
 interface TokenItemCardProps {
 	token: TokenType;

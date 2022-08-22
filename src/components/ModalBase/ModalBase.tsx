@@ -49,7 +49,7 @@ const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible })
 			timing(topAnimated, {
 				toValue: 0,
 				duration: 200,
-				easing: EasingNode.ease
+				easing: EasingNode.linear
 			})
 		]).start();
 	};
