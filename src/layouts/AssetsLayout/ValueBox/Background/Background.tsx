@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, useColorScheme, SafeAreaView } from 'react-native';
-import { walletAssetBackImg, walletAssetBackDarkImg } from '@images';
+import { waveDark, waveLight } from '@images';
 import { styles } from './Background.styles';
 
 export const Background: React.FC = ({ children }) => {
@@ -9,7 +9,7 @@ export const Background: React.FC = ({ children }) => {
 		<SafeAreaView style={styles.container}>
 			<Image
 				resizeMode="cover"
-				source={scheme === 'dark' ? walletAssetBackDarkImg : walletAssetBackImg}
+				source={scheme === 'dark' ? waveDark : waveLight}
 				style={styles.image}
 			/>
 			{children}
