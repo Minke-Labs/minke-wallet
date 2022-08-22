@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { FlatList, ScrollView } from 'react-native';
-import { Text, View, TokenItemCard } from '@components';
+import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
@@ -12,6 +12,9 @@ const InvestmentsScreen = () => {
 
 	const [active, setActive] = useState(0);
 	const navigation = useNavigation();
+
+	if (tokens === undefined || tokens?.length === 0) return <BlankStates.WalletAssets />;
+
 	return (
 		<AssetsLayout
 			headerValue="5000"
@@ -31,22 +34,23 @@ const InvestmentsScreen = () => {
 
 					<View pr="xs" mt="xs">
 
-						{/* <FlatList
+						<FlatList
 							showsVerticalScrollIndicator={false}
 							keyExtractor={(item) => `${item.address}`}
 							data={tokens}
 							renderItem={({ item }) => (
 								<TokenItemCard
-									token={item.symbol as TokenType}
+									token={item.symbol.toLowerCase() as TokenType}
 									name={item.name!}
-									symbol="USDC"
+									symbol={item.symbol}
 									subtitle="All networks"
-									rightValue="$1023.08"
+									rightValue={`${item.balance}`}
+									rightBottom={`$${item.balanceUSD}`}
 									onPress={() => navigation.navigate('AssetDetailScreen')}
 								/>
 							)}
-						/> */}
-
+						/>
+						{/*
 						<TokenItemCard
 							token="polygon"
 							name="Polygon"
@@ -56,28 +60,7 @@ const InvestmentsScreen = () => {
 							rightBottom="$634.9375"
 							perc={12.40}
 							onPress={() => navigation.navigate('AssetDetailScreen')}
-						/>
-
-						<TokenItemCard
-							token="eth"
-							name="Ethereum"
-							symbol="ETH"
-							subtitle="Polygon"
-							rightValue="2.28"
-							rightBottom="$1028.9375"
-							perc={-8.23}
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-						/>
-
-						<TokenItemCard
-							token="aave"
-							name="Aave"
-							symbol="AAVE"
-							subtitle="Polygon"
-							perc={-8.23}
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-						/>
-
+						/> */}
 					</View>
 
 				</View>

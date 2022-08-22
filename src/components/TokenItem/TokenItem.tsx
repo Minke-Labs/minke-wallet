@@ -1,5 +1,6 @@
 import React from 'react';
 import { TokenType } from '@styles';
+import { truncate } from '@src/hooks/useTransaction';
 import Text from '../Text/Text';
 import Token from '../Token/Token';
 import View from '../View/View';
@@ -56,7 +57,7 @@ const TokenItem: React.FC<TokenItemProps> = (
 			) : (
 				<View cross="flex-end">
 					<Text type="lLarge" weight="semiBold">
-						{rightValue}
+						{truncate(rightValue, 4)}
 					</Text>
 					{rightBottom && (
 						<Text type="bDetail" color="text3">
