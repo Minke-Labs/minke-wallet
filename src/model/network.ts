@@ -83,14 +83,14 @@ export const networks: Networks = {
 		topUpTokens: [
 			{
 				symbol: 'USDC',
-				// moonpaySymbol: 'USDC_POLYGON', @TODO: @marcosteixeira Change values once live
+				moonpaySymbol: 'USDC_POLYGON',
 				wyreSymbol: 'MUSDC',
 				address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
 				decimals: 6
 			},
 			{
 				symbol: 'MATIC',
-				// moonpaySymbol: 'MATIC_POLYGON',  @TODO: @marcosteixeira Change values once live
+				moonpaySymbol: 'MATIC_POLYGON',
 				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 				decimals: 18
 			}
