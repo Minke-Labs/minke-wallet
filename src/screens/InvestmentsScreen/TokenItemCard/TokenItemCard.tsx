@@ -8,9 +8,10 @@ interface TokenItemCardProps {
 	name: string;
 	symbol: string;
 	subtitle: string;
-	rightValue: string;
-	link?: boolean;
+	rightValue?: string;
+	rightBottom?: string;
 	onPress?: () => void;
+	perc?: number;
 }
 
 export const TokenItemCard: React.FC<TokenItemCardProps> = ({
@@ -19,7 +20,8 @@ export const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	symbol,
 	subtitle,
 	rightValue,
-	link,
+	rightBottom,
+	perc,
 	onPress
 }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
@@ -31,7 +33,8 @@ export const TokenItemCard: React.FC<TokenItemCardProps> = ({
 					symbol,
 					subtitle,
 					rightValue,
-					link
+					rightBottom,
+					perc
 				}}
 			/>
 		</View>

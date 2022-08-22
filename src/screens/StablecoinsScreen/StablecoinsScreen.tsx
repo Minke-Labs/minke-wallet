@@ -45,8 +45,6 @@ const StablecoinsScreen = () => {
 							name="USD Tether"
 							symbol="USDT"
 							subtitle="All networks"
-							rightValue="+ Buy"
-							link
 							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 						<TokenItemCard
@@ -54,8 +52,6 @@ const StablecoinsScreen = () => {
 							name="Dai"
 							symbol="DAI"
 							subtitle="All networks"
-							rightValue="+ Buy"
-							link
 							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 						<TokenItemCard
@@ -63,8 +59,6 @@ const StablecoinsScreen = () => {
 							name="Binance USD"
 							symbol="BUSDc"
 							subtitle="All networks"
-							rightValue="+ Buy"
-							link
 							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 					</View>

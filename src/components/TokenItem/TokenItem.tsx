@@ -3,14 +3,16 @@ import { TokenType } from '@styles';
 import Text from '../Text/Text';
 import Token from '../Token/Token';
 import View from '../View/View';
+import { Tag } from './Tag/Tag';
 
 interface TokenItemProps {
 	token: TokenType;
 	name: string;
 	symbol: string;
 	subtitle: string;
-	link?: boolean;
-	rightValue: string;
+	rightValue?: string;
+	rightBottom?: string;
+	perc?: number;
 }
 
 const TokenItem: React.FC<TokenItemProps> = (
@@ -19,8 +21,9 @@ const TokenItem: React.FC<TokenItemProps> = (
 		name,
 		symbol,
 		subtitle,
-		link,
-		rightValue
+		rightValue,
+		perc,
+		rightBottom
 	}
 ) => (
 	<View row main="space-between">
@@ -42,15 +45,25 @@ const TokenItem: React.FC<TokenItemProps> = (
 				</Text>
 			</View>
 		</View>
+
+		{!!perc && <Tag perc={perc} />}
+
 		<View main="center">
-			{link ? (
+			{!rightValue ? (
 				<Text type="lLarge" weight="semiBold" color="cta1">
-					{rightValue}
+					+ Buy
 				</Text>
 			) : (
-				<Text type="lLarge" weight="semiBold">
-					{rightValue}
-				</Text>
+				<View cross="flex-end">
+					<Text type="lLarge" weight="semiBold">
+						{rightValue}
+					</Text>
+					{rightBottom && (
+						<Text type="bDetail" color="text3">
+							{rightBottom}
+						</Text>
+					)}
+				</View>
 			)}
 		</View>
 	</View>

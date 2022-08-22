@@ -32,7 +32,7 @@ const InvestmentsScreen = () => {
 
 					<View pr="xs" mt="xs">
 
-						<FlatList
+						{/* <FlatList
 							showsVerticalScrollIndicator={false}
 							keyExtractor={(item) => `${item.address}`}
 							data={tokens}
@@ -46,6 +46,37 @@ const InvestmentsScreen = () => {
 									onPress={() => navigation.navigate('AssetDetailScreen')}
 								/>
 							)}
+						/> */}
+
+						<TokenItemCard
+							token="polygon"
+							name="Polygon"
+							symbol="MATIC"
+							subtitle="Polygon"
+							rightValue="1023.08"
+							rightBottom="$634.9375"
+							perc={12.40}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
+						/>
+
+						<TokenItemCard
+							token="eth"
+							name="Ethereum"
+							symbol="ETH"
+							subtitle="Polygon"
+							rightValue="2.28"
+							rightBottom="$1028.9375"
+							perc={-8.23}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
+						/>
+
+						<TokenItemCard
+							token="aave"
+							name="Aave"
+							symbol="AAVE"
+							subtitle="Polygon"
+							perc={-8.23}
+							onPress={() => navigation.navigate('AssetDetailScreen')}
 						/>
 
 					</View>
