@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { FlatList, ScrollView } from 'react-native';
-import { Text, View } from '@components';
+import { Text, View, TokenItemCard } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
-import { TokenItemCard } from './TokenItemCard/TokenItemCard';
 import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {

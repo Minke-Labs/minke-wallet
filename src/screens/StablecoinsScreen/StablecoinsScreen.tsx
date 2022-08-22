@@ -1,9 +1,8 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
-import { Icon, Text, View } from '@components';
+import { Icon, Text, View, TokenItemCard } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation } from '@hooks';
-import { TokenItemCard } from './TokenItemCard/TokenItemCard';
 
 const StablecoinsScreen = () => {
 	const navigation = useNavigation();
@@ -39,6 +38,7 @@ const StablecoinsScreen = () => {
 							subtitle="All networks"
 							rightValue="$1023.08"
 							onPress={() => navigation.navigate('AssetDetailScreen')}
+							paper
 						/>
 						<TokenItemCard
 							token="usdt"
@@ -46,6 +46,7 @@ const StablecoinsScreen = () => {
 							symbol="USDT"
 							subtitle="All networks"
 							onPress={() => navigation.navigate('AssetDetailScreen')}
+							paper
 						/>
 						<TokenItemCard
 							token="dai"
@@ -53,6 +54,7 @@ const StablecoinsScreen = () => {
 							symbol="DAI"
 							subtitle="All networks"
 							onPress={() => navigation.navigate('AssetDetailScreen')}
+							paper
 						/>
 						<TokenItemCard
 							token="bnb"
@@ -60,6 +62,7 @@ const StablecoinsScreen = () => {
 							symbol="BUSDc"
 							subtitle="All networks"
 							onPress={() => navigation.navigate('AssetDetailScreen')}
+							paper
 						/>
 					</View>
 

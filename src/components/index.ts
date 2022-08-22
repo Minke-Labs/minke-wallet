@@ -38,6 +38,7 @@ import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import IconItem from './IconItem/IconItem';
 import TokenItem from './TokenItem/TokenItem';
+import TokenItemCard from './TokenItemCard/TokenItemCard';
 import HapticButton from './HapticButton/HapticButton';
 import Header from './Header/Header';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
@@ -111,6 +112,7 @@ export {
 	DescTransparentCard,
 	TokenCard,
 	TokenItem,
+	TokenItemCard,
 	PendingTransaction,
 	PercChange,
 	PaperTouchable,
