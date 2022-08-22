@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { Icon, Text, View } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation } from '@hooks';
 import { TokenItemCard } from './TokenItemCard/TokenItemCard';
-import Selector from './Selector/Selector';
 
 const StablecoinsScreen = () => {
-	const [active, setActive] = useState(0);
 	const navigation = useNavigation();
 	return (
 		<AssetsLayout
@@ -23,8 +21,6 @@ const StablecoinsScreen = () => {
 					<Text type="tSmall" weight="bold" mb="s">
 						Stablecoins
 					</Text>
-
-					<Selector {...{ active, setActive }} />
 
 					<TouchableOpacity onPress={() => null}>
 						<View row>
