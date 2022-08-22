@@ -5,6 +5,7 @@ import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
+import { numberFormat } from '@helpers/utilities';
 import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
@@ -17,7 +18,7 @@ const InvestmentsScreen = () => {
 
 	return (
 		<AssetsLayout
-			headerValue="5000"
+			headerValue={numberFormat(balance || 0)}
 			headerTitle={
 				<Text type="lLarge" weight="semiBold" color="text3">
 					Current value
