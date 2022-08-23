@@ -17,6 +17,8 @@ const HomeScreen = () => (
 				<Assets />
 				<Accounts />
 				<Stories />
+				<View mb="xxxl" />
+				<View mb="m" />
 			</View>
 		</ScrollView>
 		<Selector />

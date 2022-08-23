@@ -82,6 +82,8 @@ const MinkeHubScreen = () => {
 							/>
 						</View>
 					</View>
+					<View mb="xxxl" />
+					<View mb="m" />
 				</ScrollView>
 				<Selector />
 			</BasicLayout>
