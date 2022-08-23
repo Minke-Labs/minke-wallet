@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper2, Text, View, Button, ModalBase } from '@components';
+import { Paper, Text, View, Button, ModalBase } from '@components';
 import { AddFunds } from '@containers';
 import { useCountry } from '@hooks';
 import APay from './APay';
@@ -12,7 +12,7 @@ export const AccountsEmpty: React.FC = () => {
 	const localPayment = chooseLocation(countryCode);
 	return (
 		<>
-			<Paper2 p="xs" mb="xs">
+			<Paper p="xs" mb="xs">
 				<Text type="tSmall" weight="bold" color="cta1" mb="xs">
 					Buy USDC now!{'\n'}No personal ID required.
 				</Text>
@@ -31,7 +31,7 @@ export const AccountsEmpty: React.FC = () => {
 					mode="outlined"
 					onPress={() => setAddFundsVisible(true)}
 				/>
-			</Paper2>
+			</Paper>
 			<ModalBase isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</ModalBase>

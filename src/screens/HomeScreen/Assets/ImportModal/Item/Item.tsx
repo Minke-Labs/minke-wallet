@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Image } from 'react-native';
-import { View, Text, Icon, Paper2 } from '@components';
+import { View, Text, Icon, Paper } from '@components';
 import { IconType } from '@styles';
 import Metamask from './metamask.png';
 import Rainbow from './rainbow.png';
@@ -16,9 +16,9 @@ interface ItemProps {
 export const Item: React.FC<ItemProps> = ({ title, icon, onPress, first }) => (
 	<TouchableOpacity onPress={onPress}>
 		<View row cross="center" mb="m">
-			<Paper2 br="xxs" p="xxs" mr="xs">
+			<Paper br="xxs" p="xxs" mr="xs">
 				<Icon name={icon} size={24} color="cta1" />
-			</Paper2>
+			</Paper>
 			<Text type="lLarge" weight="semiBold">
 				{title}
 			</Text>

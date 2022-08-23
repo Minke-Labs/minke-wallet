@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Header, HapticButton, Paper2, ModalBase, ModalReusables } from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
@@ -43,7 +43,7 @@ const ExchangeResumeScreen = () => {
 			<BasicLayout>
 				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} marginBottom={36} />
 
-				<Paper2 mb="s" m="xs" mh="xs">
+				<Paper mb="s" m="xs" mh="xs">
 					<View style={styles.container}>
 						<View style={styles.containerLeft}>
 							<TokenDetail
@@ -69,9 +69,9 @@ const ExchangeResumeScreen = () => {
 						</Text>
 						{!loading && <Rate count={count} />}
 					</View>
-				</Paper2>
+				</Paper>
 
-				<Paper2 mb="s" p="s" m="xs" mh="xs">
+				<Paper mb="s" p="s" m="xs" mh="xs">
 					<View style={styles.infoTop}>
 						<Text weight="semiBold" color="text3" type="lMedium">
 							{i18n.t('ExchangeResumeScreen.rate')}
@@ -88,7 +88,7 @@ const ExchangeResumeScreen = () => {
 							{exchangeName}
 						</Text>
 					</View>
-				</Paper2>
+				</Paper>
 
 				{!gasless && <GasSelected />}
 

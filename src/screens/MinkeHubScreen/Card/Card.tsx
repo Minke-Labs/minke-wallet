@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Text, Paper2, IconBox } from '@components';
+import { Text, Paper, IconBox } from '@components';
 import { IconType } from '@styles';
 
 interface CardProps {
@@ -12,7 +12,7 @@ interface CardProps {
 }
 export const Card: React.FC<CardProps> = ({ title, desc, number, icon, onPress }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
-		<Paper2 p="s">
+		<Paper p="s">
 			<IconBox
 				icon={icon}
 				bgc="background3"
@@ -29,6 +29,6 @@ export const Card: React.FC<CardProps> = ({ title, desc, number, icon, onPress }
 					{number}
 				</Text>
 			)}
-		</Paper2>
+		</Paper>
 	</TouchableOpacity>
 );

@@ -33,7 +33,6 @@ import Card from './Card/Card';
 import CoinSelector from './CoinSelector/CoinSelector';
 import OnrampButton from './OnrampButton/OnrampButton';
 import Paper from './Paper/Paper';
-import Paper2 from './Paper2/Paper';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
 import IconItem from './IconItem/IconItem';
@@ -70,7 +69,6 @@ export {
 	Text,
 	AnimatedText,
 	Button,
-	// Button2,
 	WhiteButton,
 	Icon,
 	Token,
@@ -103,7 +101,6 @@ export {
 	MaxButton,
 	OnrampButton,
 	Paper,
-	Paper2,
 	Flag,
 	FlagItem,
 	Card,
@@ -126,7 +123,6 @@ export {
 	WatchModeTag,
 	FiatCard,
 	CurrencySelector,
-	// new ones
 	View,
 	IconBox
 };

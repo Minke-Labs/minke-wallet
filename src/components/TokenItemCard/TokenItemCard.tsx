@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import { TokenType, SpacingType } from '@styles';
 import View from '../View/View';
 import TokenItem from '../TokenItem/TokenItem';
-import Paper2 from '../Paper2/Paper';
+import Paper from '../Paper/Paper';
 
 interface TokenItemCardProps {
 	token: TokenType;
@@ -34,7 +34,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1}>
 		{paper ? (
-			<Paper2 mb="xs" p="xs">
+			<Paper mb="xs" p="xs">
 				<TokenItem
 					{...{
 						token,
@@ -47,7 +47,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 						perc
 					}}
 				/>
-			</Paper2>
+			</Paper>
 		) : (
 			<View mb={mb}>
 				<TokenItem

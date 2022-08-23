@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text, Paper2, Icon } from '@components';
+import { Text, Paper, Icon } from '@components';
 import { useLanguage } from '@hooks';
 import { ExpanderProps } from './Expander.types';
 import styles from './Expander.styles';
@@ -17,7 +17,7 @@ export const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 	};
 
 	return (
-		<Paper2 p="xs" style={{ width: '100%' }}>
+		<Paper p="xs" style={{ width: '100%' }}>
 			<Text
 				type="tSmall"
 				weight="semiBold"
@@ -53,6 +53,6 @@ export const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 					</View>
 				)
 			}
-		</Paper2>
+		</Paper>
 	);
 };

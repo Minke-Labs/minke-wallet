@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { View, Paper2, Text } from '@components';
+import { View, Paper, Text } from '@components';
 import { useTheme } from '@hooks';
 
 export const Balance = () => {
 	const { colors } = useTheme();
 	return (
-		<Paper2 style={{ overflow: 'hidden' }} mb="xs">
+		<Paper style={{ overflow: 'hidden' }} mb="xs">
 			<View
 				bgc="background2"
 				ph="s"
@@ -80,6 +80,6 @@ export const Balance = () => {
 				</TouchableOpacity>
 			</View>
 
-		</Paper2>
+		</Paper>
 	);
 };

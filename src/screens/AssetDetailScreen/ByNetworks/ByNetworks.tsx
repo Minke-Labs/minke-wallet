@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, Paper2, TokenItemCard } from '@components';
+import { Text, Paper, TokenItemCard } from '@components';
 
 const ByNetworks = () => (
-	<Paper2 pt="xs" ph="xs" mb="xs">
+	<Paper pt="xs" ph="xs" mb="xs">
 		<Text type="tMedium" weight="bold" mb="s">
 			By networks
 		</Text>
@@ -28,7 +28,7 @@ const ByNetworks = () => (
 			rightValueUSD={0.001}
 			mb="xs"
 		/>
-	</Paper2>
+	</Paper>
 );
 
 export default ByNetworks;

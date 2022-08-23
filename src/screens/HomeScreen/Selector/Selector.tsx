@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { Paper2, View, Icon, Modal, ModalBase, ModalReusables } from '@components';
+import { Paper, View, Icon, Modal, ModalBase, ModalReusables } from '@components';
 import { useLanguage, useNavigation } from '@hooks';
 import { spacing } from '@styles';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
@@ -56,7 +56,7 @@ export const Selector: React.FC = () => {
 					bottom: spacing.l
 				}}
 			>
-				<Paper2
+				<Paper
 					w={196}
 					h={52}
 					br="l"
@@ -86,7 +86,7 @@ export const Selector: React.FC = () => {
 							color={routeName === 'MinkeHubScreen' ? 'cta1' : 'cta2'}
 						/>
 					</TouchableOpacity>
-				</Paper2>
+				</Paper>
 			</View>
 
 			<Modal isVisible={actionsModal} onDismiss={() => setActionsModal(false)}>

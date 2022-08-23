@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { View } from 'react-native';
-import { Paper2, GasOptionInner } from '@components';
+import { Paper, GasOptionInner } from '@components';
 import { State, useState } from '@hookstate/core';
 import { estimateGas, getEthLastPrice, estimateConfirmationTime } from '@models/wallet';
 import { ExchangeState, globalExchangeState, Gas } from '@stores/ExchangeStore';
@@ -98,7 +98,7 @@ export const GasSelected = () => {
 	}, [gasPrice]);
 
 	return (
-		<Paper2 p="xs" m="xs">
+		<Paper p="xs" m="xs">
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<GasOptionInner
 					type={selectedType!}
@@ -107,6 +107,6 @@ export const GasSelected = () => {
 					waiting={waiting()}
 				/>
 			</View>
-		</Paper2>
+		</Paper>
 	);
 };

@@ -9,7 +9,7 @@ import {
 	ModalReusables,
 	Header,
 	GasSelector,
-	Paper2,
+	Paper,
 	WatchModeTag,
 	BlankStates
 } from '@components';
@@ -67,9 +67,9 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 			<BasicLayout>
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
-				<Paper2 p="xs" mb="l" mh="xs">
+				<Paper p="xs" mb="l" mh="xs">
 					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
-				</Paper2>
+				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
 					<GasSelector />

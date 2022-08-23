@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Paper2, Text } from '@components';
+import { Paper, Text } from '@components';
 import { useColorScheme, Platform } from 'react-native';
 import { useLanguage, useWalletState } from '@hooks';
 import { STORYTELLER_KEY, STORYTELLER_ANDROID_KEY } from '@env';
@@ -36,7 +36,7 @@ export const Stories = () => {
 	}, [language]);
 
 	return (
-		<Paper2 p="xs">
+		<Paper p="xs">
 			<Text type="lMedium" weight="semiBold" mb="xs">
 				Learn about Minke
 			</Text>
@@ -48,6 +48,6 @@ export const Stories = () => {
 				uiStyle={scheme === 'dark' ? ('dark' as UIStyle) : ('light' as UIStyle)}
 				categories={[language as string, 'all']}
 			/>
-		</Paper2>
+		</Paper>
 	);
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 import { numberFormat } from '@helpers/utilities';
-import { Paper2, Text, View, Button, Modal, ModalBase } from '@components';
+import { Paper, Text, View, Button, Modal, ModalBase } from '@components';
 import { AddFunds } from '@containers';
 import { useAvatar, useFormProgress, useLanguage, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
@@ -19,7 +19,7 @@ export const Assets: React.FC = () => {
 
 	return (
 		<>
-			<Paper2 p="xs" mb="xs">
+			<Paper p="xs" mb="xs">
 				<View row main="space-between" cross="center" mb="s">
 					<View>
 						<Text type="lMedium" weight="semiBold" color="text3">
@@ -60,7 +60,7 @@ export const Assets: React.FC = () => {
 						/>
 					</View>
 				</View>
-			</Paper2>
+			</Paper>
 			<Modal
 				isVisible={visible}
 				onDismiss={() => setVisible(false)}

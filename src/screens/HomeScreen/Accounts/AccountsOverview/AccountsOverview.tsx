@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Paper2, View, Text, TokenItemCard } from '@components';
+import { Paper, View, Text, TokenItemCard } from '@components';
 import { useNavigation } from '@hooks';
 
 export const AccountsOverview = () => {
 	const navigation = useNavigation();
 	return (
-		<Paper2 pt="xs" ph="xs" mb="xs">
+		<Paper pt="xs" ph="xs" mb="xs">
 			<Text type="lLarge" weight="semiBold" mb="xs">
 				Accounts overview
 			</Text>
@@ -62,6 +62,6 @@ export const AccountsOverview = () => {
 				mb="xs"
 			/>
 
-		</Paper2>
+		</Paper>
 	);
 };
