@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { TokenType } from '@styles';
+import { TokenType, SpacingType } from '@styles';
 import View from '../View/View';
 import TokenItem from '../TokenItem/TokenItem';
 import Paper2 from '../Paper2/Paper';
@@ -11,10 +11,12 @@ interface TokenItemCardProps {
 	symbol: string;
 	subtitle: string;
 	rightValue?: string;
-	rightBottom?: string;
+	rightBottomValueUSd?: number;
+	rightValueUSD?: number;
 	onPress?: () => void;
 	perc?: number;
 	paper?: boolean;
+	mb?: SpacingType;
 }
 
 const TokenItemCard: React.FC<TokenItemCardProps> = ({
@@ -23,9 +25,11 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	symbol,
 	subtitle,
 	rightValue,
-	rightBottom,
+	rightBottomValueUSd,
+	rightValueUSD,
 	perc,
 	paper,
+	mb = 'm',
 	onPress
 }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
@@ -39,13 +43,14 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 							symbol,
 							subtitle,
 							rightValue,
-							rightBottom,
+							rightBottomValueUSd,
+							rightValueUSD,
 							perc
 						}}
 					/>
 				</Paper2>
 			) : (
-				<View mb="m">
+				<View mb={mb}>
 					<TokenItem
 						{...{
 							token,
@@ -53,7 +58,8 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 							symbol,
 							subtitle,
 							rightValue,
-							rightBottom,
+							rightBottomValueUSd,
+							rightValueUSD,
 							perc
 						}}
 					/>

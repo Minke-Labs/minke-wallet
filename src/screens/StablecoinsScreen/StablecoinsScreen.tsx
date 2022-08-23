@@ -36,7 +36,7 @@ const StablecoinsScreen = () => {
 							name="USD Coin"
 							symbol="USDC"
 							subtitle="All networks"
-							rightValue="$1023.08"
+							rightValue="1023.08"
 							onPress={() => navigation.navigate('AssetDetailScreen')}
 							paper
 						/>

@@ -31,7 +31,6 @@ const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalanc
 					</Text>
 					<Text marginBottom={2} weight="medium" type="p2">
 						{tokenBalanceFormat(walletBalance, 10)} <Text type="span">{coinSymbol}</Text>
-						{/* @@@ */}
 					</Text>
 					<Text marginBottom={24} type="span">
 						{numberFormat(walletBalanceUsd)}

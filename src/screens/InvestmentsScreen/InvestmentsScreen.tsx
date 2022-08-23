@@ -34,7 +34,6 @@ const InvestmentsScreen = () => {
 					<Selector {...{ active, setActive }} />
 
 					<View pr="xs" mt="xs">
-
 						<FlatList
 							showsVerticalScrollIndicator={false}
 							keyExtractor={(item) => `${item.address}`}
@@ -46,22 +45,12 @@ const InvestmentsScreen = () => {
 									symbol={item.symbol}
 									subtitle="All networks"
 									rightValue={`${item.balance}`}
-									rightBottom={`$${item.balanceUSD}`}
+									rightBottomValueUSd={item.balanceUSD}
+									// perc={12.40}
 									onPress={() => navigation.navigate('AssetDetailScreen')}
 								/>
 							)}
 						/>
-						{/*
-						<TokenItemCard
-							token="polygon"
-							name="Polygon"
-							symbol="MATIC"
-							subtitle="Polygon"
-							rightValue="1023.08"
-							rightBottom="$634.9375"
-							perc={12.40}
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-						/> */}
 					</View>
 
 				</View>

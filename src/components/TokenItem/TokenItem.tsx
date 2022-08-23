@@ -1,6 +1,6 @@
 import React from 'react';
 import { TokenType } from '@styles';
-import { truncate } from '@src/hooks/useTransaction';
+import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
 import Text from '../Text/Text';
 import Token from '../Token/Token';
 import View from '../View/View';
@@ -12,7 +12,8 @@ interface TokenItemProps {
 	symbol: string;
 	subtitle: string;
 	rightValue?: string;
-	rightBottom?: string;
+	rightBottomValueUSd?: number;
+	rightValueUSD?: number;
 	perc?: number;
 }
 
@@ -23,8 +24,9 @@ const TokenItem: React.FC<TokenItemProps> = (
 		symbol,
 		subtitle,
 		rightValue,
+		rightValueUSD,
 		perc,
-		rightBottom
+		rightBottomValueUSd
 	}
 ) => (
 	<View row main="space-between">
@@ -50,21 +52,28 @@ const TokenItem: React.FC<TokenItemProps> = (
 		{!!perc && <Tag perc={perc} />}
 
 		<View main="center">
-			{!rightValue ? (
+			{(!rightValue && !rightValueUSD) ? (
 				<Text type="lLarge" weight="semiBold" color="cta1">
 					+ Buy
 				</Text>
 			) : (
 				<View cross="flex-end">
-					<Text type="lLarge" weight="semiBold">
-						{truncate(rightValue, 4)}
-					</Text>
-					{rightBottom && (
+					{!!rightValue && (
+						<Text type="lLarge" weight="semiBold">
+							{tokenBalanceFormat(rightValue, 4)}
+						</Text>
+					)}
+					{!!rightBottomValueUSd && (
 						<Text type="bDetail" color="text3">
-							{rightBottom}
+							{numberFormat(rightBottomValueUSd)}
 						</Text>
 					)}
 				</View>
+			)}
+			{!!rightValueUSD && (
+				<Text type="lLarge" weight="semiBold">
+					{numberFormat(rightValueUSD)}
+				</Text>
 			)}
 		</View>
 	</View>
