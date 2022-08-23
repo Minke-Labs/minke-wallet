@@ -97,6 +97,7 @@ export const storytellerTheme: Theme = {
 			triviaQuiz: {}
 		}
 	},
+
 	dark: {
 		colors: {
 			primary: '#0A2138',
@@ -160,7 +161,7 @@ export const storytellerTheme: Theme = {
 				unreadIndicator: {
 					alignment: ElementAlignment.right,
 					textSize: 12,
-					backgroundColor: '#30C061'
+					backgroundColor: '#ACE8B9'
 				}
 			}
 		},
