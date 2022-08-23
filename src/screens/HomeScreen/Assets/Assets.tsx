@@ -19,7 +19,7 @@ export const Assets: React.FC = () => {
 
 	return (
 		<>
-			<Paper2 br="xs" p="xs" mb="xs">
+			<Paper2 p="xs" mb="xs">
 				<View row main="space-between" cross="center" mb="s">
 					<View>
 						<Text type="lMedium" weight="semiBold" color="text3">

@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, Paper2 } from '@components';
 
 const About = () => (
-	<Paper2 p="s" br="xs">
+	<Paper2 p="s">
 		<Text type="tMedium" weight="bold" mb="xxs">
 			About USD Coin
 		</Text>

@@ -12,7 +12,7 @@ interface CardProps {
 }
 export const Card: React.FC<CardProps> = ({ title, desc, number, icon, onPress }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
-		<Paper2 br="xs" p="s">
+		<Paper2 p="s">
 			<IconBox
 				icon={icon}
 				bgc="background3"

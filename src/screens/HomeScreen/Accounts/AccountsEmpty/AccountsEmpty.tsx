@@ -12,7 +12,7 @@ export const AccountsEmpty: React.FC = () => {
 	const localPayment = chooseLocation(countryCode);
 	return (
 		<>
-			<Paper2 br="xs" p="xs" mb="xs">
+			<Paper2 p="xs" mb="xs">
 				<Text type="tSmall" weight="bold" color="cta1" mb="xs">
 					Buy USDC now!{'\n'}No personal ID required.
 				</Text>

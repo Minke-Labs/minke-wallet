@@ -6,7 +6,7 @@ import { useNavigation } from '@hooks';
 export const AccountsOverview = () => {
 	const navigation = useNavigation();
 	return (
-		<Paper2 br="xs" pt="xs" ph="xs" mb="xs">
+		<Paper2 pt="xs" ph="xs" mb="xs">
 			<Text type="lLarge" weight="semiBold" mb="xs">
 				Accounts overview
 			</Text>

@@ -34,7 +34,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 }) => (
 	<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1}>
 		{paper ? (
-			<Paper2 mb="xs" br="xs" p="xs">
+			<Paper2 mb="xs" p="xs">
 				<TokenItem
 					{...{
 						token,

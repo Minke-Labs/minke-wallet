@@ -36,7 +36,7 @@ export const Stories = () => {
 	}, [language]);
 
 	return (
-		<Paper2 br="xs" p="xs">
+		<Paper2 p="xs">
 			<Text type="lMedium" weight="semiBold" mb="xs">
 				Learn about Minke
 			</Text>

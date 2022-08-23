@@ -6,7 +6,7 @@ import { useTheme } from '@hooks';
 export const Balance = () => {
 	const { colors } = useTheme();
 	return (
-		<Paper2 br="xs" style={{ overflow: 'hidden' }} mb="xs">
+		<Paper2 style={{ overflow: 'hidden' }} mb="xs">
 			<View
 				bgc="background2"
 				ph="s"

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Paper2, TokenItemCard } from '@components';
 
 const ByNetworks = () => (
-	<Paper2 br="xs" pt="xs" ph="xs" mb="xs">
+	<Paper2 pt="xs" ph="xs" mb="xs">
 		<Text type="tMedium" weight="bold" mb="s">
 			By networks
 		</Text>
