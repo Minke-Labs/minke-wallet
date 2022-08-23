@@ -616,7 +616,8 @@ export default {
 		},
 		Header: {
 			welcome: 'Olá',
-			points: 'pontos'
+			points: 'pontos',
+			invite_a_friend: 'Convide um amigo!'
 		},
 		AssetsPanel: {
 			your_total_assets: 'Seus ativos',
@@ -767,9 +768,9 @@ export default {
 					you_can_earn: 'Você pode ganhar pontos:',
 					referring_a_friend: 'Indicando um amigo',
 					topping_up: 'Adicionando fundos',
-					get_rewarded: 'Ganhe recompensas por investir!',
+					get_rewarded: 'Ganhe recompensas!',
 					what_can_you_do_with_your_points: 'O que você pode fazer com seus pontos?',
-					you_can_redeem: 'Você pode trocar seus pontos por MATIC.'
+					you_can_redeem: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon.'
 				}
 			}
 		},
@@ -781,24 +782,26 @@ export default {
 				you_can_earn_points_by: 'Você pode ganhar pontos por:',
 				topping_up_for_the_first_time: 'Adicionar fundos pela primeira vez.',
 				refering_minke: 'Indicando a Minke para seus amigos e família.',
-				setting_recurrent_top_ups: 'Configurando depósitos recorrentes.',
+				exchanging_for_the_first_time: 'Convertendo pela primeira vez.',
 				what_can_you_do: 'O que você pode fazer com seus pontos?',
-				you_can_redeem_your_points: 'Você pode trocar seus pontos por MATIC.'
+				you_can_redeem_your_points: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon. '
 			},
 			EarnModal: {
 				earn_minke_points: 'Ganhe pontos Minke!',
 				refer_a_friend: 'Indique um amigo',
-				when_your_friends_top_up: 'Quando seu amigo adicionar 100 USDC vocês dois ganham pontos Minke.',
+				when_your_friends_top_up:
+					'Quando seu amigo comprar stablecoins ou converter para elas no app da Minke vocês dois ganham até 100 points (valem $10 dólares americanos) ',
 				top_up: 'Adicione Fundos',
-				get_rewarded: 'Ganhe recompensas por investir!',
+				get_rewarded: 'Ganhe recompensas!',
 				coming_soon: '(Em breve)',
 				share_text:
-					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins lastreados em dólar. Ambos receberemos 100 pontos Minke (~ 10 USD com os quais você pode comprar criptomoedas) quando você se inscrever e fizer seu primeiro depósito de 100 USDC ou mais. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
+					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $10 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
 			}
 		},
 		Body: {
 			referral: 'Indicação',
 			deposit: 'Depósito',
+			exchange: 'Conversão',
 			points: '{{count}} pontos'
 		}
 	},
@@ -807,16 +810,16 @@ export default {
 		rate_fixed_for: 'Cotação fixa por:',
 		errors: {
 			failed_claim: 'Seu resgate não está completo. Por favor, entre em contato com o suporte.',
-			invalid_request: 'Requsição inválida'
+			invalid_request: 'Requisição inválida'
 		}
 	},
 	EnterReferralCodeScreen: {
 		enter_referral_code: 'Código de indicação',
-		get_rewarded_for_saving_money: 'Receba recompensas por investir!',
+		get_rewarded_for_saving_money: 'Receba recompensas!',
 		or: 'ou',
-		refer_a_friend: 'Indique um amigo',
+		buy_usdc: 'Comprar USDC',
 		referral_note:
-			'Esse código pode ser usado somente uma vez. Depois de adicionar 100 USDC você e o seu amigo vão receber 100 pontos Minke cada.',
+			'Esse código pode ser usado somente uma vez. Depois de comprar ou converter stablecoins você e o seu amigo vão receber até 100 pontos Minke cada.',
 		invalid_code: 'Código inválido',
 		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
 	},

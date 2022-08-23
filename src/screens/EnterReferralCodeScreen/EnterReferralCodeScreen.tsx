@@ -1,15 +1,13 @@
 import React from 'react';
 import { TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Button, Icon, Input, Modal, Text } from '@components';
-import { useLanguage, useNavigation, useReferralCode } from '@hooks';
+import { Button, Icon, Input, Text } from '@components';
+import { useLanguage, useNavigation } from '@hooks';
 import { whale5Img as whaleImage } from '@images';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import useEnterReferralCodeScreen from './EnterReferralCodeScreen.hooks';
-import EarnModal from '../ReferralScreen/EarnModal/EarnModal';
-import useReferralScreen from '../ReferralScreen/ReferralScreen.hooks';
 import styles from './EnterReferralCodeScreen.styles';
 
 const EnterReferralCodeScreen = () => {
@@ -17,8 +15,6 @@ const EnterReferralCodeScreen = () => {
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const { code, setCode, invalidCode, onConfirm, loading, disableCode } = useEnterReferralCodeScreen();
-	const { earnModalVisible, onEarnPress, onEarnDismiss, showReferralButton } = useReferralScreen();
-	const { code: referralCode } = useReferralCode();
 
 	return (
 		<>
@@ -49,9 +45,16 @@ const EnterReferralCodeScreen = () => {
 						{i18n.t('EnterReferralCodeScreen.get_rewarded_for_saving_money')}
 					</Text>
 					{disableCode ? (
-						<Text type="h2" weight="bold" style={styles.code} width={280} center marginBottom={48}>
-							{code}
-						</Text>
+						<>
+							<Text type="h2" weight="bold" style={styles.code} width={280} center marginBottom={48}>
+								{code}
+							</Text>
+							<Button
+								onPress={() => navigation.navigate('AddFundsScreen')}
+								title={i18n.t('EnterReferralCodeScreen.buy_usdc')}
+								marginBottom={24}
+							/>
+						</>
 					) : (
 						<>
 							<Input
@@ -71,34 +74,17 @@ const EnterReferralCodeScreen = () => {
 								}
 								disabled={invalidCode || loading}
 								onPress={onConfirm}
-								marginBottom={showReferralButton ? 8 : 24}
+								marginBottom={8}
 							/>
 						</>
 					)}
-					{showReferralButton && (
-						<>
-							{!disableCode && (
-								<Text type="p2" color="text4" center marginBottom={8}>
-									{i18n.t('EnterReferralCodeScreen.or')}
-								</Text>
-							)}
-							<Button
-								onPress={onEarnPress}
-								title={i18n.t('EnterReferralCodeScreen.refer_a_friend')}
-								mode="outlined"
-								marginBottom={24}
-							/>
-						</>
-					)}
+
 					<Text type="a" color="text3" weight="semiBold" center marginBottom={8} width={293}>
 						{i18n.t('EnterReferralCodeScreen.referral_note')}
 					</Text>
 				</ScrollView>
 				<KeyboardSpacer />
 			</BasicLayout>
-			<Modal isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
-				<EarnModal onDismiss={onEarnDismiss} code={referralCode} />
-			</Modal>
 		</>
 	);
 };
