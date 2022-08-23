@@ -21,7 +21,7 @@ const StablecoinsScreen = () => {
 						Stablecoins
 					</Text>
 
-					<TouchableOpacity onPress={() => null}>
+					<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>
 						<View row>
 							<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
 								Get 3.26% annualized interest
