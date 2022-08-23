@@ -25,7 +25,7 @@ const ByNetworks = () => (
 			name="USD Coin"
 			symbol="USDC"
 			subtitle="BSC"
-			rightValueUSD={0.00}
+			rightValueUSD={0.001}
 			mb="xs"
 		/>
 	</Paper2>
