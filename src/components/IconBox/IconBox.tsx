@@ -7,9 +7,10 @@ interface IconBoxProps {
 	icon: IconType;
 	bgc?: keyof ColorType;
 	mb?: SpacingType;
+	alert?: boolean;
 }
 
-const IconBox: React.FC<IconBoxProps> = ({ icon, bgc, mb }) => (
+const IconBox: React.FC<IconBoxProps> = ({ icon, bgc, mb, alert }) => (
 	<View
 		h={40}
 		w={40}
@@ -22,7 +23,7 @@ const IconBox: React.FC<IconBoxProps> = ({ icon, bgc, mb }) => (
 	>
 		<Icon
 			size={24}
-			color="cta1"
+			color={alert ? 'alert1' : 'cta1'}
 			name={icon}
 		/>
 	</View>
