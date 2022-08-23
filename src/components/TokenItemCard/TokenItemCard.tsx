@@ -32,40 +32,38 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	mb = 'm',
 	onPress
 }) => (
-	<TouchableOpacity onPress={onPress} activeOpacity={0.6}>
-		{
-			paper ? (
-				<Paper2 mb="xs" br="xs" p="xs">
-					<TokenItem
-						{...{
-							token,
-							name,
-							symbol,
-							subtitle,
-							rightValue,
-							rightBottomValueUSd,
-							rightValueUSD,
-							perc
-						}}
-					/>
-				</Paper2>
-			) : (
-				<View mb={mb}>
-					<TokenItem
-						{...{
-							token,
-							name,
-							symbol,
-							subtitle,
-							rightValue,
-							rightBottomValueUSd,
-							rightValueUSD,
-							perc
-						}}
-					/>
-				</View>
-			)
-		}
+	<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1}>
+		{paper ? (
+			<Paper2 mb="xs" br="xs" p="xs">
+				<TokenItem
+					{...{
+						token,
+						name,
+						symbol,
+						subtitle,
+						rightValue,
+						rightBottomValueUSd,
+						rightValueUSD,
+						perc
+					}}
+				/>
+			</Paper2>
+		) : (
+			<View mb={mb}>
+				<TokenItem
+					{...{
+						token,
+						name,
+						symbol,
+						subtitle,
+						rightValue,
+						rightBottomValueUSd,
+						rightValueUSD,
+						perc
+					}}
+				/>
+			</View>
+		)}
 	</TouchableOpacity>
 );
 
