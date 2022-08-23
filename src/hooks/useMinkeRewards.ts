@@ -1,4 +1,3 @@
-import { POINTS_PER_REWARD } from '@helpers/utilities';
 import { useState } from '@hookstate/core';
 import { useFocusEffect } from '@react-navigation/native';
 import { getRewards } from '@src/services/apis/minke/minke';
@@ -17,7 +16,10 @@ const useMinkeRewards = () => {
 		setLoading(true);
 		const apiRewards = await getRewards(address);
 		setRewards(apiRewards);
-		setPoints(apiRewards.filter(({ claimed }) => !claimed).length * POINTS_PER_REWARD);
+		const availablePoints = apiRewards
+			.filter(({ claimed }) => !claimed)
+			.map(({ points: rewardPoints }) => rewardPoints);
+		setPoints(availablePoints.reduce((partialSum, a) => partialSum + a, 0));
 		setUpdatedAt(new Date().getTime());
 		setLoading(false);
 	};

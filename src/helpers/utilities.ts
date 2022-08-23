@@ -47,4 +47,3 @@ export const addColorOpacity = (color: string, opacity: number): string => {
 export const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const REFERRAL_POINTS_TO_USD_CONVERSION = 0.1;
-export const POINTS_PER_REWARD = 100;

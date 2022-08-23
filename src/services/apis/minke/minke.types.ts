@@ -33,4 +33,5 @@ export interface Reward {
 	wallet: string;
 	timestamp: number;
 	amount: number;
+	points: number;
 }

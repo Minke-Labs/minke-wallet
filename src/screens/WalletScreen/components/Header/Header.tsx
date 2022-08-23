@@ -38,7 +38,9 @@ const Header: React.FC<HeaderProps> = ({ onSettingsPress, onCopyPress, onPointsP
 			<View style={styles.iconsContainer}>
 				<TouchableOpacity activeOpacity={0.6} onPress={onPointsPress} style={styles.minkePoints}>
 					<Text weight="semiBold" type="lSmall" color="cta1">
-						{points} {i18n.t('WalletScreen.Header.points')}
+						{points > 0
+							? `${points} ${i18n.t('WalletScreen.Header.points')}`
+							: i18n.t('WalletScreen.Header.invite_a_friend')}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity activeOpacity={0.6} onPress={onSettingsPress}>

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { useLanguage, useTheme } from '@hooks';
 import { Card, EmptyStates, Text, TransactionIcon } from '@components';
 import { Reward } from '@src/services/apis/minke/minke.types';
 import { format } from 'date-fns';
-import { POINTS_PER_REWARD, tokenBalanceFormat } from '@helpers/utilities';
+import { REFERRAL_POINTS_TO_USD_CONVERSION, tokenBalanceFormat } from '@helpers/utilities';
 import { makeStyles } from './Body.styles';
 
 export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; rewards: Reward[] }) => {
@@ -27,6 +28,8 @@ export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; reward
 								subtitle={
 									item.referral.wallet === item.wallet
 										? i18n.t('ReferralScreen.Body.referral')
+										: item.source === 'exchange'
+										? i18n.t('ReferralScreen.Body.exchange')
 										: i18n.t('ReferralScreen.Body.deposit')
 								}
 								marginBottom={index === rewards.length - 1 ? 0 : 32}
@@ -34,11 +37,11 @@ export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; reward
 									<View>
 										<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>
 											{item.claimed && item.amount
-												? `${tokenBalanceFormat(item.amount, 4)} MATIC`
-												: i18n.t('ReferralScreen.Body.points', { count: POINTS_PER_REWARD })}
+												? `${tokenBalanceFormat(item.amount, 4)} USDC`
+												: i18n.t('ReferralScreen.Body.points', { count: item.points })}
 										</Text>
 										<Text type="p2" weight="bold" style={{ alignSelf: 'flex-end' }}>
-											$10
+											${item.points * REFERRAL_POINTS_TO_USD_CONVERSION}
 										</Text>
 									</View>
 								}
