@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Header, Text, Paper, TransactionIcon, Icon, Button, Token } from '@components';
+import { Header, Text, Paper2, TransactionIcon, Icon, Button, Token } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTransaction } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -80,7 +80,7 @@ const TransactionScreen = ({ route }: Props) => {
 					</View>
 				</View>
 				<View style={styles.panel}>
-					<Paper padding={24}>
+					<Paper2 p="s">
 						<View style={styles.row}>
 							<Text color="text1" type="tSmall" weight="semiBold">
 								{i18n.t('TransactionScreen.transaction_type')}
@@ -104,9 +104,9 @@ const TransactionScreen = ({ route }: Props) => {
 								{date}
 							</Text>
 						</View>
-					</Paper>
+					</Paper2>
 				</View>
-				<Paper padding={24}>
+				<Paper2 p="s">
 					<>
 						<Text color="text1" type="tSmall" weight="semiBold">
 							{i18n.t('TransactionScreen.hash')}
@@ -174,7 +174,7 @@ const TransactionScreen = ({ route }: Props) => {
 							</View>
 						</>
 					)}
-				</Paper>
+				</Paper2>
 
 				<View style={styles.button}>
 					<Button
