@@ -1,49 +1,51 @@
 {
-	"expo": {
-		"plugins": [
-			[
-				"expo-image-picker",
-				{
-					"photosPermission": "The app accesses your photos to let you share them with your friends.",
-					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
-				}
-			]
-		],
-		"name": "Minke",
-		"slug": "minke-wallet",
-		"owner": "minkelabs",
-		"version": "0.0.13",
-		"scheme": "com.minkeapp.minkewallet",
-		"orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#0A2138"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true,
-			"buildNumber": "55",
-			"config": {
-				"usesNonExemptEncryption": false
-			},
-			"bundleIdentifier": "com.minkeapp.minkewallet"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF"
-			},
-			"versionCode": 29
-		},
-		"web": {
-			"favicon": "./assets/favicon.png"
-		},
-		"description": "",
-		"userInterfaceStyle": "automatic"
-	}
+  "expo": {
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ]
+    ],
+    "name": "Minke",
+    "slug": "minke-wallet",
+    "owner": "minkelabs",
+    "version": "0.0.13",
+    "scheme": "com.minkeapp.minkewallet",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A2138"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "buildNumber": "56",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.minkeapp.minkewallet"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "versionCode": 29
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "",
+    "userInterfaceStyle": "automatic"
+  }
 }
