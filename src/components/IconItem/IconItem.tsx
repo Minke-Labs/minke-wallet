@@ -13,10 +13,20 @@ interface IconItemProps {
 	icon: IconType;
 	alert?: boolean;
 	rightButton?: boolean;
+	newTab?: boolean;
 	onPress: () => void;
 }
 
-const IconItem: React.FC<IconItemProps> = ({ mb, title, desc, icon, alert, rightButton, onPress }) => (
+const IconItem: React.FC<IconItemProps> = ({
+	mb,
+	title,
+	desc,
+	icon,
+	alert,
+	rightButton,
+	newTab,
+	onPress
+}) => (
 	<View mb={mb}>
 		<TouchableOpacity onPress={onPress}>
 			<View row main="space-between" cross="center">
@@ -36,6 +46,13 @@ const IconItem: React.FC<IconItemProps> = ({ mb, title, desc, icon, alert, right
 				{rightButton && (
 					<Icon
 						name="chevronRight"
+						size={24}
+						color={alert ? 'alert1' : 'cta1'}
+					/>
+				)}
+				{newTab && (
+					<Icon
+						name="openInNew"
 						size={24}
 						color={alert ? 'alert1' : 'cta1'}
 					/>
