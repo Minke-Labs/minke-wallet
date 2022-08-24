@@ -41,6 +41,8 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, subtitle, ba
 
 			{!!perc && <Tag perc={perc} />}
 
+			{!balance && !balanceUSD && <View w={30} />}
+
 			<View main="center">
 				{!!balance && !!balanceUSD && (
 					<View cross="flex-end">

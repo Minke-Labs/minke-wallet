@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { TokenType, SpacingType } from '@styles';
+import { TokenType, SpacingType, spacing } from '@styles';
 import { useNavigation } from '@hooks';
 import Text from '../Text/Text';
 import View from '../View/View';
@@ -72,7 +72,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 					style={{ position: 'absolute' }}
 				>
 					<View mr="xs">
-						<Text type="lLarge" weight="semiBold" color="cta1">
+						<Text type="lLarge" weight="semiBold" color="cta1" style={{ marginBottom: spacing.xs }}>
 							+ Buy
 						</Text>
 					</View>

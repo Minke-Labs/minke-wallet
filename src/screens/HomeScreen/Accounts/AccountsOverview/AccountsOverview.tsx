@@ -47,7 +47,14 @@ export const AccountsOverview = () => {
 				perc={12.4}
 			/>
 
-			<TokenItemCard token="btc" name="USD Coin" symbol="USDC" subtitle="Ethereum" perc={-8.23} mb="xs" />
+			<TokenItemCard
+				token="btc"
+				name="USD Coin"
+				symbol="USDC"
+				subtitle="Ethereum"
+				perc={-8.23}
+				mb="xs"
+			/>
 		</Paper>
 	);
 };
