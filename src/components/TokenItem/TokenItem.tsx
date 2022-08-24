@@ -26,7 +26,7 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, subtitle, ba
 				<View>
 					<View row cross="center">
 						<Text type="lLarge" weight="semiBold">
-							{tokenName.length < 20 ? tokenName : `${tokenName.substring(0, 17)}...`}
+							{tokenName.length < 10 ? tokenName : `${tokenName.substring(0, 7)}...`}
 						</Text>
 						<View mr="xxs" />
 						<Text type="bSmall" color="text3">

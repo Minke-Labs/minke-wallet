@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Paper, View, Text, TokenItemCard } from '@components';
 import { useNavigation, useTokens } from '@hooks';
-import { MinkeToken } from '@models/types/token.types';
+import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
+import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview = () => {
-	const navigation = useNavigation();
-	const { stablecoins = [] } = useTokens();
+	const [investmentHighlights, setInvestmentHighlights] = React.useState<InvestmentToken[]>([]);
 	const {
 		network: { topUpTokens }
 	} = useState(globalWalletState()).value;
+	const navigation = useNavigation();
+	const { stablecoins = [], tokens = [] } = useTokens();
 	const [defaultToken] = topUpTokens;
 	let biggestBalanceStable: MinkeToken = {} as MinkeToken;
 
@@ -23,6 +25,26 @@ export const AccountsOverview = () => {
 	});
 
 	const showingStable = biggestBalanceStable || defaultToken;
+
+	useEffect(() => {
+		const fetchPriceChanges = async () => {
+			if (tokens.length > 0) {
+				const investedTokens = await fetchTokensPriceChange(tokens);
+				const sorted = investedTokens.sort((a, b) => (b.perc || 0) - (a.perc || 0));
+
+				const highlights = [];
+				highlights.push(sorted[0]);
+
+				if (tokens.length > 1) {
+					highlights.push(sorted[sorted.length - 1]);
+				}
+
+				setInvestmentHighlights(highlights);
+			}
+		};
+
+		fetchPriceChanges();
+	}, [tokens]);
 
 	return (
 		<Paper pt="xs" ph="xs" mb="xs">
@@ -49,6 +71,7 @@ export const AccountsOverview = () => {
 						symbol={showingStable.symbol}
 						subtitle="All networks"
 						balanceUSD={showingStable.balanceUSD}
+						onPress={() => navigation.navigate('AssetDetailScreen', { coin: showingStable })}
 					/>
 				</>
 			)}
@@ -65,17 +88,18 @@ export const AccountsOverview = () => {
 				</TouchableOpacity>
 			</View>
 
-			<TokenItemCard
-				token="eth"
-				name="USD Coin"
-				symbol="USDC"
-				subtitle="Ethereum"
-				balance="1023.08"
-				balanceUSD={634.9375}
-				perc={12.4}
-			/>
-
-			<TokenItemCard token="btc" name="USD Coin" symbol="USDC" subtitle="Ethereum" perc={-8.23} mb="xs" />
+			{investmentHighlights.map((token) => (
+				<TokenItemCard
+					token={token.symbol.toLowerCase() as TokenType}
+					name={token.name}
+					symbol={token.symbol}
+					subtitle="All networks"
+					balance={token.balance}
+					balanceUSD={token.balanceUSD}
+					perc={token.perc}
+					onPress={() => navigation.navigate('AssetsScreen', { coin: token })}
+				/>
+			))}
 		</Paper>
 	);
 };

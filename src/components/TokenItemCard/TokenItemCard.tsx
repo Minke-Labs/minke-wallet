@@ -1,11 +1,10 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { TokenType, SpacingType } from '@styles';
+import { TokenType } from '@styles';
 import { useNavigation } from '@hooks';
 import Text from '../Text/Text';
 import View from '../View/View';
 import TokenItem from '../TokenItem/TokenItem';
-import Paper from '../Paper/Paper';
 
 interface TokenItemCardProps {
 	token: TokenType;
@@ -17,7 +16,6 @@ interface TokenItemCardProps {
 	onPress?: () => void;
 	perc?: number;
 	paper?: boolean;
-	mb?: SpacingType;
 }
 
 const TokenItemCard: React.FC<TokenItemCardProps> = ({
@@ -29,55 +27,43 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	balanceUSD,
 	perc,
 	paper,
-	mb = 'm',
 	onPress
 }) => {
 	const navigation = useNavigation();
+
 	return (
-		<View row main="flex-end" cross="center" mb={paper ? 'xs' : undefined}>
-			<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1} style={{ flex: 1 }}>
-				{paper ? (
-					<Paper p="xs">
-						<TokenItem
-							{...{
-								token,
-								name,
-								symbol,
-								subtitle,
-								balance,
-								balanceUSD,
-								perc
-							}}
-						/>
-					</Paper>
-				) : (
-					<View mb={mb}>
-						<TokenItem
-							{...{
-								token,
-								name,
-								symbol,
-								subtitle,
-								balance,
-								balanceUSD,
-								perc
-							}}
-						/>
-					</View>
-				)}
-			</TouchableOpacity>
-			{!balance && !balanceUSD && (
-				<TouchableOpacity
-					onPress={() => navigation.navigate('AddFundsScreen')}
-					style={{ position: 'absolute' }}
-				>
-					<View mr="xs">
-						<Text type="lLarge" weight="semiBold" color="cta1" {...(!paper && { mb: 'xs' })}>
+		<View mb={paper ? 'xs' : 'm'}>
+			<View {...(paper && { bgc: 'background5', br: 'xs', p: 'xs' })} flex1 row main="space-between">
+				<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1} style={{ flex: 1 }}>
+					<TokenItem
+						{...{
+							token,
+							name,
+							symbol,
+							subtitle,
+							balance,
+							balanceUSD,
+							perc
+						}}
+					/>
+				</TouchableOpacity>
+				{!balance && !balanceUSD && (
+					<TouchableOpacity
+						onPress={() => navigation.navigate('AddFundsScreen')}
+						style={{ alignSelf: 'center' }}
+					>
+						<Text
+							type="lLarge"
+							weight="semiBold"
+							color="cta1"
+							{...(!paper && { mb: 'xs' })}
+							style={{ alignSelf: 'center' }}
+						>
 							+ Buy
 						</Text>
-					</View>
-				</TouchableOpacity>
-			)}
+					</TouchableOpacity>
+				)}
+			</View>
 		</View>
 	);
 };

@@ -29,7 +29,7 @@ export const useAssetDetailScreen = (coin: MinkeToken) => {
 	const fetchTokenVolume = async () => {
 		const res = await getTokenVolume(coin.id!);
 		if (res.errors) {
-			const res = await getTokenVolume(coin.name);
+			const res = await getTokenVolume(coin.name!);
 			if (res.errors) {
 				const res = await getTokenVolume(coin.symbol);
 				if (res.errors) setTokenVolume(null);
@@ -45,8 +45,10 @@ export const useAssetDetailScreen = (coin: MinkeToken) => {
 	const fetchMarketCap = async () => {
 		if (coin.id) {
 			const res = await getTokenMarketCap(coin.id);
-			if (res.errors) setMarketCap(null);
-			else setMarketCap(res);
+			const mktCapArr = res.map((item: any) => ({ id: item.id, market_cap: item.market_cap }));
+			const mktCap = mktCapArr.find((item: any) => item.id === coin.id!.toLowerCase());
+			if (mktCap?.market_cap.errors) setMarketCap(null);
+			else setMarketCap(mktCap?.market_cap);
 		} else setMarketCap(null);
 	};
 

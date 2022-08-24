@@ -3,7 +3,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { network, networks } from './network';
-import { MinkeToken } from './types/token.types';
+import { InvestmentToken, MinkeToken } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT'];
 export const exchangebleTokens = [
@@ -120,13 +120,11 @@ export const getTokenVolume = async (token: string) => {
 	return result.json();
 };
 
-export const getTokenMarketCap = async (tokenName: string) => {
-	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenName}`;
+export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoTokenMarketCap[]> => {
+	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenIds}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
-	const mktCapArr = toJson.map((item: any) => ({ id: item.id, market_cap: item.market_cap }));
-	const mktCap = mktCapArr.find((item: any) => item.id === tokenName.toLowerCase());
-	return mktCap.market_cap;
+	return toJson;
 };
 
 export const createTransaction = async ({
@@ -173,6 +171,16 @@ export const createTransaction = async ({
 	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}?gasPrice=${gasPrice}`;
 	const result = await fetch(baseURL, requestOptions);
 	return result.json();
+};
+
+export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<InvestmentToken[]> => {
+	const ids = tokens.map(({ id }) => id);
+	const marketCaps = await getTokenMarketCap(ids.join(','));
+
+	return tokens.map((t) => ({
+		...t,
+		...{ perc: marketCaps.find(({ id }) => id === t.id)?.price_change_percentage_24h }
+	}));
 };
 
 export const ether: MinkeToken = {
@@ -312,4 +320,11 @@ export interface CovalentAavePool {
 		contract_ticker_symbol: string;
 	};
 	supply_apy: number;
+}
+
+interface CoingeckoTokenMarketCap {
+	id: string;
+	market_cap: string;
+	errors?: string[];
+	price_change_percentage_24h: number;
 }

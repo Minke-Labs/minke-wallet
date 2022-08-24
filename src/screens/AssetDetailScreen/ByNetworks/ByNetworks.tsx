@@ -8,7 +8,7 @@ const ByNetworks = () => (
 		</Text>
 		<TokenItemCard token="usdc" name="USD Coin" symbol="USDC" subtitle="Polygon" balanceUSD={512.08} />
 		<TokenItemCard token="usdc" name="USD Coin" symbol="USDC" subtitle="Ethereum" balanceUSD={134.08} />
-		<TokenItemCard token="usdc" name="USD Coin" symbol="USDC" subtitle="BSC" balanceUSD={0.001} mb="xs" />
+		<TokenItemCard token="usdc" name="USD Coin" symbol="USDC" subtitle="BSC" balanceUSD={0.001} />
 	</Paper>
 );
 
