@@ -121,6 +121,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					style={styles.list}
 					data={filterByExchangebleToken()}
 					keyExtractor={(token) => token.symbol}
+					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>

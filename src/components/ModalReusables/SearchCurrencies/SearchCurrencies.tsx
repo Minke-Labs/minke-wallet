@@ -81,6 +81,7 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 					style={styles.list}
 					data={filteredCurrencies}
 					keyExtractor={(currency) => currency.code}
+					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => onCurrencySelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>
