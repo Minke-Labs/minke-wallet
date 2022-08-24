@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text, Paper, Icon } from '@components';
 import { useLanguage } from '@hooks';
+import Text from '../Text/Text';
+import Paper from '../Paper/Paper';
+import Icon from '../Icon/Icon';
 import { ExpanderProps } from './Expander.types';
 import styles from './Expander.styles';
 
