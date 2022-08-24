@@ -9,6 +9,7 @@ import CountrySelector from './CountrySelector/CountrySelector';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import ModalBase from './ModalBase/ModalBase';
+import Expander from './Expander/Expander';
 import Modal from './Modal/Modal';
 import FullModal from './FullModal/FullModal';
 import GasOption from './GasOption/GasOption';
@@ -66,6 +67,7 @@ import IconBox from './IconBox/IconBox';
 
 export {
 	AaveReusables,
+	Expander,
 	AnimatedView,
 	BlankStates,
 	ActivityIndicator,

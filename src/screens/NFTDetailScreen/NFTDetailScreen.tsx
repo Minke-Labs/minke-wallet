@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Image, SafeAreaView, Linking, StatusBar } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import { Text, Button } from '@components';
+import { Text, Button, Expander } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -12,7 +12,6 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import { getCollectionStats } from '@src/services/apis';
 import { whale2Img } from '@images';
 import { Bottom } from './Bottom/Bottom';
-import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
 import styles from './NFTDetailScreen.styles';
 import { Header } from './Header/Header';

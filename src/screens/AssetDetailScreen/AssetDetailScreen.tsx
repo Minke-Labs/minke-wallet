@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { View } from '@components';
+import { View, Expander } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -26,7 +26,12 @@ const AssetDetailScreen = ({ route }: Props) => {
 					<Header onPress={() => navigation.goBack()} />
 					<Balance coin={coin} />
 					<ByNetworks />
-					<About title={coin.name} desc={description} />
+					{description && (
+						<Expander
+							title={coin.name || ''}
+							desc={description}
+						/>
+					)}
 				</View>
 			</ScrollView>
 		</BasicLayout>

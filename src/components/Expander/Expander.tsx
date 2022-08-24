@@ -7,7 +7,7 @@ import styles from './Expander.styles';
 
 const lengthConst = 181;
 
-export const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
+const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 	const [expanded, setExpanded] = useState(false);
 	const { i18n } = useLanguage();
 
@@ -56,3 +56,5 @@ export const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 		</Paper>
 	);
 };
+
+export default Expander;
