@@ -34,7 +34,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 }) => {
 	const navigation = useNavigation();
 	return (
-		<View row main="flex-end" cross="center" mb="xs">
+		<View row main="flex-end" cross="center" mb={paper ? 'xs' : undefined}>
 			<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1} style={{ flex: 1 }}>
 				{paper ? (
 					<Paper p="xs">
@@ -72,12 +72,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 					style={{ position: 'absolute' }}
 				>
 					<View mr="xs">
-						<Text
-							type="lLarge"
-							weight="semiBold"
-							color="cta1"
-							{...(!paper && { mb: 'xs' })}
-						>
+						<Text type="lLarge" weight="semiBold" color="cta1" {...(!paper && { mb: 'xs' })}>
 							+ Buy
 						</Text>
 					</View>
