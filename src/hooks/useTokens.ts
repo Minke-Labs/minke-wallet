@@ -15,7 +15,7 @@ const useTokens = (): AccountBalance => {
 		};
 
 		loadTokens();
-	}, []);
+	}, [address]);
 
 	return accountBalance || ({} as AccountBalance);
 };
