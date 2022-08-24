@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
 import { numberFormat } from '@helpers/utilities';
+import { MinkeToken } from '@models/types/token.types';
 import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
@@ -34,23 +34,19 @@ const InvestmentsScreen = () => {
 					<Selector {...{ active, setActive }} />
 
 					<View pr="xs" mt="xs">
-						<FlatList
-							showsVerticalScrollIndicator={false}
-							keyExtractor={(item) => `${item.address}`}
-							data={tokens}
-							renderItem={({ item }) => (
-								<TokenItemCard
-									token={item.symbol.toLowerCase() as TokenType}
-									name={item.name!}
-									symbol={item.symbol}
-									subtitle="All networks"
-									rightValue={`${item.balance}`}
-									rightBottomValueUSd={item.balanceUSD}
-									// perc={12.40}
-									onPress={() => navigation.navigate('AssetDetailScreen')}
-								/>
-							)}
-						/>
+						{tokens.map((item: MinkeToken) => (
+							<TokenItemCard
+								key={item.address}
+								token={item.symbol.toLowerCase() as TokenType}
+								name={item.name!}
+								symbol={item.symbol}
+								subtitle="All networks"
+								rightValue={`${item.balance}`}
+								rightBottomValueUSd={item.balanceUSD}
+								// perc={12.40}
+								onPress={() => navigation.navigate('AssetDetailScreen')}
+							/>
+						))}
 					</View>
 
 				</View>
