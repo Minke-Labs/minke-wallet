@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { View, Expander } from '@components';
@@ -9,7 +8,6 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import { Header } from './Header/Header';
 import { Balance } from './Balance/Balance';
 import ByNetworks from './ByNetworks/ByNetworks';
-import About from './About/About';
 import { useAssetDetailScreen } from './AssetDetailScreen.hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AssetDetailScreen'>;
@@ -17,7 +15,11 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AssetDetailScreen'>;
 const AssetDetailScreen = ({ route }: Props) => {
 	const navigation = useNavigation();
 	const { coin } = route.params;
-	const { description, tokenVolume, marketCap } = useAssetDetailScreen(coin); // @TODO:
+	const {
+		description
+		// tokenVolume,
+		// marketCap
+	} = useAssetDetailScreen(coin); // @@@TODO:
 
 	return (
 		<BasicLayout>
