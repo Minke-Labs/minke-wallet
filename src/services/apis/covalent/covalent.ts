@@ -61,12 +61,15 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 
 		tokens = tokens.filter(
 			({ symbol, balance = '0', name = '' }) =>
-				!interestBearingTokens.includes(symbol.toLowerCase()) && +balance > 0 && !isValidDomain(name)
+				!depositStablecoins.includes(symbol) &&
+				!interestBearingTokens.includes(symbol.toLowerCase()) &&
+				+balance > 0 &&
+				!isValidDomain(name)
 		);
 		const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 		const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 		const stablecoinsBalance = stablecoins.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
-		const balance = walletBalance + depositedBalance;
+		const balance = walletBalance + depositedBalance + stablecoinsBalance;
 		const balances = { walletBalance, depositedBalance, balance, stablecoinsBalance };
 		AsyncStorage.setItem('@balances', JSON.stringify(balances));
 
