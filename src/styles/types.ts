@@ -44,6 +44,9 @@ export interface ViewType {
 	// background color
 	bgc: keyof ColorType;
 
+	// flex: 1
+	flex1: boolean;
+
 	// flexbox
 	row: boolean;
 	main: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-evenly';

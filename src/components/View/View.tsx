@@ -24,6 +24,7 @@ const View: React.FC<Partial<ViewType>> = ({
 	s,
 	br = 0,
 	bw = 0,
+	flex1,
 	round,
 	bgc,
 	bc,
@@ -61,6 +62,7 @@ const View: React.FC<Partial<ViewType>> = ({
 				...(!!row && { flexDirection: 'row' }),
 				...(!!main && { justifyContent: main }),
 				...(!!cross && { alignItems: cross }),
+				...(!!flex1 && { flex: 1 }),
 				...(style as object)
 			}}
 		>
