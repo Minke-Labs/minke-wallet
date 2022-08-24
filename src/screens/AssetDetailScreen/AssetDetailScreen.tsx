@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Header } from './Header/Header';
 import { Balance } from './Balance/Balance';
-import ByNetworks from './ByNetworks/ByNetworks';
+// import ByNetworks from './ByNetworks/ByNetworks';
 import { useAssetDetailScreen } from './AssetDetailScreen.hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AssetDetailScreen'>;
@@ -27,7 +27,7 @@ const AssetDetailScreen = ({ route }: Props) => {
 				<View ph="xs">
 					<Header onPress={() => navigation.goBack()} />
 					<Balance coin={coin} />
-					<ByNetworks />
+					{/* <ByNetworks /> */}
 					{description && (
 						<Expander
 							title={coin.name || ''}

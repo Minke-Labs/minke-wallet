@@ -42,7 +42,7 @@ const InvestmentsScreen = () => {
 								subtitle="All networks"
 								balance={item.balance}
 								balanceUSD={item.balanceUSD}
-								onPress={() => navigation.navigate('AssetDetailScreen', { coin: item })}
+								onPress={() => navigation.navigate('AssetsScreen', { coin: item })}
 							/>
 						))}
 					</View>
