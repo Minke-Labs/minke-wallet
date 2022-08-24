@@ -12,7 +12,7 @@ export type RootStackParamList = {
 	MinkeHubScreen: undefined;
 	StablecoinsScreen: undefined;
 	InvestmentsScreen: undefined;
-	AssetDetailScreen: undefined;
+	AssetDetailScreen: { coin: MinkeToken };
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };

@@ -1,4 +1,5 @@
 import AaveReusables from './AaveReusables';
+import AnimatedView from './AnimatedView/AnimatedView';
 import BlankStates from './BlankStates';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
@@ -64,6 +65,7 @@ import IconBox from './IconBox/IconBox';
 
 export {
 	AaveReusables,
+	AnimatedView,
 	BlankStates,
 	ActivityIndicator,
 	Text,

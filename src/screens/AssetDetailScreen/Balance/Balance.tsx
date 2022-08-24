@@ -1,9 +1,18 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { View, Paper, Text } from '@components';
-import { useTheme } from '@hooks';
+import { useLanguage, useTheme } from '@hooks';
+import { MinkeToken } from '@models/types/token.types';
+import Selector from './Selector/Selector';
 
-export const Balance = () => {
+interface BlanceProps {
+	coin: MinkeToken;
+}
+
+export const Balance: React.FC<BlanceProps> = ({ coin }) => {
+	const [active, setActive] = useState(false);
+	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	return (
 		<Paper style={{ overflow: 'hidden' }} mb="xs">
@@ -16,9 +25,13 @@ export const Balance = () => {
 					borderBottomColor: colors.background1
 				}}
 			>
-				<Text type="lMedium" weight="semiBold" color="text3">
-					Balance
-				</Text>
+				<View row main="space-between">
+					<Text type="lMedium" weight="semiBold" color="text3">
+						{i18n.t('AssetsScreen.Balance.Balance')}
+						{/* @@@ - CHANGE LOCATION OF TRANSLATION */}
+					</Text>
+					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
+				</View>
 				<Text type="dMedium">
 					$1023.0854
 				</Text>

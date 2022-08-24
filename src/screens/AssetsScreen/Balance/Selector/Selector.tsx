@@ -21,16 +21,23 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive, coinSymbol }) =>
 			style={[styles.container, { backgroundColor: colors.background1 }]}
 		>
 			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
+
 			<View style={styles.titleContainer}>
 				<Text weight={active ? 'bold' : 'medium'} style={{ fontSize: 12 }} color={active ? 'text3' : 'text6'}>
 					USD
 				</Text>
 			</View>
+
 			<View style={styles.titleContainer}>
-				<Text weight={active ? 'bold' : 'medium'} style={{ fontSize: 12 }} color={active ? 'text6' : 'text3'}>
+				<Text
+					weight={active ? 'bold' : 'medium'}
+					style={{ fontSize: 12 }}
+					color={active ? 'text6' : 'text3'}
+				>
 					{coinSymbol}
 				</Text>
 			</View>
+
 		</TouchableOpacity>
 	);
 };
