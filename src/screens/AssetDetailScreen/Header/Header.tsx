@@ -7,17 +7,17 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onPress }) => (
-	<View row cross="center" mb="s">
-		<TouchableOpacity onPress={onPress}>
+	<TouchableOpacity onPress={onPress}>
+		<View row cross="flex-end" mb="s">
 			<Icon name="chevronLeft" size={24} color="cta1" />
-		</TouchableOpacity>
-		<View mr="xxs" />
-		<Text type="tSmall" weight="bold">
-			USD Coin
-		</Text>
-		<View mr="xxs" />
-		<Text type="bSmall" color="text2">
-			USDC
-		</Text>
-	</View>
+			<View mr="xxs" />
+			<Text type="tSmall" weight="bold">
+				USD Coin
+			</Text>
+			<View mr="xxs" />
+			<Text type="bSmall" color="text2">
+				USDC
+			</Text>
+		</View>
+	</TouchableOpacity>
 );

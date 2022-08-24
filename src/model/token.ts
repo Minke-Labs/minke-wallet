@@ -5,7 +5,7 @@ import * as qs from 'qs';
 import { network, networks } from './network';
 import { MinkeToken } from './types/token.types';
 
-export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD'];
+export const stablecoins = ['USDC', 'DAI', 'USDT'];
 export const exchangebleTokens = [
 	'ETH',
 	'MATIC',
@@ -277,7 +277,9 @@ export interface AccountBalance {
 	balance: number; // total
 	depositedBalance: number; // deposited amount
 	walletBalance: number; // available in the wallet (not deposited)
+	stablecoinsBalance: number; // USDT, USDC, DAI usd balances sum
 	tokens: MinkeToken[];
+	stablecoins: MinkeToken[];
 	interestTokens: MinkeToken[];
 	depositableTokens: MinkeToken[];
 	withdrawableTokens: MinkeToken[];

@@ -41,14 +41,13 @@ const InvestmentsScreen = () => {
 								name={item.name!}
 								symbol={item.symbol}
 								subtitle="All networks"
-								rightValue={`${item.balance}`}
-								rightBottomValueUSd={item.balanceUSD}
+								balance={item.balance}
+								balanceUSD={item.balanceUSD}
 								// perc={12.40}
 								onPress={() => navigation.navigate('AssetDetailScreen', { coin: item })}
 							/>
 						))}
 					</View>
-
 				</View>
 			</ScrollView>
 		</AssetsLayout>

@@ -17,7 +17,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'AssetDetailScreen'>;
 const AssetDetailScreen = ({ route }: Props) => {
 	const navigation = useNavigation();
 	const { coin } = route.params;
-	const { description, tokenVolume, marketCap } = useAssetDetailScreen(coin);
+	const { description, tokenVolume, marketCap } = useAssetDetailScreen(coin); // @TODO:
 
 	return (
 		<BasicLayout>

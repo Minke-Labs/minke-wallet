@@ -1,14 +1,20 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
-import { Icon, Text, View, TokenItemCard } from '@components';
+import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useNavigation } from '@hooks';
+import { useDepositProtocols, useNavigation, useTokens } from '@hooks';
+import { TokenType } from '@styles';
 
 const StablecoinsScreen = () => {
 	const navigation = useNavigation();
+	const { stablecoins, stablecoinsBalance } = useTokens();
+	const { apy } = useDepositProtocols();
+
+	if (!stablecoins) return <BlankStates.Save />; // @@@TODO: update blank state without the title
+
 	return (
 		<AssetsLayout
-			headerValue="5000"
+			headerValue={stablecoinsBalance}
 			headerTitle={
 				<Text type="lLarge" weight="semiBold" color="text3">
 					Current value
@@ -23,49 +29,39 @@ const StablecoinsScreen = () => {
 
 					<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>
 						<View row>
-							<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
-								Get 3.26% annualized interest
-							</Text>
-							<Icon name="chevronRight" size={20} color="cta1" />
+							{apy ? (
+								<>
+									<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
+										{`Get ${apy}% annualized interest`}
+										{/* @@@TODO: - TRANSLATE */}
+									</Text>
+									<Icon name="chevronRight" size={20} color="cta1" />
+								</>
+							) : (
+								<ActivityIndicator size={16} />
+							)}
 						</View>
 					</TouchableOpacity>
 
 					<View pr="xs">
-						<TokenItemCard
-							token="eth"
-							name="USD Coin"
-							symbol="USDC"
-							subtitle="All networks"
-							rightValue="1023.08"
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-							paper
-						/>
-						<TokenItemCard
-							token="usdt"
-							name="USD Tether"
-							symbol="USDT"
-							subtitle="All networks"
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-							paper
-						/>
-						<TokenItemCard
-							token="dai"
-							name="Dai"
-							symbol="DAI"
-							subtitle="All networks"
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-							paper
-						/>
-						<TokenItemCard
-							token="bnb"
-							name="Binance USD"
-							symbol="BUSDc"
-							subtitle="All networks"
-							onPress={() => navigation.navigate('AssetDetailScreen')}
-							paper
-						/>
+						{stablecoins === undefined ? (
+							<ActivityIndicator />
+						) : stablecoins.length > 0 ? (
+							stablecoins.map((coin) => (
+								<TokenItemCard
+									token={coin.symbol.toLowerCase() as TokenType}
+									name={coin.name}
+									symbol={coin.symbol}
+									subtitle="All networks" // @TODO: check what this means
+									balanceUSD={coin.balanceUSD}
+									onPress={() => navigation.navigate('AssetDetailScreen', { coin })}
+									paper
+								/>
+							))
+						) : (
+							<EmptyStates.NoTokens />
+						)}
 					</View>
-
 				</View>
 			</ScrollView>
 		</AssetsLayout>

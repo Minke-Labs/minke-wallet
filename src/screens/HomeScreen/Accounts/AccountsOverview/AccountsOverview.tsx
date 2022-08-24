@@ -23,13 +23,7 @@ export const AccountsOverview = () => {
 				</TouchableOpacity>
 			</View>
 
-			<TokenItemCard
-				token="usdc"
-				name="USD Coin"
-				symbol="USDC"
-				subtitle="All networks"
-				rightValueUSD={1023.08}
-			/>
+			<TokenItemCard token="usdc" name="USD Coin" symbol="USDC" subtitle="All networks" balanceUSD={1023.08} />
 
 			<View row cross="center" mb="xs">
 				<Text type="lSmall" weight="semiBold" color="text2">
@@ -48,20 +42,12 @@ export const AccountsOverview = () => {
 				name="USD Coin"
 				symbol="USDC"
 				subtitle="Ethereum"
-				rightValue="1023.08"
-				rightBottomValueUSd={634.9375}
-				perc={12.40}
+				balance="1023.08"
+				balanceUSD={634.9375}
+				perc={12.4}
 			/>
 
-			<TokenItemCard
-				token="btc"
-				name="USD Coin"
-				symbol="USDC"
-				subtitle="Ethereum"
-				perc={-8.23}
-				mb="xs"
-			/>
-
+			<TokenItemCard token="btc" name="USD Coin" symbol="USDC" subtitle="Ethereum" perc={-8.23} mb="xs" />
 		</Paper>
 	);
 };

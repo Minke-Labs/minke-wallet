@@ -56,17 +56,18 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 		interestTokens = interestTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
 		withdrawableTokens = withdrawableTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001);
 
-		const depositableTokens = allTokens.filter(
-			(token) => depositStablecoins.includes(token.symbol) && +token.balance! > 0
-		);
+		const stablecoins = allTokens.filter((token) => depositStablecoins.includes(token.symbol));
+		const depositableTokens = stablecoins.filter((token) => +token.balance! > 0);
+
 		tokens = tokens.filter(
 			({ symbol, balance = '0', name = '' }) =>
 				!interestBearingTokens.includes(symbol.toLowerCase()) && +balance > 0 && !isValidDomain(name)
 		);
 		const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 		const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
+		const stablecoinsBalance = stablecoins.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 		const balance = walletBalance + depositedBalance;
-		const balances = { walletBalance, depositedBalance, balance };
+		const balances = { walletBalance, depositedBalance, balance, stablecoinsBalance };
 		AsyncStorage.setItem('@balances', JSON.stringify(balances));
 
 		return {
@@ -77,13 +78,15 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 			walletBalance,
 			interestTokens,
 			depositableTokens,
-			withdrawableTokens
+			withdrawableTokens,
+			stablecoins,
+			stablecoinsBalance
 		};
 	} catch (error) {
 		Logger.error('Error loading tokens', error);
 
 		const balances = await AsyncStorage.getItem('@balances');
-		const { walletBalance, depositedBalance, balance } = JSON.parse(balances || '{}');
+		const { walletBalance, depositedBalance, balance, stablecoinsBalance } = JSON.parse(balances || '{}');
 
 		return {
 			address,
@@ -91,9 +94,11 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 			balance: balance || 0,
 			depositedBalance: depositedBalance || 0,
 			walletBalance: walletBalance || 0,
+			stablecoinsBalance: stablecoinsBalance || 0,
 			interestTokens: [],
 			depositableTokens: [],
-			withdrawableTokens: []
+			withdrawableTokens: [],
+			stablecoins: []
 		};
 	}
 };

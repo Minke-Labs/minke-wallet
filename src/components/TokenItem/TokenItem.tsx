@@ -8,27 +8,15 @@ import { Tag } from './Tag/Tag';
 
 interface TokenItemProps {
 	token: TokenType;
-	name: string;
+	name?: string;
 	symbol: string;
 	subtitle: string;
-	rightValue?: string;
-	rightBottomValueUSd?: number;
-	rightValueUSD?: number;
+	balance?: string;
+	balanceUSD?: number;
 	perc?: number;
 }
 
-const TokenItem: React.FC<TokenItemProps> = (
-	{
-		token,
-		name,
-		symbol,
-		subtitle,
-		rightValue,
-		rightValueUSD,
-		perc,
-		rightBottomValueUSd
-	}
-) => (
+const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, subtitle, balance, balanceUSD, perc }) => (
 	<View row main="space-between">
 		<View row>
 			<Token name={token} size={39} />
@@ -36,11 +24,11 @@ const TokenItem: React.FC<TokenItemProps> = (
 			<View>
 				<View row cross="center">
 					<Text type="lLarge" weight="semiBold">
-						{name}
+						{name || symbol}
 					</Text>
 					<View mr="xxs" />
 					<Text type="bSmall" color="text3">
-						{symbol}
+						{name ? symbol : ''}
 					</Text>
 				</View>
 				<Text type="lSmall" weight="semiBold">
@@ -52,27 +40,26 @@ const TokenItem: React.FC<TokenItemProps> = (
 		{!!perc && <Tag perc={perc} />}
 
 		<View main="center">
-			{(!rightValue && !rightValueUSD) ? (
-				<Text type="lLarge" weight="semiBold" color="cta1">
-					+ Buy
-				</Text>
-			) : (
+			{!!balance && !!balanceUSD && (
 				<View cross="flex-end">
-					{!!rightValue && (
+					<>
 						<Text type="lLarge" weight="semiBold">
-							{tokenBalanceFormat(rightValue, 4)}
+							{tokenBalanceFormat(balance, 4)}
 						</Text>
-					)}
-					{!!rightBottomValueUSd && (
 						<Text type="bDetail" color="text3">
-							{numberFormat(rightBottomValueUSd)}
+							{numberFormat(balanceUSD)}
 						</Text>
-					)}
+					</>
 				</View>
 			)}
-			{!!rightValueUSD && (
+			{!!balance && !balanceUSD && (
 				<Text type="lLarge" weight="semiBold">
-					{numberFormat(rightValueUSD)}
+					{tokenBalanceFormat(balance, 4)}
+				</Text>
+			)}
+			{!!balanceUSD && !balance && (
+				<Text type="lLarge" weight="semiBold">
+					{numberFormat(balanceUSD)}
 				</Text>
 			)}
 		</View>
