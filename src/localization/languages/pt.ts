@@ -720,8 +720,9 @@ export default {
 		}
 	},
 	WelcomeScreen: {
+		referral_code_applied: 'Código de indicação aplicado',
 		wave_goodbye: 'Diga olá para um dinheiro melhor!',
-		easily: 'Envie, economize e invista facilmente com a Minke',
+		easily: 'Economize, gaste e invista facilmente com a Minke',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
 		import_or_restore: 'Importar Carteira',
@@ -912,6 +913,9 @@ export default {
 		}
 	},
 	Components: {
+		GenericPayButton: {
+			debit_credit: 'Cartão de Débito/Crédito'
+		},
 		BlankStates: {
 			NFT: 'NFTs',
 			WalletAssets: 'Carteira',

@@ -6,15 +6,20 @@ import { countries } from '@styles';
 import { getWalletOrderQuotation } from '@models/wyre';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { MinkeToken } from '@models/types/token.types';
+import { TopupToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
+import { buyQuote } from '@src/services/apis/moonpay/moonpay';
+import { MOONPAY_API_KEY, MOONPAY_BUY_URL, MOONPAY_SECRET_KEY } from '@env';
+import crypto from 'crypto';
+import * as qs from 'qs';
+import * as Linking from 'expo-linking';
 
 const useAddFundsScreen = () => {
 	const { address, network } = useState(globalWalletState()).value;
 	const { topUpTokens, nativeToken } = network;
 	const [currency, setCurrency] = React.useState<Currency>();
-	const [token, setToken] = React.useState<MinkeToken>();
+	const [token, setToken] = React.useState<TopupToken>();
 	const [currencySearchVisible, setCurrencySearchVisible] = React.useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = React.useState(false);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
@@ -26,9 +31,14 @@ const useAddFundsScreen = () => {
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();
-	const useApplePay = currency && providers.wyre.includes(currency);
-	const useBanxa = !useApplePay && currency && providers.banxa.includes(currency);
-	const showApplePay = useApplePay && Platform.OS === 'ios';
+	const useApplePay = Platform.OS === 'ios' && currency && providers.wyre.includes(currency);
+	const useBanxa = currency && providers.banxa.includes(currency);
+	const useMoonpay =
+		currency &&
+		!useBanxa &&
+		(!useApplePay || ['BRL', 'CAD', 'EUR'].includes(currency.code)) &&
+		providers.moonpay.includes(currency);
+	const moonPaySpecialButton = useMoonpay && ['BRL', 'CAD', 'EUR'].includes(currency.code);
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
 	const { track } = useAmplitude();
@@ -51,17 +61,18 @@ const useAddFundsScreen = () => {
 		Keyboard.dismiss();
 		const value = fiat ? +fiatAmount! : +tokenAmount!;
 		const { code } = currency!;
+		const { symbol, wyreSymbol } = token!;
 		track('Started Apple Pay Payment', { currency: code, value });
 		onPurchase({
 			sourceCurrency: code,
-			destCurrency: token!.symbol,
+			destCurrency: wyreSymbol || symbol,
 			value,
 			fiat,
 			country: countryIso
 		});
 	};
 
-	const onOnrampPurchase = async () => {
+	const onOnrampBanxaPurchase = async () => {
 		const { country: currencyCountry, code } = currency!;
 		const { symbol } = token!;
 		const locationCountry = banxaCountries.find(({ iso }) => iso === currencyCountry);
@@ -91,6 +102,34 @@ const useAddFundsScreen = () => {
 		setLoadingPrices(false);
 	};
 
+	const onMoonpayPurchase = async () => {
+		const { code } = currency!;
+		const { symbol } = token!;
+
+		setLoadingPrices(true);
+		const apiKey = MOONPAY_API_KEY || process.env.MOONPAY_API_KEY;
+		const params = {
+			apiKey,
+			currencyCode: symbol,
+			walletAddress: address,
+			baseCurrencyCode: code,
+			baseCurrencyAmount: fiat ? fiatAmount : undefined,
+			quoteCurrencyAmount: fiat ? undefined : tokenAmount,
+			lockAmount: true,
+			language: i18n.locale,
+			redirectURL: Linking.createURL('/moonpayWaitScreen')
+		};
+
+		const query = `?${qs.stringify(params)}`;
+		const host = MOONPAY_BUY_URL || process.env.MOONPAY_BUY_URL;
+		const originalUrl = `${host}${query}`;
+		const secret = MOONPAY_SECRET_KEY || process.env.MOONPAY_SECRET_KEY;
+		const signature = crypto.createHmac('sha256', secret!).update(query).digest('base64');
+		const urlWithSignature = `${originalUrl}&signature=${encodeURIComponent(signature)}`;
+		setOrderLink(urlWithSignature);
+		setLoadingPrices(false);
+	};
+
 	const dismissCurrencySearch = () => setCurrencySearchVisible(false);
 	const dismissTokenSearch = () => setTokenSearchVisible(false);
 
@@ -110,7 +149,7 @@ const useAddFundsScreen = () => {
 		dismissCurrencySearch();
 	};
 
-	const selectToken = (t: MinkeToken) => {
+	const selectToken = (t: TopupToken) => {
 		setToken(t);
 		dismissTokenSearch();
 	};
@@ -132,7 +171,7 @@ const useAddFundsScreen = () => {
 				const quotation = await getWalletOrderQuotation({
 					sourceAmount: +formatedValue,
 					destAmount: undefined,
-					destCurrency: token.symbol,
+					destCurrency: token.wyreSymbol || token.symbol,
 					accountAddress: address,
 					network,
 					country: countryIso,
@@ -149,9 +188,26 @@ const useAddFundsScreen = () => {
 					setFiatAmount(formatedValue);
 				}
 				setLoadingPrices(false);
-			}
-
-			if (useBanxa) {
+			} else if (useMoonpay) {
+				setLoadingPrices(true);
+				const params = {
+					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
+					quoteCurrencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
+					baseCurrencyCode: currency.code.toLowerCase(),
+					baseCurrencyAmount: formatedValue,
+					quoteCurrencyAmount: undefined,
+					areFeesIncluded: true
+				};
+				const { message, quoteCurrencyAmount } = await buyQuote(params);
+				if (message) {
+					addError(message);
+					setTokenAmount('');
+				} else {
+					setTokenAmount(quoteCurrencyAmount.toString());
+					setFiatAmount(formatedValue);
+				}
+				setLoadingPrices(false);
+			} else if (useBanxa) {
 				setLoadingPrices(true);
 				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
 				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
@@ -189,7 +245,7 @@ const useAddFundsScreen = () => {
 				setLoadingPrices(true);
 				const quotation = await getWalletOrderQuotation({
 					sourceAmount: undefined,
-					destCurrency: token.symbol,
+					destCurrency: token.wyreSymbol || token.symbol,
 					accountAddress: address,
 					network,
 					destAmount: +formatedValue,
@@ -205,9 +261,28 @@ const useAddFundsScreen = () => {
 					setTokenAmount(formatedValue);
 				}
 				setLoadingPrices(false);
-			}
+			} else if (useMoonpay) {
+				setLoadingPrices(true);
+				const params = {
+					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
+					quoteCurrencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
+					baseCurrencyCode: currency.code.toLowerCase(),
+					baseCurrencyAmount: undefined,
+					quoteCurrencyAmount: formatedValue,
+					areFeesIncluded: true
+				};
 
-			if (useBanxa) {
+				const { message, totalAmount } = await buyQuote(params);
+
+				if (message) {
+					addError(message);
+					setFiatAmount('');
+				} else {
+					setFiatAmount(totalAmount.toString());
+					setTokenAmount(formatedValue);
+				}
+				setLoadingPrices(false);
+			} else if (useBanxa) {
 				setLoadingPrices(true);
 				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
 				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
@@ -233,8 +308,9 @@ const useAddFundsScreen = () => {
 	const paymentEnabled =
 		!loadingPrices && token && currency && fiatAmount && tokenAmount && +fiatAmount > 0 && +tokenAmount > 0;
 
-	const disableApplePay = !(showApplePay && paymentEnabled);
+	const disableApplePay = !(useApplePay && paymentEnabled);
 	const disableBanxa = !paymentEnabled;
+	const disableMoonPay = !disableBanxa && !paymentEnabled;
 
 	useEffect(() => {
 		let defaultCurrency = currencies.find((c) => c.country === countryCode);
@@ -297,13 +373,18 @@ const useAddFundsScreen = () => {
 		fiatAmount,
 		error,
 		setError,
-		showApplePay,
 		disableApplePay,
 		onApplePayPurchase,
 		disableBanxa,
-		onOnrampPurchase,
+		onOnrampBanxaPurchase,
 		orderLink,
-		setOrderLink
+		setOrderLink,
+		useApplePay,
+		useBanxa,
+		useMoonpay,
+		disableMoonPay,
+		onMoonpayPurchase,
+		moonPaySpecialButton
 	};
 };
 

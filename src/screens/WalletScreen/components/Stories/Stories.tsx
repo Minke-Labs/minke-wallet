@@ -202,7 +202,7 @@ const Stories: React.FC = () => {
 	const { state } = useWalletState();
 	const { i18n, language, languages } = useLanguage();
 	const { address: walletAddress } = state.value;
-	const [toggle, setToggle] = useState(false);
+	const [toggle, setToggle] = useState(true);
 	const scheme = useColorScheme();
 	const rowRef = useRef<StorytellerRowView>(null);
 	const apiKey =

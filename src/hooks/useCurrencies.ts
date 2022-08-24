@@ -1,7 +1,7 @@
 import { Currency } from '@models/types/currency.types';
 import { useEffect, useState } from 'react';
-// import { getCurrencies } from '@src/services/apis';
-// import { fiatCurrencies } from '@models/currency';
+import { getCurrencies } from '@src/services/apis';
+import { fiatCurrencies } from '@models/currency';
 import { availableFiatCurrencies } from '@models/wyre';
 import { availableFiatCurrencies as banxaAvailableFiatCurrencies } from '@models/banxa';
 import { Platform } from 'react-native';
@@ -18,9 +18,9 @@ const useCurrencies = () => {
 
 	useEffect(() => {
 		const fetchCurrencies = async () => {
-			// const moonpayCurrencies = await getCurrencies();
-			// const enabled = moonpayCurrencies.filter(({ type }) => type === 'fiat');
-			const moonpay: Currency[] = []; // enabled.map(({ code }) => fiatCurrencies[code.toUpperCase()]);
+			const moonpayCurrencies = await getCurrencies();
+			const enabled = moonpayCurrencies.filter(({ type }) => type === 'fiat');
+			const moonpay = enabled.map(({ code }) => fiatCurrencies[code.toUpperCase()]);
 			const wyre = Platform.OS === 'android' ? [] : Object.values(availableFiatCurrencies);
 			const banxa = Object.values(banxaAvailableFiatCurrencies);
 			const fiat: CurrencyProvider = { moonpay, wyre, banxa };

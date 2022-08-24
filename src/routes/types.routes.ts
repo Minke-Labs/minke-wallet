@@ -44,5 +44,6 @@ export type RootStackParamList = {
 	ImportWalletScreen: undefined;
 	AddFundsScreen: undefined;
 	TransactionScreen: { transaction: ZapperTransaction };
+	MoonpayWaitScreen: { transactionId: string };
 	Test: undefined;
 };

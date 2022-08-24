@@ -718,8 +718,9 @@ export default {
 		}
 	},
 	WelcomeScreen: {
-		wave_goodbye: 'Wave hello to better money!',
-		easily: 'Easily send, save and invest with Minke',
+		referral_code_applied: 'Referral code applied',
+		wave_goodbye: 'Wave hello\nto better money!',
+		easily: 'Easily save, spend and invest with Minke',
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import Wallet',
@@ -785,7 +786,7 @@ export default {
 			EarnModal: {
 				earn_minke_points: 'Earn Minke points!',
 				refer_a_friend: 'Refer a friend',
-				when_your_friends_top_up: 'When your friend tops up 100 USDC both get 100 Minke points.',
+				when_your_friends_top_up: 'When your friend buys 100 USDC you both get 100 Minke points.',
 				top_up: 'Top-up',
 				get_rewarded: 'Get rewarded for saving money!',
 				coming_soon: '(Coming soon)',
@@ -813,7 +814,7 @@ export default {
 		or: 'or',
 		refer_a_friend: 'Refer a friend',
 		referral_note:
-			'This code can only be used once. After topping-up 100 USDC you and your friend will get each 100 Minke points.',
+			'This code can only be used once. After buying 100 USDC you and your friend will get each 100 Minke points.',
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
@@ -908,6 +909,9 @@ export default {
 		}
 	},
 	Components: {
+		GenericPayButton: {
+			debit_credit: 'Debit/Credit card'
+		},
 		BlankStates: {
 			NFT: 'NFTs',
 			WalletAssets: 'Wallet',
