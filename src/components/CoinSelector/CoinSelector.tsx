@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLanguage, useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { TokenType } from '@styles';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import styles from './CoinSelector.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';

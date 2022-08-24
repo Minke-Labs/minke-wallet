@@ -41,7 +41,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					<Text>{address}</Text>
 				</View>
 
-				<NetworkWarning.Tag />
+				<NetworkWarning.Tag title={i18n.t('WalletScreen.Modals.ReceiveModal.sending_on')} />
 
 				<WhiteButton
 					title={i18n.t('Components.Buttons.share')}

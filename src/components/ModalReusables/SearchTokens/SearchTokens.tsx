@@ -3,7 +3,8 @@ import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useTokens } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
-import { paraswapTokens, exchangebleTokens, MinkeToken } from '@models/token';
+import { paraswapTokens, exchangebleTokens } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import ModalHeader from '../../ModalHeader/ModalHeader';
@@ -109,7 +110,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 	return (
 		<SafeAreaView>
-			<ModalHeader {...{ onDismiss }} onBack={onDismiss} />
+			<ModalHeader {...{ onDismiss }} />
 			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
 				<SearchInput
 					marginBottom={24}

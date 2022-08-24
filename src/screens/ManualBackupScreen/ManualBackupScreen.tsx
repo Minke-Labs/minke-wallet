@@ -25,7 +25,6 @@ const ManualBackupScreen = ({ route }: Props) => {
 	const seed = useState(loadSeed);
 	const { country } = useCountry();
 	if (seed.promised) return <ScreenLoadingIndicator />;
-	RNUxcam.tagScreenName('ManualBackupScreen');
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(seed.value || '');

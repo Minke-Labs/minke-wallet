@@ -8,8 +8,8 @@ import { useApp } from './App.hooks';
 import { Providers } from './Providers';
 
 const App = () => {
-	const { walletState, coinList, fontsLoaded } = useApp();
-	if (!coinList || !fontsLoaded || walletState.promised) return <AppLoading />;
+	const { walletState, fontsLoaded } = useApp();
+	if (!fontsLoaded || walletState.promised) return <AppLoading />;
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>

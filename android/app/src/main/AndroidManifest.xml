@@ -9,6 +9,7 @@
   <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW"/>
@@ -38,7 +39,7 @@
       android:windowSoftInputMode="adjustResize"
       android:theme="@style/Theme.App.SplashScreen"
       android:screenOrientation="portrait"
-			android:exported="true"
+      android:exported="true"
     >
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>

@@ -14,7 +14,7 @@ import { BalanceApiResponse } from './covalent.types';
 
 const instance = axios.create({
 	baseURL: 'https://api.covalenthq.com/v1',
-	timeout: 5000,
+	timeout: 15000,
 	headers: { 'Content-Type': 'application/json' },
 	params: {
 		'quote-currency': 'USD',

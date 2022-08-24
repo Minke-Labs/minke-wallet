@@ -98,7 +98,7 @@ export const GasSelected = () => {
 	}, [gasPrice]);
 
 	return (
-		<Paper padding={16}>
+		<Paper padding={16} margin={16}>
 			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<GasOptionInner type={selectedType!} gasPrice={gasPrice!} usdPrice={usdPrice!} waiting={waiting()} />
 			</View>

@@ -16,7 +16,7 @@ import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { debounce } from 'lodash';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import Warning from '../ExchangeScreen/Warning/Warning';
 import useWithdrawScreen from './WithdrawScreen.hooks';
 import styles from './WithdrawScreen.styles';
@@ -55,13 +55,8 @@ const WithdrawScreen = () => {
 			<BasicLayout>
 				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
-				<Paper padding={16} marginBottom={42}>
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+				<Paper padding={16} marginBottom={42} margin={16}>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>

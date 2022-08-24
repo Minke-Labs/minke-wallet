@@ -17,7 +17,7 @@ const Card: React.FC<{ type: AppTourStepType }> = ({ children, type }) => {
 	const { dismiss } = useContext(AppTourContext);
 
 	return (
-		<Paper padding={24}>
+		<Paper padding={24} margin={16}>
 			<StepIndicator type={type} />
 			{children}
 			<TouchableOpacity onPress={dismiss} style={styles.close}>

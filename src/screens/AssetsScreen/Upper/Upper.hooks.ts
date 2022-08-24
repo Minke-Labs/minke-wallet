@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
 import { useVector } from 'react-native-redash';
-import { getTokenHistory, MinkeToken } from '@models/token';
+import { getTokenHistory } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { GraphIndex } from './Upper.types';
 
 export const useUpper = (coin: MinkeToken) => {

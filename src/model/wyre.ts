@@ -1,7 +1,7 @@
 // @ts-expect-error
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
 import { captureException } from '@sentry/react-native';
-import { get, split } from 'lodash';
+import { get, pick, split } from 'lodash';
 import {
 	WYRE_MERCHANT_ID_TEST,
 	WYRE_MERCHANT_ID,
@@ -13,9 +13,8 @@ import {
 import { WyreReferenceInfo } from '@stores/TopUpStore';
 import { Network } from './network';
 import { ApplePayResponse } from './types/wyre.types';
-
-const SOURCE_CURRENCY_USD = 'USD';
-const PAYMENT_PROCESSOR_COUNTRY_CODE = 'US';
+import { Currency } from './types/currency.types';
+import { fiatCurrencies } from './currency';
 
 const WYRE_ENDPOINT_TEST = 'https://api.testwyre.com';
 const WYRE_ENDPOINT = 'https://api.sendwyre.com';
@@ -38,16 +37,32 @@ const wyreApi = {
 };
 
 const getBaseUrl = ({ testnet }: Network) => (testnet ? WYRE_ENDPOINT_TEST : WYRE_ENDPOINT);
-// @ts-expect-error
-const getWyrePaymentDetails = (sourceAmount, destCurrency, networkFee, purchaseFee, totalAmount) => {
+
+const getWyrePaymentDetails = ({
+	sourceAmount,
+	destAmount,
+	sourceCurrency,
+	destCurrency,
+	networkFee,
+	purchaseFee,
+	totalAmount
+}: {
+	sourceAmount: number;
+	destAmount: number;
+	sourceCurrency: string;
+	destCurrency: string;
+	networkFee: number;
+	purchaseFee: number;
+	totalAmount: number;
+}) => {
 	const items = {
 		displayItems: [
 			{
-				amount: { currency: SOURCE_CURRENCY_USD, value: sourceAmount },
-				label: destCurrency
+				amount: { currency: sourceCurrency, value: sourceAmount - purchaseFee },
+				label: `${destAmount} ${destCurrency}`
 			},
 			{
-				amount: { currency: SOURCE_CURRENCY_USD, value: purchaseFee },
+				amount: { currency: sourceCurrency, value: purchaseFee },
 				label: 'Purchase Fee'
 			}
 		],
@@ -55,28 +70,39 @@ const getWyrePaymentDetails = (sourceAmount, destCurrency, networkFee, purchaseF
 		id: 'minke-wyre',
 
 		total: {
-			amount: { currency: SOURCE_CURRENCY_USD, value: totalAmount },
+			amount: { currency: sourceCurrency, value: totalAmount },
 			label: 'Minke'
 		}
 	};
 
 	if (networkFee > 0) {
 		items.displayItems.push({
-			amount: { currency: SOURCE_CURRENCY_USD, value: networkFee },
+			amount: { currency: sourceCurrency, value: networkFee },
 			label: 'Network Fee'
 		});
 	}
 	return items;
 };
 
-export const showApplePayRequest = async (
-	referenceInfo: WyreReferenceInfo,
-	destCurrency: any,
-	sourceAmountWithFees: any,
-	purchaseFee: any,
-	sourceAmount: any,
-	network: Network
-): Promise<ApplePayResponse> => {
+export const showApplePayRequest = async ({
+	sourceCurrency,
+	destCurrency,
+	destAmount,
+	sourceAmountWithFees,
+	purchaseFee,
+	sourceAmount,
+	network,
+	country
+}: {
+	sourceCurrency: string;
+	destCurrency: string;
+	sourceAmountWithFees: number;
+	purchaseFee: number;
+	sourceAmount: number;
+	destAmount: number;
+	network: Network;
+	country: string;
+}): Promise<ApplePayResponse> => {
 	const feeAmount = sourceAmountWithFees - sourceAmount;
 	const networkFee = feeAmount - purchaseFee;
 
@@ -85,8 +111,8 @@ export const showApplePayRequest = async (
 	const methodData = [
 		{
 			data: {
-				countryCode: PAYMENT_PROCESSOR_COUNTRY_CODE,
-				currencyCode: SOURCE_CURRENCY_USD,
+				countryCode: country,
+				currencyCode: sourceCurrency,
 				merchantIdentifier,
 				supportedNetworks: ['visa', 'mastercard', 'discover']
 			},
@@ -94,13 +120,15 @@ export const showApplePayRequest = async (
 		}
 	];
 
-	const paymentDetails = getWyrePaymentDetails(
+	const paymentDetails = getWyrePaymentDetails({
 		sourceAmount,
-		destCurrency,
+		destAmount,
+		sourceCurrency,
+		destCurrency: destCurrency === 'MUSDC' ? 'USDC' : destCurrency,
 		networkFee,
 		purchaseFee,
-		sourceAmountWithFees
-	);
+		totalAmount: sourceAmountWithFees
+	});
 
 	const paymentOptions = {
 		requestBilling: true,
@@ -122,23 +150,37 @@ export const showApplePayRequest = async (
 	}
 };
 
-export const getWalletOrderQuotation = async (
-	amount: any,
-	destCurrency: any,
-	accountAddress: any,
-	network: Network
-) => {
+export const getWalletOrderQuotation = async ({
+	sourceAmount,
+	destCurrency,
+	accountAddress,
+	network,
+	destAmount,
+	country,
+	sourceCurrency
+}: {
+	sourceAmount: number | undefined;
+	destCurrency: string;
+	accountAddress: string;
+	network: Network;
+	destAmount: number | undefined;
+	country: string;
+	sourceCurrency: string;
+}) => {
 	const partnerId = network.testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	const dest = `${network.wyreSRN}:${accountAddress}`;
 	const data = {
 		accountId: partnerId,
-		amount,
-		country: PAYMENT_PROCESSOR_COUNTRY_CODE,
+		country,
 		dest,
 		destCurrency,
-		sourceCurrency: SOURCE_CURRENCY_USD,
-		walletType: 'APPLE_PAY'
+		sourceCurrency,
+		walletType: 'APPLE_PAY',
+		amountIncludeFees: !!sourceAmount,
+		sourceAmount,
+		destAmount
 	};
+
 	const baseUrl = getBaseUrl(network);
 	const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
 	const headers = {
@@ -147,33 +189,49 @@ export const getWalletOrderQuotation = async (
 		Authorization: `Bearer ${wyreAuthToken}`
 	};
 	const response = await wyreApi.post(`${baseUrl}/v3/orders/quote/partner`, data, headers);
-	const purchaseFee = response?.fees[SOURCE_CURRENCY_USD];
-	return {
-		purchaseFee,
-		sourceAmountWithFees: response?.sourceAmount
-	};
+	if (response.fees) {
+		const purchaseFee = response?.fees[sourceCurrency];
+		return {
+			purchaseFee,
+			sourceAmountWithFees: response?.sourceAmount,
+			destAmount: response?.destAmount
+		};
+	}
+	const { errorCode, message } = response;
+	return { errorCode, message };
 };
 
-export const reserveWyreOrder = async (
-	amount: any,
-	destCurrency: any,
-	accountAddress: any,
-	network: Network,
-	paymentMethod = null
-) => {
+export const reserveWyreOrder = async ({
+	sourceAmount,
+	destAmount,
+	destCurrency,
+	sourceCurrency,
+	accountAddress,
+	network,
+	country
+}: {
+	sourceAmount: number | undefined;
+	destAmount: number | undefined;
+	destCurrency: string;
+	sourceCurrency: string;
+	accountAddress: string;
+	network: Network;
+	paymentMethod?: string;
+	country: string;
+}) => {
 	const partnerId = network.testnet ? WYRE_ACCOUNT_ID_TEST : WYRE_ACCOUNT_ID;
 	const dest = `${network.wyreSRN}:${accountAddress}`;
 	const data = {
-		amount,
+		sourceAmount,
 		dest,
 		destCurrency,
 		referrerAccountId: partnerId,
-		sourceCurrency: SOURCE_CURRENCY_USD
+		sourceCurrency,
+		amountIncludeFees: !!sourceAmount,
+		country,
+		paymentMethod: 'apple-pay',
+		destAmount
 	};
-	if (paymentMethod) {
-		// @ts-expect-error
-		data.paymentMethod = paymentMethod;
-	}
 
 	const baseUrl = getBaseUrl(network);
 	const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
@@ -221,15 +279,26 @@ const getAddressDetails = (addressInfo: any) => {
 	};
 };
 
-const createPayload = (
-	referenceInfo: WyreReferenceInfo,
-	paymentResponse: any,
-	amount: any,
-	accountAddress: any,
-	destCurrency: any,
-	{ testnet, wyreSRN }: Network,
-	reservationId: any
-) => {
+const createPayload = ({
+	referenceInfo,
+	paymentResponse,
+	amount,
+	accountAddress,
+	destCurrency,
+	sourceCurrency,
+	network,
+	reservationId
+}: {
+	referenceInfo: WyreReferenceInfo;
+	paymentResponse: any;
+	amount: number;
+	accountAddress: string;
+	destCurrency: string;
+	sourceCurrency: string;
+	network: Network;
+	reservationId: any;
+}) => {
+	const { testnet, wyreSRN } = network;
 	const dest = `${wyreSRN}:${accountAddress}`;
 
 	const {
@@ -259,7 +328,7 @@ const createPayload = (
 				referenceId: referenceInfo.referenceId,
 				referrerAccountId: partnerId,
 				reservationId,
-				sourceCurrency: SOURCE_CURRENCY_USD
+				sourceCurrency
 			},
 			paymentObject: {
 				billingContact,
@@ -277,24 +346,35 @@ const createPayload = (
 	};
 };
 
-export const getOrderId = async (
-	referenceInfo: WyreReferenceInfo,
-	paymentResponse: any,
-	amount: any,
-	accountAddress: any,
-	destCurrency: any,
-	network: any,
-	reservationId: any
-) => {
-	const data = createPayload(
+export const getOrderId = async ({
+	referenceInfo,
+	paymentResponse,
+	amount,
+	accountAddress,
+	destCurrency,
+	sourceCurrency,
+	network,
+	reservationId
+}: {
+	referenceInfo: WyreReferenceInfo;
+	paymentResponse: any;
+	amount: any;
+	accountAddress: any;
+	destCurrency: any;
+	sourceCurrency: any;
+	network: any;
+	reservationId: any;
+}) => {
+	const data = createPayload({
 		referenceInfo,
 		paymentResponse,
 		amount,
 		accountAddress,
+		sourceCurrency,
 		destCurrency,
 		network,
 		reservationId
-	);
+	});
 	try {
 		const baseUrl = getBaseUrl(network);
 		const wyreAuthToken = network.testnet ? WYRE_TOKEN_TEST : WYRE_TOKEN;
@@ -328,3 +408,36 @@ export const getOrderId = async (
 		};
 	}
 };
+
+export const availableFiatCurrencies: { [key: string]: Currency } = pick(
+	fiatCurrencies,
+	'USD',
+	'EUR',
+	'GBP',
+	'AUD',
+	'CAD',
+	'CZK',
+	'NZD',
+	'ARS',
+	'BRL',
+	'CHF',
+	'CLP',
+	'COP',
+	'DKK',
+	'HKD',
+	'ILS',
+	'INR',
+	'ISK',
+	'JPY',
+	'KRW',
+	'MXN',
+	'MYR',
+	'NOK',
+	'PHP',
+	'PLN',
+	'SEK',
+	'SGD',
+	'THB',
+	'VND',
+	'ZAR'
+);

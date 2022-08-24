@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { decimalSeparator } from 'expo-localization';
-import { MinkeToken } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 
 interface UseTokenCardProps {
 	token: MinkeToken | undefined;
@@ -62,7 +62,7 @@ export const useTokenCard = ({ updateQuotes, token, conversionAmount, disableMax
 	}, [balance]);
 
 	const isMaxEnabled = !disableMax && token && balance;
-	const invalidAmount = isMaxEnabled && +balance < +amount.replace(/,/g, '.');
+	const invalidAmount = +balance < +amount.replace(/,/g, '.');
 
 	return {
 		amount,

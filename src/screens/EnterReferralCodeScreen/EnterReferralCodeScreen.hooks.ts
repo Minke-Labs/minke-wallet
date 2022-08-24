@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createReferral, getUsedReferralCode } from '@src/services/apis';
 import { globalWalletState } from '@stores/WalletStore';
@@ -32,19 +32,12 @@ const useEnterReferralCodeScreen = () => {
 		fetchCodeInUse();
 	}, [address]);
 
-	const formatCode = useCallback(
-		(t: string) => {
-			setCode(t.toUpperCase());
-		},
-		[setCode]
-	);
-
 	const invalidCode = !code || code.length !== CODE_LENGTH;
 
 	const onConfirm = async () => {
 		if (code && !invalidCode) {
 			setLoading(true);
-			const referral = await createReferral(address, code);
+			const referral = await createReferral(address, code.toUpperCase());
 			const { error, referral_code: referralCode } = referral;
 
 			if (error) {
@@ -63,7 +56,7 @@ const useEnterReferralCodeScreen = () => {
 
 	return {
 		code,
-		setCode: formatCode,
+		setCode,
 		invalidCode,
 		onConfirm,
 		loading,

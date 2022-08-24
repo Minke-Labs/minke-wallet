@@ -1,6 +1,8 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
 import AssetsScreen from './AssetsScreen/AssetsScreen';
 import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
+import NFTScreen from './NFTScreen/NFTScreen';
+import NFTDetailScreen from './NFTDetailScreen/NFTDetailScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
 import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
@@ -29,13 +31,17 @@ import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCode
 import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
 import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
 import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
+import AddFundsScreen from './AddFundsScreen/AddFundsScreen';
 import TransactionScreen from './TransactionScreen/TransactionScreen';
+import MoonpayWaitScreen from './TopUpWaitScreen/Moonpay/MoonpayWaitScreen';
 import Test from './Test/Test';
 
 const screensObj = {
 	AccountsScreen,
 	AssetsScreen,
 	ManualBackupScreen,
+	NFTScreen,
+	NFTDetailScreen,
 	BackupSettingsScreen,
 	ChangeLanguageScreen,
 	BackupStatusScreen,
@@ -64,7 +70,9 @@ const screensObj = {
 	TransferWaitScreen,
 	DevSettingsScreen,
 	ImportWalletScreen,
+	AddFundsScreen,
 	TransactionScreen,
+	MoonpayWaitScreen,
 	Test
 };
 

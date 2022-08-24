@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { NativeTokens, nativeTokens, MinkeToken } from '@models/token';
+import { NativeTokens, nativeTokens } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from 'ethers';

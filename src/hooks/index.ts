@@ -26,6 +26,8 @@ import usePrevious from './usePrevious';
 import useWalletState from './useWalletState';
 import useMinkeRewards from './useMinkeRewards';
 import useWalletManagement from './useWalletManagement';
+import useCurrencies from './useCurrencies';
+import useNFT from './useNFT';
 
 export {
 	useCountry,
@@ -55,5 +57,7 @@ export {
 	useFirstTime,
 	usePrevious,
 	useMinkeRewards,
-	useWalletManagement
+	useWalletManagement,
+	useCurrencies,
+	useNFT
 };

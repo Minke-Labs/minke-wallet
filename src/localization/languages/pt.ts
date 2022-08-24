@@ -23,113 +23,113 @@ export default {
 		}
 	},
 	LocationContext: {
-		AUT: {
+		AT: {
 			name: 'Áustria',
 			currencyName: 'Euro'
 		},
-		BEL: {
+		BE: {
 			name: 'Bélgica',
 			currencyName: 'Euro'
 		},
-		BGR: {
+		BG: {
 			name: 'Bulgária',
-			currencyName: 'Euro'
+			currencyName: 'Lev Búlgaro'
 		},
-		HRV: {
+		HR: {
 			name: 'Croácia',
-			currencyName: 'Euro'
+			currencyName: 'Kuna Croata'
 		},
 		CY: {
 			name: 'Chipre',
 			currencyName: 'Euro'
 		},
-		CZE: {
+		CZ: {
 			name: 'República Tcheca',
-			currencyName: 'Euro'
+			currencyName: 'Coroa Tcheca'
 		},
-		DNK: {
+		DK: {
 			name: 'Dinamarca',
-			currencyName: 'Euro'
+			currencyName: 'Coroa Dinamarquesa'
 		},
-		EST: {
+		EE: {
 			name: 'Estônia',
 			currencyName: 'Euro'
 		},
-		FIN: {
+		FI: {
 			name: 'Finlândia',
 			currencyName: 'Euro'
 		},
-		FRA: {
+		FR: {
 			name: 'França',
 			currencyName: 'Euro'
 		},
-		DEU: {
+		DE: {
 			name: 'Alemanha',
 			currencyName: 'Euro'
 		},
-		GRC: {
+		GR: {
 			name: 'Grécia',
 			currencyName: 'Euro'
 		},
-		HUN: {
-			name: 'Hungária',
-			currencyName: 'Euro'
+		HU: {
+			name: 'Hungria',
+			currencyName: 'Florim Húngaro'
 		},
-		IRL: {
+		IE: {
 			name: 'Irlanda',
 			currencyName: 'Euro'
 		},
-		ITA: {
+		IT: {
 			name: 'Itália',
 			currencyName: 'Euro'
 		},
-		LVA: {
+		LV: {
 			name: 'Letônia',
 			currencyName: 'Euro'
 		},
-		LTU: {
+		LT: {
 			name: 'Lituânia',
 			currencyName: 'Euro'
 		},
-		LUX: {
+		LU: {
 			name: 'Luxemburgo',
 			currencyName: 'Euro'
 		},
-		MLT: {
+		MT: {
 			name: 'Malta',
 			currencyName: 'Euro'
 		},
-		NLD: {
+		NL: {
 			name: 'Países Baixos',
 			currencyName: 'Euro'
 		},
-		POL: {
+		PL: {
 			name: 'Polônia',
-			currencyName: 'Euro'
+			currencyName: 'Zloty'
 		},
-		PRT: {
+		PT: {
 			name: 'Portugal',
 			currencyName: 'Euro'
 		},
-		ROU: {
+		RO: {
 			name: 'Roménia',
-			currencyName: 'Euro'
+			currencyName: 'Leu Romeno'
 		},
-		SVK: {
+		SK: {
 			name: 'Eslováquia',
 			currencyName: 'Euro'
 		},
-		SVN: {
+		SI: {
 			name: 'Eslovênia',
 			currencyName: 'Euro'
 		},
-		ESP: {
+		ES: {
 			name: 'Espanha',
 			currencyName: 'Euro'
 		},
-		SWE: {
+		SE: {
 			name: 'Suécia',
-			currencyName: 'Euro'
+			currencyName: 'Coroa Sueca'
 		},
 		US: {
 			name: 'Estados Unidos',
@@ -139,7 +139,7 @@ export default {
 			name: 'União Europeia',
 			currencyName: 'Euro'
 		},
-		UK: {
+		GB: {
 			name: 'Reino Unido',
 			currencyName: 'Libra Esterlina'
 		},
@@ -155,9 +155,125 @@ export default {
 			name: 'Brasil',
 			currencyName: 'Real Brasileiro'
 		},
-		TUR: {
+		TR: {
 			name: 'Turquia',
 			currencyName: 'Lira Turca'
+		},
+		AR: {
+			name: 'Argentina',
+			currencyName: 'Peso Argentina'
+		},
+		LK: {
+			name: 'Sri Lanka',
+			currencyName: 'Rúpia Cingalesa'
+		},
+		NG: {
+			name: 'Nigéria',
+			currencyName: 'Naira'
+		},
+		PK: {
+			name: 'Paquistão',
+			currencyName: 'Rúpia Paquistanesa'
+		},
+		CH: {
+			name: 'Suíça',
+			currencyName: 'Franco Suíço'
+		},
+		CO: {
+			name: 'Colômbia',
+			currencyName: 'Peso Colombiano'
+		},
+		DO: {
+			name: 'República Dominicana',
+			currencyName: 'Peso Dominicano'
+		},
+		EG: {
+			name: 'Egito',
+			currencyName: 'Libra Egípcia'
+		},
+		HK: {
+			name: 'Hong Kong',
+			currencyName: 'Dólar de Hong Kong'
+		},
+		ID: {
+			name: 'Indonésia',
+			currencyName: 'Rúpia indonésia'
+		},
+		JP: {
+			name: 'Japão',
+			currencyName: 'Yen'
+		},
+		JO: {
+			name: 'Jordânia',
+			currencyName: 'Dinar Jordaniano'
+		},
+		KE: {
+			name: 'Quênia',
+			currencyName: 'Xelim Queniano'
+		},
+		KR: {
+			name: 'Coréia do Sul',
+			currencyName: 'Won Sul-Coreano'
+		},
+		KW: {
+			name: 'Kuwait',
+			currencyName: 'Dinar Kuwaitiano'
+		},
+		MA: {
+			name: 'Marrocos',
+			currencyName: 'Dirham Marroquino'
+		},
+		MX: {
+			name: 'México',
+			currencyName: 'Peso Mexicano'
+		},
+		MY: {
+			name: 'Malásia',
+			currencyName: 'Ringgit Malaio'
+		},
+		NO: {
+			name: 'Noruega',
+			currencyName: 'Coroa Norueguesa'
+		},
+		NZ: {
+			name: 'Nova Zelândia',
+			currencyName: 'Dólar Neozelandês'
+		},
+		OM: {
+			name: 'Omã',
+			currencyName: 'Rial Omanense'
+		},
+		PE: {
+			name: 'Peru',
+			currencyName: 'Sol'
+		},
+		SG: {
+			name: 'Singapura',
+			currencyName: 'Dólar de Singapura'
+		},
+		TH: {
+			name: 'Tailândia',
+			currencyName: 'Bath Tailandês'
+		},
+		TW: {
+			name: 'Taiwan',
+			currencyName: 'Dólar de Taiwan'
+		},
+		VN: {
+			name: 'Vietnam',
+			currencyName: 'Dong'
+		},
+		ZA: {
+			name: 'África do Sul',
+			currencyName: 'Rand Sul-Africano'
+		},
+		IL: {
+			name: 'Israel',
+			currencyName: 'Novo Shekel Israelense'
+		},
+		CN: {
+			name: 'China',
+			currencyName: 'Yuan Chinês'
 		}
 	},
 	AccountsScreen: {
@@ -202,6 +318,27 @@ export default {
 					}
 				}
 			}
+		}
+	},
+	NFTScreen: {
+		assets: 'Ativos',
+		estimated_value: 'Valor estimado',
+		InfoModal: {
+			how_are_valued: 'Como minhas NFTs são avaliadas?',
+			desc: 'Seus NFTs são avaliados com base em uma combinação do preço mínimo da coleção, último preço de venda e atributos únicos individuais.'
+		}
+	},
+	NFTDetailScreen: {
+		by: 'por ',
+		Panel: {
+			floor_price: 'Preço mínimo',
+			last_sale_price: 'Última venda'
+		},
+		view_on_openSea: 'Ver na OpenSea',
+		about: 'Sobre',
+		Expander: {
+			show_less: 'Ver menos',
+			show_more: 'Ver mais'
 		}
 	},
 	BackupSettingsScreen: {
@@ -514,7 +651,10 @@ export default {
 				open_loans: 'Empréstimos em aberto',
 				coming_soon: 'Em breve',
 				points: 'Pontos',
-				points_earned: 'Indique um amigo, receba crypto'
+				points_earned: 'Indique um amigo, receba crypto',
+				nfts: 'NFTs',
+				estimated_value: 'Valor estimado',
+				value: '$29,214.63'
 			},
 			Transactions: {
 				NoTransactionsYet: {
@@ -535,6 +675,7 @@ export default {
 				}
 			},
 			ReceiveModal: {
+				sending_on: 'Enviando na',
 				receive: 'Receber',
 				show_qr: 'Mostre seu código QR ou compartilhe suas informações'
 			},
@@ -653,7 +794,7 @@ export default {
 				get_rewarded: 'Ganhe recompensas por investir!',
 				coming_soon: '(Em breve)',
 				share_text:
-					'Oi! Eu tenho usado Minke para economizar e ganhar 20x mais que no meu banco. Ambos receberemos 100 pontos Minke(~ 10 USD com os quais você pode comprar criptomoedas) quando você se inscrever e fizer seu primeiro depósito de 100 USD ou mais. Meu código é {{code}} - inscreva-se aqui: https://apps.apple.com/pt/app/minke-defi-wallet/id1585144414'
+					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins lastreados em dólar. Ambos receberemos 100 pontos Minke (~ 10 USD com os quais você pode comprar criptomoedas) quando você se inscrever e fizer seu primeiro depósito de 100 USDC ou mais. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
 			}
 		},
 		Body: {
@@ -690,6 +831,16 @@ export default {
 		please_change_network: 'Por favor, mude para a rede {{network}} para usar essa carteira.',
 		Error: {
 			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
+		}
+	},
+	AddFundsScreen: {
+		header: 'Adicionar fundos',
+		you_pay: 'Você paga',
+		you_receive: 'Você recebe',
+		Errors: {
+			validation_snapx_min: 'O valor é menor que o mínimo',
+			exchange_sourceAmountTooSmall: 'O valor é muito pequeno',
+			minimal_topup_amount: 'O valor mínimo é {{amount}} {{currency}}'
 		}
 	},
 	TransactionScreen: {
@@ -751,7 +902,8 @@ export default {
 			SelectorModal: {
 				add_funds: 'Adicionar fundos',
 				buy_crypto: 'Comprar cripto',
-				apple_card_transfer: 'Apple Pay, cartão ou transferência',
+				apple_card_transfer: '{{pay}}, cartão ou transferência',
+				send_from_exchange: 'Enviar da Binance, Coinbase, outras',
 				external: 'Exchange externa'
 			},
 			CustomAmountModal: {
@@ -761,7 +913,11 @@ export default {
 		}
 	},
 	Components: {
+		GenericPayButton: {
+			debit_credit: 'Cartão de Débito/Crédito'
+		},
 		BlankStates: {
+			NFT: 'NFTs',
 			WalletAssets: 'Carteira',
 			Exchange: 'Converter',
 			Save: 'Investir',
@@ -826,7 +982,7 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Enviando na rede {{network}}'
+				sending_on: 'rede {{network}}'
 			}
 		},
 		EmptyStates: {
@@ -844,6 +1000,7 @@ export default {
 			repeat_password: 'Repita a senha',
 			search: 'Procurar',
 			search_token: 'Procurar token',
+			search_currency: 'Procurar moeda',
 			name: 'Nome',
 			ens_or_wallet: 'ENS ou Endereço da Carteira',
 			enter_code: 'Digitar código'
@@ -901,6 +1058,7 @@ export default {
 		},
 		TokenCard: {
 			choose_token: 'Escolha um token',
+			choose_currency: 'Escolha uma moeda',
 			available: 'Disponível'
 		},
 		InterestBanner: {

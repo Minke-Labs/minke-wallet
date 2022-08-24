@@ -5,10 +5,12 @@ import { welcomeImg } from '@images';
 import { Text, Button, LoadingScreen, Icon } from '@components';
 import { useLanguage, useNavigation } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
-import styles from './WelcomeScreen.styles';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
 import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';
+import styles from './WelcomeScreen.styles';
 
 const WelcomeScreen = () => {
 	RNUxcam.tagScreenName('WelcomeScreen');
@@ -16,6 +18,7 @@ const WelcomeScreen = () => {
 	const { onCreateWallet, onImportWallet, loading } = useWelcomeScreen();
 	const navigation = useNavigation();
 	const { disableCode } = useEnterReferralCodeScreen();
+	const { address } = useState(globalWalletState()).value;
 
 	return (
 		<BasicLayout>
@@ -24,12 +27,7 @@ const WelcomeScreen = () => {
 					<Image source={welcomeImg} style={styles.headerImage} />
 
 					<View style={styles.textContainer}>
-						<Text
-							center
-							weight="extraBold"
-							type="hLarge"
-							marginBottom={16}
-						>
+						<Text center weight="extraBold" type="hLarge" marginBottom={16}>
 							{i18n.t('WelcomeScreen.wave_goodbye')}
 						</Text>
 						<Text center color="text2" type="bMedium" width={198}>
@@ -59,11 +57,15 @@ const WelcomeScreen = () => {
 										<Icon name="checkmark" color="cta1" size={20} style={{ marginLeft: 8 }} />
 									</View>
 								) : (
-									<TouchableOpacity onPress={() => navigation.navigate('EnterReferralCodeScreen')}>
-										<Text type="a" weight="semiBold" color="cta1">
-											{i18n.t('WelcomeScreen.i_have_a_referral_code')}
-										</Text>
-									</TouchableOpacity>
+									!!address && (
+										<TouchableOpacity
+											onPress={() => navigation.navigate('EnterReferralCodeScreen')}
+										>
+											<Text type="a" weight="semiBold" color="cta1">
+												{i18n.t('WelcomeScreen.i_have_a_referral_code')}
+											</Text>
+										</TouchableOpacity>
+									)
 								)}
 							</>
 						)}

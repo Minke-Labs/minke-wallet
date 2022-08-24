@@ -1,25 +1,18 @@
 import React from 'react';
 import { Modal, BlankStates } from '@components';
-import { AddFunds } from '@containers';
 import { useDepositProtocols } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
+import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
 import OpenSavings from './OpenSavings/OpenSavings';
 import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
-	const { notAbleToSaveVisible, notAbleToSaveDismiss, addFundsVisible, dismissAddFunds, onAddFunds } =
+	const { notAbleToSaveVisible, notAbleToSaveDismiss, dismissAddFunds, addFundsVisible, onAddFunds } =
 		useDepositScreen();
-	const {
-		setSelectedUSDCoin,
-		depositableToken,
-		selectedProtocol,
-		ableToDeposit,
-		approved,
-		setApproved,
-		apy
-	} = useDepositProtocols();
+	const { setSelectedUSDCoin, depositableToken, selectedProtocol, ableToDeposit, approved, setApproved, apy } =
+		useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
 
 	if (ableToDeposit === undefined) return <BlankStates.Deposit />;

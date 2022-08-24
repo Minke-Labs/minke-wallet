@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@hooks';
-import { getTokenMarketCap, getTokenData, getTokenVolume, MinkeToken } from '@models/token';
+import { getTokenMarketCap, getTokenData, getTokenVolume } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
 
 export const useAssetsScreen = (coin: MinkeToken) => {
 	const { i18n } = useLanguage();

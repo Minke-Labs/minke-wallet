@@ -18,7 +18,8 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	apy,
 	exchange = false,
 	disableAmountValidation = false,
-	disableInput = false
+	disableInput = false,
+	autoFocus = true
 }) => {
 	const styles = makeStyles();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
@@ -30,12 +31,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
 	return (
 		<TouchableOpacity onPress={onPress} style={styles.container}>
-			<CoinSelector
-				token={token}
-				onPress={onPress!}
-				notTouchable={notTouchable}
-				inline={exchange}
-			/>
+			<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
 
 			<View
 				style={
@@ -50,7 +46,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					symbol={token ? token.symbol : ''}
 					isAmountValid={disableAmountValidation || !invalidAmount}
 					placeholder="0.00"
-					autoFocus
+					autoFocus={autoFocus}
 					showSymbol
 					amount={amount}
 					onChangeText={onChangeText}
