@@ -719,8 +719,9 @@ export default {
 		}
 	},
 	WelcomeScreen: {
-		wave_goodbye: 'Wave hello to better money!',
-		easily: 'Easily send, save and invest with Minke',
+		referral_code_applied: 'Referral code applied',
+		wave_goodbye: 'Wave hello\nto better money!',
+		easily: 'Easily save, spend and invest with Minke',
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import Wallet',
@@ -911,6 +912,9 @@ export default {
 		}
 	},
 	Components: {
+		GenericPayButton: {
+			debit_credit: 'Debit/Credit card'
+		},
 		BlankStates: {
 			NFT: 'NFTs',
 			WalletAssets: 'Wallet',

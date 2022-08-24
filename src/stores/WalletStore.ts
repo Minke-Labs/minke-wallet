@@ -2,8 +2,17 @@
 /* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
 import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
-import { getAllWallets, getPrivateKey, MinkeWallet, saveAllWallets, ZapperTransaction } from '@models/wallet';
+import {
+	getAllWallets,
+	getPrivateKey,
+	getTokenList,
+	MinkeWallet,
+	saveAllWallets,
+	ZapperTransaction
+} from '@models/wallet';
 import { getTokenBalances } from '@src/services/apis';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import coins from '../utils/files/coins.json';
 
 export interface WalletState {
 	privateKey: string | null;
@@ -74,7 +83,19 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 	return emptyWallet;
 };
 
+const getCoinList = async () => {
+	try {
+		const data = await getTokenList();
+		await AsyncStorage.setItem('@listCoins', JSON.stringify(data));
+		return data;
+	} catch (error) {
+		await AsyncStorage.setItem('@listCoins', JSON.stringify(coins));
+		return coins;
+	}
+};
+
 const initializeWallet = async (): Promise<WalletState> => {
+	await getCoinList();
 	const wallets = Object.values((await getAllWallets()) || []);
 	let wallet = wallets.find(({ primary }) => primary);
 	if (wallets && !wallet) {

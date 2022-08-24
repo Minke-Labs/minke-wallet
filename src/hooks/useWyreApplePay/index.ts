@@ -3,7 +3,6 @@ import { globalWalletState } from '@stores/WalletStore';
 import { useState } from '@hookstate/core';
 import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@models/wyre';
 import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
-import { networks } from '@models/network';
 import useTimeout from '../useTimeout';
 import { OnPurchaseParams, UseWyreApplePay, UseWyreApplePayError } from './types';
 import useAmplitude from '../useAmplitude';
@@ -28,11 +27,6 @@ export default function useWyreApplePay(): UseWyreApplePay {
 
 	const onPurchase = useCallback(
 		async ({ sourceCurrency, destCurrency, value, country, fiat = true }: OnPurchaseParams) => {
-			if (destCurrency === 'USDC' && network.id === networks.matic.id) {
-				// eslint-disable-next-line no-param-reassign
-				destCurrency = 'MUSDC';
-			}
-
 			const referenceInfo: WyreReferenceInfo = {
 				referenceId: accountAddress.toLowerCase().substr(-12)
 			};

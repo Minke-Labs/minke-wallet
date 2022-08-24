@@ -27,10 +27,10 @@ const WelcomeScreen = () => {
 					<Image source={welcomeImg} style={styles.headerImage} />
 
 					<View style={styles.textContainer}>
-						<Text center weight="extraBold" type="h1" width={273} marginBottom={16}>
+						<Text center weight="extraBold" type="hLarge" marginBottom={16}>
 							{i18n.t('WelcomeScreen.wave_goodbye')}
 						</Text>
-						<Text center color="text2" width={198}>
+						<Text center color="text2" type="bMedium" width={198}>
 							{i18n.t('WelcomeScreen.easily')}
 						</Text>
 					</View>
@@ -52,7 +52,7 @@ const WelcomeScreen = () => {
 								{disableCode ? (
 									<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 										<Text type="a" weight="medium" center color="alert3">
-											Referral code applied
+											{i18n.t('WelcomeScreen.referral_code_applied')}
 										</Text>
 										<Icon name="checkmark" color="cta1" size={20} style={{ marginLeft: 8 }} />
 									</View>

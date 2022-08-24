@@ -16,7 +16,7 @@ declare module '@env' {
 	export const BICONOMY_API_KEY_POLYGON_MAINNET: string;
 	export const ALCHEMY_API_KEY_ETHEREUM: string;
 	export const ALCHEMY_API_KEY_MATIC: string;
-	export const ALCHEMY_API_KEY_ROPSTEN: string;
+	export const ALCHEMY_API_KEY_GOERLI: string;
 	export const ALCHEMY_API_KEY_KOVAN: string;
 	export const BANXA_ENDPOINT_URL: string;
 	export const BANXA_KEY: string;
@@ -29,9 +29,9 @@ declare module '@env' {
 	export const STORYTELLER_ANDROID_KEY: string;
 	export const INTERCOM_KEY: string;
 	export const ZAPPER_API_KEY: string;
-	export const OPENSEA_API_KEY: string;
 	export const MOONPAY_BUY_URL: string;
 	export const MOONPAY_API_URL: string;
 	export const MOONPAY_API_KEY: string;
 	export const MOONPAY_SECRET_KEY: string;
+	export const OPENSEA_API_KEY: string;
 }

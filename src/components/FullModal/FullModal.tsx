@@ -5,14 +5,9 @@ import ModalPaper from './ModalPaper/ModalPaper';
 import { FullModalProps } from './FullModal.types';
 
 const FullModal: React.FC<FullModalProps> = ({ children, visible, onClose }) => (
-	<Modal
-		transparent
-		{...{ visible, onClose }}
-	>
+	<Modal transparent {...{ visible, onClose }}>
 		<ModalBackground>
-			<ModalPaper onPress={onClose}>
-				{children}
-			</ModalPaper>
+			<ModalPaper onPress={onClose}>{children}</ModalPaper>
 		</ModalBackground>
 	</Modal>
 );

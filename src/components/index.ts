@@ -10,6 +10,7 @@ import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
 import Modal from './Modal/Modal';
 import FullModal from './FullModal/FullModal';
 import GasOption from './GasOption/GasOption';
+import GenericPayButton from './GenericPayButton/GenericPayButton';
 import GasOptionInner from './GasOptionInner/GasOptionInner';
 import GasSelector from './GasSelector/GasSelector';
 import NetworkWarning from './NetworkWarning';
@@ -85,6 +86,7 @@ export {
 	TouchableShrinks,
 	Input,
 	InterestBanner,
+	GenericPayButton,
 	ItemTag,
 	ListItem,
 	NetworkWarning,

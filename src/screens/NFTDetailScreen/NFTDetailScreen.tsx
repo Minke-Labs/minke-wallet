@@ -10,6 +10,7 @@ import { toBn } from 'evm-bn';
 import { Stats } from '@models/types/nft.types';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { getCollectionStats } from '@src/services/apis';
+import { whale2Img } from '@images';
 import { Bottom } from './Bottom/Bottom';
 import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
@@ -54,12 +55,16 @@ const NFTDetailScreen = ({ route }: Props) => {
 
 			<View style={styles.topContainer}>
 				<Header title={nft.collection.name} />
-				{image.endsWith('.svg') ? (
-					<View style={{ borderRadius: 8, overflow: 'hidden' }}>
-						<SvgUri uri={image} width={256} height={256} />
-					</View>
+				{image ? (
+					image.endsWith('.svg') ? (
+						<View style={{ borderRadius: 8, overflow: 'hidden' }}>
+							<SvgUri uri={image} width={256} height={256} />
+						</View>
+					) : (
+						<Image source={{ uri: image }} style={styles.image} />
+					)
 				) : (
-					<Image source={{ uri: image }} style={styles.image} />
+					<Image source={whale2Img} style={styles.image} />
 				)}
 				<Text type="hMedium" weight="bold">
 					{nft.name}

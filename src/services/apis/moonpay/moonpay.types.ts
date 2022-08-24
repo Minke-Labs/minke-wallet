@@ -3,6 +3,8 @@ export interface MoonpayCurrency {
 	type: 'crypto' | 'fiat';
 	name: string;
 	code: string;
+	minBuyAmount: number;
+	maxBuyAmount: number;
 }
 
 export interface MoonpayCountry {
@@ -13,4 +15,13 @@ export interface MoonpayCountry {
 	isSellAllowed: boolean;
 	name: string;
 	supportedDocuments: string[];
+}
+
+export interface MoonpayQuote {
+	currencyCode: string;
+	quoteCurrencyCode: string;
+	baseCurrencyCode: string;
+	baseCurrencyAmount: string | undefined;
+	quoteCurrencyAmount: string | undefined;
+	areFeesIncluded: boolean;
 }

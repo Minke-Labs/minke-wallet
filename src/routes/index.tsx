@@ -24,7 +24,7 @@ const Routes: React.FC = () => {
 
 	const walletState = useState(globalWalletState());
 	const initialScreen = walletState.value.walletId ? 'WalletScreen' : 'WelcomeScreen';
-	// const initialScreen = 'NFTScreen';
+	// const initialScreen = 'Test';
 
 	const urlRedirect = (event: any) => {
 		const { url } = event;
@@ -46,7 +46,8 @@ const Routes: React.FC = () => {
 		prefixes: [prefix],
 		config: {
 			screens: {
-				Test: 'test'
+				Test: 'test',
+				MoonpayWaitScreen: 'moonpayWaitScreen'
 			}
 		}
 	};
