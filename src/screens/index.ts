@@ -33,6 +33,7 @@ import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
 import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
 import AddFundsScreen from './AddFundsScreen/AddFundsScreen';
 import TransactionScreen from './TransactionScreen/TransactionScreen';
+import MoonpayWaitScreen from './TopUpWaitScreen/Moonpay/MoonpayWaitScreen';
 import Test from './Test/Test';
 
 const screensObj = {
@@ -71,6 +72,7 @@ const screensObj = {
 	ImportWalletScreen,
 	AddFundsScreen,
 	TransactionScreen,
+	MoonpayWaitScreen,
 	Test
 };
 

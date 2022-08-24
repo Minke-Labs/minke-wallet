@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { MOONPAY_API_URL, MOONPAY_API_KEY } from '@env';
 import Logger from '@utils/logger';
-import { MoonpayCountry, MoonpayCurrency } from './moonpay.types';
+import { MoonpayCountry, MoonpayCurrency, MoonpayQuote } from './moonpay.types';
 
 const instance = axios.create({
 	baseURL: MOONPAY_API_URL || process.env.MOONPAY_API_URL,
 	timeout: 5000,
 	params: {
 		apiKey: MOONPAY_API_KEY || process.env.MOONPAY_API_KEY
+	},
+	validateStatus() {
+		return true;
 	}
 });
 
@@ -23,4 +26,10 @@ const getCountries = async (): Promise<MoonpayCountry[]> => {
 	return data;
 };
 
-export { getCurrencies, getCountries };
+const buyQuote = async ({ currencyCode, ...params }: MoonpayQuote) => {
+	const { status, data } = await instance.get(`/currencies/${currencyCode}/buy_quote/`, { params });
+	if (status !== 200) Logger.sentry('Moonpay buyQuote API failed');
+	return data;
+};
+
+export { getCurrencies, getCountries, buyQuote };

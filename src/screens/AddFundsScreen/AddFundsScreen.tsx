@@ -4,6 +4,7 @@ import {
 	ApplePayButton,
 	FiatCard,
 	FullModal,
+	GenericPayButton,
 	Header,
 	Modal,
 	ModalReusables,
@@ -44,13 +45,18 @@ const AddFundsScreen = () => {
 		fiatAmount,
 		error,
 		setError,
-		showApplePay,
 		disableApplePay,
 		onApplePayPurchase,
 		disableBanxa,
-		onOnrampPurchase,
+		onOnrampBanxaPurchase,
 		orderLink,
-		setOrderLink
+		setOrderLink,
+		useApplePay,
+		useBanxa,
+		useMoonpay,
+		disableMoonPay,
+		onMoonpayPurchase,
+		moonPaySpecialButton
 	} = useAddFundsScreen();
 	RNUxcam.tagScreenName('AddFundsScreen');
 
@@ -93,15 +99,33 @@ const AddFundsScreen = () => {
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
 					<View style={styles.buttons}>
-						{showApplePay && (
+						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
-						<OnrampButton
-							marginBottom={24}
-							currency={currency}
-							onPress={onOnrampPurchase}
-							disabled={disableBanxa}
-						/>
+						{!!useMoonpay &&
+							(moonPaySpecialButton ? (
+								<OnrampButton
+									marginBottom={16}
+									currency={currency}
+									onPress={onMoonpayPurchase}
+									disabled={disableMoonPay}
+								/>
+							) : (
+								<GenericPayButton
+									disabled={disableMoonPay}
+									marginBottom={16}
+									onPress={onMoonpayPurchase}
+								/>
+							))}
+
+						{!!useBanxa && (
+							<OnrampButton
+								marginBottom={16}
+								currency={currency}
+								onPress={onOnrampBanxaPurchase}
+								disabled={disableBanxa}
+							/>
+						)}
 					</View>
 					<KeyboardSpacer />
 				</TouchableOpacity>
@@ -136,6 +160,8 @@ const AddFundsScreen = () => {
 							setOrderLink('');
 						}
 					}}
+					enableApplePay
+					useWebKit
 				/>
 			</FullModal>
 		</>

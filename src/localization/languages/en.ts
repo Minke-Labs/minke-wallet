@@ -908,6 +908,9 @@ export default {
 		}
 	},
 	Components: {
+		GenericPayButton: {
+			debit_credit: 'Debit/Credit card'
+		},
 		BlankStates: {
 			NFT: 'NFTs',
 			WalletAssets: 'Wallet',

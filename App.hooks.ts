@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import RNUxcam from 'react-native-ux-cam';
 import Logger from '@utils/logger';
@@ -13,14 +12,11 @@ import {
 	Inter_800ExtraBold,
 	useFonts
 } from '@expo-google-fonts/inter';
-import { Coin, getTokenList } from '@models/wallet';
 import appsFlyer from 'react-native-appsflyer';
 import { globalWalletState } from './src/stores/WalletStore';
-import coins from './src/utils/files/coins.json';
 
 export const useApp = () => {
 	Logger.initialize();
-	const [coinList, setCoinList] = React.useState<Coin[]>();
 
 	const walletState = useState(globalWalletState());
 	const [fontsLoaded] = useFonts({
@@ -58,23 +54,11 @@ export const useApp = () => {
 	};
 
 	useEffect(() => {
-		const getCoinList = async () => {
-			try {
-				const data = await getTokenList();
-				await AsyncStorage.setItem('@listCoins', JSON.stringify(data));
-				setCoinList(data);
-			} catch (error) {
-				await AsyncStorage.setItem('@listCoins', JSON.stringify(coins));
-				setCoinList(coins);
-			}
-		};
-		getCoinList();
 		initializeServices();
 	}, []);
 
 	return {
 		walletState,
-		coinList,
 		fontsLoaded
 	};
 };

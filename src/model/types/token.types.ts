@@ -16,3 +16,8 @@ export interface MinkeToken {
 		source: string;
 	};
 }
+
+export interface TopupToken extends MinkeToken {
+	wyreSymbol?: string | undefined;
+	moonpaySymbol?: string | undefined;
+}
