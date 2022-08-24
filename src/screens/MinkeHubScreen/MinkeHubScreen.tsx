@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { Text, View, ModalReusables, ModalBase } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation } from '@hooks';
+import { useNavigation, useNFT, useTokens } from '@hooks';
+import { numberFormat } from '@helpers/utilities';
 import { Selector } from '../HomeScreen/Selector/Selector';
 import MinkeLogo from './MinkeLogo.svg';
 import { Card } from './Card/Card';
@@ -10,6 +11,9 @@ import { Card } from './Card/Card';
 const MinkeHubScreen = () => {
 	const [modal, setModal] = useState(false);
 	const navigation = useNavigation();
+	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = useTokens();
+	const { networth } = useNFT();
+
 	return (
 		<>
 			<BasicLayout>
@@ -27,7 +31,7 @@ const MinkeHubScreen = () => {
 							Accounts
 						</Text>
 						<Text type="hSmall" weight="bold" color="text2" mb="xs">
-							Total: $1223.98
+							Total: {!!balance && numberFormat(balance, 2)}
 						</Text>
 						<View mb="xs" row main="center">
 							<Card
@@ -35,7 +39,7 @@ const MinkeHubScreen = () => {
 								icon="dollar"
 								title="Stablecoins"
 								desc="Coins pegged to the US dollar"
-								number="$193.29"
+								number={stablecoinsBalance}
 							/>
 							<View mr="xs" />
 							<Card
@@ -43,7 +47,7 @@ const MinkeHubScreen = () => {
 								icon="crypto"
 								title="Investments"
 								desc="Coins with fluctuating value"
-								number="$193.29"
+								number={walletBalance}
 							/>
 						</View>
 						<View mb="xs" row main="center">
@@ -52,7 +56,7 @@ const MinkeHubScreen = () => {
 								icon="dollar"
 								title="Savings"
 								desc="Earn passive income from your stablecoins"
-								number="$193.29"
+								number={depositedBalance}
 							/>
 							<View mr="xs" />
 							<Card
@@ -60,7 +64,7 @@ const MinkeHubScreen = () => {
 								icon="crypto"
 								title="NFTs"
 								desc="Non-fungible tokens and collectibles"
-								number="$193.29"
+								number={networth}
 							/>
 						</View>
 						<Text type="lMedium" weight="semiBold" color="text3" mb="xs">
@@ -88,9 +92,7 @@ const MinkeHubScreen = () => {
 				<Selector />
 			</BasicLayout>
 			<ModalBase isVisible={modal} onDismiss={() => setModal(false)}>
-				<ModalReusables.ComingSoon
-					onDismiss={() => setModal(false)}
-				/>
+				<ModalReusables.ComingSoon onDismiss={() => setModal(false)} />
 			</ModalBase>
 		</>
 	);

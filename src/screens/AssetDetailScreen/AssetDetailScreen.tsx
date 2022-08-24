@@ -28,12 +28,7 @@ const AssetDetailScreen = ({ route }: Props) => {
 					<Header onPress={() => navigation.goBack()} />
 					<Balance coin={coin} />
 					{/* <ByNetworks /> */}
-					{description && (
-						<Expander
-							title={coin.name || ''}
-							desc={description}
-						/>
-					)}
+					{description && <Expander title={coin.name || ''} desc={description} />}
 				</View>
 			</ScrollView>
 		</BasicLayout>
