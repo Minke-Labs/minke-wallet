@@ -639,7 +639,7 @@ export default {
 		},
 		components: {
 			Stories: {
-				whats_new: 'Quais são as novidades?'
+				learn_about_minke: 'Aprenda sobre a Minke'
 			}
 		},
 		screens: {

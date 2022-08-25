@@ -637,7 +637,7 @@ export default {
 		},
 		components: {
 			Stories: {
-				whats_new: 'What’s new?'
+				learn_about_minke: 'Learn about Minke'
 			}
 		},
 		screens: {

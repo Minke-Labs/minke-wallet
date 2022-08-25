@@ -26,7 +26,7 @@ export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; reward
 								image={<TransactionIcon received={item.claimed} withdraw={!item.claimed} />}
 								title={format(item.timestamp, 'h:mm aaa')}
 								subtitle={
-									item.referral.wallet === item.wallet
+									item.referral.wallet !== item.wallet
 										? i18n.t('ReferralScreen.Body.referral')
 										: item.source === 'exchange'
 										? i18n.t('ReferralScreen.Body.exchange')
