@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Paper, View, Text, TokenItemCard } from '@components';
+import { Paper, View, Text, TokenItemCard, Touchable } from '@components';
 import { useNavigation, useTokens } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
@@ -58,11 +57,11 @@ export const AccountsOverview = () => {
 							Stablecoins
 						</Text>
 						<View mr="xxs" />
-						<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('StablecoinsScreen')}>
+						<Touchable onPress={() => navigation.navigate('StablecoinsScreen')}>
 							<Text type="bSmall" color="cta1">
 								See all
 							</Text>
-						</TouchableOpacity>
+						</Touchable>
 					</View>
 
 					<TokenItemCard
@@ -81,11 +80,11 @@ export const AccountsOverview = () => {
 					Investments highlights
 				</Text>
 				<View mr="xxs" />
-				<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('InvestmentsScreen')}>
+				<Touchable onPress={() => navigation.navigate('InvestmentsScreen')}>
 					<Text type="bSmall" color="cta1">
 						See all
 					</Text>
-				</TouchableOpacity>
+				</Touchable>
 			</View>
 
 			{investmentHighlights.map((token) => (
