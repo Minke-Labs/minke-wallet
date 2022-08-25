@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { TokenType } from '@styles';
 import { useNetwork } from '@hooks';
 import ModalBase from '../../ModalBase/ModalBase';
 import Token from '../../Token/Token';
 import Text from '../../Text/Text';
 import Icon from '../../Icon/Icon';
+import Touchable from '../../Touchable/Touchable';
 import { NetworkModalProps } from './NetworkModal.types';
 import styles from './NetworkModal.styles';
 
@@ -16,9 +17,9 @@ const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => 
 		<ModalBase {...{ isVisible, onDismiss }}>
 			<View style={styles.container}>
 				<View style={styles.closeContainer}>
-					<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
+					<Touchable onPress={onDismiss}>
 						<Icon name="close" size={24} color="text7" />
-					</TouchableOpacity>
+					</Touchable>
 				</View>
 
 				<Token size={56} glow name={network?.id as TokenType} />

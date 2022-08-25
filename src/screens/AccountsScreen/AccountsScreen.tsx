@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Text, Icon } from '@components';
+import { Text, Icon, Touchable } from '@components';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import styles from './AccountsScreen.styles';
@@ -16,14 +16,14 @@ const AccountsScreen = () => {
 	return (
 		<BasicLayout>
 			<View style={styles.header}>
-				<TouchableOpacity activeOpacity={0.6} onPress={goBack}>
+				<Touchable onPress={goBack}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</TouchableOpacity>
-				<TouchableOpacity activeOpacity={0.6} onPress={onImportWallet}>
+				</Touchable>
+				<Touchable onPress={onImportWallet}>
 					<Text weight="medium" color="text7" type="a">
 						{i18n.t('AccountsScreen.import_or_restore')}
 					</Text>
-				</TouchableOpacity>
+				</Touchable>
 			</View>
 
 			<View style={styles.container}>

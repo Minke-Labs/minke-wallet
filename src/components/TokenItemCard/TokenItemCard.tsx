@@ -1,9 +1,9 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
 import { useNavigation } from '@hooks';
 import Text from '../Text/Text';
 import View from '../View/View';
+import Touchable from '../Touchable/Touchable';
 import TokenItem from '../TokenItem/TokenItem';
 
 interface TokenItemCardProps {
@@ -34,7 +34,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	return (
 		<View mb={paper ? 'xs' : 'm'}>
 			<View {...(paper && { bgc: 'background5', br: 'xs', p: 'xs' })} flex1 row main="space-between">
-				<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1} style={{ flex: 1 }}>
+				<Touchable onPress={onPress} opacity={onPress ? 0.6 : 1} flex1>
 					<TokenItem
 						{...{
 							token,
@@ -46,9 +46,9 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 							perc
 						}}
 					/>
-				</TouchableOpacity>
+				</Touchable>
 				{!balance && !balanceUSD && (
-					<TouchableOpacity
+					<Touchable
 						onPress={() => navigation.navigate('AddFundsScreen')}
 						style={{ alignSelf: 'center' }}
 					>
@@ -61,7 +61,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 						>
 							+ Buy
 						</Text>
-					</TouchableOpacity>
+					</Touchable>
 				)}
 			</View>
 		</View>

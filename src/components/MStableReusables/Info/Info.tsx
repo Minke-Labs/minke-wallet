@@ -1,8 +1,9 @@
 import React from 'react';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import { Linking, View } from 'react-native';
 import { useLanguage } from '@hooks';
 import Icon from '../../Icon/Icon';
 import Text from '../../Text/Text';
+import Touchable from '../../Touchable/Touchable';
 import TransparentCard from '../../TransparentCard/TransparentCard';
 import DescTransparentCard from '../../DescTransparentCard/DescTransparentCard';
 
@@ -22,7 +23,7 @@ const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ margi
 					justifyContent: 'space-between'
 				}}
 			>
-				<TouchableOpacity onPress={() => Linking.openURL('https://mstable.org/')}>
+				<Touchable onPress={() => Linking.openURL('https://mstable.org/')}>
 					<TransparentCard row padding={16}>
 						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
@@ -30,9 +31,9 @@ const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ margi
 						</Text>
 						<Icon name="chevronRight" color="cta1" size={24} />
 					</TransparentCard>
-				</TouchableOpacity>
+				</Touchable>
 
-				<TouchableOpacity onPress={() => Linking.openURL('https://docs.mstable.org/')}>
+				<Touchable onPress={() => Linking.openURL('https://docs.mstable.org/')}>
 					<TransparentCard row padding={16}>
 						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
@@ -40,7 +41,7 @@ const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ margi
 						</Text>
 						<Icon name="chevronRight" color="cta1" size={24} />
 					</TransparentCard>
-				</TouchableOpacity>
+				</Touchable>
 			</View>
 		</View>
 	);

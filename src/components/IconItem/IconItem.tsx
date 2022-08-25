@@ -1,10 +1,10 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { SpacingType, IconType } from '@styles';
 import IconBox from '../IconBox/IconBox';
 import Text from '../Text/Text';
 import View from '../View/View';
 import Icon from '../Icon/Icon';
+import Touchable from '../Touchable/Touchable';
 
 interface IconItemProps {
 	mb?: SpacingType;
@@ -28,7 +28,7 @@ const IconItem: React.FC<IconItemProps> = ({
 	onPress
 }) => (
 	<View mb={mb}>
-		<TouchableOpacity onPress={onPress}>
+		<Touchable onPress={onPress}>
 			<View row main="space-between" cross="center">
 				<View row cross="center">
 					<IconBox icon={icon} bgc="background2" alert={alert} />
@@ -58,7 +58,7 @@ const IconItem: React.FC<IconItemProps> = ({
 					/>
 				)}
 			</View>
-		</TouchableOpacity>
+		</Touchable>
 	</View>
 );
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { useLanguage } from '@hooks';
 import Text from '../Text/Text';
 import Paper from '../Paper/Paper';
 import Icon from '../Icon/Icon';
 import View from '../View/View';
+import Touchable from '../Touchable/Touchable';
 import { ExpanderProps } from './Expander.types';
 
 const lengthConst = 181;
@@ -28,7 +28,7 @@ const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 			</Text>
 			{desc.length > lengthConst && (
 				<View h={38} row main="flex-end" cross="center">
-					<TouchableOpacity onPress={() => setExpanded(!expanded)}>
+					<Touchable onPress={() => setExpanded(!expanded)}>
 						<View row cross="center">
 							<Text type="lSmall" weight="semiBold">
 								{expanded ?
@@ -42,7 +42,7 @@ const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 								color="cta1"
 							/>
 						</View>
-					</TouchableOpacity>
+					</Touchable>
 				</View>
 			)}
 		</Paper>

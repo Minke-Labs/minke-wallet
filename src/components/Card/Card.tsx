@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import Text from '../Text/Text';
+import Touchable from '../Touchable/Touchable';
 import { CardProps } from './Card.types';
 import { styles } from './styles';
 
@@ -17,7 +18,7 @@ const Card: React.FC<CardProps> = ({
 	thirdRowText,
 	thirdRowStyle
 }) => (
-	<TouchableOpacity activeOpacity={0.6} style={[styles.container, { marginBottom }]} {...{ onPress }}>
+	<Touchable style={[styles.container, { marginBottom }]} {...{ onPress }}>
 		<View style={[styles.leftContainer, { ...(style as object) }]}>
 			{image}
 			<View style={styles.titleContainer}>
@@ -35,7 +36,7 @@ const Card: React.FC<CardProps> = ({
 			</View>
 		</View>
 		{right}
-	</TouchableOpacity>
+	</Touchable>
 );
 
 export default Card;

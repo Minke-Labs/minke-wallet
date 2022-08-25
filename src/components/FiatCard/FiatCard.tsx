@@ -1,10 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { FiatCardProps } from './FiatCard.types';
 import { useFiatCard } from './FiatCard.hooks';
 import { makeStyles } from './FiatCard.styles';
 import TokenInputInner from '../TokenInputInner/TokenInputInner';
 import CurrencySelector from '../CurrencySelector/CurrencySelector';
+import Touchable from '../Touchable/Touchable';
 
 const FiatCard: React.FC<FiatCardProps> = ({
 	currency,
@@ -24,7 +25,7 @@ const FiatCard: React.FC<FiatCardProps> = ({
 	});
 
 	return (
-		<TouchableOpacity onPress={onPress} style={styles.container}>
+		<Touchable onPress={onPress} style={styles.container}>
 			<CurrencySelector currency={currency} onPress={onPress!} notTouchable={notTouchable} />
 
 			<View
@@ -47,7 +48,7 @@ const FiatCard: React.FC<FiatCardProps> = ({
 					editable={!disableInput}
 				/>
 			</View>
-		</TouchableOpacity>
+		</Touchable>
 	);
 };
 

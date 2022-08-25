@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useCurrencies } from '@hooks';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Currency } from '@models/types/currency.types';
 import { countries, FlagType } from '@src/styles';
 import Flag from '../../Flag/Flag';
+import Touchable from '../../Touchable/Touchable';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -83,7 +83,7 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 					keyExtractor={(currency) => currency.code}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onCurrencySelect(item)} style={styles.tokenItem}>
+						<Touchable onPress={() => onCurrencySelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>
 								<Flag size={40} name={countries[item.country] as FlagType} />
 							</View>
@@ -91,7 +91,7 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 								<Text style={styles.tokenItemSymbol}>{countryName(item)}</Text>
 								<Text style={styles.tokenItemName}>{currencyName(item)}</Text>
 							</View>
-						</TouchableOpacity>
+						</Touchable>
 					)}
 				/>
 

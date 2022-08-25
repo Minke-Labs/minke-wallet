@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useTokens } from '@hooks';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
@@ -12,6 +11,7 @@ import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIn
 import SearchInput from '../../SearchInput/SearchInput';
 import Text from '../../Text/Text';
 import Token from '../../Token/Token';
+import Touchable from '../../Touchable/Touchable';
 import EmptyStates from '../../EmptyStates';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
@@ -123,7 +123,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					keyExtractor={(token) => token.symbol}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+						<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>
 								<Token name={item.symbol.toLowerCase() as TokenType} size={40} />
 							</View>
@@ -131,7 +131,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
 								<Text style={styles.tokenItemName}>{item.symbol}</Text>
 							</View>
-						</TouchableOpacity>
+						</Touchable>
 					)}
 				/>
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLanguage, useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { TokenType } from '@styles';
@@ -9,6 +8,7 @@ import styles from './CoinSelector.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import Token from '../Token/Token';
+import Touchable from '../Touchable/Touchable';
 import { CoinSelectorProps } from './CoinSelector.types';
 
 const NoTokenIcon = () => {
@@ -66,7 +66,7 @@ const TitlesEmpty = () => {
 };
 
 const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, token, inline = false }) => (
-	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
+	<Touchable onPress={onPress} opacity={notTouchable ? 1 : 0.6}>
 		<View style={styles.container}>
 			{token ? (
 				<Token name={(token.symbol || '').toLowerCase() as TokenType} size={inline ? 28 : 40} />
@@ -90,7 +90,7 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, toke
 				{token ? <Titles {...{ token, inline, notTouchable }} /> : <TitlesEmpty />}
 			</View>
 		</View>
-	</TouchableOpacity>
+	</Touchable>
 );
 
 export default CoinSelector;

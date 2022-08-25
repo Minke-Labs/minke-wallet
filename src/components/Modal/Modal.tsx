@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import ModalBase from '../ModalBase/ModalBase';
 import View from '../View/View';
 import Icon from '../Icon/Icon';
+import Touchable from '../Touchable/Touchable';
 
 interface ModalProps {
 	isVisible: boolean;
@@ -19,13 +19,13 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onDismiss, onBack, children })
 				mb="xs"
 			>
 				{!!onBack && (
-					<TouchableOpacity onPress={onBack}>
+					<Touchable onPress={onBack}>
 						<Icon size={24} name="chevronLeft" color="cta1" />
-					</TouchableOpacity>
+					</Touchable>
 				)}
-				<TouchableOpacity onPress={onDismiss}>
+				<Touchable onPress={onDismiss}>
 					<Icon size={24} name="close" color="cta1" />
-				</TouchableOpacity>
+				</Touchable>
 			</View>
 			{children}
 		</View>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useLanguage, useTheme } from '@hooks';
 import { countries, FlagType } from '@styles';
 import { Currency } from '@models/types/currency.types';
@@ -8,6 +7,7 @@ import styles from './CurrencySelector.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
 import Flag from '../Flag/Flag';
+import Touchable from '../Touchable/Touchable';
 import { CurrencySelectorProps } from './CurrencySelector.types';
 
 const NoTokenIcon = () => {
@@ -59,7 +59,7 @@ const TitlesEmpty = () => {
 };
 
 const CurrencySelector: React.FC<CurrencySelectorProps> = ({ onPress, notTouchable, currency }) => (
-	<TouchableOpacity {...{ onPress }} activeOpacity={notTouchable ? 1 : 0.6}>
+	<Touchable onPress={onPress} opacity={notTouchable ? 1 : 0.6}>
 		<View style={styles.container}>
 			{currency ? <Flag size={28} name={countries[currency.country] as FlagType} /> : <NoTokenIcon />}
 
@@ -67,7 +67,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ onPress, notTouchab
 				{currency ? <Titles {...{ currency, notTouchable }} /> : <TitlesEmpty />}
 			</View>
 		</View>
-	</TouchableOpacity>
+	</Touchable>
 );
 
 export default CurrencySelector;

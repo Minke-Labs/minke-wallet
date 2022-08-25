@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle, GestureResponderEvent, TextStyle } from 'react-native';
+import { StyleProp, ViewStyle, TextStyle } from 'react-native';
 
 export interface CardProps {
 	title: string;
@@ -9,7 +9,7 @@ export interface CardProps {
 	style?: StyleProp<ViewStyle>;
 	titleStyle?: StyleProp<TextStyle>;
 	subtitleStyle?: StyleProp<TextStyle>;
-	onPress?: (event: GestureResponderEvent) => void;
+	onPress?: () => void;
 	marginBottom?: number;
 	thirdRowText?: string | number;
 	thirdRowStyle?: StyleProp<TextStyle>;
