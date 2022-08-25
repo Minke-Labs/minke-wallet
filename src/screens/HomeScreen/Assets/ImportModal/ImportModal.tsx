@@ -1,9 +1,8 @@
 import React from 'react';
-import { View } from '@components';
 import { Item } from './Item/Item';
 
 const ImportModal = () => (
-	<View>
+	<>
 		<Item
 			title="Import existing wallet"
 			icon="help"
@@ -20,7 +19,7 @@ const ImportModal = () => (
 			icon="cloud"
 			onPress={() => null}
 		/>
-	</View>
+	</>
 );
 
 export default ImportModal;

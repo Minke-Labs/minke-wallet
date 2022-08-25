@@ -1,10 +1,10 @@
 import React from 'react';
 import { Keyboard } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { spacing, ColorType } from '@styles';
 import View from '../View/View';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
+import Touchable from '../Touchable/Touchable';
 import { ButtonProps } from './Button.types';
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,6 +14,7 @@ const Button: React.FC<ButtonProps> = ({
 	iconLeft,
 	iconRight,
 	marginBottom = 0,
+	mb,
 	br = 's',
 	alert,
 	onPress
@@ -39,11 +40,13 @@ const Button: React.FC<ButtonProps> = ({
 	};
 
 	return (
-		<TouchableOpacity
-			activeOpacity={0.8}
+		<Touchable
 			disabled={disabled}
 			onPress={handlePress}
-			style={{ width: '100%', height: 40, flexDirection: 'row', marginBottom }}
+			h={40}
+			mb={mb}
+			row
+			style={{ marginBottom }}
 		>
 			<View
 				br={br}
@@ -80,7 +83,7 @@ const Button: React.FC<ButtonProps> = ({
 					/>
 				)}
 			</View>
-		</TouchableOpacity>
+		</Touchable>
 	);
 };
 

@@ -21,7 +21,7 @@ const ComingSoonModal: React.FC<ComingSoonModalProps> = ({ onDismiss }) => {
 				<Text weight="extraBold" center marginBottom={45}>
 					{i18n.t('Components.ModalReusables.ComingSoonModal.devs_doing_something')}
 				</Text>
-				<Button title="Ok, got it" onPress={onDismiss} marginBottom={8} />
+				<Button title="Ok, got it" onPress={onDismiss} mb="xxs" />
 			</View>
 		</SafeAreaView>
 	);

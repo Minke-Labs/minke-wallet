@@ -1,7 +1,7 @@
 import React from 'react';
-import { Alert, Share, View } from 'react-native';
+import { Alert, Share } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Button, Header, Text } from '@components';
+import { Button, Header, Text, View } from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from '@hookstate/core';
 import { getUniqueId } from 'react-native-device-info';
@@ -48,12 +48,12 @@ const DevSettingsScreen = () => {
 	return (
 		<BasicLayout>
 			<Header title="Dev settings" marginBottom={8} />
-			<View style={{ padding: 32 }}>
-				<Text marginBottom={16}>{address}</Text>
-				<Text marginBottom={16}>Device ID: {deviceId}</Text>
-				<Button title="Reset app tour" onPress={resetAppTour} marginBottom={16} />
-				<Button title="Reset referral program" onPress={resetReferralProgram} marginBottom={16} />
-				<Button title="Delete all cloud backups" onPress={deleteBackups} marginBottom={16} />
+			<View p="m">
+				<Text mb="xs">{address}</Text>
+				<Text mb="xs">Device ID: {deviceId}</Text>
+				<Button title="Reset app tour" onPress={resetAppTour} mb="xs" />
+				<Button title="Reset referral program" onPress={resetReferralProgram} mb="xs" />
+				<Button title="Delete all cloud backups" onPress={deleteBackups} mb="xs" />
 				<Button title="Share debug data" onPress={shareDebugData} />
 			</View>
 		</BasicLayout>

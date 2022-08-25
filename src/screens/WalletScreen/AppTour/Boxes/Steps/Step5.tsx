@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Text, Icon } from '@components';
+import { View } from 'react-native';
+import { Text, Icon, Touchable } from '@components';
 import { useLanguage } from '@hooks';
 import Arrow from '../Arrow';
 import { AppTourStepType } from '../../AppTour.types';
@@ -9,19 +9,17 @@ import { AppTourContext } from '../../Context/AppTourContext';
 const Button: React.FC<{ onPress: () => void }> = ({ onPress }) => {
 	const { i18n } = useLanguage();
 	return (
-		<TouchableOpacity
-			style={{
-				flexDirection: 'row',
-				justifyContent: 'flex-end',
-				alignItems: 'center'
-			}}
+		<Touchable
+			row
+			main="flex-end"
+			cross="center"
 			onPress={onPress}
 		>
 			<Text type="lMedium" weight="semiBold" color="cta1" style={{ marginRight: 8 }}>
 				{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step5.finish')}
 			</Text>
 			<Icon name="checkmark" size={20} color="cta1" />
-		</TouchableOpacity>
+		</Touchable>
 	);
 };
 

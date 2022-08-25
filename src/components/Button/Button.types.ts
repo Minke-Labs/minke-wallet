@@ -6,7 +6,8 @@ export interface ButtonProps {
 	iconRight?: IconType;
 	disabled?: boolean;
 	mode?: string;
-	marginBottom?: number;
+	marginBottom?: number; // @@@
+	mb?: SpacingType;
 	onPress?: () => void;
 	alert?: boolean;
 	br?: SpacingType;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
-import { Text, Button, LoadingScreen, Icon } from '@components';
+import { Text, Button, LoadingScreen, Icon, Touchable, View } from '@components';
 import { useLanguage, useNavigation } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { useState } from '@hookstate/core';
@@ -39,7 +39,7 @@ const WelcomeScreen = () => {
 						{loading ? (
 							<LoadingScreen title={i18n.t('WelcomeScreen.creating')} />
 						) : (
-							<Button title={i18n.t('WelcomeScreen.create')} onPress={onCreateWallet} marginBottom={16} />
+							<Button title={i18n.t('WelcomeScreen.create')} onPress={onCreateWallet} mb="xs" />
 						)}
 						{!loading && (
 							<>
@@ -47,7 +47,7 @@ const WelcomeScreen = () => {
 									title={i18n.t('WelcomeScreen.import_or_restore')}
 									mode="outlined"
 									onPress={onImportWallet}
-									marginBottom={16}
+									mb="xs"
 								/>
 								{disableCode ? (
 									<View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -58,13 +58,13 @@ const WelcomeScreen = () => {
 									</View>
 								) : (
 									!!address && (
-										<TouchableOpacity
+										<Touchable
 											onPress={() => navigation.navigate('EnterReferralCodeScreen')}
 										>
 											<Text type="a" weight="semiBold" color="cta1">
 												{i18n.t('WelcomeScreen.i_have_a_referral_code')}
 											</Text>
-										</TouchableOpacity>
+										</Touchable>
 									)
 								)}
 							</>

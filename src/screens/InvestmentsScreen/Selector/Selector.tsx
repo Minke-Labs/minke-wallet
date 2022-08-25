@@ -1,12 +1,11 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { View } from '@components';
+import { View, Scroll } from '@components';
 import { SelectorProps } from './Selector.types';
 import { Button } from './Button/Button';
 
 const Selector: React.FC<SelectorProps> = ({ active, setActive }) => (
 	<View row mb="xs">
-		<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+		<Scroll horizontal hideIndicator>
 			<Button active={active === 0} onPress={() => setActive(0)}>
 				All Networks
 			</Button>
@@ -19,7 +18,7 @@ const Selector: React.FC<SelectorProps> = ({ active, setActive }) => (
 			<Button active={active === 3} onPress={() => setActive(3)}>
 				BSC
 			</Button>
-		</ScrollView>
+		</Scroll>
 	</View>
 );
 

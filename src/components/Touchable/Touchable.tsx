@@ -1,20 +1,26 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ViewType } from '@styles';
 import View from '../View/View';
 
 interface TouchableProps extends ViewType {
 	opacity: number;
 	onPress: () => void;
+	disabled?: boolean;
 }
 
 const Touchable: React.FC<Partial<TouchableProps>> = ({
 	children,
 	onPress,
+	disabled,
 	opacity = 0.6,
 	...rest
 }) => (
-	<TouchableOpacity onPress={onPress} activeOpacity={opacity}>
+	<TouchableOpacity
+		disabled={disabled}
+		onPress={onPress}
+		activeOpacity={opacity}
+	>
 		<View {...{ ...rest }}>
 			{children}
 		</View>

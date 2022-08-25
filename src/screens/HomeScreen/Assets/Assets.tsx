@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Image } from 'react-native';
+import { Image } from 'react-native';
 import { numberFormat } from '@helpers/utilities';
-import { Paper, Text, View, Button, Modal, ModalBase } from '@components';
+import { Paper, Text, View, Button, Modal, ModalBase, Touchable } from '@components';
 import { AddFunds } from '@containers';
 import { useAvatar, useFormProgress, useLanguage, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
@@ -30,7 +30,7 @@ export const Assets: React.FC = () => {
 							{numberFormat(balance?.usd || 0)}
 						</Text>
 					</View>
-					<TouchableOpacity onPress={() => setVisible(true)}>
+					<Touchable onPress={() => setVisible(true)}>
 						{!!address && (
 							<Image
 								source={currentAvatar.image}
@@ -41,7 +41,7 @@ export const Assets: React.FC = () => {
 								}}
 							/>
 						)}
-					</TouchableOpacity>
+					</Touchable>
 				</View>
 				<View row main="space-between">
 					<View style={{ flex: 1 }}>
