@@ -13,7 +13,6 @@ const Button: React.FC<ButtonProps> = ({
 	disabled = false,
 	iconLeft,
 	iconRight,
-	marginBottom = 0,
 	mb,
 	br = 's',
 	alert,
@@ -46,7 +45,6 @@ const Button: React.FC<ButtonProps> = ({
 			h={40}
 			mb={mb}
 			row
-			style={{ marginBottom }}
 		>
 			<View
 				br={br}
