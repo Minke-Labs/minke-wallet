@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDerivedValue } from 'react-native-reanimated';
-import { AnimatedText, PercChange, View, Text } from '@components';
+import { AnimatedText, PercChange, View } from '@components';
 import { HeaderProps } from './Header.types';
 
 const Header: React.FC<HeaderProps> = ({ price, current, graphs }) => {
@@ -12,22 +12,14 @@ const Header: React.FC<HeaderProps> = ({ price, current, graphs }) => {
 		<View cross="center">
 
 			<AnimatedText
-				marginBottom={2}
+				marginBottom={4}
 				text={price}
 				weight="bold"
 				style={{
-					fontSize: 28,
-					lineHeight: 34
+					fontSize: 24,
+					lineHeight: 33.6
 				}}
 			/>
-
-			<Text
-				weight="bold"
-				type="hMedium"
-				color="text2"
-			>
-				{price.value}
-			</Text>
 
 			<PercChange {...{ percZero, percChange, data, current, graphs }} />
 

@@ -1,11 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
 import { useDerivedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { round } from 'react-native-redash';
 import { useTheme } from '@hooks';
 import Icon from '../Icon/Icon';
+import View from '../View/View';
 import AnimatedText from '../AnimatedText/AnimatedText';
-import styles from './PercChange.styles';
 import { PercChangeProps } from './PercChange.types';
 
 const PercChange: React.FC<PercChangeProps> = ({ percZero, percChange, data }) => {
@@ -18,16 +17,26 @@ const PercChange: React.FC<PercChangeProps> = ({ percZero, percChange, data }) =
 	}));
 
 	return (
-		<View style={styles.container}>
+		<View row cross='flex-end'>
 			{!percZero && (
-				<Icon
-					name={percChange ? 'iconUp' : 'iconDown'}
-					color={data.value.percentChange > 0 ? 'alert3' : data.value.percentChange < 0 ? 'alert1' : 'text4'}
-					size={16}
-					style={{ marginRight: 4 }}
-				/>
+				<View mr='xxxs'>
+					<Icon
+						name={percChange ? 'iconUp' : 'iconDown'}
+						color={data.value.percentChange > 0 ? 
+							'alert3' : 
+								data.value.percentChange < 0 ? 
+									'alert1' : 
+									'text4'
+						}
+						size={16}
+					/>
+				</View>
 			)}
-			<AnimatedText text={animatedText} style={animatedTextStyle} type="a" />
+			<AnimatedText 
+				text={animatedText} 
+				style={animatedTextStyle} 
+				type="lMedium" 
+			/>
 		</View>
 	);
 };
