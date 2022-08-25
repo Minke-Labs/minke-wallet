@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { AssetsLayout } from '@layouts';
-import { Text, Icon, ModalBase, BlankStates, EmptyStates } from '@components';
+import { View, Text, Icon, ModalBase, BlankStates, EmptyStates, Touchable } from '@components';
 import { useLanguage, useNFT } from '@hooks';
 import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
 
 const NFTScreen = () => {
-	const { assets, estimatedValue, nftsByCollection } = useNFT();
+	const {
+		assets,
+		// estimatedValue,
+		nftsByCollection
+	} = useNFT();
 	const [infoModal, setInfoModal] = useState(false);
 	const { i18n } = useLanguage();
 
@@ -18,21 +22,31 @@ const NFTScreen = () => {
 	return (
 		<>
 			<AssetsLayout
-				headerValue={estimatedValue}
+				headerValue={1}
+				// headerValue={estimatedValue}
 				headerTitle={
-					<TouchableOpacity
-						style={{ flexDirection: 'row', alignItems: 'center' }}
+					<Touchable
+						row
+						cross="center"
 						onPress={() => setInfoModal(true)}
 					>
-						<Text style={{ marginRight: 8 }}>{i18n.t('NFTScreen.estimated_value')}</Text>
-						<Icon name="infoStroke" size={20} color="cta1" />
-					</TouchableOpacity>
+						<Text>
+							{i18n.t('NFTScreen.estimated_value')}
+						</Text>
+						<View mr="xxs" />
+						<Icon
+							name="infoStroke"
+							size={20}
+							color="cta1"
+						/>
+					</Touchable>
 				}
 			>
-				<View style={{ paddingHorizontal: 16, paddingTop: 24, flex: 1 }}>
-					<Text type="tMedium" weight="bold" marginBottom={24}>
+				<View ph="xs" pt="s" flex1>
+					<Text type="tMedium" weight="bold" mb="s">
 						{i18n.t('NFTScreen.assets')}
 					</Text>
+
 					{data.length > 0 ? (
 						<FlatList
 							data={data}
@@ -42,6 +56,7 @@ const NFTScreen = () => {
 					) : (
 						<EmptyStates.NoTokens />
 					)}
+
 				</View>
 			</AssetsLayout>
 

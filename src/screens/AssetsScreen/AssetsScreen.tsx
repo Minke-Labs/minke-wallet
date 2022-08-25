@@ -36,7 +36,10 @@ const AssetsScreen = ({ route }: Props) => {
 						{coin && <Balance coin={coin} />}
 
 						{marketCap > 0 && !!tokenVolume && (
-							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
+							<MarketCap
+								tokenVolume={tokenVolume.total_volumes}
+								marketCap={marketCap}
+							/>
 						)}
 
 						{!!description && <Expander title={coin.name!} desc={description} />}
