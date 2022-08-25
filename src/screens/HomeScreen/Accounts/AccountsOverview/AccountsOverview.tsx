@@ -71,7 +71,7 @@ export const AccountsOverview = () => {
 						symbol={showingStable.symbol}
 						subtitle="All networks"
 						balanceUSD={showingStable.balanceUSD}
-						onPress={() => navigation.navigate('AssetDetailScreen', { coin: showingStable })}
+						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: showingStable })}
 					/>
 				</>
 			)}

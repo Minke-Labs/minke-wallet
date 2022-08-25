@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, IconItem } from '@components';
 import { useNavigation } from '@hooks';
 import { RootStackParamList } from '@src/routes/types.routes';
+import IconItem from '../../IconItem/IconItem';
+import View from '../../View/View';
 
 interface ActionsModalProps {
 	onDismiss: () => void;
