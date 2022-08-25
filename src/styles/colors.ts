@@ -15,6 +15,7 @@ const lightTheme = {
 	cta1: '#006AA6',
 	cta2: '#D0D0D0',
 	cta3: '#FCFBF9',
+	cta4: '#213952',
 
 	detail1: '#B7B9BB',
 	detail2: '#D0D0D0',
@@ -64,6 +65,7 @@ const darkTheme = {
 	cta1: '#0090E0',
 	cta2: '#D0D0D0',
 	cta3: '#FCFBF9',
+	cta4: '#FFFFFF',
 
 	detail1: '#4E5E6F',
 	detail2: '#4E5E6F',

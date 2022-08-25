@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 import React, { useState } from 'react';
-import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { View, TouchableWithoutFeedback, FlatList } from 'react-native';
-import { Text } from '@components';
-// import { graphs } from './Graph.utils';
+import { FlatList, StyleSheet } from 'react-native';
+import { useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { Text, View, Touchable, AnimatedView } from '@components';
 import { useLanguage } from '@hooks';
 import { screenWidth } from '@styles';
 import { GraphIndex } from '../Chart.types';
-import { SelectionProps } from './Selection.types';
-import { styles } from './Selection.styles';
+import { SelectorProps } from './Selector.types';
 
-const Selection: React.FC<SelectionProps> = ({ previous, current, transition, graphs }) => {
+const SELECTOR_HEIGHT = 32;
+
+const Selector: React.FC<SelectorProps> = ({ previous, current, transition, graphs }) => {
 	const { i18n } = useLanguage();
 	const BUTTON_WIDTH = screenWidth / graphs.length;
 
@@ -19,15 +19,23 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition, gr
 	const animatedBackgroundTag = useAnimatedStyle(() => ({
 		transform: [{ translateX: withTiming(BUTTON_WIDTH * (current.value + 0.11)) }]
 	}));
+
 	return (
-		<View style={styles.container}>
-			<Animated.View style={[styles.backgroundTag, animatedBackgroundTag]} />
+		<View mb="m">
+			<AnimatedView
+				bgc="cta1"
+				w={52}
+				h={SELECTOR_HEIGHT}
+				br="xs"
+				style={[animatedBackgroundTag, { ...StyleSheet.absoluteFillObject }]}
+			/>
 
 			<FlatList
 				keyExtractor={(item) => item.label}
 				data={graphs}
 				renderItem={({ item, index }) => (
-					<TouchableWithoutFeedback
+					<Touchable
+						opacity={1}
 						key={item.label}
 						onPress={() => {
 							previous.value = current.value;
@@ -37,15 +45,21 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition, gr
 							setUsing(item.value);
 						}}
 					>
-						<Animated.View style={[styles.labelContainer, { width: BUTTON_WIDTH }]}>
+						<AnimatedView
+							h={SELECTOR_HEIGHT}
+							w={BUTTON_WIDTH}
+							main="center"
+							cross="center"
+						>
 							<Text
-								color={item.value === using ? 'text6' : 'text9'}
-								weight={item.value === using ? 'bold' : 'regular'}
+								type="lLarge"
+								color={item.value === using ? 'cta3' : 'cta4'}
+								weight="semiBold"
 							>
 								{i18n.t(`AssetsScreen.Upper.Chart.Selection.Chart.${item.label}`)}
 							</Text>
-						</Animated.View>
-					</TouchableWithoutFeedback>
+						</AnimatedView>
+					</Touchable>
 				)}
 				horizontal
 			/>
@@ -53,4 +67,4 @@ const Selection: React.FC<SelectionProps> = ({ previous, current, transition, gr
 	);
 };
 
-export default Selection;
+export default Selector;

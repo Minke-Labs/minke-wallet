@@ -3,7 +3,7 @@ import { useTheme } from '@hooks';
 import { View } from '@components';
 import { ColorType } from '@styles';
 import Main from './Main/Main';
-import Selection from './Selection/Selection';
+import Selector from './Selector/Selector';
 import Header from './Header/Header';
 import { ChartProps } from './Chart.types';
 import Changes from './Changes/Changes';
@@ -26,7 +26,7 @@ const Chart: React.FC<ChartProps> = ({ tokenHistory, current, translation, previ
 				color={chooseColor(percChange, colors)}
 				{...{ previous, current, transition, translation, percChange, graphs }}
 			/>
-			<Selection {...{ previous, current, transition, graphs }} />
+			<Selector {...{ previous, current, transition, graphs }} />
 			<Changes color={chooseColor(percChange, colors)} {...{ tokenHistory, current, graphs }} />
 		</View>
 	);
