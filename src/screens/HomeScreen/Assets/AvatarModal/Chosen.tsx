@@ -54,12 +54,12 @@ export const Chosen: React.FC<ChosenProps> = ({ onSelectAvatar }) => {
 			</Text>
 			<Button
 				title={i18n.t('WalletScreen.Modals.AvatarModal.Chosen.select')}
-				marginBottom={16}
+				mb="xs"
 				onPress={onSelectAvatar}
 			/>
 			<Button
 				title={i18n.t('WalletScreen.Modals.AvatarModal.Chosen.choose')}
-				marginBottom={16}
+				mb="xs"
 				onPress={pickImage}
 			/>
 		</View>
