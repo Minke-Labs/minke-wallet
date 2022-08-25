@@ -90,6 +90,7 @@ export const AccountsOverview = () => {
 
 			{investmentHighlights.map((token) => (
 				<TokenItemCard
+					key={token.address}
 					token={token.symbol.toLowerCase() as TokenType}
 					name={token.name}
 					symbol={token.symbol}
