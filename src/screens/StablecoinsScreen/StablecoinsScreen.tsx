@@ -55,7 +55,7 @@ const StablecoinsScreen = () => {
 									symbol={coin.symbol}
 									subtitle="All networks" // @@@TODO: check what this means
 									balanceUSD={coin.balanceUSD}
-									onPress={() => navigation.navigate('AssetDetailScreen', { coin })}
+									onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin })}
 									paper
 								/>
 							))

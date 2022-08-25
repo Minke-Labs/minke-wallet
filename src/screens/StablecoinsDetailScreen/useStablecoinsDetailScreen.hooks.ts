@@ -4,7 +4,7 @@ import { useLanguage } from '@hooks';
 import { getTokenMarketCap, getTokenData, getTokenVolume } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 
-export const useAssetDetailScreen = (coin: MinkeToken) => {
+export const useStablecoinsDetailScreen = (coin: MinkeToken) => {
 	const { i18n } = useLanguage();
 	const [tokenData, setTokenData] = useState<any>(null);
 	const [tokenVolume, setTokenVolume] = useState<any>(null);

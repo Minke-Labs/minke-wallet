@@ -8,18 +8,18 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import { Header } from './Header/Header';
 import Balance from './Balance/Balance';
 // import ByNetworks from './ByNetworks/ByNetworks';
-import { useAssetDetailScreen } from './AssetDetailScreen.hooks';
+import { useStablecoinsDetailScreen } from './useStablecoinsDetailScreen.hooks';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'AssetDetailScreen'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'StablecoinsDetailScreen'>;
 
-const AssetDetailScreen = ({ route }: Props) => {
+const StablecoinsDetailScreen = ({ route }: Props) => {
 	const navigation = useNavigation();
 	const { coin } = route.params;
 	const {
 		description
 		// tokenVolume,
 		// marketCap
-	} = useAssetDetailScreen(coin); // @@@TODO:
+	} = useStablecoinsDetailScreen(coin); // @@@TODO:
 
 	return (
 		<BasicLayout>
@@ -35,4 +35,4 @@ const AssetDetailScreen = ({ route }: Props) => {
 	);
 };
 
-export default AssetDetailScreen;
+export default StablecoinsDetailScreen;
