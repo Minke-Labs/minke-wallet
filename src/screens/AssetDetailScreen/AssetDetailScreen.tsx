@@ -6,7 +6,7 @@ import { useNavigation } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Header } from './Header/Header';
-import { Balance } from './Balance/Balance';
+import Balance from './Balance/Balance';
 // import ByNetworks from './ByNetworks/ByNetworks';
 import { useAssetDetailScreen } from './AssetDetailScreen.hooks';
 

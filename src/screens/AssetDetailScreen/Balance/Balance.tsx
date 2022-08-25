@@ -10,7 +10,7 @@ interface BlanceProps {
 	coin: MinkeToken;
 }
 
-export const Balance: React.FC<BlanceProps> = ({ coin }) => {
+const Balance: React.FC<BlanceProps> = ({ coin }) => {
 	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -96,3 +96,5 @@ export const Balance: React.FC<BlanceProps> = ({ coin }) => {
 		</Paper>
 	);
 };
+
+export default Balance;

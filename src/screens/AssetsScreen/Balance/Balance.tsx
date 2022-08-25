@@ -1,31 +1,101 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import { Text } from '@components';
-import { useTheme, useLanguage } from '@hooks';
+import { TouchableOpacity } from 'react-native';
+import { View, Paper, Text } from '@components';
+import { useLanguage, useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
+import { MinkeToken } from '@models/types/token.types';
 import Selector from './Selector/Selector';
-import { BalanceProps } from './Balance.types';
-import styles from './Balance.styles';
 
-const Balance: React.FC<BalanceProps> = ({ coin }) => {
+interface BlanceProps {
+	coin: MinkeToken;
+}
+
+const Balance: React.FC<BlanceProps> = ({ coin }) => {
+	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
-	const [active, setActive] = useState(false);
-
 	return (
-		<View style={[styles.container, { backgroundColor: colors.background2 }]}>
-			<View style={styles.valueContainer}>
-				<View style={styles.valueContainerTop}>
-					<Text color="text4">{i18n.t('AssetsScreen.Balance.Balance')}</Text>
+		<Paper style={{ overflow: 'hidden' }} mb="xs">
+			<View
+				bgc="background2"
+				ph="s"
+				pv="xs"
+				style={{
+					borderBottomWidth: 1,
+					borderBottomColor: colors.background1
+				}}
+			>
+				<View row main="space-between">
+					<Text type="lMedium" weight="semiBold" color="text3">
+						{i18n.t('AssetsScreen.Balance.Balance')}
+						{/* @@@ - CHANGE LOCATION OF TRANSLATION */}
+					</Text>
 					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
 				</View>
-				<Text type="h2">
-					{active
-						? `${tokenBalanceFormat(coin.balance!)} ${coin.symbol}`
-						: `${numberFormat(coin.balanceUSD!)}`}
+				<Text type="dMedium">
+					{active ?
+						`${tokenBalanceFormat(coin.balance!)} ${coin.symbol}` :
+						`${numberFormat(coin.balanceUSD!)}`}
 				</Text>
 			</View>
-		</View>
+
+			<View h={56} row>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					onPress={() => null}
+					style={{ flex: 1 }}
+				>
+					<View
+						main="center"
+						cross="center"
+						style={{
+							flex: 1,
+							borderRightWidth: 1,
+							borderRightColor: colors.background1
+						}}
+					>
+						<Text type="lLarge" color="cta1" weight="semiBold">
+							Buy
+						</Text>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					onPress={() => null}
+					style={{ flex: 1 }}
+				>
+					<View
+						main="center"
+						cross="center"
+						style={{
+							flex: 1,
+							borderRightWidth: 1,
+							borderRightColor: colors.background1
+						}}
+					>
+						<Text type="lLarge" color="cta1" weight="semiBold">
+							Sell
+						</Text>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity
+					activeOpacity={0.6}
+					onPress={() => null}
+					style={{ flex: 1 }}
+				>
+					<View
+						main="center"
+						cross="center"
+						style={{ flex: 1 }}
+					>
+						<Text type="lLarge" color="cta1" weight="semiBold">
+							Send
+						</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
+
+		</Paper>
 	);
 };
 
