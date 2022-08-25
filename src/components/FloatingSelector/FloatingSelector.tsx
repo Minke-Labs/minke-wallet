@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useLanguage, useNavigation } from '@hooks';
 import { spacing } from '@styles';
@@ -10,6 +9,7 @@ import Modal from '../Modal/Modal';
 import Icon from '../Icon/Icon';
 import View from '../View/View';
 import Paper from '../Paper/Paper';
+import Touchable from '../Touchable/Touchable';
 import Actions from './Actions/Actions';
 import { SendModal, ReceiveModal } from './Modals';
 
@@ -67,27 +67,27 @@ const FloatingSelector: React.FC = () => {
 					main="space-between"
 					cross="center"
 				>
-					<TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+					<Touchable onPress={() => navigation.navigate('HomeScreen')}>
 						<Icon
 							name="home"
 							size={28}
 							color={routeName === 'HomeScreen' ? 'cta1' : 'cta2'}
 						/>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={() => setActionsModal(true)}>
+					</Touchable>
+					<Touchable onPress={() => setActionsModal(true)}>
 						<Icon
 							name="exchange"
 							size={28}
 							color="cta2"
 						/>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={() => navigation.navigate('MinkeHubScreen')}>
+					</Touchable>
+					<Touchable onPress={() => navigation.navigate('MinkeHubScreen')}>
 						<Icon
 							name="hub"
 							size={28}
 							color={routeName === 'MinkeHubScreen' ? 'cta1' : 'cta2'}
 						/>
-					</TouchableOpacity>
+					</Touchable>
 				</Paper>
 			</View>
 
