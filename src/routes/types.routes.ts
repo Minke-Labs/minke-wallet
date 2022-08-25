@@ -4,7 +4,7 @@ import { ZapperTransaction } from '@models/wallet';
 
 export type RootStackParamList = {
 	AccountsScreen: undefined;
-	AssetsScreen: { coin: MinkeToken };
+	InvestmentsDetailScreen: { coin: MinkeToken };
 	ManualBackupScreen: { walletId: string };
 	NFTScreen: undefined;
 	NFTDetailScreen: { nft: NFT };

@@ -15,7 +15,7 @@ const AssetList: React.FC<AssetListProps> = ({ walletTokens }) => {
 	const [active, setActive] = React.useState(0);
 	const navigation = useNavigation();
 
-	const onSelected = (coin: MinkeToken) => navigation.navigate('AssetsScreen', { coin });
+	const onSelected = (coin: MinkeToken) => navigation.navigate('InvestmentsDetailScreen', { coin });
 
 	let tokens = walletTokens;
 	if (active) tokens = walletTokens.filter((item) => stablecoins.includes(item.symbol));

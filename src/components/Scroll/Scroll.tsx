@@ -3,20 +3,20 @@ import { ScrollView } from 'react-native';
 import { ViewType } from '@styles';
 
 interface ScrollProps extends ViewType {
-	hideScroll: boolean;
+	hideIndicator: boolean;
 	horizontal?: boolean;
 }
 
 const Scroll: React.FC<Partial<ScrollProps>> = ({
 	children,
-	hideScroll = false,
+	hideIndicator = false,
 	horizontal = false,
 	...rest
 }) => (
 	<ScrollView
 		horizontal={horizontal}
-		showsHorizontalScrollIndicator={!hideScroll}
-		showsVerticalScrollIndicator={!hideScroll}
+		showsHorizontalScrollIndicator={!hideIndicator}
+		showsVerticalScrollIndicator={!hideIndicator}
 		{...{ ...rest }}
 	>
 		{children}

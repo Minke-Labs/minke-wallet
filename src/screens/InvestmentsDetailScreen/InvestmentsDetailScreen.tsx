@@ -8,21 +8,21 @@ import RNUxcam from 'react-native-ux-cam';
 import MarketCap from './MarketCap/MarketCap';
 import Balance from './Balance/Balance';
 import { Upper } from './Upper/Upper';
-import { useAssetsScreen } from './AssetsScreen.hooks';
+import { useInvestmentsDetailScreen } from './InvestmentsDetailScreen.hooks';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'AssetsScreen'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'InvestmentsDetailScreen'>;
 
-const AssetsScreen = ({ route }: Props) => {
+const InvestmentsDetailScreen = ({ route }: Props) => {
 	const { coin } = route.params;
-	const { description, tokenVolume, marketCap } = useAssetsScreen(coin);
+	const { description, tokenVolume, marketCap } = useInvestmentsDetailScreen(coin);
 	RNUxcam.tagScreenName('AssetsScreen');
 
 	return (
 		<BasicLayout hideSafeAreaView bgc="detail4">
-			<Scroll hideScroll>
+			<Scroll hideIndicator>
 				<SafeAreaView>
 
-					<Upper {...{ coin }} />
+					<Upper coin={coin} />
 
 					<View
 						ph="xs"
@@ -52,4 +52,4 @@ const AssetsScreen = ({ route }: Props) => {
 	);
 };
 
-export default AssetsScreen;
+export default InvestmentsDetailScreen;

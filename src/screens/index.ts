@@ -1,5 +1,5 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
-import AssetsScreen from './AssetsScreen/AssetsScreen';
+import InvestmentsDetailScreen from './InvestmentsDetailScreen/InvestmentsDetailScreen';
 import AssetDetailScreen from './AssetDetailScreen/AssetDetailScreen';
 import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
 import NFTScreen from './NFTScreen/NFTScreen';
@@ -43,7 +43,7 @@ import Test from './Test/Test';
 
 const screensObj = {
 	AccountsScreen,
-	AssetsScreen,
+	InvestmentsDetailScreen,
 	AssetDetailScreen,
 	ManualBackupScreen,
 	NFTScreen,

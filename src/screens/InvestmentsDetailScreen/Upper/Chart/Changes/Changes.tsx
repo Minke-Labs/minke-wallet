@@ -14,7 +14,7 @@ const Changes: React.FC<ChangesProps> = ({ current, graphs }) => {
 				{i18n.t('AssetsScreen.Upper.Chart.Changes.changes')}
 			</Text>
 
-			<Scroll horizontal hideScroll>
+			<Scroll horizontal hideIndicator>
 				<Box
 					data={hour}
 					name={i18n.t('AssetsScreen.Upper.Chart.Changes.hour')}

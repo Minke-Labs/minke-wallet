@@ -98,7 +98,7 @@ export const AccountsOverview = () => {
 					balance={token.balance}
 					balanceUSD={token.balanceUSD}
 					perc={token.perc}
-					onPress={() => navigation.navigate('AssetsScreen', { coin: token })}
+					onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: token })}
 				/>
 			))}
 		</Paper>

@@ -54,7 +54,7 @@ const InvestmentsScreen = () => {
 								balance={item.balance}
 								balanceUSD={item.balanceUSD}
 								perc={item.perc}
-								onPress={() => navigation.navigate('AssetsScreen', { coin: item })}
+								onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: item })}
 							/>
 						))}
 					</View>
