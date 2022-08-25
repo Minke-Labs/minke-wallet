@@ -1,8 +1,7 @@
 import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { View } from '@components';
-import { Selector } from './Selector/Selector';
+import { View, FloatingSelector } from '@components';
 import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
@@ -21,7 +20,7 @@ const HomeScreen = () => (
 				<View mb="m" />
 			</View>
 		</ScrollView>
-		<Selector />
+		<FloatingSelector />
 	</BasicLayout>
 );
 

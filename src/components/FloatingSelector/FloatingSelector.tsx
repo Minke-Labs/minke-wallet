@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { Paper, View, Icon, Modal, ModalBase, ModalReusables } from '@components';
 import { useLanguage, useNavigation } from '@hooks';
 import { spacing } from '@styles';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
+import ModalReusables from '../ModalReusables';
+import ModalBase from '../ModalBase/ModalBase';
+import Modal from '../Modal/Modal';
+import Icon from '../Icon/Icon';
+import View from '../View/View';
+import Paper from '../Paper/Paper';
 import Actions from './Actions/Actions';
-import {
-	SendModal,
-	ReceiveModal
-} from './Modals';
+import { SendModal, ReceiveModal } from './Modals';
 
-export const Selector: React.FC = () => {
+const FloatingSelector: React.FC = () => {
 	const { i18n } = useLanguage();
 	const [actionsModal, setActionsModal] = useState(false);
 	const [receiveModal, setReceiveModal] = useState(false);
@@ -133,3 +135,5 @@ export const Selector: React.FC = () => {
 		</>
 	);
 };
+
+export default FloatingSelector;

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
-import { Text, View, ModalReusables, ModalBase } from '@components';
+import { Text, View, ModalReusables, ModalBase, FloatingSelector } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useNFT, useTokens } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
-import { Selector } from '../HomeScreen/Selector/Selector';
 import MinkeLogo from './MinkeLogo.svg';
 import { Card } from './Card/Card';
 
@@ -89,7 +88,7 @@ const MinkeHubScreen = () => {
 					<View mb="xxxl" />
 					<View mb="m" />
 				</ScrollView>
-				<Selector />
+				<FloatingSelector />
 			</BasicLayout>
 			<ModalBase isVisible={modal} onDismiss={() => setModal(false)}>
 				<ModalReusables.ComingSoon onDismiss={() => setModal(false)} />
