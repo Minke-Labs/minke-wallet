@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { spacing } from '@styles';
 import { Expander, View, Scroll } from '@components';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -30,10 +29,8 @@ const AssetsScreen = ({ route }: Props) => {
 						pt="s"
 						h="100%"
 						bgc="background1"
-						style={{
-							borderTopLeftRadius: spacing.s,
-							borderTopRightRadius: spacing.s
-						}}
+						btlr="s"
+						btrr="s"
 					>
 
 						{coin && <Balance coin={coin} />}

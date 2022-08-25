@@ -32,6 +32,12 @@ export interface ViewType {
 	// border radius
 	br: SpacingType;
 
+	// border top left radius
+	btlr: SpacingType;
+
+	// border top right radius
+	btrr: SpacingType;
+
 	// border width
 	bw: number;
 
