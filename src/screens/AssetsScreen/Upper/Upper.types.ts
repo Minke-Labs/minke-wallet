@@ -1,7 +1,7 @@
-import { WalletToken } from '@models/wallet';
+import { MinkeToken } from '@models/types/token.types';
 
 export interface UpperProps {
-	coin: WalletToken;
+	coin: MinkeToken;
 }
 
 interface ChartProps {

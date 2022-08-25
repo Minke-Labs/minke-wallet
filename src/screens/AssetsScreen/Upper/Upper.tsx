@@ -9,7 +9,7 @@ export const Upper: React.FC<UpperProps> = ({ coin }) => {
 	const { tokenHistory, transition, previous, current, translation } = useUpper(coin);
 	return (
 		<>
-			<Header {...{ coin }} />
+			<Header coin={coin} />
 			{tokenHistory ? (
 				<Chart
 					{...{

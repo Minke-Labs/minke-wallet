@@ -31,4 +31,5 @@ const Chart: React.FC<ChartProps> = ({ tokenHistory, current, translation, previ
 		</View>
 	);
 };
+
 export default Chart;
