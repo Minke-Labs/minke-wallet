@@ -16,15 +16,12 @@ export default StyleSheet.create({
 	titleText: {
 		marginLeft: 8
 	},
-	panel: {
-		marginBottom: 16
-	},
 	description: {
 		marginLeft: 8
 	},
 	button: {
-		marginTop: 24,
-		padding: 16
+		marginTop: 8,
+		padding: 24
 	},
 	data: {
 		marginBottom: 16
