@@ -5,7 +5,7 @@ import { screenWidth } from '@styles';
 import { DataPoints } from './Chart.types';
 
 const POINTS = 30;
-export const height = 263;
+export const height = 264;
 
 export const buildGraph = (datapoints: DataPoints, label?: string) => {
 	const { length } = datapoints.prices;

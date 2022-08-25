@@ -1,12 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
 import { mixPath } from 'react-native-redash';
+import { View } from '@components';
 import { screenWidth } from '@styles';
 import { height } from '../Chart.utils';
 import Cursor from './Cursor/Cursor';
-import { styles } from './Main.styles';
 import { ChartProps } from './Main.types';
 import { ChartAreaGradients } from './ChartAreaGradients/ChartAreaGradients';
 
@@ -30,13 +29,24 @@ const Chart: React.FC<ChartProps> = ({ color, previous, current, transition, tra
 	});
 
 	return (
-		<View style={styles.container}>
+		<View h={height}>
 			<Svg>
 				<ChartAreaGradients {...{ color }} />
-				<AnimatedPath animatedProps={animatedPropsBg} fill="url(#gradient1)" />
-				<AnimatedPath fill="transparent" stroke={color} animatedProps={animatedPropsLine} strokeWidth={2} />
+				<AnimatedPath
+					animatedProps={animatedPropsBg}
+					fill="url(#gradient1)"
+				/>
+				<AnimatedPath
+					fill="transparent"
+					stroke={color}
+					animatedProps={animatedPropsLine}
+					strokeWidth={2}
+				/>
 			</Svg>
-			<Cursor index={current} {...{ color, translation, graphs }} />
+			<Cursor
+				index={current}
+				{...{ color, translation, graphs }}
+			/>
 		</View>
 	);
 };
