@@ -1,8 +1,8 @@
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { spacing } from '@styles';
-import { Expander, View } from '@components';
+import { Expander, View, Scroll } from '@components';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import RNUxcam from 'react-native-ux-cam';
@@ -20,8 +20,7 @@ const AssetsScreen = ({ route }: Props) => {
 
 	return (
 		<BasicLayout hideSafeAreaView bgc="detail4">
-			<ScrollView showsVerticalScrollIndicator={false}>
-
+			<Scroll hideScroll>
 				<SafeAreaView>
 
 					<Upper {...{ coin }} />
@@ -29,29 +28,26 @@ const AssetsScreen = ({ route }: Props) => {
 					<View
 						ph="s"
 						pt="s"
+						h="100%"
 						bgc="background1"
 						style={{
 							borderTopLeftRadius: spacing.s,
-							borderTopRightRadius: spacing.s,
-							overflow: 'hidden'
+							borderTopRightRadius: spacing.s
 						}}
 					>
-						<ScrollView style={{ width: '100%', height: '100%' }}>
 
-							{coin && <Balance coin={coin} />}
+						{coin && <Balance coin={coin} />}
 
-							{marketCap > 0 && !!tokenVolume && (
-								<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
-							)}
+						{marketCap > 0 && !!tokenVolume && (
+							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
+						)}
 
-							{!!description && <Expander title={coin.name!} desc={description} />}
+						{!!description && <Expander title={coin.name!} desc={description} />}
 
-						</ScrollView>
 					</View>
 
 				</SafeAreaView>
-
-			</ScrollView>
+			</Scroll>
 		</BasicLayout>
 	);
 };

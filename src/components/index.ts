@@ -62,6 +62,8 @@ import WatchModeTag from './WatchModeTag/WatchModeTag';
 import FiatCard from './FiatCard/FiatCard';
 import CurrencySelector from './CurrencySelector/CurrencySelector';
 // new ones
+import Touchable from './Touchable/Touchable';
+import Scroll from './Scroll/Scroll';
 import View from './View/View';
 import IconBox from './IconBox/IconBox';
 
@@ -130,5 +132,7 @@ export {
 	FiatCard,
 	CurrencySelector,
 	View,
+	Touchable,
+	Scroll,
 	IconBox
 };
