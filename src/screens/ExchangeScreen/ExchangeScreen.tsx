@@ -3,23 +3,19 @@ import { View, Keyboard, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage, useKeyboard } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import {
-	Button,
-	ModalBase,
-	ModalReusables,
-	Header,
-	GasSelector,
-	TokenCard,
-	BlankStates
-} from '@components';
+import { Button, ModalBase, ModalReusables, Header, GasSelector, TokenCard, BlankStates } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import { makeStyles } from './ExchangeScreen.styles';
 import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
 import DirectionButton from './DirectionButton/DirectionButton';
 
-const ExchangeScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
+const ExchangeScreen = ({ route }: Props) => {
+	const { sourceToken, destToken } = route.params || {};
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const {
@@ -45,7 +41,7 @@ const ExchangeScreen = () => {
 		error,
 		setError,
 		gasless
-	} = useExchangeScreen();
+	} = useExchangeScreen({ sourceToken, destToken });
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
 	RNUxcam.tagScreenName('ExchangeScreen');
@@ -93,9 +89,7 @@ const ExchangeScreen = () => {
 						</View>
 
 						<View style={{ marginHorizontal: 16 }}>
-							{!enoughForGas && (
-								<Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />
-							)}
+							{!enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 						</View>
 					</View>
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { View, Paper, Text } from '@components';
-import { useLanguage, useTheme } from '@hooks';
+import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { MinkeToken } from '@models/types/token.types';
 import Selector from './Selector/Selector';
 
@@ -14,6 +14,8 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
+	const navigation = useNavigation();
+
 	return (
 		<Paper style={{ overflow: 'hidden' }} mb="xs">
 			<View
@@ -32,15 +34,13 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 					</Text>
 					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
 				</View>
-				<Text type="dMedium">
-					$1023.0854
-				</Text>
+				<Text type="dMedium">$1023.0854</Text>
 			</View>
 
 			<View h={56} row>
 				<TouchableOpacity
 					activeOpacity={0.6}
-					onPress={() => null}
+					onPress={() => navigation.navigate('ExchangeScreen', { destToken: coin })}
 					style={{ flex: 1 }}
 				>
 					<View
@@ -59,7 +59,7 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 				</TouchableOpacity>
 				<TouchableOpacity
 					activeOpacity={0.6}
-					onPress={() => null}
+					onPress={() => navigation.navigate('ExchangeScreen', { sourceToken: coin })}
 					style={{ flex: 1 }}
 				>
 					<View
@@ -76,23 +76,14 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 						</Text>
 					</View>
 				</TouchableOpacity>
-				<TouchableOpacity
-					activeOpacity={0.6}
-					onPress={() => null}
-					style={{ flex: 1 }}
-				>
-					<View
-						main="center"
-						cross="center"
-						style={{ flex: 1 }}
-					>
+				<TouchableOpacity activeOpacity={0.6} onPress={() => null} style={{ flex: 1 }}>
+					<View main="center" cross="center" style={{ flex: 1 }}>
 						<Text type="lLarge" color="cta1" weight="semiBold">
 							Send
 						</Text>
 					</View>
 				</TouchableOpacity>
 			</View>
-
 		</Paper>
 	);
 };

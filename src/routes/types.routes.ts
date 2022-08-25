@@ -20,7 +20,7 @@ export type RootStackParamList = {
 	ChangeCountryScreen: undefined;
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
-	ExchangeScreen: undefined;
+	ExchangeScreen: { sourceToken?: MinkeToken; destToken?: MinkeToken };
 	SaveScreen: undefined;
 	SettingsScreen: undefined;
 	TransactionsScreen: undefined;

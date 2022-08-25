@@ -18,7 +18,7 @@ export const useWalletScreen = () => {
 	const [openAvatarModal, setOpenAvatarModal] = React.useState(false);
 	const [sentTransaction, setSentTransaction] = React.useState<ResultProps>();
 
-	const onExchange = () => navigation.navigate('ExchangeScreen');
+	const onExchange = () => navigation.navigate('ExchangeScreen', {});
 	const onSettingsPress = () => navigation.navigate('SettingsScreen');
 	const onSwitchAccounts = () => navigation.navigate('AccountsScreen');
 	const onSeeAllTransactions = () => navigation.navigate('TransactionsScreen');

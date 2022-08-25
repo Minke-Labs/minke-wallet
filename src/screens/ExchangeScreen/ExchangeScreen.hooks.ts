@@ -17,14 +17,19 @@ interface PriceParams {
 	side?: ExchangeParams['side'];
 }
 
-export const useExchangeScreen = () => {
+interface UseExchangeScreenParams {
+	sourceToken?: MinkeToken;
+	destToken?: MinkeToken;
+}
+
+export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenParams) => {
 	const { nativeToken, balance } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const [fromToken, setFromToken] = React.useState<MinkeToken>();
-	const [toToken, setToToken] = React.useState<MinkeToken>();
+	const [fromToken, setFromToken] = React.useState<MinkeToken>(sourceToken as MinkeToken);
+	const [toToken, setToToken] = React.useState<MinkeToken>(destToken as MinkeToken);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
@@ -59,7 +64,7 @@ export const useExchangeScreen = () => {
 		if (fromToken && toToken) {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
-			const { address: destToken, decimals: destDecimals } = toToken;
+			const { address: destinationToken, decimals: destDecimals } = toToken;
 			const {
 				reason,
 				message,
@@ -72,7 +77,7 @@ export const useExchangeScreen = () => {
 			} = await getExchangePrice({
 				address: wallet.address.value,
 				srcToken,
-				destToken,
+				destToken: destinationToken,
 				srcDecimals,
 				destDecimals,
 				amount,
@@ -229,10 +234,12 @@ export const useExchangeScreen = () => {
 	}, []);
 
 	useEffect(() => {
-		if (!!defaultToken && !fromToken) {
+		if (destToken && nativeToken) {
+			setFromToken(nativeToken);
+		} else if (!!defaultToken && !fromToken) {
 			setFromToken(defaultToken);
 		} else if (defaultToken === null) {
-			setFromToken(nativeToken);
+			setFromToken(nativeToken as MinkeToken);
 		}
 	}, [defaultToken]);
 
