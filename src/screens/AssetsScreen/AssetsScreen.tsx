@@ -25,8 +25,8 @@ const AssetsScreen = ({ route }: Props) => {
 					<Upper {...{ coin }} />
 
 					<View
-						ph="s"
-						pt="s"
+						ph="xs"
+						pt="xs"
 						h="100%"
 						bgc="background1"
 						btlr="s"
