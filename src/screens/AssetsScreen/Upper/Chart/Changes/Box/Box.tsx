@@ -1,9 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text, PercChange } from '@components';
+import { View, Text, PercChange } from '@components';
 import { useTheme } from '@hooks';
 import { ColorType } from '@styles';
-import { makeStyles } from './Box.styles';
+import { addColorOpacity } from '@helpers/utilities';
 import { BoxProps } from './Box.types';
 
 export const Box: React.FC<BoxProps> = ({ data, current, graphs, name }) => {
@@ -17,11 +16,14 @@ export const Box: React.FC<BoxProps> = ({ data, current, graphs, name }) => {
 		return c.text4;
 	};
 
-	const styles = makeStyles(colors, percChange, chooseColor(data.value.percentChange, colors));
-
 	return (
-		<View style={styles.container}>
-			<Text type="span" marginBottom={8}>
+		<View
+			p="xs"
+			br="xs"
+			mr="xxs"
+			style={{ backgroundColor: addColorOpacity(chooseColor(data.value.percentChange, colors), 0.1) }}
+		>
+			<Text type="lSmall">
 				{name}
 			</Text>
 			<PercChange {...{ percZero, percChange, data, current, graphs }} />

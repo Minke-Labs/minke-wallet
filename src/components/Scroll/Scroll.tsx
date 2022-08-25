@@ -4,10 +4,17 @@ import { ViewType } from '@styles';
 
 interface ScrollProps extends ViewType {
 	hideScroll: boolean;
+	horizontal?: boolean;
 }
 
-const Scroll: React.FC<Partial<ScrollProps>> = ({ children, hideScroll = false, ...rest }) => (
+const Scroll: React.FC<Partial<ScrollProps>> = ({
+	children,
+	hideScroll = false,
+	horizontal = false,
+	...rest
+}) => (
 	<ScrollView
+		horizontal={horizontal}
 		showsHorizontalScrollIndicator={!hideScroll}
 		showsVerticalScrollIndicator={!hideScroll}
 		{...{ ...rest }}
