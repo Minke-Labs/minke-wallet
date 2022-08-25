@@ -49,10 +49,11 @@ const StablecoinsScreen = () => {
 						) : stablecoins.length > 0 ? (
 							stablecoins.map((coin) => (
 								<TokenItemCard
+									key={coin.symbol}
 									token={coin.symbol.toLowerCase() as TokenType}
 									name={coin.name}
 									symbol={coin.symbol}
-									subtitle="All networks" // @TODO: check what this means
+									subtitle="All networks" // @@@TODO: check what this means
 									balanceUSD={coin.balanceUSD}
 									onPress={() => navigation.navigate('AssetDetailScreen', { coin })}
 									paper
