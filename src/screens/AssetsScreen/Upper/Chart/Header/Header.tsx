@@ -1,8 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
 import { useDerivedValue } from 'react-native-reanimated';
-import { AnimatedText, PercChange } from '@components';
-import styles from './Header.styles';
+import { AnimatedText, PercChange, View, Text } from '@components';
 import { HeaderProps } from './Header.types';
 
 const Header: React.FC<HeaderProps> = ({ price, current, graphs }) => {
@@ -11,13 +9,28 @@ const Header: React.FC<HeaderProps> = ({ price, current, graphs }) => {
 	const percZero = data.value.percentChange === 0;
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.titleContainer}>
-				<AnimatedText marginBottom={2} text={price} weight="extraBold" style={styles.animatedText} />
-				<View style={styles.indicatorContainer}>
-					<PercChange {...{ percZero, percChange, data, current, graphs }} />
-				</View>
-			</View>
+		<View cross="center">
+
+			<AnimatedText
+				marginBottom={2}
+				text={price}
+				weight="bold"
+				style={{
+					fontSize: 28,
+					lineHeight: 34
+				}}
+			/>
+
+			<Text
+				weight="bold"
+				type="hMedium"
+				color="text2"
+			>
+				{price.value}
+			</Text>
+
+			<PercChange {...{ percZero, percChange, data, current, graphs }} />
+
 		</View>
 	);
 };

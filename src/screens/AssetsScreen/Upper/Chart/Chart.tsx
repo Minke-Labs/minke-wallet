@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
 import { useTheme } from '@hooks';
+import { View } from '@components';
 import { ColorType } from '@styles';
 import Main from './Main/Main';
 import Selection from './Selection/Selection';
@@ -20,7 +20,7 @@ const Chart: React.FC<ChartProps> = ({ tokenHistory, current, translation, previ
 	};
 
 	return (
-		<View style={{ flex: 1 }}>
+		<View>
 			<Header {...{ current, price, graphs }} />
 			<Main
 				color={chooseColor(percChange, colors)}
