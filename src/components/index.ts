@@ -67,6 +67,7 @@ import View from './View/View';
 import IconBox from './IconBox/IconBox';
 import FloatingSelector from './FloatingSelector/FloatingSelector';
 import Warning from './Warning/Warning';
+import Balance from './Balance/Balance';
 
 export {
 	AaveReusables,
@@ -137,5 +138,6 @@ export {
 	Scroll,
 	IconBox,
 	FloatingSelector,
-	Warning
+	Warning,
+	Balance
 };

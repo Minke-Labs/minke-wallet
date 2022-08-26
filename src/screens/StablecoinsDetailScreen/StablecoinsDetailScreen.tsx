@@ -1,12 +1,11 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { View, Expander } from '@components';
+import { View, Expander, Balance } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Header } from './Header/Header';
-import Balance from './Balance/Balance';
 // import ByNetworks from './ByNetworks/ByNetworks';
 import { useStablecoinsDetailScreen } from './useStablecoinsDetailScreen.hooks';
 

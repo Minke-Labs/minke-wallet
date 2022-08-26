@@ -9,7 +9,7 @@ const Changes: React.FC<ChangesProps> = ({ current, graphs }) => {
 	const { i18n } = useLanguage();
 	const { hour, day, week, month, year, all } = useChanges(graphs);
 	return (
-		<View pl="xs" pb="m">
+		<View pl="xs" pb="s">
 			<Text type="tMedium" weight="bold" mb="xs">
 				{i18n.t('AssetsScreen.Upper.Chart.Changes.changes')}
 			</Text>

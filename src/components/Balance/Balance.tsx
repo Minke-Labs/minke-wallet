@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { View, Paper, Text } from '@components';
-import { useLanguage, useTheme } from '@hooks';
+import Text from '@src/components/Text/Text';
+import Paper from '@src/components/Paper/Paper';
+import View from '@src/components/View/View';
+import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { MinkeToken } from '@models/types/token.types';
 import Selector from './Selector/Selector';
@@ -14,6 +16,8 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
+	const navigation = useNavigation();
+
 	return (
 		<Paper style={{ overflow: 'hidden' }} mb="xs">
 			<View
@@ -42,7 +46,7 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 			<View h={56} row>
 				<TouchableOpacity
 					activeOpacity={0.6}
-					onPress={() => null}
+					onPress={() => navigation.navigate('ExchangeScreen', { destToken: coin })}
 					style={{ flex: 1 }}
 				>
 					<View
@@ -61,7 +65,7 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 				</TouchableOpacity>
 				<TouchableOpacity
 					activeOpacity={0.6}
-					onPress={() => null}
+					onPress={() => navigation.navigate('ExchangeScreen', { sourceToken: coin })}
 					style={{ flex: 1 }}
 				>
 					<View

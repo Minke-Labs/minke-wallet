@@ -1,12 +1,11 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Expander, View, Scroll } from '@components';
+import { Expander, View, Scroll, Balance } from '@components';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import RNUxcam from 'react-native-ux-cam';
 import MarketCap from './MarketCap/MarketCap';
-import Balance from './Balance/Balance';
 import { Upper } from './Upper/Upper';
 import { useInvestmentsDetailScreen } from './InvestmentsDetailScreen.hooks';
 

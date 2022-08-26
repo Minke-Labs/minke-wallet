@@ -21,7 +21,7 @@ const Selector: React.FC<SelectorProps> = ({ previous, current, transition, grap
 	}));
 
 	return (
-		<View mb="m">
+		<View mb="s">
 			<AnimatedView
 				bgc="cta1"
 				w={52}
