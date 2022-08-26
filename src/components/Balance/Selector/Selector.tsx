@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { View, Text, AnimatedView } from '@components';
+import AnimatedView from '@src/components/AnimatedView/AnimatedView';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
 import { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 export const BUTTON_WIDTH = 46;
