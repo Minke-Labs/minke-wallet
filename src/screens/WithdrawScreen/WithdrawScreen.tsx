@@ -10,14 +10,14 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	BlankStates
+	BlankStates,
+	Warning
 } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { debounce } from 'lodash';
 import { MinkeToken } from '@models/types/token.types';
-import Warning from '../ExchangeScreen/Warning/Warning';
 import useWithdrawScreen from './WithdrawScreen.hooks';
 import styles from './WithdrawScreen.styles';
 

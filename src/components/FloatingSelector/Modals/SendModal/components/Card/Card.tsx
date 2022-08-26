@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
-import { Text, Token } from '@components';
+import Text from '@src/components/Text/Text';
+import Token from '@src/components/Token/Token';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { useLanguage } from '@hooks';
 import { CardProps } from './Card.types';

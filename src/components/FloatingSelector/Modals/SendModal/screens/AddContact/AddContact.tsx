@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Button, Input } from '@components';
+import Input from '@src/components/Input/Input';
+import Button from '@src/components/Button/Button';
+import Text from '@src/components/Text/Text';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
 import styles from './AddContact.styles';

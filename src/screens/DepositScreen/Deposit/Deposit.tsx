@@ -11,11 +11,11 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	BlankStates
+	BlankStates,
+	Warning
 } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
-import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import { DepositProtocol } from '@models/deposit';

@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, SafeAreaView } from 'react-native';
-import { Text, WhiteButton, ModalHeader, ActivityIndicator, NetworkWarning } from '@components';
 import QRCode from 'react-native-qrcode-svg';
 import { useLanguage } from '@hooks';
+import NetworkWarning from '../../../NetworkWarning';
+import ActivityIndicator from '../../../ActivityIndicator/ActivityIndicator';
+import ModalHeader from '../../../ModalHeader/ModalHeader';
+import WhiteButton from '../../../WhiteButton/WhiteButton';
+import Text from '../../../Text/Text';
 import { ReceiveModalProps } from './ReceiveModal.types';
 import styles from './ReceiveModal.styles';
 import { useReceiveModal } from './ReceiveModal.hooks';

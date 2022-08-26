@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Button, Text, Input } from '@components';
+import Input from '@src/components/Input/Input';
+import Text from '@src/components/Text/Text';
+import Button from '@src/components/Button/Button';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
 import { ContactItem } from '../../components';
@@ -37,7 +39,7 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 					title={i18n.t('Components.Buttons.send')}
 					disabled={!validAddress}
 					onPress={onSendAddress}
-					marginBottom={32}
+					mb="m"
 				/>
 
 				{!keyboardVisible &&

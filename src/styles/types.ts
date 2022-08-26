@@ -38,6 +38,12 @@ export interface ViewType {
 	// border top right radius
 	btrr: SpacingType;
 
+	// border bottom left radius
+	bblr: SpacingType;
+
+	// border bottom right radius
+	bbrr: SpacingType;
+
 	// border width
 	bw: number;
 

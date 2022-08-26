@@ -66,6 +66,7 @@ import Scroll from './Scroll/Scroll';
 import View from './View/View';
 import IconBox from './IconBox/IconBox';
 import FloatingSelector from './FloatingSelector/FloatingSelector';
+import Warning from './Warning/Warning';
 
 export {
 	AaveReusables,
@@ -135,5 +136,6 @@ export {
 	Touchable,
 	Scroll,
 	IconBox,
-	FloatingSelector
+	FloatingSelector,
+	Warning
 };

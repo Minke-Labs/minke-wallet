@@ -3,13 +3,21 @@ import { View, Keyboard, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage, useKeyboard } from '@hooks';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
-import { Button, ModalBase, ModalReusables, Header, GasSelector, TokenCard, BlankStates } from '@components';
+import {
+	Button,
+	ModalBase,
+	ModalReusables,
+	Header,
+	GasSelector,
+	TokenCard,
+	BlankStates,
+	Warning
+} from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { makeStyles } from './ExchangeScreen.styles';
-import Warning from './Warning/Warning';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
 import DirectionButton from './DirectionButton/DirectionButton';
 

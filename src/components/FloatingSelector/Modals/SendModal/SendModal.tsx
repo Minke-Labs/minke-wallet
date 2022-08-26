@@ -1,9 +1,16 @@
 import React from 'react';
 import { View, SafeAreaView } from 'react-native';
-import { Icon, Text, Touchable } from '@components';
 import { useLanguage } from '@hooks';
+import Icon from '@src/components/Icon/Icon';
+import Text from '@src/components/Text/Text';
+import Touchable from '@src/components/Touchable/Touchable';
 import styles from './SendModal.styles';
-import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact } from './screens';
+import {
+	TransactionContacts,
+	TransactionSelectFunds,
+	TransactionTransfer,
+	AddContact
+} from './screens';
 import { SendModalProps } from './SendModal.types';
 import { useSendModal } from './SendModal.hooks';
 

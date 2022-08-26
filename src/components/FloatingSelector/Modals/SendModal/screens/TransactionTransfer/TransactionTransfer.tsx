@@ -1,19 +1,17 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import {
-	Text,
-	Token,
-	ActivityIndicator,
-	TokenAmountInput,
-	NetworkWarning,
-	HapticButton,
-	WatchModeTag
-} from '@components';
+import Text from '@src/components/Text/Text';
+import Token from '@src/components/Token/Token';
+import Warning from '@src/components/Warning/Warning';
+import NetworkWarning from '@src/components/NetworkWarning';
+import HapticButton from '@src/components/HapticButton/HapticButton';
+import WatchModeTag from '@src/components/WatchModeTag/WatchModeTag';
+import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
+import ActivityIndicator from '@src/components/ActivityIndicator/ActivityIndicator';
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard, useLanguage } from '@hooks';
-import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';

@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Text, Icon, Touchable } from '@components';
+import Icon from '@src/components/Icon/Icon';
+import Text from '@src/components/Text/Text';
+import Touchable from '@src/components/Touchable/Touchable';
 import styles from './Item.styles';
 import { ItemProps } from './Item.types';
 

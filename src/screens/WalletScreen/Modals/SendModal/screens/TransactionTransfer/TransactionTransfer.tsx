@@ -7,13 +7,13 @@ import {
 	TokenAmountInput,
 	NetworkWarning,
 	HapticButton,
-	WatchModeTag
+	WatchModeTag,
+	Warning
 } from '@components';
 import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard, useLanguage } from '@hooks';
-import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import { styles } from './TransactionTransfer.styles';
 import { TransactionTransferProps } from './TransactionTransfer.types';
 import { Card, GasPriceLine } from '../../components';

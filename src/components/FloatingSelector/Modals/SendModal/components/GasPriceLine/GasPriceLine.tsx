@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { Text } from '@components';
+import Text from '@src/components/Text/Text';
 import { numberFormat } from '@helpers/utilities';
 import { useLanguage } from '@hooks';
 import { getEthLastPrice } from '@models/wallet';

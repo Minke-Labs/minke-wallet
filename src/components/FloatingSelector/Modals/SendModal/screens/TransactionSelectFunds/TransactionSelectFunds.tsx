@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, FlatList, Image } from 'react-native';
-import { Text, EmptyStates, BlankStates } from '@components';
+import Text from '@src/components/Text/Text';
+import BlankStates from '@src/components/BlankStates';
+import EmptyStates from '@src/components/EmptyStates';
 import { useLanguage } from '@hooks';
 import { styles } from './TransactionSelectFunds.styles';
 import { Card } from '../../components';

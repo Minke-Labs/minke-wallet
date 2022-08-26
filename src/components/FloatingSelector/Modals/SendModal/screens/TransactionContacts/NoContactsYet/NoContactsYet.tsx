@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Text } from '@components';
 import { whale3Img } from '@images';
 import { useLanguage } from '@hooks';
+import Text from '@src/components/Text/Text';
 import styles from './NoContactsYet.styles';
 
 export const NoContactsYet = () => {
