@@ -28,7 +28,7 @@ const HelpModal = ({ onDismiss }: { onDismiss: () => void }) => {
 					{i18n.t('ReferralScreen.Modals.HelpModal.refering_minke')}
 				</Text>
 				<Text type="p2" color="text2" style={{ width: '100%' }} marginBottom={24}>
-					{i18n.t('ReferralScreen.Modals.HelpModal.setting_recurrent_top_ups')}
+					{i18n.t('ReferralScreen.Modals.HelpModal.exchanging_for_the_first_time')}
 				</Text>
 				<Text type="p2" weight="bold" style={{ width: '100%' }} marginBottom={16}>
 					{i18n.t('ReferralScreen.Modals.HelpModal.what_can_you_do')}

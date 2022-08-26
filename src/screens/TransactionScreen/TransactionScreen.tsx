@@ -79,7 +79,7 @@ const TransactionScreen = ({ route }: Props) => {
 						</Text>
 					</View>
 				</View>
-				<View style={styles.panel}>
+				<View style={styles.container}>
 					<Paper padding={24}>
 						<View style={styles.row}>
 							<Text color="text1" type="tSmall" weight="semiBold">
@@ -106,75 +106,77 @@ const TransactionScreen = ({ route }: Props) => {
 						</View>
 					</Paper>
 				</View>
-				<Paper padding={24}>
-					<>
-						<Text color="text1" type="tSmall" weight="semiBold">
-							{i18n.t('TransactionScreen.hash')}
-						</Text>
-						<View style={[styles.row, styles.data]}>
-							<Text color="text1" type="lLarge" weight="regular" width={242}>
-								{smallWalletAddress(hash, 12)}
-							</Text>
-							<TouchableOpacity onPress={onCopyHashToClipboard}>
-								<Icon name="copy" size={24} color="text7" />
-							</TouchableOpacity>
-						</View>
-					</>
-					{deposit || withdraw ? (
+				<View style={styles.container}>
+					<Paper padding={24}>
 						<>
 							<Text color="text1" type="tSmall" weight="semiBold">
-								{i18n.t('TransactionScreen.savings_account')}
-							</Text>
-							<View style={[styles.titleRow, styles.data]}>
-								<Token name={protocol.toLowerCase() as TokenType} size={16} />
-								<Text color="text1" type="lLarge" weight="regular" style={styles.description}>
-									{protocol}
-								</Text>
-							</View>
-						</>
-					) : exchange && toToken && sourceToken ? (
-						<>
-							<Text color="text1" type="tSmall" weight="semiBold">
-								{i18n.t('TransactionScreen.exchanged')}
+								{i18n.t('TransactionScreen.hash')}
 							</Text>
 							<View style={[styles.row, styles.data]}>
-								<Text color="text1" type="lLarge" weight="regular">
-									{i18n.t('TransactionScreen.exchange_details', {
-										from: sourceToken.symbol,
-										fromAmount,
-										toAmount: value,
-										to: toToken.symbol
-									})}
-								</Text>
-							</View>
-							<Text color="text1" type="tSmall" weight="semiBold">
-								{i18n.t('TransactionScreen.exchange_rate')}
-							</Text>
-							<View style={[styles.row, styles.data]}>
-								<Text color="text1" type="lLarge" weight="regular">
-									1 {sourceToken.symbol} = {truncate(toToken.amount / sourceToken.amount, 6)}{' '}
-									{toToken.symbol}
-								</Text>
-							</View>
-						</>
-					) : (
-						<>
-							<Text color="text1" type="tSmall" weight="semiBold">
-								{received
-									? i18n.t('TransactionScreen.received_from')
-									: i18n.t('TransactionScreen.sent_to')}
-							</Text>
-							<View style={styles.row}>
 								<Text color="text1" type="lLarge" weight="regular" width={242}>
-									{formattedSource}
+									{smallWalletAddress(hash, 12)}
 								</Text>
-								<TouchableOpacity onPress={onCopyToClipboard}>
+								<TouchableOpacity onPress={onCopyHashToClipboard}>
 									<Icon name="copy" size={24} color="text7" />
 								</TouchableOpacity>
 							</View>
 						</>
-					)}
-				</Paper>
+						{deposit || withdraw ? (
+							<>
+								<Text color="text1" type="tSmall" weight="semiBold">
+									{i18n.t('TransactionScreen.savings_account')}
+								</Text>
+								<View style={[styles.titleRow, styles.data]}>
+									<Token name={protocol.toLowerCase() as TokenType} size={16} />
+									<Text color="text1" type="lLarge" weight="regular" style={styles.description}>
+										{protocol}
+									</Text>
+								</View>
+							</>
+						) : exchange && toToken && sourceToken ? (
+							<>
+								<Text color="text1" type="tSmall" weight="semiBold">
+									{i18n.t('TransactionScreen.exchanged')}
+								</Text>
+								<View style={[styles.row, styles.data]}>
+									<Text color="text1" type="lLarge" weight="regular">
+										{i18n.t('TransactionScreen.exchange_details', {
+											from: sourceToken.symbol,
+											fromAmount,
+											toAmount: value,
+											to: toToken.symbol
+										})}
+									</Text>
+								</View>
+								<Text color="text1" type="tSmall" weight="semiBold">
+									{i18n.t('TransactionScreen.exchange_rate')}
+								</Text>
+								<View style={[styles.row, styles.data]}>
+									<Text color="text1" type="lLarge" weight="regular">
+										1 {sourceToken.symbol} = {truncate(toToken.amount / sourceToken.amount, 6)}{' '}
+										{toToken.symbol}
+									</Text>
+								</View>
+							</>
+						) : (
+							<>
+								<Text color="text1" type="tSmall" weight="semiBold">
+									{received
+										? i18n.t('TransactionScreen.received_from')
+										: i18n.t('TransactionScreen.sent_to')}
+								</Text>
+								<View style={styles.row}>
+									<Text color="text1" type="lLarge" weight="regular" width={242}>
+										{formattedSource}
+									</Text>
+									<TouchableOpacity onPress={onCopyToClipboard}>
+										<Icon name="copy" size={24} color="text7" />
+									</TouchableOpacity>
+								</View>
+							</>
+						)}
+					</Paper>
+				</View>
 
 				<View style={styles.button}>
 					<Button
