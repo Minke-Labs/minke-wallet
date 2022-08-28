@@ -25,7 +25,7 @@ const StablecoinsDetailScreen = ({ route }: Props) => {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View ph="xs">
 					<Header onPress={() => navigation.goBack()} />
-					<Balance coin={coin} />
+					<Balance coin={coin} stablecoin />
 					{/* <ByNetworks /> */}
 					{description && <Expander title={coin.name || ''} desc={description} />}
 				</View>

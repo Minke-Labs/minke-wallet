@@ -10,9 +10,10 @@ import Selector from './Selector/Selector';
 
 interface BlanceProps {
 	coin: MinkeToken;
+	stablecoin?: boolean;
 }
 
-const Balance: React.FC<BlanceProps> = ({ coin }) => {
+const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -34,7 +35,12 @@ const Balance: React.FC<BlanceProps> = ({ coin }) => {
 						{i18n.t('AssetsScreen.Balance.Balance')}
 						{/* @@@ - CHANGE LOCATION OF TRANSLATION */}
 					</Text>
-					<Selector coinSymbol={coin.symbol} {...{ active, setActive }} />
+					{!stablecoin && (
+						<Selector
+							coinSymbol={coin.symbol}
+							{...{ active, setActive }}
+						/>
+					)}
 				</View>
 				<Text type="dMedium">
 					{active ?
