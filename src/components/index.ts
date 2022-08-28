@@ -68,6 +68,7 @@ import IconBox from './IconBox/IconBox';
 import FloatingSelector from './FloatingSelector/FloatingSelector';
 import Warning from './Warning/Warning';
 import Balance from './Balance/Balance';
+import SendModalComponent from './SendModalComponent/SendModalComponent';
 
 export {
 	AaveReusables,
@@ -139,5 +140,6 @@ export {
 	IconBox,
 	FloatingSelector,
 	Warning,
-	Balance
+	Balance,
+	SendModalComponent
 };

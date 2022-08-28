@@ -1,41 +1,24 @@
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { useLanguage, useNavigation } from '@hooks';
+import { useNavigation } from '@hooks';
 import { spacing } from '@styles';
-import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
-import ModalReusables from '@src/components/ModalReusables';
 import ModalBase from '@src/components/ModalBase/ModalBase';
 import Modal from '@src/components/Modal/Modal';
 import Icon from '@src/components/Icon/Icon';
 import View from '@src/components/View/View';
 import Paper from '@src/components/Paper/Paper';
 import Touchable from '@src/components/Touchable/Touchable';
+import SendModalComponent from '@src/components/SendModalComponent/SendModalComponent';
 import Actions from './Actions/Actions';
 import { ReceiveModal } from './Modals';
 
 const FloatingSelector: React.FC = () => {
-	const { i18n } = useLanguage();
+	const [sendModal, setSendModal] = useState(false);
 	const [actionsModal, setActionsModal] = useState(false);
 	const [receiveModal, setReceiveModal] = useState(false);
-	const [sentTransaction, setSentTransaction] = useState<ResultProps>();
-	const [sendModal, setSendModal] = useState(false);
-	const [error, setError] = useState(false);
-	const [sendModalFinished, setSendModalFinished] = useState(false);
 
 	const navigation = useNavigation();
 	const { name: routeName } = useRoute();
-
-	const onError = () => {
-		setSendModalFinished(false);
-		setError(true);
-		setSendModal(true);
-	};
-
-	const onSendFinished = (obj: ResultProps) => {
-		const { hash } = obj;
-		setSendModalFinished(!hash);
-		setSentTransaction(obj);
-	};
 
 	const handleSend = () => {
 		setActionsModal(false);
@@ -99,39 +82,11 @@ const FloatingSelector: React.FC = () => {
 				/>
 			</Modal>
 
-			<ModalBase isVisible={sendModal} onDismiss={() => setSendModal(false)}>
-				<ModalReusables.Send
-					onDismiss={() => setSendModal(false)}
-					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
-					isVisible={sendModal}
-					onError={onError}
-				/>
-			</ModalBase>
-
 			<ModalBase isVisible={receiveModal} onDismiss={() => setReceiveModal(false)}>
 				<ReceiveModal onDismiss={() => setReceiveModal(false)} />
 			</ModalBase>
 
-			<ModalBase isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>
-				{sentTransaction && (
-					<ModalReusables.TransactionWait
-						transactionHash={sentTransaction.hash}
-						fromToken={sentTransaction.token}
-						onDismiss={() => setSendModalFinished(false)}
-						sent
-					/>
-				)}
-			</ModalBase>
-
-			<ModalBase isVisible={error} onDismiss={() => setError(false)}>
-				{error && (
-					<ModalReusables.Error
-						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
-						onDismiss={() => setError(false)}
-						showHeader
-					/>
-				)}
-			</ModalBase>
+			<SendModalComponent {...{ sendModal, setSendModal }} />
 		</>
 	);
 };
