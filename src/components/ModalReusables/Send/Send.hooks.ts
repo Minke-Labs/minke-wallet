@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAmplitude, useFormProgress } from '@hooks';
 import { MinkeToken } from '@models/types/token.types';
-import { UserProps } from './SendModal.types';
+import { UserProps } from './Send.types';
 
 export const useSendModal = ({ isVisible, onDismiss }: { isVisible: boolean; onDismiss: () => void }) => {
 	const { track } = useAmplitude();

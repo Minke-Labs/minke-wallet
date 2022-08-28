@@ -1,5 +1,5 @@
 import { MinkeToken } from '@models/types/token.types';
-import { UserProps } from '../../SendModal.types';
+import { UserProps } from '../../Send.types';
 
 interface TransactionSelectFundsProps {
 	user: UserProps;

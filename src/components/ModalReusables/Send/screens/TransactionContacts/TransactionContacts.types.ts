@@ -1,4 +1,4 @@
-import { UserProps } from '../../SendModal.types';
+import { UserProps } from '../../Send.types';
 
 interface TransactionContactsProps {
 	onSelected: (item: UserProps) => void;

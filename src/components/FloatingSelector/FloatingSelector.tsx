@@ -11,7 +11,7 @@ import View from '@src/components/View/View';
 import Paper from '@src/components/Paper/Paper';
 import Touchable from '@src/components/Touchable/Touchable';
 import Actions from './Actions/Actions';
-import { SendModal, ReceiveModal } from './Modals';
+import { ReceiveModal } from './Modals';
 
 const FloatingSelector: React.FC = () => {
 	const { i18n } = useLanguage();
@@ -100,7 +100,7 @@ const FloatingSelector: React.FC = () => {
 			</Modal>
 
 			<ModalBase isVisible={sendModal} onDismiss={() => setSendModal(false)}>
-				<SendModal
+				<ModalReusables.Send
 					onDismiss={() => setSendModal(false)}
 					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
 					isVisible={sendModal}

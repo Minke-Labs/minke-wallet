@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { imageSource } from '@models/wallet';
 import { useTokens } from '@hooks';
 import { exchangebleTokens } from '@models/token';
-import { UserProps } from '../../SendModal.types';
+import { UserProps } from '../../Send.types';
 
 interface UseTransactionSelectFundsProps {
 	user: UserProps;

@@ -1,15 +1,20 @@
-import { ResultProps } from '../../WalletScreen.types';
+import { MinkeToken } from '@models/types/token.types';
+
+type ResultProps = {
+	hash: string;
+	token: MinkeToken;
+};
 
 interface UserProps {
 	name: string;
 	address: string;
 }
 
-interface SendModalProps {
+interface SendProps {
 	onDismiss: () => void;
 	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	isVisible: boolean;
 }
 
-export type { UserProps, SendModalProps };
+export type { UserProps, SendProps };
