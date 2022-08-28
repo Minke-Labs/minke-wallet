@@ -1,12 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables } from '@components';
+import { Header, HapticButton, Paper, ModalBase, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import DirectionButton from '@src/screens/ExchangeScreen/DirectionButton/DirectionButton';
 import { TokenDetail } from '@src/screens/ExchangeResumeScreen/TokenDetail/TokenDetail';
-import { Rate } from '@src/screens/ExchangeResumeScreen/Rate/Rate';
 import { makeStyles } from './RedeemConfirmScreen.styles';
 import useRedeemConfirmScreenHooks from './RedeemConfirmScreen.hooks';
 
@@ -14,18 +13,8 @@ const RedeemConfirmScreen = () => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const {
-		fromToken,
-		toToken,
-		fromTokenAmount,
-		toTokenAmount,
-		usdAmount,
-		loading,
-		error,
-		count,
-		onSwapConfirm,
-		setError
-	} = useRedeemConfirmScreenHooks();
+	const { fromToken, toToken, fromTokenAmount, toTokenAmount, usdAmount, loading, error, onSwapConfirm, setError } =
+		useRedeemConfirmScreenHooks();
 	RNUxcam.tagScreenName('RedeemConfirmScreen');
 
 	return (
@@ -56,12 +45,6 @@ const RedeemConfirmScreen = () => {
 							)}
 						</View>
 						<DirectionButton disabled right />
-					</View>
-					<View style={styles.containerBottom}>
-						<Text type="lSmall" weight="semiBold" style={{ marginRight: 8 }}>
-							{i18n.t('RedeemConfirmScreen.rate_fixed_for')}
-						</Text>
-						{!loading && <Rate count={count} />}
 					</View>
 				</Paper>
 

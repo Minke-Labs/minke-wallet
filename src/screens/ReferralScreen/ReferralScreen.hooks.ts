@@ -1,4 +1,3 @@
-import { useWallets } from '@hooks';
 import { useState } from 'react';
 
 const useReferralScreen = () => {
@@ -10,17 +9,13 @@ const useReferralScreen = () => {
 	const onEarnPress = () => setEarnModalVisible(true);
 	const onEarnDismiss = () => setEarnModalVisible(false);
 
-	const { wallets } = useWallets();
-	const showReferralButton = (Object.values(wallets) || []).length > 0;
-
 	return {
 		helpModalVisible,
 		onHelpPress,
 		onHelpDismiss,
 		earnModalVisible,
 		onEarnPress,
-		onEarnDismiss,
-		showReferralButton
+		onEarnDismiss
 	};
 };
 

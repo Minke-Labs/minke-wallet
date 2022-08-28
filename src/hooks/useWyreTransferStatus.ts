@@ -19,9 +19,9 @@ const useWyreTransferStatus = (transfer: string) => {
 				const network = await selectedNetwork();
 				const { transferHash, destAmount, destCurrency } = await trackWyreTransfer(transfer, network);
 				if (transferHash) {
-					setTransactionHash(transferHash);
 					setAmount(destAmount);
 					setCurrency(destCurrency);
+					setTransactionHash(transferHash);
 				} else {
 					transferHashHandle = setTimeout(
 						() => getTransferHash(remainingTries - 1, remainingErrorTries),

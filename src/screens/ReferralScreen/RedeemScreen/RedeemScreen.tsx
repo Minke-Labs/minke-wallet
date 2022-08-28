@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, View, TouchableWithoutFeedback } from 'react-native';
-import { ActivityIndicator, Button, Header, ModalBase, ModalReusables, TokenCard } from '@components';
+import { Button, Header, ModalBase, ModalReusables, TokenCard } from '@components';
 import { useLanguage, useMinkeRewards, useNavigation, useTheme, useWalletState } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -28,7 +28,7 @@ const RedeemScreen = ({ route }: Props) => {
 	const navigation = useNavigation();
 	const dismissModal = () => navigation.navigate('ReferralScreen');
 	const { i18n } = useLanguage();
-	const { fromToken, toToken, loading, fromConversionAmount, conversionAmount, canSwap, onSwap, updateFromQuotes } =
+	const { fromToken, toToken, fromConversionAmount, conversionAmount, canSwap, onSwap, updateFromQuotes } =
 		useRedeemScreenHooks(points);
 
 	return (
@@ -61,18 +61,14 @@ const RedeemScreen = ({ route }: Props) => {
 								/>
 							</View>
 
-							<DirectionButton loading={loading} disabled />
+							<DirectionButton loading={false} disabled />
 						</View>
 						<View style={styles.buttonBox}>
-							{loading ? (
-								<ActivityIndicator />
-							) : (
-								<Button
-									title={i18n.t('ReferralScreen.RedeemScreen.swap')}
-									onPress={onSwap}
-									disabled={!canSwap}
-								/>
-							)}
+							<Button
+								title={i18n.t('ReferralScreen.RedeemScreen.swap')}
+								onPress={onSwap}
+								disabled={!canSwap}
+							/>
 						</View>
 						<KeyboardSpacer />
 					</>

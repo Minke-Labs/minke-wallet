@@ -614,7 +614,8 @@ export default {
 		},
 		Header: {
 			welcome: 'Welcome',
-			points: 'points'
+			points: 'points',
+			invite_a_friend: 'Invite a friend!'
 		},
 		AssetsPanel: {
 			your_total_assets: 'Your total assets',
@@ -636,7 +637,7 @@ export default {
 		},
 		components: {
 			Stories: {
-				whats_new: 'What’s new?'
+				learn_about_minke: 'Learn about Minke'
 			}
 		},
 		screens: {
@@ -766,9 +767,9 @@ export default {
 					you_can_earn: 'You can earn Minke points by:',
 					referring_a_friend: 'Referring a friend',
 					topping_up: 'Topping-up',
-					get_rewarded: 'Get rewarded for saving money!',
+					get_rewarded: 'Get rewarded with better money!',
 					what_can_you_do_with_your_points: 'What can you do with your points?',
-					you_can_redeem: 'You can redeem your points for MATIC tokens.'
+					you_can_redeem: 'You can redeem your points for rewards in USDC on Polygon.'
 				}
 			}
 		},
@@ -779,24 +780,26 @@ export default {
 				you_can_earn_points_by: 'You can earn points by:',
 				topping_up_for_the_first_time: 'Topping up for the first time.',
 				refering_minke: 'Referring Minke to friends and family.',
-				setting_recurrent_top_ups: 'Setting recurrent top-ups.',
+				exchanging_for_the_first_time: 'Exchanging for the first time',
 				what_can_you_do: 'What can you do with your points?',
-				you_can_redeem_your_points: 'You can redeem your points for MATIC tokens. '
+				you_can_redeem_your_points: 'You can redeem your points for rewards in USDC on Polygon. '
 			},
 			EarnModal: {
 				earn_minke_points: 'Earn Minke points!',
 				refer_a_friend: 'Refer a friend',
-				when_your_friends_top_up: 'When your friend buys 100 USDC you both get 100 Minke points.',
+				when_your_friends_top_up:
+					'When your friend buys stablecoins or exchanges for them in Minke you will both get up to 100 points (worth $10).',
 				top_up: 'Top-up',
-				get_rewarded: 'Get rewarded for saving money!',
+				get_rewarded: 'Get rewarded with better money!',
 				coming_soon: '(Coming soon)',
 				share_text:
-					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive 100 Minke Reward Points (~$10 that you can buy crypto with) when you signup and make your first purchase of 100 USDC or more. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref"
+					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $10 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref"
 			}
 		},
 		Body: {
 			referral: 'Referral',
 			deposit: 'Deposit',
+			exchange: 'Exchange',
 			points: '{{count}} points'
 		}
 	},
@@ -810,11 +813,11 @@ export default {
 	},
 	EnterReferralCodeScreen: {
 		enter_referral_code: 'Enter referral code',
-		get_rewarded_for_saving_money: 'Get rewarded for saving money!',
+		get_rewarded_for_saving_money: 'Get rewarded with better money!',
 		or: 'or',
-		refer_a_friend: 'Refer a friend',
+		buy_usdc: 'Buy USDC',
 		referral_note:
-			'This code can only be used once. After buying 100 USDC you and your friend will get each 100 Minke points.',
+			'This code can only be used once. After buying stablecoins you and your friend will each get up to 100 Minke points.',
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},

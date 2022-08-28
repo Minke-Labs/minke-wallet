@@ -232,7 +232,7 @@ const Stories: React.FC = () => {
 		<View style={{ marginBottom: 64 }}>
 			<TouchableOpacity onPress={() => setToggle(!toggle)} style={{ flexDirection: 'row', alignItems: 'center' }}>
 				<Text weight="semiBold" type="lMedium" style={{ marginRight: 8 }}>
-					{i18n.t('WalletScreen.components.Stories.whats_new')}
+					{i18n.t('WalletScreen.components.Stories.learn_about_minke')}
 				</Text>
 				<Icon name={toggle ? 'chevronUp' : 'chevronDown'} size={24} color="cta1" />
 			</TouchableOpacity>

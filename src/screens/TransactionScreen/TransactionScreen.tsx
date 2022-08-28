@@ -79,7 +79,7 @@ const TransactionScreen = ({ route }: Props) => {
 						</Text>
 					</View>
 				</View>
-				<View style={styles.panel}>
+				<View style={styles.container}>
 					<Paper p="s">
 						<View style={styles.row}>
 							<Text color="text1" type="tSmall" weight="semiBold">
