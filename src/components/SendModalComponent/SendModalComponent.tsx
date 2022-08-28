@@ -3,13 +3,15 @@ import { useLanguage } from '@hooks';
 import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import ModalReusables from '@src/components/ModalReusables';
 import ModalBase from '@src/components/ModalBase/ModalBase';
+import { MinkeToken } from '@models/types/token.types';
 
 interface SendModalComponentProps {
 	sendModal: boolean;
 	setSendModal: (val: boolean) => void;
+	coin?: MinkeToken;
 }
 
-const SendModalComponent: React.FC<SendModalComponentProps> = ({ sendModal, setSendModal }) => {
+const SendModalComponent: React.FC<SendModalComponentProps> = ({ sendModal, setSendModal, coin }) => {
 	const { i18n } = useLanguage();
 	const [sendModalFinished, setSendModalFinished] = useState(false);
 	const [sentTransaction, setSentTransaction] = useState<ResultProps>();
@@ -35,6 +37,7 @@ const SendModalComponent: React.FC<SendModalComponentProps> = ({ sendModal, setS
 					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
 					isVisible={sendModal}
 					onError={onError}
+					coin={coin}
 				/>
 			</ModalBase>
 			<ModalBase isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>

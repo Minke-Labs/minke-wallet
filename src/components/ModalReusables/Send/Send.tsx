@@ -14,7 +14,13 @@ import {
 import { SendProps } from './Send.types';
 import { useSendModal } from './Send.hooks';
 
-const SendModal: React.FC<SendProps> = ({ onDismiss, onError, sentSuccessfully, isVisible = false }) => {
+const SendModal: React.FC<SendProps> = ({
+	coin,
+	onDismiss,
+	onError,
+	sentSuccessfully,
+	isVisible = false
+}) => {
 	const {
 		currentStep,
 		user,
@@ -24,7 +30,7 @@ const SendModal: React.FC<SendProps> = ({ onDismiss, onError, sentSuccessfully, 
 		onUserSelected,
 		onTokenSelected,
 		onContactsBack
-	} = useSendModal({ isVisible, onDismiss });
+	} = useSendModal({ isVisible, onDismiss, coin });
 	const { i18n } = useLanguage();
 
 	return (
@@ -53,10 +59,22 @@ const SendModal: React.FC<SendProps> = ({ onDismiss, onError, sentSuccessfully, 
 					<TransactionContacts onSelected={onUserSelected} />
 				))}
 
-			{currentStep === 1 && (
+			{(currentStep === 1) && (coin === undefined) && (
 				<TransactionSelectFunds
 					user={user}
 					onSelected={onTokenSelected}
+				/>
+			)}
+
+			{(currentStep === 1) && (coin !== undefined) && (
+				<TransactionTransfer
+					{...{
+						user,
+						token: coin,
+						onDismiss,
+						onError,
+						sentSuccessfully
+					}}
 				/>
 			)}
 

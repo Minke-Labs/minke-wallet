@@ -21,16 +21,18 @@ const StablecoinsDetailScreen = ({ route }: Props) => {
 	} = useStablecoinsDetailScreen(coin); // @@@TODO:
 
 	return (
-		<BasicLayout>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				<View ph="xs">
-					<Header onPress={() => navigation.goBack()} />
-					<Balance coin={coin} stablecoin />
-					{/* <ByNetworks /> */}
-					{description && <Expander title={coin.name || ''} desc={description} />}
-				</View>
-			</ScrollView>
-		</BasicLayout>
+		<>
+			<BasicLayout>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					<View ph="xs">
+						<Header onPress={() => navigation.goBack()} />
+						<Balance coin={coin} stablecoin />
+						{/* <ByNetworks /> */}
+						{description && <Expander title={coin.name || ''} desc={description} />}
+					</View>
+				</ScrollView>
+			</BasicLayout>
+		</>
 	);
 };
 

@@ -6,6 +6,7 @@ import View from '@src/components/View/View';
 import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { MinkeToken } from '@models/types/token.types';
+import SendModalComponent from '@src/components/SendModalComponent/SendModalComponent';
 import Selector from './Selector/Selector';
 
 interface BlanceProps {
@@ -14,98 +15,101 @@ interface BlanceProps {
 }
 
 const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
+	const [sendModal, setSendModal] = useState(false);
 	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const navigation = useNavigation();
 
 	return (
-		<Paper style={{ overflow: 'hidden' }} mb="xs">
-			<View
-				bgc="background2"
-				ph="s"
-				pv="xs"
-				style={{
-					borderBottomWidth: 1,
-					borderBottomColor: colors.background1
-				}}
-			>
-				<View row main="space-between">
-					<Text type="lMedium" weight="semiBold" color="text3">
-						{i18n.t('AssetsScreen.Balance.Balance')}
-						{/* @@@ - CHANGE LOCATION OF TRANSLATION */}
+		<>
+			<Paper style={{ overflow: 'hidden' }} mb="xs">
+				<View
+					bgc="background2"
+					ph="s"
+					pv="xs"
+					style={{
+						borderBottomWidth: 1,
+						borderBottomColor: colors.background1
+					}}
+				>
+					<View row main="space-between">
+						<Text type="lMedium" weight="semiBold" color="text3">
+							{i18n.t('AssetsScreen.Balance.Balance')}
+							{/* @@@ - CHANGE LOCATION OF TRANSLATION */}
+						</Text>
+						{!stablecoin && (
+							<Selector
+								coinSymbol={coin.symbol}
+								{...{ active, setActive }}
+							/>
+						)}
+					</View>
+					<Text type="dMedium">
+						{active ?
+							`${tokenBalanceFormat(coin.balance!)} ${coin.symbol}` :
+							`${numberFormat(coin.balanceUSD!)}`}
 					</Text>
-					{!stablecoin && (
-						<Selector
-							coinSymbol={coin.symbol}
-							{...{ active, setActive }}
-						/>
-					)}
 				</View>
-				<Text type="dMedium">
-					{active ?
-						`${tokenBalanceFormat(coin.balance!)} ${coin.symbol}` :
-						`${numberFormat(coin.balanceUSD!)}`}
-				</Text>
-			</View>
 
-			<View h={56} row>
-				<TouchableOpacity
-					activeOpacity={0.6}
-					onPress={() => navigation.navigate('ExchangeScreen', { destToken: coin })}
-					style={{ flex: 1 }}
-				>
-					<View
-						main="center"
-						cross="center"
-						style={{
-							flex: 1,
-							borderRightWidth: 1,
-							borderRightColor: colors.background1
-						}}
-					>
-						<Text type="lLarge" color="cta1" weight="semiBold">
-							Buy
-						</Text>
-					</View>
-				</TouchableOpacity>
-				<TouchableOpacity
-					activeOpacity={0.6}
-					onPress={() => navigation.navigate('ExchangeScreen', { sourceToken: coin })}
-					style={{ flex: 1 }}
-				>
-					<View
-						main="center"
-						cross="center"
-						style={{
-							flex: 1,
-							borderRightWidth: 1,
-							borderRightColor: colors.background1
-						}}
-					>
-						<Text type="lLarge" color="cta1" weight="semiBold">
-							Sell
-						</Text>
-					</View>
-				</TouchableOpacity>
-				<TouchableOpacity
-					activeOpacity={0.6}
-					onPress={() => null}
-					style={{ flex: 1 }}
-				>
-					<View
-						main="center"
-						cross="center"
+				<View h={56} row>
+					<TouchableOpacity
+						activeOpacity={0.6}
+						onPress={() => navigation.navigate('ExchangeScreen', { destToken: coin })}
 						style={{ flex: 1 }}
 					>
-						<Text type="lLarge" color="cta1" weight="semiBold">
-							Send
-						</Text>
-					</View>
-				</TouchableOpacity>
-			</View>
-
-		</Paper>
+						<View
+							main="center"
+							cross="center"
+							style={{
+								flex: 1,
+								borderRightWidth: 1,
+								borderRightColor: colors.background1
+							}}
+						>
+							<Text type="lLarge" color="cta1" weight="semiBold">
+								Buy
+							</Text>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						activeOpacity={0.6}
+						onPress={() => navigation.navigate('ExchangeScreen', { sourceToken: coin })}
+						style={{ flex: 1 }}
+					>
+						<View
+							main="center"
+							cross="center"
+							style={{
+								flex: 1,
+								borderRightWidth: 1,
+								borderRightColor: colors.background1
+							}}
+						>
+							<Text type="lLarge" color="cta1" weight="semiBold">
+								Sell
+							</Text>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						activeOpacity={0.6}
+						onPress={() => setSendModal(true)}
+						style={{ flex: 1 }}
+					>
+						<View
+							main="center"
+							cross="center"
+							style={{ flex: 1 }}
+						>
+							<Text type="lLarge" color="cta1" weight="semiBold">
+								Send
+							</Text>
+						</View>
+					</TouchableOpacity>
+				</View>
+			</Paper>
+			<SendModalComponent {...{ sendModal, setSendModal, coin }} />
+		</>
 	);
 };
 

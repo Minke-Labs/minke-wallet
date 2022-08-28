@@ -15,6 +15,7 @@ interface SendProps {
 	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	isVisible: boolean;
+	coin?: MinkeToken;
 }
 
 export type { UserProps, SendProps };
