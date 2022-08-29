@@ -10,7 +10,6 @@ interface TokenItemCardProps {
 	token: TokenType;
 	name?: string;
 	symbol: string;
-	subtitle: string;
 	balance?: string;
 	balanceUSD?: number;
 	onPress?: () => void;
@@ -22,7 +21,6 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	token,
 	name,
 	symbol,
-	subtitle,
 	balance,
 	balanceUSD,
 	perc,
@@ -51,7 +49,6 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 								token,
 								name,
 								symbol,
-								subtitle,
 								balance,
 								balanceUSD,
 								perc

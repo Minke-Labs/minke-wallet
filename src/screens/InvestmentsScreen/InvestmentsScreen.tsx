@@ -54,7 +54,6 @@ const InvestmentsScreen = () => {
 								token={item.symbol.toLowerCase() as TokenType}
 								name={item.name!}
 								symbol={item.symbol}
-								subtitle="All networks"
 								balance={item.balance}
 								balanceUSD={item.balanceUSD}
 								perc={item.perc}

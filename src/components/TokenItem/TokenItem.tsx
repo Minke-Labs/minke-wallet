@@ -1,5 +1,6 @@
 import React from 'react';
 import { TokenType } from '@styles';
+import { useNetwork } from '@hooks';
 import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
 import Text from '../Text/Text';
 import Token from '../Token/Token';
@@ -10,7 +11,6 @@ interface TokenItemProps {
 	token: TokenType;
 	name?: string;
 	symbol: string;
-	subtitle: string;
 	balance?: string;
 	balanceUSD?: number;
 	perc?: number;
@@ -20,11 +20,11 @@ const TokenItem: React.FC<TokenItemProps> = ({
 	token,
 	name,
 	symbol,
-	subtitle,
 	balance,
 	balanceUSD,
 	perc
 }) => {
+	const { network } = useNetwork();
 	const tokenName = name || symbol;
 	return (
 		<View row main="space-between" w="100%">
@@ -42,7 +42,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
 						</Text>
 					</View>
 					<Text type="lSmall" weight="semiBold">
-						{subtitle}
+						{network.name || ''}
 					</Text>
 				</View>
 			</View>

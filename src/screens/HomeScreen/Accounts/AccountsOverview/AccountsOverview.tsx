@@ -68,7 +68,6 @@ export const AccountsOverview = () => {
 						token={showingStable.symbol.toLowerCase() as TokenType}
 						name={showingStable.name}
 						symbol={showingStable.symbol}
-						subtitle="All networks"
 						balanceUSD={showingStable.balanceUSD}
 						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: showingStable })}
 					/>
@@ -93,7 +92,6 @@ export const AccountsOverview = () => {
 					token={token.symbol.toLowerCase() as TokenType}
 					name={token.name}
 					symbol={token.symbol}
-					subtitle="All networks"
 					balance={token.balance}
 					balanceUSD={token.balanceUSD}
 					perc={token.perc}
