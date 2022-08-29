@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useNavigation, useTokens, useLanguage } from '@hooks';
+import { useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
 import { InvestmentToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
 // import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
-	const { i18n } = useLanguage();
 	const { tokens, walletBalance: balance } = useTokens();
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>();
 
@@ -27,7 +26,7 @@ const InvestmentsScreen = () => {
 
 	if (investmentTokens === undefined) {
 		return (
-			<BlankStates.Type2 title={i18n.t('Components.BlankStates.WalletAssets')} />
+			<BlankStates.Type2 title="Investments" />
 		);
 	}
 
