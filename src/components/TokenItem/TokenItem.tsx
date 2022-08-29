@@ -28,7 +28,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
 	const tokenName = name || symbol;
 	return (
 		<View row main="space-between" w="100%">
-			<View row>
+			<View row w={180}>
 				<Token name={token} size={39} />
 				<View mr="xxs" />
 				<View>
@@ -48,8 +48,6 @@ const TokenItem: React.FC<TokenItemProps> = ({
 			</View>
 
 			{!!perc && <Tag perc={perc} />}
-
-			{!balance && !balanceUSD && <View w={30} />}
 
 			<View main="center">
 				{!!balance && !!balanceUSD && (
