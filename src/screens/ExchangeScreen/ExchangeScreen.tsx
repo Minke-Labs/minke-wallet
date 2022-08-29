@@ -54,7 +54,11 @@ const ExchangeScreen = ({ route }: Props) => {
 	const keyboardVisible = useKeyboard();
 	RNUxcam.tagScreenName('ExchangeScreen');
 
-	if (fromToken === undefined) return <BlankStates.Exchange />;
+	if (fromToken === undefined) {
+		return (
+			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Exchange')} />
+		);
+	}
 
 	return (
 		<>

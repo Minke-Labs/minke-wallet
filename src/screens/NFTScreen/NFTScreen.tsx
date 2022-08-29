@@ -15,7 +15,7 @@ const NFTScreen = () => {
 	const [infoModal, setInfoModal] = useState(false);
 	const { i18n } = useLanguage();
 
-	if (!assets) return <BlankStates.NFT />;
+	if (!assets) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.NFT')} />;
 
 	const data = Object.keys(nftsByCollection);
 

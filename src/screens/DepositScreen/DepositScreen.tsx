@@ -1,6 +1,6 @@
 import React from 'react';
 import { ModalBase, BlankStates } from '@components';
-import { useDepositProtocols } from '@hooks';
+import { useDepositProtocols, useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
@@ -9,13 +9,18 @@ import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
+	const { i18n } = useLanguage();
 	const { notAbleToSaveVisible, notAbleToSaveDismiss, dismissAddFunds, addFundsVisible, onAddFunds } =
 		useDepositScreen();
 	const { setSelectedUSDCoin, depositableToken, selectedProtocol, ableToDeposit, approved, setApproved, apy } =
 		useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
 
-	if (ableToDeposit === undefined) return <BlankStates.Deposit />;
+	if (ableToDeposit === undefined) {
+		return (
+			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />
+		);
+	}
 
 	if (!ableToDeposit) {
 		return (
@@ -34,7 +39,11 @@ const DepositScreen = () => {
 		);
 	}
 
-	if (approved === undefined) return <BlankStates.Deposit />;
+	if (approved === undefined) {
+		return (
+			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />
+		);
+	}
 
 	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;

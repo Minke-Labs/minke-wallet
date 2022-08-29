@@ -1,17 +1,9 @@
-import { ViewType } from '@styles';
 import React from 'react';
-import View from '../View/View';
+import { ViewType } from '@styles';
+import View from '@src/components/View/View';
 
-const Paper: React.FC<Partial<ViewType>> = ({
-	children,
-	br = 'xs',
-	...rest
-}) => (
-	<View
-		bgc="background5"
-		br={br}
-		{...{ ...rest }}
-	>
+const Paper: React.FC<Partial<ViewType>> = ({ children, br = 'xs', ...rest }) => (
+	<View bgc="background5" br={br} {...{ ...rest }}>
 		{children}
 	</View>
 );

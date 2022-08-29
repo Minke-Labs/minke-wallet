@@ -2,15 +2,20 @@ import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useDepositProtocols, useNavigation, useTokens } from '@hooks';
+import { useDepositProtocols, useLanguage, useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
 
 const StablecoinsScreen = () => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { stablecoins, stablecoinsBalance } = useTokens();
 	const { apy } = useDepositProtocols();
 
-	if (!stablecoins) return <BlankStates.Save />; // @@@TODO: update blank state without the title
+	if (!stablecoins) {
+		return (
+			<BlankStates.Type2 title={i18n.t('Components.BlankStates.Save')} />
+		);
+	}
 
 	return (
 		<AssetsLayout

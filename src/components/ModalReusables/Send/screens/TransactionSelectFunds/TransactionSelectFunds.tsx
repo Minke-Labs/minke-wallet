@@ -28,7 +28,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 				?
 			</Text>
 			{tokens === undefined ? (
-				<BlankStates.Send />
+				<BlankStates.Type3 />
 			) : tokens.length > 0 ? (
 				<FlatList
 					style={styles.tokensList}

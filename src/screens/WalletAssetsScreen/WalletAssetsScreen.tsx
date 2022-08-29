@@ -35,7 +35,7 @@ const WalletAssetsScreen = () => {
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
 	const { tokens, walletBalance: balance } = useTokens();
 
-	if (tokens === undefined) return <BlankStates.WalletAssets />;
+	if (tokens === undefined) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.WalletAssets')} />;
 
 	return (
 		<>

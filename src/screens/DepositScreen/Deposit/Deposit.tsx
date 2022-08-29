@@ -59,7 +59,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 	}, []);
 
 	if (!token) {
-		return <BlankStates.Deposit />;
+		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />;
 	}
 
 	return (
