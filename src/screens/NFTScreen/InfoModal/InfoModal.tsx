@@ -18,7 +18,7 @@ export const InfoModal: React.FC<InfoModalProps> = ({ onPress }) => {
 				</TouchableOpacity>
 			</View>
 
-			<Text type="bSmall" marginBottom={32} color="text2" width={343}>
+			<Text type="bSmall" mb="m" color="text2" width={343}>
 				{i18n.t('NFTScreen.InfoModal.desc')}
 			</Text>
 		</View>

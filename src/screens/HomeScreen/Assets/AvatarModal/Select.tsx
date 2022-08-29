@@ -22,7 +22,7 @@ export const Select: React.FC<SelectProps> = ({ onBack }) => {
 			<Text
 				type="hMedium"
 				weight="bold"
-				marginBottom={16}
+				mb="xs"
 			>
 				{i18n.t('WalletScreen.Modals.AvatarModal.Select.select')}
 			</Text>

@@ -16,10 +16,10 @@ const DepositWithdrawalSuccessScreen = ({ route }: Props) => {
 
 	return (
 		<SaveLayout>
-			<Text type="h1" weight="extraBold" color="text1" marginBottom={32}>
+			<Text type="h1" weight="extraBold" color="text1" mb="m">
 				{i18n.t('DepositWithdrawalSuccessScreen.congrats')}
 			</Text>
-			<Text type="p2" color="text3" marginBottom={32}>
+			<Text type="p2" color="text3" mb="m">
 				{type === 'deposit'
 					? i18n.t('DepositWithdrawalSuccessScreen.you_deposited')
 					: i18n.t('DepositWithdrawalSuccessScreen.you_withdrawn')}

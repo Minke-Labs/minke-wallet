@@ -21,7 +21,7 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={styles.container}>
-				<Text weight="extraBold" type="h3" center marginBottom={24}>
+				<Text weight="extraBold" type="h3" center mb="s">
 					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.sent_to_address')}
 				</Text>
 				<Input
@@ -45,7 +45,7 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 				{!keyboardVisible &&
 					(contactList!.length > 0 ? (
 						<>
-							<Text center weight="extraBold" type="p" marginBottom={32} style={{ marginTop: 32 }}>
+							<Text center weight="extraBold" type="p" mb="m" style={{ marginTop: 32 }}>
 								{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.choose_from_saved')}
 							</Text>
 							<FlatList

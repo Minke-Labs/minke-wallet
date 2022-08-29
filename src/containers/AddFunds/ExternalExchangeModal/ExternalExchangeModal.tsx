@@ -20,10 +20,10 @@ export const ExternalExchangeModal = () => {
 			<Text width="100%" weight="bold" type="hMedium">
 				{i18n.t('Containers.AddFunds.ExternalExchangeModal.external')}
 			</Text>
-			<Text width="100%" type="bMedium" marginBottom={16}>
+			<Text width="100%" type="bMedium" mb="xs">
 				{i18n.t('Containers.AddFunds.ExternalExchangeModal.send_from')}
 			</Text>
-			<Text width="100%" type="bMedium" color="alert1" marginBottom={24}>
+			<Text width="100%" type="bMedium" color="alert1" mb="s">
 				{i18n.t('Containers.AddFunds.ExternalExchangeModal.make_sure')}{' '}
 				<Text type="bMedium" color="alert1" weight="bold">
 					{network?.name}.

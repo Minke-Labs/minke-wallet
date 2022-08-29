@@ -23,10 +23,10 @@ export const CurrentValue = ({
 	return (
 		<View style={styles.container}>
 			<BlurView intensity={12} tint={scheme === 'dark' ? 'dark' : 'light'} style={styles.glassContainer}>
-				<Text type="p2" color="text3" weight="bold" marginBottom={8}>
+				<Text type="p2" color="text3" weight="bold" mb="xxs">
 					{i18n.t('ReferralScreen.CurrentValue.owned')}
 				</Text>
-				<Text type="textLarge" weight="medium" marginBottom={14}>
+				<Text type="textLarge" weight="medium" mb="xs">
 					{points} {i18n.t('ReferralScreen.CurrentValue.pts')}
 				</Text>
 				<View style={styles.interestContainer}>
@@ -43,13 +43,13 @@ export const CurrentValue = ({
 					onPress={onRedeemPress}
 				>
 					<Icon name="minusStroke" color="cta1" size={20} />
-					<Text marginBottom={4} style={{ marginLeft: 8 }}>
+					<Text mb="xxxs" style={{ marginLeft: 8 }}>
 						{i18n.t('ReferralScreen.CurrentValue.redeem')}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.depositButton} onPress={onEarnPress}>
 					<Icon name="saveStroke" color="cta1" size={20} />
-					<Text marginBottom={4} style={{ marginLeft: 8 }}>
+					<Text mb="xxxs" style={{ marginLeft: 8 }}>
 						{i18n.t('ReferralScreen.CurrentValue.earn')}
 					</Text>
 				</TouchableOpacity>

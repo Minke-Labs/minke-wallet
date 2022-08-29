@@ -17,7 +17,7 @@ const TransactionPeriod: React.FC<ITransactionPeriod> = ({ title, data }) => {
 	const { colors } = useTheme();
 	return (
 		<View style={[styles.section, { borderBottomColor: colors.background1 }]}>
-			<Text type="a" weight="bold" color="text3" marginBottom={16}>
+			<Text type="a" weight="bold" color="text3" mb="xs">
 				{title}
 			</Text>
 			{data.map((item) => (

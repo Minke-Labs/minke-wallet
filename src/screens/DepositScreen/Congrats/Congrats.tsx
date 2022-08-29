@@ -15,10 +15,10 @@ const SaveCongratsScreen = () => {
 		<View style={styles.container}>
 			<ImageBackground source={saveCongratsImg} style={styles.saveCongratsImg} />
 			<View style={styles.congratsMessage}>
-				<Text center type="h2" weight="bold" color="text2" marginBottom={24}>
+				<Text center type="h2" weight="bold" color="text2" mb="s">
 					{i18n.t('DepositScreen.Congrats.congrats')}
 				</Text>
-				<Text center color="text2" marginBottom={24}>
+				<Text center color="text2" mb="s">
 					{i18n.t('DepositScreen.Congrats.you_just')}
 				</Text>
 			</View>

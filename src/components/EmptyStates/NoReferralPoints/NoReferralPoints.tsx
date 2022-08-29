@@ -11,10 +11,10 @@ const NoReferralPoints = ({ onEarnPress }: { onEarnPress: () => void }) => {
 	return (
 		<View style={styles.container}>
 			<Image source={whale2Img} style={styles.image} />
-			<Text type="p2" color="text1" weight="bold" marginBottom={8}>
+			<Text type="p2" color="text1" weight="bold" mb="xxs">
 				{i18n.t('Components.EmptyStates.NoReferralPoints.your_points_will_appear_here')}
 			</Text>
-			<Text type="p2" color="text1" weight="regular" marginBottom={24}>
+			<Text type="p2" color="text1" weight="regular" mb="s">
 				{i18n.t('Components.EmptyStates.NoReferralPoints.lets_get_started')}
 			</Text>
 			<Button

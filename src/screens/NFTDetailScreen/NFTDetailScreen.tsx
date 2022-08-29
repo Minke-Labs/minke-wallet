@@ -90,7 +90,7 @@ const NFTDetailScreen = ({ route }: Props) => {
 				<Button
 					iconRight="openInNew"
 					title={i18n.t('NFTDetailScreen.view_on_openSea')}
-					marginBottom={16}
+					mb="xs"
 					onPress={() => Linking.openURL(nft.permalink)}
 				/>
 				{!!nft.collection.description && (

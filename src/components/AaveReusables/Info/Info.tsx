@@ -12,7 +12,7 @@ const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ margi
 	return (
 		<View style={{ marginBottom }}>
 			<DescTransparentCard fullHeight={fullHeight}>
-				<Text weight="extraBold" marginBottom={12} style={{ width: '100%' }}>
+				<Text weight="extraBold" mb="xs" style={{ width: '100%' }}>
 					{i18n.t('Components.AaveReusables.Info.what_is')}
 				</Text>
 				<Text type="a">{i18n.t('Components.AaveReusables.Info.aave_des')}</Text>

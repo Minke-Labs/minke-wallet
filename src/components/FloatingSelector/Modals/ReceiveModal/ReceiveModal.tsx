@@ -28,7 +28,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					{i18n.t('WalletScreen.Modals.ReceiveModal.receive')}
 				</Text>
 
-				<Text marginBottom={44} width="100%">
+				<Text mb="l" width="100%">
 					{i18n.t('WalletScreen.Modals.ReceiveModal.show_qr')}
 				</Text>
 

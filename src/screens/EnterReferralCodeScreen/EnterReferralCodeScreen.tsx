@@ -48,12 +48,12 @@ const EnterReferralCodeScreen = () => {
 					}}
 				>
 					<Image source={whaleImage} style={styles.image} />
-					<Text type="h2" weight="bold" style={styles.title} width={280} center marginBottom={24}>
+					<Text type="h2" weight="bold" style={styles.title} width={280} center mb="s">
 						{i18n.t('EnterReferralCodeScreen.get_rewarded_for_saving_money')}
 					</Text>
 					{disableCode ? (
 						<>
-							<Text type="h2" weight="bold" style={styles.code} width={280} center marginBottom={48}>
+							<Text type="h2" weight="bold" style={styles.code} width={280} center mb="xl">
 								{code}
 							</Text>
 							<Button

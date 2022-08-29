@@ -16,7 +16,7 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 	return (
 		<View style={styles.container}>
 			{!!user.address && <Image source={image!} style={styles.image} />}
-			<Text type="h3" weight="extraBold" marginBottom={32}>
+			<Text type="h3" weight="extraBold" mb="m">
 				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.which')}
 				<Text color="text12" type="h3" weight="extraBold">
 					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.asset')}

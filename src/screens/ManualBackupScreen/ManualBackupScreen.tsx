@@ -51,11 +51,11 @@ const ManualBackupScreen = ({ route }: Props) => {
 				</View>
 
 				<View style={styles.container}>
-					<Text weight="extraBold" type="h3" marginBottom={8}>
+					<Text weight="extraBold" type="h3" mb="xxs">
 						{i18n.t('ManualBackupScreen.recovery_phrase')}
 					</Text>
 
-					<Text color="text2" width={290} marginBottom={40}>
+					<Text color="text2" width={290} mb="l">
 						{i18n.t('ManualBackupScreen.write_this_down')}
 					</Text>
 

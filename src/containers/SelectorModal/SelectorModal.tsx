@@ -14,7 +14,7 @@ export const SelectorModal: React.FC<SelectorModalProps> = ({ onBuy, onExchange 
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<Text marginBottom={16} weight="bold" type="hMedium">
+			<Text mb="xs" weight="bold" type="hMedium">
 				{i18n.t('Containers.AddFunds.SelectorModal.add_funds')}
 			</Text>
 			{os === 'android' ? (

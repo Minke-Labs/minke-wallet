@@ -50,7 +50,7 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 								<Icon name="arrowBackStroke" color="text7" size={24} />
 							</TouchableOpacity>
 						</View>
-						<Text type="h3" weight="bold" color="text1" marginBottom={35}>
+						<Text type="h3" weight="bold" color="text1" mb="m">
 							{i18n.t(`DepositScreen.OpenSavings.${selectedProtocol?.id}`)}
 						</Text>
 

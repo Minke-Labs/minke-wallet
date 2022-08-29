@@ -17,7 +17,7 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text weight="extraBold" type="h3" marginBottom={32}>
+			<Text weight="extraBold" type="h3" mb="m">
 				{i18n.t('WalletScreen.Modals.SendModal.screens.AddContact.add_contact')}
 			</Text>
 			<Input

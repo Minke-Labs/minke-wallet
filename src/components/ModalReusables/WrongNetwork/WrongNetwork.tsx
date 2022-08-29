@@ -26,10 +26,10 @@ const WrongNetwork = ({ onDismiss, network, description, onUpdate }: WrongNetwor
 
 			<View style={styles.container}>
 				<Image source={whale4Img} style={styles.image} />
-				<Text weight="bold" type="h3" marginBottom={12}>
+				<Text weight="bold" type="h3" mb="xs">
 					{i18n.t('ReferralScreen.RedeemScreen.Modals.WrongNetwork.wrong_network')}
 				</Text>
-				<Text weight="regular" type="tSmall" color="text2" marginBottom={40}>
+				<Text weight="regular" type="tSmall" color="text2" mb="l">
 					{description}
 				</Text>
 				<Button
@@ -37,7 +37,7 @@ const WrongNetwork = ({ onDismiss, network, description, onUpdate }: WrongNetwor
 						network: network.name
 					})}
 					onPress={() => onPress(network)}
-					marginBottom={40}
+					mb="l"
 					mode="outlined"
 				/>
 			</View>

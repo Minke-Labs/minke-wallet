@@ -25,13 +25,13 @@ const BackedUp: React.FC<{ address: string }> = ({ address }) => {
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
+			<Text weight="extraBold" type="h2" center mb="s" width={275}>
 				{i18n.t('BackupStatusScreen.your_wallet_is_backed_up')}
 			</Text>
-			<Text type="p" weight="regular" center marginBottom={48}>
+			<Text type="p" weight="regular" center mb="xl">
 				{smallWalletAddress(address, 9)}
 			</Text>
-			<Text weight="medium" center marginBottom={40}>
+			<Text weight="medium" center mb="l">
 				{i18n.t('BackupStatusScreen.if_you_lose', { cloudPlatform })}
 			</Text>
 		</>
@@ -45,20 +45,20 @@ const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }>
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<Text weight="extraBold" type="h2" center marginBottom={24} width={275} color="alert1">
+			<Text weight="extraBold" type="h2" center mb="s" width={275} color="alert1">
 				{i18n.t('BackupStatusScreen.your_wallet_is_not_backed_up')}
 			</Text>
-			<Text type="p" weight="regular" center marginBottom={48}>
+			<Text type="p" weight="regular" center mb="xl">
 				{smallWalletAddress(address, 9)}
 			</Text>
-			<Text weight="medium" center marginBottom={40}>
+			<Text weight="medium" center mb="l">
 				{i18n.t('BackupStatusScreen.your_keys_your_coins')}
 			</Text>
 			<Button
 				title={i18n.t('BackupStatusScreen.back_up_to_icloud', { cloudPlatform })}
 				onPress={handleIcloudBackup}
 				iconRight="cloud"
-				marginBottom={24}
+				mb="s"
 			/>
 		</>
 	);
@@ -140,7 +140,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					{address !== addressState && (
 						<Button
 							title={i18n.t('BackupStatusScreen.go_to_wallet')}
-							marginBottom={21}
+							mb="xs"
 							onPress={() => onSelectWallet(wallet)}
 						/>
 					)}

@@ -68,7 +68,7 @@ const AddFundsScreen = () => {
 
 					<View style={styles.container}>
 						<View style={styles.top}>
-							<Text type="lSmall" weight="semiBold" color="text1" marginBottom={8}>
+							<Text type="lSmall" weight="semiBold" color="text1" mb="xxs">
 								{i18n.t('AddFundsScreen.you_pay')}
 							</Text>
 							<FiatCard

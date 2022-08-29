@@ -47,7 +47,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 						{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
 					</View>
 				)}
-				<Text type="h3" weight="extraBold" marginBottom={32}>
+				<Text type="h3" weight="extraBold" mb="m">
 					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.how_much')}
 					<Text color="text12" type="h3" weight="extraBold">
 						{amountType === 'token' ? token.symbol : 'USD'}

@@ -23,10 +23,10 @@ const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => 
 				</View>
 
 				<Token size={56} glow name={network?.id as TokenType} />
-				<Text type="h3" weight="extraBold" marginBottom={16} style={{ marginTop: 40 }}>
+				<Text type="h3" weight="extraBold" mb="xs" style={{ marginTop: 40 }}>
 					{network?.name} network
 				</Text>
-				<Text center marginBottom={56}>
+				<Text center mb="xxl">
 					If you&apos;re receiving from an exchange or wallet make sure they support withdrawals on the{' '}
 					{network?.name} network.
 				</Text>

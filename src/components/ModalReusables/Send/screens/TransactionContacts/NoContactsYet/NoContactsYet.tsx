@@ -10,10 +10,10 @@ export const NoContactsYet = () => {
 	return (
 		<View style={styles.container}>
 			<Image source={whale3Img} style={styles.image} />
-			<Text type="p2" marginBottom={15}>
+			<Text type="p2" mb="xs">
 				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.NoContactsYet.no_contacts_yet')}
 			</Text>
-			<Text weight="bold" type="p2" marginBottom={65}>
+			<Text weight="bold" type="p2" mb="xxxl">
 				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.NoContactsYet.add_some')}
 			</Text>
 		</View>

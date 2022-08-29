@@ -41,14 +41,14 @@ export const Chosen: React.FC<ChosenProps> = ({ onSelectAvatar }) => {
 				width={210}
 				center
 				type="bSmall"
-				marginBottom={8}
+				mb="xxs"
 			>
 				{currentAvatar.desc}
 			</Text>
 			<Text
 				weight="bold"
 				type="hMedium"
-				marginBottom={24}
+				mb="s"
 			>
 				{i18n.t('WalletScreen.Modals.AvatarModal.Chosen.edit')}
 			</Text>

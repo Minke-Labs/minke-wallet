@@ -54,10 +54,10 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 				</View>
 			)}
 			<View style={{ paddingHorizontal: 24 }}>
-				<Text type="h3" weight="extraBold" marginBottom={8}>
+				<Text type="h3" weight="extraBold" mb="xxs">
 					{i18n.t('BackupToICloudScreen.CreateBackupPassword.choose_password')}
 				</Text>
-				<Text type="p2" weight="medium" color="text2" marginBottom={32}>
+				<Text type="p2" weight="medium" color="text2" mb="m">
 					{i18n.t('BackupToICloudScreen.CreateBackupPassword.memorable_password')}{' '}
 					<Text type="p2" weight="bold">
 						{i18n.t('BackupToICloudScreen.CreateBackupPassword.not_recoverable')}

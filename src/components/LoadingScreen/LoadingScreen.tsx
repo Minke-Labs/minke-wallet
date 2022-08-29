@@ -13,7 +13,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ title }) => {
 			<View style={[styles.container, { backgroundColor: colors.background1 }]}>
 				<Image style={styles.image} source={require('../../../assets/wave.gif')} />
 				<View>
-					<Text type="h2" weight="bold" marginBottom={8} center>
+					<Text type="h2" weight="bold" mb="xxs" center>
 						{title}
 					</Text>
 					<Text type="p2" center>
