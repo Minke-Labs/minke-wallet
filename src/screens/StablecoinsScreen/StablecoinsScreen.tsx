@@ -27,7 +27,7 @@ const StablecoinsScreen = () => {
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl="xs" pt="s">
-					<Text type="tSmall" weight="bold" mb="s">
+					<Text type="tSmall" weight="bold" mb="xs">
 						Stablecoins
 					</Text>
 

@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { useLanguage } from '@hooks';
-import NetworkWarning from '../../../NetworkWarning';
-import ActivityIndicator from '../../../ActivityIndicator/ActivityIndicator';
-import ModalHeader from '../../../ModalHeader/ModalHeader';
-import WhiteButton from '../../../WhiteButton/WhiteButton';
-import Text from '../../../Text/Text';
+import View from '@src/components/View/View';
+import ActivityIndicator from '@src/components/ActivityIndicator/ActivityIndicator';
+import ModalHeader from '@src/components/ModalHeader/ModalHeader';
+import WhiteButton from '@src/components/WhiteButton/WhiteButton';
+import Text from '@src/components/Text/Text';
+import NetworkWarning from '@src/components/NetworkWarning';
 import { ReceiveModalProps } from './ReceiveModal.types';
-import styles from './ReceiveModal.styles';
 import { useReceiveModal } from './ReceiveModal.hooks';
 
 const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
@@ -21,10 +21,16 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 
 	return (
 		<SafeAreaView>
-			<ModalHeader {...{ onDismiss }} />
-			<View style={styles.container}>
 
-				<Text type="h3" weight="extraBold" style={{ width: '100%' }}>
+			<ModalHeader {...{ onDismiss }} />
+
+			<View ph="s" cross="center">
+
+				<Text
+					width="100%"
+					type="hMedium"
+					weight="bold"
+				>
 					{i18n.t('WalletScreen.Modals.ReceiveModal.receive')}
 				</Text>
 
@@ -32,17 +38,31 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					{i18n.t('WalletScreen.Modals.ReceiveModal.show_qr')}
 				</Text>
 
-				<View style={styles.QRCodeContainer}>
-					<QRCode value={address} size={216} color="#34769D" />
+				<View
+					br="xs"
+					bgc="text11"
+					main="center"
+					cross="center"
+					mb="s"
+					w={280}
+					h={280}
+				>
+					<QRCode
+						value={address}
+						size={216}
+						color="#34769D"
+					/>
 				</View>
 
-				<View style={styles.textContainer}>
+				<View mb="s" main="center">
 					{!!ensName && (
 						<Text weight="extraBold" type="h3">
 							{ensName}
 						</Text>
 					)}
-					<Text>{address}</Text>
+					<Text style={{ textAlign: 'center' }}>
+						{address}
+					</Text>
 				</View>
 
 				<NetworkWarning.Tag title={i18n.t('WalletScreen.Modals.ReceiveModal.sending_on')} />
@@ -51,6 +71,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					title={i18n.t('Components.Buttons.share')}
 					icon="shareStroke"
 					onPress={onShare}
+					color="cta1"
 				/>
 			</View>
 		</SafeAreaView>

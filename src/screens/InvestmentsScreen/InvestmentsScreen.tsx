@@ -47,7 +47,7 @@ const InvestmentsScreen = () => {
 
 					{/* <Selector {...{ active, setActive }} /> */}
 
-					<View pr="xs" mt="xs">
+					<View pr="xs">
 						{investmentTokens.map((item: InvestmentToken) => (
 							<TokenItemCard
 								key={item.address}
