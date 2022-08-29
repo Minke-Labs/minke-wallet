@@ -16,10 +16,18 @@ interface TokenItemProps {
 	perc?: number;
 }
 
-const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, subtitle, balance, balanceUSD, perc }) => {
+const TokenItem: React.FC<TokenItemProps> = ({
+	token,
+	name,
+	symbol,
+	subtitle,
+	balance,
+	balanceUSD,
+	perc
+}) => {
 	const tokenName = name || symbol;
 	return (
-		<View row main="space-between">
+		<View row main="space-between" w="100%">
 			<View row>
 				<Token name={token} size={39} />
 				<View mr="xxs" />

@@ -1,10 +1,10 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { TokenType } from '@styles';
 import { useNavigation } from '@hooks';
-import Text from '../Text/Text';
-import View from '../View/View';
-import TokenItem from '../TokenItem/TokenItem';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
+import TokenItem from '@src/components/TokenItem/TokenItem';
+import Touchable from '@src/components/Touchable/Touchable';
 
 interface TokenItemCardProps {
 	token: TokenType;
@@ -39,34 +39,43 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 				row
 				main="space-between"
 			>
-				<TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1} style={{ flex: 1 }}>
-					<TokenItem
-						{...{
-							token,
-							name,
-							symbol,
-							subtitle,
-							balance,
-							balanceUSD,
-							perc
-						}}
-					/>
-				</TouchableOpacity>
-				{!balance && !balanceUSD && (
-					<TouchableOpacity
-						onPress={() => navigation.navigate('AddFundsScreen')}
-						style={{ alignSelf: 'center' }}
+				<View flex1>
+					<Touchable
+						onPress={onPress}
+						opacity={onPress ? 0.6 : 1}
+						row
 					>
-						<Text
-							type="lLarge"
-							weight="semiBold"
-							color="cta1"
-							{...(!paper && { mb: 'xs' })}
-							style={{ alignSelf: 'center' }}
-						>
-							+ Buy
-						</Text>
-					</TouchableOpacity>
+						<TokenItem
+							{...{
+								token,
+								name,
+								symbol,
+								subtitle,
+								balance,
+								balanceUSD,
+								perc
+							}}
+						/>
+					</Touchable>
+				</View>
+				{!balance && !balanceUSD && (
+					<View
+						w={50}
+						h="100%"
+						main="center"
+						cross="center"
+					>
+						<Touchable onPress={() => navigation.navigate('AddFundsScreen')}>
+							<Text
+								type="lLarge"
+								weight="semiBold"
+								color="cta1"
+								{...(!paper && { mb: 'xs' })}
+							>
+								+ Buy
+							</Text>
+						</Touchable>
+					</View>
 				)}
 			</View>
 		</View>
