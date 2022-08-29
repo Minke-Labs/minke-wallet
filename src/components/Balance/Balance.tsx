@@ -21,6 +21,11 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 	const { colors } = useTheme();
 	const navigation = useNavigation();
 
+	const handleBuy = () => {
+		if (coin.symbol === 'USDC') navigation.navigate('AddFundsScreen');
+		else navigation.navigate('ExchangeScreen', { destToken: coin });
+	};
+
 	return (
 		<>
 			<Paper style={{ overflow: 'hidden' }} mb="xs">
@@ -55,7 +60,7 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 				<View h={56} row>
 					<TouchableOpacity
 						activeOpacity={0.6}
-						onPress={() => navigation.navigate('ExchangeScreen', { destToken: coin })}
+						onPress={handleBuy}
 						style={{ flex: 1 }}
 					>
 						<View
