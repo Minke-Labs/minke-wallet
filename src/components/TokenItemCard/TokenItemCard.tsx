@@ -34,7 +34,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	return (
 		<View mb={paper ? 'xs' : 'm'} main="space-between">
 			<View
-				{...(paper && { bgc: 'background5', br: 'xs', p: 'xs' })}
+				{...(paper && { bgc: 'background5', br: 'xs' })}
 				flex1
 				row
 				main="space-between"
@@ -44,6 +44,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 						onPress={onPress}
 						opacity={onPress ? 0.6 : 1}
 						row
+						{...(paper && { p: 'xs' })}
 					>
 						<TokenItem
 							{...{
@@ -60,17 +61,17 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 				</View>
 				{!balance && !balanceUSD && (
 					<View
-						w={50}
+						w={70}
 						h="100%"
 						main="center"
-						cross="center"
+						cross="flex-end"
+						pr="xs"
 					>
 						<Touchable onPress={() => navigation.navigate('AddFundsScreen')}>
 							<Text
 								type="lLarge"
 								weight="semiBold"
 								color="cta1"
-								{...(!paper && { mb: 'xs' })}
 							>
 								+ Buy
 							</Text>
