@@ -32,7 +32,6 @@ import LoadingScreen from './LoadingScreen/LoadingScreen';
 import MaxButton from './MaxButton/MaxButton';
 import Flag from './Flag/Flag';
 import FlagItem from './FlagItem/FlagItem';
-import Card from './Card/Card';
 import CoinSelector from './CoinSelector/CoinSelector';
 import OnrampButton from './OnrampButton/OnrampButton';
 import Paper from './Paper/Paper';
@@ -114,7 +113,6 @@ export {
 	Paper,
 	Flag,
 	FlagItem,
-	Card,
 	CoinSelector,
 	TransparentCard,
 	DescTransparentCard,

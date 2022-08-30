@@ -3,9 +3,10 @@ import { TouchableOpacity } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import * as Clipboard from 'expo-clipboard';
 import { View, Text, Icon, ScreenLoadingIndicator, Snackbar } from '@components';
-import { useMinkeRewards, useNavigation, useWalletState } from '@hooks';
+import { useLanguage, useMinkeRewards, useNavigation, useWalletState } from '@hooks';
 
 const Header: React.FC = () => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { points } = useMinkeRewards();
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -57,7 +58,9 @@ const Header: React.FC = () => {
 							bgc="background3"
 						>
 							<Text weight="semiBold" type="lSmall" color="cta1">
-								{points} points
+								{points > 0
+									? `${points} ${i18n.t('HomeScreen.Header.points')}`
+									: i18n.t('HomeScreen.Header.invite_a_friend')}
 							</Text>
 						</View>
 					</TouchableOpacity>

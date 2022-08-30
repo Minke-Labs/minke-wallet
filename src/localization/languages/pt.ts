@@ -614,22 +614,10 @@ export default {
 			transactions: 'Transações',
 			accounts: 'Contas'
 		},
-		Header: {
-			welcome: 'Olá',
-			points: 'pontos',
-			invite_a_friend: 'Convide um amigo!'
-		},
 		AssetsPanel: {
 			your_total_assets: 'Seus ativos',
 			add_funds: 'Adicionar Fundos',
 			save: 'Investir'
-		},
-		ActionPanel: {
-			send: 'Enviar',
-			exchange: 'Converter',
-			receive: 'Receber',
-			are_you_sure: 'Você tem certeza?',
-			cancel: 'Cancelar'
 		},
 		ModalsImport: {
 			address_copied: 'Endereço copiado!'
@@ -643,20 +631,6 @@ export default {
 			}
 		},
 		screens: {
-			Accounts: {
-				wallet: 'Carteira',
-				available_funds_in_your_wallet: 'Fundos na sua carteira',
-				savings: 'Investimentos',
-				funds_deposited_in_savings: 'Fundos investidos',
-				borrowing: 'Empréstimos',
-				open_loans: 'Empréstimos em aberto',
-				coming_soon: 'Em breve',
-				points: 'Pontos',
-				points_earned: 'Indique um amigo, receba crypto',
-				nfts: 'NFTs',
-				estimated_value: 'Valor estimado',
-				value: '$29,214.63'
-			},
 			Transactions: {
 				NoTransactionsYet: {
 					no_transactions_here: 'Nenhuma transação aqui',
@@ -856,6 +830,13 @@ export default {
 		exchange_rate: 'Cotação',
 		savings_account: 'Conta de investimentos:',
 		received_from: 'Recebido de:'
+	},
+	HomeScreen: {
+		Header: {
+			welcome: 'Olá',
+			points: 'pontos',
+			invite_a_friend: 'Convide um amigo!'
+		}
 	},
 	Hooks: {
 		iCloudBackup: {
