@@ -46,6 +46,7 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed }) => {
 				mb="m"
 				component
 			/>
+
 			<IconItem
 				title="Import with secret phrase"
 				icon="key"
