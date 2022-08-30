@@ -541,29 +541,6 @@ export default {
 	USDCoinScreen: {
 		usd_asset: 'USD Asset'
 	},
-	WalletAssetsScreen: {
-		header: 'Wallet',
-		ValueBox: {
-			current_value: 'Current value'
-		},
-		AssetList: {
-			Header: {
-				asset_header: 'Asset'
-			},
-			Selector: {
-				all_coins: 'All coins',
-				stable_coins: 'Stablecoins'
-			},
-			Card: {
-				your_wallet_balance: 'Your wallet balance'
-			}
-		},
-		AssetListEmpty: {
-			no_tokens_yet: 'No tokens yet',
-			lets_buy_some: "Let's buy some?",
-			add_funds_to_start: 'Add funds to start'
-		}
-	},
 	WalletCreatedScreen: {
 		wallet_created: 'Wallet Created!',
 		need_backup:

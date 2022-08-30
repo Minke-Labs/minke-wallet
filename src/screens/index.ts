@@ -21,7 +21,6 @@ import InvestmentsScreen from './InvestmentsScreen/InvestmentsScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
-import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
@@ -63,7 +62,6 @@ const screensObj = {
 	TransactionsScreen,
 	USDCoinScreen,
 	MinkeHubScreen,
-	WalletAssetsScreen,
 	WalletCreatedScreen,
 	InvestmentsScreen,
 	WelcomeScreen,

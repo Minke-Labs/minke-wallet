@@ -25,7 +25,6 @@ export type RootStackParamList = {
 	SettingsScreen: undefined;
 	TransactionsScreen: undefined;
 	USDCoinScreen: undefined;
-	WalletAssetsScreen: undefined;
 	WalletCreatedScreen: undefined;
 	WelcomeScreen: undefined; // undefined because you aren't passing any params to the home screen
 	DepositWithdrawalSuccessScreen: { type: 'deposit' | 'withdrawal' };
