@@ -26,9 +26,9 @@ const Images = () => (
 	<View row pl="xxs" cross="center">
 		<Image source={Metamask} />
 		<View mr="xxs" />
-		<Image source={Rainbow} />
-		<View mr="xxs" />
 		<Image source={Twt} />
+		<View mr="xxs" />
+		<Image source={Rainbow} />
 	</View>
 );
 
