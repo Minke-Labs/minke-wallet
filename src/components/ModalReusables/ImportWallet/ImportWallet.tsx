@@ -1,13 +1,11 @@
 import React from 'react';
 import { SafeAreaView, View as RNView } from 'react-native';
-import {
-	Text,
-	Button,
-	TextArea,
-	ModalHeader,
-	LoadingScreen,
-	View
-} from '@src/components';
+import Text from '@src/components/Text/Text';
+import Button from '@src/components/Button/Button';
+import TextArea from '@src/components/TextArea/TextArea';
+import ModalHeader from '@src/components/ModalHeader/ModalHeader';
+import LoadingScreen from '@src/components/LoadingScreen/LoadingScreen';
+import View from '@src/components/View/View';
 import { deviceHeight } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';

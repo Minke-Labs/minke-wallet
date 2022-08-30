@@ -1,15 +1,45 @@
-import React, { useEffect } from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { View, FloatingSelector } from '@components';
-import { useAmplitude, useWalletState } from '@hooks';
+import { View, FloatingSelector, PendingTransaction } from '@components';
+import { useAmplitude, useWalletState, useTransactions } from '@hooks';
+import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
 
 const HomeScreen = () => {
+	const {
+		// loading,
+		fetchTransactions,
+		pendingTransactions,
+		updatePendingTransaction
+	} = useTransactions();
+	const [tx, setTx] = useState<ZapperTransaction | null>();
+
+	useEffect(() => {
+		const fetchStatus = async () => {
+			const provider = await getProvider();
+			const pending = pendingTransactions.filter((t) => t.pending)[0];
+			if (pending) {
+				setTx(pending);
+				const { status } = await provider.waitForTransaction(pending.hash);
+				const newTransaction = { ...pending, pending: false, txSuccessful: status === 1 };
+				setTx(newTransaction);
+				updatePendingTransaction(pending.hash, newTransaction);
+			}
+		};
+
+		fetchStatus();
+	}, [pendingTransactions]);
+
+	const handleRefresh = useCallback(() => {
+		fetchTransactions();
+		setTx(null);
+	}, [fetchTransactions]);
+
 	RNUxcam.tagScreenName('HomeScreen');
 
 	const { track } = useAmplitude();
@@ -25,9 +55,13 @@ const HomeScreen = () => {
 	return (
 		<BasicLayout>
 			<SafeAreaView />
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView
+				refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
+				showsVerticalScrollIndicator={false}
+			>
 				<View ph="xs">
 					<Header />
+					{!!tx && <PendingTransaction transaction={tx} />}
 					<Assets />
 					<Accounts />
 					<Stories />

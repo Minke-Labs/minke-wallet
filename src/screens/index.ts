@@ -23,7 +23,6 @@ import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
 import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
-import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
@@ -67,7 +66,6 @@ const screensObj = {
 	WalletAssetsScreen,
 	WalletCreatedScreen,
 	InvestmentsScreen,
-	WalletScreen,
 	WelcomeScreen,
 	BackupToICloudScreen,
 	TopUpWaitScreen,

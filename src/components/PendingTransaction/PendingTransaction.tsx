@@ -1,15 +1,13 @@
-/* eslint-disable @typescript-eslint/indent */
 import React, { useCallback } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { useLanguage, useNavigation, useTheme, useTransaction } from '@hooks';
-import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
-import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
-import styles from './PendingTransaction.styles';
+import { TouchableOpacity } from 'react-native';
+import { useLanguage, useNavigation, useTransaction } from '@hooks';
+import Text from '@src/components/Text/Text';
+import Icon from '@src/components/Icon/Icon';
+import View from '@src/components/View/View';
+import ActivityIndicator from '@src/components/ActivityIndicator/ActivityIndicator';
 import { PendingTransactionProps } from './PendingTransaction.types';
 
-const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: PendingTransactionProps) => {
-	const { colors } = useTheme();
+const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }) => {
 	const { i18n } = useLanguage();
 	const getMin = useCallback(
 		(ts: string) => Math.floor((new Date().getTime() / 1000 - Number(ts)) / 60),
@@ -20,44 +18,55 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }: 
 
 	return (
 		<TouchableOpacity
-			style={[styles.container, { backgroundColor: colors.detail4 }]}
 			onPress={() => navigation.navigate('TransactionScreen', { transaction })}
 		>
-			<View style={styles.leftContainer}>
-				{pending ? (
-					<ActivityIndicator size={26} />
-				) : failed ? (
-					<Icon name="error" size={24} color="alert1" />
-				) : (
-					<Icon name="checkmark" size={24} color="alert3" />
-				)}
+			<View
+				h={55}
+				mb="xs"
+				pv="xxs"
+				ph="xs"
+				br="xs"
+				row
+				main="space-between"
+				bgc="detail4"
+			>
+				<View row cross="center">
+					{pending ? (
+						<ActivityIndicator size={26} />
+					) : failed ? (
+						<Icon name="error" size={24} color="alert1" />
+					) : (
+						<Icon name="checkmark" size={24} color="alert3" />
+					)}
+					<View ml="xxs">
+						<Text type="lLarge" weight="semiBold">
+							{pending
+								? i18n.t('Components.PendingTransactions.pending')
+								: failed
+									? i18n.t('Components.PendingTransactions.failed')
+									: i18n.t('Components.PendingTransactions.success')}
+						</Text>
+						<Text type="lSmall" color="text4" weight="semiBold">
+							{getMin(timestamp)} min.
+						</Text>
+					</View>
+				</View>
 
-				<View style={{ marginLeft: 8 }}>
-					<Text type="p2" weight="semiBold">
-						{pending
-							? i18n.t('Components.PendingTransactions.pending')
-							: failed
-							? i18n.t('Components.PendingTransactions.failed')
-							: i18n.t('Components.PendingTransactions.success')}
+				<View main="center">
+					<Icon name="arrowRight" size={23} color="text7" />
+				</View>
+
+				<View cross="flex-end">
+					<Text type="bMedium" color="text4" numberOfLines={1}>
+						{subtitle}
 					</Text>
-					<Text type="span" weight="semiBold">
-						{getMin(timestamp)} min.
+					<Text type="lSmall" color="text3" weight="semiBold">
+						{value} {token}
 					</Text>
 				</View>
+
 			</View>
 
-			<View style={styles.centerContainer}>
-				<Icon name="arrowRight" size={22} color="text7" />
-			</View>
-
-			<View style={styles.rightContainer}>
-				<Text type="p2" numberOfLines={1}>
-					{subtitle}
-				</Text>
-				<Text type="span" weight="semiBold">
-					{value} {token}
-				</Text>
-			</View>
 		</TouchableOpacity>
 	);
 };

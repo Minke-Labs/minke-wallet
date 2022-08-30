@@ -6,5 +6,5 @@ export interface TabLayoutProps {
 	leftTitle: string;
 	rightTitle: string;
 	onRefresh: () => void;
-	loading: boolean;
+	loading?: boolean;
 }
