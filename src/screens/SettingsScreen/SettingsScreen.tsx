@@ -61,7 +61,7 @@ const SettingsScreen = () => {
 						</Text>
 						<IconItem
 							title={i18n.t('SettingsScreen.backup')}
-							icon="backupStroke"
+							icon="backup"
 							onPress={onBackup}
 							rightButton
 							mb="m"

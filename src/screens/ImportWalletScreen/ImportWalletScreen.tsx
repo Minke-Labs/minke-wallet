@@ -1,5 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 import { useLanguage } from '@hooks';
 import {
@@ -10,22 +8,19 @@ import {
 	IconItem
 } from '@components';
 import { BasicLayout } from '@layouts';
-// import { metamask, trustWallet, rainbow } from '@images';
-// import { smallWalletAddress } from '@models/wallet';
-// import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
-import styles from './ImportWalletScreen.styles';
+import { smallWalletAddress } from '@models/wallet';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import useImportWalletScreen from './ImportWalletScreen.hooks';
 
 const ImportWalletScreen = () => {
 	const { i18n } = useLanguage();
-	// const { colors } = useTheme();
 	const {
-		// address,
+		address,
 		goBack,
-		// onICloudBackup,
-		// walletsBackedUp,
-		// latestBackup,
-		// connected,
+		onICloudBackup,
+		walletsBackedUp,
+		latestBackup,
+		connected,
 		toggleWalletConnect,
 		error,
 		dismissError,
@@ -42,7 +37,7 @@ const ImportWalletScreen = () => {
 			<BasicLayout>
 				<SettingsHeader title={i18n.t('ImportWalletScreen.import_wallet')} onPress={goBack} />
 
-				<View style={styles.container}>
+				<View pt="m" p="s">
 
 					<IconItem
 						title="Import with secret phrase"
@@ -52,58 +47,29 @@ const ImportWalletScreen = () => {
 					/>
 
 					<IconItem
-						title="Import existing wallet"
+						title={connected
+							? `${i18n.t('ImportWalletScreen.disconnect_wallet')} - ${smallWalletAddress(address)}`
+							: i18n.t('ImportWalletScreen.connect_wallet')}
 						icon="help"
 						onPress={toggleWalletConnect}
 						mb="m"
 						component
 					/>
-					{/* @@@:TODO - SEE HOW THIS WORKS */}
-					{/*
-					<TouchableOpacity style={styles.option} onPress={toggleWalletConnect}>
-						<View style={styles.leftContainer}>
-							<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
-								<Icon name="help" size={24} color="text7" />
-							</View>
-							<Text weight="semiBold" type="tSmall" style={{ marginHorizontal: 16 }}>
-								{connected
-									? `${i18n.t('ImportWalletScreen.disconnect_wallet')} - ${smallWalletAddress(
-											address
-									  )}`
-									: i18n.t('ImportWalletScreen.connect_wallet')}
-							</Text>
-							<View style={styles.row}>
-								<Image source={metamask} style={styles.walletImage} />
-								<Image source={trustWallet} style={styles.walletImage} />
-								<Image source={rainbow} style={styles.walletImage} />
-							</View>
-						</View>
-					</TouchableOpacity> */}
 
-					{/* {(walletsBackedUp > 0 || !!latestBackup) && (
-						<TouchableOpacity style={styles.option} onPress={onICloudBackup}>
-							<View style={styles.leftContainer}>
-								<View style={[styles.imageBg, { backgroundColor: colors.background2 }]}>
-									<Icon name="backupStroke" size={24} color="text7" />
-								</View>
-								<View style={{ marginLeft: 16 }}>
-									<Text weight="semiBold" type="tSmall">
-										{i18n.t('ImportWalletScreen.restore_from_icloud', {
-											cloudPlatform
-										})}
-									</Text>
-									{walletsBackedUp > 0 && (
-										<Text type="a">
-											{i18n.t('ImportWalletScreen.backup_wallets_count', {
-												count: walletsBackedUp,
-												plural: walletsBackedUp > 1 ? 's' : ''
-											})}
-										</Text>
-									)}
-								</View>
-							</View>
-						</TouchableOpacity>
-					)} */}
+					{(walletsBackedUp > 0 || !!latestBackup) && (
+						<IconItem
+							title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
+							{...(walletsBackedUp > 0 && {
+								desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
+									count: walletsBackedUp,
+									plural: walletsBackedUp > 1 ? 's' : ''
+								})}`
+							})}
+							icon="cloud"
+							onPress={onICloudBackup}
+						/>
+					)}
+
 				</View>
 			</BasicLayout>
 

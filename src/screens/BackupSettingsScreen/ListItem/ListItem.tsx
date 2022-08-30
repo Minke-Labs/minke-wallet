@@ -26,7 +26,7 @@ const ListItem: React.FC<ListItemProps> = ({ label, backedUp, onPress }) => {
 						</Text>
 					</View>
 				) : (
-					<Icon name="backupStroke" size={24} color="detail2" />
+					<Icon name="backup" size={24} color="detail2" />
 				)}
 			</View>
 		</TouchableOpacity>
