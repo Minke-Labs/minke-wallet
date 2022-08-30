@@ -1,10 +1,10 @@
 import React from 'react';
 import { SpacingType, IconType } from '@styles';
-import IconBox from '../IconBox/IconBox';
-import Text from '../Text/Text';
-import View from '../View/View';
-import Icon from '../Icon/Icon';
-import Touchable from '../Touchable/Touchable';
+import IconBox from '@src/components/IconBox/IconBox';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
+import Icon from '@src/components/Icon/Icon';
+import Touchable from '@src/components/Touchable/Touchable';
 
 interface IconItemProps {
 	mb?: SpacingType;
