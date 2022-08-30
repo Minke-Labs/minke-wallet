@@ -15,6 +15,7 @@ interface IconItemProps {
 	rightButton?: boolean;
 	newTab?: boolean;
 	onPress: () => void;
+	component?: JSX.Element;
 }
 
 const IconItem: React.FC<IconItemProps> = ({
@@ -25,6 +26,7 @@ const IconItem: React.FC<IconItemProps> = ({
 	alert,
 	rightButton,
 	newTab,
+	component,
 	onPress
 }) => (
 	<View mb={mb}>
@@ -42,6 +44,8 @@ const IconItem: React.FC<IconItemProps> = ({
 							</Text>
 						)}
 					</View>
+					{component && component}
+
 				</View>
 				{rightButton && (
 					<Icon
