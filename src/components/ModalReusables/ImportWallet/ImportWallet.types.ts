@@ -1,4 +1,4 @@
-export interface ImportWalletModalProps {
+export interface ImportWalletProps {
 	onImportFinished: () => void;
 	onDismiss: () => void;
 }

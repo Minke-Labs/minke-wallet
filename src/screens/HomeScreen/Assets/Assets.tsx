@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Image } from 'react-native';
 import { numberFormat } from '@helpers/utilities';
-import { Paper, Text, View, Button, Modal, ModalBase, Touchable } from '@components';
+import { Paper, Text, View, Button, Modal, ModalBase, Touchable, ModalReusables } from '@components';
 import { AddFunds } from '@containers';
-import { useAvatar, useFormProgress, useLanguage, useWalletState } from '@hooks';
+import { useAvatar, useFormProgress, useLanguage, useNavigation, useWalletState } from '@hooks';
 import AvatarModal from './AvatarModal/AvatarModal';
 import ImportModal from './ImportModal/ImportModal';
 
 export const Assets: React.FC = () => {
 	const { i18n } = useLanguage();
+	const navigation = useNavigation();
+	const [importSeed, setImportSeed] = useState(false);
 	const [importModal, setImportModal] = useState(false);
 	const [addFundsVisible, setAddFundsVisible] = useState(false);
 	const { currentStep, goBack, goForward } = useFormProgress();
@@ -16,6 +18,16 @@ export const Assets: React.FC = () => {
 	const { state } = useWalletState();
 	const { address, balance } = state.value;
 	const { currentAvatar } = useAvatar();
+
+	const handleImportModal = () => {
+		setImportModal(false);
+		setImportSeed(true);
+	};
+
+	const onSeedImportFinished = () => {
+		setImportSeed(false);
+		navigation.navigate('WalletCreatedScreen');
+	};
 
 	return (
 		<>
@@ -61,6 +73,7 @@ export const Assets: React.FC = () => {
 					</View>
 				</View>
 			</Paper>
+
 			<Modal
 				isVisible={visible}
 				onDismiss={() => setVisible(false)}
@@ -72,12 +85,23 @@ export const Assets: React.FC = () => {
 					onSelectAvatar={goForward}
 				/>
 			</Modal>
+
 			<ModalBase isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
 				<AddFunds visible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)} />
 			</ModalBase>
+
 			<Modal isVisible={importModal} onDismiss={() => setImportModal(false)}>
-				<ImportModal />
+				<ImportModal
+					onImportSeed={handleImportModal}
+				/>
 			</Modal>
+
+			<ModalBase isVisible={importSeed} onDismiss={() => setImportSeed(false)}>
+				<ModalReusables.ImportWallet
+					onDismiss={() => setImportSeed(false)}
+					onImportFinished={onSeedImportFinished}
+				/>
+			</ModalBase>
 		</>
 	);
 };

@@ -10,7 +10,7 @@ interface UseImportWalletModalProps {
 	onImportFinished: () => void;
 }
 
-export const useImportWalletModal = ({ onImportFinished }: UseImportWalletModalProps) => {
+export const useImportWallet = ({ onImportFinished }: UseImportWalletModalProps) => {
 	const [text, setText] = React.useState('');
 	const [importing, setImporting] = React.useState(false);
 	const state = useState(globalWalletState());

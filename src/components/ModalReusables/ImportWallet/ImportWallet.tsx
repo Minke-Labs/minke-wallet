@@ -4,13 +4,13 @@ import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
-import { ImportWalletModalProps } from './ImportWalletModal.types';
-import { useImportWalletModal } from './useImportWallet.hooks';
-import { styles } from './ImportWalletModal.styles';
+import { ImportWalletProps } from './ImportWallet.types';
+import { useImportWallet } from './useImportWallet.hooks';
+import { styles } from './ImportWallet.styles';
 
-const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished, onDismiss }) => {
+const ImportWallet: React.FC<ImportWalletProps> = ({ onImportFinished, onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { text, setText, importing, onImportWallet } = useImportWalletModal({
+	const { text, setText, importing, onImportWallet } = useImportWallet({
 		onImportFinished
 	});
 
@@ -38,7 +38,7 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 								disabled={!text.trim()}
 								title={i18n.t('WelcomeScreen.ImportWalletModal.import')}
 								onPress={onImportWallet}
-								marginBottom={24}
+								mb="s"
 							/>
 						)}
 					</View>
@@ -49,4 +49,4 @@ const ImportWalletModal: React.FC<ImportWalletModalProps> = ({ onImportFinished,
 	);
 };
 
-export default ImportWalletModal;
+export default ImportWallet;

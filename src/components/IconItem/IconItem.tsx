@@ -1,10 +1,14 @@
 import React from 'react';
+import { Image } from 'react-native';
 import { SpacingType, IconType } from '@styles';
 import IconBox from '@src/components/IconBox/IconBox';
 import Text from '@src/components/Text/Text';
 import View from '@src/components/View/View';
 import Icon from '@src/components/Icon/Icon';
 import Touchable from '@src/components/Touchable/Touchable';
+import Metamask from './metamask.png';
+import Rainbow from './rainbow.png';
+import Twt from './twt.png';
 
 interface IconItemProps {
 	mb?: SpacingType;
@@ -15,8 +19,18 @@ interface IconItemProps {
 	rightButton?: boolean;
 	newTab?: boolean;
 	onPress: () => void;
-	component?: JSX.Element;
+	component?: boolean;
 }
+
+const Images = () => (
+	<View row pl="xxs" cross="center">
+		<Image source={Metamask} />
+		<View mr="xxs" />
+		<Image source={Rainbow} />
+		<View mr="xxs" />
+		<Image source={Twt} />
+	</View>
+);
 
 const IconItem: React.FC<IconItemProps> = ({
 	mb,
@@ -44,7 +58,7 @@ const IconItem: React.FC<IconItemProps> = ({
 							</Text>
 						)}
 					</View>
-					{component && component}
+					{component && <Images />}
 
 				</View>
 				{rightButton && (

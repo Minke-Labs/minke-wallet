@@ -1,33 +1,23 @@
 import React from 'react';
-import { Image } from 'react-native';
-import { IconItem, View } from '@components';
-import Metamask from './metamask.png';
-import Rainbow from './rainbow.png';
-import Twt from './twt.png';
+import { IconItem } from '@components';
 
-const Images = () => (
-	<View row pl="xxs" cross="center">
-		<Image source={Metamask} />
-		<View mr="xxs" />
-		<Image source={Rainbow} />
-		<View mr="xxs" />
-		<Image source={Twt} />
-	</View>
-);
+interface ImportModalProps {
+	onImportSeed: () => void;
+}
 
-const ImportModal = () => (
+const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed }) => (
 	<>
 		<IconItem
 			title="Import existing wallet"
 			icon="help"
 			onPress={() => null}
 			mb="m"
-			component={<Images />}
+			component
 		/>
 		<IconItem
 			title="Import with secret phrase"
 			icon="key"
-			onPress={() => null}
+			onPress={onImportSeed}
 			mb="m"
 		/>
 		<IconItem
