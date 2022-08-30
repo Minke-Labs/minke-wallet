@@ -46,7 +46,7 @@ const Header: React.FC = () => {
 						</View>
 					</TouchableOpacity>
 				</View>
-				<View row cross="center">
+				<View row cross="center" pb="xxxs">
 					<TouchableOpacity activeOpacity={0.6} onPress={onPointsPress}>
 						<View
 							br="xxs"
