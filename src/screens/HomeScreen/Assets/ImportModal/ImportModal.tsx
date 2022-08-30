@@ -1,19 +1,28 @@
 import React, { useEffect, useMemo } from 'react';
 import { forEach } from 'lodash';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
+import { globalWalletState } from '@stores/WalletStore';
+import { useState } from '@hookstate/core';
 import { IconItem } from '@components';
 import { useLanguage, useNavigation, useWallets } from '@hooks';
+import { smallWalletAddress } from '@models/wallet';
 import { findLatestBackUpOnICloud } from '@models/backup';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 
 interface ImportModalProps {
 	onImportSeed: () => void;
+	onDismiss: () => void;
 }
 
-const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed }) => {
+const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) => {
 	const { i18n } = useLanguage();
 	const { wallets } = useWallets();
 	const navigation = useNavigation();
 	const [latestBackup, setLatestBackup] = React.useState<string | null>();
+	const state = useState(globalWalletState());
+	const { address } = state.value;
+	const connector = useWalletConnect();
+	const { connected } = connector;
 
 	useEffect(() => {
 		const fetchBackupsFiles = async () => {
@@ -37,14 +46,25 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed }) => {
 		return count;
 	}, [wallets]);
 
+	const toggleWalletConnect = () => {
+		onDismiss();
+		if (connected) {
+			connector.killSession();
+		} else {
+			connector.connect();
+		}
+	};
+
 	return (
 		<>
 			<IconItem
-				title="Import existing wallet"
+				title={connected
+					? `${i18n.t('ImportWalletScreen.disconnect_wallet')} - ${smallWalletAddress(address)}`
+					: i18n.t('ImportWalletScreen.connect_wallet')}
 				icon="help"
-				onPress={() => null}
+				onPress={toggleWalletConnect}
 				mb="m"
-				component
+				images
 			/>
 
 			<IconItem

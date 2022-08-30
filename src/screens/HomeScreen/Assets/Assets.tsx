@@ -93,6 +93,7 @@ export const Assets: React.FC = () => {
 			<Modal isVisible={importModal} onDismiss={() => setImportModal(false)}>
 				<ImportModal
 					onImportSeed={handleImportModal}
+					onDismiss={() => setImportModal(false)}
 				/>
 			</Modal>
 

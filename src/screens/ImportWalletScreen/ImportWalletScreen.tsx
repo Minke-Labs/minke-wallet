@@ -53,7 +53,7 @@ const ImportWalletScreen = () => {
 						icon="help"
 						onPress={toggleWalletConnect}
 						mb="m"
-						component
+						images
 					/>
 
 					{(walletsBackedUp > 0 || !!latestBackup) && (
