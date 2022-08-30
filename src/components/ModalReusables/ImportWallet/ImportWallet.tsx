@@ -1,12 +1,19 @@
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
-import { Text, Button, TextArea, ModalHeader, LoadingScreen } from '@components';
+import { SafeAreaView, View as RNView } from 'react-native';
+import {
+	Text,
+	Button,
+	TextArea,
+	ModalHeader,
+	LoadingScreen,
+	View
+} from '@src/components';
+import { deviceHeight } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { ImportWalletProps } from './ImportWallet.types';
 import { useImportWallet } from './useImportWallet.hooks';
-import { styles } from './ImportWallet.styles';
 
 const ImportWallet: React.FC<ImportWalletProps> = ({ onImportFinished, onDismiss }) => {
 	const { i18n } = useLanguage();
@@ -17,20 +24,34 @@ const ImportWallet: React.FC<ImportWalletProps> = ({ onImportFinished, onDismiss
 	return (
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
-			<View style={styles.container}>
+			<View ph="s" style={{ minHeight: deviceHeight * 0.3 }}>
 				<>
-					<View style={styles.addWalletContainer}>
-						<Text type="h3" weight="extraBold" marginBottom={24} width="100%">
+					<View style={{ minHeight: deviceHeight * 0.4 }}>
+
+						<Text
+							type="h3"
+							weight="extraBold"
+							mb="s"
+							width="100%"
+						>
 							{i18n.t('WelcomeScreen.ImportWalletModal.add_wallet')}
 						</Text>
-						<View style={styles.textAreaContainer} ref={(view: any) => RNUxcam.occludeSensitiveView(view)}>
+
+						<RNView
+							style={{
+								width: '100%',
+								height: 110,
+								marginBottom: 24
+							}}
+							ref={(view: any) => RNUxcam.occludeSensitiveView(view)}
+						>
 							<TextArea
 								label={i18n.t('WelcomeScreen.ImportWalletModal.seed_or_key')}
 								value={text}
 								numberOfLines={6}
 								onChangeText={(t) => setText(t)}
 							/>
-						</View>
+						</RNView>
 						{importing ? (
 							<LoadingScreen title={i18n.t('WelcomeScreen.ImportWalletModal.importing')} />
 						) : (
@@ -41,6 +62,7 @@ const ImportWallet: React.FC<ImportWalletProps> = ({ onImportFinished, onDismiss
 								mb="s"
 							/>
 						)}
+
 					</View>
 					<KeyboardSpacer />
 				</>
