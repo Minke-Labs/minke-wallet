@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import React from 'react';
 import { approvalTransaction } from '@models/deposit';
 import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
 import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
 import Logger from '@utils/logger';
-import { aaveDepositContract, gaslessApproval } from '@models/gaslessTransaction';
+import { gaslessApproval } from '@models/gaslessTransaction';
+import { useState } from '@hookstate/core';
 
 export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
-	const [loading, setLoading] = useState(false);
-	const { address, privateKey } = globalWalletState().value;
+	const [loading, setLoading] = React.useState(false);
+	const {
+		address,
+		privateKey,
+		network: {
+			aave: { depositContract: aaveDepositContract }
+		}
+	} = useState(globalWalletState()).value;
 	const { depositableToken } = useDepositProtocols();
 	const { track } = useAmplitude();
 

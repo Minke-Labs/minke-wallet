@@ -10,14 +10,12 @@ import {
 import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { getDepositToken } from '@models/depositTokens';
 import { network } from '@models/network';
-import { aaveDepositContract } from '@models/gaslessTransaction';
 import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { getTokenBalances } from '@src/services/apis';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import DepositService from '@src/services/deposit/DepositService';
-import useBiconomy from './useBiconomy';
 
 const useDepositProtocols = (withdraw = false) => {
 	const [selectedProtocol, setSelectedProtocol] = React.useState<DepositProtocol>();
@@ -28,7 +26,6 @@ const useDepositProtocols = (withdraw = false) => {
 	const [ableToDeposit, setAbleToDeposit] = React.useState<boolean | undefined>();
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
 	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
-	const { gaslessEnabled } = useBiconomy();
 	const { address } = useState(globalWalletState()).value;
 
 	const onChangeProtocol = async (protocol: DepositProtocol) => {
@@ -108,6 +105,9 @@ const useDepositProtocols = (withdraw = false) => {
 		const fetchDepositContract = async () => {
 			if (selectedProtocol) {
 				if (selectedProtocol.id === 'aave') {
+					const {
+						aave: { depositContract: aaveDepositContract }
+					} = await network();
 					setDepositContract(aaveDepositContract);
 				} else {
 					const { mStable } = await network();

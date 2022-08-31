@@ -1,5 +1,4 @@
 import { ApprovalState } from '@models/deposit';
-import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
@@ -31,10 +30,8 @@ class WithdrawService {
 		walletConnect,
 		connector
 	}: WithdrawParams): Promise<WithdrawReturn> {
-		const { isApproved } = await this.approveState(address, gasless, interestBearingToken);
-		const provider = biconomy.getEthersProvider();
-		Logger.log('Is provider ready?', !!provider);
-		if (!isApproved && !(this.protocol === 'aave' && gasless)) {
+		const { isApproved } = await this.approveState(address, interestBearingToken);
+		if (!isApproved && this.protocol !== 'aave') {
 			// Gasless AAVE withdraw uses a permit signature
 			const hash = await this.approve({
 				gasless,
@@ -50,6 +47,7 @@ class WithdrawService {
 				Logger.log('approval failed');
 				return null;
 			}
+			const provider = biconomy.getEthersProvider();
 			await provider.waitForTransaction(hash);
 			Logger.log('Withdraw approval', hash);
 		}
@@ -71,7 +69,9 @@ class WithdrawService {
 			if (walletConnect) {
 				const transaction = await withdrawTransaction({
 					address,
+					privateKey: privateKey!,
 					amount,
+					minAmount,
 					toTokenAddress: token,
 					interestBearingToken,
 					gasPrice: Number(gasPrice)
@@ -92,6 +92,7 @@ class WithdrawService {
 				address,
 				privateKey: privateKey!,
 				amount,
+				minAmount,
 				toTokenAddress: token,
 				interestBearingToken,
 				gasPrice
@@ -144,13 +145,8 @@ class WithdrawService {
 		return null;
 	}
 
-	public async approveState(address: string, gasless: boolean, contract: string): Promise<ApprovalState> {
-		return new ApprovalService(this.protocol).approveState(
-			address,
-			gasless,
-			contract,
-			await this.withdrawContract()
-		);
+	public async approveState(address: string, contract: string): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, await this.withdrawContract());
 	}
 
 	public async approve({
@@ -184,8 +180,8 @@ class WithdrawService {
 	}
 
 	private async withdrawContract(): Promise<string> {
-		const { mStable } = await network();
-		return this.protocol === 'mstable' ? mStable?.withdrawContract! : aaveDepositContract;
+		const { mStable, aave } = await network();
+		return this.protocol === 'mstable' ? mStable?.withdrawContract! : aave.depositContract;
 	}
 }
 

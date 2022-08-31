@@ -81,8 +81,8 @@ export const onChainApproval = async ({
 		nonce
 	};
 
-	Logger.log('onChainApproval', txDefaults);
 	const tx = await onChainApprovalData({ address: wallet.address, contractAddress, amount, spender });
+	Logger.log('onChainApproval', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	const transaction = await wallet.provider.sendTransaction(signedTx as string);
 	return { transaction };

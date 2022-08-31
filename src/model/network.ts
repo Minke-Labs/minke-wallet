@@ -34,6 +34,9 @@ export interface Network {
 		saveAsset: string;
 		vault: string;
 	};
+	aave: {
+		depositContract: string;
+	};
 	coingeckoPlatform: string;
 }
 
@@ -64,7 +67,10 @@ export const networks: Networks = {
 		transactionTimesEndpoint: true,
 		apiUrl0x: 'https://api.0x.org/',
 		alchemyAPIKey: (ALCHEMY_API_KEY_ETHEREUM || process.env.ALCHEMY_API_KEY_ETHEREUM)!,
-		coingeckoPlatform: 'ethereum'
+		coingeckoPlatform: 'ethereum',
+		aave: {
+			depositContract: '0x411F4d453d530a1daDb9bA153C93448b9e83c592'
+		}
 	},
 	matic: {
 		chainId: 137,
@@ -104,6 +110,9 @@ export const networks: Networks = {
 			saveAsset: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
 			vault: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29'
 		},
+		aave: {
+			depositContract: '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'
+		},
 		coingeckoPlatform: 'polygon-pos'
 	},
 	kovan: {
@@ -120,7 +129,10 @@ export const networks: Networks = {
 		topUpTokens: [{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }],
 		transactionTimesEndpoint: true,
 		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
-		coingeckoPlatform: 'ethereum'
+		coingeckoPlatform: 'ethereum',
+		aave: {
+			depositContract: ''
+		}
 	},
 	goerli: {
 		chainId: 5,
@@ -139,7 +151,10 @@ export const networks: Networks = {
 		],
 		transactionTimesEndpoint: true,
 		alchemyAPIKey: (ALCHEMY_API_KEY_GOERLI || process.env.ALCHEMY_API_KEY_GOERLI)!,
-		coingeckoPlatform: 'ethereum'
+		coingeckoPlatform: 'ethereum',
+		aave: {
+			depositContract: ''
+		}
 	}
 };
 
