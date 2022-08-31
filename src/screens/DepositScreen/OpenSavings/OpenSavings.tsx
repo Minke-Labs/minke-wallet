@@ -29,9 +29,10 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { selectedProtocol } = useDepositProtocols();
-	const { loading, onOpenAccount, gaslessEnabled, canSendTransactions, needToChangeNetwork } = useOpenDepositAccount({
-		onApprove
-	});
+	const { loading, onOpenAccount, gaslessEnabled, canSendTransactions, needToChangeNetwork, cannotOpenAccount } =
+		useOpenDepositAccount({
+			onApprove
+		});
 
 	useEffect(() => {
 		track('OpenSavings Screen Opened', {
@@ -68,10 +69,14 @@ const OpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 							</View>
 						)}
 						<HapticButton
-							title={i18n.t('DepositScreen.OpenSavings.open_account')}
+							title={
+								cannotOpenAccount
+									? i18n.t('DepositScreen.OpenSavings.please_read_it')
+									: i18n.t('DepositScreen.OpenSavings.open_account')
+							}
 							marginBottom={16}
 							onPress={onOpenAccount}
-							disabled={loading || !canSendTransactions}
+							disabled={loading || !canSendTransactions || cannotOpenAccount}
 						/>
 						{!gaslessEnabled && (
 							<Text type="span" color="text2" style={{ textAlign: 'center' }}>

@@ -398,7 +398,8 @@ export default {
 			open_account: 'Abrir uma Conta',
 			aave: 'Abrir uma conta na Aave',
 			mstable: 'Abrir uma conta na mStable',
-			this_transaction: 'Esta transação vai custar alguns centavos.'
+			this_transaction: 'Esta transação vai custar alguns centavos.',
+			please_read_it: 'Por favor, leia...'
 		},
 		OpenMStable: {
 			open_account: 'Abrir Conta',

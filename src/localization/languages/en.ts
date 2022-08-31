@@ -397,7 +397,8 @@ export default {
 			open_account: 'Open Account',
 			aave: 'Open Aave\nSavings Account',
 			mstable: 'Open mStable\nSavings Account',
-			this_transaction: 'This transaction will cost a few cents.'
+			this_transaction: 'This transaction will cost a few cents.',
+			please_read_it: 'Please, read it...'
 		},
 		OpenMStable: {
 			open_account: 'Open Account',

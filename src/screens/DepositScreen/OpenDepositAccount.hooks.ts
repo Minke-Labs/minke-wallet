@@ -15,13 +15,13 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 	const { address, privateKey } = useState(globalWalletState()).value;
 	const { depositableToken, selectedProtocol, depositContract } = useDepositProtocols();
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
-
 	const { track } = useAmplitude();
+	const cannotOpenAccount = !depositableToken || !selectedProtocol || !depositContract;
 
 	const onOpenAccount = async () => {
 		setLoading(true);
 
-		if (!depositableToken || !selectedProtocol || !depositContract) return;
+		if (cannotOpenAccount) return;
 		try {
 			const hash = await new DepositService(selectedProtocol.id).approve({
 				gasless: gaslessEnabled,
@@ -59,6 +59,7 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		cannotOpenAccount
 	};
 };
