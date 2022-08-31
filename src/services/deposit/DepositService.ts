@@ -75,15 +75,7 @@ class DepositService {
 				});
 				return hash;
 			}
-			console.log({
-				address,
-				privateKey: privateKey!,
-				amount,
-				minAmount,
-				gweiValue: gasPrice,
-				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
-				tokenAddress: depositableToken.address
-			});
+
 			const hash = await deposit({
 				address,
 				privateKey: privateKey!,
