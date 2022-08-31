@@ -91,7 +91,6 @@ const useDepositProtocols = (withdraw = false) => {
 				} else if (depositableToken) {
 					const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
 						address,
-						gaslessEnabled,
 						depositableToken.address
 					);
 					setApproved(isApproved);
