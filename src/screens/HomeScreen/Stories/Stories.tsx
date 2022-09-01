@@ -8,7 +8,7 @@ import { storytellerTheme } from './storytellerTheme';
 
 export const Stories = () => {
 	const { state } = useWalletState();
-	const { language } = useLanguage();
+	const { language, i18n } = useLanguage();
 	const { address: walletAddress } = state.value;
 	const scheme = useColorScheme();
 	const rowRef = useRef<StorytellerRowView>(null);
@@ -38,7 +38,7 @@ export const Stories = () => {
 	return (
 		<Paper p="xs">
 			<Text type="lMedium" weight="semiBold" mb="xs">
-				Learn about Minke
+				{i18n.t('HomeScreen.Stories.learn_about_minke')}
 			</Text>
 			<StorytellerRowView
 				cellType="round"

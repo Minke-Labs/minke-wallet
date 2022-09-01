@@ -188,6 +188,9 @@ export default {
 				buy_usdc_now: 'Compre USDC agora!\nNenhuma identificação pessoal necessária.',
 				purchase: 'Compre em poucos cliques com:'
 			}
+		},
+		Stories: {
+			learn_about_minke: 'Saiba mais sobre Minke'
 		}
 	},
 	ImportWalletScreen: {
