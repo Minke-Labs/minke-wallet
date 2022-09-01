@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useMemo } from 'react';
 import { useFirstTime, usePrevious } from '@hooks';
 import { AppTourContext } from './Context/AppTourContext';
@@ -22,7 +23,7 @@ const AppTour: React.FC = ({ children }) => {
 		[type]
 	);
 
-	if (!active || loading || !isFirstTimeLoad) return <>{children}</>;
+	// if (!active || loading || !isFirstTimeLoad) return <>{children}</>;
 
 	return (
 		<AppTourContext.Provider value={obj}>

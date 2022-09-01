@@ -42,7 +42,7 @@ export const getBox = (type: AppTourStepType) => {
 		case 4:
 			return {
 				position: {
-					bottom: deviceHeight * -0.06 + 200,
+					top: deviceHeight * 0.1 + 42,
 					left: center
 				},
 				component: <Step4 />
