@@ -41,11 +41,11 @@ export const getHole = (type: AppTourStepType) => {
 			};
 		case 4:
 			return {
-				width: 143,
+				width: 146,
 				height: 35,
 				borderRadius: spacing.xxs,
 				top: deviceHeight * 0.15 - 62 - offset,
-				right: deviceWidth * 0.150 - 15
+				right: deviceWidth * 0.150 - 16.5
 			};
 		default:
 			return {};
