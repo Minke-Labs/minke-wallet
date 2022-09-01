@@ -182,6 +182,10 @@ export default {
 				overview: 'Accounts overview',
 				see_all: 'See all',
 				investments_highlight: 'Investments highlights'
+			},
+			AccountsEmpty: {
+				buy_usdc_now: 'Buy USDC now!\nNo personal ID required.',
+				purchase: 'Purchase in a few clicks with:'
 			}
 		}
 	},
@@ -923,7 +927,8 @@ export default {
 			pay_with: 'Pay with ',
 			use_code: 'Use code',
 			loading: 'Loading',
-			swap: 'Swap'
+			swap: 'Swap',
+			buy_usdc_now: 'Buy USDC now'
 		},
 		CountrySelector: {
 			country: 'Country',

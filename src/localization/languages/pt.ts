@@ -183,6 +183,10 @@ export default {
 				overview: 'Visão geral das contas',
 				see_all: 'Ver todos',
 				investments_highlight: 'Destaques de investimentos'
+			},
+			AccountsEmpty: {
+				buy_usdc_now: 'Compre USDC agora!\nNenhuma identificação pessoal necessária.',
+				purchase: 'Compre em poucos cliques com:'
 			}
 		}
 	},
@@ -925,7 +929,8 @@ export default {
 			pay_with: 'Pagar com ',
 			use_code: 'Usar código',
 			loading: 'Carregando',
-			swap: 'Trocar'
+			swap: 'Trocar',
+			buy_usdc_now: 'Compre USDC agora'
 		},
 		CountrySelector: {
 			country: 'País',
