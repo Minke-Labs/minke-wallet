@@ -1,5 +1,509 @@
 /* eslint-disable max-len */
 export default {
+	// SCREENS
+	AccountsScreen: {
+		import_or_restore: 'Importar ou Restaurar',
+		accounts: 'Contas'
+	},
+	AddFundsScreen: {
+		header: 'Adicionar fundos',
+		you_pay: 'Você paga',
+		you_receive: 'Você recebe',
+		Errors: {
+			validation_snapx_min: 'O valor é menor que o mínimo',
+			exchange_sourceAmountTooSmall: 'O valor é muito pequeno',
+			minimal_topup_amount: 'O valor mínimo é {{amount}} {{currency}}'
+		}
+	},
+	AssetsScreen: {
+		AboutCoin: {
+			about: 'Sobre '
+		},
+		Balance: {
+			Balance: 'Saldo',
+			Buttons: {
+				buy: 'Comprar',
+				sell: 'Vender',
+				send: 'Enviar'
+			}
+		},
+		MarketCap: {
+			market_cap: 'Valor de mercado',
+			volume: 'Volume (1D)'
+		},
+		Upper: {
+			Chart: {
+				Changes: {
+					changes: 'Mudanças',
+					hour: '1 Hora',
+					day: '1 Dia',
+					week: '1 Semana',
+					month: '1 Mês',
+					year: '1 Ano',
+					all: 'Total'
+				},
+				Selection: {
+					Chart: {
+						'1H': '1H',
+						'1D': '1H',
+						'1W': '1S',
+						'1M': '1M',
+						'1Y': '1A',
+						All: 'Total'
+					}
+				}
+			}
+		}
+	},
+	BackupSettingsScreen: {
+		title: 'Backup'
+	},
+	BackupStatusScreen: {
+		your_wallet_is_backed_up: 'Sua carteira tem backup!',
+		if_you_lose:
+			'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no {{cloudPlatform}}.',
+		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
+		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
+		back_up_to_icloud: 'Backup no {{cloudPlatform}}',
+		backup: 'Backup',
+		done: 'Pronto',
+		go_to_wallet: 'Ir para a carteira',
+		view_secret_phrase: 'Ver Frase Secreta',
+		backup_error: 'Erro no backup'
+	},
+	BackupToICloudScreen: {
+		CreateBackupPassword: {
+			choose_password: 'Escolha uma senha',
+			memorable_password: 'Escolha uma senha que você se lembrará.',
+			not_recoverable: 'Ela não poderá ser recuperada!'
+		},
+		ConfirmBackupPassword: {
+			enter_backup_password: 'Digite a senha do backup',
+			to: 'Para',
+			restore_from: ' restaurar suas carteiras do ',
+			add_to: ' adicionar esta carteira ao seu ',
+			enter_existing: 'backup do {{cloudPlatform}}, digite sua senha de backup existente',
+			importing_backups: 'Importando backups'
+		}
+	},
+	ChangeCountryScreen: {
+		header_title: 'Alterar o País'
+	},
+	ChangeLanguageScreen: {
+		header_title: 'Alterar o Idioma'
+	},
+	ChangeNetworkScreen: {
+		header_title: 'Rede',
+		ListItem: {
+			test_network: 'rede de testes'
+		}
+	},
+	DepositScreen: {
+		Congrats: {
+			congrats: 'Parabéns',
+			you_just: 'Você acabou de fazer seu primeiro depósito!',
+			done: 'Pronto'
+		},
+		Deposit: {
+			deposit: 'Depósito',
+			balance: 'Saldo: '
+		},
+		OpenSavings: {
+			open_account: 'Abrir uma Conta',
+			aave: 'Abrir uma conta na Aave',
+			mstable: 'Abrir uma conta na mStable',
+			this_transaction: 'Esta transação vai custar alguns centavos.'
+		},
+		OpenMStable: {
+			open_account: 'Abrir Conta',
+			open_mstable: 'Abrir uma conta\nna mStable',
+			what_is: 'O que é a mStable?',
+			mstable_des:
+				'mStable é serviço de infraestrutura para crypto ativos autônoma e não custodial. O protocolo foi criado para corrigir três problemas: \n\n- Fragmentação significativa entre ativos com o mesmo mecanismo de funcionamento (há pelo menos 5 grandes stablecoins vinculadas ao dólar americano na rede Ethereum, por exemplo). \n\n - Falta de rendimentos em stablecoins e moedas fiduciárias. \n\n - Falta de proteção contra perda de capital em crypto ativos vinculados a uma outra moeda.',
+			view_site: 'Ver Site',
+			learn_more: 'Ver Mais',
+			this_transaction: 'Esta transação vai custar alguns centavos.'
+		},
+		NotAbleToSaveModal: {
+			not_able: 'Não foi possível salvar',
+			need_funds_in: 'Primeiro você precisa ter fundos em ',
+			add_funds: 'Adicionar fundos',
+			exchange: 'Converter'
+		}
+	},
+	DepositWithdrawalSuccessScreen: {
+		congrats: 'Parabéns!',
+		you_deposited: 'Você fez o seu depósito!',
+		you_withdrawn: 'Você retirou com sucesso!'
+	},
+	EnterReferralCodeScreen: {
+		enter_referral_code: 'Código de indicação',
+		get_rewarded_for_saving_money: 'Receba recompensas!',
+		or: 'ou',
+		buy_usdc: 'Comprar USDC',
+		referral_note:
+			'Esse código pode ser usado somente uma vez. Depois de comprar ou converter stablecoins você e o seu amigo vão receber até 100 pontos Minke cada.',
+		invalid_code: 'Código inválido',
+		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
+	},
+	ExchangeResumeScreen: {
+		exchange_resume: 'Confirmação',
+		rate_fixed_for: 'Cotação fixa por:',
+		rate: 'Cotação',
+		swapping_via: 'Convertendo via'
+	},
+	ExchangeScreen: {
+		fetching: 'Buscando...',
+		exchange: 'Converter',
+		review: 'Revisar',
+		GasSelector: {
+			GasOption: {
+				transaction_fee: 'Taxa da transação',
+				fast: 'Rápido',
+				normal: 'Normal',
+				slow: 'Devagar'
+			}
+		},
+		validations: {
+			INSUFFICIENT_ASSET_LIQUIDITY: 'Não há liquidez insuficiente para o token'
+		}
+	},
+	HomeScreen: {
+		Header: {
+			welcome: 'Olá',
+			points: 'pontos',
+			invite_a_friend: 'Convide um amigo!'
+		}
+	},
+	ImportWalletScreen: {
+		import_wallet: 'Importar Carteira',
+		import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada',
+		connect_wallet: 'Conectar Carteira',
+		restore_from_icloud: 'Recuperar do {{cloudPlatform}}',
+		backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
+		disconnect_wallet: 'Disconectar Carteira',
+		please_change_network: 'Por favor, mude para a rede {{network}} para usar essa carteira.',
+		Error: {
+			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
+		}
+	},
+	ManualBackupScreen: {
+		CopyButton: {
+			copy_to_clipboard: 'Copiar para área de transferência'
+		},
+		done: 'Pronto',
+		recovery_phrase: 'Frase de recuperação',
+		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
+		address_copied: 'Endereço copiado!',
+		Warning: {
+			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
+			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
+		}
+	},
+	NFTDetailScreen: {
+		by: 'por ',
+		Panel: {
+			floor_price: 'Preço mínimo',
+			last_sale_price: 'Última venda'
+		},
+		view_on_openSea: 'Ver na OpenSea',
+		about: 'Sobre',
+		Expander: {
+			show_less: 'Ver menos',
+			show_more: 'Ver mais'
+		}
+	},
+	NFTScreen: {
+		assets: 'Ativos',
+		estimated_value: 'Valor estimado',
+		InfoModal: {
+			how_are_valued: 'Como minhas NFTs são avaliadas?',
+			desc: 'Seus NFTs são avaliados com base em uma combinação do preço mínimo da coleção, último preço de venda e atributos únicos individuais.'
+		}
+	},
+	RedeemConfirmScreen: {
+		confirmation: 'Confirmação',
+		rate_fixed_for: 'Cotação fixa por:',
+		errors: {
+			failed_claim: 'Seu resgate não está completo. Por favor, entre em contato com o suporte.',
+			invalid_request: 'Requisição inválida'
+		}
+	},
+	ReferralScreen: {
+		Header: {
+			points: 'Pontos'
+		},
+		CurrentValue: {
+			pts: 'pts.',
+			owned: 'Meus pontos',
+			redeem: 'Resgatar',
+			earn: 'Ganhar'
+		},
+		RedeemScreen: {
+			redeem_minke_points: 'Resgatar Pontos Minke',
+			swap: 'Resgatar',
+			Modals: {
+				WrongNetwork: {
+					wrong_network: 'Oops! Parece que você está na rede errada',
+					please_change_network: 'Por favor, mude para a rede {{network}} para resgatar os seus pontos.',
+					change_to_network: 'Mudar para {{network}}'
+				},
+				NotEnoughPoints: {
+					you_dont_have_points: 'Oops! Você não tem pontos',
+					you_can_earn: 'Você pode ganhar pontos:',
+					referring_a_friend: 'Indicando um amigo',
+					topping_up: 'Adicionando fundos',
+					get_rewarded: 'Ganhe recompensas!',
+					what_can_you_do_with_your_points: 'O que você pode fazer com seus pontos?',
+					you_can_redeem: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon.'
+				}
+			}
+		},
+		Modals: {
+			HelpModal: {
+				how_minke_points_work: 'Como os pontos Minke funcionam?',
+				rewards_explanation:
+					'Pontos Minke são recompensas que te damos quando você realiza determinadas tarefas no aplicativo.',
+				you_can_earn_points_by: 'Você pode ganhar pontos por:',
+				topping_up_for_the_first_time: 'Adicionar fundos pela primeira vez.',
+				refering_minke: 'Indicando a Minke para seus amigos e família.',
+				exchanging_for_the_first_time: 'Convertendo pela primeira vez.',
+				what_can_you_do: 'O que você pode fazer com seus pontos?',
+				you_can_redeem_your_points: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon. '
+			},
+			EarnModal: {
+				earn_minke_points: 'Ganhe pontos Minke!',
+				refer_a_friend: 'Indique um amigo',
+				when_your_friends_top_up:
+					'Quando seu amigo comprar stablecoins ou converter para elas no app da Minke vocês dois ganham até 100 points (valem $10 dólares americanos) ',
+				top_up: 'Adicione Fundos',
+				get_rewarded: 'Ganhe recompensas!',
+				coming_soon: '(Em breve)',
+				share_text:
+					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $10 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
+			}
+		},
+		Body: {
+			referral: 'Indicação',
+			deposit: 'Depósito',
+			exchange: 'Conversão',
+			points: '{{count}} pontos'
+		}
+	},
+	SaveScreen: {
+		interest: '% de juros anuais',
+		EmptyState: {
+			save: 'Investir',
+			open_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
+			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
+		},
+		Header: {
+			save: 'Investir'
+		},
+		CurrentValue: {
+			current_deposits: 'Depósitos',
+			withdraw: 'Retirar',
+			deposit: 'Depositar'
+		},
+		Body: {
+			deposit: 'Depósito ({{source}})'
+		},
+		InfoModal: {
+			Aave: 'Conta de investimentos da Aave'
+		},
+		MStable: {
+			MStable: 'Conta de investimentos na mStable'
+		}
+	},
+	SavingAccountsScreen: {
+		title: 'Conta de investimentos'
+	},
+	SettingsScreen: {
+		DeleteModal: {
+			delete_wallet: 'Deletar carteira',
+			keep_wallet: 'Manter carteira',
+			are_you_sure: 'Você tem certeza que quer deletar esta carteira?',
+			recover:
+				'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
+		},
+		title: 'Configurações',
+		creating_wallet: 'Criando Carteira',
+		backup: 'Backup',
+		country: 'País',
+		language: 'Idioma',
+		network: 'Rede',
+		new_wallet: 'Nova Carteira',
+		usd_coin: 'Moeda Padrão USD',
+		contact_support: 'Contactar Suporte',
+		help_centre: 'Central de Ajuda',
+		switch_account: 'Trocar Carteira',
+		my_wallet: 'Minha Carteira',
+		my_account: 'Minha Conta',
+		help: 'Ajuda',
+		other: 'Outros',
+		savings_account: 'Conta de Investimentos',
+		enter_referral_code: 'Inserir código de indicação',
+		delete_wallet: 'Deletar carteira'
+	},
+	TopUpWaitScreen: {
+		Failed: {
+			something_gone_wrong: 'Ah não! Algo de errado aconteceu. Por favor, tente mais tarde ou contate o suporte.',
+			reference: 'Referência: '
+		},
+		Processing: {
+			almost_there: 'Quase lá... isso pode levar um tempinho...',
+			please_wait: {
+				payment: 'Por favor, espere enquanto processamos o seu pagamento...',
+				transfer: 'Por favor, espere enquanto processamos a sua transferência...'
+			}
+		},
+		Success: {
+			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
+			done: 'Pronto'
+		}
+	},
+	TransactionScreen: {
+		transaction_type: 'Transação:',
+		date: 'Data:',
+		sent_to: 'Enviou para:',
+		exchanged: 'Converteu:',
+		exchange_details: '{{fromAmount}} {{from}} para {{toAmount}} {{to}}',
+		hash: 'Hash',
+		exchange_rate: 'Cotação',
+		savings_account: 'Conta de investimentos:',
+		received_from: 'Recebido de:'
+	},
+	TransactionsScreen: {
+		Header: {
+			transactions: 'Transações'
+		},
+		Selector: {
+			all: 'Todas',
+			sent: 'Enviadas',
+			received: 'Recebidas'
+		}
+	},
+	USDCoinScreen: {
+		usd_asset: 'Moeda padrão USD '
+	},
+	WalletCreatedScreen: {
+		wallet_created: 'Carteira Criada!',
+		need_backup:
+			'Você precisar fazer backup da sua carteira. Mantenha o seu backup seguro pois se perdê-lo todos os seus ativos estarão em risco.',
+		modal_error: 'Erro de backup'
+	},
+	WalletScreen: {
+		Content: {
+			transactions: 'Transações',
+			accounts: 'Contas'
+		},
+		AssetsPanel: {
+			your_total_assets: 'Seus ativos',
+			add_funds: 'Adicionar Fundos',
+			save: 'Investir'
+		},
+		ModalsImport: {
+			address_copied: 'Endereço copiado!'
+		},
+		TransactionsTable: {
+			see_all: 'Ver todas'
+		},
+		components: {
+			Stories: {
+				learn_about_minke: 'Aprenda sobre a Minke'
+			}
+		},
+		screens: {
+			Transactions: {
+				NoTransactionsYet: {
+					no_transactions_here: 'Nenhuma transação aqui',
+					lets_get_started: 'Vamos começar?'
+				}
+			}
+		},
+		Modals: {
+			AvatarModal: {
+				Chosen: {
+					edit: 'Editar seu avatar',
+					select: 'Selecionar um avatar da Minke',
+					choose: 'Escolher da biblioteca'
+				},
+				Select: {
+					select: 'Selecionar seu avatar'
+				}
+			},
+			ReceiveModal: {
+				sending_on: 'Enviando na',
+				receive: 'Receber',
+				show_qr: 'Mostre seu código QR ou compartilhe suas informações'
+			},
+			SendModal: {
+				components: {
+					Card: {
+						available: ' Disponível'
+					},
+					GasPriceLine: {
+						speed: 'Velocidade: ',
+						network_fee: ' Taxa da rede'
+					}
+				},
+				screens: {
+					AddContact: {
+						add_contact: 'Adicionar Contato'
+					},
+					TransactionContacts: {
+						sent_to_address: 'Envie para algum endereço',
+						address_or_ens: 'Endereço ou ENS',
+						choose_from_saved: 'Ou escolha um endereço já salvo',
+						NoContactsYet: {
+							no_contacts_yet: 'Nenhum contato disponível',
+							add_some: 'Adicione alguns para começar'
+						}
+					},
+					TransactionSelectFunds: {
+						which: 'Qual ',
+						asset: 'token',
+						want_to_send: 'você deseja enviar para ',
+						Card: {
+							available: ' Disponível'
+						}
+					},
+					TransactionTransfer: {
+						how_much: 'Quantos ',
+						wanna_send: ' você quer enviar?'
+					}
+				},
+				add: '+ Adicionar'
+			}
+		}
+	},
+	WelcomeScreen: {
+		referral_code_applied: 'Código de indicação aplicado',
+		wave_goodbye: 'Diga olá para um dinheiro melhor!',
+		easily: 'Economize, gaste e invista facilmente com a Minke',
+		creating: 'Criando carteira',
+		create: 'Criar Carteira',
+		import_or_restore: 'Importar Carteira',
+		i_have_a_referral_code: 'Eu tenho um código de indicação',
+		ImportWalletModal: {
+			add_wallet: 'Adicionar Carteira',
+			seed_or_key: 'Frase de recuperação ou chave privada',
+			importing: 'Importando carteira',
+			import: 'Importar Carteira',
+			SelectImportMethodModal: {
+				import_wallet: 'Importar Carteira',
+				restore_from_icloud: 'Restaurar do {{cloudPlatform}}',
+				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
+				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
+			}
+		}
+	},
+	WithdrawScreen: {
+		withdraw: 'Retirar',
+		balance: 'Saldo: '
+	},
+
+	// CONTEXTS
 	AvatarContext: {
 		KrakenJr: {
 			name: 'Kraken Jr.',
@@ -276,507 +780,8 @@ export default {
 			currencyName: 'Yuan Chinês'
 		}
 	},
-	AccountsScreen: {
-		import_or_restore: 'Importar ou Restaurar',
-		accounts: 'Contas'
-	},
-	AssetsScreen: {
-		AboutCoin: {
-			about: 'Sobre '
-		},
-		Balance: {
-			Balance: 'Saldo',
-			Buttons: {
-				buy: 'Comprar',
-				sell: 'Vender',
-				send: 'Enviar'
-			}
-		},
-		MarketCap: {
-			market_cap: 'Valor de mercado',
-			volume: 'Volume (1D)'
-		},
-		Upper: {
-			Chart: {
-				Changes: {
-					changes: 'Mudanças',
-					hour: '1 Hora',
-					day: '1 Dia',
-					week: '1 Semana',
-					month: '1 Mês',
-					year: '1 Ano',
-					all: 'Total'
-				},
-				Selection: {
-					Chart: {
-						'1H': '1H',
-						'1D': '1H',
-						'1W': '1S',
-						'1M': '1M',
-						'1Y': '1A',
-						All: 'Total'
-					}
-				}
-			}
-		}
-	},
-	NFTScreen: {
-		assets: 'Ativos',
-		estimated_value: 'Valor estimado',
-		InfoModal: {
-			how_are_valued: 'Como minhas NFTs são avaliadas?',
-			desc: 'Seus NFTs são avaliados com base em uma combinação do preço mínimo da coleção, último preço de venda e atributos únicos individuais.'
-		}
-	},
-	NFTDetailScreen: {
-		by: 'por ',
-		Panel: {
-			floor_price: 'Preço mínimo',
-			last_sale_price: 'Última venda'
-		},
-		view_on_openSea: 'Ver na OpenSea',
-		about: 'Sobre',
-		Expander: {
-			show_less: 'Ver menos',
-			show_more: 'Ver mais'
-		}
-	},
-	BackupSettingsScreen: {
-		title: 'Backup'
-	},
-	BackupStatusScreen: {
-		your_wallet_is_backed_up: 'Sua carteira tem backup!',
-		if_you_lose:
-			'Se você perder esse dispositivo poderá recuperar sua carteira através do backup no {{cloudPlatform}}.',
-		your_wallet_is_not_backed_up: 'Sua carteira não tem backup!',
-		your_keys_your_coins: 'Faça backup para não correr o risco de perder sua carteira.',
-		back_up_to_icloud: 'Backup no {{cloudPlatform}}',
-		backup: 'Backup',
-		done: 'Pronto',
-		go_to_wallet: 'Ir para a carteira',
-		view_secret_phrase: 'Ver Frase Secreta',
-		backup_error: 'Erro no backup'
-	},
-	BackupToICloudScreen: {
-		CreateBackupPassword: {
-			choose_password: 'Escolha uma senha',
-			memorable_password: 'Escolha uma senha que você se lembrará.',
-			not_recoverable: 'Ela não poderá ser recuperada!'
-		},
-		ConfirmBackupPassword: {
-			enter_backup_password: 'Digite a senha do backup',
-			to: 'Para',
-			restore_from: ' restaurar suas carteiras do ',
-			add_to: ' adicionar esta carteira ao seu ',
-			enter_existing: 'backup do {{cloudPlatform}}, digite sua senha de backup existente',
-			importing_backups: 'Importando backups'
-		}
-	},
-	ChangeCountryScreen: {
-		header_title: 'Alterar o País'
-	},
-	ChangeLanguageScreen: {
-		header_title: 'Alterar o Idioma'
-	},
-	ChangeNetworkScreen: {
-		header_title: 'Rede',
-		ListItem: {
-			test_network: 'rede de testes'
-		}
-	},
-	DepositScreen: {
-		Congrats: {
-			congrats: 'Parabéns',
-			you_just: 'Você acabou de fazer seu primeiro depósito!',
-			done: 'Pronto'
-		},
-		Deposit: {
-			deposit: 'Depósito',
-			balance: 'Saldo: '
-		},
-		OpenSavings: {
-			open_account: 'Abrir uma Conta',
-			aave: 'Abrir uma conta na Aave',
-			mstable: 'Abrir uma conta na mStable',
-			this_transaction: 'Esta transação vai custar alguns centavos.'
-		},
-		OpenMStable: {
-			open_account: 'Abrir Conta',
-			open_mstable: 'Abrir uma conta\nna mStable',
-			what_is: 'O que é a mStable?',
-			mstable_des:
-				'mStable é serviço de infraestrutura para crypto ativos autônoma e não custodial. O protocolo foi criado para corrigir três problemas: \n\n- Fragmentação significativa entre ativos com o mesmo mecanismo de funcionamento (há pelo menos 5 grandes stablecoins vinculadas ao dólar americano na rede Ethereum, por exemplo). \n\n - Falta de rendimentos em stablecoins e moedas fiduciárias. \n\n - Falta de proteção contra perda de capital em crypto ativos vinculados a uma outra moeda.',
-			view_site: 'Ver Site',
-			learn_more: 'Ver Mais',
-			this_transaction: 'Esta transação vai custar alguns centavos.'
-		},
-		NotAbleToSaveModal: {
-			not_able: 'Não foi possível salvar',
-			need_funds_in: 'Primeiro você precisa ter fundos em ',
-			add_funds: 'Adicionar fundos',
-			exchange: 'Converter'
-		}
-	},
-	DepositWithdrawalSuccessScreen: {
-		congrats: 'Parabéns!',
-		you_deposited: 'Você fez o seu depósito!',
-		you_withdrawn: 'Você retirou com sucesso!'
-	},
-	ExchangeResumeScreen: {
-		exchange_resume: 'Confirmação',
-		rate_fixed_for: 'Cotação fixa por:',
-		rate: 'Cotação',
-		swapping_via: 'Convertendo via'
-	},
-	ExchangeScreen: {
-		fetching: 'Buscando...',
-		exchange: 'Converter',
-		review: 'Revisar',
-		GasSelector: {
-			GasOption: {
-				transaction_fee: 'Taxa da transação',
-				fast: 'Rápido',
-				normal: 'Normal',
-				slow: 'Devagar'
-			}
-		},
-		validations: {
-			INSUFFICIENT_ASSET_LIQUIDITY: 'Não há liquidez insuficiente para o token'
-		}
-	},
-	ManualBackupScreen: {
-		CopyButton: {
-			copy_to_clipboard: 'Copiar para área de transferência'
-		},
-		done: 'Pronto',
-		recovery_phrase: 'Frase de recuperação',
-		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
-		address_copied: 'Endereço copiado!',
-		Warning: {
-			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
-			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
-		}
-	},
-	SaveScreen: {
-		interest: '% de juros anuais',
-		EmptyState: {
-			save: 'Investir',
-			open_savings_account: 'Abrir Conta\nde investimentos na %{protocol}',
-			lets_make_first_deposit: 'Vamos fazer seu primeiro depósito?'
-		},
-		Header: {
-			save: 'Investir'
-		},
-		CurrentValue: {
-			current_deposits: 'Depósitos',
-			withdraw: 'Retirar',
-			deposit: 'Depositar'
-		},
-		Body: {
-			deposit: 'Depósito ({{source}})'
-		},
-		InfoModal: {
-			Aave: 'Conta de investimentos da Aave'
-		},
-		MStable: {
-			MStable: 'Conta de investimentos na mStable'
-		}
-	},
-	SavingAccountsScreen: {
-		title: 'Conta de investimentos'
-	},
-	SettingsScreen: {
-		DeleteModal: {
-			delete_wallet: 'Deletar carteira',
-			keep_wallet: 'Manter carteira',
-			are_you_sure: 'Você tem certeza que quer deletar esta carteira?',
-			recover:
-				'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
-		},
-		title: 'Configurações',
-		creating_wallet: 'Criando Carteira',
-		backup: 'Backup',
-		country: 'País',
-		language: 'Idioma',
-		network: 'Rede',
-		new_wallet: 'Nova Carteira',
-		usd_coin: 'Moeda Padrão USD',
-		contact_support: 'Contactar Suporte',
-		help_centre: 'Central de Ajuda',
-		switch_account: 'Trocar Carteira',
-		my_wallet: 'Minha Carteira',
-		my_account: 'Minha Conta',
-		help: 'Ajuda',
-		other: 'Outros',
-		savings_account: 'Conta de Investimentos',
-		enter_referral_code: 'Inserir código de indicação',
-		delete_wallet: 'Deletar carteira'
-	},
-	TopUpWaitScreen: {
-		Failed: {
-			something_gone_wrong: 'Ah não! Algo de errado aconteceu. Por favor, tente mais tarde ou contate o suporte.',
-			reference: 'Referência: '
-		},
-		Processing: {
-			almost_there: 'Quase lá... isso pode levar um tempinho...',
-			please_wait: {
-				payment: 'Por favor, espere enquanto processamos o seu pagamento...',
-				transfer: 'Por favor, espere enquanto processamos a sua transferência...'
-			}
-		},
-		Success: {
-			funds_being_deposited: 'Seus fundos estão sendo depositados na sua carteira...',
-			done: 'Pronto'
-		}
-	},
-	TransactionsScreen: {
-		Header: {
-			transactions: 'Transações'
-		},
-		Selector: {
-			all: 'Todas',
-			sent: 'Enviadas',
-			received: 'Recebidas'
-		}
-	},
-	USDCoinScreen: {
-		usd_asset: 'Moeda padrão USD '
-	},
-	WalletCreatedScreen: {
-		wallet_created: 'Carteira Criada!',
-		need_backup:
-			'Você precisar fazer backup da sua carteira. Mantenha o seu backup seguro pois se perdê-lo todos os seus ativos estarão em risco.',
-		modal_error: 'Erro de backup'
-	},
-	WalletScreen: {
-		Content: {
-			transactions: 'Transações',
-			accounts: 'Contas'
-		},
-		AssetsPanel: {
-			your_total_assets: 'Seus ativos',
-			add_funds: 'Adicionar Fundos',
-			save: 'Investir'
-		},
-		ModalsImport: {
-			address_copied: 'Endereço copiado!'
-		},
-		TransactionsTable: {
-			see_all: 'Ver todas'
-		},
-		components: {
-			Stories: {
-				learn_about_minke: 'Aprenda sobre a Minke'
-			}
-		},
-		screens: {
-			Transactions: {
-				NoTransactionsYet: {
-					no_transactions_here: 'Nenhuma transação aqui',
-					lets_get_started: 'Vamos começar?'
-				}
-			}
-		},
-		Modals: {
-			AvatarModal: {
-				Chosen: {
-					edit: 'Editar seu avatar',
-					select: 'Selecionar um avatar da Minke',
-					choose: 'Escolher da biblioteca'
-				},
-				Select: {
-					select: 'Selecionar seu avatar'
-				}
-			},
-			ReceiveModal: {
-				sending_on: 'Enviando na',
-				receive: 'Receber',
-				show_qr: 'Mostre seu código QR ou compartilhe suas informações'
-			},
-			SendModal: {
-				components: {
-					Card: {
-						available: ' Disponível'
-					},
-					GasPriceLine: {
-						speed: 'Velocidade: ',
-						network_fee: ' Taxa da rede'
-					}
-				},
-				screens: {
-					AddContact: {
-						add_contact: 'Adicionar Contato'
-					},
-					TransactionContacts: {
-						sent_to_address: 'Envie para algum endereço',
-						address_or_ens: 'Endereço ou ENS',
-						choose_from_saved: 'Ou escolha um endereço já salvo',
-						NoContactsYet: {
-							no_contacts_yet: 'Nenhum contato disponível',
-							add_some: 'Adicione alguns para começar'
-						}
-					},
-					TransactionSelectFunds: {
-						which: 'Qual ',
-						asset: 'token',
-						want_to_send: 'você deseja enviar para ',
-						Card: {
-							available: ' Disponível'
-						}
-					},
-					TransactionTransfer: {
-						how_much: 'Quantos ',
-						wanna_send: ' você quer enviar?'
-					}
-				},
-				add: '+ Adicionar'
-			}
-		}
-	},
-	WelcomeScreen: {
-		referral_code_applied: 'Código de indicação aplicado',
-		wave_goodbye: 'Diga olá para um dinheiro melhor!',
-		easily: 'Economize, gaste e invista facilmente com a Minke',
-		creating: 'Criando carteira',
-		create: 'Criar Carteira',
-		import_or_restore: 'Importar Carteira',
-		i_have_a_referral_code: 'Eu tenho um código de indicação',
-		ImportWalletModal: {
-			add_wallet: 'Adicionar Carteira',
-			seed_or_key: 'Frase de recuperação ou chave privada',
-			importing: 'Importando carteira',
-			import: 'Importar Carteira',
-			SelectImportMethodModal: {
-				import_wallet: 'Importar Carteira',
-				restore_from_icloud: 'Restaurar do {{cloudPlatform}}',
-				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
-				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada'
-			}
-		}
-	},
-	WithdrawScreen: {
-		withdraw: 'Retirar',
-		balance: 'Saldo: '
-	},
-	ReferralScreen: {
-		Header: {
-			points: 'Pontos'
-		},
-		CurrentValue: {
-			pts: 'pts.',
-			owned: 'Meus pontos',
-			redeem: 'Resgatar',
-			earn: 'Ganhar'
-		},
-		RedeemScreen: {
-			redeem_minke_points: 'Resgatar Pontos Minke',
-			swap: 'Resgatar',
-			Modals: {
-				WrongNetwork: {
-					wrong_network: 'Oops! Parece que você está na rede errada',
-					please_change_network: 'Por favor, mude para a rede {{network}} para resgatar os seus pontos.',
-					change_to_network: 'Mudar para {{network}}'
-				},
-				NotEnoughPoints: {
-					you_dont_have_points: 'Oops! Você não tem pontos',
-					you_can_earn: 'Você pode ganhar pontos:',
-					referring_a_friend: 'Indicando um amigo',
-					topping_up: 'Adicionando fundos',
-					get_rewarded: 'Ganhe recompensas!',
-					what_can_you_do_with_your_points: 'O que você pode fazer com seus pontos?',
-					you_can_redeem: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon.'
-				}
-			}
-		},
-		Modals: {
-			HelpModal: {
-				how_minke_points_work: 'Como os pontos Minke funcionam?',
-				rewards_explanation:
-					'Pontos Minke são recompensas que te damos quando você realiza determinadas tarefas no aplicativo.',
-				you_can_earn_points_by: 'Você pode ganhar pontos por:',
-				topping_up_for_the_first_time: 'Adicionar fundos pela primeira vez.',
-				refering_minke: 'Indicando a Minke para seus amigos e família.',
-				exchanging_for_the_first_time: 'Convertendo pela primeira vez.',
-				what_can_you_do: 'O que você pode fazer com seus pontos?',
-				you_can_redeem_your_points: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon. '
-			},
-			EarnModal: {
-				earn_minke_points: 'Ganhe pontos Minke!',
-				refer_a_friend: 'Indique um amigo',
-				when_your_friends_top_up:
-					'Quando seu amigo comprar stablecoins ou converter para elas no app da Minke vocês dois ganham até 100 points (valem $10 dólares americanos) ',
-				top_up: 'Adicione Fundos',
-				get_rewarded: 'Ganhe recompensas!',
-				coming_soon: '(Em breve)',
-				share_text:
-					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $10 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
-			}
-		},
-		Body: {
-			referral: 'Indicação',
-			deposit: 'Depósito',
-			exchange: 'Conversão',
-			points: '{{count}} pontos'
-		}
-	},
-	RedeemConfirmScreen: {
-		confirmation: 'Confirmação',
-		rate_fixed_for: 'Cotação fixa por:',
-		errors: {
-			failed_claim: 'Seu resgate não está completo. Por favor, entre em contato com o suporte.',
-			invalid_request: 'Requisição inválida'
-		}
-	},
-	EnterReferralCodeScreen: {
-		enter_referral_code: 'Código de indicação',
-		get_rewarded_for_saving_money: 'Receba recompensas!',
-		or: 'ou',
-		buy_usdc: 'Comprar USDC',
-		referral_note:
-			'Esse código pode ser usado somente uma vez. Depois de comprar ou converter stablecoins você e o seu amigo vão receber até 100 pontos Minke cada.',
-		invalid_code: 'Código inválido',
-		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
-	},
-	ImportWalletScreen: {
-		import_wallet: 'Importar Carteira',
-		import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada',
-		connect_wallet: 'Conectar Carteira',
-		restore_from_icloud: 'Recuperar do {{cloudPlatform}}',
-		backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
-		disconnect_wallet: 'Disconectar Carteira',
-		please_change_network: 'Por favor, mude para a rede {{network}} para usar essa carteira.',
-		Error: {
-			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
-		}
-	},
-	AddFundsScreen: {
-		header: 'Adicionar fundos',
-		you_pay: 'Você paga',
-		you_receive: 'Você recebe',
-		Errors: {
-			validation_snapx_min: 'O valor é menor que o mínimo',
-			exchange_sourceAmountTooSmall: 'O valor é muito pequeno',
-			minimal_topup_amount: 'O valor mínimo é {{amount}} {{currency}}'
-		}
-	},
-	TransactionScreen: {
-		transaction_type: 'Transação:',
-		date: 'Data:',
-		sent_to: 'Enviou para:',
-		exchanged: 'Converteu:',
-		exchange_details: '{{fromAmount}} {{from}} para {{toAmount}} {{to}}',
-		hash: 'Hash',
-		exchange_rate: 'Cotação',
-		savings_account: 'Conta de investimentos:',
-		received_from: 'Recebido de:'
-	},
-	HomeScreen: {
-		Header: {
-			welcome: 'Olá',
-			points: 'pontos',
-			invite_a_friend: 'Convide um amigo!'
-		}
-	},
+
+	// HOOKS
 	Hooks: {
 		iCloudBackup: {
 			BACKING_UP_WALLET: 'Fazendo backup...',
@@ -794,6 +799,8 @@ export default {
 			}
 		}
 	},
+
+	// CONTAINERS
 	Containers: {
 		AddFunds: {
 			Header: {
@@ -835,6 +842,8 @@ export default {
 			}
 		}
 	},
+
+	// COMPONENTS
 	Components: {
 		AaveReusables: {
 			Info: {
@@ -1034,6 +1043,8 @@ export default {
 			import_wallet: 'Importe essa carteira para fazer transações'
 		}
 	},
+
+	// LOGS
 	Logs: {
 		couldnt_restore_backup: 'Não foi possível restaurar seus backups',
 		not_enough_balance_for_gas: 'Não há saldo suficiente para gás'
