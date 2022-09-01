@@ -176,6 +176,13 @@ export default {
 		Assets: {
 			your_total_assets: 'Your total assets',
 			add_funds: 'Add Funds'
+		},
+		Accounts: {
+			AccountsOverview: {
+				overview: 'Accounts overview',
+				see_all: 'See all',
+				investments_highlight: 'Investments highlights'
+			}
 		}
 	},
 	ImportWalletScreen: {

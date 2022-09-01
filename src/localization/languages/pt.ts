@@ -177,6 +177,13 @@ export default {
 		Assets: {
 			your_total_assets: 'Seus ativos',
 			add_funds: 'Adicionar Fundos'
+		},
+		Accounts: {
+			AccountsOverview: {
+				overview: 'Visão geral das contas',
+				see_all: 'Ver todos',
+				investments_highlight: 'Destaques de investimentos'
+			}
 		}
 	},
 	ImportWalletScreen: {

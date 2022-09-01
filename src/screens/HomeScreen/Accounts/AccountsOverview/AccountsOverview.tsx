@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Paper, View, Text, TokenItemCard, Touchable } from '@components';
-import { useNavigation, useTokens } from '@hooks';
+import { useLanguage, useNavigation, useTokens } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
 import { useState } from '@hookstate/core';
@@ -8,6 +8,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview = () => {
+	const { i18n } = useLanguage();
 	const [investmentHighlights, setInvestmentHighlights] = React.useState<InvestmentToken[]>([]);
 	const {
 		network: { topUpTokens }
@@ -48,7 +49,7 @@ export const AccountsOverview = () => {
 	return (
 		<Paper pt="xs" ph="xs" mb="xs">
 			<Text type="lLarge" weight="semiBold" mb="xs">
-				Accounts overview
+				{i18n.t('HomeScreen.Accounts.AccountsOverview.overview')}
 			</Text>
 			{!!showingStable.symbol && (
 				<>
@@ -59,7 +60,7 @@ export const AccountsOverview = () => {
 						<View mr="xxs" />
 						<Touchable onPress={() => navigation.navigate('StablecoinsScreen')}>
 							<Text type="bSmall" color="cta1">
-								See all
+								{i18n.t('HomeScreen.Accounts.AccountsOverview.see_all')}
 							</Text>
 						</Touchable>
 					</View>
@@ -76,12 +77,12 @@ export const AccountsOverview = () => {
 
 			<View row cross="center" mb="xs">
 				<Text type="lSmall" weight="semiBold" color="text2">
-					Investments highlights
+					{i18n.t('HomeScreen.Accounts.AccountsOverview.investments_highlight')}
 				</Text>
 				<View mr="xxs" />
 				<Touchable onPress={() => navigation.navigate('InvestmentsScreen')}>
 					<Text type="bSmall" color="cta1">
-						See all
+						{i18n.t('HomeScreen.Accounts.AccountsOverview.see_all')}
 					</Text>
 				</Touchable>
 			</View>
