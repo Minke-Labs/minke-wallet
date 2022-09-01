@@ -836,6 +836,15 @@ export default {
 		}
 	},
 	Components: {
+		AaveReusables: {
+			Info: {
+				what_is: 'O que é a Aave?',
+				aave_des:
+					'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
+				view_site: 'Ver o Site',
+				learn_more: 'Ver Mais'
+			}
+		},
 		AppTour: {
 			Boxes: {
 				Steps: {
@@ -875,9 +884,6 @@ export default {
 				}
 			}
 		},
-		GenericPayButton: {
-			debit_credit: 'Cartão de Débito/Crédito'
-		},
 		BlankStates: {
 			NFT: 'NFTs',
 			WalletAssets: 'Carteira',
@@ -886,86 +892,6 @@ export default {
 			Deposit: 'Depositar',
 			Withdraw: 'Retirar',
 			Send: 'Qual token você deseja enviar para {{to}}?'
-		},
-		CountrySelector: {
-			country: 'País',
-			to_offer:
-				'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
-			select: 'Selecione um País'
-		},
-		AaveReusables: {
-			Info: {
-				what_is: 'O que é a Aave?',
-				aave_des:
-					'Aave permite que você ganhe juros com suas criptomoedas e stablecoins emprestando-as a quem deseja. Aave é um protocolo descentralizado para empréstimo de criptomoedas. As taxas são variáveis e podem mudar a qualquer momento.\n\nOs riscos incluem a parte econômica do protocolo, riscos de mercado, segurança dos contratos inteligentes, risco de contraparte e outros mais. O protocolo Aave foi auditado pela Trail of Bits e pela Open Zeppelin.',
-				view_site: 'Ver o Site',
-				learn_more: 'Ver Mais'
-			}
-		},
-		MStableReusables: {
-			Info: {
-				what_is: 'O que é o mStable?',
-				mstable_des:
-					'O mStable é uma infraestrutura autônoma e sem custódia para ativos criptográficos de valor atrelado. O protocolo foi criado para resolver três problemas principais: \n\nfragmentação significativa em ativos criptográficos de mesma indexação (atualmente, existem pelo menos 5 ativos criptográficos indexados em dólares principais no Ethereum, por exemplo). \n\nFalta de rendimento em moedas fiduciárias e ativos criptográficos atrelados.\n\nFalta de proteção contra perda de capital permanente em ativos criptográficos atrelados.',
-				view_site: 'Ver o Site',
-				learn_more: 'Ver Mais'
-			}
-		},
-		PendingTransactions: {
-			pending: 'Pendente',
-			success: 'Sucesso',
-			failed: 'Falhou'
-		},
-		Transaction: {
-			failed: 'Falhou',
-			view_on: 'Ver em',
-			cancel: 'Cancelar',
-			adding_via_apple_pay: 'Adicionando via Apple Pay',
-			withdrew_from_savings: 'Retirou',
-			deposited_in_savings: 'Depositou',
-			swap: 'Converteu',
-			from: 'De',
-			to: 'Para',
-			today: 'Hoje',
-			yesterday: 'Ontem',
-			this_month: 'Nesse mês',
-			top_up: 'Adicionou Fundos',
-			savings_withdrew: 'Retirada',
-			savings_deposited: 'Investimento',
-			exchanged: 'Converteu',
-			received: 'Recebeu',
-			sent: 'Enviou'
-		},
-		LoadingScreen: {
-			this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
-		},
-		TokenAmountInput: {
-			send_max: 'Enviar o máximo'
-		},
-		NetworkWarning: {
-			NetworkTag: {
-				sending_on: 'rede {{network}}'
-			}
-		},
-		EmptyStates: {
-			NoTokens: {
-				no_tokens_here: 'Nenhum token {{network}}'
-			},
-			NoReferralPoints: {
-				your_points_will_appear_here: 'Seus pontos aparecerão aqui',
-				lets_get_started: 'Vamos começar?',
-				earn_points: 'Ganhar pontos'
-			}
-		},
-		Inputs: {
-			enter_password: 'Entre a senha',
-			repeat_password: 'Repita a senha',
-			search: 'Procurar',
-			search_token: 'Procurar token',
-			search_currency: 'Procurar moeda',
-			name: 'Nome',
-			ens_or_wallet: 'ENS ou Endereço da Carteira',
-			enter_code: 'Digitar código'
 		},
 		Buttons: {
 			backup_to_icloud: 'Fazer Backup no {{cloudPlatform}}',
@@ -985,6 +911,41 @@ export default {
 			use_code: 'Usar código',
 			loading: 'Carregando',
 			swap: 'Trocar'
+		},
+		CountrySelector: {
+			country: 'País',
+			to_offer:
+				'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
+			select: 'Selecione um País'
+		},
+		EmptyStates: {
+			NoTokens: {
+				no_tokens_here: 'Nenhum token {{network}}'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Seus pontos aparecerão aqui',
+				lets_get_started: 'Vamos começar?',
+				earn_points: 'Ganhar pontos'
+			}
+		},
+		GenericPayButton: {
+			debit_credit: 'Cartão de Débito/Crédito'
+		},
+		Inputs: {
+			enter_password: 'Entre a senha',
+			repeat_password: 'Repita a senha',
+			search: 'Procurar',
+			search_token: 'Procurar token',
+			search_currency: 'Procurar moeda',
+			name: 'Nome',
+			ens_or_wallet: 'ENS ou Endereço da Carteira',
+			enter_code: 'Digitar código'
+		},
+		InterestBanner: {
+			interest: '% de juros anuais'
+		},
+		LoadingScreen: {
+			this_can_take_a_few_seconds: 'Isso pode levar alguns segundos'
 		},
 		ModalReusables: {
 			TransactionWaitModal: {
@@ -1015,16 +976,55 @@ export default {
 				devs_doing_something: 'Nossos devs estão trabalhando.'
 			}
 		},
+		MStableReusables: {
+			Info: {
+				what_is: 'O que é o mStable?',
+				mstable_des:
+					'O mStable é uma infraestrutura autônoma e sem custódia para ativos criptográficos de valor atrelado. O protocolo foi criado para resolver três problemas principais: \n\nfragmentação significativa em ativos criptográficos de mesma indexação (atualmente, existem pelo menos 5 ativos criptográficos indexados em dólares principais no Ethereum, por exemplo). \n\nFalta de rendimento em moedas fiduciárias e ativos criptográficos atrelados.\n\nFalta de proteção contra perda de capital permanente em ativos criptográficos atrelados.',
+				view_site: 'Ver o Site',
+				learn_more: 'Ver Mais'
+			}
+		},
+		NetworkWarning: {
+			NetworkTag: {
+				sending_on: 'rede {{network}}'
+			}
+		},
+		PendingTransactions: {
+			pending: 'Pendente',
+			success: 'Sucesso',
+			failed: 'Falhou'
+		},
 		SettingsHeader: {
 			done: 'Pronto'
+		},
+		TokenAmountInput: {
+			send_max: 'Enviar o máximo'
 		},
 		TokenCard: {
 			choose_token: 'Escolha um token',
 			choose_currency: 'Escolha uma moeda',
 			available: 'Disponível'
 		},
-		InterestBanner: {
-			interest: '% de juros anuais'
+		Transaction: {
+			failed: 'Falhou',
+			view_on: 'Ver em',
+			cancel: 'Cancelar',
+			adding_via_apple_pay: 'Adicionando via Apple Pay',
+			withdrew_from_savings: 'Retirou',
+			deposited_in_savings: 'Depositou',
+			swap: 'Converteu',
+			from: 'De',
+			to: 'Para',
+			today: 'Hoje',
+			yesterday: 'Ontem',
+			this_month: 'Nesse mês',
+			top_up: 'Adicionou Fundos',
+			savings_withdrew: 'Retirada',
+			savings_deposited: 'Investimento',
+			exchanged: 'Converteu',
+			received: 'Recebeu',
+			sent: 'Enviou'
 		},
 		WatchModeTag: {
 			this_wallet_needs_to_be_reconnected: 'Essa carteira precisa ser reconectada à rede {{network}}.',

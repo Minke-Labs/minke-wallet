@@ -833,6 +833,15 @@ export default {
 		}
 	},
 	Components: {
+		AaveReusables: {
+			Info: {
+				what_is: 'What is Aave?',
+				aave_des:
+					'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
+			}
+		},
 		AppTour: {
 			Boxes: {
 				Steps: {
@@ -873,9 +882,6 @@ export default {
 				}
 			}
 		},
-		GenericPayButton: {
-			debit_credit: 'Debit/Credit card'
-		},
 		BlankStates: {
 			NFT: 'NFTs',
 			WalletAssets: 'Wallet',
@@ -884,85 +890,6 @@ export default {
 			Deposit: 'Deposit',
 			Withdraw: 'Withdraw',
 			Send: 'Which asset do you want to send to {{to}}?'
-		},
-		CountrySelector: {
-			country: 'Country',
-			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
-			select: 'Select a Country'
-		},
-		AaveReusables: {
-			Info: {
-				what_is: 'What is Aave?',
-				aave_des:
-					'Aave lets you earn interest on your crypto and stablecoins by lending it to borrowers. Aave is a decentralized protocol for lending and borrowing crypto. Rates are variable and can change at any time.\n\nRisks include the economics of the protocol, market risks, security of the smart contracts, counterparty risk and more. Aave has been audited by Trail of Bits and Open Zeppelin.',
-				view_site: 'View Site',
-				learn_more: 'Learn More'
-			}
-		},
-		MStableReusables: {
-			Info: {
-				what_is: 'What is mStable?',
-				mstable_des:
-					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
-				view_site: 'View Site',
-				learn_more: 'Learn More'
-			}
-		},
-		PendingTransactions: {
-			pending: 'Pending',
-			success: 'Success',
-			failed: 'Failed'
-		},
-		Transaction: {
-			failed: 'Failed',
-			view_on: 'View on',
-			cancel: 'Cancel',
-			adding_via_apple_pay: 'Adding via Apple Pay',
-			withdrew_from_savings: 'Withdrew',
-			deposited_in_savings: 'Deposited',
-			swap: 'Swapped',
-			from: 'From',
-			to: 'To',
-			today: 'Today',
-			yesterday: 'Yesterday',
-			this_month: 'This Month',
-			top_up: 'Top Up',
-			savings_withdrew: 'Savings (withdrew)',
-			savings_deposited: 'Savings (deposited)',
-			exchanged: 'Exchanged',
-			received: 'Received',
-			sent: 'Sent'
-		},
-		LoadingScreen: {
-			this_can_take_a_few_seconds: 'This can take a few seconds'
-		},
-		TokenAmountInput: {
-			send_max: 'Send max'
-		},
-		NetworkWarning: {
-			NetworkTag: {
-				sending_on: '{{network}} network'
-			}
-		},
-		EmptyStates: {
-			NoTokens: {
-				no_tokens_here: 'No tokens here ({{network}})'
-			},
-			NoReferralPoints: {
-				your_points_will_appear_here: 'Your points will appear here',
-				lets_get_started: "Let's get started?",
-				earn_points: 'Earn points'
-			}
-		},
-		Inputs: {
-			enter_password: 'Enter password',
-			repeat_password: 'Repeat password',
-			search: 'Search',
-			search_token: 'Search token',
-			search_currency: 'Search currency',
-			name: 'Name',
-			ens_or_wallet: 'ENS or Wallet Address',
-			enter_code: 'Enter code'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to {{cloudPlatform}}',
@@ -982,6 +909,49 @@ export default {
 			use_code: 'Use code',
 			loading: 'Loading',
 			swap: 'Swap'
+		},
+		CountrySelector: {
+			country: 'Country',
+			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
+			select: 'Select a Country'
+		},
+		EmptyStates: {
+			NoTokens: {
+				no_tokens_here: 'No tokens here ({{network}})'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Your points will appear here',
+				lets_get_started: "Let's get started?",
+				earn_points: 'Earn points'
+			}
+		},
+		GenericPayButton: {
+			debit_credit: 'Debit/Credit card'
+		},
+		Inputs: {
+			enter_password: 'Enter password',
+			repeat_password: 'Repeat password',
+			search: 'Search',
+			search_token: 'Search token',
+			search_currency: 'Search currency',
+			name: 'Name',
+			ens_or_wallet: 'ENS or Wallet Address',
+			enter_code: 'Enter code'
+		},
+		InterestBanner: {
+			interest: '% annualized interest'
+		},
+		LoadingScreen: {
+			this_can_take_a_few_seconds: 'This can take a few seconds'
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'What is mStable?',
+				mstable_des:
+					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
+			}
 		},
 		ModalReusables: {
 			TransactionWaitModal: {
@@ -1012,16 +982,46 @@ export default {
 				devs_doing_something: 'Devs are doing something.'
 			}
 		},
+		NetworkWarning: {
+			NetworkTag: {
+				sending_on: '{{network}} network'
+			}
+		},
+		PendingTransactions: {
+			pending: 'Pending',
+			success: 'Success',
+			failed: 'Failed'
+		},
 		SettingsHeader: {
 			done: 'Done'
+		},
+		TokenAmountInput: {
+			send_max: 'Send max'
 		},
 		TokenCard: {
 			choose_token: 'Choose token',
 			choose_currency: 'Choose currency',
 			available: 'Available'
 		},
-		InterestBanner: {
-			interest: '% annualized interest'
+		Transaction: {
+			failed: 'Failed',
+			view_on: 'View on',
+			cancel: 'Cancel',
+			adding_via_apple_pay: 'Adding via Apple Pay',
+			withdrew_from_savings: 'Withdrew',
+			deposited_in_savings: 'Deposited',
+			swap: 'Swapped',
+			from: 'From',
+			to: 'To',
+			today: 'Today',
+			yesterday: 'Yesterday',
+			this_month: 'This Month',
+			top_up: 'Top Up',
+			savings_withdrew: 'Savings (withdrew)',
+			savings_deposited: 'Savings (deposited)',
+			exchanged: 'Exchanged',
+			received: 'Received',
+			sent: 'Sent'
 		},
 		WatchModeTag: {
 			this_wallet_needs_to_be_reconnected: 'This wallet needs to be reconnected to {{network}}.',

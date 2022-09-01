@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import * as Clipboard from 'expo-clipboard';
-import { View, Text, Icon, ScreenLoadingIndicator, Snackbar } from '@components';
+import { View, Text, Icon, ScreenLoadingIndicator, Snackbar, Touchable } from '@components';
 import { useLanguage, useMinkeRewards, useNavigation, useWalletState } from '@hooks';
 
 const Header: React.FC = () => {
@@ -33,9 +32,9 @@ const Header: React.FC = () => {
 			<View row main="space-between" cross="flex-end" mb="xs">
 				<View>
 					<Text type="lMedium" weight="semiBold">
-						Welcome
+						{i18n.t('HomeScreen.Header.welcome')}
 					</Text>
-					<TouchableOpacity activeOpacity={0.6} onPress={handlePress}>
+					<Touchable onPress={handlePress}>
 						<View row cross="center">
 							<Text type="hMedium" weight="bold">
 								{accountName}
@@ -44,33 +43,28 @@ const Header: React.FC = () => {
 								<Icon name="copy" size={24} color="text7" />
 							</View>
 						</View>
-					</TouchableOpacity>
+					</Touchable>
 				</View>
 				<View row cross="center" pb="xxxs">
-					<TouchableOpacity activeOpacity={0.6} onPress={onPointsPress}>
-						<View
-							br="xxs"
-							mr="xxs"
-							ph="xxs"
-							pv="xxxs"
-							row
-							cross="center"
-							bgc="background3"
-						>
-							<Text weight="semiBold" type="lSmall" color="cta1">
-								{points > 0
-									? `${points} ${i18n.t('HomeScreen.Header.points')}`
-									: i18n.t('HomeScreen.Header.invite_a_friend')}
-							</Text>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={onSettingsPress}>
-						<Icon
-							name="gear"
-							size={28}
-							color="cta1"
-						/>
-					</TouchableOpacity>
+					<Touchable
+						onPress={onPointsPress}
+						br="xxs"
+						mr="xxs"
+						ph="xxs"
+						pv="xxxs"
+						row
+						cross="center"
+						bgc="background3"
+					>
+						<Text weight="semiBold" type="lSmall" color="cta1">
+							{points > 0
+								? `${points} ${i18n.t('HomeScreen.Header.points')}`
+								: i18n.t('HomeScreen.Header.invite_a_friend')}
+						</Text>
+					</Touchable>
+					<Touchable onPress={onSettingsPress}>
+						<Icon name="gear" size={28} color="cta1" />
+					</Touchable>
 				</View>
 			</View>
 
