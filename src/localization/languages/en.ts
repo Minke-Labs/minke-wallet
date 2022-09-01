@@ -218,7 +218,18 @@ export default {
 		}
 	},
 	MinkeHubScreen: {
-
+		accounts: 'Accounts',
+		coins_pegged_to: 'Coins pegged to the US dollar',
+		investments: 'Investments',
+		fluctuating_value: 'Coins with fluctuating value',
+		savings: 'Savings',
+		earn_passive_income: 'Earn passive income from your stablecoins',
+		nfts_and_collectibles: 'Non-fungible tokens and collectibles',
+		others: 'Others',
+		send_to_bank: 'Send to bank',
+		convert_to_local: 'Convert to your local currency',
+		referral: 'Referral',
+		refer_and_earn: 'Refer a friend and earn free crypto'
 	},
 	NFTDetailScreen: {
 		by: 'by ',

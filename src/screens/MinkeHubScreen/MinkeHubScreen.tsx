@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { Text, View, ModalReusables, ModalBase, FloatingSelector } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useNFT, useTokens } from '@hooks';
+import { useLanguage, useNavigation, useNFT, useTokens } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
 import MinkeLogo from './MinkeLogo.svg';
 import { Card } from './Card/Card';
 
 const MinkeHubScreen = () => {
+	const { i18n } = useLanguage();
 	const [modal, setModal] = useState(false);
 	const navigation = useNavigation();
 	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = useTokens();
@@ -27,7 +28,7 @@ const MinkeHubScreen = () => {
 							<MinkeLogo />
 						</View>
 						<Text type="lMedium" weight="semiBold" color="text3" mb="xxs">
-							Accounts
+							{i18n.t('MinkeHubScreen.accounts')}
 						</Text>
 						<Text type="hSmall" weight="bold" color="text2" mb="xs">
 							Total: {!!balance && numberFormat(balance, 2)}
@@ -37,15 +38,15 @@ const MinkeHubScreen = () => {
 								onPress={() => navigation.navigate('StablecoinsScreen')}
 								icon="dollar"
 								title="Stablecoins"
-								desc="Coins pegged to the US dollar"
+								desc={i18n.t('MinkeHubScreen.coins_pegged_to')}
 								number={stablecoinsBalance}
 							/>
 							<View mr="xs" />
 							<Card
 								onPress={() => navigation.navigate('InvestmentsScreen')}
 								icon="crypto"
-								title="Investments"
-								desc="Coins with fluctuating value"
+								title={i18n.t('MinkeHubScreen.investments')}
+								desc={i18n.t('MinkeHubScreen.fluctuating_value')}
 								number={walletBalance}
 							/>
 						</View>
@@ -53,8 +54,8 @@ const MinkeHubScreen = () => {
 							<Card
 								onPress={() => navigation.navigate('SaveScreen')}
 								icon="dollar"
-								title="Savings"
-								desc="Earn passive income from your stablecoins"
+								title={i18n.t('MinkeHubScreen.savings')}
+								desc={i18n.t('MinkeHubScreen.earn_passive_income')}
 								number={depositedBalance}
 							/>
 							<View mr="xs" />
@@ -62,26 +63,26 @@ const MinkeHubScreen = () => {
 								onPress={() => navigation.navigate('NFTScreen')}
 								icon="crypto"
 								title="NFTs"
-								desc="Non-fungible tokens and collectibles"
+								desc={i18n.t('MinkeHubScreen.nfts_and_collectibles')}
 								number={networth}
 							/>
 						</View>
 						<Text type="lMedium" weight="semiBold" color="text3" mb="xs">
-							Others
+							{i18n.t('MinkeHubScreen.others')}
 						</Text>
 						<View mb="xs" row main="center">
 							<Card
 								onPress={() => setModal(true)}
 								icon="vault"
-								title="Send to bank"
-								desc="Convert to your local currency"
+								title={i18n.t('MinkeHubScreen.send_to_bank')}
+								desc={i18n.t('MinkeHubScreen.convert_to_local')}
 							/>
 							<View mr="xs" />
 							<Card
 								onPress={() => navigation.navigate('ReferralScreen')}
 								icon="vault"
-								title="Referral"
-								desc="Refer a friend and earn free crypto"
+								title={i18n.t('MinkeHubScreen.referral')}
+								desc={i18n.t('MinkeHubScreen.refer_and_earn')}
 							/>
 						</View>
 					</View>

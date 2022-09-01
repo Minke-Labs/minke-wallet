@@ -219,7 +219,18 @@ export default {
 		}
 	},
 	MinkeHubScreen: {
-
+		accounts: 'Contas',
+		coins_pegged_to: 'Moedas atreladas ao dólar americano',
+		investments: 'Investimentos',
+		fluctuating_value: 'Moedas com valor flutuante',
+		savings: 'Poupança',
+		earn_passive_income: 'Ganhe renda passiva com suas stablecoins',
+		nfts_and_collectibles: 'Tokens não fungíveis e colecionáveis',
+		others: 'Outros',
+		send_to_bank: 'Enviar ao banco',
+		convert_to_local: 'Converter para sua moeda local',
+		referral: 'Indicação',
+		refer_and_earn: 'Indique um amigo e ganhe criptos grátis'
 	},
 	NFTDetailScreen: {
 		by: 'por ',
