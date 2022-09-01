@@ -48,7 +48,7 @@ export const CurrentValue = ({
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.depositButton} onPress={onEarnPress}>
-					<Icon name="saveStroke" color="cta1" size={20} />
+					<Icon name="save" color="cta1" size={20} />
 					<Text mb="xxxs" style={{ marginLeft: 8 }}>
 						{i18n.t('ReferralScreen.CurrentValue.earn')}
 					</Text>

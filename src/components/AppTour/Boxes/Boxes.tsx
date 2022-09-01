@@ -3,7 +3,7 @@ import {
 	PanGestureHandler,
 	PanGestureHandlerGestureEvent
 } from 'react-native-gesture-handler';
-import Animated, {
+import {
 	Easing,
 	withTiming,
 	runOnJS,
@@ -15,6 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { snapPoint } from 'react-native-redash';
 import { screenWidth } from '@styles';
+import AnimatedView from '@src/components/AnimatedView/AnimatedView';
 import { AppTourStepType } from '../AppTour.types';
 import { BoxesProps } from './Boxes.types';
 import { getBox } from './Boxes.utils';
@@ -56,7 +57,7 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 		},
 		onEnd: ({ velocityX }) => {
 			const dest = snapPoint(x.value, velocityX, SNAP_POINTS);
-			if ((type === 0 && dest > 0) || (type === 5 && dest < 0)) {
+			if ((type === 0 && dest > 0) || (type === 4 && dest < 0)) {
 				x.value = withSpring(0, { velocity: velocityX });
 			} else {
 				x.value = withSpring(dest, { velocity: velocityX });
@@ -73,7 +74,7 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 
 	return (
 		<PanGestureHandler onGestureEvent={onGestureEvent}>
-			<Animated.View
+			<AnimatedView
 				style={[
 					{ position: 'absolute', ...(getBox(type).position) },
 					animatedStyle
@@ -82,7 +83,7 @@ export const Boxes: React.FC<BoxesProps> = ({ type, setType, previous }) => {
 				<Card type={type}>
 					{getBox(type).component}
 				</Card>
-			</Animated.View>
+			</AnimatedView>
 		</PanGestureHandler>
 	);
 };

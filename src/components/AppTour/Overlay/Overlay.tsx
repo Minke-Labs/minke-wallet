@@ -1,18 +1,33 @@
 import React from 'react';
-import { View } from 'react-native';
+import View from '@src/components/View/View';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { getHole } from './Overlay.utils';
-import { OverlayProps } from './Overlay.types';
-import styles from './Overlay.styles';
+import { AppTourStepType } from '../AppTour.types';
+
+export interface OverlayProps {
+	type: AppTourStepType;
+}
 
 const Overlay: React.FC<OverlayProps> = ({ children, type = 0 }) => (
-	<View style={styles.container} pointerEvents="none">
+	<View
+		w="100%"
+		h="100%"
+		style={{
+			position: 'absolute',
+			top: 0,
+			backgroundColor: '#000000'
+		}}
+		pointerEvents="none"
+	>
 		<MaskedView
 			androidRenderingMode="software"
 			style={{ flex: 1 }}
 			maskElement={
-				<View style={styles.opacity}>
-					<View style={[styles.masked, { ...(getHole(type)) }]} />
+				<View flex1 style={{ backgroundColor: '#00000060' }}>
+					<View
+						bgc="text11"
+						style={{ ...(getHole(type)), position: 'absolute' }}
+					/>
 				</View>
 			}
 		>

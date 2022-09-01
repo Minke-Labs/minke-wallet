@@ -2,7 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { View, FloatingSelector, PendingTransaction } from '@components';
+import {
+	View,
+	FloatingSelector,
+	PendingTransaction,
+	AppTour
+} from '@components';
 import { useAmplitude, useWalletState, useTransactions } from '@hooks';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { Stories } from './Stories/Stories';
@@ -53,24 +58,26 @@ const HomeScreen = () => {
 	}, []);
 
 	return (
-		<BasicLayout>
-			<SafeAreaView />
-			<ScrollView
-				refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
-				showsVerticalScrollIndicator={false}
-			>
-				<View ph="xs">
-					<Header />
-					{!!tx && <PendingTransaction transaction={tx} />}
-					<Assets />
-					<Accounts />
-					<Stories />
-					<View mb="xxxl" />
-					<View mb="m" />
-				</View>
-			</ScrollView>
-			<FloatingSelector />
-		</BasicLayout>
+		<AppTour>
+			<BasicLayout>
+				<SafeAreaView />
+				<ScrollView
+					refreshControl={<RefreshControl refreshing={false} onRefresh={handleRefresh} />}
+					showsVerticalScrollIndicator={false}
+				>
+					<View ph="xs">
+						<Header />
+						{!!tx && <PendingTransaction transaction={tx} />}
+						<Assets />
+						<Accounts />
+						<Stories />
+						<View mb="xxxl" />
+						<View mb="m" />
+					</View>
+				</ScrollView>
+				<FloatingSelector />
+			</BasicLayout>
+		</AppTour>
 	);
 };
 

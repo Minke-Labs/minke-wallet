@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { View } from 'react-native';
 import { useLanguage } from '@hooks';
-import { Text, Icon } from '@components';
+import Text from '@src/components/Text/Text';
+import Icon from '@src/components/Icon/Icon';
+import View from '@src/components/View/View';
 import Arrow from '../Arrow';
 import { AppTourStepType } from '../../AppTour.types';
 import { AppTourContext } from '../../Context/AppTourContext';
@@ -11,24 +12,21 @@ export const Step2 = () => {
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<View style={{ height: 25, marginBottom: 8, flexDirection: 'row' }}>
+			<View mb="xxs" row cross="center">
 				<Icon
-					name="saveStroke"
+					name="save"
 					size={20}
 					color="cta1"
-					style={{ marginRight: 8 }}
 				/>
-				<Text
-					type="tMedium"
-					weight="bold"
-				>
-					{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step2.save')}
+				<View mr="xxs" />
+				<Text type="tMedium" weight="bold">
+					{i18n.t('Components.AppTour.Boxes.Steps.Step2.save')}
 				</Text>
 			</View>
-			<Text width={237} type="a" marginBottom={16}>
-				{i18n.t('WalletScreen.AppTour.Boxes.Steps.Step2.get_up_to')}
+			<Text width={237} color="text2" type="bSmall" mb="xs">
+				{i18n.t('Components.AppTour.Boxes.Steps.Step2.earn_up_to')}
 			</Text>
-			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+			<View row main="space-between">
 				<Arrow left onPress={() => setType(type - 1 as AppTourStepType)} />
 				<Arrow onPress={() => setType(type + 1 as AppTourStepType)} />
 			</View>

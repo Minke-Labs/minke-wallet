@@ -1,34 +1,23 @@
-import { View } from 'react-native';
 import React from 'react';
-import { useTheme } from '@hooks';
+import View from '@src/components/View/View';
 import { AppTourStepType } from '../AppTour.types';
 
-const Circle: React.FC<{ active: boolean }> = ({ active }) => {
-	const { colors } = useTheme();
-	return (
-		<View
-			style={{
-				height: 8,
-				width: 8,
-				borderRadius: 4,
-				backgroundColor: active ? colors.cta1 : colors.cta2,
-				marginRight: 8
-			}}
-		/>
-	);
-};
+const Circle: React.FC<{ active: boolean }> = ({ active }) => (
+	<View
+		round={8}
+		mr="xxs"
+		bgc={active ? 'cta1' : 'cta2'}
+	/>
+);
 
 const StepIndicator: React.FC<{ type: AppTourStepType }> = ({ type }) => (
 	<View
-		style={{
-			alignSelf: 'center',
-			flexDirection: 'row',
-			alignItems: 'center',
-			padding: 4,
-			marginBottom: 16
-		}}
+		row
+		main="center"
+		pv="xxxs"
+		mb="xs"
 	>
-		{[0, 1, 2, 3, 4, 5].map((item: number) => <Circle key={item.toString()} active={type === item} />)}
+		{[0, 1, 2, 3, 4].map((item: number) => <Circle key={item.toString()} active={type === item} />)}
 	</View>
 );
 

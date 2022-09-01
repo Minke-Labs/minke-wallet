@@ -35,11 +35,13 @@ const View: React.FC<Partial<ViewType>> = ({
 	row = false,
 	main,
 	cross,
+	pointerEvents = 'auto',
 	style
 }) => {
 	const { colors } = useTheme();
 	return (
 		<RNView
+			pointerEvents={pointerEvents}
 			style={{
 				...(!!ph && { paddingHorizontal: spacing[ph as SpacingType] }),
 				...(!!pv && { paddingVertical: spacing[pv as SpacingType] }),

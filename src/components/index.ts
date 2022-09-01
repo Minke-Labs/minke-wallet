@@ -68,6 +68,7 @@ import FloatingSelector from './FloatingSelector/FloatingSelector';
 import Warning from './Warning/Warning';
 import Balance from './Balance/Balance';
 import SendModalComponent from './SendModalComponent/SendModalComponent';
+import AppTour from './AppTour';
 
 export {
 	AaveReusables,
@@ -139,5 +140,6 @@ export {
 	FloatingSelector,
 	Warning,
 	Balance,
-	SendModalComponent
+	SendModalComponent,
+	AppTour
 };

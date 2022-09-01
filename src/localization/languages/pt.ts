@@ -549,44 +549,6 @@ export default {
 		modal_error: 'Erro de backup'
 	},
 	WalletScreen: {
-		AppTour: {
-			Boxes: {
-				Steps: {
-					Step0: {
-						welcome: 'Bem-vindo a Minke!',
-						your_new_favorite:
-							'Sua nova maneira favorita de economizar em stablecoins e ganhar até 5% de juros anuais.'
-					},
-					Step1: {
-						add_funds: 'Adicione fundos',
-						you_can_buy:
-							'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
-					},
-					Step2: {
-						save: 'Poupe',
-						get_up_to: 'Obtenha até 5% de juros anuais em stablecoins com mStable ou Aave.'
-					},
-					Step3: {
-						send: 'Envie',
-						send_tokens_to:
-							'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.'
-					},
-					Step4: {
-						exchange: 'Converta',
-						swap: 'Converta de um token para outro.'
-					},
-					Step5: {
-						receive: 'Receba',
-						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.',
-						finish: 'Finalizar'
-					}
-				},
-				Arrow: {
-					back: 'Voltar',
-					next: 'Próximo'
-				}
-			}
-		},
 		Content: {
 			transactions: 'Transações',
 			accounts: 'Contas'
@@ -874,6 +836,45 @@ export default {
 		}
 	},
 	Components: {
+		AppTour: {
+			Boxes: {
+				Steps: {
+					Step0: {
+						welcome: 'Bem-vindo a Minke!',
+						your_new_favorite:
+							'Sua nova maneira favorita de usar stablecoins como USDC e USDT. Compre, envie, economize e invista com zero taxas de gás.'
+					},
+					Step1: {
+						add_funds: 'Adicione fundos',
+						you_can_buy:
+							'Você pode comprar USDC em 3 cliques com o Apple Pay ou com sua solução de pagamento local.'
+					},
+					Step2: {
+						save: 'Poupe e Invista',
+						earn_up_to: 'Obtenha até 5% de juros anuais em stablecoins ou invista em outros tokens sem taxas de gás.'
+					},
+					Step3: {
+						send: 'Envie',
+						send_tokens_to: 'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.',
+						receive: 'Receba',
+						receive_funds: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
+					},
+					Step4: {
+						earn_minke_points: 'Obtenha pontos da Minke',
+						refer_a_friend: 'Indique um amigo e ganhe até $10 em USDC quando ele fizer sua primeira compra em USDC ou uma troca.'
+					},
+					Step5: {
+						receive: 'Receba',
+						copy_your: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.',
+						finish: 'Finalizar'
+					}
+				},
+				Arrow: {
+					back: 'Voltar',
+					next: 'Próximo'
+				}
+			}
+		},
 		GenericPayButton: {
 			debit_credit: 'Cartão de Débito/Crédito'
 		},

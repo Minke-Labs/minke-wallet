@@ -64,5 +64,8 @@ export interface ViewType {
 	main: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-evenly';
 	cross: 'flex-start' | 'center' | 'flex-end';
 
+	// pointer events
+	pointerEvents?: 'auto' | 'none' | 'box-none' | 'box-only' | undefined;
+
 	style: StyleProp<ViewStyle>;
 }

@@ -548,43 +548,6 @@ export default {
 		modal_error: 'Backup error'
 	},
 	WalletScreen: {
-		AppTour: {
-			Boxes: {
-				Steps: {
-					Step0: {
-						welcome: 'Welcome to Minke!',
-						your_new_favorite:
-							'Your new favourite way to save on stablecoins and earn up to 5% annualized interest.'
-					},
-					Step1: {
-						add_funds: 'Add funds',
-						you_can_buy: 'You can buy USDC in 3 clicks with Apple Pay or your local payment solution.'
-					},
-					Step2: {
-						save: 'Save',
-						get_up_to: 'Get up to 5% annual interest on stablecoins with mStable or Aave.'
-					},
-					Step3: {
-						send: 'Send',
-						send_tokens_to: 'Send tokens to another wallet or to an exchange like Binance or Coinbase.'
-					},
-					Step4: {
-						exchange: 'Exchange',
-						swap: 'Swap between tokens.'
-					},
-					Step5: {
-						receive: 'Receive',
-						copy_your:
-							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.',
-						finish: 'Finish'
-					}
-				},
-				Arrow: {
-					back: 'Back',
-					next: 'Next'
-				}
-			}
-		},
 		Content: {
 			transactions: 'Transactions',
 			accounts: 'Accounts'
@@ -870,6 +833,46 @@ export default {
 		}
 	},
 	Components: {
+		AppTour: {
+			Boxes: {
+				Steps: {
+					Step0: {
+						welcome: 'Welcome to Minke!',
+						your_new_favorite:
+							'Your new favourite way to use stablecoins like USDC and USDT. Buy, send, save and invest with zero gas-fees.'
+					},
+					Step1: {
+						add_funds: 'Add funds',
+						you_can_buy: 'You can buy USDC in 3 clicks with Apple Pay or your local payment solution.'
+					},
+					Step2: {
+						save: 'Save & Invest',
+						earn_up_to: 'Earn up to 5% annual interest on stablecoins or invest in other tokens without any gas fees.'
+					},
+					Step3: {
+						send: 'Send',
+						send_tokens_to: 'Send tokens to another wallet or to an exchange like Binance or Coinbase.',
+						receive: 'Receive',
+						receive_funds:
+						'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
+					},
+					Step4: {
+						earn_minke_points: 'Earn Minke points',
+						refer_a_friend: 'Refer a friend and earn up to $10 in USDC when they buy their first USDC or make an exchange.'
+					},
+					Step5: {
+						receive: 'Receive',
+						copy_your:
+							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.',
+						finish: 'Finish'
+					}
+				},
+				Arrow: {
+					back: 'Back',
+					next: 'Next'
+				}
+			}
+		},
 		GenericPayButton: {
 			debit_credit: 'Debit/Credit card'
 		},
