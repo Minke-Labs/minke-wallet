@@ -217,6 +217,9 @@ export default {
 			anyone_who_has_these: 'Anyone who has these can access your wallet!'
 		}
 	},
+	MinkeHubScreen: {
+
+	},
 	NFTDetailScreen: {
 		by: 'by ',
 		Panel: {

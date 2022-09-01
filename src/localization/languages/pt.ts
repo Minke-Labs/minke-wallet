@@ -218,6 +218,9 @@ export default {
 			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
 		}
 	},
+	MinkeHubScreen: {
+
+	},
 	NFTDetailScreen: {
 		by: 'por ',
 		Panel: {
