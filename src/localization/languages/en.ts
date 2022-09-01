@@ -171,7 +171,7 @@ export default {
 		Header: {
 			welcome: 'Welcome',
 			points: 'points',
-			invite_a_friend: 'Invite a friend!'
+			invite_a_friend: 'Invite your friend!'
 		},
 		Assets: {
 			your_total_assets: 'Your total assets',
