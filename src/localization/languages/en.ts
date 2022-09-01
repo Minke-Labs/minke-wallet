@@ -995,6 +995,9 @@ export default {
 		SettingsHeader: {
 			done: 'Done'
 		},
+		Snackbar: {
+			address_copied: 'Address copied'
+		},
 		TokenAmountInput: {
 			send_max: 'Send max'
 		},

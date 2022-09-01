@@ -71,7 +71,7 @@ const Header: React.FC = () => {
 			<Snackbar
 				onDismiss={() => setSnackbarVisible(false)}
 				visible={snackbarVisible}
-				title="Address copied"
+				title={i18n.t('Components.Snackbar.address_copied')}
 			/>
 		</>
 	);

@@ -998,6 +998,9 @@ export default {
 		SettingsHeader: {
 			done: 'Pronto'
 		},
+		Snackbar: {
+			address_copied: 'Endereço copiado'
+		},
 		TokenAmountInput: {
 			send_max: 'Enviar o máximo'
 		},
