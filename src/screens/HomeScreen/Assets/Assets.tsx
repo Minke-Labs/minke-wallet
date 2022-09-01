@@ -35,8 +35,7 @@ export const Assets: React.FC = () => {
 				<View row main="space-between" cross="center" mb="s">
 					<View>
 						<Text type="lMedium" weight="semiBold" color="text3">
-							{i18n.t('WalletScreen.AssetsPanel.your_total_assets')}
-							{/* @@@  - CHANGE LOCAL OF TRANSLATIONS  */}
+							{i18n.t('HomeScreen.Assets.your_total_assets')}
 						</Text>
 						<Text type="dMedium">
 							{numberFormat(balance?.usd || 0)}
@@ -59,7 +58,7 @@ export const Assets: React.FC = () => {
 					<View style={{ flex: 1 }}>
 						<Button
 							iconLeft="add"
-							title="Add funds"
+							title={i18n.t('HomeScreen.Assets.add_funds')}
 							onPress={() => setAddFundsVisible(true)}
 						/>
 					</View>

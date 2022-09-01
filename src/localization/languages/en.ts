@@ -172,6 +172,10 @@ export default {
 			welcome: 'Welcome',
 			points: 'points',
 			invite_a_friend: 'Invite a friend!'
+		},
+		Assets: {
+			your_total_assets: 'Your total assets',
+			add_funds: 'Add Funds'
 		}
 	},
 	ImportWalletScreen: {
@@ -394,11 +398,6 @@ export default {
 		Content: {
 			transactions: 'Transactions',
 			accounts: 'Accounts'
-		},
-		AssetsPanel: {
-			your_total_assets: 'Your total assets',
-			add_funds: 'Add Funds',
-			save: 'Save'
 		},
 		ModalsImport: {
 			address_copied: 'Address copied!'
