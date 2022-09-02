@@ -459,11 +459,6 @@ export default {
 					select: 'Selecionar seu avatar'
 				}
 			},
-			ReceiveModal: {
-				sending_on: 'Enviando na',
-				receive: 'Receber',
-				show_qr: 'Mostre seu código QR ou compartilhe suas informações'
-			},
 			SendModal: {
 				components: {
 					Card: {
@@ -974,6 +969,13 @@ export default {
 				to_another: 'Para outra carteira ou exchange',
 				from_another: 'De outra carteira ou exchange',
 				transactions: 'Transações'
+			},
+			Modals: {
+				ReceiveModal: {
+					sending_on: 'Enviando na',
+					receive: 'Receber',
+					show_qr: 'Mostre seu código QR ou compartilhe suas informações'
+				}
 			}
 		},
 		GenericPayButton: {

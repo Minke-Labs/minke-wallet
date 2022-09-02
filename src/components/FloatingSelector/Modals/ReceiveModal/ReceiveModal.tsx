@@ -31,11 +31,11 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					type="hMedium"
 					weight="bold"
 				>
-					{i18n.t('WalletScreen.Modals.ReceiveModal.receive')}
+					{i18n.t('Components.FloatingSelector.Modals.ReceiveModal.receive')}
 				</Text>
 
 				<Text mb="l" width="100%">
-					{i18n.t('WalletScreen.Modals.ReceiveModal.show_qr')}
+					{i18n.t('Components.FloatingSelector.Modals.ReceiveModal.show_qr')}
 				</Text>
 
 				<View
@@ -65,7 +65,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					</Text>
 				</View>
 
-				<NetworkWarning.Tag title={i18n.t('WalletScreen.Modals.ReceiveModal.sending_on')} />
+				<NetworkWarning.Tag title={i18n.t('Components.FloatingSelector.Modals.ReceiveModal.sending_on')} />
 
 				<WhiteButton
 					title={i18n.t('Components.Buttons.share')}

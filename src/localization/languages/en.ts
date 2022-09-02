@@ -457,11 +457,6 @@ export default {
 					select: 'Select your avatar'
 				}
 			},
-			ReceiveModal: {
-				sending_on: 'Sending on the',
-				receive: 'Receive',
-				show_qr: 'Show your QR code or share your informations'
-			},
 			SendModal: {
 				components: {
 					Card: {
@@ -971,6 +966,13 @@ export default {
 				to_another: 'To another wallet or an exchange',
 				from_another: 'From another wallet or exchange',
 				transactions: 'Transactions'
+			},
+			Modals: {
+				ReceiveModal: {
+					sending_on: 'Sending on the',
+					receive: 'Receive',
+					show_qr: 'Show your QR code or share your informations'
+				}
 			}
 		},
 		GenericPayButton: {
