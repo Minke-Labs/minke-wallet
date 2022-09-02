@@ -14,7 +14,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'InvestmentsDetailScreen
 const InvestmentsDetailScreen = ({ route }: Props) => {
 	const { coin } = route.params;
 	const { description, tokenVolume, marketCap } = useInvestmentsDetailScreen(coin);
-	RNUxcam.tagScreenName('AssetsScreen');
+	RNUxcam.tagScreenName('InvestmentsDetailScreen');
 
 	return (
 		<BasicLayout hideSafeAreaView bgc="detail4">

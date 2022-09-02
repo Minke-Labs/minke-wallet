@@ -16,7 +16,7 @@ const MarketCap: React.FC<MarketCapProps> = ({ marketCap, tokenVolume }) => {
 
 			<View pt="xs" ph="s">
 				<Text mb="xxs" color="text4" type="bMedium">
-					{i18n.t('AssetsScreen.MarketCap.market_cap')}
+					{i18n.t('InvestmentsDetailScreen.MarketCap.market_cap')}
 				</Text>
 				<Text weight="bold" type="hMedium" mb="xs">
 					{numberFormat(marketCap)}
@@ -27,7 +27,7 @@ const MarketCap: React.FC<MarketCapProps> = ({ marketCap, tokenVolume }) => {
 
 			<View pt="xs" ph="s">
 				<Text mb="xxs" color="text4" type="bMedium">
-					{i18n.t('AssetsScreen.MarketCap.volume')}
+					{i18n.t('InvestmentsDetailScreen.MarketCap.volume')}
 				</Text>
 				<Text weight="bold" type="hMedium" mb="xs">
 					{numberFormat(lastVolume)}

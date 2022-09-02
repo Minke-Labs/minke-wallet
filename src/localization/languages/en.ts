@@ -19,10 +19,6 @@ export default {
 		AboutCoin: {
 			about: 'About '
 		},
-		MarketCap: {
-			market_cap: 'MarketCap',
-			volume: 'Volume (1D)'
-		},
 		Upper: {
 			Chart: {
 				Changes: {
@@ -216,6 +212,12 @@ export default {
 	InvestmentsScreen: {
 		investments: 'Investments',
 		current_value: 'Current value'
+	},
+	InvestmentsDetailScreen: {
+		MarketCap: {
+			market_cap: 'MarketCap',
+			volume: 'Volume (1D)'
+		}
 	},
 	ManualBackupScreen: {
 		CopyButton: {
