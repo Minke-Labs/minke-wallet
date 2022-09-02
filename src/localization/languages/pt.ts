@@ -1040,7 +1040,8 @@ export default {
 			},
 			ComingSoonModal: {
 				coming_soon: 'Em breve!',
-				devs_doing_something: 'Nossos devs estão trabalhando.'
+				devs_doing_something: 'Nossos devs estão trabalhando.',
+				got_it: 'Ok, entendi'
 			}
 		},
 		MStableReusables: {

@@ -1046,7 +1046,8 @@ export default {
 			},
 			ComingSoonModal: {
 				coming_soon: 'Coming soon!',
-				devs_doing_something: 'Devs are doing something.'
+				devs_doing_something: 'Devs are doing something.',
+				got_it: 'Ok, got it'
 			}
 		},
 		NetworkWarning: {
