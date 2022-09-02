@@ -394,6 +394,10 @@ export default {
 		enter_referral_code: 'Inserir código de indicação',
 		delete_wallet: 'Deletar carteira'
 	},
+	StablecoinsScreen: {
+		current_value: 'Valor atual',
+		get_annualized_interest: 'Obtenha {{apy}}% de juros anualizados'
+	},
 	TopUpWaitScreen: {
 		Failed: {
 			something_gone_wrong: 'Ah não! Algo de errado aconteceu. Por favor, tente mais tarde ou contate o suporte.',

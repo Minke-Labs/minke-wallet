@@ -2,10 +2,11 @@ import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useDepositProtocols, useNavigation, useTokens } from '@hooks';
+import { useDepositProtocols, useLanguage, useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
 
 const StablecoinsScreen = () => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { stablecoins, stablecoinsBalance } = useTokens();
 	const { apy } = useDepositProtocols();
@@ -21,7 +22,7 @@ const StablecoinsScreen = () => {
 			headerValue={stablecoinsBalance}
 			headerTitle={
 				<Text type="lLarge" weight="semiBold" color="text3">
-					Current value
+					{i18n.t('StablecoinsScreen.current_value')}
 				</Text>
 			}
 		>
@@ -36,8 +37,7 @@ const StablecoinsScreen = () => {
 							{apy ? (
 								<>
 									<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
-										{`Get ${apy}% annualized interest`}
-										{/* @@@TODO: - TRANSLATE */}
+										{i18n.t('StablecoinsScreen.get_annualized_interest', { apy })}
 									</Text>
 									<Icon name="chevronRight" size={20} color="cta1" />
 								</>

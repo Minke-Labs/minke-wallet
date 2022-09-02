@@ -392,6 +392,10 @@ export default {
 		enter_referral_code: 'Enter referral code',
 		delete_wallet: 'Delete wallet'
 	},
+	StablecoinsScreen: {
+		current_value: 'Current value',
+		get_annualized_interest: 'Get {{apy}}% annualized interest'
+	},
 	TopUpWaitScreen: {
 		Failed: {
 			something_gone_wrong: 'Oh no! Something has gone wrong. Please try again later or contact the support.',
