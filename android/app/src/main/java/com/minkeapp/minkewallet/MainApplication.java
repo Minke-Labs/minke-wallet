@@ -24,6 +24,8 @@ import java.util.List;
 
 import com.intercom.reactnative.IntercomModule;
 
+import com.facebook.FacebookSdk;
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
     this,

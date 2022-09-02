@@ -5,7 +5,6 @@ import { captureException } from '@sentry/react-native';
 import { gaslessTransactionData, signTypedDataV3 } from '@utils/signing/signing';
 import { getProvider } from './wallet';
 
-export const aaveDepositContract = '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'; // Polygon
 export const exchangeContract = '0x986089F230DF31D34A1baE69A08C11ef6b06EcbA'; // Polygon
 export const sendContract = '0x70e38dEdC805330286A305966241aBeCC41c2438'; // Polygon
 

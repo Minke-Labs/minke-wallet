@@ -136,8 +136,8 @@ android {
         applicationId 'com.minkeapp.minkewallet'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 32
-        versionName "0.0.14"
+        versionCode 37
+        versionName "0.0.15"
     }
     splits {
         abi {
@@ -250,6 +250,8 @@ dependencies {
     }
 
 		implementation project(':react-native-fs')
+
+		implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 
 		compile ('com.google.android.gms:play-services-drive:17.0.0') {
     	force = true;

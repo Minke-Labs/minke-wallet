@@ -1,4 +1,4 @@
-import { aaveDepositContract } from '@models/gaslessTransaction';
+import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
@@ -29,6 +29,10 @@ export const gaslessWithdraw = async ({
 	// send signed transaction with ethers
 	const userSigner = new ethers.Wallet(privateKey, provider);
 
+	const {
+		aave: { depositContract: aaveDepositContract }
+	} = await network();
+
 	const permitSig = await permitSignature({
 		owner: address,
 		spender: aaveDepositContract,
@@ -52,7 +56,7 @@ export const gaslessWithdraw = async ({
 		permitSig,
 		'0x0000000000000000000000000000000000000000',
 		'0x00',
-		'0x667fc4b1edc5ff96f45bc382cbfb60b51647948d'
+		'0xe0eE7Fec8eC7eB5e88f1DbBFE3E0681cC49F6499'
 	]);
 
 	const rawTx = {
@@ -85,6 +89,7 @@ export const withdraw = async ({
 	address,
 	toTokenAddress,
 	amount,
+	minAmount,
 	privateKey,
 	interestBearingToken,
 	gasPrice
@@ -92,20 +97,23 @@ export const withdraw = async ({
 	address: string;
 	privateKey: string;
 	amount: string;
+	minAmount: string;
 	toTokenAddress: string;
 	interestBearingToken: string;
 	gasPrice: string;
 }) => {
 	const transaction = await withdrawTransaction({
 		address,
+		privateKey,
 		amount,
+		minAmount,
 		toTokenAddress,
 		interestBearingToken,
 		gasPrice: Number(gasPrice)
 	});
 	Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
 
-	const { from, to, data, maxFeePerGas, maxPriorityFeePerGas, gas: gasLimit } = transaction;
+	const { from, to, data, gasPrice: gas } = transaction;
 
 	const provider = await getProvider();
 	const wallet = new Wallet(privateKey, provider);
@@ -116,9 +124,9 @@ export const withdraw = async ({
 		to,
 		data,
 		nonce,
-		gasLimit,
-		maxFeePerGas,
-		maxPriorityFeePerGas,
+		gasLimit: 700000,
+		maxFeePerGas: gas.toString(),
+		maxPriorityFeePerGas: gas.toString(),
 		type: 2,
 		chainId
 	};

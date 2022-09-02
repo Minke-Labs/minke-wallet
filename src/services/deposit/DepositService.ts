@@ -1,5 +1,4 @@
 import { ApprovalState } from '@models/deposit';
-import { aaveDepositContract } from '@models/gaslessTransaction';
 import { network } from '@models/network';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
@@ -28,10 +27,8 @@ class DepositService {
 		connector,
 		walletConnect = false
 	}: DepositParams): Promise<DepositReturn> {
-		const { isApproved } = await this.approveState(address, gasless, depositableToken.address);
+		const { isApproved } = await this.approveState(address, depositableToken.address);
 		Logger.log('Deposit approved:', isApproved);
-		const provider = biconomy.getEthersProvider();
-		Logger.log('Is provider ready?', !!provider);
 		if (!isApproved) {
 			await this.approve({
 				gasless,
@@ -64,23 +61,26 @@ class DepositService {
 				const { from, to, data } = await depositData({
 					address,
 					amount,
+					minAmount,
 					gweiValue: gasPrice,
 					interestBearingTokenAddress: depositableToken.interestBearingToken.address,
 					tokenAddress: depositableToken.address
 				});
 
 				const hash = await connector.sendTransaction({
-					from,
+					from: from!,
 					to,
 					value: toBn('0').toHexString(),
 					data: data || toBn('0').toHexString()
 				});
 				return hash;
 			}
+
 			const hash = await deposit({
 				address,
 				privateKey: privateKey!,
 				amount,
+				minAmount,
 				gweiValue: gasPrice,
 				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
 				tokenAddress: depositableToken.address
@@ -131,17 +131,12 @@ class DepositService {
 	}
 
 	private async depositContract(): Promise<string> {
-		const { mStable } = await network();
-		return this.protocol === 'mstable' ? mStable?.depositContract! : aaveDepositContract;
+		const { mStable, aave } = await network();
+		return this.protocol === 'mstable' ? mStable?.depositContract! : aave.depositContract;
 	}
 
-	public async approveState(address: string, gasless: boolean, contract: string): Promise<ApprovalState> {
-		return new ApprovalService(this.protocol).approveState(
-			address,
-			gasless,
-			contract,
-			await this.depositContract()
-		);
+	public async approveState(address: string, contract: string): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, await this.depositContract());
 	}
 
 	public async approve({
