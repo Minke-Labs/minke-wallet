@@ -187,7 +187,17 @@ export default {
 				disconnect_wallet: 'Disconnect Wallet',
 				import_with_secret_phrase: 'Import with secret phrase',
 				restore_from_cloud: 'Restore from {{cloudPlatform}}',
-				backup_wallets_count: 'You have %{count} wallet%{plural} backed up'
+				backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+				AvatarModal: {
+					Main: {
+						edit: 'Edit your avatar image',
+						select: 'Select a Minke avatar',
+						choose: 'Choose from library'
+					},
+					Select: {
+						select: 'Select your avatar'
+					}
+				}
 			}
 		},
 		Header: {
@@ -454,16 +464,6 @@ export default {
 			}
 		},
 		Modals: {
-			AvatarModal: {
-				Chosen: {
-					edit: 'Edit your avatar image',
-					select: 'Select a Minke avatar',
-					choose: 'Choose from library'
-				},
-				Select: {
-					select: 'Select your avatar'
-				}
-			},
 			SendModal: {
 				components: {
 					Card: {

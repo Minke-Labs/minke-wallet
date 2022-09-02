@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { Text } from '@components';
+import { FlatList } from 'react-native';
+import { View, Text } from '@components';
 import { useAvatar, useLanguage } from '@hooks';
 import { Item } from './Item';
 
@@ -18,13 +18,13 @@ export const Select: React.FC<SelectProps> = ({ onBack }) => {
 	};
 
 	return (
-		<View style={{ paddingHorizontal: 16 }}>
+		<View ph="xs">
 			<Text
 				type="hMedium"
 				weight="bold"
 				mb="xs"
 			>
-				{i18n.t('WalletScreen.Modals.AvatarModal.Select.select')}
+				{i18n.t('HomeScreen.Assets.Modals.AvatarModal.Select.select')}
 			</Text>
 			<FlatList
 				style={{ marginBottom: 20 }}

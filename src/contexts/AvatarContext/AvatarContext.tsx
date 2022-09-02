@@ -84,7 +84,7 @@ const AvatarProvider: React.FC = ({ children }) => {
 	const handleMinkeAvatarSelect = async (id: AvatarId) => {
 		const avatarObj = { id, customImage: null };
 		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
-		setSavedAvatar({ id, customImage: null });
+		setSavedAvatar(avatarObj);
 	};
 
 	const pickImage = async () => {

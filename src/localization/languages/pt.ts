@@ -188,7 +188,17 @@ export default {
 				disconnect_wallet: 'Disconectar Carteira',
 				import_with_secret_phrase: 'Importar com frase de recuperação',
 				restore_from_cloud: 'Recuperar do {{cloudPlatform}}',
-				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup'
+				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
+				AvatarModal: {
+					Main: {
+						edit: 'Editar seu avatar',
+						select: 'Selecionar um avatar da Minke',
+						choose: 'Escolher da biblioteca'
+					},
+					Select: {
+						select: 'Selecionar seu avatar'
+					}
+				}
 			}
 		},
 		Header: {
@@ -456,16 +466,6 @@ export default {
 			}
 		},
 		Modals: {
-			AvatarModal: {
-				Chosen: {
-					edit: 'Editar seu avatar',
-					select: 'Selecionar um avatar da Minke',
-					choose: 'Escolher da biblioteca'
-				},
-				Select: {
-					select: 'Selecionar seu avatar'
-				}
-			},
 			SendModal: {
 				components: {
 					Card: {

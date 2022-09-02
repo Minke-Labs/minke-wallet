@@ -1,11 +1,11 @@
 import React from 'react';
 import { AvatarModalProps } from './AvatarModal.types';
-import { Chosen } from './Chosen';
+import { Main } from './Main/Main';
 import { Select } from './Select';
 
 const AvatarModal: React.FC<AvatarModalProps> = ({ onSelectAvatar, onBack, currentStep }) => (
 	<>
-		{ currentStep === 0 && <Chosen {...{ onSelectAvatar }} /> }
+		{ currentStep === 0 && <Main {...{ onSelectAvatar }} /> }
 		{ currentStep === 1 && <Select {...{ onBack }} /> }
 	</>
 );
