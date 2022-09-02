@@ -213,6 +213,10 @@ export default {
 			no_network: "We don't support this network. Please, select another network in the wallet app."
 		}
 	},
+	InvestmentsScreen: {
+		investments: 'Investments',
+		current_value: 'Current value'
+	},
 	ManualBackupScreen: {
 		CopyButton: {
 			copy_to_clipboard: 'Copy to clipboard'

@@ -214,6 +214,10 @@ export default {
 			no_network: 'Nós ainda não suportamos essa rede. Por favor, selecione outra rede no aplicativo da carteira.'
 		}
 	},
+	InvestmentsScreen: {
+		investments: 'Investimentos',
+		current_value: 'Valor atual'
+	},
 	ManualBackupScreen: {
 		CopyButton: {
 			copy_to_clipboard: 'Copiar para área de transferência'

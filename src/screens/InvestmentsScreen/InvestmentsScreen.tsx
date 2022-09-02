@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useNavigation, useTokens } from '@hooks';
+import { useLanguage, useNavigation, useTokens } from '@hooks';
 import { TokenType } from '@styles';
 import { InvestmentToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
 // import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
+	const { i18n } = useLanguage();
 	const { tokens, walletBalance: balance } = useTokens();
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>();
 
@@ -26,7 +27,7 @@ const InvestmentsScreen = () => {
 
 	if (investmentTokens === undefined) {
 		return (
-			<BlankStates.Type2 title="Investments" />
+			<BlankStates.Type2 title={i18n.t('InvestmentsScreen.investments')} />
 		);
 	}
 
@@ -35,14 +36,14 @@ const InvestmentsScreen = () => {
 			headerValue={balance}
 			headerTitle={
 				<Text type="lLarge" weight="semiBold" color="text3">
-					Current value
+					{i18n.t('InvestmentsScreen.current_value')}
 				</Text>
 			}
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl="xs" pt="s">
 					<Text type="tSmall" weight="bold" mb="s">
-						Investments
+						{i18n.t('InvestmentsScreen.investments')}
 					</Text>
 
 					{/* <Selector {...{ active, setActive }} /> */}
