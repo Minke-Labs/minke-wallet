@@ -3,7 +3,7 @@ import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
 import { BigNumber, Contract, ethers, Wallet } from 'ethers';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 
 export const withdrawAmount = async (
@@ -38,7 +38,8 @@ const mStableGaslessWithdraw = async ({
 	token,
 	amount,
 	minAmount,
-	gasPrice,
+	maxFeePerGas,
+	maxPriorityFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -46,7 +47,8 @@ const mStableGaslessWithdraw = async ({
 	token: string;
 	amount: BigNumber; // BigNumber converted to the im-USD value
 	minAmount: string;
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 }) => {
 	const provider = biconomy.getEthersProvider();
@@ -77,7 +79,8 @@ const mStableGaslessWithdraw = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 1000000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
+		maxFeePerGas,
+		maxPriorityFeePerGas
 	};
 
 	Logger.log('mStable gasless withdraw', rawTx);
@@ -128,14 +131,16 @@ const mStableWithdrawData = async ({
 const mStableWithdraw = async ({
 	address,
 	privateKey,
-	gasPrice,
+	maxFeePerGas,
+	maxPriorityFeePerGas,
 	amount,
 	minAmount,
 	token
 }: {
 	address: string;
 	privateKey: string;
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 	amount: BigNumber; // BigNumber converted to the im-USD value
 	minAmount: string;
 	token: string;
@@ -151,16 +156,17 @@ const mStableWithdraw = async ({
 	const { mStable } = await network();
 	const { withdrawContract, mAsset } = mStable!;
 	const txDefaults = {
+		type: 2,
 		chainId,
 		to: withdrawContract,
-		gasPrice: parseUnits(gasPrice, 'gwei'),
+		maxFeePerGas,
+		maxPriorityFeePerGas,
 		gasLimit: 800000,
 		nonce
 	};
 
 	const erc20 = new Contract(withdrawContract, abi, wallet.provider);
 	const tx = await erc20.populateTransaction.withdrawAndUnwrap(amount, minAmount, token, address, mAsset, true, []);
-
 	const signedTx = await wallet.signTransaction({ ...txDefaults, ...tx });
 	const { hash } = await wallet.provider.sendTransaction(signedTx as string);
 	return hash;

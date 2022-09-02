@@ -60,13 +60,15 @@ export const onChainApproval = async ({
 	amount,
 	contractAddress,
 	spender,
-	gasPrice
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	privateKey: string;
 	amount?: string;
 	contractAddress: string;
 	spender: string;
-	gasPrice: number;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }): Promise<ContractApproval> => {
 	const provider = await getProvider();
 	const wallet = new Wallet(privateKey, provider);
@@ -76,8 +78,8 @@ export const onChainApproval = async ({
 		type: 2,
 		chainId: await wallet.getChainId(),
 		gasLimit: 100000,
-		maxFeePerGas: gasPrice.toString(),
-		maxPriorityFeePerGas: gasPrice.toString(),
+		maxFeePerGas,
+		maxPriorityFeePerGas,
 		nonce
 	};
 
@@ -94,18 +96,20 @@ export const approveSpending = async ({
 	amount,
 	contractAddress,
 	spender,
-	gasPrice
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	userAddress: string;
 	privateKey: string;
 	amount?: string;
 	contractAddress: string;
 	spender: string;
-	gasPrice: number;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }): Promise<ContractApproval> => {
 	const { isApproved } = await approvalState(userAddress, contractAddress, spender);
 	if (isApproved) {
 		return { isApproved };
 	}
-	return onChainApproval({ privateKey, amount, spender, contractAddress, gasPrice });
+	return onChainApproval({ privateKey, amount, spender, contractAddress, maxFeePerGas, maxPriorityFeePerGas });
 };

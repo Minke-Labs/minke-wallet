@@ -1,5 +1,4 @@
-import { parseUnits } from 'ethers/lib/utils';
-import { Contract, Wallet } from 'ethers';
+import { BigNumber, Contract, Wallet } from 'ethers';
 import { permitSignature } from '@utils/signing/signing';
 import { getProvider } from './wallet';
 import { network as selectedNetwork } from './network';
@@ -11,7 +10,8 @@ export const withdrawTransaction = async ({
 	toTokenAddress,
 	amount,
 	minAmount,
-	gasPrice
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	address: string;
 	privateKey: string;
@@ -19,16 +19,20 @@ export const withdrawTransaction = async ({
 	toTokenAddress: string;
 	amount: string; // WEI
 	minAmount: string; // WEI
-	gasPrice: number;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }) => {
 	const { aave } = await selectedNetwork();
 
 	const txDefaults = {
 		from: address,
 		to: aave.depositContract,
-		gasPrice: parseUnits(gasPrice.toString(), 'gwei')
-		// gasLimit: 500000
+		maxFeePerGas,
+		maxPriorityFeePerGas,
+		gasLimit: 450000,
+		type: 2
 	};
+
 	const abi = [
 		// eslint-disable-next-line max-len
 		'function ZapOutWithPermit(address fromToken, uint256 amountIn, address toToken, uint256 minToTokens, bytes calldata permitSig, address swapTarget, bytes calldata swapData, address affiliate) external returns (uint256)'

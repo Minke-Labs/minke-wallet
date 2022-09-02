@@ -1,5 +1,6 @@
 import { DepositableToken } from '@models/types/depositTokens.types';
 import WalletConnect from '@walletconnect/client';
+import { BigNumber } from 'ethers';
 
 export interface DepositParams {
 	gasless: boolean;
@@ -7,7 +8,8 @@ export interface DepositParams {
 	privateKey: string | null;
 	amount: string; // WEI
 	minAmount: string; // WEI
-	gasPrice: string; // WEI
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber; // WEI
 	depositableToken: DepositableToken;
 	biconomy: any;
 	walletConnect: boolean;

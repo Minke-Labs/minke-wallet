@@ -2,8 +2,7 @@ import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
-import { Contract, ethers, PopulatedTransaction, Wallet } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber, Contract, ethers, PopulatedTransaction, Wallet } from 'ethers';
 import { DepositReturn } from './deposit.types';
 
 const mStableDepositData = async ({
@@ -43,13 +42,15 @@ const mStableDeposit = async ({
 	token,
 	amount,
 	minAmount,
-	gasPrice
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	privateKey: string;
 	token: string;
 	amount: string; // in WEI
 	minAmount: string; // in WEI, imUSD decimals
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }): Promise<DepositReturn> => {
 	const { mStable } = await network();
 
@@ -67,8 +68,8 @@ const mStableDeposit = async ({
 		type: 2,
 		chainId: await userSigner.getChainId(),
 		gasLimit: 1000000,
-		maxFeePerGas: parseUnits(gasPrice, 'gwei'),
-		maxPriorityFeePerGas: parseUnits(gasPrice, 'gwei'),
+		maxFeePerGas,
+		maxPriorityFeePerGas,
 		nonce
 	};
 	const { mAsset, saveAsset, vault, depositContract } = mStable!;
@@ -94,7 +95,8 @@ const gaslessMStableDeposit = async ({
 	token,
 	amount,
 	minAmount,
-	gasPrice,
+	maxFeePerGas,
+	maxPriorityFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -102,7 +104,8 @@ const gaslessMStableDeposit = async ({
 	token: string;
 	amount: string; // in WEI
 	minAmount: string; // in WEI, imUSD decimals
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 }): Promise<DepositReturn> => {
 	// send signed transaction with ethers
@@ -133,7 +136,8 @@ const gaslessMStableDeposit = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 5000000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
+		maxFeePerGas,
+		maxPriorityFeePerGas
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);

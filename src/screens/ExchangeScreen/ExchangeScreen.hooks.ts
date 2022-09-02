@@ -10,7 +10,7 @@ import { ExchangeState, Conversion, globalExchangeState } from '@stores/Exchange
 import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeTargetApproved } from '@models/gaslessTransaction';
 import { validatedExceptions } from '@models/exchange';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 
 interface PriceParams {
 	amount?: string;
@@ -39,7 +39,7 @@ export const useExchangeScreen = () => {
 	const { tokens: walletTokens } = useTokens();
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
-	const { gweiValue = 0 } = exchange.gas.value || {};
+	const { maxFeePerGas = 0, maxPriorityFeePerGas = 0 } = exchange.gas.value || {};
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -256,21 +256,29 @@ export const useExchangeScreen = () => {
 	}, [gaslessEnabled, quote]);
 
 	useEffect(() => {
-		if (!gasless && fromToken && nativeToken && gweiValue && !!fromToken.balance && +fromToken.balance > 0) {
+		if (
+			!gasless &&
+			fromToken &&
+			nativeToken &&
+			maxFeePerGas &&
+			maxPriorityFeePerGas &&
+			!!fromToken.balance &&
+			+fromToken.balance > 0
+		) {
 			const isNativeToken = fromToken.symbol === nativeToken.symbol;
 			if (isNativeToken) {
-				const transactionPrice = gweiValue * 300000; // gas price * gas limit
-				const gasValueInEth = formatUnits(parseUnits(transactionPrice.toString(), 'gwei'));
+				const transactionPrice = maxFeePerGas.add(maxPriorityFeePerGas).mul(300000); // gas price * gas limit
+				const gasValueInEth = formatUnits(transactionPrice, 'gwei');
 				const newBalance = +fromToken.balance - +gasValueInEth;
 				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
 				fromToken.balance = String(newBalance);
 				setFromToken(fromToken);
 			}
 		}
-	}, [gweiValue, fromToken, nativeToken]);
+	}, [maxFeePerGas, maxPriorityFeePerGas, fromToken, nativeToken]);
 
-	const enoughForGas =
-		gasless || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
+	// @TODO: multiply by the gas usage of the blockchain transaction
+	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
 
 	const canSwap = () =>
 		quote &&

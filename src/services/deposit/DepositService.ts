@@ -22,7 +22,8 @@ class DepositService {
 		depositableToken,
 		amount,
 		minAmount,
-		gasPrice,
+		maxFeePerGas,
+		maxPriorityFeePerGas,
 		biconomy,
 		connector,
 		walletConnect = false
@@ -49,7 +50,8 @@ class DepositService {
 					amount,
 					minAmount,
 					biconomy,
-					gasPrice,
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					interestBearingToken: depositableToken.interestBearingToken.address,
 					token: depositableToken.address
 				});
@@ -62,7 +64,8 @@ class DepositService {
 					address,
 					amount,
 					minAmount,
-					gweiValue: gasPrice,
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					interestBearingTokenAddress: depositableToken.interestBearingToken.address,
 					tokenAddress: depositableToken.address
 				});
@@ -81,7 +84,8 @@ class DepositService {
 				privateKey: privateKey!,
 				amount,
 				minAmount,
-				gweiValue: gasPrice,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
 				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
 				tokenAddress: depositableToken.address
 			});
@@ -96,7 +100,8 @@ class DepositService {
 					amount,
 					minAmount,
 					biconomy,
-					gasPrice,
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					token: depositableToken.address
 				});
 				return hash;
@@ -122,7 +127,8 @@ class DepositService {
 				privateKey: privateKey!,
 				amount,
 				minAmount,
-				gasPrice,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
 				token: depositableToken.address
 			});
 			return hash;

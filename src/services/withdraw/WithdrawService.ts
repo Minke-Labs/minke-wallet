@@ -23,7 +23,8 @@ class WithdrawService {
 		privateKey,
 		amount,
 		minAmount,
-		gasPrice,
+		maxFeePerGas,
+		maxPriorityFeePerGas,
 		token,
 		interestBearingToken,
 		biconomy,
@@ -58,7 +59,8 @@ class WithdrawService {
 					privateKey: privateKey!,
 					amount,
 					minAmount,
-					gasPrice,
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					interestBearingToken,
 					token,
 					biconomy
@@ -74,7 +76,8 @@ class WithdrawService {
 					minAmount,
 					toTokenAddress: token,
 					interestBearingToken,
-					gasPrice: Number(gasPrice)
+					maxFeePerGas,
+					maxPriorityFeePerGas
 				});
 
 				const { from, to, data } = transaction;
@@ -87,7 +90,6 @@ class WithdrawService {
 				});
 				return hash;
 			}
-
 			const hash = await withdraw({
 				address,
 				privateKey: privateKey!,
@@ -95,7 +97,8 @@ class WithdrawService {
 				minAmount,
 				toTokenAddress: token,
 				interestBearingToken,
-				gasPrice
+				maxFeePerGas,
+				maxPriorityFeePerGas
 			});
 			return hash;
 		}
@@ -106,7 +109,8 @@ class WithdrawService {
 					privateKey: privateKey!,
 					amount: await withdrawAmount(amount, address, interestBearingToken),
 					minAmount,
-					gasPrice,
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					token,
 					biconomy
 				});
@@ -136,7 +140,8 @@ class WithdrawService {
 				privateKey: privateKey!,
 				amount: await withdrawAmount(amount, address, interestBearingToken),
 				minAmount,
-				gasPrice,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
 				token
 			});
 
