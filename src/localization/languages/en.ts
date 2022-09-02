@@ -255,11 +255,7 @@ export default {
 			last_sale_price: 'Last sale price'
 		},
 		view_on_openSea: 'View on OpenSea',
-		about: 'About',
-		Expander: {
-			show_less: 'Show less',
-			show_more: 'Show more'
-		}
+		about: 'About'
 	},
 	NFTScreen: {
 		assets: 'Assets',
@@ -967,6 +963,10 @@ export default {
 				lets_get_started: "Let's get started?",
 				earn_points: 'Earn points'
 			}
+		},
+		Expander: {
+			show_less: 'Show less',
+			show_more: 'Show more'
 		},
 		FloatingSelector: {
 			Actions: {

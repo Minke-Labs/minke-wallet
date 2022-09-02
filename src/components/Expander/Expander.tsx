@@ -32,8 +32,8 @@ const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 						<View row cross="center">
 							<Text type="lSmall" weight="semiBold">
 								{expanded ?
-									i18n.t('NFTDetailScreen.Expander.show_less') :
-									i18n.t('NFTDetailScreen.Expander.show_more')}
+									i18n.t('Components.Expander.show_less') :
+									i18n.t('Components.Expander.show_more')}
 							</Text>
 							<View mr="xxxs" />
 							<Icon
