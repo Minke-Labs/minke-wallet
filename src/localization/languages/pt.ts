@@ -966,7 +966,15 @@ export default {
 			}
 		},
 		FloatingSelector: {
-
+			Actions: {
+				exchange: 'Converter',
+				swap: 'Troque um token por outro',
+				send: 'Enviar',
+				receive: 'Receber',
+				to_another: 'Para outra carteira ou exchange',
+				from_another: 'De outra carteira ou exchange',
+				transactions: 'Transações'
+			}
 		},
 		GenericPayButton: {
 			debit_credit: 'Cartão de Débito/Crédito'

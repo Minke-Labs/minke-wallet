@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { RootStackParamList } from '@src/routes/types.routes';
 import IconItem from '../../IconItem/IconItem';
 import View from '../../View/View';
@@ -11,6 +11,7 @@ interface ActionsModalProps {
 }
 
 const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onReceivePress }) => {
+	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 
 	const handleNavigate = (path: keyof RootStackParamList) => {
@@ -23,29 +24,29 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onR
 			<IconItem
 				onPress={() => handleNavigate('ExchangeScreen')}
 				mb="s"
-				title="Exchange"
-				desc="Swap one token for another"
+				title={i18n.t('Components.FloatingSelector.Actions.exchange')}
+				desc={i18n.t('Components.FloatingSelector.Actions.swap')}
 				icon="exchange"
 			/>
 			<IconItem
 				onPress={onSendPress}
 				mb="s"
-				title="Send"
-				desc="To another wallet or an exchange"
+				title={i18n.t('Components.FloatingSelector.Actions.send')}
+				desc={i18n.t('Components.FloatingSelector.Actions.to_another')}
 				icon="send"
 			/>
 			<IconItem
 				onPress={onReceivePress}
 				mb="s"
-				title="Receive"
-				desc="From another wallet or exchange"
+				title={i18n.t('Components.FloatingSelector.Actions.receive')}
+				desc={i18n.t('Components.FloatingSelector.Actions.from_another')}
 				icon="receive"
 			/>
 			<IconItem
 				onPress={() => handleNavigate('TransactionsScreen')}
 				mb="s"
-				title="Transactions"
-				desc="To another wallet or an exchange"
+				title={i18n.t('Components.FloatingSelector.Actions.transactions')}
+				desc={i18n.t('Components.FloatingSelector.Actions.to_another')}
 				icon="transactions"
 			/>
 		</View>
