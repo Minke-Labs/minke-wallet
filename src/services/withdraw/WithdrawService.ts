@@ -110,7 +110,6 @@ class WithdrawService {
 					amount: await withdrawAmount(amount, address, interestBearingToken),
 					minAmount,
 					maxFeePerGas,
-					maxPriorityFeePerGas,
 					token,
 					biconomy
 				});

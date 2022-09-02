@@ -1,6 +1,5 @@
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
-import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
 import { BigNumber, Contract, ethers, Wallet } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
@@ -39,7 +38,6 @@ const mStableGaslessWithdraw = async ({
 	amount,
 	minAmount,
 	maxFeePerGas,
-	maxPriorityFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -48,7 +46,6 @@ const mStableGaslessWithdraw = async ({
 	amount: BigNumber; // BigNumber converted to the im-USD value
 	minAmount: string;
 	maxFeePerGas: BigNumber;
-	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 }) => {
 	const provider = biconomy.getEthersProvider();
@@ -79,11 +76,8 @@ const mStableGaslessWithdraw = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 1000000,
-		maxFeePerGas,
-		maxPriorityFeePerGas
+		gasPrice: maxFeePerGas
 	};
-
-	Logger.log('mStable gasless withdraw', rawTx);
 
 	const signedTx = await userSigner.signTransaction(rawTx);
 	// should get user message to sign for EIP712 or personal signature types

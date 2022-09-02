@@ -96,7 +96,6 @@ const gaslessMStableDeposit = async ({
 	amount,
 	minAmount,
 	maxFeePerGas,
-	maxPriorityFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -105,7 +104,6 @@ const gaslessMStableDeposit = async ({
 	amount: string; // in WEI
 	minAmount: string; // in WEI, imUSD decimals
 	maxFeePerGas: BigNumber;
-	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 }): Promise<DepositReturn> => {
 	// send signed transaction with ethers
@@ -136,8 +134,7 @@ const gaslessMStableDeposit = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 5000000,
-		maxFeePerGas,
-		maxPriorityFeePerGas
+		gasPrice: maxFeePerGas
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);

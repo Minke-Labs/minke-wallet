@@ -13,7 +13,6 @@ export const gaslessWithdraw = async ({
 	interestBearingToken,
 	minAmount,
 	maxFeePerGas,
-	maxPriorityFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -23,7 +22,6 @@ export const gaslessWithdraw = async ({
 	interestBearingToken: string;
 	minAmount: string;
 	maxFeePerGas: BigNumber;
-	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 }) => {
 	const provider = biconomy.getEthersProvider();
@@ -65,8 +63,7 @@ export const gaslessWithdraw = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 900000,
-		maxFeePerGas,
-		maxPriorityFeePerGas
+		gasPrice: maxFeePerGas
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);

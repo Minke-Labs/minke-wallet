@@ -51,7 +51,6 @@ class DepositService {
 					minAmount,
 					biconomy,
 					maxFeePerGas,
-					maxPriorityFeePerGas,
 					interestBearingToken: depositableToken.interestBearingToken.address,
 					token: depositableToken.address
 				});
@@ -101,7 +100,6 @@ class DepositService {
 					minAmount,
 					biconomy,
 					maxFeePerGas,
-					maxPriorityFeePerGas,
 					token: depositableToken.address
 				});
 				return hash;

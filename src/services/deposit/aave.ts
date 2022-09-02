@@ -13,7 +13,6 @@ export const gaslessDeposit = async ({
 	interestBearingToken,
 	minAmount,
 	maxFeePerGas,
-	maxPriorityFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -23,7 +22,6 @@ export const gaslessDeposit = async ({
 	interestBearingToken: string;
 	minAmount: string;
 	maxFeePerGas: BigNumber;
-	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 }): Promise<DepositReturn> => {
 	const abi = [
@@ -55,8 +53,7 @@ export const gaslessDeposit = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 500000,
-		maxFeePerGas,
-		maxPriorityFeePerGas
+		gasPrice: maxFeePerGas
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);
