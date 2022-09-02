@@ -19,14 +19,6 @@ export default {
 		AboutCoin: {
 			about: 'About '
 		},
-		Balance: {
-			Balance: 'Balance',
-			Buttons: {
-				buy: 'Buy',
-				sell: 'Sell',
-				send: 'Send'
-			}
-		},
 		MarketCap: {
 			market_cap: 'MarketCap',
 			volume: 'Volume (1D)'
@@ -918,6 +910,14 @@ export default {
 					back: 'Back',
 					next: 'Next'
 				}
+			}
+		},
+		Balance: {
+			balance: 'Balance',
+			Buttons: {
+				buy: 'Buy',
+				sell: 'Sell',
+				send: 'Send'
 			}
 		},
 		BlankStates: {

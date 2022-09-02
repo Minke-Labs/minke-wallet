@@ -40,8 +40,7 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 				>
 					<View row main="space-between">
 						<Text type="lMedium" weight="semiBold" color="text3">
-							{i18n.t('AssetsScreen.Balance.Balance')}
-							{/* @@@ - CHANGE LOCATION OF TRANSLATION */}
+							{i18n.t('Components.Balance.balance')}
 						</Text>
 						{!stablecoin && (
 							<Selector
@@ -73,7 +72,7 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 							}}
 						>
 							<Text type="lLarge" color="cta1" weight="semiBold">
-								Buy
+								{i18n.t('Components.Balance.Buttons.buy')}
 							</Text>
 						</View>
 					</TouchableOpacity>
@@ -92,7 +91,7 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 							}}
 						>
 							<Text type="lLarge" color="cta1" weight="semiBold">
-								Sell
+								{i18n.t('Components.Balance.Buttons.sell')}
 							</Text>
 						</View>
 					</TouchableOpacity>
@@ -107,7 +106,7 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 							style={{ flex: 1 }}
 						>
 							<Text type="lLarge" color="cta1" weight="semiBold">
-								Send
+								{i18n.t('Components.Balance.Buttons.send')}
 							</Text>
 						</View>
 					</TouchableOpacity>
