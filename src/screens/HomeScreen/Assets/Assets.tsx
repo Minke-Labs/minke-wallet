@@ -64,7 +64,7 @@ export const Assets: React.FC = () => {
 					<View mr="xxs" />
 					<View w={48}>
 						<Button
-							title="..."
+							title="···"
 							onPress={() => setImportModal(true)}
 							br="xs"
 						/>
