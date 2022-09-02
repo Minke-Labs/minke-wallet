@@ -56,7 +56,7 @@ const Selector: React.FC<SelectorProps> = ({ previous, current, transition, grap
 								color={item.value === using ? 'cta3' : 'cta4'}
 								weight="semiBold"
 							>
-								{i18n.t(`AssetsScreen.Upper.Chart.Selection.Chart.${item.label}`)}
+								{i18n.t(`InvestmentsDetailScreen.Upper.Chart.Selection.Chart.${item.label}`)}
 							</Text>
 						</AnimatedView>
 					</Touchable>

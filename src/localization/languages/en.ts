@@ -18,29 +18,6 @@ export default {
 	AssetsScreen: {
 		AboutCoin: {
 			about: 'About '
-		},
-		Upper: {
-			Chart: {
-				Changes: {
-					changes: 'Changes',
-					hour: '1 Hour',
-					day: '1 Day',
-					week: '1 Week',
-					month: '1 Month',
-					year: '1 Year',
-					all: 'All'
-				},
-				Selection: {
-					Chart: {
-						'1H': '1H',
-						'1D': '1D',
-						'1W': '1W',
-						'1M': '1M',
-						'1Y': '1Y',
-						All: 'All'
-					}
-				}
-			}
 		}
 	},
 	BackupSettingsScreen: {
@@ -217,6 +194,29 @@ export default {
 		MarketCap: {
 			market_cap: 'MarketCap',
 			volume: 'Volume (1D)'
+		},
+		Upper: {
+			Chart: {
+				Changes: {
+					changes: 'Changes',
+					hour: '1 Hour',
+					day: '1 Day',
+					week: '1 Week',
+					month: '1 Month',
+					year: '1 Year',
+					all: 'All'
+				},
+				Selection: {
+					Chart: {
+						'1H': '1H',
+						'1D': '1D',
+						'1W': '1W',
+						'1M': '1M',
+						'1Y': '1Y',
+						All: 'All'
+					}
+				}
+			}
 		}
 	},
 	ManualBackupScreen: {
