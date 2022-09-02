@@ -2,11 +2,12 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { useLanguage, useTheme } from '@hooks';
-import { Card, EmptyStates, Text, TransactionIcon } from '@components';
+import { EmptyStates, Text, TransactionIcon } from '@components';
 import { Reward } from '@src/services/apis/minke/minke.types';
 import { format } from 'date-fns';
 import { REFERRAL_POINTS_TO_USD_CONVERSION, tokenBalanceFormat } from '@helpers/utilities';
 import { makeStyles } from './Body.styles';
+import Card from './Card/Card';
 
 export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; rewards: Reward[] }) => {
 	const { colors } = useTheme();
