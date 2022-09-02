@@ -962,6 +962,9 @@ export default {
 				earn_points: 'Earn points'
 			}
 		},
+		FloatingSelector: {
+
+		},
 		GenericPayButton: {
 			debit_credit: 'Debit/Credit card'
 		},

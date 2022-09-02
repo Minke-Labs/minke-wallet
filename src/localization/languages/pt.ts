@@ -223,7 +223,7 @@ export default {
 		coins_pegged_to: 'Moedas atreladas ao dólar americano',
 		investments: 'Investimentos',
 		fluctuating_value: 'Moedas com valor flutuante',
-		savings: 'Poupança',
+		savings: 'Depósitos',
 		earn_passive_income: 'Ganhe renda passiva com suas stablecoins',
 		nfts_and_collectibles: 'Tokens não fungíveis e colecionáveis',
 		others: 'Outros',
@@ -964,6 +964,9 @@ export default {
 				lets_get_started: 'Vamos começar?',
 				earn_points: 'Ganhar pontos'
 			}
+		},
+		FloatingSelector: {
+
 		},
 		GenericPayButton: {
 			debit_credit: 'Cartão de Débito/Crédito'

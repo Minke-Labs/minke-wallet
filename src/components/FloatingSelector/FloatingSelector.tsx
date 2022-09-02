@@ -35,9 +35,9 @@ const FloatingSelector: React.FC = () => {
 			<View
 				cross="center"
 				s={1}
+				w="100%"
 				style={{
 					position: 'absolute',
-					width: '100%',
 					bottom: spacing.l
 				}}
 			>
