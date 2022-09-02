@@ -169,15 +169,6 @@ export default {
 		}
 	},
 	HomeScreen: {
-		Header: {
-			welcome: 'Olá',
-			points: 'pontos',
-			invite_a_friend: 'Convide um amigo!'
-		},
-		Assets: {
-			your_total_assets: 'Seus ativos',
-			add_funds: 'Adicionar Fundos'
-		},
 		Accounts: {
 			AccountsOverview: {
 				overview: 'Visão geral das contas',
@@ -188,6 +179,22 @@ export default {
 				buy_usdc_now: 'Compre USDC agora!\nNenhuma identificação pessoal necessária.',
 				purchase: 'Compre em poucos cliques com:'
 			}
+		},
+		Assets: {
+			your_total_assets: 'Seus ativos',
+			add_funds: 'Adicionar Fundos',
+			Modals: {
+				connect_wallet: 'Conectar Carteira',
+				disconnect_wallet: 'Disconectar Carteira',
+				import_with_secret_phrase: 'Importar com frase de recuperação',
+				restore_from_cloud: 'Recuperar do {{cloudPlatform}}',
+				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup'
+			}
+		},
+		Header: {
+			welcome: 'Olá',
+			points: 'pontos',
+			invite_a_friend: 'Convide um amigo!'
 		},
 		Stories: {
 			learn_about_minke: 'Saiba mais sobre Minke'

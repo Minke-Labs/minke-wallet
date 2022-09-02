@@ -4,8 +4,7 @@ import { numberFormat } from '@helpers/utilities';
 import { Paper, Text, View, Button, Modal, ModalBase, Touchable, ModalReusables } from '@components';
 import { AddFunds } from '@containers';
 import { useAvatar, useFormProgress, useLanguage, useNavigation, useWalletState } from '@hooks';
-import AvatarModal from './AvatarModal/AvatarModal';
-import ImportModal from './ImportModal/ImportModal';
+import { AvatarModal, ImportModal } from './Modals';
 
 export const Assets: React.FC = () => {
 	const { i18n } = useLanguage();

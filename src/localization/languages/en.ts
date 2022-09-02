@@ -168,15 +168,6 @@ export default {
 		}
 	},
 	HomeScreen: {
-		Header: {
-			welcome: 'Welcome',
-			points: 'points',
-			invite_a_friend: 'Invite your friend!'
-		},
-		Assets: {
-			your_total_assets: 'Your total assets',
-			add_funds: 'Add Funds'
-		},
 		Accounts: {
 			AccountsOverview: {
 				overview: 'Accounts overview',
@@ -187,6 +178,22 @@ export default {
 				buy_usdc_now: 'Buy USDC now!\nNo personal ID required.',
 				purchase: 'Purchase in a few clicks with:'
 			}
+		},
+		Assets: {
+			your_total_assets: 'Your total assets',
+			add_funds: 'Add Funds',
+			Modals: {
+				connect_wallet: 'Connect Wallet',
+				disconnect_wallet: 'Disconnect Wallet',
+				import_with_secret_phrase: 'Import with secret phrase',
+				restore_from_cloud: 'Restore from {{cloudPlatform}}',
+				backup_wallets_count: 'You have %{count} wallet%{plural} backed up'
+			}
+		},
+		Header: {
+			welcome: 'Welcome',
+			points: 'points',
+			invite_a_friend: 'Invite your friend!'
 		},
 		Stories: {
 			learn_about_minke: 'Learn about Minke'
@@ -819,7 +826,7 @@ export default {
 		}
 	},
 
-	// CONTEINERS
+	// CONTAINERS
 	Containers: {
 		AddFunds: {
 			Header: {

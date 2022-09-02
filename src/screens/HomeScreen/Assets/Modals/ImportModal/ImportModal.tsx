@@ -59,8 +59,8 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 		<>
 			<IconItem
 				title={connected
-					? `${i18n.t('ImportWalletScreen.disconnect_wallet')} - ${smallWalletAddress(address)}`
-					: i18n.t('ImportWalletScreen.connect_wallet')}
+					? `${i18n.t('HomeScreen.Assets.Modals.disconnect_wallet')} - ${smallWalletAddress(address)}`
+					: i18n.t('HomeScreen.Assets.Modals.connect_wallet')}
 				icon="help"
 				onPress={toggleWalletConnect}
 				mb="m"
@@ -68,7 +68,7 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 			/>
 
 			<IconItem
-				title="Import with secret phrase"
+				title={i18n.t('HomeScreen.Assets.Modals.import_with_secret_phrase')}
 				icon="key"
 				onPress={onImportSeed}
 				mb="m"
@@ -76,9 +76,9 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 
 			{(walletsBackedUp > 0 || !!latestBackup) && (
 				<IconItem
-					title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
+					title={i18n.t('HomeScreen.Assets.Modals.restore_from_cloud', { cloudPlatform })}
 					{...(walletsBackedUp > 0 && {
-						desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
+						desc: `${i18n.t('HomeScreen.Assets.Modals.backup_wallets_count', {
 							count: walletsBackedUp,
 							plural: walletsBackedUp > 1 ? 's' : ''
 						})}`
