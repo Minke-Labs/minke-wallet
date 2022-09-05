@@ -8,8 +8,7 @@ import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState, WalletState } from '@stores/WalletStore';
-import { isExchangeTargetApproved } from '@models/gaslessTransaction';
-import { validatedExceptions } from '@models/exchange';
+import { isExchangeGasless, validatedExceptions } from '@models/exchange';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 
 interface PriceParams {
@@ -97,7 +96,7 @@ export const useExchangeScreen = () => {
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
 				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) },
-				gasless: BigNumber.from(value).isZero() && (await isExchangeTargetApproved(to || allowanceTarget))
+				gasless: await isExchangeGasless(value, to || allowanceTarget)
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);

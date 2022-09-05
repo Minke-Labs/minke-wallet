@@ -25,7 +25,8 @@ export const exchangebleTokens = [
 	'CRV',
 	'SUSHI',
 	'BAL',
-	'YFI'
+	'YFI',
+	'QUICK'
 ];
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {

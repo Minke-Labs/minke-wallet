@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useTokens } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,6 +15,9 @@ import Token from '../../Token/Token';
 import EmptyStates from '../../EmptyStates';
 import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
+import { networks } from '@models/network';
 
 const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
@@ -26,13 +29,14 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	withdraw = false
 }) => {
 	const { i18n } = useLanguage();
-	const [tokens, setTokens] = useState<Array<MinkeToken>>();
-	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
-	const [search, setSearch] = useState('');
-	const [loading, setLoading] = useState(true);
+	const [tokens, setTokens] = React.useState<Array<MinkeToken>>();
+	const [filteredTokens, setFilteredTokens] = React.useState<Array<MinkeToken>>();
+	const [search, setSearch] = React.useState('');
+	const [loading, setLoading] = React.useState(true);
 	const { withdrawableTokens } = useTokens();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const { network } = useState(globalWalletState()).value;
 
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {
@@ -64,6 +68,13 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
 				const allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
+				if (!withdraw && network.id === networks.matic.id) {
+					allTokens.push({
+						address: '0xb5c064f955d8e7f38fe0460c556a72987494ee17',
+						decimals: 18,
+						symbol: 'QUICK'
+					});
+				}
 				setTokens(allTokens);
 				removeSelectedTokens(allTokens);
 				setLoading(false);
