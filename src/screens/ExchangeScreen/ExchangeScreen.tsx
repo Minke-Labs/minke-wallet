@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Keyboard, TouchableOpacity } from 'react-native';
+import { Keyboard, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage, useKeyboard } from '@hooks';
+import { os } from '@styles';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
 import {
@@ -11,13 +12,13 @@ import {
 	GasSelector,
 	TokenCard,
 	BlankStates,
-	Warning
+	Warning,
+	View
 } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { makeStyles } from './ExchangeScreen.styles';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
 import DirectionButton from './DirectionButton/DirectionButton';
 
@@ -25,7 +26,6 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
 const ExchangeScreen = ({ route }: Props) => {
 	const { sourceToken, destToken } = route.params || {};
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const {
 		fromToken,
 		toToken,
@@ -66,8 +66,24 @@ const ExchangeScreen = ({ route }: Props) => {
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
 					<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
 
-					<View style={styles.container}>
-						<View style={styles.top}>
+					<View
+						bgc="background5"
+						br="xs"
+						mh="xs"
+						mb="s"
+						main="center"
+						cross="center"
+					>
+						<View
+							ph="xs"
+							pt="xs"
+							pb="s"
+							w="100%"
+							style={{
+								borderBottomWidth: 1,
+								borderBottomColor: colors.background1
+							}}
+						>
 							<TokenCard
 								updateQuotes={debounce(updateFromQuotes, 500)}
 								conversionAmount={fromConversionAmount}
@@ -76,7 +92,12 @@ const ExchangeScreen = ({ route }: Props) => {
 								exchange
 							/>
 						</View>
-						<View style={styles.bottom}>
+						<View
+							ph="xs"
+							pb="xs"
+							pt="s"
+							w="100%"
+						>
 							<TokenCard
 								updateQuotes={debounce(updateToQuotes, 500)}
 								conversionAmount={toConversionAmount}
@@ -96,16 +117,20 @@ const ExchangeScreen = ({ route }: Props) => {
 					</View>
 
 					<View style={{ display: keyboardVisible ? 'none' : 'flex' }}>
-						<View style={{ marginBottom: 24, display: gasless ? 'none' : 'flex' }}>
+						<View mb="s" style={{ display: gasless ? 'none' : 'flex' }}>
 							<GasSelector />
 						</View>
 
-						<View style={{ marginHorizontal: 16 }}>
+						<View mh="xs">
 							{!enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 						</View>
 					</View>
 
-					<View style={styles.buttonBox}>
+					<View
+						mh="xs"
+						mb="xs"
+						style={{ marginTop: os === 'android' ? undefined : 'auto' }}
+					>
 						<Button
 							title={i18n.t('ExchangeScreen.review')}
 							onPress={goToExchangeResume}

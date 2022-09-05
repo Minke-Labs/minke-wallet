@@ -1,8 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
+import View from '../View/View';
 import { TokenCardProps } from './TokenCard.types';
 import { useTokenCard } from './TokenCard.hooks';
-import { makeStyles } from './TokenCard.styles';
 import MaxButton from '../MaxButton/MaxButton';
 import CoinSelector from '../CoinSelector/CoinSelector';
 import Touchable from '../Touchable/Touchable';
@@ -22,7 +21,6 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	disableInput = false,
 	autoFocus = true
 }) => {
-	const styles = makeStyles();
 	const { amount, onChangeText, onMaxPress, isMaxEnabled, invalidAmount } = useTokenCard({
 		updateQuotes,
 		token,
@@ -31,18 +29,12 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	});
 
 	return (
-		<Touchable onPress={onPress} style={styles.container}>
-			<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
+		<>
+			<Touchable onPress={onPress} w="100%">
+				<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
+			</Touchable>
 
-			<View
-				style={
-					exchange && {
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'center'
-					}
-				}
-			>
+			<View row={exchange}>
 				<TokenInputInner
 					symbol={token ? token.symbol : ''}
 					isAmountValid={disableAmountValidation || !invalidAmount}
@@ -56,12 +48,18 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					editable={!disableInput}
 				/>
 
-				<View style={[styles.bottomRow, exchange && { marginBottom: 8 }]}>
+				<View
+					row
+					main="space-between"
+					cross="center"
+					mt="xxxs"
+					mb={exchange ? 'xxxs' : 'zero'}
+				>
 					{!!apy && <InterestBanner token apy={apy} />}
 					{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 				</View>
 			</View>
-		</Touchable>
+		</>
 	);
 };
 
