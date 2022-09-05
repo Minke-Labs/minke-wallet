@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@hooks';
 import { spacing } from '@styles';
@@ -13,6 +14,7 @@ import Actions from './Actions/Actions';
 import { ReceiveModal } from './Modals';
 
 const FloatingSelector: React.FC = () => {
+	const [exchangeButtonColor, setExchangeButtonColor] = useState(false);
 	const [sendModal, setSendModal] = useState(false);
 	const [actionsModal, setActionsModal] = useState(false);
 	const [receiveModal, setReceiveModal] = useState(false);
@@ -57,13 +59,18 @@ const FloatingSelector: React.FC = () => {
 							color={routeName === 'HomeScreen' ? 'cta1' : 'cta2'}
 						/>
 					</Touchable>
-					<Touchable onPress={() => setActionsModal(true)}>
+					<TouchableOpacity
+						activeOpacity={0.8}
+						onPressIn={() => setExchangeButtonColor(true)}
+						onPressOut={() => setExchangeButtonColor(false)}
+						onPress={() => setActionsModal(true)}
+					>
 						<Icon
 							name="exchange"
 							size={28}
-							color="cta2"
+							color={exchangeButtonColor ? 'cta1' : 'cta2'}
 						/>
-					</Touchable>
+					</TouchableOpacity>
 					<Touchable onPress={() => navigation.navigate('MinkeHubScreen')}>
 						<Icon
 							name="hub"
