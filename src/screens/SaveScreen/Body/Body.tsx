@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
-import { tokenBalanceFormat } from '@helpers/utilities';
+import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { Text, Card, Button, TransactionIcon } from '@components';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
@@ -31,7 +31,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 										{tokenBalanceFormat(item.balance!, 4)} {item.symbol}
 									</Text>
 									<Text type="p2" weight="bold" style={{ alignSelf: 'flex-end' }}>
-										${tokenBalanceFormat(item.balance!, 2)}
+										{numberFormat(+item.balance!, 2)}
 									</Text>
 								</View>
 							}

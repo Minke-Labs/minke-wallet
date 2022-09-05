@@ -1,14 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
-import { ZAPPER_API_KEY } from '@env';
-import * as qs from 'qs';
-import { network, network as selectedNetwork, networks } from './network';
-import { stablecoins } from './token';
+import { network as selectedNetwork, networks } from './network';
 import { MinkeToken } from './types/token.types';
 import { DepositableToken } from './types/depositTokens.types';
-import { erc20abi, estimateGas, getProvider } from './wallet';
+import { erc20abi, getProvider } from './wallet';
 
-const protocol = 'aave-v2';
 export const usdCoinSettingsKey = '@minke:usdcoin';
 export const depositStablecoins = ['USDC', 'DAI', 'USDT'];
 export const interestBearingTokensAndProtocols: { [key: string]: string } = {
@@ -21,15 +17,6 @@ export const interestBearingTokensAndProtocols: { [key: string]: string } = {
 	'mv-imusd': 'mStable'
 };
 export const interestBearingTokens = Object.keys(interestBearingTokensAndProtocols);
-
-export const fetchAaveMarketData = async (): Promise<Array<AaveMarket>> => {
-	const baseURL = `https://api.zapper.fi/v1/protocols/${protocol}/token-market-data`;
-	const { zapperNetwork } = await selectedNetwork();
-	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
-	const result = await fetch(`${baseURL}?&type=interest-bearing&api_key=${apiKey}&network=${zapperNetwork}`);
-	const allMarkets: Array<AaveMarket> = await result.json();
-	return allMarkets.filter(({ tokens }) => tokens.find(({ symbol }) => stablecoins.includes(symbol)));
-};
 
 export const fetchMStablePoolData = async (): Promise<MStablePoolData> => {
 	const baseURL = 'https://api.mstable.org/pools';
@@ -46,14 +33,6 @@ export const depositableTokenToMinkeToken = (token: DepositableToken): MinkeToke
 	};
 };
 
-export const aaveDeposits = async (address: string): Promise<AaveBalances> => {
-	const baseURL = `https://api.zapper.fi/v1/apps/${protocol}/balances`;
-	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
-	const { zapperNetwork } = await selectedNetwork();
-	const result = await fetch(`${baseURL}?addresses%5B%5D=${address}&network=${zapperNetwork}&api_key=${apiKey}`);
-	return result.json();
-};
-
 export const approvalState = async (owner: string, token: string, spender: string): Promise<ApprovalState> => {
 	if (
 		[
@@ -68,84 +47,6 @@ export const approvalState = async (owner: string, token: string, spender: strin
 	const allowance: BigNumber = await contract.allowance(owner, spender);
 
 	return { isApproved: allowance.gte(amount) };
-};
-
-export const zapperApprovalState = async (address: string, token: string): Promise<ApprovalState> => {
-	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/approval-state`;
-	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
-	const { zapperNetwork } = await selectedNetwork();
-	const params = {
-		ownerAddress: address,
-		sellTokenAddress: token,
-		network: zapperNetwork,
-		api_key: apiKey
-	};
-	const result = await fetch(`${baseURL}?${qs.stringify(params)}`);
-
-	return result.json();
-};
-
-export const approvalTransaction = async (
-	address: string,
-	token: string,
-	type = 'in',
-	amount = ''
-): Promise<ApprovalTransaction> => {
-	const baseURL = `https://api.zapper.fi/v1/zap-${type}/interest-bearing/${protocol}/approval-transaction`;
-	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
-	const { zapperNetwork } = await selectedNetwork();
-	const {
-		result: { FastGasPrice: gasPrice, suggestBaseFee }
-	} = await estimateGas();
-	const baseFee = +suggestBaseFee * 1000000000;
-	const gasValue = +gasPrice * 1000000000;
-	const gas = `&maxFeePerGas=${baseFee + gasValue}&maxPriorityFeePerGas=${gasValue}`;
-	let tokenAmount;
-	if (amount) {
-		tokenAmount = `&amount=${amount}`;
-	} else {
-		tokenAmount = '';
-	}
-	const addresses = `ownerAddress=${address}&sellTokenAddress=${token}`;
-	const result = await fetch(
-		`${baseURL}?${addresses}&network=${zapperNetwork}&api_key=${apiKey}${gas}${tokenAmount}`
-	);
-
-	return result.json();
-};
-
-export const depositTransaction = async ({
-	address,
-	token,
-	amount,
-	interestBearingToken,
-	gweiValue
-}: {
-	address: string;
-	token: string;
-	interestBearingToken: string;
-	amount: string;
-	gweiValue: number;
-}): Promise<DepositTransaction> => {
-	const baseURL = `https://api.zapper.fi/v1/zap-in/interest-bearing/${protocol}/transaction`;
-	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
-	const gasValue = gweiValue * 1000000000;
-	const { zapperNetwork } = await selectedNetwork();
-	const params = {
-		maxFeePerGas: gasValue,
-		maxPriorityFeePerGas: gasValue,
-		ownerAddress: address.toLowerCase(),
-		sellTokenAddress: token.toLowerCase(),
-		poolAddress: interestBearingToken.toLowerCase(),
-		payoutTokenAddress: interestBearingToken.toLowerCase(),
-		slippagePercentage: 0.05,
-		network: zapperNetwork,
-		api_key: apiKey,
-		sellAmount: amount
-	};
-	const result = await fetch(`${baseURL}?${qs.stringify(params)}`);
-
-	return result.json();
 };
 
 export const usdCoin = async (): Promise<string> => {
@@ -168,7 +69,7 @@ export const availableDepositProtocols: DepositProtocols = {
 
 export const fetchDepositProtocol = async (): Promise<DepositProtocol> => {
 	const depositProtocol = await AsyncStorage.getItem('@depositProtocol');
-	const { chainId } = await network();
+	const { chainId } = await selectedNetwork();
 	if (chainId === networks.mainnet.chainId) {
 		return availableDepositProtocols.aave;
 	}
@@ -184,20 +85,6 @@ export interface DepositProtocol {
 	id: 'aave' | 'mstable';
 	name: string;
 	icon: string;
-}
-
-export interface DepositTransaction {
-	buyTokenAddress: string;
-	data: string;
-	from: string;
-	minTokens: string;
-	sellTokenAddress: string;
-	sellTokenAmount: string;
-	to: string;
-	value: string;
-	gas: string;
-	maxFeePerGas: string;
-	maxPriorityFeePerGas: string;
 }
 
 export interface ApprovalTransaction {
