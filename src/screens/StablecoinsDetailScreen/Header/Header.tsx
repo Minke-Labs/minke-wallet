@@ -4,19 +4,21 @@ import { Text, View, Icon } from '@components';
 
 interface HeaderProps {
 	onPress: () => void;
+	title: string;
+	symbol?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onPress }) => (
+export const Header: React.FC<HeaderProps> = ({ onPress, title, symbol }) => (
 	<TouchableOpacity onPress={onPress}>
-		<View row cross="flex-end" mb="s">
+		<View row cross="center" mb="s">
 			<Icon name="chevronLeft" size={24} color="cta1" />
 			<View mr="xxs" />
 			<Text type="tSmall" weight="bold">
-				USD Coin
+				{title}
 			</Text>
 			<View mr="xxs" />
 			<Text type="bSmall" color="text2">
-				USDC
+				{symbol}
 			</Text>
 		</View>
 	</TouchableOpacity>
