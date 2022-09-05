@@ -25,7 +25,7 @@ const Card: React.FC<CardProps> = ({ onPress, coinName, coinSymbol, walletBalanc
 			</View>
 
 			<View style={styles.body}>
-				<View style={{ flex: 0.5 }}>
+				<View style={{ flex: 1 }}>
 					<Text marginBottom={6} type="span">
 						{i18n.t('WalletAssetsScreen.AssetList.Card.your_wallet_balance')}
 					</Text>

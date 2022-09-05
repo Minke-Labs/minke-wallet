@@ -5,10 +5,16 @@ import { formatUnits } from 'ethers/lib/utils';
 import { TokenConverterParams, TokensConverterParams } from './tokenConverter.types';
 
 const convertToken = async ({ source, token, chainId }: TokenConverterParams): Promise<MinkeToken> => {
-	const { id, name } = await coinFromSymbol(token.contract_ticker_symbol);
+	const data = await coinFromSymbol(token.contract_ticker_symbol);
+	const { id } = data;
+	let { name } = data;
 	const matic = chainId === networks.matic.chainId;
 	const weth = token.contract_ticker_symbol === 'WETH';
 	const symbol = matic && weth ? 'ETH' : token.contract_ticker_symbol;
+	name = name || token.contract_name;
+	if (token.contract_address.toLowerCase() === '0xb5c064f955d8e7f38fe0460c556a72987494ee17') {
+		name = 'QuickSwap';
+	}
 
 	switch (source) {
 		// covalent
@@ -20,7 +26,7 @@ const convertToken = async ({ source, token, chainId }: TokenConverterParams): P
 				balanceUSD: token.quote,
 				decimals: token.contract_decimals,
 				image: token.logo_url,
-				name: name || token.contract_name,
+				name,
 				symbol
 			};
 	}

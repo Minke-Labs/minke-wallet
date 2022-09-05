@@ -5,6 +5,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
+import { networks } from '@models/network';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
 import ModalHeader from '../../ModalHeader/ModalHeader';
@@ -13,11 +16,8 @@ import SearchInput from '../../SearchInput/SearchInput';
 import Text from '../../Text/Text';
 import Token from '../../Token/Token';
 import EmptyStates from '../../EmptyStates';
-import { makeStyles } from './SearchTokens.styles';
 import { SearchTokensProps } from './SearchTokens.types';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
-import { networks } from '@models/network';
+import { makeStyles } from './SearchTokens.styles';
 
 const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
@@ -67,12 +67,23 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		const loadTokens = async () => {
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
-				const allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
+				let allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
 				if (!withdraw && network.id === networks.matic.id) {
-					allTokens.push({
-						address: '0xb5c064f955d8e7f38fe0460c556a72987494ee17',
-						decimals: 18,
-						symbol: 'QUICK'
+					allTokens = allTokens.map((t) => {
+						if (t.symbol === 'QUICK') {
+							const token = t;
+							// QUICK changed address
+							token.address = '0xb5c064f955d8e7f38fe0460c556a72987494ee17';
+							return token;
+						}
+
+						if (t.address === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
+							const token = t;
+							token.symbol = 'PolyDoge';
+							return token;
+						}
+
+						return t;
 					});
 				}
 				setTokens(allTokens);
@@ -131,7 +142,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				<FlatList
 					style={styles.list}
 					data={filterByExchangebleToken()}
-					keyExtractor={(token) => token.symbol}
+					keyExtractor={(token) => token.address}
 					renderItem={({ item }) => (
 						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>

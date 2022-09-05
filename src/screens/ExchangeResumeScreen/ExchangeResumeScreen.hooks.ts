@@ -127,7 +127,10 @@ const useExchangeResumeScreen = () => {
 	useEffect(() => {
 		const fetchGasless = async () => {
 			setGasless(
-				gaslessEnabled && (priceQuote ? await isExchangeGasless(priceQuote.value, priceQuote.to!) : true)
+				gaslessEnabled &&
+					(priceQuote
+						? await isExchangeGasless(priceQuote.value, priceQuote.sellTokenAddress, priceQuote.to!)
+						: true)
 			);
 		};
 
