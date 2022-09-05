@@ -17,11 +17,11 @@ const TransactionSelectFunds: React.FC<TransactionSelectFundsProps> = ({ user, o
 		<View style={styles.container}>
 			{!!user.address && <Image source={image!} style={styles.image} />}
 			<Text type="h3" weight="extraBold" mb="m">
-				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.which')}
+				{i18n.t('Components.ModalReusables.SendModal.screens.TransactionSelectFunds.which')}
 				<Text color="text12" type="h3" weight="extraBold">
-					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.asset')}
+					{i18n.t('Components.ModalReusables.SendModal.screens.TransactionSelectFunds.asset')}
 				</Text>{' '}
-				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionSelectFunds.want_to_send')}
+				{i18n.t('Components.ModalReusables.SendModal.screens.TransactionSelectFunds.want_to_send')}
 				<Text color="text12" type="h3" weight="extraBold">
 					{user.name}
 				</Text>

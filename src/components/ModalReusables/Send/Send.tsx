@@ -42,7 +42,7 @@ const SendModal: React.FC<SendProps> = ({
 				{currentStep === 0 && !addContactVisible ? (
 					<Touchable onPress={() => setAddContactVisible(true)}>
 						<Text type="a" color="text7" weight="medium">
-							{i18n.t('WalletScreen.Modals.SendModal.add')}
+							{i18n.t('Components.ModalReusables.SendModal.add')}
 						</Text>
 					</Touchable>
 				) : (

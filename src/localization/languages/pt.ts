@@ -462,46 +462,6 @@ export default {
 					lets_get_started: 'Vamos começar?'
 				}
 			}
-		},
-		Modals: {
-			SendModal: {
-				components: {
-					Card: {
-						available: ' Disponível'
-					},
-					GasPriceLine: {
-						speed: 'Velocidade: ',
-						network_fee: ' Taxa da rede'
-					}
-				},
-				screens: {
-					AddContact: {
-						add_contact: 'Adicionar Contato'
-					},
-					TransactionContacts: {
-						sent_to_address: 'Envie para algum endereço',
-						address_or_ens: 'Endereço ou ENS',
-						choose_from_saved: 'Ou escolha um endereço já salvo',
-						NoContactsYet: {
-							no_contacts_yet: 'Nenhum contato disponível',
-							add_some: 'Adicione alguns para começar'
-						}
-					},
-					TransactionSelectFunds: {
-						which: 'Qual ',
-						asset: 'token',
-						want_to_send: 'você deseja enviar para ',
-						Card: {
-							available: ' Disponível'
-						}
-					},
-					TransactionTransfer: {
-						how_much: 'Quantos ',
-						wanna_send: ' você quer enviar?'
-					}
-				},
-				add: '+ Adicionar'
-			}
 		}
 	},
 	WelcomeScreen: {
@@ -989,7 +949,6 @@ export default {
 			},
 			Modals: {
 				ReceiveModal: {
-					sending_on: 'Enviando na',
 					receive: 'Receber',
 					show_qr: 'Mostre seu código QR ou compartilhe suas informações'
 				}
@@ -1042,6 +1001,44 @@ export default {
 				coming_soon: 'Em breve!',
 				devs_doing_something: 'Nossos devs estão trabalhando.',
 				got_it: 'Ok, entendi'
+			},
+			SendModal: {
+				components: {
+					Card: {
+						available: ' Disponível'
+					},
+					GasPriceLine: {
+						speed: 'Velocidade: ',
+						network_fee: ' Taxa da rede'
+					}
+				},
+				screens: {
+					AddContact: {
+						add_contact: 'Adicionar Contato'
+					},
+					TransactionContacts: {
+						sent_to_address: 'Envie para algum endereço',
+						address_or_ens: 'Endereço ou ENS',
+						choose_from_saved: 'Ou escolha um endereço já salvo',
+						NoContactsYet: {
+							no_contacts_yet: 'Nenhum contato disponível',
+							add_some: 'Adicione alguns para começar'
+						}
+					},
+					TransactionSelectFunds: {
+						which: 'Qual ',
+						asset: 'token',
+						want_to_send: 'você deseja enviar para ',
+						Card: {
+							available: ' Disponível'
+						}
+					},
+					TransactionTransfer: {
+						how_much: 'Quantos ',
+						wanna_send: ' você quer enviar?'
+					}
+				},
+				add: '+ Adicionar'
 			}
 		},
 		MStableReusables: {
@@ -1055,7 +1052,7 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'rede {{network}}'
+				sending_on: 'Enviando na rede {{network}}'
 			}
 		},
 		PendingTransactions: {

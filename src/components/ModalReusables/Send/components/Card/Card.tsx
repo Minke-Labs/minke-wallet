@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => {
 				<Text type="span" weight="bold">
 					${tokenBalanceFormat(token.balanceUSD!, 2)} ({tokenBalanceFormat(token.balance!, 9)} {token.symbol})
 					<Text weight="regular" type="span">
-						{i18n.t('WalletScreen.Modals.SendModal.components.Card.available')}
+						{i18n.t('Components.ModalReusables.SendModal.components.Card.available')}
 					</Text>
 				</Text>
 			</View>

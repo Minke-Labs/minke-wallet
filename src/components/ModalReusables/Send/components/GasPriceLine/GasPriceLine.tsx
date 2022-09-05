@@ -28,12 +28,12 @@ const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD }) => 
 	return (
 		<View style={styles.container}>
 			<Text color="text2" type="span">
-				{i18n.t('WalletScreen.Modals.SendModal.components.GasPriceLine.speed')}
+				{i18n.t('Components.ModalReusables.SendModal.components.GasPriceLine.speed')}
 				{label}
 			</Text>
 			<Text color="text2" type="span">
 				{numberFormat(coinValue * usdPrice, 5)}
-				{i18n.t('WalletScreen.Modals.SendModal.components.GasPriceLine.network_fee')}
+				{i18n.t('Components.ModalReusables.SendModal.components.GasPriceLine.network_fee')}
 			</Text>
 		</View>
 	);

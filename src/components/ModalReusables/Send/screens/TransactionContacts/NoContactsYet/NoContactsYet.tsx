@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { View, Image } from 'react-native';
 import { whale3Img } from '@images';
@@ -11,10 +12,10 @@ export const NoContactsYet = () => {
 		<View style={styles.container}>
 			<Image source={whale3Img} style={styles.image} />
 			<Text type="p2" mb="xs">
-				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.NoContactsYet.no_contacts_yet')}
+				{i18n.t('Components.ModalReusables.SendModal.screens.TransactionContacts.NoContactsYet.no_contacts_yet')}
 			</Text>
 			<Text weight="bold" type="p2" mb="xxxl">
-				{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.NoContactsYet.add_some')}
+				{i18n.t('Components.ModalReusables.SendModal.screens.TransactionContacts.NoContactsYet.add_some')}
 			</Text>
 		</View>
 	);

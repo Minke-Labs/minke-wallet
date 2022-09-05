@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { View, FlatList, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Input from '@src/components/Input/Input';
@@ -22,10 +23,10 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={styles.container}>
 				<Text weight="extraBold" type="h3" center mb="s">
-					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.sent_to_address')}
+					{i18n.t('Components.ModalReusables.SendModal.screens.TransactionContacts.sent_to_address')}
 				</Text>
 				<Input
-					label={i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.address_or_ens')}
+					label={i18n.t('Components.ModalReusables.SendModal.screens.TransactionContacts.address_or_ens')}
 					value={address}
 					onChangeText={(t: string) => setAddress(t)}
 					autoCorrect={false}
@@ -46,7 +47,7 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 					(contactList!.length > 0 ? (
 						<>
 							<Text center weight="extraBold" type="p" mb="m" style={{ marginTop: 32 }}>
-								{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionContacts.choose_from_saved')}
+								{i18n.t('Components.ModalReusables.SendModal.screens.TransactionContacts.choose_from_saved')}
 							</Text>
 							<FlatList
 								style={styles.contactsList}

@@ -65,7 +65,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					</Text>
 				</View>
 
-				<NetworkWarning.Tag title={i18n.t('Components.FloatingSelector.Modals.ReceiveModal.sending_on')} />
+				<NetworkWarning.Tag />
 
 				<WhiteButton
 					title={i18n.t('Components.Buttons.share')}

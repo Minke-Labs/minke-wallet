@@ -48,11 +48,11 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 					</View>
 				)}
 				<Text type="h3" weight="extraBold" mb="m">
-					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.how_much')}
+					{i18n.t('Components.ModalReusables.SendModal.screens.TransactionTransfer.how_much')}
 					<Text color="text12" type="h3" weight="extraBold">
 						{amountType === 'token' ? token.symbol : 'USD'}
 					</Text>
-					{i18n.t('WalletScreen.Modals.SendModal.screens.TransactionTransfer.wanna_send')}
+					{i18n.t('Components.ModalReusables.SendModal.screens.TransactionTransfer.wanna_send')}
 				</Text>
 			</>
 
@@ -82,7 +82,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 
 			{!enoughGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 
-			<NetworkWarning.Tag title={i18n.t('WalletScreen.Modals.ReceiveModal.sending_on')} />
+			<NetworkWarning.Tag />
 
 			<View style={{ marginBottom: 8, marginTop: 24 }}>
 				{sending ? (

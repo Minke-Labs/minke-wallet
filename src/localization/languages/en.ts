@@ -460,46 +460,6 @@ export default {
 					lets_get_started: "Let's get started?"
 				}
 			}
-		},
-		Modals: {
-			SendModal: {
-				components: {
-					Card: {
-						available: ' Available'
-					},
-					GasPriceLine: {
-						speed: 'Speed: ',
-						network_fee: ' Network fee'
-					}
-				},
-				screens: {
-					AddContact: {
-						add_contact: 'Add Contact'
-					},
-					TransactionContacts: {
-						sent_to_address: 'Send to an address',
-						address_or_ens: 'Address or ENS',
-						choose_from_saved: 'Or choose from a saved address',
-						NoContactsYet: {
-							no_contacts_yet: 'No contacts yet',
-							add_some: 'Add some to start'
-						}
-					},
-					TransactionSelectFunds: {
-						which: 'Which ',
-						asset: 'asset ',
-						want_to_send: 'do you want to send to ',
-						Card: {
-							available: ' Available'
-						}
-					},
-					TransactionTransfer: {
-						how_much: 'How much ',
-						wanna_send: ' do you want to send?'
-					}
-				},
-				add: '+ Add'
-			}
 		}
 	},
 	WelcomeScreen: {
@@ -986,7 +946,6 @@ export default {
 			},
 			Modals: {
 				ReceiveModal: {
-					sending_on: 'Sending on the',
 					receive: 'Receive',
 					show_qr: 'Show your QR code or share your informations'
 				}
@@ -1048,11 +1007,49 @@ export default {
 				coming_soon: 'Coming soon!',
 				devs_doing_something: 'Devs are doing something.',
 				got_it: 'Ok, got it'
+			},
+			SendModal: {
+				components: {
+					Card: {
+						available: ' Available'
+					},
+					GasPriceLine: {
+						speed: 'Speed: ',
+						network_fee: ' Network fee'
+					}
+				},
+				screens: {
+					AddContact: {
+						add_contact: 'Add Contact'
+					},
+					TransactionContacts: {
+						sent_to_address: 'Send to an address',
+						address_or_ens: 'Address or ENS',
+						choose_from_saved: 'Or choose from a saved address',
+						NoContactsYet: {
+							no_contacts_yet: 'No contacts yet',
+							add_some: 'Add some to start'
+						}
+					},
+					TransactionSelectFunds: {
+						which: 'Which ',
+						asset: 'asset ',
+						want_to_send: 'do you want to send to ',
+						Card: {
+							available: ' Available'
+						}
+					},
+					TransactionTransfer: {
+						how_much: 'How much ',
+						wanna_send: ' do you want to send?'
+					}
+				},
+				add: '+ Add'
 			}
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: '{{network}} network'
+				sending_on: 'Sending on the {{network}} network'
 			}
 		},
 		PendingTransactions: {
