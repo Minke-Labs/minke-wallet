@@ -1,8 +1,15 @@
 import React, { useCallback } from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
-import { LoadingScreen, SettingsHeader, Text, ModalBase, IconItem } from '@components';
+import {
+	View,
+	LoadingScreen,
+	SettingsHeader,
+	Text,
+	ModalBase,
+	IconItem
+} from '@components';
 import { useNavigation, useLanguage, useWalletState } from '@hooks';
 import { networks } from '@models/network';
 import RNUxcam from 'react-native-ux-cam';

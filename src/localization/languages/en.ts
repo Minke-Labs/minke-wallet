@@ -226,7 +226,6 @@ export default {
 		done: 'Done',
 		recovery_phrase: 'Recovery phrase',
 		write_this_down: 'Write this down on paper or save it in your password manager.',
-		address_copied: 'Address copied!',
 		Warning: {
 			minke_will_never_ask: 'Minke will never ask for these words',
 			anyone_who_has_these: 'Anyone who has these can access your wallet!'
@@ -365,7 +364,8 @@ export default {
 			keep_wallet: 'Keep wallet',
 			are_you_sure: 'Are you sure you want to delete this wallet?',
 			recover:
-				'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})'
+				'You can only recover it with you private key or your {{os}} recovery password (if stored on {{os}})',
+			cancel: 'Cancel'
 		},
 		title: 'Settings',
 		creating_wallet: 'Creating Wallet',
@@ -436,31 +436,6 @@ export default {
 		need_backup:
 			'You need to create a backup of your wallet. Keep your backup safe as losing it could mean a loss of funds.',
 		modal_error: 'Backup error'
-	},
-	WalletScreen: {
-		Content: {
-			transactions: 'Transactions',
-			accounts: 'Accounts'
-		},
-		ModalsImport: {
-			address_copied: 'Address copied!'
-		},
-		TransactionsTable: {
-			see_all: 'See all'
-		},
-		components: {
-			Stories: {
-				learn_about_minke: 'Learn about Minke'
-			}
-		},
-		screens: {
-			Transactions: {
-				NoTransactionsYet: {
-					no_transactions_here: 'No transactions here',
-					lets_get_started: "Let's get started?"
-				}
-			}
-		}
 	},
 	WelcomeScreen: {
 		referral_code_applied: 'Referral code applied',
@@ -917,8 +892,7 @@ export default {
 		},
 		CountrySelector: {
 			country: 'Country',
-			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
-			select: 'Select a Country'
+			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
 		},
 		EmptyStates: {
 			NoTokens: {
@@ -1061,7 +1035,8 @@ export default {
 			done: 'Done'
 		},
 		Snackbar: {
-			address_copied: 'Address copied'
+			address_copied: 'Address copied',
+			select: 'Select a Country'
 		},
 		TokenAmountInput: {
 			send_max: 'Send max'

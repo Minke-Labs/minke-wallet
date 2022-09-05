@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Header, Text, Paper, TransactionIcon, Icon, Button, Token } from '@components';
+import { Header, Text, Paper, TransactionIcon, Icon, Button, Token, Snackbar } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTransaction } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -8,7 +8,6 @@ import { RootStackParamList } from '@src/routes/types.routes';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { networks } from '@models/network';
-import { Snackbar } from 'react-native-paper';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { smallWalletAddress } from '@models/wallet';
@@ -184,9 +183,11 @@ const TransactionScreen = ({ route }: Props) => {
 					/>
 				</View>
 			</BasicLayout>
-			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text color="text11">{i18n.t('WalletScreen.ModalsImport.address_copied')}</Text>
-			</Snackbar>
+			<Snackbar
+				onDismiss={() => setSnackbarVisible(false)}
+				visible={snackbarVisible}
+				title={i18n.t('Components.Snackbar.address_copied')}
+			/>
 		</>
 	);
 };

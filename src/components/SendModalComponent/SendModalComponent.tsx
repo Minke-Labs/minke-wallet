@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@hooks';
-import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import ModalReusables from '@src/components/ModalReusables';
 import ModalBase from '@src/components/ModalBase/ModalBase';
 import { MinkeToken } from '@models/types/token.types';
@@ -10,6 +9,11 @@ interface SendModalComponentProps {
 	setSendModal: (val: boolean) => void;
 	coin?: MinkeToken;
 }
+
+export type ResultProps = {
+	hash: string;
+	token: MinkeToken;
+};
 
 const SendModalComponent: React.FC<SendModalComponentProps> = ({ sendModal, setSendModal, coin }) => {
 	const { i18n } = useLanguage();

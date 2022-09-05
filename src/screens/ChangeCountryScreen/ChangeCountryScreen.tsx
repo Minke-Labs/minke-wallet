@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { SettingsHeader, CountrySelector, Text } from '@components';
+import { SettingsHeader, CountrySelector, Snackbar } from '@components';
 import { BasicLayout } from '@layouts';
-import { Snackbar } from 'react-native-paper';
 import { useNavigation, useLanguage, useCountry } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 
@@ -32,9 +31,11 @@ const ChangeCountryScreen = () => {
 					</View>
 				</View>
 			</BasicLayout>
-			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text color="text11">{i18n.t('Components.CountrySelector.select')}</Text>
-			</Snackbar>
+			<Snackbar
+				onDismiss={() => setSnackbarVisible(false)}
+				visible={snackbarVisible}
+				title={i18n.t('Components.Snackbar.select')}
+			/>
 		</>
 	);
 };

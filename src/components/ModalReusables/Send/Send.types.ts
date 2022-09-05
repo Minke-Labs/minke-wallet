@@ -1,6 +1,6 @@
 import { MinkeToken } from '@models/types/token.types';
 
-type ResultProps = {
+export type ResultProps = {
 	hash: string;
 	token: MinkeToken;
 };

@@ -20,9 +20,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () => {
-		Alert.alert(i18n.t('WalletScreen.ActionPanel.are_you_sure'), '', [
+		Alert.alert(i18n.t('SettingsScreen.DeleteModal.are_you_sure'), '', [
 			{
-				text: i18n.t('WalletScreen.ActionPanel.cancel'),
+				text: i18n.t('SettingsScreen.DeleteModal.cancel'),
 				style: 'cancel'
 			},
 			{
@@ -78,7 +78,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 							alert
 						/>
 					</View>
-					<View w="s" />
+					<View mr="s" />
 					<View flex1>
 						<Button
 							title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')}

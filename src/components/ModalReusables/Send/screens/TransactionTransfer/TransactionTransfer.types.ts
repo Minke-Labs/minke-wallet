@@ -1,6 +1,5 @@
 import { MinkeToken } from '@models/types/token.types';
-import { UserProps } from '../../Send.types';
-import { ResultProps } from '../../../../WalletScreen.types';
+import { UserProps, ResultProps } from '../../Send.types';
 
 export interface TransactionTransferProps {
 	user: UserProps;

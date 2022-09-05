@@ -227,7 +227,6 @@ export default {
 		done: 'Pronto',
 		recovery_phrase: 'Frase de recuperação',
 		write_this_down: 'Escreva num papel ou salve no seu gerenciador de senhas.',
-		address_copied: 'Endereço copiado!',
 		Warning: {
 			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
 			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
@@ -367,7 +366,8 @@ export default {
 			keep_wallet: 'Manter carteira',
 			are_you_sure: 'Você tem certeza que quer deletar esta carteira?',
 			recover:
-				'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})'
+				'Você só pode recuperá-la com sua chave privada ou sua senha de recuperação do {{os}} (caso armazenada no {{os}})',
+			cancel: 'Cancelar'
 		},
 		title: 'Configurações',
 		creating_wallet: 'Criando Carteira',
@@ -438,31 +438,6 @@ export default {
 		need_backup:
 			'Você precisar fazer backup da sua carteira. Mantenha o seu backup seguro pois se perdê-lo todos os seus ativos estarão em risco.',
 		modal_error: 'Erro de backup'
-	},
-	WalletScreen: {
-		Content: {
-			transactions: 'Transações',
-			accounts: 'Contas'
-		},
-		ModalsImport: {
-			address_copied: 'Endereço copiado!'
-		},
-		TransactionsTable: {
-			see_all: 'Ver todas'
-		},
-		components: {
-			Stories: {
-				learn_about_minke: 'Aprenda sobre a Minke'
-			}
-		},
-		screens: {
-			Transactions: {
-				NoTransactionsYet: {
-					no_transactions_here: 'Nenhuma transação aqui',
-					lets_get_started: 'Vamos começar?'
-				}
-			}
-		}
 	},
 	WelcomeScreen: {
 		referral_code_applied: 'Código de indicação aplicado',
@@ -920,8 +895,7 @@ export default {
 		CountrySelector: {
 			country: 'País',
 			to_offer:
-				'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:',
-			select: 'Selecione um País'
+				'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:'
 		},
 		EmptyStates: {
 			NoTokens: {
@@ -1064,7 +1038,8 @@ export default {
 			done: 'Pronto'
 		},
 		Snackbar: {
-			address_copied: 'Endereço copiado'
+			address_copied: 'Endereço copiado',
+			select: 'Selecione um País'
 		},
 		TokenAmountInput: {
 			send_max: 'Enviar o máximo'

@@ -19,7 +19,6 @@ import {
 	imageSource,
 	sendTransactionData
 } from '@models/wallet';
-import { ResultProps } from '@src/screens/WalletScreen/WalletScreen.types';
 import { MinkeToken } from '@models/types/token.types';
 import { decimalSeparator } from 'expo-localization';
 import { approvalState } from '@models/deposit';
@@ -28,6 +27,7 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureEvent } from '@sentry/react-native';
 import { toBn } from 'evm-bn';
+import { ResultProps } from '../../Send.types';
 
 interface UserProps {
 	name: string;

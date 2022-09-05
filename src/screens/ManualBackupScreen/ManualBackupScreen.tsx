@@ -1,12 +1,11 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import { Icon, ScreenLoadingIndicator, Text } from '@components';
+import { Icon, ScreenLoadingIndicator, Text, Snackbar } from '@components';
 import { useNavigation, useLanguage, useCountry } from '@hooks';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { getSeedPhrase } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
-import { Snackbar } from 'react-native-paper';
 import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -74,9 +73,11 @@ const ManualBackupScreen = ({ route }: Props) => {
 					<CopyButton onPress={onCopyToClipboard} />
 				</View>
 			</BasicLayout>
-			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text style={{ color: '#FFFFFF' }}> {i18n.t('ManualBackupScreen.address_copied')}</Text>
-			</Snackbar>
+			<Snackbar
+				onDismiss={() => setSnackbarVisible(false)}
+				visible={snackbarVisible}
+				title={i18n.t('Components.Snackbar.address_copied')}
+			/>
 		</>
 	);
 };
