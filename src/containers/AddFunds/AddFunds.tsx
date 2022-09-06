@@ -19,7 +19,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	return (
 		<>
 			<ModalHeader onBack={currentStep === 1 ? handleReturn : undefined} onDismiss={onDismiss} />
-			<View ph="s">
+			<View ph="s" pb="s">
 				<>
 					{currentStep === 0 && <SelectorModal onBuy={onBuy} onExchange={() => setCurrentStep(1)} />}
 					{currentStep === 1 && <ExternalExchangeModal />}
