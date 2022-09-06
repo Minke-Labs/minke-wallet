@@ -3,7 +3,7 @@ import Logger from '@utils/logger';
 import { Keyboard } from 'react-native';
 import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
 import { useState, State } from '@hookstate/core';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber, constants, utils } from 'ethers';
 import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
@@ -39,7 +39,7 @@ export const useExchangeScreen = () => {
 	const { tokens: walletTokens } = useTokens();
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
-	const { maxFeePerGas = 0, maxPriorityFeePerGas = 0 } = exchange.gas.value || {};
+	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -256,26 +256,18 @@ export const useExchangeScreen = () => {
 	}, [gaslessEnabled, quote]);
 
 	useEffect(() => {
-		if (
-			!gasless &&
-			fromToken &&
-			nativeToken &&
-			maxFeePerGas &&
-			maxPriorityFeePerGas &&
-			!!fromToken.balance &&
-			+fromToken.balance > 0
-		) {
+		if (!gasless && fromToken && nativeToken && maxFeePerGas && !!fromToken.balance && +fromToken.balance > 0) {
 			const isNativeToken = fromToken.symbol === nativeToken.symbol;
 			if (isNativeToken) {
-				const transactionPrice = maxFeePerGas.add(maxPriorityFeePerGas).mul(300000); // gas price * gas limit
-				const gasValueInEth = formatUnits(transactionPrice, 'gwei');
+				const transactionPrice = maxFeePerGas.mul(300000); // gas price * gas limit
+				const gasValueInEth = formatUnits(transactionPrice);
 				const newBalance = +fromToken.balance - +gasValueInEth;
 				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
 				fromToken.balance = String(newBalance);
 				setFromToken(fromToken);
 			}
 		}
-	}, [maxFeePerGas, maxPriorityFeePerGas, fromToken, nativeToken]);
+	}, [maxFeePerGas, fromToken, nativeToken]);
 
 	// @TODO: multiply by the gas usage of the blockchain transaction
 	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
