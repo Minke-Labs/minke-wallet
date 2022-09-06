@@ -15,6 +15,7 @@ interface TokenItemCardProps {
 	onPress?: () => void;
 	perc?: number;
 	paper?: boolean;
+	stablecoin?: boolean;
 }
 
 const TokenItemCard: React.FC<TokenItemCardProps> = ({
@@ -25,6 +26,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	balanceUSD,
 	perc,
 	paper,
+	stablecoin,
 	onPress
 }) => {
 	const navigation = useNavigation();
@@ -53,10 +55,11 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 								balanceUSD,
 								perc
 							}}
+							hideValues={stablecoin && balanceUSD === 0}
 						/>
 					</Touchable>
 				</View>
-				{!balance && !balanceUSD && (
+				{stablecoin && balanceUSD === 0 && (
 					<View
 						w={70}
 						h="100%"
@@ -65,11 +68,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 						pr="xs"
 					>
 						<Touchable onPress={() => navigation.navigate('AddFundsScreen')}>
-							<Text
-								type="lLarge"
-								weight="semiBold"
-								color="cta1"
-							>
+							<Text type="lLarge" weight="semiBold" color="cta1">
 								+ Buy
 							</Text>
 						</Touchable>

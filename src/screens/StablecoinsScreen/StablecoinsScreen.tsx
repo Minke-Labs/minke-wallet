@@ -57,8 +57,10 @@ const StablecoinsScreen = () => {
 									token={coin.symbol.toLowerCase() as TokenType}
 									name={coin.name}
 									symbol={coin.symbol}
+									balance={coin.balance}
 									balanceUSD={coin.balanceUSD}
 									onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin })}
+									stablecoin
 									paper
 								/>
 							))

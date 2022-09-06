@@ -14,6 +14,7 @@ interface TokenItemProps {
 	balance?: string;
 	balanceUSD?: number;
 	perc?: number;
+	hideValues?: boolean;
 }
 
 const TokenItem: React.FC<TokenItemProps> = ({
@@ -22,10 +23,12 @@ const TokenItem: React.FC<TokenItemProps> = ({
 	symbol,
 	balance,
 	balanceUSD,
+	hideValues,
 	perc
 }) => {
 	const { network } = useNetwork();
 	const tokenName = name || symbol;
+
 	return (
 		<View row main="space-between" w="100%">
 			<View row w={180}>
@@ -37,9 +40,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
 							{tokenName.length < 10 ? tokenName : `${tokenName.substring(0, 7)}...`}
 						</Text>
 						<View mr="xxs" />
-						<Text type="bSmall" color="text3">
-							{name ? symbol : ''}
-						</Text>
+						{!!perc && <Tag perc={perc} />}
 					</View>
 					<Text type="lSmall" weight="semiBold">
 						{network.name || ''}
@@ -47,30 +48,22 @@ const TokenItem: React.FC<TokenItemProps> = ({
 				</View>
 			</View>
 
-			{!!perc && <Tag perc={perc} />}
-
-			<View main="center">
-				{!!balance && !!balanceUSD && (
-					<View cross="flex-end">
-						<>
-							<Text type="lLarge" weight="semiBold">
-								{tokenBalanceFormat(balance, 4)}
+			<View main="center" cross="flex-end">
+				{!hideValues && (
+					<>
+						<Text type="lLarge" weight="semiBold">
+							{numberFormat(balanceUSD || 0)}
+						</Text>
+						<View row cross="center">
+							<Text type="bSmall" color="text3">
+								{name ? symbol : ''}
 							</Text>
+							<View mr="xxs" />
 							<Text type="bDetail" color="text3">
-								{numberFormat(balanceUSD)}
+								{tokenBalanceFormat(balance || '0', 4)}
 							</Text>
-						</>
-					</View>
-				)}
-				{!!balance && !balanceUSD && (
-					<Text type="lLarge" weight="semiBold">
-						{tokenBalanceFormat(balance, 4)}
-					</Text>
-				)}
-				{!!balanceUSD && !balance && (
-					<Text type="lLarge" weight="semiBold">
-						{numberFormat(balanceUSD)}
-					</Text>
+						</View>
+					</>
 				)}
 			</View>
 		</View>

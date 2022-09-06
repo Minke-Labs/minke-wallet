@@ -26,6 +26,8 @@ export const AccountsOverview = () => {
 
 	const showingStable = biggestBalanceStable || defaultToken;
 
+	console.log(investmentHighlights[1]);
+
 	useEffect(() => {
 		const fetchPriceChanges = async () => {
 			if (tokens.length > 0) {
@@ -69,8 +71,10 @@ export const AccountsOverview = () => {
 						token={showingStable.symbol.toLowerCase() as TokenType}
 						name={showingStable.name}
 						symbol={showingStable.symbol}
+						balance={showingStable.balance}
 						balanceUSD={showingStable.balanceUSD}
 						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: showingStable })}
+						stablecoin
 					/>
 				</>
 			)}
