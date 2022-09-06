@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
-import { ModalHeader } from '@components';
+import { ModalHeader, View } from '@components';
 import { useAddFunds } from './AddFunds.hooks';
 import { AddFundsProps } from './AddFunds.types';
 import { SelectorModal } from '../SelectorModal/SelectorModal';
@@ -18,15 +17,15 @@ const AddFunds: React.FC<AddFundsProps> = ({ visible = false, onDismiss }) => {
 	};
 
 	return (
-		<SafeAreaView>
+		<>
 			<ModalHeader onBack={currentStep === 1 ? handleReturn : undefined} onDismiss={onDismiss} />
-			<View style={{ paddingHorizontal: 24 }}>
+			<View ph="s">
 				<>
 					{currentStep === 0 && <SelectorModal onBuy={onBuy} onExchange={() => setCurrentStep(1)} />}
 					{currentStep === 1 && <ExternalExchangeModal />}
 				</>
 			</View>
-		</SafeAreaView>
+		</>
 	);
 };
 

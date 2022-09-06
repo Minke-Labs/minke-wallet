@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableWithoutFeedback, Keyboard, Modal as RNModal, Animated as ReactAnimated } from 'react-native';
+import {
+	View,
+	TouchableWithoutFeedback,
+	Keyboard,
+	Modal as RNModal,
+	Animated as ReactAnimated
+} from 'react-native';
 import Animated, {
 	EasingNode,
 	interpolate,
@@ -13,7 +19,7 @@ import { useTheme } from '@hooks';
 import {
 	screenHeight,
 	navigationBarHeight,
-	statusBarHeight
+	statusBar
 } from '@styles';
 import styles from './ModalBase.styles';
 
@@ -23,8 +29,7 @@ interface ModalBaseProps {
 }
 
 const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible }) => {
-	const statusBar = navigationBarHeight === 0 ? statusBarHeight || 0 : 0;
-	const [topAnimated] = useState(new Animated.Value(screenHeight - navigationBarHeight - statusBar));
+	const [topAnimated] = useState(new Animated.Value(screenHeight));
 
 	const { colors } = useTheme();
 	const top = useSharedValue(screenHeight);
@@ -47,7 +52,7 @@ const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible })
 		ReactAnimated.parallel([
 			// @ts-ignore
 			timing(topAnimated, {
-				toValue: 0,
+				toValue: 0 - navigationBarHeight - statusBar,
 				duration: 200,
 				easing: EasingNode.linear
 			})
@@ -60,7 +65,7 @@ const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible })
 			Keyboard.dismiss();
 		}
 		animateFocus();
-	}, [isVisible]);
+	}, [isVisible, isActive]);
 
 	if (!isVisible) return <View />;
 

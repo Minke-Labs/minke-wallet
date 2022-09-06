@@ -13,7 +13,8 @@ import {
 	deviceWidth,
 	statusBarHeight,
 	navigationBarHeight,
-	os
+	os,
+	statusBar
 } from './dimensions';
 import { ViewType } from './types';
 
@@ -34,7 +35,8 @@ export {
 	deviceWidth,
 	statusBarHeight,
 	navigationBarHeight,
-	os
+	os,
+	statusBar
 };
 
 export type {
