@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { Text, Flag } from '@components';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, Flag, Touchable } from '@components';
 import styles from './Item.styles';
 
 interface ItemProps {
@@ -10,7 +9,7 @@ interface ItemProps {
 }
 
 export const Item: React.FC<ItemProps> = ({ avatar, onPress }) => (
-	<TouchableOpacity style={styles.container} onPress={onPress}>
+	<Touchable style={styles.container} onPress={onPress}>
 		<Image
 			source={avatar.image}
 			style={styles.image}
@@ -30,5 +29,5 @@ export const Item: React.FC<ItemProps> = ({ avatar, onPress }) => (
 				<Text type="bSmall">{avatar.desc}</Text>
 			</View>
 		</View>
-	</TouchableOpacity>
+	</Touchable>
 );
