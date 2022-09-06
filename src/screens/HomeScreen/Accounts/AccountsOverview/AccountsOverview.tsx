@@ -26,8 +26,6 @@ export const AccountsOverview = () => {
 
 	const showingStable = biggestBalanceStable || defaultToken;
 
-	console.log(investmentHighlights[1]);
-
 	useEffect(() => {
 		const fetchPriceChanges = async () => {
 			if (tokens.length > 0) {
