@@ -77,7 +77,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 							return token;
 						}
 
-						if (t.address === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
+						if (t.address.toLowerCase() === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
 							const token = t;
 							token.symbol = 'PolyDoge';
 							return token;
