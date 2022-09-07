@@ -3,8 +3,7 @@ import { getProvider } from '@models/wallet';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
 import { permitSignature, signTypedDataV3 } from '@utils/signing/signing';
-import { ethers, Wallet } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber, ethers, Wallet } from 'ethers';
 
 export const gaslessWithdraw = async ({
 	address,
@@ -13,7 +12,7 @@ export const gaslessWithdraw = async ({
 	amount,
 	interestBearingToken,
 	minAmount,
-	gasPrice,
+	maxFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -22,7 +21,7 @@ export const gaslessWithdraw = async ({
 	amount: string; // in WEI
 	interestBearingToken: string;
 	minAmount: string;
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
 	biconomy: any;
 }) => {
 	const provider = biconomy.getEthersProvider();
@@ -64,7 +63,7 @@ export const gaslessWithdraw = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 900000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
+		gasPrice: maxFeePerGas
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);
@@ -92,7 +91,8 @@ export const withdraw = async ({
 	minAmount,
 	privateKey,
 	interestBearingToken,
-	gasPrice
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	address: string;
 	privateKey: string;
@@ -100,7 +100,8 @@ export const withdraw = async ({
 	minAmount: string;
 	toTokenAddress: string;
 	interestBearingToken: string;
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }) => {
 	const transaction = await withdrawTransaction({
 		address,
@@ -109,25 +110,27 @@ export const withdraw = async ({
 		minAmount,
 		toTokenAddress,
 		interestBearingToken,
-		gasPrice: Number(gasPrice)
+		maxFeePerGas,
+		maxPriorityFeePerGas
 	});
 	Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
 
-	const { from, to, data, gasPrice: gas } = transaction;
+	const { from, to, data, maxFeePerGas: baseFee, maxPriorityFeePerGas: priorityFee, gasLimit } = transaction;
 
 	const provider = await getProvider();
 	const wallet = new Wallet(privateKey, provider);
 	const chainId = await wallet.getChainId();
 	const nonce = await provider.getTransactionCount(address, 'latest');
+
 	const txDefaults = {
+		type: 2,
 		from,
 		to,
 		data,
 		nonce,
-		gasLimit: 700000,
-		maxFeePerGas: gas.toString(),
-		maxPriorityFeePerGas: gas.toString(),
-		type: 2,
+		maxFeePerGas: baseFee,
+		maxPriorityFeePerGas: priorityFee,
+		gasLimit,
 		chainId
 	};
 	Logger.log(`Withdraw ${JSON.stringify(txDefaults)}`);

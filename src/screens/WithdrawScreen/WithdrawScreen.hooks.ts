@@ -15,10 +15,11 @@ import {
 } from '@hooks';
 import Logger from '@utils/logger';
 import { globalWalletState } from '@stores/WalletStore';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import WithdrawService from '@src/services/withdraw/WithdrawService';
 import { captureException } from '@sentry/react-native';
+import { constants } from 'ethers';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -27,7 +28,7 @@ const useWithdrawScreen = () => {
 	const [token, setToken] = React.useState<MinkeToken>();
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
-	const { gweiValue = 0 } = gas || {};
+	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
 	const { withdrawableTokens: tokens } = useTokens();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
@@ -61,8 +62,8 @@ const useWithdrawScreen = () => {
 		setToken(selectedToken);
 	};
 
-	const enoughForGas =
-		gaslessEnabled || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
+	// @TODO: multiply by the gas usage of the blockchain transaction
+	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
 
 	const canWithdraw =
 		canSendTransactions &&
@@ -71,7 +72,7 @@ const useWithdrawScreen = () => {
 		+amount > 0 &&
 		+token.balance >= +amount &&
 		enoughForGas &&
-		(gaslessEnabled || gweiValue > 0);
+		(gaslessEnabled || !maxFeePerGas.isZero());
 
 	const onWithdraw = async () => {
 		Keyboard.dismiss();
@@ -86,7 +87,8 @@ const useWithdrawScreen = () => {
 					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
 					token: token.address,
 					interestBearingToken: token.interestBearingToken.address,
-					gasPrice: gweiValue.toString(),
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					biconomy,
 					connector,
 					walletConnect

@@ -1,4 +1,5 @@
 import WalletConnect from '@walletconnect/client';
+import { BigNumber } from 'ethers';
 
 export interface WithdrawParams {
 	gasless: boolean;
@@ -6,7 +7,8 @@ export interface WithdrawParams {
 	privateKey: string | null;
 	amount: string; // WEI
 	minAmount: string; // WEI
-	gasPrice: string; // WEI
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 	biconomy: any;
 	token: string;
 	interestBearingToken: string;

@@ -131,52 +131,6 @@ export const getTokenMarketCap = async (tokenName: string) => {
 	return mktCap.market_cap;
 };
 
-export const createTransaction = async ({
-	srcToken,
-	destToken,
-	srcAmount,
-	priceRoute,
-	destAmount,
-	userAddress,
-	permit,
-	gasPrice,
-	side
-}: {
-	srcToken: string;
-	srcDecimals: number;
-	destToken: string;
-	destDecimals: number;
-	srcAmount: string;
-	destAmount: string;
-	priceRoute: PriceRoute;
-	userAddress: string;
-	permit?: string;
-	gasPrice?: number;
-	side: string;
-}): Promise<TransactionData> => {
-	const { chainId } = await network();
-	const requestOptions = {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			srcToken,
-			destToken,
-			srcAmount: side === 'BUY' ? undefined : srcAmount,
-			priceRoute,
-			userAddress,
-			destAmount: side === 'SELL' ? undefined : destAmount,
-			side,
-			permit,
-			slippage: 30, // 3% (0.3 * 100 = 30)
-			eip1559: true
-		})
-	};
-
-	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}?gasPrice=${gasPrice}`;
-	const result = await fetch(baseURL, requestOptions);
-	return result.json();
-};
-
 export const ether: MinkeToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
@@ -261,17 +215,6 @@ export interface Quote {
 	from: { [fromSymbol: string]: BigNumber };
 	to: { [toSymbol: string]: BigNumber };
 	gasless: boolean; // holds if the transaction will be gasless
-}
-
-export interface TransactionData {
-	chainId: number;
-	data: string;
-	from: string;
-	gas: string;
-	gasPrice: string;
-	to: string;
-	value: string;
-	error: string;
 }
 
 export interface AccountBalance {

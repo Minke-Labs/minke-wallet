@@ -3,13 +3,13 @@ import Logger from '@utils/logger';
 import { Keyboard } from 'react-native';
 import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
 import { useState, State } from '@hookstate/core';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber, constants, utils } from 'ethers';
 import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeGasless, validatedExceptions } from '@models/exchange';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 
 interface PriceParams {
 	amount?: string;
@@ -38,7 +38,7 @@ export const useExchangeScreen = () => {
 	const { tokens: walletTokens } = useTokens();
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
-	const { gweiValue = 0 } = exchange.gas.value || {};
+	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -257,21 +257,21 @@ export const useExchangeScreen = () => {
 	}, [gaslessEnabled, quote]);
 
 	useEffect(() => {
-		if (!gasless && fromToken && nativeToken && gweiValue && !!fromToken.balance && +fromToken.balance > 0) {
+		if (!gasless && fromToken && nativeToken && maxFeePerGas && !!fromToken.balance && +fromToken.balance > 0) {
 			const isNativeToken = fromToken.symbol === nativeToken.symbol;
 			if (isNativeToken) {
-				const transactionPrice = gweiValue * 300000; // gas price * gas limit
-				const gasValueInEth = formatUnits(parseUnits(transactionPrice.toString(), 'gwei'));
+				const transactionPrice = maxFeePerGas.mul(300000); // gas price * gas limit
+				const gasValueInEth = formatUnits(transactionPrice);
 				const newBalance = +fromToken.balance - +gasValueInEth;
 				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
 				fromToken.balance = String(newBalance);
 				setFromToken(fromToken);
 			}
 		}
-	}, [gweiValue, fromToken, nativeToken]);
+	}, [maxFeePerGas, fromToken, nativeToken]);
 
-	const enoughForGas =
-		gasless || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
+	// @TODO: multiply by the gas usage of the blockchain transaction
+	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
 
 	const canSwap = () =>
 		quote &&

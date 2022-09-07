@@ -2,8 +2,7 @@ import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
-import { Contract, ethers, PopulatedTransaction, Wallet } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber, Contract, ethers, PopulatedTransaction, Wallet } from 'ethers';
 import { DepositReturn } from './deposit.types';
 
 export const gaslessDeposit = async ({
@@ -13,7 +12,7 @@ export const gaslessDeposit = async ({
 	amount,
 	interestBearingToken,
 	minAmount,
-	gasPrice,
+	maxFeePerGas,
 	biconomy
 }: {
 	address: string;
@@ -22,7 +21,7 @@ export const gaslessDeposit = async ({
 	amount: string; // in WEI
 	interestBearingToken: string;
 	minAmount: string;
-	gasPrice: string;
+	maxFeePerGas: BigNumber;
 	biconomy: any;
 }): Promise<DepositReturn> => {
 	const abi = [
@@ -54,7 +53,7 @@ export const gaslessDeposit = async ({
 		data: functionSignature,
 		from: address,
 		gasLimit: 500000,
-		gasPrice: parseUnits(gasPrice, 'gwei')
+		gasPrice: maxFeePerGas
 	};
 
 	const signedTx = await userSigner.signTransaction(rawTx);
@@ -83,21 +82,24 @@ export const depositData = async ({
 	minAmount,
 	tokenAddress,
 	interestBearingTokenAddress,
-	gweiValue
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	address: string;
 	amount: string;
 	minAmount: string;
 	tokenAddress: string;
 	interestBearingTokenAddress: string;
-	gweiValue: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }): Promise<PopulatedTransaction> => {
 	const { aave } = await network();
 
 	const txDefaults = {
 		from: address,
 		to: aave.depositContract,
-		gasPrice: parseUnits(gweiValue, 'gwei')
+		maxFeePerGas,
+		maxPriorityFeePerGas
 		// gasLimit: 500000
 	};
 	const abi = [
@@ -126,7 +128,8 @@ export const deposit = async ({
 	minAmount,
 	tokenAddress,
 	interestBearingTokenAddress,
-	gweiValue
+	maxFeePerGas,
+	maxPriorityFeePerGas
 }: {
 	address: string;
 	privateKey: string;
@@ -134,7 +137,8 @@ export const deposit = async ({
 	minAmount: string;
 	tokenAddress: string;
 	interestBearingTokenAddress: string;
-	gweiValue: string;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 }): Promise<DepositReturn> => {
 	const transaction = await depositData({
 		address,
@@ -142,11 +146,12 @@ export const deposit = async ({
 		minAmount,
 		tokenAddress,
 		interestBearingTokenAddress,
-		gweiValue
+		maxFeePerGas,
+		maxPriorityFeePerGas
 	});
 	Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
 
-	const { from, to, data, gasPrice } = transaction;
+	const { from, to, data, maxFeePerGas: baseFee, maxPriorityFeePerGas: priorityFee } = transaction;
 
 	const provider = await getProvider();
 	const wallet = new Wallet(privateKey, provider);
@@ -158,8 +163,8 @@ export const deposit = async ({
 		data,
 		nonce,
 		gasLimit: 500000,
-		maxFeePerGas: gasPrice!.toString(),
-		maxPriorityFeePerGas: gasPrice!.toString(),
+		maxFeePerGas: baseFee,
+		maxPriorityFeePerGas: priorityFee,
 		type: 2,
 		chainId
 	};
