@@ -105,6 +105,7 @@
     "react-native-redash": "^16.2.3",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-sse": "^1.1.0",
     "react-native-svg": "12.1.1",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-tcp": "^3.3.2",
