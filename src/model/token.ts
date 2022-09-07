@@ -3,7 +3,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { network, networks } from './network';
-import { MinkeToken } from './types/token.types';
+import { MinkeToken, InvestmentToken } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT'];
 export const exchangebleTokens = [
@@ -127,6 +127,16 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
 	return toJson;
+};
+
+export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<InvestmentToken[]> => {
+	const ids = tokens.map(({ id }) => id);
+	const marketCaps = await getTokenMarketCap(ids.join(','));
+
+	return tokens.map((t) => ({
+		...t,
+		...{ perc: marketCaps.find(({ id }) => id === t.id)?.price_change_percentage_24h }
+	}));
 };
 
 export const ether: MinkeToken = {

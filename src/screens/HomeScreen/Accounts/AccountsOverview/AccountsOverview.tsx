@@ -38,7 +38,7 @@ export const AccountsOverview: React.FC = () => {
 		const fetchPriceChanges = async () => {
 			if (tokens.length > 0) {
 				const investedTokens = await fetchTokensPriceChange(tokens);
-				const sorted = investedTokens.sort((a, b) => (b.perc || 0) - (a.perc || 0));
+				const sorted = investedTokens.sort((a: any, b: any) => (b.perc || 0) - (a.perc || 0));
 
 				const highlights = [];
 				highlights.push(sorted[0]);
