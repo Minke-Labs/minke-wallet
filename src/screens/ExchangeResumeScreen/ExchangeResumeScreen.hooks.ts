@@ -11,13 +11,9 @@ import { getProvider } from '@models/wallet';
 import { convertTransactionResponse } from '@models/transaction';
 import { BigNumber, Wallet } from 'ethers';
 import { approvalState } from '@models/deposit';
-import {
-	exchangeContract,
-	gaslessApproval,
-	gaslessExchange,
-	isExchangeTargetApproved
-} from '@models/gaslessTransaction';
+import { exchangeContract, gaslessApproval, gaslessExchange } from '@models/gaslessTransaction';
 import { captureException } from '@sentry/react-native';
+import { isExchangeGasless } from '@models/exchange';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -133,7 +129,7 @@ const useExchangeResumeScreen = () => {
 			setGasless(
 				gaslessEnabled &&
 					(priceQuote
-						? BigNumber.from(priceQuote.value).isZero() && (await isExchangeTargetApproved(priceQuote.to!))
+						? await isExchangeGasless(priceQuote.value, priceQuote.sellTokenAddress, priceQuote.to!)
 						: true)
 			);
 		};
@@ -183,7 +179,7 @@ const useExchangeResumeScreen = () => {
 							address,
 							biconomy,
 							contract: sellTokenAddress,
-							privateKey,
+							privateKey: privateKey!,
 							spender: exchangeContract
 						});
 
@@ -198,7 +194,7 @@ const useExchangeResumeScreen = () => {
 						biconomy,
 						depositContract: exchangeContract,
 						gasPrice,
-						privateKey,
+						privateKey: privateKey!,
 						swapData: data,
 						token: sellTokenAddress,
 						toToken: buyTokenAddress,
@@ -225,15 +221,16 @@ const useExchangeResumeScreen = () => {
 					navigation.navigate('HomeScreen');
 				} else {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
-					const { gweiValue = 30 } = exchange.gas.value || {};
+					const { maxFeePerGas, maxPriorityFeePerGas } = exchange.gas.value || {};
 
 					if (!isApproved) {
 						const { transaction: approvalTransaction } = await approveSpending({
 							userAddress: address,
-							privateKey,
+							privateKey: privateKey!,
 							contractAddress: sellTokenAddress,
 							spender: allowanceTarget,
-							gasPrice: +gweiValue * 1000000000
+							maxFeePerGas: maxFeePerGas!,
+							maxPriorityFeePerGas: maxPriorityFeePerGas!
 						});
 						if (approvalTransaction) {
 							track('Approved for exchange', { to: to.symbol, from: from.symbol, gasless: false });
@@ -252,7 +249,7 @@ const useExchangeResumeScreen = () => {
 						to: toAddress,
 						value: BigNumber.from(value)
 					};
-					const walletObject = new Wallet(wallet.privateKey.value, provider);
+					const walletObject = new Wallet(wallet.privateKey.value!, provider);
 					const signedTx = await walletObject.signTransaction(txDefaults);
 					const transaction = await provider.sendTransaction(signedTx as string);
 					const converted = convertTransactionResponse({

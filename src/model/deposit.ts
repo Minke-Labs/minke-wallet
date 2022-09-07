@@ -87,17 +87,6 @@ export interface DepositProtocol {
 	icon: string;
 }
 
-export interface ApprovalTransaction {
-	gasPrice: string;
-	maxFeePerGas: string;
-	maxPriorityFeePerGas: string;
-	from: string;
-	to: string;
-	value: string;
-	gas: string;
-	data: string;
-}
-
 export interface ApprovalState {
 	isApproved: boolean;
 }

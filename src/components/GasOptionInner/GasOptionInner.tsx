@@ -5,7 +5,6 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import { makeStyles } from './GasOptionInner.styles';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
-import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 
 interface GasOptionInnerProps {
 	type: 'normal' | 'fast' | 'slow';
@@ -33,7 +32,8 @@ const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice
 
 			<View style={{ alignItems: 'flex-end', flex: 1 }}>
 				<Text type="span" weight="bold">
-					${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}
+					${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}{' '}
+					{/* @TODO: receive the transaction gas cost */}
 				</Text>
 				<Text type="span">{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}</Text>
 			</View>

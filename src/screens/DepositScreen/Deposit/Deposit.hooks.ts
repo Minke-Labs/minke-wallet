@@ -17,10 +17,11 @@ import {
 import Logger from '@utils/logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toBn } from 'evm-bn';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'ethers/lib/utils';
 import Deposit from '@src/services/deposit/DepositService';
 import { captureException } from '@sentry/react-native';
 import { DepositableToken } from '@models/types/depositTokens.types';
+import { constants } from 'ethers';
 
 interface UseDepositProps {
 	depositableToken: DepositableToken | undefined;
@@ -37,7 +38,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const { depositableTokens = [] } = accountBalance;
 	const { address, privateKey } = globalWalletState().value;
 	const { gas } = useState(globalExchangeState()).value;
-	const { gweiValue = 0 } = gas || {};
+	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
 	const [token, setToken] = React.useState<MinkeToken>();
 	const [amount, setAmount] = React.useState('0');
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
@@ -54,15 +55,15 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 		}
 	};
 
-	const enoughForGas =
-		gaslessEnabled || (balance && gweiValue ? balance.gte(parseUnits(gweiValue.toString(), 'gwei')) : true);
+	// @TODO: multiply by the gas usage of the blockchain transaction
+	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
 	const canDeposit =
 		token &&
 		token.balance &&
 		+amount > 0 &&
 		+token.balance >= +amount &&
 		enoughForGas &&
-		(gaslessEnabled || gweiValue > 0); // if gasless we dont need a gwei value
+		(gaslessEnabled || !maxFeePerGas.isZero()); // if gasless we dont need a gwei value
 
 	const onDeposit = async () => {
 		Keyboard.dismiss();
@@ -74,7 +75,8 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 					privateKey,
 					amount: formatUnits(toBn(amount, token.decimals), 'wei'),
 					minAmount: formatUnits(toBn((Number(amount) * 0.97).toString(), token.decimals), 'wei'),
-					gasPrice: gweiValue.toString(),
+					maxFeePerGas,
+					maxPriorityFeePerGas,
 					depositableToken,
 					gasless: gaslessEnabled,
 					biconomy,

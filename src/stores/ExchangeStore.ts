@@ -1,9 +1,11 @@
 import { createState } from '@hookstate/core';
 import { MinkeToken } from '@models/types/token.types';
+import { BigNumber } from 'ethers';
 
 export interface Gas {
 	type: 'normal' | 'fast' | 'slow';
-	gweiValue: number;
+	maxFeePerGas: BigNumber;
+	maxPriorityFeePerGas: BigNumber;
 	usdPrice: number;
 	wait: number;
 }

@@ -1,8 +1,11 @@
 import React from 'react';
-import { BlankStates } from '@components';
+import { BasicLayout } from '@layouts';
+import { Token } from '@components';
 
 const Test = () => (
-	<BlankStates.Type3 />
+	<BasicLayout>
+		<Token name="polydoge" />
+	</BasicLayout>
 );
 
 export default Test;

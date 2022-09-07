@@ -3,7 +3,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { network, networks } from './network';
-import { InvestmentToken, MinkeToken } from './types/token.types';
+import { MinkeToken } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT'];
 export const exchangebleTokens = [
@@ -25,7 +25,9 @@ export const exchangebleTokens = [
 	'CRV',
 	'SUSHI',
 	'BAL',
-	'YFI'
+	'YFI',
+	'QUICK',
+	'PolyDoge'
 ];
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {
@@ -127,62 +129,6 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 	return toJson;
 };
 
-export const createTransaction = async ({
-	srcToken,
-	destToken,
-	srcAmount,
-	priceRoute,
-	destAmount,
-	userAddress,
-	permit,
-	gasPrice,
-	side
-}: {
-	srcToken: string;
-	srcDecimals: number;
-	destToken: string;
-	destDecimals: number;
-	srcAmount: string;
-	destAmount: string;
-	priceRoute: PriceRoute;
-	userAddress: string;
-	permit?: string;
-	gasPrice?: number;
-	side: string;
-}): Promise<TransactionData> => {
-	const { chainId } = await network();
-	const requestOptions = {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			srcToken,
-			destToken,
-			srcAmount: side === 'BUY' ? undefined : srcAmount,
-			priceRoute,
-			userAddress,
-			destAmount: side === 'SELL' ? undefined : destAmount,
-			side,
-			permit,
-			slippage: 30, // 3% (0.3 * 100 = 30)
-			eip1559: true
-		})
-	};
-
-	const baseURL = `https://apiv5.paraswap.io/transactions/${chainId}?gasPrice=${gasPrice}`;
-	const result = await fetch(baseURL, requestOptions);
-	return result.json();
-};
-
-export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<InvestmentToken[]> => {
-	const ids = tokens.map(({ id }) => id);
-	const marketCaps = await getTokenMarketCap(ids.join(','));
-
-	return tokens.map((t) => ({
-		...t,
-		...{ perc: marketCaps.find(({ id }) => id === t.id)?.price_change_percentage_24h }
-	}));
-};
-
 export const ether: MinkeToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
@@ -267,17 +213,6 @@ export interface Quote {
 	from: { [fromSymbol: string]: BigNumber };
 	to: { [toSymbol: string]: BigNumber };
 	gasless: boolean; // holds if the transaction will be gasless
-}
-
-export interface TransactionData {
-	chainId: number;
-	data: string;
-	from: string;
-	gas: string;
-	gasPrice: string;
-	to: string;
-	value: string;
-	error: string;
 }
 
 export interface AccountBalance {
