@@ -3,9 +3,10 @@ import { View } from 'react-native';
 import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-import { Text, Card, Button, TransactionIcon } from '@components';
+import { Text, Button, TransactionIcon } from '@components';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
+import Card from './Card/Card';
 
 export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 	const { i18n } = useLanguage();
