@@ -4,6 +4,7 @@ import { gaslessApproval } from '@models/gaslessTransaction';
 import { estimateGas, getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
+import { parseUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { DepositReturn } from '../deposit/deposit.types';
 
@@ -71,13 +72,16 @@ class ApprovalService {
 			});
 		} else {
 			const {
-				result: { FastGasPrice: gasPrice }
+				result: { FastGasPrice: fast, suggestBaseFee }
 			} = await estimateGas();
+			const maxPriorityFeePerGas = parseUnits(fast, 'gwei');
+			const maxFeePerGas = parseUnits(suggestBaseFee, 'gwei').add(maxPriorityFeePerGas);
 			const { transaction } = await onChainApproval({
 				contractAddress: contract,
 				spender,
 				privateKey: privateKey!,
-				gasPrice: +gasPrice * 1000000000
+				maxFeePerGas,
+				maxPriorityFeePerGas
 			});
 			hash = transaction?.hash;
 		}

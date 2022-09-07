@@ -5,6 +5,8 @@ import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
+import { parseUnits } from 'ethers/lib/utils';
+import { BigNumber } from 'ethers';
 import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 import GasOption from '../GasOption/GasOption';
 import styles from './GasSelector.styles';
@@ -22,7 +24,7 @@ const defaultWait: Wait = {
 };
 
 type Speeds = 'fast' | 'normal' | 'slow';
-type Price = { [key: string]: number };
+type Price = { [key: string]: number } & { suggestBaseFee: BigNumber };
 type WaitTime = { [key: string]: number | null };
 
 const GasSelector = () => {
@@ -30,7 +32,7 @@ const GasSelector = () => {
 	const { colors } = useTheme();
 
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
-	const [gasPrice, setGasPrice] = React.useState<Price>({});
+	const [gasPrice, setGasPrice] = React.useState<Price>({} as Price);
 	const [usdPrice, setUsdPrice] = React.useState<number>();
 	const [wait, setWait] = React.useState<WaitTime>({});
 
@@ -40,14 +42,17 @@ const GasSelector = () => {
 	const fetchGas = async () => {
 		const gas = await estimateGas();
 		const {
-			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast }
+			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, suggestBaseFee }
 		} = gas;
-
-		setGasPrice({ normal: +normal, fast: +fast });
+		// @ts-ignore
+		setGasPrice({ normal: +normal, fast: +fast, maxFeePerGas: parseUnits(suggestBaseFee, 'gwei') });
 		if (!exchange.gas.value && type === 'fast') {
+			const maxPriorityFeePerGas = parseUnits(fast, 'gwei');
+			const maxFeePerGas = parseUnits(suggestBaseFee, 'gwei').add(maxPriorityFeePerGas);
 			exchange.gas.set({
 				type: 'fast',
-				gweiValue: +fast,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
 				wait: defaultWait.fast
 			} as Gas);
 		}
@@ -84,7 +89,7 @@ const GasSelector = () => {
 	useEffect(() => {
 		const fetchConfirmation = async (gasType: string) => {
 			const value = gasPrice[gasType];
-			const { result } = await estimateConfirmationTime(value * 1000000000);
+			const { result } = await estimateConfirmationTime(Number(value) * 1000000000);
 			if (!Number.isNaN(+result)) {
 				return +result;
 			}
@@ -117,19 +122,25 @@ const GasSelector = () => {
 	}, [type, useState]);
 
 	useEffect(() => {
-		if (selected) {
+		if (selected && !!gasPrice.suggestBaseFee) {
+			const maxPriorityFeePerGas = parseUnits(gasPrice[type].toString(), 'gwei');
+			const maxFeePerGas = gasPrice.suggestBaseFee.add(maxPriorityFeePerGas);
 			exchange.gas.merge({
 				usdPrice,
 				wait: wait[type] || defaultWait[type as keyof Wait],
-				gweiValue: gasPrice[type]
+				maxFeePerGas,
+				maxPriorityFeePerGas
 			});
 		}
 	}, [gasPrice, usdPrice, wait]);
 
 	const onSelectGas = (val: Speeds) => {
+		const maxPriorityFeePerGas = parseUnits(gasPrice[val].toString(), 'gwei');
+		const maxFeePerGas = gasPrice.suggestBaseFee.add(maxPriorityFeePerGas);
 		exchange.gas.set({
 			type: val,
-			gweiValue: gasPrice[val],
+			maxFeePerGas,
+			maxPriorityFeePerGas,
 			usdPrice,
 			wait: wait[val] || defaultWait[type as keyof Wait]
 		} as Gas);

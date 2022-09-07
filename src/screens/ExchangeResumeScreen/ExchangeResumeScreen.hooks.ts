@@ -225,7 +225,7 @@ const useExchangeResumeScreen = () => {
 					navigation.navigate('WalletScreen');
 				} else {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
-					const { gweiValue = 30 } = exchange.gas.value || {};
+					const { maxFeePerGas, maxPriorityFeePerGas } = exchange.gas.value || {};
 
 					if (!isApproved) {
 						const { transaction: approvalTransaction } = await approveSpending({
@@ -233,7 +233,8 @@ const useExchangeResumeScreen = () => {
 							privateKey,
 							contractAddress: sellTokenAddress,
 							spender: allowanceTarget,
-							gasPrice: +gweiValue * 1000000000
+							maxFeePerGas: maxFeePerGas!,
+							maxPriorityFeePerGas: maxPriorityFeePerGas!
 						});
 						if (approvalTransaction) {
 							track('Approved for exchange', { to: to.symbol, from: from.symbol, gasless: false });

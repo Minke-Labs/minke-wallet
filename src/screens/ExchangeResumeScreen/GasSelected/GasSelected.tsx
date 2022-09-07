@@ -5,6 +5,7 @@ import { State, useState } from '@hookstate/core';
 import { estimateGas, getEthLastPrice, estimateConfirmationTime } from '@models/wallet';
 import { ExchangeState, globalExchangeState, Gas } from '@stores/ExchangeStore';
 import { network } from '@models/network';
+import { parseUnits } from 'ethers/lib/utils';
 
 interface Wait {
 	normal: number;
@@ -28,7 +29,7 @@ export const GasSelected = () => {
 	const fetchGas = async () => {
 		const gas = await estimateGas();
 		const {
-			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, SafeGasPrice: slow }
+			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, SafeGasPrice: slow, suggestBaseFee }
 		} = gas;
 
 		let gasValue = normal;
@@ -39,9 +40,12 @@ export const GasSelected = () => {
 		}
 		setGasPrice(+gasValue);
 		if (!exchange.gas.value && selectedType === 'fast') {
+			const maxPriorityFeePerGas = parseUnits(fast, 'gwei');
+			const maxFeePerGas = parseUnits(suggestBaseFee, 'gwei').add(maxPriorityFeePerGas);
 			exchange.gas.set({
 				type: 'fast',
-				gweiValue: +fast,
+				maxFeePerGas,
+				maxPriorityFeePerGas,
 				wait: defaultWait.fast
 			} as Gas);
 		}
