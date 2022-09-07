@@ -944,15 +944,6 @@ export default {
 		LoadingScreen: {
 			this_can_take_a_few_seconds: 'This can take a few seconds'
 		},
-		MStableReusables: {
-			Info: {
-				what_is: 'What is mStable?',
-				mstable_des:
-					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
-				view_site: 'View Site',
-				learn_more: 'Learn More'
-			}
-		},
 		ModalReusables: {
 			TransactionWaitModal: {
 				transaction_done: 'Transaction done',
@@ -1019,6 +1010,15 @@ export default {
 					}
 				},
 				add: '+ Add'
+			}
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'What is mStable?',
+				mstable_des:
+					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
+				view_site: 'View Site',
+				learn_more: 'Learn More'
 			}
 		},
 		NetworkWarning: {
