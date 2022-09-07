@@ -12,7 +12,7 @@ import { useNavigation } from '@hooks';
 import View from '@src/components/View/View';
 import AnimatedView from '@src/components/AnimatedView/AnimatedView';
 import ModalHeader from '@src/components/ModalHeader/ModalHeader';
-import { BasicLayout } from '@layouts';
+import BasicLayout from '@src/layouts/BasicLayout/BasicLayout';
 import { Gradient } from './Gradient';
 
 const timing = { duration: 1200 };
