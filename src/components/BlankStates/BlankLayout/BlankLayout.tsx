@@ -1,24 +1,29 @@
 import React, { useEffect } from 'react';
-import { View, SafeAreaView } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, withRepeat } from 'react-native-reanimated';
-import { screenWidth } from '@styles';
+import { SafeAreaView } from 'react-native';
+import {
+	useSharedValue,
+	useAnimatedStyle,
+	withTiming,
+	withRepeat
+} from 'react-native-reanimated';
+import { screenWidth, SpacingType } from '@styles';
 import MaskedView from '@react-native-masked-view/masked-view';
-import { useNavigation, useTheme } from '@hooks';
-import ModalHeader from '../../ModalHeader/ModalHeader';
-import BasicLayout from '../../../layouts/BasicLayout/BasicLayout';
+import { useNavigation } from '@hooks';
+import View from '@src/components/View/View';
+import AnimatedView from '@src/components/AnimatedView/AnimatedView';
+import ModalHeader from '@src/components/ModalHeader/ModalHeader';
+import { BasicLayout } from '@layouts';
 import { Gradient } from './Gradient';
-import styles from './BlankLayout.styles';
 
 const timing = { duration: 1200 };
 
 interface BlankLayoutProps {
 	title?: string;
-	br?: number;
+	br?: SpacingType;
 }
 
-const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) => {
+const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br }) => {
 	const navigation = useNavigation();
-	const { colors } = useTheme();
 	const posX = useSharedValue(-screenWidth);
 
 	const animatedStyle = useAnimatedStyle(() => ({
@@ -30,13 +35,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 	}, []);
 
 	return (
-		<View
-			style={{
-				backgroundColor: colors.background1,
-				flex: 1,
-				borderRadius: br
-			}}
-		>
+		<View bgc="background1" flex1 br={br}>
 			<SafeAreaView />
 			{!!title && (
 				<ModalHeader onDismiss={() => navigation.goBack()} onBack={() => navigation.goBack()} title={title} />
@@ -44,13 +43,20 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br = 0 }) =>
 			<MaskedView
 				androidRenderingMode="software"
 				style={{ flex: 1 }}
-				maskElement={<View style={{ alignItems: 'center', flex: 1 }}>{children}</View>}
+				maskElement={(
+					<View flex1 cross="center">
+						{children}
+					</View>
+				)}
 			>
 				<BasicLayout hideSafeAreaView center bgc="background2">
 					{children}
-					<Animated.View style={[styles.container, animatedStyle]}>
+					<AnimatedView
+						h="100%"
+						style={[{ position: 'absolute', left: 0 }, animatedStyle]}
+					>
 						<Gradient />
-					</Animated.View>
+					</AnimatedView>
 				</BasicLayout>
 			</MaskedView>
 		</View>

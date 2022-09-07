@@ -10,7 +10,8 @@ interface UseTransactionSelectFundsProps {
 
 export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsProps) => {
 	const [image, setImage] = React.useState<{ uri: string }>();
-	const { tokens } = useTokens();
+	const { accountBalance } = useTokens();
+	const { tokens } = accountBalance;
 
 	useEffect(() => {
 		const fetchImage = async () => {

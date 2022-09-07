@@ -10,7 +10,8 @@ const useNativeToken = () => {
 	const [nativeToken, setNativeToken] = useState<MinkeToken>();
 	const [name, setName] = useState<string>();
 	const [balance, setBalance] = useState<BigNumber>();
-	const { tokens = [] } = useTokens();
+	const { accountBalance } = useTokens();
+	const { tokens = [] } = accountBalance;
 
 	useEffect(() => {
 		const loadNativeToken = async () => {

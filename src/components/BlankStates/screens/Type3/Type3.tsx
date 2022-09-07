@@ -4,7 +4,7 @@ import Box from '../../Box/Box';
 import BlankLayout from '../../BlankLayout/BlankLayout';
 
 const Type3: React.FC = () => (
-	<BlankLayout br={24}>
+	<BlankLayout br="s">
 		<View ph="s" w="100%">
 
 			<View

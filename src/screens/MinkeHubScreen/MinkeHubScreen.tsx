@@ -11,7 +11,8 @@ const MinkeHubScreen = () => {
 	const { i18n } = useLanguage();
 	const [modal, setModal] = useState(false);
 	const navigation = useNavigation();
-	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = useTokens();
+	const { accountBalance } = useTokens();
+	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = accountBalance;
 	const { networth } = useNFT();
 
 	return (
@@ -19,7 +20,7 @@ const MinkeHubScreen = () => {
 			<BasicLayout>
 				<SafeAreaView />
 				<ScrollView showsVerticalScrollIndicator={false}>
-					<View ph="xs">
+					<View p="xs">
 						<View row cross="center" mb="s">
 							<Text type="hMedium" weight="bold">
 								Minke Hub
@@ -50,6 +51,7 @@ const MinkeHubScreen = () => {
 								number={walletBalance}
 							/>
 						</View>
+
 						<View mb="xs" row main="center">
 							<Card
 								onPress={() => navigation.navigate('SaveScreen')}
@@ -67,6 +69,7 @@ const MinkeHubScreen = () => {
 								number={networth}
 							/>
 						</View>
+
 						<Text type="lMedium" weight="semiBold" color="text3" mb="xs">
 							{i18n.t('MinkeHubScreen.others')}
 						</Text>
@@ -76,6 +79,7 @@ const MinkeHubScreen = () => {
 								icon="vault"
 								title={i18n.t('MinkeHubScreen.send_to_bank')}
 								desc={i18n.t('MinkeHubScreen.convert_to_local')}
+								hideLoading
 							/>
 							<View mr="xs" />
 							<Card
@@ -83,6 +87,7 @@ const MinkeHubScreen = () => {
 								icon="vault"
 								title={i18n.t('MinkeHubScreen.referral')}
 								desc={i18n.t('MinkeHubScreen.refer_and_earn')}
+								hideLoading
 							/>
 						</View>
 					</View>

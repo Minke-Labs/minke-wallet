@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Paper, View, Text, TokenItemCard, Touchable } from '@components';
+import {
+	Paper,
+	View,
+	Text,
+	TokenItemCard,
+	Touchable,
+	BlankStates
+} from '@components';
 import { useLanguage, useNavigation, useTokens } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
@@ -7,14 +14,15 @@ import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 import { fetchTokensPriceChange } from '@models/token';
 
-export const AccountsOverview = () => {
+export const AccountsOverview: React.FC = () => {
 	const { i18n } = useLanguage();
 	const [investmentHighlights, setInvestmentHighlights] = React.useState<InvestmentToken[]>([]);
 	const {
 		network: { topUpTokens }
 	} = useState(globalWalletState()).value;
 	const navigation = useNavigation();
-	const { stablecoins = [], tokens = [] } = useTokens();
+	const { accountBalance } = useTokens();
+	const { stablecoins = [], tokens = [] } = accountBalance;
 	const [defaultToken] = topUpTokens;
 	let biggestBalanceStable: MinkeToken = {} as MinkeToken;
 
@@ -45,6 +53,14 @@ export const AccountsOverview = () => {
 
 		fetchPriceChanges();
 	}, [tokens]);
+
+	if (!(investmentHighlights.length > 0)) {
+		return (
+			<View mb="xs">
+				<BlankStates.Type4 h={287} />
+			</View>
+		);
+	}
 
 	return (
 		<Paper pt="xs" ph="xs" mb="xs">

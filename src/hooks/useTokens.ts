@@ -4,20 +4,26 @@ import { globalWalletState } from '@stores/WalletStore';
 import { AccountBalance } from '@models/token';
 import { getTokenBalances } from '@src/services/apis';
 
-const useTokens = (): AccountBalance => {
+const useTokens = () => {
 	const { address } = useState(globalWalletState()).value;
-	const [accountBalance, setAccountBalance] = React.useState<AccountBalance>();
+	const [loadingBalance, setLoadingBalance] = React.useState(false);
+	const [accountBalance, setAccountBalance] = React.useState<AccountBalance>({} as AccountBalance);
 
 	useEffect(() => {
 		const loadTokens = async () => {
+			setLoadingBalance(true);
 			const balance = await getTokenBalances(address);
 			setAccountBalance(balance);
+			setLoadingBalance(false);
 		};
 
 		loadTokens();
 	}, [address]);
 
-	return accountBalance || ({} as AccountBalance);
+	return {
+		accountBalance,
+		loadingBalance
+	};
 };
 
 export default useTokens;

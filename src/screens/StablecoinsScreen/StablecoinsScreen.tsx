@@ -8,7 +8,8 @@ import { TokenType } from '@styles';
 const StablecoinsScreen = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { stablecoins, stablecoinsBalance } = useTokens();
+	const { accountBalance } = useTokens();
+	const { stablecoins, stablecoinsBalance } = accountBalance;
 	const { apy } = useDepositProtocols();
 
 	if (!stablecoins) {

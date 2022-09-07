@@ -41,7 +41,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const { gaslessEnabled } = useBiconomy();
-	const { tokens: walletTokens } = useTokens();
+	const { accountBalance } = useTokens();
+	const { tokens: walletTokens } = accountBalance;
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
 	const { gweiValue = 0 } = exchange.gas.value || {};

@@ -33,7 +33,8 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const { nativeToken, balance } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { depositableTokens = [] } = useTokens();
+	const { accountBalance } = useTokens();
+	const { depositableTokens = [] } = accountBalance;
 	const { address, privateKey } = globalWalletState().value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};

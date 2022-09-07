@@ -28,7 +28,8 @@ const useWithdrawScreen = () => {
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { gweiValue = 0 } = gas || {};
-	const { withdrawableTokens: tokens } = useTokens();
+	const { accountBalance } = useTokens();
+	const { withdrawableTokens: tokens } = accountBalance;
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');

@@ -10,7 +10,8 @@ import { fetchTokensPriceChange } from '@models/token';
 
 const InvestmentsScreen = () => {
 	const { i18n } = useLanguage();
-	const { tokens, walletBalance: balance } = useTokens();
+	const { accountBalance } = useTokens();
+	const { tokens, walletBalance: balance } = accountBalance;
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>();
 
 	// const [active, setActive] = useState(0);

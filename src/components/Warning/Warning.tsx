@@ -8,7 +8,6 @@ const Warning = ({ label }: { label: string }) => (
 		row
 		br="xs"
 		mb="m"
-		bw={1}
 		style={{ borderColor: '#FFFCF5' }}
 	>
 		<View

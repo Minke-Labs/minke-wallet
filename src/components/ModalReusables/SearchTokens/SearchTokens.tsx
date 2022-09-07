@@ -30,7 +30,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
-	const { withdrawableTokens } = useTokens();
+	const { accountBalance } = useTokens();
+	const { withdrawableTokens } = accountBalance;
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 

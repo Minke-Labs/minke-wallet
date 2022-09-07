@@ -13,7 +13,6 @@ export const Button: React.FC<ButtonProps> = ({ children, active, onPress }) => 
 				ph="xs"
 				br="s"
 				mr="xxs"
-				bw={1}
 				h={32}
 				main="center"
 				cross="center"
