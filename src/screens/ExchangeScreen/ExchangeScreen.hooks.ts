@@ -8,8 +8,7 @@ import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState, WalletState } from '@stores/WalletStore';
-import { isExchangeTargetApproved } from '@models/gaslessTransaction';
-import { validatedExceptions } from '@models/exchange';
+import { isExchangeGasless, validatedExceptions } from '@models/exchange';
 import { formatUnits } from 'ethers/lib/utils';
 
 interface PriceParams {
@@ -65,6 +64,7 @@ export const useExchangeScreen = () => {
 				message,
 				buyAmount,
 				sellAmount,
+				sellTokenAddress,
 				value,
 				allowanceTarget,
 				to,
@@ -97,7 +97,7 @@ export const useExchangeScreen = () => {
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
 				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) },
-				gasless: BigNumber.from(value).isZero() && (await isExchangeTargetApproved(to || allowanceTarget))
+				gasless: await isExchangeGasless(value, sellTokenAddress, to || allowanceTarget)
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);
@@ -187,7 +187,8 @@ export const useExchangeScreen = () => {
 		let walletToken = token;
 		if (!token.balance) {
 			walletToken =
-				(walletTokens || []).find(({ symbol }) => symbol.toLowerCase() === token.symbol.toLowerCase()) || token;
+				(walletTokens || []).find(({ address }) => address.toLowerCase() === token.address.toLowerCase()) ||
+				token;
 		}
 		if (searchSource === 'from') {
 			updateFromToken(walletToken);

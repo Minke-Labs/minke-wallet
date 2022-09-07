@@ -11,13 +11,9 @@ import { getProvider } from '@models/wallet';
 import { convertTransactionResponse } from '@models/transaction';
 import { BigNumber, Wallet } from 'ethers';
 import { approvalState } from '@models/deposit';
-import {
-	exchangeContract,
-	gaslessApproval,
-	gaslessExchange,
-	isExchangeTargetApproved
-} from '@models/gaslessTransaction';
+import { exchangeContract, gaslessApproval, gaslessExchange } from '@models/gaslessTransaction';
 import { captureException } from '@sentry/react-native';
+import { isExchangeGasless } from '@models/exchange';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -133,7 +129,7 @@ const useExchangeResumeScreen = () => {
 			setGasless(
 				gaslessEnabled &&
 					(priceQuote
-						? BigNumber.from(priceQuote.value).isZero() && (await isExchangeTargetApproved(priceQuote.to!))
+						? await isExchangeGasless(priceQuote.value, priceQuote.sellTokenAddress, priceQuote.to!)
 						: true)
 			);
 		};
