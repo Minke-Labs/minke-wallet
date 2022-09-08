@@ -1,16 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
-import { useState } from '@hookstate/core';
-import { globalContactState } from '@src/stores/ContactStore';
+import { useState, useCallback, useEffect } from 'react';
 import { isAddress } from 'ethers/lib/utils';
 import { resolveENSAddress, smallWalletAddress } from '@models/wallet';
-import { useKeyboard, useWallets } from '@hooks';
+import { useKeyboard, useWallets, useGlobalContactState } from '@hooks';
 import { ContactItem } from '@models/contact';
 import { TransactionContactsProps } from './TransactionContacts.types';
 
 export const useTransactionContacts = ({ onSelected }: TransactionContactsProps) => {
-	const [address, setAddress] = React.useState('');
-	const [ensAddress, setEnsAddress] = React.useState<string>();
-	const state = useState(globalContactState());
+	const [address, setAddress] = useState('');
+	const [ensAddress, setEnsAddress] = useState<string>();
+	const state = useGlobalContactState();
 	const { contactList = [] } = state.value;
 	const keyboardVisible = useKeyboard();
 	const { wallets, address: selectedAddress } = useWallets();

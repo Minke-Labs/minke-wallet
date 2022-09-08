@@ -1,5 +1,6 @@
 import useAmplitude from './useAmplitude';
 import useAvatar from './useAvatar';
+import useGlobalContactState from './useGlobalContactState';
 import useGlobalWalletState from './useGlobalWalletState';
 import useTheme from './useTheme';
 import useNavigation from './useNavigation';
@@ -32,6 +33,7 @@ import useNFT from './useNFT';
 
 export {
 	useCountry,
+	useGlobalContactState,
 	useAmplitude,
 	useAvatar,
 	useGlobalWalletState,
