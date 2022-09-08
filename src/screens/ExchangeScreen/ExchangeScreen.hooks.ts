@@ -232,7 +232,9 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	}, []);
 
 	useEffect(() => {
-		if (destToken && nativeToken) {
+		if (destToken && defaultToken && defaultToken.symbol !== destToken.symbol) {
+			setFromToken(defaultToken);
+		} else if (destToken && nativeToken) {
 			setFromToken(nativeToken);
 		} else if (!!defaultToken && !fromToken) {
 			setFromToken(defaultToken);

@@ -73,11 +73,12 @@ export const getExchangePrice = async ({
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	if (chainId === networks.matic.chainId) {
-		if (sellToken === '0x0000000000000000000000000000000000001010') {
+		const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
+		if (natives.includes(sellToken)) {
 			sellToken = 'MATIC';
 		}
 
-		if (buyToken === '0x0000000000000000000000000000000000001010') {
+		if (natives.includes(buyToken)) {
 			buyToken = 'MATIC';
 		}
 	}
