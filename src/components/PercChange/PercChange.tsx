@@ -17,25 +17,24 @@ const PercChange: React.FC<PercChangeProps> = ({ percZero, percChange, data }) =
 	}));
 
 	return (
-		<View row cross='flex-end'>
+		<View row cross="flex-end">
 			{!percZero && (
-				<View mr='xxxs'>
+				<View mr="xxxs">
 					<Icon
 						name={percChange ? 'iconUp' : 'iconDown'}
-						color={data.value.percentChange > 0 ? 
-							'alert3' : 
-								data.value.percentChange < 0 ? 
-									'alert1' : 
-									'text4'
-						}
+						color={data.value.percentChange > 0 ?
+							'alert3' :
+							data.value.percentChange < 0 ?
+								'alert1' :
+								'text4'}
 						size={16}
 					/>
 				</View>
 			)}
-			<AnimatedText 
-				text={animatedText} 
-				style={animatedTextStyle} 
-				type="lMedium" 
+			<AnimatedText
+				text={animatedText}
+				style={animatedTextStyle}
+				type="lMedium"
 			/>
 		</View>
 	);
