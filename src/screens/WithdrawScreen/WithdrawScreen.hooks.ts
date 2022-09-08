@@ -6,7 +6,7 @@ import { globalExchangeState } from '@stores/ExchangeStore';
 import {
 	useAmplitude,
 	useNavigation,
-	useTokens,
+	useBalances,
 	useNativeToken,
 	useBiconomy,
 	useTransactions,
@@ -29,8 +29,7 @@ const useWithdrawScreen = () => {
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
-	const { accountBalance } = useTokens();
-	const { withdrawableTokens: tokens } = accountBalance;
+	const { withdrawableTokens: tokens } = useBalances();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');

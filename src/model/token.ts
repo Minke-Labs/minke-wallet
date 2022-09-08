@@ -238,23 +238,6 @@ export interface AccountBalance {
 	withdrawableTokens: MinkeToken[];
 }
 
-export interface CovalentToken {
-	contract_decimals: number;
-	contract_name: string;
-	contract_ticker_symbol: string;
-	contract_address: string;
-	logo_url: string;
-	last_transferred_at: string;
-	type: string;
-	balance: string;
-	balance_24h: string;
-	quote_rate: number;
-	quote_rate_24h: number;
-	quote: number;
-	quote_24h: number;
-	nft_data: null;
-}
-
 export interface CovalentAavePool {
 	underlying: {
 		contract_address: string;

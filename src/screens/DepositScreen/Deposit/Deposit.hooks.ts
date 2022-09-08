@@ -7,7 +7,7 @@ import { globalExchangeState } from '@stores/ExchangeStore';
 import { DepositProtocol, usdCoinSettingsKey } from '@models/deposit';
 import {
 	useNavigation,
-	useTokens,
+	useBalances,
 	useAmplitude,
 	useBiconomy,
 	useNativeToken,
@@ -34,8 +34,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const { nativeToken, balance } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { accountBalance } = useTokens();
-	const { depositableTokens = [] } = accountBalance;
+	const { depositableTokens = [] } = useBalances();
 	const { address, privateKey } = globalWalletState().value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};

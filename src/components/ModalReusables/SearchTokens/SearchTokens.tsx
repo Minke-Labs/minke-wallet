@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { useTheme, useLanguage, useTokens, useGlobalWalletState } from '@hooks';
+import { useTheme, useLanguage, useGlobalWalletState, useBalances } from '@hooks';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
@@ -31,8 +31,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
-	const { accountBalance } = useTokens();
-	const { withdrawableTokens } = accountBalance;
+	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { network } = useGlobalWalletState();

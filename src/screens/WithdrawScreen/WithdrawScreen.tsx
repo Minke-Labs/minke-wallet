@@ -49,9 +49,7 @@ const WithdrawScreen = () => {
 	const { i18n } = useLanguage();
 
 	if (token === undefined) {
-		return (
-			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Withdraw')} />
-		);
+		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Withdraw')} />;
 	}
 
 	return (

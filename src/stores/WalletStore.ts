@@ -10,7 +10,6 @@ import {
 	saveAllWallets,
 	ZapperTransaction
 } from '@models/wallet';
-import { getTokenBalances } from '@src/services/apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import coins from '../utils/files/coins.json';
 
@@ -19,11 +18,6 @@ export interface WalletState {
 	network: Network;
 	address: string;
 	walletId?: string | null;
-	balance?: {
-		usd?: number; // total
-		depositedBalance?: number; // deposits
-		walletBalance?: number; // total in the wallet (total - deposits)
-	};
 	transactions?: Array<ZapperTransaction>;
 	backedUp: boolean;
 }
@@ -35,19 +29,6 @@ export const emptyWallet: WalletState = {
 	network: defaultNetwork,
 	transactions: [],
 	backedUp: false
-};
-
-export const fetchTokensAndBalances = async (address: string) => {
-	const blockchain = await selectedNetwork();
-	const { balance: balanceUSD, walletBalance, depositedBalance } = await getTokenBalances(address);
-
-	const balance = {
-		usd: balanceUSD,
-		walletBalance,
-		depositedBalance
-	};
-
-	return { balance, network: blockchain };
 };
 
 const setPrimaryWallet = async (wallet: MinkeWallet): Promise<MinkeWallet> => {
@@ -75,9 +56,9 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 				walletId: wallet.id,
 				allTokens: [],
 				transactions: [],
-				backedUp: wallet.backedUp
-			},
-			...(await fetchTokensAndBalances(wallet.address))
+				backedUp: wallet.backedUp,
+				network: await selectedNetwork()
+			}
 		};
 	}
 	return emptyWallet;
