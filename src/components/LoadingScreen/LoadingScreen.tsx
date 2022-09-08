@@ -1,17 +1,29 @@
 import React from 'react';
-import { View, Image, Modal } from 'react-native';
-import { useTheme, useLanguage } from '@hooks';
-import Text from '../Text/Text';
-import styles from './LoadingScreen.styles';
+import { Image, Modal } from 'react-native';
+import { useLanguage } from '@hooks';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
 import { LoadingScreenProps } from './LoadingScreen.types';
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ title }) => {
-	const { colors } = useTheme();
 	const { i18n } = useLanguage();
 	return (
 		<Modal visible>
-			<View style={[styles.container, { backgroundColor: colors.background1 }]}>
-				<Image style={styles.image} source={require('../../../assets/wave.gif')} />
+			<View
+				h="100%"
+				w="100%"
+				main="center"
+				cross="center"
+				bgc="background1"
+			>
+				<Image
+					source={require('../../../assets/wave.gif')}
+					style={{
+						height: '100%',
+						width: '100%',
+						position: 'absolute'
+					}}
+				/>
 				<View>
 					<Text type="h2" weight="bold" mb="xxs" center>
 						{title}
