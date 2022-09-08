@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useLanguage, useNavigation, useTransaction } from '@hooks';
-import Text from '../Text/Text';
-import TransactionIcon from '../TransactionIcon/TransactionIcon';
+import Text from '@src/components/Text/Text';
+import TransactionIcon from '@src/components/TransactionIcon/TransactionIcon';
 import { styles } from './Transaction.styles';
 import { TransactionProps } from './Transaction.types';
 

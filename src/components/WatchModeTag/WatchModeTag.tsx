@@ -1,12 +1,10 @@
 /* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
-import { View } from 'react-native';
 import { useLanguage, useNavigation, useNetwork } from '@hooks';
-import Icon from '../Icon/Icon';
-import Text from '../Text/Text';
-import Touchable from '../Touchable/Touchable';
-import styles from './WatchModeTag.styles';
+import Icon from '@src/components/Icon/Icon';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
+import Touchable from '@src/components/Touchable/Touchable';
 import { WatchModeTagProps } from './WatchModeTag.types';
 
 const WatchModeTag: React.FC<WatchModeTagProps> = ({ needToChangeNetwork }) => {
@@ -15,10 +13,21 @@ const WatchModeTag: React.FC<WatchModeTagProps> = ({ needToChangeNetwork }) => {
 	const navigation = useNavigation();
 
 	return (
-		<View style={styles.container}>
-			<Touchable onPress={() => navigation.navigate('ImportWalletScreen')} style={styles.left}>
+		<View
+			row
+			w="100%"
+			main="center"
+			cross="center"
+		>
+			<Touchable
+				row
+				main="space-between"
+				cross="center"
+				onPress={() => navigation.navigate('ImportWalletScreen')}
+			>
 				<Icon size={16} name="walletConnectStroke" />
-				<Text type="span" style={{ marginLeft: 8 }}>
+				<View mr="xxs" />
+				<Text type="span">
 					{needToChangeNetwork
 						? i18n.t('Components.WatchModeTag.this_wallet_needs_to_be_reconnected', { network: network.name })
 						: i18n.t('Components.WatchModeTag.import_wallet')}

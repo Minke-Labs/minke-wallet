@@ -13,7 +13,7 @@ const TextComponent: React.FC<Partial<TextComponentProps>> = ({
 	width = 0,
 	center = false,
 	numberOfLines,
-	mb,
+	mb = 'zero',
 	style
 }) => {
 	const { colors } = useTheme();

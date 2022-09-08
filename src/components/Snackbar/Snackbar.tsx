@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal as RNModal } from 'react-native';
 import { Snackbar as RNPSnackbar } from 'react-native-paper';
-import Text from '../Text/Text';
+import Text from '@src/components/Text/Text';
 
 interface SnackbarProps {
 	title?: string;

@@ -1,12 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
 import { useLanguage } from '@hooks';
-import TokenInputInner from '../TokenInputInner/TokenInputInner';
-import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
-import Touchable from '../Touchable/Touchable';
+import Text from '@src/components/Text/Text';
+import Icon from '@src/components/Icon/Icon';
+import View from '@src/components/View/View';
+import Touchable from '@src/components/Touchable/Touchable';
+import TokenInputInner from '@src/components/TokenInputInner/TokenInputInner';
 import { TokenAmountInputProps } from './TokenAmountInput.types';
-import styles from './TokenAmountInput.styles';
 import { useTokenAmountInput } from './TokenAmountInput.hooks';
 
 const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
@@ -28,7 +27,7 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 	});
 	const { i18n } = useLanguage();
 	return (
-		<View style={styles.container}>
+		<View mb="xs">
 			<TokenInputInner
 				{...{
 					symbol,
@@ -41,14 +40,21 @@ const TokenAmountInput: React.FC<TokenAmountInputProps> = ({
 				}}
 			/>
 
-			<View style={styles.buttonsContainer}>
+			<View
+				h={40}
+				row
+				main="flex-end"
+				cross="center"
+			>
 				<Touchable onPress={() => !!onMaxPress && onMaxPress(showSymbol)}>
-					<Text type="a" weight="medium" color="text7" style={{ marginRight: 12 }}>
+					<Text type="a" weight="medium" color="text7">
 						{i18n.t('Components.TokenAmountInput.send_max')}
 					</Text>
 				</Touchable>
-				<Touchable style={styles.touchable} onPress={() => setShowSymbol(!showSymbol)}>
-					<Icon name="tradeStroke" color="text7" size={16} style={{ marginRight: 4 }} />
+				<View mr="xxs" />
+				<Touchable row onPress={() => setShowSymbol(!showSymbol)}>
+					<Icon name="tradeStroke" color="text7" size={16} />
+					<View mr="xxxs" />
 					<Text type="a" color="text7" weight="medium">
 						{!showSymbol ? symbol : 'USD'}
 					</Text>

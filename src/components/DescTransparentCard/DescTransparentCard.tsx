@@ -8,7 +8,7 @@ type DescTransparentCardProps = {
 };
 
 const DescTransparentCard = ({ children, fullHeight = false }: DescTransparentCardProps) => (
-	<TransparentCard marginBottom={16}>
+	<TransparentCard mb="xs">
 		<ScrollView style={{ height: fullHeight ? undefined : 250 }}>{children}</ScrollView>
 	</TransparentCard>
 );

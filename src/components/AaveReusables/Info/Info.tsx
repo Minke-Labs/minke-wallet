@@ -24,7 +24,7 @@ const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ margi
 				}}
 			>
 				<Touchable onPress={() => Linking.openURL('https://aave.com/')}>
-					<TransparentCard row padding={16}>
+					<TransparentCard row p="xs">
 						<Icon name="siteStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
 							{i18n.t('Components.AaveReusables.Info.view_site')}
@@ -34,7 +34,7 @@ const Info: React.FC<{ marginBottom?: number; fullHeight?: boolean }> = ({ margi
 				</Touchable>
 
 				<Touchable onPress={() => Linking.openURL('https://docs.aave.com/faq/')}>
-					<TransparentCard row padding={16}>
+					<TransparentCard row p="xs">
 						<Icon name="learnStroke" color="cta1" size={24} style={{ marginRight: 8 }} />
 						<Text type="a" color="text2">
 							{i18n.t('Components.AaveReusables.Info.learn_more')}
