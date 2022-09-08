@@ -7,9 +7,11 @@ import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageCon
 import NetworkProvider, { NetworkContext } from './NetworkContext/NetworkContext';
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
 import NFTProvider, { NFTContext } from './NFTContext/NFTContext';
+import BalanceProvider, { BalanceContext } from './BalanceContext/BalanceContext';
 import WalletConnectProvider from './WalletConnectContext/WalletConnectContext';
 
 export {
+	BalanceContext,
 	ThemeContext,
 	AmplitudeContext,
 	LanguageContext,
@@ -23,6 +25,7 @@ export {
 };
 
 export const providers = [
+	BalanceProvider,
 	ThemeProvider,
 	AmplitudeProvider,
 	BiconomyProvider,

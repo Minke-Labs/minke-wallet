@@ -68,7 +68,6 @@ export const getTokenBalances = async (address: string): Promise<AccountBalance>
 		const balance = walletBalance + depositedBalance;
 		const balances = { walletBalance, depositedBalance, balance };
 		AsyncStorage.setItem('@balances', JSON.stringify(balances));
-
 		return {
 			address,
 			tokens,
