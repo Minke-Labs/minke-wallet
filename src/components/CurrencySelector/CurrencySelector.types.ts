@@ -5,3 +5,8 @@ export interface CurrencySelectorProps {
 	onPress: () => void;
 	notTouchable: boolean;
 }
+
+export interface TitlesProps {
+	currency: Currency;
+	notTouchable?: boolean;
+}

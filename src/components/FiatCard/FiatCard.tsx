@@ -1,11 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
+import View from '@src/components/View/View';
+import TokenInputInner from '@src/components/TokenInputInner/TokenInputInner';
+import CurrencySelector from '@src/components/CurrencySelector/CurrencySelector';
+import Touchable from '@src/components/Touchable/Touchable';
 import { FiatCardProps } from './FiatCard.types';
 import { useFiatCard } from './FiatCard.hooks';
-import { makeStyles } from './FiatCard.styles';
-import TokenInputInner from '../TokenInputInner/TokenInputInner';
-import CurrencySelector from '../CurrencySelector/CurrencySelector';
-import Touchable from '../Touchable/Touchable';
 
 const FiatCard: React.FC<FiatCardProps> = ({
 	currency,
@@ -17,7 +16,6 @@ const FiatCard: React.FC<FiatCardProps> = ({
 	disableInput = false,
 	autoFocus = true
 }) => {
-	const styles = makeStyles();
 	const { amount, onChangeText, invalidAmount } = useFiatCard({
 		updateQuotes,
 		conversionAmount,
@@ -25,16 +23,15 @@ const FiatCard: React.FC<FiatCardProps> = ({
 	});
 
 	return (
-		<Touchable onPress={onPress} style={styles.container}>
-			<CurrencySelector currency={currency} onPress={onPress!} notTouchable={notTouchable} />
+		<Touchable onPress={onPress} w="100%">
 
-			<View
-				style={{
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center'
-				}}
-			>
+			<CurrencySelector
+				currency={currency}
+				onPress={onPress!}
+				notTouchable={notTouchable}
+			/>
+
+			<View row main="space-between" cross="center">
 				<TokenInputInner
 					symbol={currency?.name || ''}
 					isAmountValid={disableAmountValidation || !invalidAmount}
@@ -48,6 +45,7 @@ const FiatCard: React.FC<FiatCardProps> = ({
 					editable={!disableInput}
 				/>
 			</View>
+
 		</Touchable>
 	);
 };

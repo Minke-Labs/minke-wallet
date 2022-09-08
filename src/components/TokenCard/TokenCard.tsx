@@ -31,7 +31,12 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	return (
 		<>
 			<Touchable onPress={onPress} w="100%">
-				<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
+				<CoinSelector
+					token={token}
+					onPress={onPress!}
+					notTouchable={notTouchable}
+					inline={exchange}
+				/>
 			</Touchable>
 
 			<View row={exchange}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, TouchableOpacity, View } from 'react-native';
+import { Keyboard, TouchableOpacity } from 'react-native';
 import {
 	ApplePayButton,
 	FiatCard,
@@ -10,7 +10,8 @@ import {
 	ModalReusables,
 	OnrampButton,
 	Text,
-	TokenCard
+	TokenCard,
+	View
 } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
@@ -20,12 +21,10 @@ import { debounce } from 'lodash';
 import WebView from 'react-native-webview';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useAddFundsScreen from './AddFundsScreen.hooks';
-import { makeStyles } from './AddFundsScreen.styles';
 
 const AddFundsScreen = () => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const {
 		currency,
 		selectCurrency,
@@ -66,8 +65,24 @@ const AddFundsScreen = () => {
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
 					<Header title={i18n.t('AddFundsScreen.header')} marginBottom={36} />
 
-					<View style={styles.container}>
-						<View style={styles.top}>
+					<View
+						bgc="background5"
+						br="xs"
+						mh="xs"
+						mb="s"
+						main="center"
+						cross="center"
+					>
+						<View
+							ph="xs"
+							pt="xs"
+							pb="s"
+							w="100%"
+							style={{
+								borderBottomWidth: 1,
+								borderBottomColor: colors.background1
+							}}
+						>
 							<Text type="lSmall" weight="semiBold" color="text1" mb="xxs">
 								{i18n.t('AddFundsScreen.you_pay')}
 							</Text>
@@ -80,8 +95,14 @@ const AddFundsScreen = () => {
 								autoFocus={false}
 							/>
 						</View>
-						<View style={styles.bottom}>
-							<Text type="lSmall" weight="semiBold" color="text1">
+
+						<View
+							ph="xs"
+							pb="xs"
+							pt="s"
+							w="100%"
+						>
+							<Text type="lSmall" weight="semiBold" color="text1" mb="xxs">
 								{i18n.t('AddFundsScreen.you_receive')}
 							</Text>
 							<TokenCard
@@ -98,7 +119,8 @@ const AddFundsScreen = () => {
 
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
-					<View style={styles.buttons}>
+
+					<View mh="xs" mb="xs">
 						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
@@ -127,6 +149,7 @@ const AddFundsScreen = () => {
 							/>
 						)}
 					</View>
+
 					<KeyboardSpacer />
 				</TouchableOpacity>
 			</BasicLayout>

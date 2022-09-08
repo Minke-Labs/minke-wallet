@@ -6,3 +6,9 @@ export interface CoinSelectorProps {
 	notTouchable: boolean;
 	inline?: boolean;
 }
+
+export interface TitlesProps {
+	token: MinkeToken;
+	inline?: boolean;
+	notTouchable?: boolean;
+}

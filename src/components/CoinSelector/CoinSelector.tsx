@@ -1,37 +1,31 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useLanguage, useTheme } from '@hooks';
+import { useLanguage } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { TokenType } from '@styles';
-import { MinkeToken } from '@models/types/token.types';
-import styles from './CoinSelector.styles';
-import Text from '../Text/Text';
-import Icon from '../Icon/Icon';
-import Token from '../Token/Token';
-import Touchable from '../Touchable/Touchable';
-import { CoinSelectorProps } from './CoinSelector.types';
+import View from '@src/components/View/View';
+import Text from '@src/components/Text/Text';
+import Icon from '@src/components/Icon/Icon';
+import Token from '@src/components/Token/Token';
+import Touchable from '@src/components/Touchable/Touchable';
+import { CoinSelectorProps, TitlesProps } from './CoinSelector.types';
 
-const NoTokenIcon = () => {
-	const { colors } = useTheme();
-	return (
-		<View style={[styles.noTokenIcon, { backgroundColor: colors.background6 }]}>
-			<Icon name="dollar" color="cta1" size={30} />
-		</View>
-	);
-};
-
-interface TitlesProps {
-	token: MinkeToken;
-	inline?: boolean;
-	notTouchable?: boolean;
-}
+const NoTokenIcon = () => (
+	<View
+		round={40}
+		bgc="background6"
+		main="center"
+		cross="center"
+	>
+		<Icon name="dollar" color="cta1" size={30} />
+	</View>
+);
 
 const Titles: React.FC<TitlesProps> = ({ token, inline, notTouchable = false }) => {
 	const { i18n } = useLanguage();
 	const { balance = '0', balanceUSD = 0, symbol } = token;
 	return (
 		<>
-			<View style={styles.titlesUpper}>
+			<View row cross="center">
 				<Text type="p2" style={{ marginRight: inline ? 4 : 8 }} weight="extraBold">
 					{symbol}
 				</Text>
@@ -50,16 +44,11 @@ const Titles: React.FC<TitlesProps> = ({ token, inline, notTouchable = false }) 
 const TitlesEmpty = () => {
 	const { i18n } = useLanguage();
 	return (
-		<View
-			style={{
-				height: '100%',
-				flexDirection: 'row',
-				alignItems: 'center'
-			}}
-		>
-			<Text type="p2" weight="medium" style={{ marginRight: 4 }}>
+		<View row cross="center" h="100%">
+			<Text type="p2" weight="medium">
 				{i18n.t('Components.TokenCard.choose_token')}
 			</Text>
+			<View mr="xxxs" />
 			<Icon name="chevronDown" color="cta1" size={16} />
 		</View>
 	);
@@ -67,7 +56,7 @@ const TitlesEmpty = () => {
 
 const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, token, inline = false }) => (
 	<Touchable onPress={onPress} opacity={notTouchable ? 1 : 0.6}>
-		<View style={styles.container}>
+		<View row mb="xs" cross="center">
 			{token ? (
 				<Token name={(token.symbol || '').toLowerCase() as TokenType} size={inline ? 28 : 40} />
 			) : (
@@ -75,17 +64,11 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, toke
 			)}
 
 			<View
-				style={[
-					styles.titlesContainer,
-					{
-						marginLeft: inline ? 8 : 16
-					},
-					inline && {
-						flexDirection: 'row',
-						alignItems: 'center',
-						flex: 1
-					}
-				]}
+				main="space-between"
+				ml={inline ? 'xxs' : 'xs'}
+				row={inline}
+				flex1={inline}
+				cross={inline ? 'center' : 'flex-start'}
 			>
 				{token ? <Titles {...{ token, inline, notTouchable }} /> : <TitlesEmpty />}
 			</View>
