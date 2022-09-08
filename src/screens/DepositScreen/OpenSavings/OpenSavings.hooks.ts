@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { approvalTransaction } from '@models/deposit';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
@@ -8,7 +8,7 @@ import { gaslessApproval } from '@models/gaslessTransaction';
 
 export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
-	const [loading, setLoading] = React.useState(false);
+	const [loading, setLoading] = useState(false);
 	const {
 		address,
 		privateKey,

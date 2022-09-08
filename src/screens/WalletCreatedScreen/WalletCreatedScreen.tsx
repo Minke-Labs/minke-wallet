@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
@@ -13,7 +13,7 @@ const WalletCreatedScreen = () => {
 	RNUxcam.tagScreenName('WalletCreatedScreen');
 	const { i18n } = useLanguage();
 	const { backupManually, seed, walletId } = useWalletCreatedScreen();
-	const [error, setError] = React.useState<string | undefined>();
+	const [error, setError] = useState<string | undefined>();
 	const { handleIcloudBackup, isWalletLoading, backupError } = iCloudBackup(walletId || '');
 
 	useEffect(() => {

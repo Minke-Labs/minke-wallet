@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Header, Text, Paper, TransactionIcon, Icon, Button, Token, Snackbar } from '@components';
 import { BasicLayout } from '@layouts';
@@ -19,7 +19,7 @@ const TransactionScreen = ({ route }: Props) => {
 	const { i18n } = useLanguage();
 	const { network } = useGlobalWalletState();
 	const explorer = network.id === networks.matic.id ? 'PolygonScan' : 'EtherScan';
-	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+	const [snackbarVisible, setSnackbarVisible] = useState(false);
 
 	const {
 		received,

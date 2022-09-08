@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAmplitude, useBiconomy, useDepositProtocols, useGlobalWalletState, useWalletManagement } from '@hooks';
 import Logger from '@utils/logger';
@@ -8,8 +8,8 @@ import { captureException } from '@sentry/react-native';
 
 export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
-	const [loading, setLoading] = React.useState(false);
-	const [blockchainError, setBlockchainError] = React.useState(false);
+	const [loading, setLoading] = useState(false);
+	const [blockchainError, setBlockchainError] = useState(false);
 	const { address, privateKey } = useGlobalWalletState();
 
 	const { depositableToken, selectedProtocol, depositContract } = useDepositProtocols();

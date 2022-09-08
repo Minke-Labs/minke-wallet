@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { forEach } from 'lodash';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
-import { globalWalletState } from '@stores/WalletStore';
-import { useState } from '@hookstate/core';
 import { IconItem } from '@components';
-import { useLanguage, useNavigation, useWallets } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation, useWallets } from '@hooks';
 import { smallWalletAddress } from '@models/wallet';
 import { findLatestBackUpOnICloud } from '@models/backup';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
@@ -18,9 +16,8 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 	const { i18n } = useLanguage();
 	const { wallets } = useWallets();
 	const navigation = useNavigation();
-	const [latestBackup, setLatestBackup] = React.useState<string | null>();
-	const state = useState(globalWalletState());
-	const { address } = state.value;
+	const [latestBackup, setLatestBackup] = useState<string | null>();
+	const { address } = useGlobalWalletState();
 	const connector = useWalletConnect();
 	const { connected } = connector;
 

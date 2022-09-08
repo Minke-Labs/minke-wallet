@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
@@ -47,7 +47,7 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 		interestBearingTokens.includes(sourceToken!.symbol.toLowerCase());
 	const source = received ? from : destination;
 	const timestamp = new Date(+timeStamp * 1000);
-	const [formattedSource, setFormattedSource] = React.useState(smallWalletAddress(source, walletDigits));
+	const [formattedSource, setFormattedSource] = useState(smallWalletAddress(source, walletDigits));
 
 	useEffect(() => {
 		const formatAddress = async () => {

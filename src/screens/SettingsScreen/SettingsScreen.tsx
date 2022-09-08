@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
@@ -28,8 +28,8 @@ const SettingsScreen = () => {
 		network: { chainId }
 	} = state.value;
 	const navigation = useNavigation();
-	const [creatingWallet, setCreatingWallet] = React.useState(false);
-	const [deleteModal, setDeleteModal] = React.useState(false);
+	const [creatingWallet, setCreatingWallet] = useState(false);
+	const [deleteModal, setDeleteModal] = useState(false);
 
 	const goBack = () => navigation.goBack();
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');

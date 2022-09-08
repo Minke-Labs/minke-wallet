@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Paper,
 	View,
@@ -14,7 +14,7 @@ import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview: React.FC = () => {
 	const { i18n } = useLanguage();
-	const [investmentHighlights, setInvestmentHighlights] = React.useState<InvestmentToken[]>([]);
+	const [investmentHighlights, setInvestmentHighlights] = useState<InvestmentToken[]>([]);
 	const {
 		network: { topUpTokens }
 	} = useGlobalWalletState();

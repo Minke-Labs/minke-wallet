@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { captureException } from '@sentry/react-native';
 import { network as selectedNetwork } from '@models/network';
 import { trackWyreTransfer } from '@models/wyre';
@@ -8,9 +8,9 @@ const MAX_ERROR_TRIES = 3;
 let transferHashHandle: null | ReturnType<typeof setTimeout> = null;
 
 const useWyreTransferStatus = (transfer: string) => {
-	const [transactionHash, setTransactionHash] = React.useState<string | null>(null);
-	const [amount, setAmount] = React.useState<number | null>(null);
-	const [currency, setCurrency] = React.useState<string | null>(null);
+	const [transactionHash, setTransactionHash] = useState<string | null>(null);
+	const [amount, setAmount] = useState<number | null>(null);
+	const [currency, setCurrency] = useState<string | null>(null);
 
 	const getTransferHash = useCallback(
 		async (remainingTries = MAX_TRIES, remainingErrorTries = MAX_ERROR_TRIES) => {

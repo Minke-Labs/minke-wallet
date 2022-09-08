@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
 import { fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
@@ -30,9 +30,9 @@ export const TransactionsContext = React.createContext<TransactionContextProps>(
 const TransactionsProvider: React.FC = ({ children }) => {
 	const { i18n } = useLanguage();
 	const { state } = useWalletState();
-	const [loading, setLoading] = React.useState(true);
-	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);
-	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
+	const [loading, setLoading] = useState(true);
+	const [pendingTransactions, setPendingTransactions] = useState<ZapperTransaction[]>([]);
+	const [lastTransactionsFetch, setLastTransationsFetch] = useState<number>();
 	const {
 		address,
 		network: { chainId },

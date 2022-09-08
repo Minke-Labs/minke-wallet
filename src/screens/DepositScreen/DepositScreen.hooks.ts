@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@hooks';
 
 export const useDepositScreen = () => {
 	const navigation = useNavigation();
-	const [notAbleToSaveVisible, setNotAbleToSaveVisible] = React.useState(true);
-	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
+	const [notAbleToSaveVisible, setNotAbleToSaveVisible] = useState(true);
+	const [addFundsVisible, setAddFundsVisible] = useState(false);
 
 	const notAbleToSaveDismiss = () => {
 		setNotAbleToSaveVisible(false);

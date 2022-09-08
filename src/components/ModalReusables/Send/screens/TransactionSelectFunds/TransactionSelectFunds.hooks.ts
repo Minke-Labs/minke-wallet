@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { imageSource } from '@models/wallet';
 import { useTokens } from '@hooks';
 import { exchangebleTokens } from '@models/token';
@@ -9,7 +9,7 @@ interface UseTransactionSelectFundsProps {
 }
 
 export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsProps) => {
-	const [image, setImage] = React.useState<{ uri: string }>();
+	const [image, setImage] = useState<{ uri: string }>();
 	const { accountBalance } = useTokens();
 	const { tokens } = accountBalance;
 

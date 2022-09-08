@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
@@ -12,8 +12,8 @@ import styles from './CreateBackupPassword.styles';
 const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const [password, setPassword] = React.useState<string>();
-	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
+	const [password, setPassword] = useState<string>();
+	const [passwordConfirmation, setPasswordConfirmation] = useState<string>();
 	const { walletCloudBackup, isWalletLoading } = useWalletCloudBackup();
 
 	const keyboardVisible = useKeyboard();

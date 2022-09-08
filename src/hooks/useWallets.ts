@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AllMinkeWallets, getAllWallets, MinkeWallet } from '@models/wallet';
 import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
@@ -9,7 +9,7 @@ interface UseWallets {
 }
 
 const useWallets = (): UseWallets => {
-	const [wallets, setWallets] = React.useState<AllMinkeWallets>({});
+	const [wallets, setWallets] = useState<AllMinkeWallets>({});
 	const { address } = useGlobalWalletState();
 
 	useEffect(() => {

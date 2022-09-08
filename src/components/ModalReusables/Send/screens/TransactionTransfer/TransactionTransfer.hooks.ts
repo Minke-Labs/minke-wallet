@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	useWalletState,
 	useAmplitude,
@@ -50,14 +50,14 @@ export const useTransactionTransfer = ({
 	token
 }: UseTransactionTransferProps) => {
 	const { track } = useAmplitude();
-	const [image, setImage] = React.useState<{ uri: string }>();
-	const [amount, onChangeAmount] = React.useState('');
-	const [number, onChangeNumber] = React.useState<Number>();
-	const [chainDefaultToken, setChainDefaultToken] = React.useState('');
-	const [sending, setSending] = React.useState(false);
-	const [gasPrice, setGasPrice] = React.useState<EstimateGasResponse>();
-	const [amountType, setAmountType] = React.useState<'fiat' | 'token'>('fiat');
-	const [enoughGas, setEnoughGas] = React.useState(true);
+	const [image, setImage] = useState<{ uri: string }>();
+	const [amount, onChangeAmount] = useState('');
+	const [number, onChangeNumber] = useState<Number>();
+	const [chainDefaultToken, setChainDefaultToken] = useState('');
+	const [sending, setSending] = useState(false);
+	const [gasPrice, setGasPrice] = useState<EstimateGasResponse>();
+	const [amountType, setAmountType] = useState<'fiat' | 'token'>('fiat');
+	const [enoughGas, setEnoughGas] = useState(true);
 	const { addPendingTransaction } = useTransactions();
 	const { gaslessEnabled, biconomy } = useBiconomy();
 	const gasless = gaslessEnabled && chainDefaultToken !== token.symbol;
