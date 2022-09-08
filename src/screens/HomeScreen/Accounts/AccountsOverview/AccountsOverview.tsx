@@ -7,11 +7,9 @@ import {
 	Touchable,
 	BlankStates
 } from '@components';
-import { useLanguage, useNavigation, useTokens } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation, useTokens } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview: React.FC = () => {
@@ -19,7 +17,7 @@ export const AccountsOverview: React.FC = () => {
 	const [investmentHighlights, setInvestmentHighlights] = React.useState<InvestmentToken[]>([]);
 	const {
 		network: { topUpTokens }
-	} = useState(globalWalletState()).value;
+	} = useGlobalWalletState();
 	const navigation = useNavigation();
 	const { accountBalance } = useTokens();
 	const { stablecoins = [], tokens = [] } = accountBalance;

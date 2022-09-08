@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import useWyreTransferStatus from '@src/hooks/useWyreTransferStatus';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useTransactions } from '@hooks';
+import { useGlobalWalletState, useNavigation, useTransactions } from '@hooks';
 import { useState } from '@hookstate/core';
 import { globalRedeemState, RedeemState } from '@stores/RedeemStore';
-import { globalWalletState } from '@stores/WalletStore';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Processing } from '../TopUpWaitScreen/Processing/Processing';
@@ -16,7 +15,7 @@ const TransferWaitScreen = ({ route }: Props) => {
 	const { transactionHash, amount, currency } = useWyreTransferStatus(transferId);
 	const navigation = useNavigation();
 	const redeemState = useState(globalRedeemState());
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 	const { addPendingTransaction } = useTransactions();
 
 	const onFinish = () => {

@@ -3,13 +3,13 @@ import { Alert, Share } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Button, Header, Text, View } from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from '@hookstate/core';
 import { getUniqueId } from 'react-native-device-info';
-import { globalWalletState } from '@stores/WalletStore';
 import { deleteAllBackups } from '@models/cloudBackup';
+import { useGlobalWalletState } from '@hooks';
 
 const DevSettingsScreen = () => {
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
+
 	const resetAppTour = async () => {
 		await AsyncStorage.removeItem('isFirstTimeLoaded?');
 	};

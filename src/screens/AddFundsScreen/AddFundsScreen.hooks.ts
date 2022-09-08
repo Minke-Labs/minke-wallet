@@ -1,11 +1,17 @@
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Keyboard, Platform } from 'react-native';
 import { Currency } from '@models/types/currency.types';
-import { useAmplitude, useCountry, useCurrencies, useLanguage, useNavigation, useWyreApplePay } from '@hooks';
+import {
+	useAmplitude,
+	useCountry,
+	useCurrencies,
+	useGlobalWalletState,
+	useLanguage,
+	useNavigation,
+	useWyreApplePay
+} from '@hooks';
 import { countries } from '@styles';
 import { getWalletOrderQuotation } from '@models/wyre';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { TopupToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
@@ -16,18 +22,18 @@ import * as qs from 'qs';
 import * as Linking from 'expo-linking';
 
 const useAddFundsScreen = () => {
-	const { address, network } = useState(globalWalletState()).value;
+	const { address, network } = useGlobalWalletState();
 	const { topUpTokens, nativeToken } = network;
-	const [currency, setCurrency] = React.useState<Currency>();
-	const [token, setToken] = React.useState<TopupToken>();
-	const [currencySearchVisible, setCurrencySearchVisible] = React.useState(false);
-	const [tokenSearchVisible, setTokenSearchVisible] = React.useState(false);
-	const [loadingPrices, setLoadingPrices] = React.useState(false);
-	const [tokenAmount, setTokenAmount] = React.useState<string | undefined>();
-	const [fiatAmount, setFiatAmount] = React.useState<string | undefined>();
-	const [fiat, setFiat] = React.useState(false);
-	const [error, setError] = React.useState('');
-	const [orderLink, setOrderLink] = React.useState('');
+	const [currency, setCurrency] = useState<Currency>();
+	const [token, setToken] = useState<TopupToken>();
+	const [currencySearchVisible, setCurrencySearchVisible] = useState(false);
+	const [tokenSearchVisible, setTokenSearchVisible] = useState(false);
+	const [loadingPrices, setLoadingPrices] = useState(false);
+	const [tokenAmount, setTokenAmount] = useState<string | undefined>();
+	const [fiatAmount, setFiatAmount] = useState<string | undefined>();
+	const [fiat, setFiat] = useState(false);
+	const [error, setError] = useState('');
+	const [orderLink, setOrderLink] = useState('');
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();

@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
+import { useState, useEffect } from 'react';
 import { AccountBalance } from '@models/token';
 import { getTokenBalances } from '@src/services/apis';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 const useTokens = () => {
-	const { address } = useState(globalWalletState()).value;
-	const [loadingBalance, setLoadingBalance] = React.useState(false);
-	const [accountBalance, setAccountBalance] = React.useState<AccountBalance>({} as AccountBalance);
+	const { address } = useGlobalWalletState();
+	const [loadingBalance, setLoadingBalance] = useState(false);
+	const [accountBalance, setAccountBalance] = useState<AccountBalance>({} as AccountBalance);
 
 	useEffect(() => {
 		const loadTokens = async () => {

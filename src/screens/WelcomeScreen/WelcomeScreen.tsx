@@ -3,10 +3,8 @@ import { Image } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
 import { Text, Button, LoadingScreen, Icon, Touchable, View } from '@components';
-import { useLanguage, useNavigation } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
 import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';
@@ -18,7 +16,7 @@ const WelcomeScreen = () => {
 	const { onCreateWallet, onImportWallet, loading } = useWelcomeScreen();
 	const navigation = useNavigation();
 	const { disableCode } = useEnterReferralCodeScreen();
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 
 	return (
 		<BasicLayout>

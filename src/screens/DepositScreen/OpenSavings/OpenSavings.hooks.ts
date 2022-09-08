@@ -1,12 +1,10 @@
 import React from 'react';
 import { approvalTransaction } from '@models/deposit';
-import { globalWalletState } from '@src/stores/WalletStore';
 import { getProvider } from '@src/model/wallet';
 import { Wallet } from 'ethers';
-import { useAmplitude, useBiconomy, useDepositProtocols } from '@hooks';
+import { useAmplitude, useBiconomy, useDepositProtocols, useGlobalWalletState } from '@hooks';
 import Logger from '@utils/logger';
 import { gaslessApproval } from '@models/gaslessTransaction';
-import { useState } from '@hookstate/core';
 
 export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -17,7 +15,7 @@ export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 		network: {
 			aave: { depositContract: aaveDepositContract }
 		}
-	} = useState(globalWalletState()).value;
+	} = useGlobalWalletState();
 	const { depositableToken } = useDepositProtocols();
 	const { track } = useAmplitude();
 
@@ -28,7 +26,7 @@ export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 		if (gaslessEnabled) {
 			const hash = await gaslessApproval({
 				address,
-				privateKey,
+				privateKey: privateKey!,
 				biconomy,
 				contract: depositableToken.address,
 				spender: aaveDepositContract
@@ -45,7 +43,7 @@ export const useOpenSavings = ({ onApprove }: { onApprove: () => void }) => {
 			const transaction = await approvalTransaction(address, depositableToken.address);
 			const { data, from, to, maxFeePerGas, maxPriorityFeePerGas } = transaction;
 			const provider = await getProvider();
-			const wallet = new Wallet(privateKey, provider);
+			const wallet = new Wallet(privateKey!, provider);
 			const chainId = await wallet.getChainId();
 			const nonce = await provider.getTransactionCount(address, 'latest');
 			Logger.log(`Approval API ${JSON.stringify(transaction)}`);

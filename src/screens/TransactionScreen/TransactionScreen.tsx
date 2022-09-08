@@ -2,11 +2,9 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Header, Text, Paper, TransactionIcon, Icon, Button, Token, Snackbar } from '@components';
 import { BasicLayout } from '@layouts';
-import { useLanguage, useTransaction } from '@hooks';
+import { useGlobalWalletState, useLanguage, useTransaction } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { networks } from '@models/network';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
@@ -19,7 +17,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'TransactionScreen'>;
 const TransactionScreen = ({ route }: Props) => {
 	const { transaction } = route.params;
 	const { i18n } = useLanguage();
-	const { network } = useState(globalWalletState()).value;
+	const { network } = useGlobalWalletState();
 	const explorer = network.id === networks.matic.id ? 'PolygonScan' : 'EtherScan';
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 

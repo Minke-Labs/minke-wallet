@@ -11,11 +11,10 @@ import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { getDepositToken } from '@models/depositTokens';
 import { network } from '@models/network';
 import { MinkeToken } from '@models/types/token.types';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { getTokenBalances } from '@src/services/apis';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import DepositService from '@src/services/deposit/DepositService';
+import { useGlobalWalletState } from '@hooks';
 
 const useDepositProtocols = (withdraw = false) => {
 	const [selectedProtocol, setSelectedProtocol] = React.useState<DepositProtocol>();
@@ -26,7 +25,7 @@ const useDepositProtocols = (withdraw = false) => {
 	const [ableToDeposit, setAbleToDeposit] = React.useState<boolean | undefined>();
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
 	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 
 	const onChangeProtocol = async (protocol: DepositProtocol) => {
 		await AsyncStorage.setItem('@depositProtocol', protocol.id);

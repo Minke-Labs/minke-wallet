@@ -1,11 +1,10 @@
 import { useState } from '@hookstate/core';
 import { getSeedPhrase } from '@models/wallet';
-import { globalWalletState } from '@src/stores/WalletStore';
-import { useNavigation, useAuthentication } from '@hooks';
+import { useNavigation, useAuthentication, useGlobalWalletState } from '@hooks';
 
 export const useWalletCreatedScreen = () => {
 	const navigation = useNavigation();
-	const { walletId } = useState(globalWalletState()).value;
+	const { walletId } = useGlobalWalletState();
 	const { showAuthenticationPrompt } = useAuthentication();
 
 	const backupManually = () =>

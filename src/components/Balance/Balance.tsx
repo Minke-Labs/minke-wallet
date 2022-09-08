@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import Text from '@src/components/Text/Text';
 import Paper from '@src/components/Paper/Paper';
 import View from '@src/components/View/View';
-import { useLanguage, useNavigation, useTheme } from '@hooks';
+import { useLanguage, useNavigation, useTheme, useGlobalWalletState } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
 import { MinkeToken } from '@models/types/token.types';
 import SendModalComponent from '@src/components/SendModalComponent/SendModalComponent';
@@ -20,6 +20,7 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const navigation = useNavigation();
+	const { network } = useGlobalWalletState();
 
 	const handleBuy = () => {
 		if (coin.symbol === 'USDC') navigation.navigate('AddFundsScreen');

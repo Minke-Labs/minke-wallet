@@ -2,16 +2,14 @@ import React from 'react';
 import { TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { Button, Icon, Input, Text } from '@components';
-import { useLanguage, useNavigation } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { whale5Img as whaleImage } from '@images';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import useEnterReferralCodeScreen from './EnterReferralCodeScreen.hooks';
 import styles from './EnterReferralCodeScreen.styles';
 
 const EnterReferralCodeScreen = () => {
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const {
