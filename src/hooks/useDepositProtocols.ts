@@ -16,6 +16,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { getTokenBalances } from '@src/services/apis';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import DepositService from '@src/services/deposit/DepositService';
+import { globalDepositState } from '@stores/DepositStore';
 
 const useDepositProtocols = (withdraw = false) => {
 	const [selectedProtocol, setSelectedProtocol] = React.useState<DepositProtocol>();
@@ -27,9 +28,11 @@ const useDepositProtocols = (withdraw = false) => {
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
 	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
 	const { address } = useState(globalWalletState()).value;
+	const depositState = useState(globalDepositState());
 
 	const onChangeProtocol = async (protocol: DepositProtocol) => {
 		await AsyncStorage.setItem('@depositProtocol', protocol.id);
+		depositState.set(protocol);
 		setSelectedProtocol(protocol);
 	};
 

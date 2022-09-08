@@ -9,7 +9,7 @@ import Logger from '@utils/logger';
 import { fetchInterestBearingTokens } from '@models/depositTokens';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
-import { useDepositProtocols } from '@hooks';
+import { globalDepositState } from '@stores/DepositStore';
 import { parse, ZapperCustomEvents } from './utils';
 
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
@@ -19,7 +19,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 		address,
 		network: { zapperNetwork }
 	} = useState(globalWalletState()).value;
-	const { selectedProtocol } = useDepositProtocols();
+	const { id: selectedProtocol } = useState(globalDepositState()).value;
 	const [tokens, setTokens] = React.useState<MinkeToken[]>([]);
 	const [interestTokens, setInterestTokens] = React.useState<MinkeToken[]>([]);
 	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
@@ -27,7 +27,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchInterests = async () => {
 			if (selectedProtocol) {
-				const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol.id);
+				const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
 				const [withdrawable] = allInterestTokens;
 				const interest = allInterestTokens.flat();
 				setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
