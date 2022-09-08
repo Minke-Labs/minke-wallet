@@ -172,7 +172,7 @@ export default {
 			invite_a_friend: 'Convide um amigo!'
 		},
 		Stories: {
-			learn_about_minke: 'Saiba mais sobre Minke'
+			learn_about_minke: 'Saiba mais sobre a Minke'
 		}
 	},
 	ImportWalletScreen: {

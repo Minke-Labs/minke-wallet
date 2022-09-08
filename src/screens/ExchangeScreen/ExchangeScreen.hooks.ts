@@ -34,14 +34,13 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
-	const [ownedTokens, setOwnedTokens] = React.useState<string[]>();
 	const [error, setError] = React.useState('');
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens, stablecoins } = useBalances();
-	const walletTokens = [...tokens, ...stablecoins];
+	const walletTokens = [...stablecoins, ...tokens];
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
@@ -204,7 +203,10 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	};
 
 	const canChangeDirections =
-		!loadingPrices && fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase());
+		!loadingPrices &&
+		fromToken &&
+		toToken &&
+		walletTokens.map(({ symbol }) => symbol.toLowerCase()).includes(toToken.symbol.toLowerCase());
 
 	const directionSwap = () => {
 		if (canChangeDirections) {
@@ -224,12 +226,6 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 			updateToToken(backup!);
 		}
 	};
-
-	useEffect(() => {
-		if (walletTokens) {
-			setOwnedTokens(walletTokens.map(({ symbol }) => symbol.toLowerCase()));
-		}
-	}, [walletTokens]);
 
 	useEffect(() => {
 		exchange.set({} as ExchangeState);

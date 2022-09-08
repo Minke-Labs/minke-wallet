@@ -55,9 +55,7 @@ const ExchangeScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('ExchangeScreen');
 
 	if (fromToken === undefined) {
-		return (
-			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Exchange')} />
-		);
+		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Exchange')} />;
 	}
 
 	return (
@@ -66,15 +64,7 @@ const ExchangeScreen = ({ route }: Props) => {
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
 					<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
 
-					<View
-						bgc="background5"
-						br="xs"
-						mh="xs"
-						mb="s"
-						main="center"
-						cross="center"
-					>
-
+					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
 						<View
 							ph="xs"
 							pt="xs"
@@ -94,12 +84,7 @@ const ExchangeScreen = ({ route }: Props) => {
 							/>
 						</View>
 
-						<View
-							ph="xs"
-							pb="xs"
-							pt="s"
-							w="100%"
-						>
+						<View ph="xs" pb="xs" pt="s" w="100%">
 							<TokenCard
 								updateQuotes={debounce(updateToQuotes, 500)}
 								conversionAmount={toConversionAmount}
@@ -128,11 +113,7 @@ const ExchangeScreen = ({ route }: Props) => {
 						</View>
 					</View>
 
-					<View
-						mh="xs"
-						mb="xs"
-						style={{ marginTop: os === 'android' ? undefined : 'auto' }}
-					>
+					<View mh="xs" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 						<Button
 							title={i18n.t('ExchangeScreen.review')}
 							onPress={goToExchangeResume}

@@ -73,6 +73,7 @@ const useDepositProtocols = (withdraw = false) => {
 			setDefaultToken(token);
 			return;
 		}
+
 		setAbleToDeposit(false);
 		setDefaultToken(null);
 	};
