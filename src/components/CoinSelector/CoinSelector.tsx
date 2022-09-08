@@ -9,9 +9,9 @@ import Token from '@src/components/Token/Token';
 import Touchable from '@src/components/Touchable/Touchable';
 import { CoinSelectorProps, TitlesProps } from './CoinSelector.types';
 
-const NoTokenIcon = () => (
+const NoTokenIcon: React.FC<{ inline: boolean }> = ({ inline }) => (
 	<View
-		round={40}
+		round={inline ? 28 : 40}
 		bgc="background6"
 		main="center"
 		cross="center"
@@ -60,7 +60,7 @@ const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, toke
 			{token ? (
 				<Token name={(token.symbol || '').toLowerCase() as TokenType} size={inline ? 28 : 40} />
 			) : (
-				<NoTokenIcon />
+				<NoTokenIcon {...{ inline }} />
 			)}
 
 			<View

@@ -74,6 +74,7 @@ const ExchangeScreen = ({ route }: Props) => {
 						main="center"
 						cross="center"
 					>
+
 						<View
 							ph="xs"
 							pt="xs"
@@ -92,6 +93,7 @@ const ExchangeScreen = ({ route }: Props) => {
 								exchange
 							/>
 						</View>
+
 						<View
 							ph="xs"
 							pb="xs"
