@@ -12,7 +12,7 @@ import {
 } from '@hooks';
 import { countries } from '@styles';
 import { getWalletOrderQuotation } from '@models/wyre';
-import { TopupToken } from '@models/types/token.types';
+import { MinkeToken, TopupToken } from '@models/types/token.types';
 import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { buyQuote } from '@src/services/apis/moonpay/moonpay';
@@ -21,11 +21,11 @@ import crypto from 'crypto';
 import * as qs from 'qs';
 import * as Linking from 'expo-linking';
 
-const useAddFundsScreen = () => {
+const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { address, network } = useGlobalWalletState();
 	const { topUpTokens, nativeToken } = network;
 	const [currency, setCurrency] = useState<Currency>();
-	const [token, setToken] = useState<TopupToken>();
+	const [token, setToken] = useState<TopupToken>(topupToken as MinkeToken);
 	const [currencySearchVisible, setCurrencySearchVisible] = useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = useState(false);
 	const [loadingPrices, setLoadingPrices] = useState(false);
@@ -327,7 +327,7 @@ const useAddFundsScreen = () => {
 	}, [country, currencies]);
 
 	useEffect(() => {
-		setToken(topUpTokens[0]);
+		if (!token?.symbol) setToken(topUpTokens[0]);
 	}, []);
 
 	useEffect(() => {

@@ -25,8 +25,11 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 	} = useGlobalWalletState();
 
 	const handleBuy = () => {
-		if (topUpTokens.map(({ symbol }) => symbol).includes(coin.symbol)) navigation.navigate('AddFundsScreen');
-		else navigation.navigate('ExchangeScreen', { destToken: coin });
+		if (topUpTokens.map(({ symbol }) => symbol).includes(coin.symbol)) {
+			navigation.navigate('AddFundsScreen', { topupToken: coin });
+		} else {
+			navigation.navigate('ExchangeScreen', { destToken: coin });
+		}
 	};
 
 	return (

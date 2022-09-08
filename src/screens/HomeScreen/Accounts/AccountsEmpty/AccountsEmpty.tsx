@@ -28,7 +28,7 @@ export const AccountsEmpty: React.FC = () => {
 			<Button
 				title={i18n.t('Components.Buttons.buy_usdc_now')}
 				mode="outlined"
-				onPress={() => navigation.navigate('AddFundsScreen')}
+				onPress={() => navigation.navigate('AddFundsScreen', {})}
 			/>
 		</Paper>
 	);

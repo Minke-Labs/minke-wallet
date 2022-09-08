@@ -12,14 +12,7 @@ const EnterReferralCodeScreen = () => {
 	const { address } = useGlobalWalletState();
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
-	const {
-		code,
-		setCode,
-		invalidCode,
-		onConfirm,
-		loading,
-		disableCode
-	} = useEnterReferralCodeScreen();
+	const { code, setCode, invalidCode, onConfirm, loading, disableCode } = useEnterReferralCodeScreen();
 
 	return (
 		<>
@@ -55,7 +48,7 @@ const EnterReferralCodeScreen = () => {
 								{code}
 							</Text>
 							<Button
-								onPress={() => navigation.navigate('AddFundsScreen')}
+								onPress={() => navigation.navigate('AddFundsScreen', {})}
 								title={i18n.t('EnterReferralCodeScreen.buy_usdc')}
 								mb="xxs"
 							/>

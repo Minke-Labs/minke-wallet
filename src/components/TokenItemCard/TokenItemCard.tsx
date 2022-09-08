@@ -52,7 +52,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 				</View>
 				{stablecoin && balanceUSD === 0 && (
 					<View h="100%" main="center" cross="flex-end" pr="xs">
-						<Touchable onPress={() => navigation.navigate('AddFundsScreen')}>
+						<Touchable onPress={() => navigation.navigate('AddFundsScreen', {})}>
 							<Text type="lLarge" weight="semiBold" color="cta1">
 								+ {i18n.t('Components.TokenItemCard.buy')}
 							</Text>

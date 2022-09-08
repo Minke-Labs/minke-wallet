@@ -19,10 +19,14 @@ import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { debounce } from 'lodash';
 import WebView from 'react-native-webview';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useAddFundsScreen from './AddFundsScreen.hooks';
 
-const AddFundsScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'AddFundsScreen'>;
+const AddFundsScreen = ({ route }: Props) => {
+	const { topupToken } = route.params;
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const {
@@ -56,7 +60,7 @@ const AddFundsScreen = () => {
 		disableMoonPay,
 		onMoonpayPurchase,
 		moonPaySpecialButton
-	} = useAddFundsScreen();
+	} = useAddFundsScreen(topupToken);
 	RNUxcam.tagScreenName('AddFundsScreen');
 
 	return (
@@ -65,14 +69,7 @@ const AddFundsScreen = () => {
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
 					<Header title={i18n.t('AddFundsScreen.header')} marginBottom={36} />
 
-					<View
-						bgc="background5"
-						br="xs"
-						mh="xs"
-						mb="s"
-						main="center"
-						cross="center"
-					>
+					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
 						<View
 							ph="xs"
 							pt="xs"
@@ -96,12 +93,7 @@ const AddFundsScreen = () => {
 							/>
 						</View>
 
-						<View
-							ph="xs"
-							pb="xs"
-							pt="s"
-							w="100%"
-						>
+						<View ph="xs" pb="xs" pt="s" w="100%">
 							<Text type="lSmall" weight="semiBold" color="text1" mb="xxs">
 								{i18n.t('AddFundsScreen.you_receive')}
 							</Text>
