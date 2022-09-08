@@ -1,10 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
 import { deviceWidth } from '@styles';
-import Text from '../Text/Text';
-import styles from './ModalHeader.styles';
-import Icon from '../Icon/Icon';
-import Touchable from '../Touchable/Touchable';
+import Text from '@src/components/Text/Text';
+import Icon from '@src/components/Icon/Icon';
+import Touchable from '@src/components/Touchable/Touchable';
+import View from '@src/components/View/View';
 
 interface ModalHeaderProps {
 	onBack?: () => void;
@@ -13,8 +12,14 @@ interface ModalHeaderProps {
 }
 
 const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = '' }) => (
-	<View style={styles.container}>
-		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+	<View
+		h={64}
+		row
+		main="space-between"
+		cross="center"
+		ph="xs"
+	>
+		<View row cross="center">
 			{!!onBack && (
 				<Touchable onPress={onBack}>
 					<Icon name="arrowBackStroke" size={24} color="text7" />
