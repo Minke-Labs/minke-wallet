@@ -27,7 +27,7 @@ export const useAssetsScreen = (coin: MinkeToken) => {
 	};
 
 	const fetchTokenVolume = async () => {
-		const res = await getTokenVolume(coin.id!);
+		const res = await getTokenVolume(coin.id);
 		if (res.errors) {
 			const res = await getTokenVolume(coin.name);
 			if (res.errors) {

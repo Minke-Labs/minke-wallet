@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useLanguage, useTokens } from '@hooks';
+import { useLanguage, useBalances } from '@hooks';
 import { AddFunds } from '@containers';
 import { AssetsLayout } from '@layouts';
 import { ActivityIndicator, Modal, Text, BlankStates } from '@components';
@@ -33,7 +33,7 @@ const WalletAssetsScreen = () => {
 	const { i18n } = useLanguage();
 	RNUxcam.tagScreenName('WalletAssetsScreen');
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
-	const { tokens, walletBalance: balance } = useTokens();
+	const { tokens, walletBalance: balance } = useBalances();
 
 	if (tokens === undefined) return <BlankStates.WalletAssets />;
 

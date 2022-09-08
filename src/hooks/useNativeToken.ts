@@ -4,13 +4,13 @@ import { MinkeToken } from '@models/types/token.types';
 import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from 'ethers';
-import useTokens from './useTokens';
+import useBalances from './useBalances';
 
 const useNativeToken = () => {
 	const [nativeToken, setNativeToken] = useState<MinkeToken>();
 	const [name, setName] = useState<string>();
 	const [balance, setBalance] = useState<BigNumber>();
-	const { tokens = [] } = useTokens();
+	const { tokens = [] } = useBalances();
 
 	useEffect(() => {
 		const loadNativeToken = async () => {

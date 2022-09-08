@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
 import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
-import { fetchTokensAndBalances } from '@stores/WalletStore';
 import { filterPendingTransactions } from '@models/transaction';
 import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
@@ -42,8 +41,7 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const fetchTransactions = async () => {
 		setLoading(true);
 		const { data = [] } = await getZapperTransactions(address!);
-		const { balance } = await fetchTokensAndBalances(address);
-		state.merge({ transactions: data, balance });
+		state.merge({ transactions: data });
 		setLoading(false);
 		setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
 		setLastTransationsFetch(new Date().getTime());

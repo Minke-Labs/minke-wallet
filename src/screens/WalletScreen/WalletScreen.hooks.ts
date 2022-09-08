@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAmplitude, useNavigation, useWalletState } from '@hooks';
+import { useAmplitude, useBalances, useNavigation, useWalletState } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { ResultProps } from './WalletScreen.types';
@@ -10,6 +10,7 @@ export const useWalletScreen = () => {
 	const [error, setError] = React.useState(false);
 	const [sendModalOpen, setSendModalOpen] = React.useState(false);
 	const navigation = useNavigation();
+	const { balance } = useBalances();
 
 	const [receiveVisible, setReceiveVisible] = React.useState(false);
 	const [addFundsVisible, setAddFundsVisible] = React.useState(false);
@@ -27,7 +28,7 @@ export const useWalletScreen = () => {
 	const hideReceive = () => setReceiveVisible(false);
 	const showReceive = () => setReceiveVisible(true);
 
-	const { address, balance } = state.value;
+	const { address } = state.value;
 
 	const onCopyToClipboard = () => {
 		Clipboard.setString(address || '');
@@ -43,7 +44,7 @@ export const useWalletScreen = () => {
 
 	useEffect(() => {
 		track('Wallet Screen Opened');
-		track('Wallet access', { active: (balance?.usd || 0) > 0, address });
+		track('Wallet access', { active: balance > 0, address });
 	}, []);
 
 	const onError = () => {
@@ -74,10 +75,10 @@ export const useWalletScreen = () => {
 		setOpenAvatarModal,
 		openAvatarModal,
 		address,
-		balance,
 		onError,
 		setError,
 		error,
-		onPointsPress
+		onPointsPress,
+		balance
 	};
 };

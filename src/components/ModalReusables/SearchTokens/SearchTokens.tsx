@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { useTheme, useLanguage, useTokens } from '@hooks';
+import { useTheme, useLanguage, useBalances } from '@hooks';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
@@ -33,7 +33,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [filteredTokens, setFilteredTokens] = React.useState<Array<MinkeToken>>();
 	const [search, setSearch] = React.useState('');
 	const [loading, setLoading] = React.useState(true);
-	const { withdrawableTokens } = useTokens();
+	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { network } = useState(globalWalletState()).value;

@@ -34,11 +34,11 @@ const WalletScreen = () => {
 		onCopyToClipboard,
 		onSendFinished,
 		address,
-		balance,
 		onPointsPress,
 		onError,
 		setError,
-		error
+		error,
+		balance
 	} = useWalletScreen();
 	const { i18n } = useLanguage();
 
@@ -53,10 +53,10 @@ const WalletScreen = () => {
 					onCopyToClipboard,
 					showReceive,
 					address,
-					balance,
 					setAddFundsVisible,
 					setSendModalOpen,
-					onPointsPress
+					onPointsPress,
+					balance
 				}}
 				onAvatarClick={() => setOpenAvatarModal(true)}
 			/>

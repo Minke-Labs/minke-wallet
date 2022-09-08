@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Logger from '@utils/logger';
 import { Keyboard } from 'react-native';
-import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
+import { useBalances, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, constants, utils } from 'ethers';
 import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
@@ -35,7 +35,7 @@ export const useExchangeScreen = () => {
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const { gaslessEnabled } = useBiconomy();
-	const { tokens: walletTokens } = useTokens();
+	const { tokens: walletTokens } = useBalances();
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};

@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { Card, Text, Icon } from '@components';
-import { useNavigation, useLanguage, useNFT } from '@hooks';
+import { useNavigation, useLanguage, useNFT, useBalances } from '@hooks';
 import { IconType } from '@styles';
 import { numberFormat } from '@src/helpers/utilities';
 import Image from './Image/Image';
@@ -13,14 +11,14 @@ const Accounts = ({ points }: { points: number }) => {
 	const { estimatedValue } = useNFT();
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { balance } = useState(globalWalletState()).value;
+	const { balance, walletBalance, depositedBalance } = useBalances();
 
 	const cardArr = useMemo(
 		() => [
 			{
 				title: i18n.t('WalletScreen.screens.Accounts.wallet'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.available_funds_in_your_wallet'),
-				thirdRowText: numberFormat(balance?.walletBalance || 0),
+				thirdRowText: numberFormat(walletBalance),
 				image: 'wallet2Stroke',
 				onPress: () => navigation.navigate('WalletAssetsScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
@@ -28,7 +26,7 @@ const Accounts = ({ points }: { points: number }) => {
 			{
 				title: i18n.t('WalletScreen.screens.Accounts.savings'),
 				subtitle: i18n.t('WalletScreen.screens.Accounts.funds_deposited_in_savings'),
-				thirdRowText: numberFormat(balance?.depositedBalance || 0),
+				thirdRowText: numberFormat(depositedBalance),
 				image: 'vaultStroke',
 				onPress: () => navigation.navigate('SaveScreen'),
 				right: <Icon name="arrowForwardStroke" size={16} color="text7" />
@@ -57,7 +55,7 @@ const Accounts = ({ points }: { points: number }) => {
 		<View style={styles.tabsNetWorth}>
 			<View style={styles.currentValueCard}>
 				<Text style={styles.cardLabel}>Current value</Text>
-				<Text style={styles.cardBalance}>{numberFormat(balance?.usd || 0)}</Text>
+				<Text style={styles.cardBalance}>{numberFormat(balance)}</Text>
 			</View>
 
 			{cardArr.map((item) => (

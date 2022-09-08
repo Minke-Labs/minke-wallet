@@ -10,6 +10,7 @@ import { fetchInterestBearingTokens } from '@models/depositTokens';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
+import { coinFromSymbol } from '@helpers/utilities';
 import { parse, ZapperCustomEvents } from './utils';
 
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
@@ -36,7 +37,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 		};
 
 		fetchInterests();
-	}, [selectedProtocol]);
+	}, [selectedProtocol, address, zapperNetwork]);
 
 	useEffect(() => {
 		const fetchBalances = async () => {
@@ -49,20 +50,22 @@ const BalanceProvider: React.FC = ({ children }) => {
 				// when balance event is received, the data is parsed
 				// Zapper objects can be huge so parsing logic is extracted to ./utils.js
 				// @ts-ignore
-				eventSource.addEventListener('balance', ({ data }) => {
+				eventSource.addEventListener('balance', async ({ data }) => {
 					const parsedDatas = JSON.parse(data);
+
 					const {
 						appId,
 						balance: { wallet }
 					} = parsedDatas;
 					const apiTokens = Object.keys(wallet);
 					if (appId === 'tokens' && apiTokens.length > 0) {
-						tokensBalances.push(parse(wallet));
+						const parsed = parse(wallet);
+						tokensBalances.push(parsed);
 					}
 				});
 
 				// when the data feed has been completely sent
-				eventSource.addEventListener('end', () => {
+				eventSource.addEventListener('end', async () => {
 					let allTokens = tokensBalances.flat();
 					allTokens = allTokens.filter(
 						({ symbol, balance = '0', name = '' }) =>
@@ -70,7 +73,15 @@ const BalanceProvider: React.FC = ({ children }) => {
 							+balance > 0 &&
 							!isValidDomain(name)
 					);
-					setTokens(allTokens);
+					const promises = allTokens.map(async (t) => {
+						const { id, name } = await coinFromSymbol(t.symbol);
+						return {
+							id,
+							name,
+							...t
+						};
+					});
+					setTokens(await Promise.all(promises));
 					eventSource.close();
 				});
 
@@ -107,7 +118,6 @@ const BalanceProvider: React.FC = ({ children }) => {
 		}),
 		[address, zapperNetwork, selectedProtocol, tokens, interestTokens, withdrawableTokens]
 	);
-
 	return <BalanceContext.Provider value={obj}>{children}</BalanceContext.Provider>;
 };
 

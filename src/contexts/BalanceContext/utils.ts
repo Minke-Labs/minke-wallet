@@ -12,13 +12,17 @@ interface ZapperToken {
 		decimals: number;
 		symbol: string;
 	};
+	displayProps: {
+		label: string;
+	};
 }
 
 export type ZapperCustomEvents = 'balance' | 'end' | 'error';
 
-const parseToken = ({ address, balanceUSD, context }: ZapperToken): MinkeToken => {
+const parseToken = ({ address, balanceUSD, context, displayProps }: ZapperToken): MinkeToken => {
+	const { label: name } = displayProps;
 	const { symbol, decimals, balance } = context;
-	return { address, symbol, balanceUSD, decimals, balance: balance.toString() };
+	return { name, address, symbol, balanceUSD, decimals, balance: balance.toString() };
 };
 
 const parseTokensFromWallet = (wallet: ZapperWallet): MinkeToken[] => {

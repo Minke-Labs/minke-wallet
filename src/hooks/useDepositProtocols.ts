@@ -13,10 +13,10 @@ import { network } from '@models/network';
 import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
-import { getTokenBalances } from '@src/services/apis';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import DepositService from '@src/services/deposit/DepositService';
 import { globalDepositState } from '@stores/DepositStore';
+import useBalances from './useBalances';
 
 const useDepositProtocols = (withdraw = false) => {
 	const [selectedProtocol, setSelectedProtocol] = React.useState<DepositProtocol>();
@@ -29,6 +29,7 @@ const useDepositProtocols = (withdraw = false) => {
 	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
 	const { address } = useState(globalWalletState()).value;
 	const depositState = useState(globalDepositState());
+	const { depositableTokens: tokens, withdrawableTokens } = useBalances();
 
 	const onChangeProtocol = async (protocol: DepositProtocol) => {
 		await AsyncStorage.setItem('@depositProtocol', protocol.id);
@@ -54,7 +55,6 @@ const useDepositProtocols = (withdraw = false) => {
 
 	const checkAbleToDeposit = async () => {
 		const defaultUSDCoin = await usdCoin();
-		const { depositableTokens: tokens, withdrawableTokens } = await getTokenBalances(address);
 		const sourceTokens = withdraw ? withdrawableTokens : tokens;
 		let token = sourceTokens.find((t) => t.symbol === defaultUSDCoin);
 		const hasTheDefaultToken = !!token;
@@ -65,6 +65,7 @@ const useDepositProtocols = (withdraw = false) => {
 		}
 
 		token = sourceTokens.reverse().find((t) => depositStablecoins.includes(t.symbol)) || ({} as MinkeToken);
+
 		const { symbol } = token;
 		if (symbol) {
 			setSelectedUSDCoin(symbol);

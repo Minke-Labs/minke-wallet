@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { imageSource } from '@models/wallet';
-import { useTokens } from '@hooks';
+import { useBalances } from '@hooks';
 import { exchangebleTokens } from '@models/token';
 import { UserProps } from '../../SendModal.types';
 
@@ -10,7 +10,7 @@ interface UseTransactionSelectFundsProps {
 
 export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsProps) => {
 	const [image, setImage] = React.useState<{ uri: string }>();
-	const { tokens } = useTokens();
+	const { tokens } = useBalances();
 
 	useEffect(() => {
 		const fetchImage = async () => {

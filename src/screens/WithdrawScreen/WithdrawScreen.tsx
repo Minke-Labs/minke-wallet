@@ -47,7 +47,6 @@ const WithdrawScreen = () => {
 		needToChangeNetwork
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
-
 	if (token === undefined) return <BlankStates.Withdraw />;
 
 	return (

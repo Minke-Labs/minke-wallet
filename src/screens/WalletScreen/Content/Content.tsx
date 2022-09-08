@@ -16,10 +16,10 @@ export const Content: React.FC<ContentProps> = ({
 	onCopyToClipboard,
 	showReceive,
 	address,
-	balance,
 	setAddFundsVisible,
 	setSendModalOpen,
-	onAvatarClick
+	onAvatarClick,
+	balance
 }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
@@ -70,7 +70,7 @@ export const Content: React.FC<ContentProps> = ({
 				onSave={() => navigation.navigate('SaveScreen')}
 				onWalletAssets={() => navigation.navigate('WalletAssetsScreen')}
 				onAddFunds={() => setAddFundsVisible(true)}
-				balance={balance?.usd || 0}
+				balance={balance}
 				address={address}
 				onAvatarClick={onAvatarClick}
 			/>
