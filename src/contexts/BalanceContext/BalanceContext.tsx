@@ -22,6 +22,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 	} = useState(globalWalletState()).value;
 	const { id: selectedProtocol } = useState(globalDepositState()).value;
 	const [tokens, setTokens] = React.useState<MinkeToken[]>([]);
+	const [stablecoins, setStablecoins] = React.useState<MinkeToken[]>([]);
 	const [interestTokens, setInterestTokens] = React.useState<MinkeToken[]>([]);
 	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
 	const [loading, setLoading] = React.useState(true);
@@ -29,13 +30,11 @@ const BalanceProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchInterests = async () => {
 			if (selectedProtocol) {
-				setLoading(true);
 				const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
 				const [withdrawable] = allInterestTokens;
 				const interest = allInterestTokens.flat();
 				setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 				setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
-				setLoading(false);
 			}
 		};
 
@@ -85,7 +84,10 @@ const BalanceProvider: React.FC = ({ children }) => {
 							...t
 						};
 					});
-					setTokens(await Promise.all(promises));
+					allTokens = await Promise.all(promises);
+					setStablecoins(allTokens.filter((token) => depositStablecoins.includes(token.symbol)));
+					allTokens = allTokens.filter(({ symbol }) => !depositStablecoins.includes(symbol));
+					setTokens(allTokens);
 					eventSource.close();
 					setLoading(false);
 				});
@@ -104,14 +106,11 @@ const BalanceProvider: React.FC = ({ children }) => {
 		return () => clearInterval(intervalId);
 	}, [address, zapperNetwork]);
 
-	const depositableTokens = tokens.filter(
-		(token) => depositStablecoins.includes(token.symbol) && +token.balance! > 0
-	);
+	const stablecoinsBalance = stablecoins.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
-	const balance = walletBalance + depositedBalance;
+	const balance = walletBalance + depositedBalance + stablecoinsBalance;
 
-	// @TODO: fix stablecoins
 	const obj: AccountBalance = useMemo(
 		() => ({
 			address,
@@ -120,10 +119,9 @@ const BalanceProvider: React.FC = ({ children }) => {
 			depositedBalance,
 			walletBalance,
 			interestTokens,
-			depositableTokens,
 			withdrawableTokens,
-			stablecoins: [],
-			stablecoinsBalance: 0,
+			stablecoins,
+			stablecoinsBalance,
 			loading
 		}),
 		[address, zapperNetwork, selectedProtocol, tokens, interestTokens, withdrawableTokens, loading]

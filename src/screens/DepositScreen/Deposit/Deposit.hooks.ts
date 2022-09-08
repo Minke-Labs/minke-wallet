@@ -34,7 +34,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const { nativeToken, balance } = useNativeToken();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
-	const { depositableTokens = [] } = useBalances();
+	const { stablecoins = [] } = useBalances();
 	const { address, privateKey } = globalWalletState().value;
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
@@ -138,13 +138,13 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	};
 
 	useEffect(() => {
-		if (depositableToken && depositableTokens.length > 0) {
-			const balanceToken = depositableTokens.find(
+		if (depositableToken && stablecoins.length > 0) {
+			const balanceToken = stablecoins.find(
 				({ symbol }) => symbol.toLowerCase() === depositableToken.symbol.toLowerCase()
 			);
 			setToken(balanceToken);
 		}
-	}, [depositableToken, depositableTokens]);
+	}, [depositableToken, stablecoins]);
 
 	return {
 		token,
@@ -160,7 +160,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 		hideModal,
 		showModal,
 		onTokenSelect,
-		tokens: depositableTokens,
+		tokens: stablecoins,
 		selectedProtocol,
 		blockchainError,
 		setBlockchainError,

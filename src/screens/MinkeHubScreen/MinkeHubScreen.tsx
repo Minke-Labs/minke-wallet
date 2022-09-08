@@ -38,7 +38,7 @@ const MinkeHubScreen = () => {
 							<Card
 								onPress={() => navigation.navigate('StablecoinsScreen')}
 								icon="dollar"
-								title="Stablecoins"
+								title={i18n.t('MinkeHubScreen.stablecoins')}
 								desc={i18n.t('MinkeHubScreen.coins_pegged_to')}
 								number={stablecoinsBalance}
 							/>

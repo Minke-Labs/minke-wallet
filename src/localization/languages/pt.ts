@@ -244,7 +244,8 @@ export default {
 		send_to_bank: 'Enviar ao banco',
 		convert_to_local: 'Converter para sua moeda local',
 		referral: 'Indicação',
-		refer_and_earn: 'Indique um amigo e ganhe criptos grátis'
+		refer_and_earn: 'Indique um amigo e ganhe criptos grátis',
+		stablecoins: 'Stablecoins'
 	},
 	NFTDetailScreen: {
 		by: 'por ',
@@ -390,7 +391,8 @@ export default {
 	},
 	StablecoinsScreen: {
 		current_value: 'Valor atual',
-		get_annualized_interest: 'Obtenha {{apy}}% de juros anualizados'
+		get_annualized_interest: 'Obtenha {{apy}}% de juros por ano',
+		stablecoins: 'Stablecoins'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -831,17 +833,21 @@ export default {
 					},
 					Step2: {
 						save: 'Poupe e Invista',
-						earn_up_to: 'Obtenha até 5% de juros anuais em stablecoins ou invista em outros tokens sem taxas de gás.'
+						earn_up_to:
+							'Obtenha até 5% de juros anuais em stablecoins ou invista em outros tokens sem taxas de gás.'
 					},
 					Step3: {
 						send: 'Envie',
-						send_tokens_to: 'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.',
+						send_tokens_to:
+							'Envie tokens para outra carteira ou para uma exchange como Binance ou Coinbase.',
 						receive: 'Receba',
-						receive_funds: 'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
+						receive_funds:
+							'Receba de um amigo ou envie de uma corretora como a Coinbase para a sua carteira.'
 					},
 					Step4: {
 						earn_minke_points: 'Obtenha pontos da Minke',
-						refer_a_friend: 'Indique um amigo e ganhe até $10 em USDC quando ele fizer sua primeira compra em USDC ou uma troca.'
+						refer_a_friend:
+							'Indique um amigo e ganhe até $10 em USDC quando ele fizer sua primeira compra em USDC ou uma troca.'
 					},
 					Step5: {
 						receive: 'Receba',
@@ -1048,6 +1054,9 @@ export default {
 			choose_token: 'Escolha um token',
 			choose_currency: 'Escolha uma moeda',
 			available: 'Disponível'
+		},
+		TokenItemCard: {
+			buy: 'Comprar'
 		},
 		Transaction: {
 			failed: 'Falhou',

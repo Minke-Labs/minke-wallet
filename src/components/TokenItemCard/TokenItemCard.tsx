@@ -1,6 +1,6 @@
 import React from 'react';
 import { TokenType } from '@styles';
-import { useNavigation } from '@hooks';
+import { useLanguage, useNavigation } from '@hooks';
 import Text from '@src/components/Text/Text';
 import View from '@src/components/View/View';
 import TokenItem from '@src/components/TokenItem/TokenItem';
@@ -30,22 +30,13 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 	onPress
 }) => {
 	const navigation = useNavigation();
+	const { i18n } = useLanguage();
 
 	return (
 		<View mb={paper ? 'xs' : 'm'} main="space-between">
-			<View
-				{...(paper && { bgc: 'background5', br: 'xs' })}
-				flex1
-				row
-				main="space-between"
-			>
+			<View {...(paper && { bgc: 'background5', br: 'xs' })} flex1 row main="space-between">
 				<View flex1>
-					<Touchable
-						onPress={onPress}
-						opacity={onPress ? 0.6 : 1}
-						row
-						{...(paper && { p: 'xs' })}
-					>
+					<Touchable onPress={onPress} opacity={onPress ? 0.6 : 1} row {...(paper && { p: 'xs' })}>
 						<TokenItem
 							{...{
 								token,
@@ -60,16 +51,10 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 					</Touchable>
 				</View>
 				{stablecoin && balanceUSD === 0 && (
-					<View
-						w={70}
-						h="100%"
-						main="center"
-						cross="flex-end"
-						pr="xs"
-					>
+					<View h="100%" main="center" cross="flex-end" pr="xs">
 						<Touchable onPress={() => navigation.navigate('AddFundsScreen')}>
 							<Text type="lLarge" weight="semiBold" color="cta1">
-								+ Buy
+								+ {i18n.t('Components.TokenItemCard.buy')}
 							</Text>
 						</Touchable>
 					</View>

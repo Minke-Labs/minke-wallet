@@ -20,10 +20,12 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const navigation = useNavigation();
-	const { network } = useGlobalWalletState();
+	const {
+		network: { topUpTokens }
+	} = useGlobalWalletState();
 
 	const handleBuy = () => {
-		if (coin.symbol === 'USDC') navigation.navigate('AddFundsScreen');
+		if (topUpTokens.map(({ symbol }) => symbol).includes(coin.symbol)) navigation.navigate('AddFundsScreen');
 		else navigation.navigate('ExchangeScreen', { destToken: coin });
 	};
 
@@ -43,26 +45,17 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 						<Text type="lMedium" weight="semiBold" color="text3">
 							{i18n.t('Components.Balance.balance')}
 						</Text>
-						{!stablecoin && (
-							<Selector
-								coinSymbol={coin.symbol}
-								{...{ active, setActive }}
-							/>
-						)}
+						{!stablecoin && <Selector coinSymbol={coin.symbol} {...{ active, setActive }} />}
 					</View>
 					<Text type="dMedium">
-						{active ?
-							`${tokenBalanceFormat(coin.balance!)} ${coin.symbol}` :
-							`${numberFormat(coin.balanceUSD!)}`}
+						{active
+							? `${tokenBalanceFormat(coin.balance!)} ${coin.symbol}`
+							: `${numberFormat(coin.balanceUSD!)}`}
 					</Text>
 				</View>
 
 				<View h={56} row>
-					<TouchableOpacity
-						activeOpacity={0.6}
-						onPress={handleBuy}
-						style={{ flex: 1 }}
-					>
+					<TouchableOpacity activeOpacity={0.6} onPress={handleBuy} style={{ flex: 1 }}>
 						<View
 							main="center"
 							cross="center"
@@ -96,16 +89,8 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 							</Text>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity
-						activeOpacity={0.6}
-						onPress={() => setSendModal(true)}
-						style={{ flex: 1 }}
-					>
-						<View
-							main="center"
-							cross="center"
-							style={{ flex: 1 }}
-						>
+					<TouchableOpacity activeOpacity={0.6} onPress={() => setSendModal(true)} style={{ flex: 1 }}>
+						<View main="center" cross="center" style={{ flex: 1 }}>
 							<Text type="lLarge" color="cta1" weight="semiBold">
 								{i18n.t('Components.Balance.Buttons.send')}
 							</Text>

@@ -4,15 +4,31 @@ import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankS
 import { AssetsLayout } from '@layouts';
 import { useBalances, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
 import { TokenType } from '@styles';
+import { depositStablecoins } from '@models/deposit';
 
 const StablecoinsScreen = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { stablecoins, stablecoinsBalance } = useBalances();
+	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
+	const stablecoins = depositStablecoins.map((symbol) => {
+		const found = walletStablecoins.find((s) => s.symbol === symbol);
+		if (found) {
+			return found;
+		}
 
-	if (!stablecoins) {
-		return <BlankStates.Type2 title="Stablecoins" />;
+		return {
+			symbol,
+			name: symbol,
+			balance: '0',
+			balanceUSD: 0,
+			address: '',
+			decimals: 0
+		};
+	});
+
+	if (!walletStablecoins) {
+		return <BlankStates.Type2 title={i18n.t('StablecoinsScreen.stablecoins')} />;
 	}
 
 	return (

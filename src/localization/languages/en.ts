@@ -243,7 +243,8 @@ export default {
 		send_to_bank: 'Send to bank',
 		convert_to_local: 'Convert to your local currency',
 		referral: 'Referral',
-		refer_and_earn: 'Refer a friend and earn free crypto'
+		refer_and_earn: 'Refer a friend and earn free crypto',
+		stablecoins: 'Stablecoins'
 	},
 	NFTDetailScreen: {
 		by: 'by ',
@@ -388,7 +389,8 @@ export default {
 	},
 	StablecoinsScreen: {
 		current_value: 'Current value',
-		get_annualized_interest: 'Get {{apy}}% annualized interest'
+		get_annualized_interest: 'Get {{apy}}% annualized interest',
+		stablecoins: 'Stablecoins'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -827,18 +829,20 @@ export default {
 					},
 					Step2: {
 						save: 'Save & Invest',
-						earn_up_to: 'Earn up to 5% annual interest on stablecoins or invest in other tokens without any gas fees.'
+						earn_up_to:
+							'Earn up to 5% annual interest on stablecoins or invest in other tokens without any gas fees.'
 					},
 					Step3: {
 						send: 'Send',
 						send_tokens_to: 'Send tokens to another wallet or to an exchange like Binance or Coinbase.',
 						receive: 'Receive',
 						receive_funds:
-						'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
+							'Receive funds from a friend or send funds into your wallet from an exchange like Coinbase.'
 					},
 					Step4: {
 						earn_minke_points: 'Earn Minke points',
-						refer_a_friend: 'Refer a friend and earn up to $10 in USDC when they buy their first USDC or make an exchange.'
+						refer_a_friend:
+							'Refer a friend and earn up to $10 in USDC when they buy their first USDC or make an exchange.'
 					},
 					Step5: {
 						receive: 'Receive',
@@ -1045,6 +1049,9 @@ export default {
 			choose_token: 'Choose token',
 			choose_currency: 'Choose currency',
 			available: 'Available'
+		},
+		TokenItemCard: {
+			buy: 'Buy'
 		},
 		Transaction: {
 			failed: 'Failed',

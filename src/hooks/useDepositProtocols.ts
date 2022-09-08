@@ -29,7 +29,7 @@ const useDepositProtocols = (withdraw = false) => {
 	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
 	const { address } = useState(globalWalletState()).value;
 	const depositState = useState(globalDepositState());
-	const { depositableTokens: tokens, withdrawableTokens } = useBalances();
+	const { stablecoins: tokens, withdrawableTokens } = useBalances();
 
 	const onChangeProtocol = async (protocol: DepositProtocol) => {
 		await AsyncStorage.setItem('@depositProtocol', protocol.id);
