@@ -2,13 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import {
-	View,
-	FloatingSelector,
-	PendingTransaction,
-	AppTour
-} from '@components';
-import { useAmplitude, useWalletState, useTransactions } from '@hooks';
+import { View, FloatingSelector, PendingTransaction, AppTour } from '@components';
+import { useAmplitude, useTransactions, useGlobalWalletState, useBalances } from '@hooks';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
@@ -49,12 +44,12 @@ const HomeScreen = () => {
 
 	const { track } = useAmplitude();
 
-	const { state } = useWalletState();
-	const { address, balance } = state.value;
+	const { address } = useGlobalWalletState();
+	const { balance } = useBalances();
 
 	useEffect(() => {
 		track('Home Screen Opened');
-		track('Wallet access', { active: (balance?.usd || 0) > 0, address });
+		track('Wallet access', { active: balance > 0, address });
 	}, []);
 
 	return (

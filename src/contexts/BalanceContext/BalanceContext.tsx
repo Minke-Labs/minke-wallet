@@ -24,15 +24,18 @@ const BalanceProvider: React.FC = ({ children }) => {
 	const [tokens, setTokens] = React.useState<MinkeToken[]>([]);
 	const [interestTokens, setInterestTokens] = React.useState<MinkeToken[]>([]);
 	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
+	const [loading, setLoading] = React.useState(true);
 
 	useEffect(() => {
 		const fetchInterests = async () => {
 			if (selectedProtocol) {
+				setLoading(true);
 				const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
 				const [withdrawable] = allInterestTokens;
 				const interest = allInterestTokens.flat();
 				setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 				setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
+				setLoading(false);
 			}
 		};
 
@@ -42,6 +45,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchBalances = async () => {
 			if (address) {
+				setLoading(true);
 				const tokensBalances: MinkeToken[][] = [];
 				const url = generateUrl([address], [zapperNetwork]);
 				const eventSourceDict = generateEventSourceDict();
@@ -83,10 +87,12 @@ const BalanceProvider: React.FC = ({ children }) => {
 					});
 					setTokens(await Promise.all(promises));
 					eventSource.close();
+					setLoading(false);
 				});
 
 				// @ts-ignore
 				eventSource.addEventListener('error', ({ message }) => {
+					setLoading(false);
 					Logger.log('Zapper API Error :', message);
 				});
 			}
@@ -105,7 +111,8 @@ const BalanceProvider: React.FC = ({ children }) => {
 	const depositedBalance = interestTokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const balance = walletBalance + depositedBalance;
 
-	const obj = useMemo(
+	// @TODO: fix stablecoins
+	const obj: AccountBalance = useMemo(
 		() => ({
 			address,
 			tokens,
@@ -114,9 +121,12 @@ const BalanceProvider: React.FC = ({ children }) => {
 			walletBalance,
 			interestTokens,
 			depositableTokens,
-			withdrawableTokens
+			withdrawableTokens,
+			stablecoins: [],
+			stablecoinsBalance: 0,
+			loading
 		}),
-		[address, zapperNetwork, selectedProtocol, tokens, interestTokens, withdrawableTokens]
+		[address, zapperNetwork, selectedProtocol, tokens, interestTokens, withdrawableTokens, loading]
 	);
 	return <BalanceContext.Provider value={obj}>{children}</BalanceContext.Provider>;
 };

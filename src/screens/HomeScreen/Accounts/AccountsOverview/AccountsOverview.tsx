@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-	Paper,
-	View,
-	Text,
-	TokenItemCard,
-	Touchable,
-	BlankStates
-} from '@components';
-import { useGlobalWalletState, useLanguage, useNavigation, useTokens } from '@hooks';
+import { Paper, View, Text, TokenItemCard, Touchable, BlankStates } from '@components';
+import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
 import { fetchTokensPriceChange } from '@models/token';
@@ -19,8 +12,7 @@ export const AccountsOverview: React.FC = () => {
 		network: { topUpTokens }
 	} = useGlobalWalletState();
 	const navigation = useNavigation();
-	const { accountBalance } = useTokens();
-	const { stablecoins = [], tokens = [] } = accountBalance;
+	const { stablecoins = [], tokens = [] } = useBalances();
 	const [defaultToken] = topUpTokens;
 	let biggestBalanceStable: MinkeToken = {} as MinkeToken;
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { Text, View, ModalReusables, ModalBase, FloatingSelector } from '@components';
 import { BasicLayout } from '@layouts';
-import { useLanguage, useNavigation, useNFT, useTokens } from '@hooks';
+import { useBalances, useLanguage, useNavigation, useNFT } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
 import MinkeLogo from './MinkeLogo.svg';
 import { Card } from './Card/Card';
@@ -11,8 +11,7 @@ const MinkeHubScreen = () => {
 	const { i18n } = useLanguage();
 	const [modal, setModal] = useState(false);
 	const navigation = useNavigation();
-	const { accountBalance } = useTokens();
-	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = accountBalance;
+	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = useBalances();
 	const { networth } = useNFT();
 
 	return (
@@ -92,7 +91,6 @@ const MinkeHubScreen = () => {
 								hideLoading
 							/>
 						</View>
-
 					</View>
 					<View mb="xxxl" />
 					<View mb="m" />

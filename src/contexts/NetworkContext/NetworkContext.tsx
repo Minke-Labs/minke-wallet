@@ -6,13 +6,13 @@ import Logger from '@utils/logger';
 import { useState } from '@hookstate/core';
 import { globalDepositState } from '@stores/DepositStore';
 import { fetchDepositProtocol } from '@models/deposit';
-import { useWalletState } from '@hooks';
+import { globalWalletState } from '@stores/WalletStore';
 
 export const NetworkContext = createContext<any>(null);
 
 const NetworkProvider: React.FC = ({ children }) => {
 	const [connectedNetwork, setConnectedNetwork] = React.useState<Network>();
-	const { state } = useWalletState();
+	const state = useState(globalWalletState());
 	const { network } = state.value;
 	const depositState = useState(globalDepositState());
 
@@ -20,9 +20,9 @@ const NetworkProvider: React.FC = ({ children }) => {
 		try {
 			await AsyncStorage.setItem(networkSettingsKey, ntw.id);
 			setConnectedNetwork(ntw);
+			state.merge({ network: ntw, transactions: undefined });
 			const protocol = await fetchDepositProtocol();
 			depositState.merge(protocol);
-			state.merge({ network: ntw, transactions: undefined });
 		} catch (e) {
 			Logger.error('Error saving settings');
 			captureException(e);

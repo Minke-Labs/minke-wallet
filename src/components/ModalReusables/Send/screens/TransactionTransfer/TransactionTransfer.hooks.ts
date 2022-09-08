@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { useState, useEffect } from 'react';
 import {
-	useWalletState,
 	useAmplitude,
 	useBiconomy,
 	useNativeToken,
 	useNavigation,
 	useTransactions,
-	useWalletManagement
+	useWalletManagement,
+	useGlobalWalletState
 } from '@hooks';
 import { network } from '@models/network';
 import { convertTransactionResponse } from '@models/transaction';
@@ -111,12 +111,11 @@ export const useTransactionTransfer = ({
 		}
 	}, [gasPrice, token, chainDefaultToken]);
 
-	const { state } = useWalletState();
 	const {
 		address,
 		privateKey,
 		network: { id }
-	} = state.value;
+	} = useGlobalWalletState();
 
 	const onBlockchainError = (e: any) => {
 		Logger.error('Sending blockchain error', e);

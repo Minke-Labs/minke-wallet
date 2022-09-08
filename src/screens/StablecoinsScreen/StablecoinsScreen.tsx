@@ -2,20 +2,17 @@ import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useDepositProtocols, useLanguage, useNavigation, useTokens } from '@hooks';
+import { useBalances, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
 import { TokenType } from '@styles';
 
 const StablecoinsScreen = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { accountBalance } = useTokens();
-	const { stablecoins, stablecoinsBalance } = accountBalance;
+	const { stablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
 
 	if (!stablecoins) {
-		return (
-			<BlankStates.Type2 title="Stablecoins" />
-		);
+		return <BlankStates.Type2 title="Stablecoins" />;
 	}
 
 	return (

@@ -3,7 +3,7 @@ import { Image } from 'react-native';
 import { numberFormat } from '@helpers/utilities';
 import { Paper, Text, View, Button, Modal, ModalBase, Touchable, ModalReusables } from '@components';
 import { AddFunds } from '@containers';
-import { useAvatar, useFormProgress, useLanguage, useNavigation, useWalletState } from '@hooks';
+import { useAvatar, useBalances, useFormProgress, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { AvatarModal, ImportModal } from './Modals';
 
 export const Assets: React.FC = () => {
@@ -14,8 +14,8 @@ export const Assets: React.FC = () => {
 	const [addFundsVisible, setAddFundsVisible] = useState(false);
 	const { currentStep, goBack, goForward } = useFormProgress();
 	const [visible, setVisible] = useState(false);
-	const { state } = useWalletState();
-	const { address, balance } = state.value;
+	const { address } = useGlobalWalletState();
+	const { balance } = useBalances();
 	const { currentAvatar } = useAvatar();
 
 	const handleImportModal = () => {
@@ -36,9 +36,7 @@ export const Assets: React.FC = () => {
 						<Text type="lMedium" weight="semiBold" color="text3">
 							{i18n.t('HomeScreen.Assets.your_total_assets')}
 						</Text>
-						<Text type="dMedium">
-							{numberFormat(balance?.usd || 0)}
-						</Text>
+						<Text type="dMedium">{numberFormat(balance)}</Text>
 					</View>
 					<Touchable onPress={() => setVisible(true)}>
 						{!!address && (
@@ -63,11 +61,7 @@ export const Assets: React.FC = () => {
 					</View>
 					<View mr="xxs" />
 					<View w={48}>
-						<Button
-							title="···"
-							onPress={() => setImportModal(true)}
-							br="xs"
-						/>
+						<Button title="···" onPress={() => setImportModal(true)} br="xs" />
 					</View>
 				</View>
 			</Paper>
@@ -77,11 +71,7 @@ export const Assets: React.FC = () => {
 				onDismiss={() => setVisible(false)}
 				{...(currentStep !== 0 && { onBack: goBack })}
 			>
-				<AvatarModal
-					currentStep={currentStep}
-					onBack={goBack}
-					onSelectAvatar={goForward}
-				/>
+				<AvatarModal currentStep={currentStep} onBack={goBack} onSelectAvatar={goForward} />
 			</Modal>
 
 			<ModalBase isVisible={addFundsVisible} onDismiss={() => setAddFundsVisible(false)}>
@@ -89,10 +79,7 @@ export const Assets: React.FC = () => {
 			</ModalBase>
 
 			<Modal isVisible={importModal} onDismiss={() => setImportModal(false)}>
-				<ImportModal
-					onImportSeed={handleImportModal}
-					onDismiss={() => setImportModal(false)}
-				/>
+				<ImportModal onImportSeed={handleImportModal} onDismiss={() => setImportModal(false)} />
 			</Modal>
 
 			<ModalBase isVisible={importSeed} onDismiss={() => setImportSeed(false)}>

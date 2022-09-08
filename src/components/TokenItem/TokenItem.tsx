@@ -17,15 +17,7 @@ interface TokenItemProps {
 	hideValues?: boolean;
 }
 
-const TokenItem: React.FC<TokenItemProps> = ({
-	token,
-	name,
-	symbol,
-	balance,
-	balanceUSD,
-	hideValues,
-	perc
-}) => {
+const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, balance, balanceUSD, hideValues, perc }) => {
 	const { network } = useNetwork();
 	const tokenName = name || symbol;
 

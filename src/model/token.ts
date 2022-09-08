@@ -236,6 +236,7 @@ export interface AccountBalance {
 	interestTokens: MinkeToken[];
 	depositableTokens: MinkeToken[];
 	withdrawableTokens: MinkeToken[];
+	loading: boolean;
 }
 
 export interface CovalentAavePool {

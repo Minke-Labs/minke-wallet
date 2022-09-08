@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useLanguage, useNavigation, useTokens } from '@hooks';
+import { useBalances, useLanguage, useNavigation } from '@hooks';
 import { TokenType } from '@styles';
 import { InvestmentToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
@@ -10,11 +10,8 @@ import { fetchTokensPriceChange } from '@models/token';
 
 const InvestmentsScreen = () => {
 	const { i18n } = useLanguage();
-	const { accountBalance } = useTokens();
-	const { tokens, walletBalance: balance } = accountBalance;
+	const { tokens, walletBalance } = useBalances();
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>();
-
-	// const [active, setActive] = useState(0);
 	const navigation = useNavigation();
 
 	useEffect(() => {
@@ -27,14 +24,12 @@ const InvestmentsScreen = () => {
 	}, [tokens]);
 
 	if (investmentTokens === undefined) {
-		return (
-			<BlankStates.Type2 title={i18n.t('InvestmentsScreen.investments')} />
-		);
+		return <BlankStates.Type2 title={i18n.t('InvestmentsScreen.investments')} />;
 	}
 
 	return (
 		<AssetsLayout
-			headerValue={balance}
+			headerValue={walletBalance}
 			headerTitle={
 				<Text type="lLarge" weight="semiBold" color="text3">
 					{i18n.t('InvestmentsScreen.current_value')}
