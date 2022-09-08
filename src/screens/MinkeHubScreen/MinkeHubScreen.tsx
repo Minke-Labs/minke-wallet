@@ -35,7 +35,7 @@ const MinkeHubScreen = () => {
 							Total: {!!balance && numberFormat(balance, 2)}
 						</Text>
 
-						<View mb="xs" row main="space-between">
+						<View mb="xs" row main="center">
 							<Card
 								onPress={() => navigation.navigate('StablecoinsScreen')}
 								icon="dollar"
@@ -43,6 +43,7 @@ const MinkeHubScreen = () => {
 								desc={i18n.t('MinkeHubScreen.coins_pegged_to')}
 								number={stablecoinsBalance}
 							/>
+							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('InvestmentsScreen')}
 								icon="crypto"
@@ -52,7 +53,7 @@ const MinkeHubScreen = () => {
 							/>
 						</View>
 
-						<View mb="xs" row main="space-between">
+						<View mb="xs" row main="center">
 							<Card
 								onPress={() => navigation.navigate('SaveScreen')}
 								icon="dollar"
@@ -60,6 +61,7 @@ const MinkeHubScreen = () => {
 								desc={i18n.t('MinkeHubScreen.earn_passive_income')}
 								number={depositedBalance}
 							/>
+							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('NFTScreen')}
 								icon="crypto"
@@ -73,7 +75,7 @@ const MinkeHubScreen = () => {
 							{i18n.t('MinkeHubScreen.others')}
 						</Text>
 
-						<View mb="xs" row main="space-between">
+						<View mb="xs" row main="center">
 							<Card
 								onPress={() => setModal(true)}
 								icon="vault"
@@ -81,6 +83,7 @@ const MinkeHubScreen = () => {
 								desc={i18n.t('MinkeHubScreen.convert_to_local')}
 								hideLoading
 							/>
+							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('ReferralScreen')}
 								icon="vault"
