@@ -1,7 +1,7 @@
 import React, { useState, createContext, useMemo } from 'react';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { AMPLITUDE_PROJECT_API } from '@env';
-import { useGlobalWalletState } from '@hooks';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 export type TrackingOptions = {
 	[key: string]: any;

@@ -2,7 +2,7 @@ import React, { useState, createContext, useEffect, useMemo } from 'react';
 import { providers } from 'ethers';
 // @ts-ignore
 import { Biconomy } from '@biconomy/mexa';
-import { useGlobalWalletState } from '@hooks';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 export const BiconomyContext = createContext<any>(null);
 

@@ -1,6 +1,6 @@
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
 
-const useglobalWalletState = () => useState(globalWalletState()).value;
+const useGlobalWalletState = () => useState(globalWalletState()).value;
 
-export default useglobalWalletState;
+export default useGlobalWalletState;
