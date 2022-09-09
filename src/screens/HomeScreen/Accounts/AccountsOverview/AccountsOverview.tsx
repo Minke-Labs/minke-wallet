@@ -47,7 +47,7 @@ export const AccountsOverview: React.FC = () => {
 	if (!(investmentHighlights.length > 0)) {
 		return (
 			<View mb="xs">
-				<BlankStates.Type4 h={287} />
+				<BlankStates.Type5 />
 			</View>
 		);
 	}

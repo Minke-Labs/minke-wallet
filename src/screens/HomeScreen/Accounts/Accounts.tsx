@@ -10,7 +10,7 @@ export const Accounts = () => {
 	if (loading) {
 		return (
 			<View mb="xs">
-				<BlankStates.Type4 h={287} />
+				<BlankStates.Type5 />
 			</View>
 		);
 	}

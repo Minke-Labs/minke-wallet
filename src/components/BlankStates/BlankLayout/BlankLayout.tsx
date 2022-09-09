@@ -20,9 +20,10 @@ const timing = { duration: 1200 };
 interface BlankLayoutProps {
 	title?: string;
 	br?: SpacingType;
+	invert?: boolean;
 }
 
-const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br }) => {
+const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br, invert }) => {
 	const navigation = useNavigation();
 	const posX = useSharedValue(-screenWidth);
 
@@ -35,10 +36,14 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br }) => {
 	}, []);
 
 	return (
-		<View bgc="background1" flex1 br={br}>
+		<View bgc={invert ? 'background2' : 'background1'} flex1 br={br}>
 			<SafeAreaView />
 			{!!title && (
-				<ModalHeader onDismiss={() => navigation.goBack()} onBack={() => navigation.goBack()} title={title} />
+				<ModalHeader
+					onDismiss={() => navigation.goBack()}
+					onBack={() => navigation.goBack()}
+					title={title}
+				/>
 			)}
 			<MaskedView
 				androidRenderingMode="software"
@@ -49,7 +54,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br }) => {
 					</View>
 				)}
 			>
-				<BasicLayout hideSafeAreaView center bgc="background2">
+				<BasicLayout hideSafeAreaView center bgc={invert ? 'background1' : 'background2'}>
 					{children}
 					<AnimatedView
 						h="100%"
