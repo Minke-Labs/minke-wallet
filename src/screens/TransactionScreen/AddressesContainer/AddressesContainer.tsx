@@ -83,11 +83,11 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 				</>
 				{deposit || withdraw ? (
 					<>
-						<Text type="tSmall" weight="semiBold">
+						<Text type="lLarge" weight="semiBold">
 							{i18n.t('TransactionScreen.savings_account')}
 						</Text>
 						<View row cross="center" mb="xs">
-							<Token name={protocol.toLowerCase() as TokenType} size={16} />
+							<Token name={protocol.toLowerCase() as TokenType} size={20} />
 							<View mr="xxs" />
 							<Text type="lLarge" weight="regular">
 								{protocol}
@@ -96,7 +96,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 					</>
 				) : exchange && toToken && sourceToken ? (
 					<>
-						<Text type="tSmall" weight="semiBold">
+						<Text type="lLarge" weight="semiBold">
 							{i18n.t('TransactionScreen.exchanged')}
 						</Text>
 						<View row main="space-between" cross="center" mb="xs">
@@ -109,7 +109,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 								})}
 							</Text>
 						</View>
-						<Text type="tSmall" weight="semiBold">
+						<Text type="lLarge" weight="semiBold">
 							{i18n.t('TransactionScreen.exchange_rate')}
 						</Text>
 						<View row main="space-between" cross="center" mb="xs">
