@@ -32,44 +32,41 @@ export const TransactionContainer: React.FC<TransactionContainerProps> = ({
 }) => {
 	const { i18n } = useLanguage();
 	return (
-		<View mb="xs" mh="xs">
-			<Paper p="s">
+		<Paper ph="s" pv="xs" mh="xs" mb="xs">
 
-				<View row main="space-between" cross="center" mb="xxxs">
-					<Text type="lLarge" weight="semiBold">
-						{i18n.t('TransactionScreen.transaction_type')}
-					</Text>
-					<Text type="lLarge" weight="semiBold">
-						{i18n.t('TransactionScreen.date')}
-					</Text>
-				</View>
-
-				<View row main="space-between" cross="center">
-					<View row main="space-between" cross="center">
-						<TransactionIcon
-							size={20}
-							arrowSize={10}
-							{...{
-								received,
-								failed,
-								pending,
-								topUp,
-								exchange,
-								deposit,
-								withdraw
-							}}
-						/>
-						<View mr="xxs" />
-						<Text type="bMedium" weight="regular">
-							{description}
-						</Text>
-					</View>
-					<Text type="bMedium" weight="regular">
-						{date}
+			<View mb="xxs">
+				<Text type="lLarge" weight="semiBold">
+					{i18n.t('TransactionScreen.transaction_type')}
+				</Text>
+				<View row cross="center">
+					<TransactionIcon
+						size={20}
+						arrowSize={10}
+						{...{
+							received,
+							failed,
+							pending,
+							topUp,
+							exchange,
+							deposit,
+							withdraw
+						}}
+					/>
+					<View mr="xxs" />
+					<Text type="lLarge" weight="regular">
+						{description}
 					</Text>
 				</View>
+			</View>
 
-			</Paper>
-		</View>
+			<Text type="lLarge" weight="semiBold">
+				{i18n.t('TransactionScreen.date')}
+			</Text>
+
+			<Text type="lLarge" weight="regular">
+				{date}
+			</Text>
+
+		</Paper>
 	);
 };

@@ -60,7 +60,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 	};
 	return (
 		<>
-			<Paper p="s" mh="xs" mb="s">
+			<Paper ph="s" pv="xs" mh="xs" mb="s">
 				<>
 					<Text type="lLarge" weight="semiBold">
 						{i18n.t('TransactionScreen.hash')}
@@ -86,7 +86,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 						<Text type="lLarge" weight="semiBold">
 							{i18n.t('TransactionScreen.savings_account')}
 						</Text>
-						<View row cross="center" mb="xs">
+						<View row cross="center">
 							<Token name={protocol.toLowerCase() as TokenType} size={20} />
 							<View mr="xxs" />
 							<Text type="lLarge" weight="regular">
@@ -112,7 +112,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 						<Text type="lLarge" weight="semiBold">
 							{i18n.t('TransactionScreen.exchange_rate')}
 						</Text>
-						<View row main="space-between" cross="center" mb="xs">
+						<View row main="space-between" cross="center">
 							<Text type="lLarge" weight="regular">
 								1 {sourceToken.symbol} = {truncate(toToken.amount / sourceToken.amount, 6)}{' '}
 								{toToken.symbol}
@@ -133,7 +133,6 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 							w="100%"
 							main="space-between"
 							cross="center"
-							mb="xs"
 						>
 							<Text type="lLarge" weight="regular" width={242}>
 								{formattedSource}
