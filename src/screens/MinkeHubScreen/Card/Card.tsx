@@ -15,8 +15,8 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ title, desc, number, icon, hideLoading, onPress }) => {
 	if (!hideLoading && number === undefined) return <BlankStates.Type4 h={180} w={164} />;
 	return (
-		<Touchable onPress={onPress} w={164}>
-			<Paper p="s">
+		<Touchable onPress={onPress} w={164} h={180}>
+			<Paper p="s" h="100%">
 				<IconBox icon={icon} bgc="background3" mb="xxs" />
 				<Text type="lLarge" weight="semiBold">
 					{title}
