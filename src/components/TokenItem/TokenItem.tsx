@@ -51,15 +51,9 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, balance, bal
 					</Text>
 
 					{!hideValues && (
-						<View row cross="center">
-							<Text type="bSmall" color="text3">
-								{name ? symbol : ''}
-							</Text>
-							<View mr="xxs" />
-							<Text type="bDetail" color="text3">
-								{tokenBalanceFormat(balance || '0', 4)}
-							</Text>
-						</View>
+						<Text type="bDetail" color="text3">
+							{tokenBalanceFormat(balance || '0', 4)}
+						</Text>
 					)}
 				</View>
 
