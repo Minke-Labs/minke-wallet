@@ -10,7 +10,7 @@ interface UseTransactionSelectFundsProps {
 
 export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsProps) => {
 	const [image, setImage] = useState<{ uri: string }>();
-	const { tokens } = useBalances();
+	const { tokens, stablecoins } = useBalances();
 
 	useEffect(() => {
 		const fetchImage = async () => {
@@ -20,8 +20,14 @@ export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsPro
 		fetchImage();
 	}, []);
 
+	const tokensToExchange = tokens ?
+		tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase())) :
+		[];
+
+	const listTokens = [...stablecoins, ...tokensToExchange];
+
 	return {
 		image,
-		tokens: tokens ? tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase())) : undefined
+		tokens: listTokens
 	};
 };
