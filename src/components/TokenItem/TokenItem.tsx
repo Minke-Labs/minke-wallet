@@ -22,30 +22,35 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, balance, bal
 	const tokenName = name || symbol;
 
 	return (
-		<View row main="space-between" w="100%">
-			<View row w={180}>
-				<Token name={token} size={39} />
-				<View mr="xxs" />
-				<View>
-					<View row cross="center">
+		<View row cross="center" w="100%">
+
+			<Token name={token} size={39} />
+			<View mr="xxs" />
+
+			<View flex1>
+
+				<View row cross="center" main="space-between">
+					<View row>
 						<Text type="lLarge" weight="semiBold">
 							{tokenName.length < 10 ? tokenName : `${tokenName.substring(0, 7)}...`}
 						</Text>
 						<View mr="xxs" />
 						{!!perc && <Tag perc={perc} />}
 					</View>
-					<Text type="lSmall" weight="semiBold">
-						{network.name || ''}
-					</Text>
-				</View>
-			</View>
 
-			<View main="center" cross="flex-end">
-				{!hideValues && (
-					<>
+					{!hideValues && (
 						<Text type="lLarge" weight="semiBold">
 							{numberFormat(balanceUSD || 0)}
 						</Text>
+					)}
+				</View>
+
+				<View row main="space-between">
+					<Text type="lSmall" weight="semiBold">
+						{network.name || ''}
+					</Text>
+
+					{!hideValues && (
 						<View row cross="center">
 							<Text type="bSmall" color="text3">
 								{name ? symbol : ''}
@@ -55,9 +60,11 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, name, symbol, balance, bal
 								{tokenBalanceFormat(balance || '0', 4)}
 							</Text>
 						</View>
-					</>
-				)}
+					)}
+				</View>
+
 			</View>
+
 		</View>
 	);
 };
