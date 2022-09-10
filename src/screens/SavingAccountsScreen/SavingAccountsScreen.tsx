@@ -16,7 +16,10 @@ const SavingAccountsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title={i18n.t('SavingAccountsScreen.title')} onPress={() => navigation.goBack()} />
+			<SettingsHeader
+				title={i18n.t('SavingAccountsScreen.title')}
+				onPress={() => navigation.goBack()}
+			/>
 
 			<View style={styles.container}>
 				<SafeAreaView>

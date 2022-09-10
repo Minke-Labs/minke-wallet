@@ -4,7 +4,6 @@ import RNUxcam from 'react-native-ux-cam';
 import { ModalBase, BlankStates } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useBalances, useLanguage } from '@hooks';
-import EmptyState from './EmptyState/EmptyState';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
 import { CurrentValue } from './CurrentValue/CurrentValue';
@@ -19,7 +18,6 @@ const SaveScreen = () => {
 	const { interestTokens, depositedBalance } = useBalances();
 
 	if (!interestTokens) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Save')} />;
-	if (interestTokens.length === 0) return <EmptyState />;
 
 	return (
 		<>
@@ -43,4 +41,5 @@ const SaveScreen = () => {
 		</>
 	);
 };
+
 export default SaveScreen;
