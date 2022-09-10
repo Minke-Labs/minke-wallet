@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Image, SafeAreaView, Linking, StatusBar } from 'react-native';
 import { SvgUri } from 'react-native-svg';
+import RNUxcam from 'react-native-ux-cam';
 import { Text, Button, Expander } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -18,6 +19,7 @@ import { Header } from './Header/Header';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'NFTDetailScreen'>;
 const NFTDetailScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('NFTDetailScreen');
 	const { nft } = route.params;
 	const { colors } = useTheme();
 	const { i18n } = useLanguage();

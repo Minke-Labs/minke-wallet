@@ -16,6 +16,7 @@ import styles from './ManualBackupScreen.styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const ManualBackupScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('ManualBackupScreen');
 	const { i18n } = useLanguage();
 	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 	const navigation = useNavigation();

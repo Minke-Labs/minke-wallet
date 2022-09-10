@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import useWyreTransferStatus from '@src/hooks/useWyreTransferStatus';
 import { BasicLayout } from '@layouts';
 import { useGlobalWalletState, useNavigation, useTransactions } from '@hooks';
@@ -11,6 +12,7 @@ import { Processing } from '../TopUpWaitScreen/Processing/Processing';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'TransferWaitScreen'>;
 const TransferWaitScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('TransferWaitScreen');
 	const { transferId } = route.params;
 	const { transactionHash, amount, currency } = useWyreTransferStatus(transferId);
 	const navigation = useNavigation();

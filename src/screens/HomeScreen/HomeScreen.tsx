@@ -11,6 +11,7 @@ import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
 
 const HomeScreen = () => {
+	RNUxcam.tagScreenName('HomeScreen');
 	const {
 		// loading,
 		fetchTransactions,
@@ -39,8 +40,6 @@ const HomeScreen = () => {
 		fetchTransactions();
 		setTx(null);
 	}, [fetchTransactions]);
-
-	RNUxcam.tagScreenName('HomeScreen');
 
 	const { track } = useAmplitude();
 

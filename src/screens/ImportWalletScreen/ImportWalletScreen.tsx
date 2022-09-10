@@ -1,4 +1,5 @@
 import React from 'react';
+import RNUxcam from 'react-native-ux-cam';
 import { useLanguage } from '@hooks';
 import {
 	ModalBase,
@@ -13,6 +14,7 @@ import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import useImportWalletScreen from './ImportWalletScreen.hooks';
 
 const ImportWalletScreen = () => {
+	RNUxcam.tagScreenName('ImportWalletScreen');
 	const { i18n } = useLanguage();
 	const {
 		address,

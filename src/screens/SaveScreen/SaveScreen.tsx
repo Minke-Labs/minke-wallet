@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { ModalBase, BlankStates } from '@components';
 import { BasicLayout } from '@layouts';
 import { useDepositProtocols, useBalances, useLanguage } from '@hooks';
-import RNUxcam from 'react-native-ux-cam';
 import EmptyState from './EmptyState/EmptyState';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
@@ -12,11 +12,11 @@ import { Background } from './Background/Background';
 import InfoModal from './InfoModal';
 
 const SaveScreen = () => {
+	RNUxcam.tagScreenName('SaveScreen');
 	const { i18n } = useLanguage();
 	const [isModalVisible, setModalVisible] = useState(false);
 	const { apy, selectedProtocol } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useBalances();
-	RNUxcam.tagScreenName('SaveScreen');
 
 	if (!interestTokens) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Save')} />;
 	if (interestTokens.length === 0) return <EmptyState />;

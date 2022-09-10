@@ -9,9 +9,9 @@ import ConfirmBackupPassword from './ConfirmBackupPassword/ConfirmBackupPassword
 
 type Props = NativeStackScreenProps<RootStackParamList, 'BackupToICloudScreen'>;
 const BackupToICloudScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('BackupToICloudScreen');
 	const { missingPassword, walletId, restoreBackups = false } = route.params;
 	const [error, setError] = useState<string | undefined>();
-	RNUxcam.tagScreenName('BackupToICloudScreen');
 
 	const onError = useCallback(
 		(message: string) => {

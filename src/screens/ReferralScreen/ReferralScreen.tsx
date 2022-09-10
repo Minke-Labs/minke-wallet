@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { BlankStates, ModalBase } from '@components';
 import { useReferralCode, useNavigation, useMinkeRewards, useLanguage } from '@hooks';
@@ -12,6 +13,7 @@ import EarnModal from './EarnModal/EarnModal';
 import { Body } from './Body/Body';
 
 const ReferralScreen = () => {
+	RNUxcam.tagScreenName('ReferralScreen');
 	const { i18n } = useLanguage();
 	const { helpModalVisible, onHelpPress, onHelpDismiss, earnModalVisible, onEarnPress, onEarnDismiss } =
 		useReferralScreen();

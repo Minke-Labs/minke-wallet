@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, ScrollView, Image } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { Button, Icon, Input, Text } from '@components';
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
@@ -9,6 +10,7 @@ import useEnterReferralCodeScreen from './EnterReferralCodeScreen.hooks';
 import styles from './EnterReferralCodeScreen.styles';
 
 const EnterReferralCodeScreen = () => {
+	RNUxcam.tagScreenName('EnterReferralCodeScreen');
 	const { address } = useGlobalWalletState();
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();

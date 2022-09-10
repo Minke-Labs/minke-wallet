@@ -1,10 +1,10 @@
 import React from 'react';
 import { Image } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
 import { Text, Button, LoadingScreen, Icon, Touchable, View } from '@components';
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
-import RNUxcam from 'react-native-ux-cam';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
 import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';

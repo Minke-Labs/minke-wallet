@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { ScrollView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
 import {
@@ -12,7 +13,6 @@ import {
 } from '@components';
 import { useNavigation, useLanguage, useWalletState } from '@hooks';
 import { networks } from '@models/network';
-import RNUxcam from 'react-native-ux-cam';
 import Intercom from '@intercom/intercom-react-native';
 import RNTestFlight from 'react-native-test-flight';
 import { walletState } from '@stores/WalletStore';

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import RNUxcam from 'react-native-ux-cam';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { Text, View, ModalReusables, ModalBase, FloatingSelector } from '@components';
 import { BasicLayout } from '@layouts';
@@ -8,6 +9,8 @@ import MinkeLogo from './MinkeLogo.svg';
 import { Card } from './Card/Card';
 
 const MinkeHubScreen = () => {
+	RNUxcam.tagScreenName('MinkeHubScreen');
+
 	const { i18n } = useLanguage();
 	const [modal, setModal] = useState(false);
 	const navigation = useNavigation();

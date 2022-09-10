@@ -6,12 +6,11 @@ import { useNavigation, useLanguage, useCountry } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 
 const ChangeCountryScreen = () => {
+	RNUxcam.tagScreenName('ChangeCountryScreen');
 	const { i18n } = useLanguage();
 	const { country } = useCountry();
 	const navigation = useNavigation();
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
-
-	RNUxcam.tagScreenName('ChangeCountryScreen');
 
 	const handlePress = () => {
 		if (!country) setSnackbarVisible(true);

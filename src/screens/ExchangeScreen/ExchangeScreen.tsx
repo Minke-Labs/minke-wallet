@@ -24,6 +24,7 @@ import DirectionButton from './DirectionButton/DirectionButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
 const ExchangeScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('ExchangeScreen');
 	const { sourceToken, destToken } = route.params || {};
 	const { colors } = useTheme();
 	const {
@@ -52,7 +53,6 @@ const ExchangeScreen = ({ route }: Props) => {
 	} = useExchangeScreen({ sourceToken, destToken });
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
-	RNUxcam.tagScreenName('ExchangeScreen');
 
 	if (fromToken === undefined) {
 		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Exchange')} />;

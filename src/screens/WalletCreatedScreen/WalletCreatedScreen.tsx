@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
 import { Text, Button, ScreenLoadingIndicator, LoadingScreen, ModalBase, ModalReusables } from '@components';
 import { iCloudBackup, useLanguage } from '@hooks';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
-import RNUxcam from 'react-native-ux-cam';
 import styles from './WalletCreatedScreen.styles';
 import { useWalletCreatedScreen } from './WalletCreatedScreen.hooks';
 

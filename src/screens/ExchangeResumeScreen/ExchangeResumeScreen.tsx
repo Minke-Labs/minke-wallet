@@ -20,6 +20,7 @@ import { Rate } from './Rate/Rate';
 import { GasSelected } from './GasSelected/GasSelected';
 
 const ExchangeResumeScreen = () => {
+	RNUxcam.tagScreenName('ExchangeResumeScreen');
 	const {
 		priceQuote,
 		from,
@@ -42,7 +43,6 @@ const ExchangeResumeScreen = () => {
 	} = useExchangeResumeScreen();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
-	RNUxcam.tagScreenName('ExchangeResumeScreen');
 
 	return (
 		<>

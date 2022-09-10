@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { AssetsLayout } from '@layouts';
 import { View, Text, Icon, ModalBase, BlankStates, EmptyStates, Touchable } from '@components';
 import { useLanguage, useNFT } from '@hooks';
@@ -7,6 +8,7 @@ import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
 
 const NFTScreen = () => {
+	RNUxcam.tagScreenName('NFTScreen');
 	const {
 		nftsByCollection,
 		networth,

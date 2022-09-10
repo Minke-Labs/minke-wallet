@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useLanguage, useNavigation } from '@hooks';
@@ -9,6 +10,7 @@ import { fetchTokensPriceChange } from '@models/token';
 // import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
+	RNUxcam.tagScreenName('InvestmentsScreen');
 	const { i18n } = useLanguage();
 	const { tokens, walletBalance } = useBalances();
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>();

@@ -9,9 +9,9 @@ import ListItem from './ListItem/ListItem';
 import { useAccountsScreen } from './AccountsScreen.hooks';
 
 const AccountsScreen = () => {
+	RNUxcam.tagScreenName('AccountsScreen');
 	const { address, wallets, goBack, onSelectWallet, onImportWallet } = useAccountsScreen();
 	const { i18n } = useLanguage();
-	RNUxcam.tagScreenName('AccountsScreen');
 
 	return (
 		<BasicLayout>

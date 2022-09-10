@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { View, Expander, Balance } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation } from '@hooks';
@@ -12,6 +13,7 @@ import { useStablecoinsDetailScreen } from './useStablecoinsDetailScreen.hooks';
 type Props = NativeStackScreenProps<RootStackParamList, 'StablecoinsDetailScreen'>;
 
 const StablecoinsDetailScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('StablecoinsDetailScreen');
 	const navigation = useNavigation();
 	const { coin } = route.params;
 	const {

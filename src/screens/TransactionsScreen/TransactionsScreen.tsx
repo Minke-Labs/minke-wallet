@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, FlatList } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { TransactionPeriod } from '@components';
-import RNUxcam from 'react-native-ux-cam';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
 import HeaderContainer from './HeaderContainer/HeaderContainer';

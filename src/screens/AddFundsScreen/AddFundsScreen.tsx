@@ -26,6 +26,7 @@ import useAddFundsScreen from './AddFundsScreen.hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddFundsScreen'>;
 const AddFundsScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('AddFundsScreen');
 	const { topupToken } = route.params;
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -61,7 +62,6 @@ const AddFundsScreen = ({ route }: Props) => {
 		onMoonpayPurchase,
 		moonPaySpecialButton
 	} = useAddFundsScreen(topupToken);
-	RNUxcam.tagScreenName('AddFundsScreen');
 
 	return (
 		<>

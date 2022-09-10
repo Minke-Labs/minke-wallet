@@ -1,4 +1,5 @@
 import React from 'react';
+import RNUxcam from 'react-native-ux-cam';
 import {
 	Header,
 	Button,
@@ -15,6 +16,7 @@ import { AddressesContainer } from './AddressesContainer/AddressesContainer';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'TransactionsDetailScreen'>;
 const TransactionsDetailScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('TransactionsDetailScreen');
 	const { transaction } = route.params;
 	const { i18n } = useLanguage();
 	const { network } = useGlobalWalletState();

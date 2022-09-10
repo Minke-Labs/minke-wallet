@@ -9,12 +9,26 @@ import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
-	const { i18n } = useLanguage();
-	const { notAbleToSaveVisible, notAbleToSaveDismiss, dismissAddFunds, addFundsVisible, onAddFunds } =
-		useDepositScreen();
-	const { setSelectedUSDCoin, depositableToken, selectedProtocol, ableToDeposit, approved, setApproved, apy } =
-		useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
+	const { i18n } = useLanguage();
+
+	const {
+		notAbleToSaveVisible,
+		notAbleToSaveDismiss,
+		dismissAddFunds,
+		addFundsVisible,
+		onAddFunds
+	} = useDepositScreen();
+
+	const {
+		setSelectedUSDCoin,
+		depositableToken,
+		selectedProtocol,
+		ableToDeposit,
+		approved,
+		setApproved,
+		apy
+	} = useDepositProtocols();
 
 	if (ableToDeposit === undefined) {
 		return (

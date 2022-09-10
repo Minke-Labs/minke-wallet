@@ -1,12 +1,22 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
-import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
+import RNUxcam from 'react-native-ux-cam';
+import {
+	Icon,
+	Text,
+	View,
+	TokenItemCard,
+	EmptyStates,
+	ActivityIndicator,
+	BlankStates
+} from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
 import { TokenType } from '@styles';
 import { depositStablecoins } from '@models/deposit';
 
 const StablecoinsScreen = () => {
+	RNUxcam.tagScreenName('StablecoinsScreen');
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
 	ModalBase,
@@ -15,7 +16,6 @@ import {
 } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
-import RNUxcam from 'react-native-ux-cam';
 import { debounce } from 'lodash';
 import { MinkeToken } from '@models/types/token.types';
 import useWithdrawScreen from './WithdrawScreen.hooks';
