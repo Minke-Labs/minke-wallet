@@ -876,7 +876,8 @@ export default {
 			Save: 'Investir',
 			Deposit: 'Depositar',
 			Withdraw: 'Retirar',
-			Send: 'Qual token você deseja enviar para {{to}}?'
+			Send: 'Qual token você deseja enviar para {{to}}?',
+			Referral: 'Pontos'
 		},
 		Buttons: {
 			backup_to_icloud: 'Fazer Backup no {{cloudPlatform}}',

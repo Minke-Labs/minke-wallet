@@ -872,7 +872,8 @@ export default {
 			Save: 'Save',
 			Deposit: 'Deposit',
 			Withdraw: 'Withdraw',
-			Send: 'Which asset do you want to send to {{to}}?'
+			Send: 'Which asset do you want to send to {{to}}?',
+			Referral: 'Referral'
 		},
 		Buttons: {
 			backup_to_icloud: 'Back up to {{cloudPlatform}}',
