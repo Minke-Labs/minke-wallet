@@ -44,7 +44,7 @@ const Titles: React.FC<TitlesProps> = ({ token, inline, notTouchable = false }) 
 const TitlesEmpty = () => {
 	const { i18n } = useLanguage();
 	return (
-		<View row cross="center" h="100%">
+		<View row cross="center">
 			<Text type="p2" weight="medium">
 				{i18n.t('Components.TokenCard.choose_token')}
 			</Text>

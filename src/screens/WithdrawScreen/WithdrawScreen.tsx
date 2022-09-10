@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
@@ -11,15 +10,16 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	BlankStates,
-	Warning
+	// BlankStates,
+	Warning,
+	View
 } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import { MinkeToken } from '@models/types/token.types';
+import { os } from '@styles';
 import useWithdrawScreen from './WithdrawScreen.hooks';
-import styles from './WithdrawScreen.styles';
 
 const WithdrawScreen = () => {
 	RNUxcam.tagScreenName('WithdrawScreen');
@@ -48,24 +48,32 @@ const WithdrawScreen = () => {
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
-	if (token === undefined) {
-		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Withdraw')} />;
-	}
+	// if (token === undefined) {
+	// return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Withdraw')} />;
+	// }
 
 	return (
 		<>
 			<BasicLayout>
-				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
+				<Header
+					title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`}
+					marginBottom={60}
+				/>
 
 				<Paper p="xs" mb="l" mh="xs">
-					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
+					<TokenCard
+						onPress={showModal}
+						token={token}
+						updateQuotes={debounce(updateAmount, 500)}
+						apy={apy}
+					/>
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
 					<GasSelector />
 				</View>
 
-				<View style={styles.depositButton}>
+				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 					<HapticButton
 						title={i18n.t('Components.Buttons.withdraw')}
@@ -73,11 +81,12 @@ const WithdrawScreen = () => {
 						onPress={onWithdraw}
 					/>
 					{!canSendTransactions && (
-						<View style={{ marginTop: 8 }}>
+						<View mt="xxs">
 							<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
 						</View>
 					)}
 				</View>
+
 				<KeyboardSpacer />
 			</BasicLayout>
 

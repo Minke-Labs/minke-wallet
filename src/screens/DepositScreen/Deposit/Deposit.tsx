@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/types/token.types';
 import {
@@ -12,15 +11,16 @@ import {
 	Paper,
 	WatchModeTag,
 	BlankStates,
-	Warning
+	Warning,
+	View
 } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import { DepositProtocol } from '@models/deposit';
+import { os } from '@styles';
 import { useDeposit } from './Deposit.hooks';
-import styles from './Deposit.styles';
 
 interface DepositProps {
 	apy: string;
@@ -68,14 +68,19 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper p="xs" mb="l" mh="xs">
-					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
+					<TokenCard
+						onPress={showModal}
+						token={token}
+						updateQuotes={debounce(updateAmount, 500)}
+						apy={apy}
+					/>
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
 					<GasSelector />
 				</View>
 
-				<View style={styles.depositButton}>
+				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					{!!nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 					<HapticButton
 						title={i18n.t('Components.Buttons.deposit')}

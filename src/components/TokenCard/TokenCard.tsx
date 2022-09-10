@@ -29,7 +29,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	});
 
 	return (
-		<>
+		<View>
 			<Touchable onPress={onPress} w="100%">
 				<CoinSelector
 					token={token}
@@ -64,7 +64,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 				</View>
 			</View>
-		</>
+		</View>
 	);
 };
 
