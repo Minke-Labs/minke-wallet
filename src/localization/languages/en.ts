@@ -409,7 +409,7 @@ export default {
 			done: 'Done'
 		}
 	},
-	TransactionScreen: {
+	TransactionsDetailScreen: {
 		transaction_type: 'Transaction type:',
 		date: 'Date:',
 		sent_to: 'Sent to:',

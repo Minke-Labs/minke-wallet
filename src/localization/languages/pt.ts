@@ -411,7 +411,7 @@ export default {
 			done: 'Pronto'
 		}
 	},
-	TransactionScreen: {
+	TransactionsDetailScreen: {
 		transaction_type: 'Transação:',
 		date: 'Data:',
 		sent_to: 'Enviou para:',

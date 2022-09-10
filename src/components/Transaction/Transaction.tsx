@@ -17,7 +17,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 		<TouchableOpacity
 			activeOpacity={0.6}
 			style={styles.container}
-			onPress={() => navigation.navigate('TransactionScreen', { transaction })}
+			onPress={() => navigation.navigate('TransactionsDetailScreen', { transaction })}
 		>
 			<View style={[styles.leftContainer]}>
 				<TransactionIcon {...{ received, failed, pending, topUp, exchange, deposit, withdraw }} />

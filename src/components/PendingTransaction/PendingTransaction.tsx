@@ -18,7 +18,7 @@ const PendingTransaction: React.FC<PendingTransactionProps> = ({ transaction }) 
 
 	return (
 		<TouchableOpacity
-			onPress={() => navigation.navigate('TransactionScreen', { transaction })}
+			onPress={() => navigation.navigate('TransactionsDetailScreen', { transaction })}
 		>
 			<View
 				h={55}

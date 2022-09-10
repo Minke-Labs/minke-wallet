@@ -36,7 +36,7 @@ export const TransactionContainer: React.FC<TransactionContainerProps> = ({
 
 			<View mb="xxs">
 				<Text type="lLarge" weight="semiBold">
-					{i18n.t('TransactionScreen.transaction_type')}
+					{i18n.t('TransactionsDetailScreen.transaction_type')}
 				</Text>
 				<View row cross="center">
 					<TransactionIcon
@@ -60,7 +60,7 @@ export const TransactionContainer: React.FC<TransactionContainerProps> = ({
 			</View>
 
 			<Text type="lLarge" weight="semiBold">
-				{i18n.t('TransactionScreen.date')}
+				{i18n.t('TransactionsDetailScreen.date')}
 			</Text>
 
 			<Text type="lLarge" weight="regular">

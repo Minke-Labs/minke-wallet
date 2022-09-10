@@ -41,7 +41,7 @@ export type RootStackParamList = {
 	DevSettingsScreen: undefined;
 	ImportWalletScreen: undefined;
 	AddFundsScreen: { topupToken?: MinkeToken };
-	TransactionScreen: { transaction: ZapperTransaction };
+	TransactionsDetailScreen: { transaction: ZapperTransaction };
 	MoonpayWaitScreen: { transactionId: string };
 	Test: undefined;
 };

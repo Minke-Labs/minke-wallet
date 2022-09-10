@@ -63,7 +63,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 			<Paper ph="s" pv="xs" mh="xs" mb="s">
 				<>
 					<Text type="lLarge" weight="semiBold">
-						{i18n.t('TransactionScreen.hash')}
+						{i18n.t('TransactionsDetailScreen.hash')}
 					</Text>
 
 					<Touchable
@@ -84,7 +84,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 				{deposit || withdraw ? (
 					<>
 						<Text type="lLarge" weight="semiBold">
-							{i18n.t('TransactionScreen.savings_account')}
+							{i18n.t('TransactionsDetailScreen.savings_account')}
 						</Text>
 						<View row cross="center">
 							<Token name={protocol.toLowerCase() as TokenType} size={20} />
@@ -97,11 +97,11 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 				) : exchange && toToken && sourceToken ? (
 					<>
 						<Text type="lLarge" weight="semiBold">
-							{i18n.t('TransactionScreen.exchanged')}
+							{i18n.t('TransactionsDetailScreen.exchanged')}
 						</Text>
 						<View row main="space-between" cross="center" mb="xs">
 							<Text type="lLarge" weight="regular">
-								{i18n.t('TransactionScreen.exchange_details', {
+								{i18n.t('TransactionsDetailScreen.exchange_details', {
 									from: sourceToken.symbol,
 									fromAmount,
 									toAmount: value,
@@ -110,7 +110,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 							</Text>
 						</View>
 						<Text type="lLarge" weight="semiBold">
-							{i18n.t('TransactionScreen.exchange_rate')}
+							{i18n.t('TransactionsDetailScreen.exchange_rate')}
 						</Text>
 						<View row main="space-between" cross="center">
 							<Text type="lLarge" weight="regular">
@@ -123,8 +123,8 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 					<>
 						<Text type="lLarge" weight="semiBold">
 							{received
-								? i18n.t('TransactionScreen.received_from')
-								: i18n.t('TransactionScreen.sent_to')}
+								? i18n.t('TransactionsDetailScreen.received_from')
+								: i18n.t('TransactionsDetailScreen.sent_to')}
 						</Text>
 
 						<Touchable

@@ -13,8 +13,8 @@ import { TitleContainer } from './TitleContainer/TitleContainer';
 import { TransactionContainer } from './TransactionContainer/TransactionContainer';
 import { AddressesContainer } from './AddressesContainer/AddressesContainer';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'TransactionScreen'>;
-const TransactionScreen = ({ route }: Props) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'TransactionsDetailScreen'>;
+const TransactionsDetailScreen = ({ route }: Props) => {
 	const { transaction } = route.params;
 	const { i18n } = useLanguage();
 	const { network } = useGlobalWalletState();
@@ -104,4 +104,4 @@ const TransactionScreen = ({ route }: Props) => {
 	);
 };
 
-export default TransactionScreen;
+export default TransactionsDetailScreen;
