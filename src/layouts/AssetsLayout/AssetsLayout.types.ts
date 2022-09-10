@@ -1,4 +1,4 @@
 export interface AssetsLayoutProps {
-	headerValue: number | undefined;
+	headerValue: number;
 	headerTitle: JSX.Element;
 }

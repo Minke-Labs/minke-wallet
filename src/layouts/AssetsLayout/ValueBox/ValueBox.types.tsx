@@ -1,6 +1,6 @@
 interface ValueBoxProps {
 	title?: JSX.Element;
-	value: number | undefined;
+	value: number;
 }
 
 export { ValueBoxProps };

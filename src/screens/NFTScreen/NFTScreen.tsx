@@ -8,22 +8,21 @@ import Item from './Item/Item';
 
 const NFTScreen = () => {
 	const {
-		assets,
-		// estimatedValue,
-		nftsByCollection
+		nftsByCollection,
+		networth,
+		loading
 	} = useNFT();
 	const [infoModal, setInfoModal] = useState(false);
 	const { i18n } = useLanguage();
 
-	if (!assets) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.NFT')} />;
+	if (loading) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.NFT')} />;
 
 	const data = Object.keys(nftsByCollection);
 
 	return (
 		<>
 			<AssetsLayout
-				headerValue={1}
-				// headerValue={estimatedValue}
+				headerValue={networth}
 				headerTitle={
 					<Touchable
 						row

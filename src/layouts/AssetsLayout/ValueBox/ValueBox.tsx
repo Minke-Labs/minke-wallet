@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, View } from '@components';
+import { Text, View } from '@components';
 import { numberFormat } from '@helpers/utilities';
 import Header from '../Header/Header';
 import { ValueBoxProps } from './ValueBox.types';
@@ -11,7 +11,7 @@ const ValueBox: React.FC<ValueBoxProps> = ({ value, title }) => (
 		<View h={207} cross="center">
 			{title}
 			<Text type="dLarge" mb="xxs">
-				{value ? numberFormat(value) : <ActivityIndicator />}
+				{numberFormat(value)}
 			</Text>
 		</View>
 	</Background>
