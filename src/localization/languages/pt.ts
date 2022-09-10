@@ -233,6 +233,7 @@ export default {
 		}
 	},
 	MinkeHubScreen: {
+		minke_hub: 'Minke Hub',
 		accounts: 'Contas',
 		coins_pegged_to: 'Moedas atreladas ao dólar americano',
 		investments: 'Investimentos',

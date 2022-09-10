@@ -53,7 +53,7 @@ const StablecoinsScreen = () => {
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl="xs" pt="s">
 					<Text type="tSmall" weight="bold" mb="xs">
-						Stablecoins
+						{i18n.t('StablecoinsScreen.stablecoins')}
 					</Text>
 
 					<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>

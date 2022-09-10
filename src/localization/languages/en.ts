@@ -232,6 +232,7 @@ export default {
 		}
 	},
 	MinkeHubScreen: {
+		minke_hub: 'Minke Hub',
 		accounts: 'Accounts',
 		coins_pegged_to: 'Coins pegged to the US dollar',
 		investments: 'Investments',

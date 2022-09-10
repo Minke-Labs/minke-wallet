@@ -10,7 +10,6 @@ import { Card } from './Card/Card';
 
 const MinkeHubScreen = () => {
 	RNUxcam.tagScreenName('MinkeHubScreen');
-
 	const { i18n } = useLanguage();
 	const [modal, setModal] = useState(false);
 	const navigation = useNavigation();
@@ -25,7 +24,7 @@ const MinkeHubScreen = () => {
 					<View p="xs">
 						<View row cross="center" mb="s">
 							<Text type="hMedium" weight="bold">
-								Minke Hub
+								{i18n.t('MinkeHubScreen.minke_hub')}
 							</Text>
 							<View mr="xxs" />
 							<MinkeLogo />
