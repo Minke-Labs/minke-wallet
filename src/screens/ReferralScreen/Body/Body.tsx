@@ -1,22 +1,25 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react';
-import { FlatList, View } from 'react-native';
-import { useLanguage, useTheme } from '@hooks';
-import { EmptyStates, Text, TransactionIcon } from '@components';
+import { FlatList } from 'react-native';
+import { useLanguage } from '@hooks';
+import { EmptyStates, Text, TransactionIcon, View, Paper } from '@components';
 import { Reward } from '@src/services/apis/minke/minke.types';
 import { format } from 'date-fns';
 import { REFERRAL_POINTS_TO_USD_CONVERSION, tokenBalanceFormat } from '@helpers/utilities';
-import { makeStyles } from './Body.styles';
 import Card from './Card/Card';
 
 export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; rewards: Reward[] }) => {
-	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const { i18n } = useLanguage();
 
 	return (
-		<View style={styles.depositCardContainer}>
-			<View style={styles.actionDepositCard}>
+		<View
+			flex1
+			bgc="background1"
+			pv="m"
+			btlr="s"
+			btrr="s"
+		>
+			<Paper p="xs" mb="m" mh="xs">
 				{rewards.length > 0 ? (
 					<FlatList
 						keyExtractor={(item) => item.id.toString()}
@@ -33,15 +36,15 @@ export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; reward
 										? i18n.t('ReferralScreen.Body.exchange')
 										: i18n.t('ReferralScreen.Body.deposit')
 								}
-								marginBottom={index === rewards.length - 1 ? 0 : 32}
+								mb={index === rewards.length - 1 ? 'zero' : 'm'}
 								right={
-									<View>
-										<Text style={{ fontSize: 12, alignSelf: 'flex-end' }}>
+									<View cross="flex-end">
+										<Text type="lSmall">
 											{item.claimed && item.amount
 												? `${tokenBalanceFormat(item.amount, 4)} USDC`
 												: i18n.t('ReferralScreen.Body.points', { count: item.points })}
 										</Text>
-										<Text type="p2" weight="bold" style={{ alignSelf: 'flex-end' }}>
+										<Text type="tSmall" weight="bold">
 											${item.points * REFERRAL_POINTS_TO_USD_CONVERSION}
 										</Text>
 									</View>
@@ -52,7 +55,7 @@ export const Body = ({ onEarnPress, rewards }: { onEarnPress: () => void; reward
 				) : (
 					<EmptyStates.NoReferralPoints onEarnPress={onEarnPress} />
 				)}
-			</View>
+			</Paper>
 		</View>
 	);
 };

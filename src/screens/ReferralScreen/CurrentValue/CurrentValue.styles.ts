@@ -3,12 +3,6 @@ import { ColorType } from '@styles';
 
 export const makeStyles = (colors: ColorType) =>
 	StyleSheet.create({
-		container: {
-			marginTop: 38,
-			borderRadius: 24,
-			marginBottom: 32,
-			overflow: 'hidden'
-		},
 		glassContainer: {
 			width: '100%',
 			flexDirection: 'column',
@@ -18,19 +12,7 @@ export const makeStyles = (colors: ColorType) =>
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
 		},
-		infoRow: {
-			flexDirection: 'row',
-			alignItems: 'center',
-			justifyContent: 'center'
-		},
-		interestContainer: {
-			flexDirection: 'column',
-			alignItems: 'center',
-			paddingVertical: 4,
-			paddingHorizontal: 12,
-			borderRadius: 8,
-			marginBottom: 16
-		},
+
 		depositButton: {
 			flexDirection: 'row',
 			justifyContent: 'center',

@@ -30,6 +30,7 @@ const ReferralScreen = () => {
 				</SafeAreaView>
 				<Body rewards={rewards} onEarnPress={onEarnPress} />
 			</BasicLayout>
+
 			<ModalBase isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
 				<HelpModal onDismiss={onHelpDismiss} />
 			</ModalBase>

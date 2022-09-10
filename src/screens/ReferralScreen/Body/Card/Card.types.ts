@@ -1,16 +1,12 @@
+import { SpacingType } from '@styles';
 import React from 'react';
-import { StyleProp, ViewStyle, GestureResponderEvent, TextStyle } from 'react-native';
 
 export interface CardProps {
 	title: string;
 	subtitle: string;
 	image: React.ReactChild;
 	right?: React.ReactChild;
-	style?: StyleProp<ViewStyle>;
-	titleStyle?: StyleProp<TextStyle>;
-	subtitleStyle?: StyleProp<TextStyle>;
-	onPress?: (event: GestureResponderEvent) => void;
-	marginBottom?: number;
+	onPress?: () => void;
+	mb?: SpacingType;
 	thirdRowText?: string | number;
-	thirdRowStyle?: StyleProp<TextStyle>;
 }
