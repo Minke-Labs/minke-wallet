@@ -31,6 +31,7 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 
 	const onICloudBackup = () => {
 		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
+		onDismiss();
 	};
 
 	const walletsBackedUp = useMemo(() => {
