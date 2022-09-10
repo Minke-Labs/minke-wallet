@@ -12,10 +12,11 @@ const lengthConst = 181;
 const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 	const [expanded, setExpanded] = useState(false);
 	const { i18n } = useLanguage();
+	const cleanedDesc = desc.replaceAll(/<[^>]*>/g, '');
 
 	const trunc = () => {
-		if ((desc.length > lengthConst) && !expanded) return `${desc.slice(0, lengthConst)}...`;
-		return desc;
+		if ((cleanedDesc.length > lengthConst) && !expanded) return `${cleanedDesc.slice(0, lengthConst)}...`;
+		return cleanedDesc;
 	};
 
 	return (
