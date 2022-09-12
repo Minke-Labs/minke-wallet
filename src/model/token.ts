@@ -140,6 +140,17 @@ export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<Inve
 	}));
 };
 
+export const truncBalances = (tokens: InvestmentToken[] | MinkeToken[]) => {
+	const truncated = tokens.map((item) => {
+		if (item.balance) {
+			const truncatedBalance = String(Math.trunc(+item.balance));
+			if (truncatedBalance.length > 6) return ({ ...item, balance: truncatedBalance });
+		}
+		return item;
+	});
+	return truncated;
+};
+
 export const ether: MinkeToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',

@@ -6,7 +6,7 @@ import { AssetsLayout } from '@layouts';
 import { useBalances, useLanguage, useNavigation } from '@hooks';
 import { TokenType } from '@styles';
 import { InvestmentToken } from '@models/types/token.types';
-import { fetchTokensPriceChange } from '@models/token';
+import { fetchTokensPriceChange, truncBalances } from '@models/token';
 // import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
@@ -19,7 +19,8 @@ const InvestmentsScreen = () => {
 	useEffect(() => {
 		const fetchPriceChanges = async () => {
 			if (tokens) {
-				setInvestmentTokens(await fetchTokensPriceChange(tokens));
+				const truncated = truncBalances(tokens);
+				setInvestmentTokens(await fetchTokensPriceChange(truncated));
 			}
 		};
 		fetchPriceChanges();

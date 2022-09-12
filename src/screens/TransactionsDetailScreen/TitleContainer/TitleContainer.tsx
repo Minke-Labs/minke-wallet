@@ -11,6 +11,11 @@ interface TitleContainerProps {
 	token: string;
 }
 
+export const truncBalance = (num: number) => {
+	if (String(num).length > 6) return Math.trunc(num);
+	return num;
+};
+
 export const TitleContainer: React.FC<TitleContainerProps> = ({
 	received,
 	topUp,
@@ -23,7 +28,7 @@ export const TitleContainer: React.FC<TitleContainerProps> = ({
 		<View row cross="center">
 			<Text type="hLarge" weight="bold">
 				{received || topUp || exchange || withdraw ? '+' : '-'}
-				{value}
+				{truncBalance(value)}
 			</Text>
 			<View mh="xxs">
 				<Token name={token.toLowerCase() as TokenType} size={32} glow />
