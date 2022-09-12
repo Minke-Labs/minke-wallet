@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BasicLayout } from '@layouts';
-import { MinkeToken } from '@models/types/token.types';
 import {
 	ModalBase,
 	TokenCard,
@@ -14,7 +13,7 @@ import {
 	Warning,
 	View
 } from '@components';
-import { useNavigation, useAmplitude, useLanguage } from '@hooks';
+import { useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { DepositableToken } from '@models/types/depositTokens.types';
@@ -32,15 +31,12 @@ interface DepositProps {
 const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtocol, setSelectedUSDCoin }) => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
-	const navigation = useNavigation();
 	const {
 		tokens,
 		token,
 		updateAmount,
 		canDeposit,
 		onDeposit,
-		waitingTransaction,
-		transactionHash,
 		nativeToken,
 		enoughForGas,
 		gaslessEnabled,
@@ -68,12 +64,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper p="xs" mb="l" mh="xs">
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
@@ -105,21 +96,6 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
-			</ModalBase>
-
-			<ModalBase
-				isVisible={waitingTransaction}
-				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
-			>
-				{!!token && (
-					<ModalReusables.TransactionWait
-						onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
-						fromToken={token}
-						toToken={{ symbol: selectedProtocol?.name } as MinkeToken}
-						transactionHash={transactionHash}
-						deposit
-					/>
-				)}
 			</ModalBase>
 			<ModalBase isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (

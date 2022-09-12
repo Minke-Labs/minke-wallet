@@ -27,7 +27,6 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureEvent } from '@sentry/react-native';
 import { toBn } from 'evm-bn';
-import { ResultProps } from '../../Send.types';
 
 interface UserProps {
 	name: string;
@@ -37,18 +36,11 @@ interface UserProps {
 interface UseTransactionTransferProps {
 	onDismiss: () => void;
 	onError: () => void;
-	sentSuccessfully: (obj: ResultProps) => void;
 	user: UserProps;
 	token: MinkeToken;
 }
 
-export const useTransactionTransfer = ({
-	onDismiss,
-	sentSuccessfully,
-	onError,
-	user,
-	token
-}: UseTransactionTransferProps) => {
+export const useTransactionTransfer = ({ onDismiss, onError, user, token }: UseTransactionTransferProps) => {
 	const { track } = useAmplitude();
 	const [image, setImage] = useState<{ uri: string }>();
 	const [amount, onChangeAmount] = useState('');
@@ -141,16 +133,7 @@ export const useTransactionTransfer = ({
 				const to = (await resolveENSAddress(ens)) || ens;
 				const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
 
-				onDismiss();
 				if (gasless) {
-					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
-						hash: ''
-					});
 					const { isApproved } = await approvalState(address, token.address, sendContract);
 					const provider = biconomy.getEthersProvider();
 
@@ -167,7 +150,6 @@ export const useTransactionTransfer = ({
 
 						await provider.waitForTransaction(tx);
 					}
-
 					const hash = await gaslessSend({
 						biconomy,
 						address,
@@ -176,15 +158,6 @@ export const useTransactionTransfer = ({
 						gasPrice: gasPrice.result.ProposeGasPrice,
 						token: token.address,
 						to
-					});
-
-					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
-						hash
 					});
 					track('Sent', {
 						token: token.symbol,
@@ -240,14 +213,6 @@ export const useTransactionTransfer = ({
 							symbol: token.symbol
 						});
 					} else {
-						sentSuccessfully({
-							token: {
-								address: token.address,
-								decimals: token.decimals,
-								symbol: token.symbol
-							},
-							hash
-						});
 						const transaction = await sendTransaction(
 							privateKey!,
 							to,
@@ -268,16 +233,6 @@ export const useTransactionTransfer = ({
 							})
 						);
 					}
-
-					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
-						hash
-					});
-
 					track('Sent', {
 						token: token.symbol,
 						tokenAmount,
@@ -285,6 +240,7 @@ export const useTransactionTransfer = ({
 						hash
 					});
 				}
+				onDismiss();
 				navigation.navigate('HomeScreen');
 			} catch (error) {
 				onBlockchainError(error);

@@ -13,7 +13,6 @@ interface UserProps {
 interface SendProps {
 	onDismiss: () => void;
 	onError: () => void;
-	sentSuccessfully: (obj: ResultProps) => void;
 	isVisible: boolean;
 	coin?: MinkeToken;
 }

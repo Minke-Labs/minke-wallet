@@ -5,22 +5,11 @@ import Icon from '@src/components/Icon/Icon';
 import Text from '@src/components/Text/Text';
 import Touchable from '@src/components/Touchable/Touchable';
 import styles from './Send.styles';
-import {
-	TransactionContacts,
-	TransactionSelectFunds,
-	TransactionTransfer,
-	AddContact
-} from './screens';
+import { TransactionContacts, TransactionSelectFunds, TransactionTransfer, AddContact } from './screens';
 import { SendProps } from './Send.types';
 import { useSendModal } from './Send.hooks';
 
-const SendModal: React.FC<SendProps> = ({
-	coin,
-	onDismiss,
-	onError,
-	sentSuccessfully,
-	isVisible = false
-}) => {
+const SendModal: React.FC<SendProps> = ({ coin, onDismiss, onError, isVisible = false }) => {
 	const {
 		currentStep,
 		user,
@@ -59,21 +48,17 @@ const SendModal: React.FC<SendProps> = ({
 					<TransactionContacts onSelected={onUserSelected} />
 				))}
 
-			{(currentStep === 1) && (coin === undefined) && (
-				<TransactionSelectFunds
-					user={user}
-					onSelected={onTokenSelected}
-				/>
+			{currentStep === 1 && coin === undefined && (
+				<TransactionSelectFunds user={user} onSelected={onTokenSelected} />
 			)}
 
-			{(currentStep === 1) && (coin !== undefined) && (
+			{currentStep === 1 && coin !== undefined && (
 				<TransactionTransfer
 					{...{
 						user,
 						token: coin,
 						onDismiss,
-						onError,
-						sentSuccessfully
+						onError
 					}}
 				/>
 			)}
@@ -84,8 +69,7 @@ const SendModal: React.FC<SendProps> = ({
 						user,
 						token,
 						onDismiss,
-						onError,
-						sentSuccessfully
+						onError
 					}}
 				/>
 			)}

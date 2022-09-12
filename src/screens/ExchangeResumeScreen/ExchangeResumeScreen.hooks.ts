@@ -23,11 +23,9 @@ const useExchangeResumeScreen = () => {
 	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [loading, setLoading] = React.useState(false); // creating transaction
-	const [visible, setVisible] = React.useState(false);
 	const [gasless, setGasless] = React.useState(false);
 	const [count, setCount] = React.useState(45);
 	const [intervalId, setIntervalId] = React.useState<NodeJS.Timer>();
-	const [transactionHash, setTransactionHash] = React.useState('');
 	const [error, setError] = React.useState('');
 	const [fromFiatPrice, setFromFiatPrice] = React.useState<number>();
 	const [toFiatPrice, setToFiatPrice] = React.useState<number>();
@@ -35,12 +33,10 @@ const useExchangeResumeScreen = () => {
 	const { track } = useAmplitude();
 	const { gaslessEnabled, biconomy } = useBiconomy();
 
-	const showModal = () => setVisible(true);
-	const hideModal = () => {
+	const finishExchange = () => {
 		exchange.fromAmount.set(undefined);
 		exchange.toAmount.set(undefined);
 		exchange.gas.set(undefined);
-		setVisible(false);
 		navigation.navigate('HomeScreen');
 	};
 
@@ -101,7 +97,6 @@ const useExchangeResumeScreen = () => {
 	const onBlockchainError = (e: any) => {
 		captureException(e);
 		Logger.error('Exchange resume blockchain error', e);
-		setVisible(false);
 		setBlockchainError(true);
 		setLoading(false);
 	};
@@ -152,7 +147,6 @@ const useExchangeResumeScreen = () => {
 		if (priceQuote) {
 			setLoading(true);
 			setError('');
-			showModal(); // Waiting modal.
 			try {
 				const {
 					allowanceTarget,
@@ -200,7 +194,6 @@ const useExchangeResumeScreen = () => {
 						toToken: buyTokenAddress,
 						swapTarget: toAddress!
 					});
-					setTransactionHash(hash);
 					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: true, hash });
 					addPendingTransaction({
 						from: from.address,
@@ -217,8 +210,6 @@ const useExchangeResumeScreen = () => {
 							{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
 						]
 					});
-
-					navigation.navigate('HomeScreen');
 				} else {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
 					const { maxFeePerGas, maxPriorityFeePerGas } = exchange.gas.value || {};
@@ -265,9 +256,8 @@ const useExchangeResumeScreen = () => {
 					addPendingTransaction(converted);
 					const { hash } = transaction;
 					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: false, hash });
-					setTransactionHash(hash);
-					navigation.navigate('HomeScreen');
 				}
+				finishExchange();
 			} catch (e) {
 				onBlockchainError(e);
 			}
@@ -284,9 +274,6 @@ const useExchangeResumeScreen = () => {
 		exchangeName,
 		exchange,
 		gas,
-		visible,
-		hideModal,
-		transactionHash,
 		error,
 		setError,
 		onSuccess,

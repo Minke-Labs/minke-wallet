@@ -14,15 +14,13 @@ import {
 	View
 } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
+import { useLanguage } from '@hooks';
 import { debounce } from 'lodash';
-import { MinkeToken } from '@models/types/token.types';
 import { os } from '@styles';
 import useWithdrawScreen from './WithdrawScreen.hooks';
 
 const WithdrawScreen = () => {
 	RNUxcam.tagScreenName('WithdrawScreen');
-	const navigation = useNavigation();
 	const {
 		searchVisible,
 		hideModal,
@@ -34,11 +32,8 @@ const WithdrawScreen = () => {
 		canWithdraw,
 		onTokenSelect,
 		onWithdraw,
-		waitingTransaction,
-		transactionHash,
 		tokens,
 		gaslessEnabled,
-		selectedProtocol,
 		apy,
 		blockchainError,
 		setBlockchainError,
@@ -50,18 +45,10 @@ const WithdrawScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header
-					title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`}
-					marginBottom={60}
-				/>
+				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper p="xs" mb="l" mh="xs">
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
@@ -95,21 +82,6 @@ const WithdrawScreen = () => {
 					selected={[token?.symbol.toLowerCase()]}
 					withdraw
 				/>
-			</ModalBase>
-
-			<ModalBase
-				isVisible={waitingTransaction}
-				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
-			>
-				{!!token && (
-					<ModalReusables.TransactionWait
-						onDismiss={() => navigation.navigate('SaveScreen')}
-						fromToken={{ symbol: selectedProtocol?.name } as MinkeToken}
-						toToken={token!}
-						transactionHash={transactionHash}
-						withdraw
-					/>
-				)}
 			</ModalBase>
 			<ModalBase isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (

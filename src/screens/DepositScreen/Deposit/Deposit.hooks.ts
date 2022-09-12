@@ -40,9 +40,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
 	const [token, setToken] = React.useState<MinkeToken>();
 	const [amount, setAmount] = React.useState('0');
-	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
-	const [transactionHash, setTransactionHash] = React.useState('');
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const { addPendingTransaction } = useTransactions();
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
@@ -67,7 +65,6 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const onDeposit = async () => {
 		Keyboard.dismiss();
 		if (canDeposit && depositableToken && selectedProtocol && token) {
-			setWaitingTransaction(true);
 			try {
 				const hash = await new Deposit(selectedProtocol.id).deposit({
 					address,
@@ -85,7 +82,6 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 
 				if (hash) {
 					Logger.log(`Deposit ${JSON.stringify(hash)}`);
-					setTransactionHash(hash);
 					track('Deposited', {
 						token: token.symbol,
 						amount,
@@ -112,7 +108,6 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 					Logger.error('Error depositing');
 				}
 			} catch (error) {
-				setWaitingTransaction(false);
 				captureException(error);
 				Logger.error('Deposit blockchain error', error);
 				setBlockchainError(true);
@@ -151,8 +146,6 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 		updateAmount,
 		canDeposit,
 		onDeposit,
-		waitingTransaction,
-		transactionHash,
 		nativeToken,
 		enoughForGas,
 		gaslessEnabled,

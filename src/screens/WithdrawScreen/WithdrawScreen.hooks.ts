@@ -30,9 +30,7 @@ const useWithdrawScreen = () => {
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
 	const { withdrawableTokens: tokens } = useBalances();
-	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
-	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
@@ -77,7 +75,6 @@ const useWithdrawScreen = () => {
 	const onWithdraw = async () => {
 		Keyboard.dismiss();
 		if (canWithdraw && token && token.interestBearingToken && selectedProtocol) {
-			setWaitingTransaction(true);
 			try {
 				const hash = await new WithdrawService(selectedProtocol.id).withdraw({
 					gasless: gaslessEnabled,
@@ -96,7 +93,6 @@ const useWithdrawScreen = () => {
 
 				if (hash) {
 					Logger.log(`Withdraw ${JSON.stringify(hash)}`);
-					setTransactionHash(hash);
 					track('Withdraw done', {
 						token: token.symbol,
 						amount,
@@ -118,13 +114,11 @@ const useWithdrawScreen = () => {
 							{ type: 'outgoing', symbol: token.interestBearingToken.symbol, amount: +amount }
 						]
 					});
-
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
 				} else {
 					Logger.error('Error withdrawing');
 				}
 			} catch (error) {
-				setWaitingTransaction(false);
 				captureException(error);
 				Logger.error('Withdraw blockchain error', error);
 				setBlockchainError(true);
@@ -149,8 +143,6 @@ const useWithdrawScreen = () => {
 		updateAmount,
 		onTokenSelect,
 		onWithdraw,
-		transactionHash,
-		waitingTransaction,
 		tokens,
 		gaslessEnabled,
 		selectedProtocol,

@@ -17,18 +17,9 @@ export type ResultProps = {
 
 const SendModalComponent: React.FC<SendModalComponentProps> = ({ sendModal, setSendModal, coin }) => {
 	const { i18n } = useLanguage();
-	const [sendModalFinished, setSendModalFinished] = useState(false);
-	const [sentTransaction, setSentTransaction] = useState<ResultProps>();
 	const [error, setError] = useState(false);
 
-	const onSendFinished = (obj: ResultProps) => {
-		const { hash } = obj;
-		setSendModalFinished(!hash);
-		setSentTransaction(obj);
-	};
-
 	const onError = () => {
-		setSendModalFinished(false);
 		setError(true);
 		setSendModal(true);
 	};
@@ -38,21 +29,10 @@ const SendModalComponent: React.FC<SendModalComponentProps> = ({ sendModal, setS
 			<ModalBase isVisible={sendModal} onDismiss={() => setSendModal(false)}>
 				<ModalReusables.Send
 					onDismiss={() => setSendModal(false)}
-					sentSuccessfully={(obj: ResultProps) => onSendFinished(obj)}
 					isVisible={sendModal}
 					onError={onError}
 					coin={coin}
 				/>
-			</ModalBase>
-			<ModalBase isVisible={sendModalFinished} onDismiss={() => setSendModalFinished(false)}>
-				{sentTransaction && (
-					<ModalReusables.TransactionWait
-						transactionHash={sentTransaction.hash}
-						fromToken={sentTransaction.token}
-						onDismiss={() => setSendModalFinished(false)}
-						sent
-					/>
-				)}
 			</ModalBase>
 			<ModalBase isVisible={error} onDismiss={() => setError(false)}>
 				{error && (

@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-	Text,
-	Header,
-	HapticButton,
-	Paper,
-	ModalBase,
-	ModalReusables,
-	View
-} from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables, View } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
@@ -29,9 +21,6 @@ const ExchangeResumeScreen = () => {
 		count,
 		exchangeSummary,
 		exchangeName,
-		visible,
-		hideModal,
-		transactionHash,
 		error,
 		setError,
 		onSuccess,
@@ -59,7 +48,6 @@ const ExchangeResumeScreen = () => {
 							borderBottomColor: colors.background1
 						}}
 					>
-
 						<View
 							flex1
 							h="100%"
@@ -98,7 +86,6 @@ const ExchangeResumeScreen = () => {
 						<View mr="xxs" />
 						{!loading && <Rate count={count} />}
 					</View>
-
 				</Paper>
 
 				<Paper mb="s" p="s" mh="xs">
@@ -123,24 +110,10 @@ const ExchangeResumeScreen = () => {
 
 				{!gasless && <GasSelected />}
 
-				<View
-					mb="m"
-					mh="xs"
-					style={{ marginTop: os === 'android' ? undefined : 'auto' }}
-				>
+				<View mb="m" mh="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />
 				</View>
-
 			</BasicLayout>
-
-			<ModalBase isVisible={visible} onDismiss={hideModal}>
-				<ModalReusables.TransactionWait
-					onDismiss={hideModal}
-					fromToken={from}
-					toToken={to}
-					transactionHash={transactionHash}
-				/>
-			</ModalBase>
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
 			</ModalBase>
