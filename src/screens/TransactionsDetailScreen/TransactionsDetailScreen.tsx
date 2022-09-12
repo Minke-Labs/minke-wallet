@@ -3,7 +3,8 @@ import RNUxcam from 'react-native-ux-cam';
 import {
 	Header,
 	Button,
-	View
+	View,
+	Scroll
 } from '@components';
 import { BasicLayout } from '@layouts';
 import { useGlobalWalletState, useLanguage, useTransaction } from '@hooks';
@@ -48,8 +49,8 @@ const TransactionsDetailScreen = ({ route }: Props) => {
 	});
 
 	return (
-		<>
-			<BasicLayout>
+		<BasicLayout>
+			<Scroll>
 				<Header title={description} />
 
 				<TitleContainer
@@ -101,8 +102,8 @@ const TransactionsDetailScreen = ({ route }: Props) => {
 						onPress={openTransaction}
 					/>
 				</View>
-			</BasicLayout>
-		</>
+			</Scroll>
+		</BasicLayout>
 	);
 };
 
