@@ -137,7 +137,8 @@ export default {
 			AccountsOverview: {
 				overview: 'Accounts overview',
 				see_all: 'See all',
-				investments_highlight: 'Investments highlights'
+				investments_highlight: 'Investments highlights',
+				stablecoins: 'Stablecoins'
 			},
 			AccountsEmpty: {
 				buy_usdc_now: 'Buy USDC now!\nNo personal ID required.',

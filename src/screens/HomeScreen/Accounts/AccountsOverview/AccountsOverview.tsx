@@ -14,7 +14,7 @@ export const AccountsOverview: React.FC = () => {
 	const navigation = useNavigation();
 	const { stablecoins = [], tokens = [] } = useBalances();
 	const [defaultToken] = topUpTokens;
-	let biggestBalanceStable: MinkeToken = {} as MinkeToken;
+	let biggestBalanceStable = {} as MinkeToken;
 
 	stablecoins.forEach((stable) => {
 		if ((stable.balanceUSD || 0) > (biggestBalanceStable?.balanceUSD || 0)) {
@@ -63,7 +63,7 @@ export const AccountsOverview: React.FC = () => {
 				<>
 					<View row cross="center" mb="xs">
 						<Text type="lSmall" weight="semiBold" color="text2">
-							Stablecoins
+							{i18n.t('HomeScreen.Accounts.AccountsOverview.stablecoins')}
 						</Text>
 						<View mr="xxs" />
 						<Touchable onPress={() => navigation.navigate('StablecoinsScreen')}>
@@ -80,6 +80,32 @@ export const AccountsOverview: React.FC = () => {
 						balance={showingStable.balance}
 						balanceUSD={showingStable.balanceUSD}
 						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: showingStable })}
+						stablecoin
+					/>
+				</>
+			)}
+
+			{!showingStable.symbol && investmentHighlights.length > 0 && (
+				<>
+					<View row cross="center" mb="xs">
+						<Text type="lSmall" weight="semiBold" color="text2">
+							{i18n.t('HomeScreen.Accounts.AccountsOverview.stablecoins')}
+						</Text>
+						<View mr="xxs" />
+						<Touchable onPress={() => navigation.navigate('StablecoinsScreen')}>
+							<Text type="bSmall" color="cta1">
+								{i18n.t('HomeScreen.Accounts.AccountsOverview.see_all')}
+							</Text>
+						</Touchable>
+					</View>
+
+					<TokenItemCard
+						token={defaultToken.symbol.toLowerCase() as TokenType}
+						name={defaultToken.name}
+						symbol={defaultToken.symbol}
+						balance={defaultToken.balance}
+						balanceUSD={0}
+						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: defaultToken })}
 						stablecoin
 					/>
 				</>
