@@ -30,41 +30,43 @@ export const Assets: React.FC = () => {
 
 	return (
 		<>
-			<Paper p="xs" mb="xs">
-				<View row main="space-between" cross="center" mb="s">
-					<View>
-						<Text type="lMedium" weight="semiBold" color="text3">
-							{i18n.t('HomeScreen.Assets.your_total_assets')}
-						</Text>
-						<Text type="dMedium">{numberFormat(balance)}</Text>
+			<Touchable onPress={() => navigation.navigate('MinkeHubScreen')}>
+				<Paper p="xs" mb="xs">
+					<View row main="space-between" cross="center" mb="s">
+						<View>
+							<Text type="lMedium" weight="semiBold" color="text3">
+								{i18n.t('HomeScreen.Assets.your_total_assets')}
+							</Text>
+							<Text type="dMedium">{numberFormat(balance)}</Text>
+						</View>
+						<Touchable onPress={() => setVisible(true)}>
+							{!!address && (
+								<Image
+									source={currentAvatar.image}
+									style={{
+										width: 56,
+										height: 56,
+										borderRadius: 28
+									}}
+								/>
+							)}
+						</Touchable>
 					</View>
-					<Touchable onPress={() => setVisible(true)}>
-						{!!address && (
-							<Image
-								source={currentAvatar.image}
-								style={{
-									width: 56,
-									height: 56,
-									borderRadius: 28
-								}}
+					<View row main="space-between">
+						<View style={{ flex: 1 }}>
+							<Button
+								iconLeft="add"
+								title={i18n.t('HomeScreen.Assets.add_funds')}
+								onPress={() => setAddFundsVisible(true)}
 							/>
-						)}
-					</Touchable>
-				</View>
-				<View row main="space-between">
-					<View style={{ flex: 1 }}>
-						<Button
-							iconLeft="add"
-							title={i18n.t('HomeScreen.Assets.add_funds')}
-							onPress={() => setAddFundsVisible(true)}
-						/>
+						</View>
+						<View mr="xxs" />
+						<View w={48}>
+							<Button title="···" onPress={() => setImportModal(true)} br="xs" />
+						</View>
 					</View>
-					<View mr="xxs" />
-					<View w={48}>
-						<Button title="···" onPress={() => setImportModal(true)} br="xs" />
-					</View>
-				</View>
-			</Paper>
+				</Paper>
+			</Touchable>
 
 			<Modal
 				isVisible={visible}

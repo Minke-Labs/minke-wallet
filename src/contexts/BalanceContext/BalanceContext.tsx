@@ -42,9 +42,9 @@ const BalanceProvider: React.FC = ({ children }) => {
 	}, [selectedProtocol, address, zapperNetwork]);
 
 	useEffect(() => {
-		const fetchBalances = async () => {
+		const fetchBalances = async (loadingUI = true) => {
 			if (address) {
-				setLoading(true);
+				if (loadingUI) setLoading(true);
 				const tokensBalances: MinkeToken[][] = [];
 				const url = generateUrl([address], [zapperNetwork]);
 				const eventSourceDict = generateEventSourceDict();
@@ -101,7 +101,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 		};
 		fetchBalances();
 		const intervalId = setInterval(() => {
-			fetchBalances();
+			fetchBalances(false);
 		}, 1000 * 30);
 		return () => clearInterval(intervalId);
 	}, [address, zapperNetwork]);
