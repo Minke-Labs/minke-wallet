@@ -6,7 +6,7 @@ import { generateEventSourceDict, generateUrl } from '@src/services/apis/zapper/
 import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/types/token.types';
 import Logger from '@utils/logger';
-import { fetchInterestBearingTokens } from '@models/depositTokens';
+import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTokens';
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
@@ -85,7 +85,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 						};
 					});
 					allTokens = await Promise.all(promises);
-					setStablecoins(allTokens.filter((token) => depositStablecoins.includes(token.symbol)));
+					setStablecoins(await fetchStablecoins(address));
 					allTokens = allTokens.filter(({ symbol }) => !depositStablecoins.includes(symbol));
 					setTokens(allTokens);
 					eventSource.close();
