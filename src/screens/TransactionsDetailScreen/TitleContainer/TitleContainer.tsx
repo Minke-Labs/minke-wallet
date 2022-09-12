@@ -24,7 +24,13 @@ export const TitleContainer: React.FC<TitleContainerProps> = ({
 	value,
 	token
 }) => (
-	<View mt="s" mh="xs" mb="xs">
+	<View
+		mt="s"
+		mh="xs"
+		mb="xs"
+		row={String(value).length <= 5}
+		cross={String(value).length <= 5 ? 'center' : 'flex-start'}
+	>
 		<View row cross="center">
 			<Text type="hLarge" weight="bold">
 				{received || topUp || exchange || withdraw ? '+' : '-'}
@@ -33,9 +39,9 @@ export const TitleContainer: React.FC<TitleContainerProps> = ({
 			<View mh="xxs">
 				<Token name={token.toLowerCase() as TokenType} size={32} glow />
 			</View>
-			<Text type="hLarge" weight="bold">
-				{token}
-			</Text>
 		</View>
+		<Text type="hLarge" weight="bold">
+			{token}
+		</Text>
 	</View>
 );
