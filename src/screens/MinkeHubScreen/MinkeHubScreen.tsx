@@ -87,7 +87,7 @@ const MinkeHubScreen = () => {
 							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('ReferralScreen')}
-								icon="vault"
+								icon="gift"
 								title={i18n.t('MinkeHubScreen.referral')}
 								desc={i18n.t('MinkeHubScreen.refer_and_earn')}
 								hideLoading
