@@ -10,7 +10,6 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	// BlankStates,
 	Warning,
 	View
 } from '@components';
@@ -47,10 +46,6 @@ const WithdrawScreen = () => {
 		needToChangeNetwork
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
-
-	// if (token === undefined) {
-	// return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Withdraw')} />;
-	// }
 
 	return (
 		<>
