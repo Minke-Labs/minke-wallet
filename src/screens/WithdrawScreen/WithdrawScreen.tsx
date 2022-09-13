@@ -50,18 +50,10 @@ const WithdrawScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header
-					title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`}
-					marginBottom={60}
-				/>
+				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
 				<Paper p="xs" mb="l" mh="xs">
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>

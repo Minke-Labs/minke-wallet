@@ -123,6 +123,7 @@ const useWithdrawScreen = () => {
 				} else {
 					Logger.error('Error withdrawing');
 				}
+				setWaitingTransaction(false);
 			} catch (error) {
 				setWaitingTransaction(false);
 				captureException(error);

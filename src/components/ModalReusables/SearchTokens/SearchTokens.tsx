@@ -96,14 +96,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		setSearch('');
 	}, [visible]);
 
-	useEffect(() => {
-		const filterTokens = async () => {
-			setLoading(true);
-			removeSelectedTokens(tokens || []);
-		};
-		filterTokens();
-	}, [selected]);
-
 	const onSearch = (text: string) => {
 		setSearch(text);
 
