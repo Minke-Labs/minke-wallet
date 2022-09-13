@@ -29,7 +29,7 @@ export const withdrawTransaction = async ({
 		to: aave.depositContract,
 		maxFeePerGas,
 		maxPriorityFeePerGas,
-		gasLimit: 450000,
+		gasLimit: 500000,
 		type: 2
 	};
 

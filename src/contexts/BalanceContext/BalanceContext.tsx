@@ -27,17 +27,17 @@ const BalanceProvider: React.FC = ({ children }) => {
 	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
 	const [loading, setLoading] = React.useState(true);
 
-	useEffect(() => {
-		const fetchInterests = async () => {
-			if (selectedProtocol) {
-				const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
-				const [withdrawable] = allInterestTokens;
-				const interest = allInterestTokens.flat();
-				setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
-				setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
-			}
-		};
+	const fetchInterests = async () => {
+		if (selectedProtocol) {
+			const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
+			const [withdrawable] = allInterestTokens;
+			const interest = allInterestTokens.flat();
+			setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
+			setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
+		}
+	};
 
+	useEffect(() => {
 		fetchInterests();
 	}, [selectedProtocol, address, zapperNetwork]);
 
@@ -102,6 +102,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 		fetchBalances();
 		const intervalId = setInterval(() => {
 			fetchBalances(false);
+			fetchInterests();
 		}, 1000 * 30);
 		return () => clearInterval(intervalId);
 	}, [address, zapperNetwork]);
@@ -126,6 +127,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 		}),
 		[address, zapperNetwork, selectedProtocol, tokens, interestTokens, withdrawableTokens, loading]
 	);
+
 	return <BalanceContext.Provider value={obj}>{children}</BalanceContext.Provider>;
 };
 
