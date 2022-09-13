@@ -44,6 +44,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
+	const gasValueInEth = formatUnits(maxFeePerGas);
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -267,14 +268,14 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 			const isNativeToken = fromToken.symbol === nativeToken.symbol;
 			if (isNativeToken) {
 				const transactionPrice = maxFeePerGas.mul(300000); // gas price * gas limit
-				const gasValueInEth = formatUnits(transactionPrice);
-				const newBalance = +fromToken.balance - +gasValueInEth;
+				const nativeTokenTransactionPrice = formatUnits(transactionPrice);
+				const newBalance = +fromToken.balance - +nativeTokenTransactionPrice;
 				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
 				fromToken.balance = String(newBalance);
 				setFromToken(fromToken);
 			}
 		}
-	}, [maxFeePerGas, fromToken, nativeToken]);
+	}, [gasValueInEth, fromToken?.symbol, nativeToken?.symbol]);
 
 	// @TODO: multiply by the gas usage of the blockchain transaction
 	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);

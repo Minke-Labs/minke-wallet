@@ -45,7 +45,7 @@ const GasSelector = () => {
 			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, suggestBaseFee }
 		} = gas;
 		// @ts-ignore
-		setGasPrice({ normal: +normal, fast: +fast, maxFeePerGas: parseUnits(suggestBaseFee, 'gwei') });
+		setGasPrice({ normal: +normal, fast: +fast, suggestBaseFee: parseUnits(suggestBaseFee, 'gwei') });
 		if (!exchange.gas.value && type === 'fast') {
 			const maxPriorityFeePerGas = parseUnits(fast, 'gwei');
 			const maxFeePerGas = parseUnits(suggestBaseFee, 'gwei').add(maxPriorityFeePerGas);

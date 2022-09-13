@@ -928,7 +928,8 @@ export default {
 				receive: 'Receber',
 				to_another: 'Para outra carteira ou exchange',
 				from_another: 'De outra carteira ou exchange',
-				transactions: 'Transações'
+				transactions: 'Transações',
+				history_of_account_transactions: 'Histórico de transações'
 			},
 			Modals: {
 				ReceiveModal: {

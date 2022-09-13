@@ -46,7 +46,7 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onR
 				onPress={() => handleNavigate('TransactionsScreen')}
 				mb="s"
 				title={i18n.t('Components.FloatingSelector.Actions.transactions')}
-				desc={i18n.t('Components.FloatingSelector.Actions.to_another')}
+				desc={i18n.t('Components.FloatingSelector.Actions.history_of_account_transactions')}
 				icon="transactions"
 			/>
 		</View>

@@ -923,7 +923,8 @@ export default {
 				receive: 'Receive',
 				to_another: 'To another wallet or an exchange',
 				from_another: 'From another wallet or exchange',
-				transactions: 'Transactions'
+				transactions: 'Transactions',
+				history_of_account_transactions: 'History of account transactions'
 			},
 			Modals: {
 				ReceiveModal: {
