@@ -22,7 +22,7 @@ export const AccountsOverview: React.FC = () => {
 		}
 	});
 
-	const showingStable = biggestBalanceStable || defaultToken;
+	const showingStable = biggestBalanceStable?.symbol ? biggestBalanceStable : defaultToken;
 
 	useEffect(() => {
 		const fetchPriceChanges = async () => {
@@ -44,7 +44,7 @@ export const AccountsOverview: React.FC = () => {
 		fetchPriceChanges();
 	}, [tokens]);
 
-	if (!(investmentHighlights.length > 0)) {
+	if (investmentHighlights.length === 0 && !showingStable.symbol) {
 		return (
 			<View mb="xs">
 				<BlankStates.Type5 />
@@ -83,43 +83,19 @@ export const AccountsOverview: React.FC = () => {
 				</>
 			)}
 
-			{!showingStable.symbol && investmentHighlights.length > 0 && (
-				<>
-					<View row cross="center" mb="xs">
-						<Text type="lSmall" weight="semiBold" color="text2">
-							{i18n.t('HomeScreen.Accounts.AccountsOverview.stablecoins')}
-						</Text>
-						<View mr="xxs" />
-						<Touchable onPress={() => navigation.navigate('StablecoinsScreen')}>
-							<Text type="bSmall" color="cta1">
-								{i18n.t('HomeScreen.Accounts.AccountsOverview.see_all')}
-							</Text>
-						</Touchable>
-					</View>
-
-					<TokenItemCard
-						token={defaultToken.symbol.toLowerCase() as TokenType}
-						name={defaultToken.name}
-						symbol={defaultToken.symbol}
-						balance={defaultToken.balance}
-						balanceUSD={0}
-						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: defaultToken })}
-						stablecoin
-					/>
-				</>
-			)}
-
-			<View row cross="center" mb="xs">
-				<Text type="lSmall" weight="semiBold" color="text2">
-					{i18n.t('HomeScreen.Accounts.AccountsOverview.investments_highlight')}
-				</Text>
-				<View mr="xxs" />
-				<Touchable onPress={() => navigation.navigate('InvestmentsScreen')}>
-					<Text type="bSmall" color="cta1">
-						{i18n.t('HomeScreen.Accounts.AccountsOverview.see_all')}
+			{investmentHighlights.length > 0 && (
+				<View row cross="center" mb="xs">
+					<Text type="lSmall" weight="semiBold" color="text2">
+						{i18n.t('HomeScreen.Accounts.AccountsOverview.investments_highlight')}
 					</Text>
-				</Touchable>
-			</View>
+					<View mr="xxs" />
+					<Touchable onPress={() => navigation.navigate('InvestmentsScreen')}>
+						<Text type="bSmall" color="cta1">
+							{i18n.t('HomeScreen.Accounts.AccountsOverview.see_all')}
+						</Text>
+					</Touchable>
+				</View>
+			)}
 
 			{investmentHighlights.map((token) => (
 				<TokenItemCard
