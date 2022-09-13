@@ -111,6 +111,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 				} else {
 					Logger.error('Error depositing');
 				}
+				setWaitingTransaction(false);
 			} catch (error) {
 				setWaitingTransaction(false);
 				captureException(error);

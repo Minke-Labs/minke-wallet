@@ -13,7 +13,7 @@ const CountryProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchCountry = async () => {
 			const storedLocation = await AsyncStorage.getItem('@country');
-			setCountry(storedLocation || countries[Localization.region! as CountriesType]);
+			setCountry(storedLocation || countries[Localization.region! as CountriesType] || countries.US);
 		};
 		fetchCountry();
 	}, []);

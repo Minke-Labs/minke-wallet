@@ -36,7 +36,7 @@ export const Stories = () => {
 	}, [language]);
 
 	return (
-		<Paper p="xs">
+		<Paper p="xs" style={{ overflow: 'hidden' }}>
 			<Text type="lMedium" weight="semiBold" mb="xs">
 				{i18n.t('HomeScreen.Stories.learn_about_minke')}
 			</Text>

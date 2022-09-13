@@ -12,10 +12,10 @@ const lengthConst = 181;
 const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 	const [expanded, setExpanded] = useState(false);
 	const { i18n } = useLanguage();
-	const cleanedDesc = desc.replaceAll(/<[^>]*>/g, '');
+	const cleanedDesc = desc.replace(/<[^>]*>/g, '');
 
 	const trunc = () => {
-		if ((cleanedDesc.length > lengthConst) && !expanded) return `${cleanedDesc.slice(0, lengthConst)}...`;
+		if (cleanedDesc.length > lengthConst && !expanded) return `${cleanedDesc.slice(0, lengthConst)}...`;
 		return cleanedDesc;
 	};
 
@@ -32,16 +32,12 @@ const Expander: React.FC<ExpanderProps> = ({ title, desc }) => {
 					<Touchable onPress={() => setExpanded(!expanded)}>
 						<View row cross="center">
 							<Text type="lSmall" weight="semiBold">
-								{expanded ?
-									i18n.t('Components.Expander.show_less') :
-									i18n.t('Components.Expander.show_more')}
+								{expanded
+									? i18n.t('Components.Expander.show_less')
+									: i18n.t('Components.Expander.show_more')}
 							</Text>
 							<View mr="xxxs" />
-							<Icon
-								name={expanded ? 'chevronUp' : 'chevronDown'}
-								size={20}
-								color="cta1"
-							/>
+							<Icon name={expanded ? 'chevronUp' : 'chevronDown'} size={20} color="cta1" />
 						</View>
 					</Touchable>
 				</View>
