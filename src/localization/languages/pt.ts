@@ -445,11 +445,11 @@ export default {
 	},
 	WelcomeScreen: {
 		referral_code_applied: 'Código de indicação aplicado',
-		wave_goodbye: 'Diga olá para um dinheiro melhor!',
-		easily: 'Economize, gaste e invista facilmente com a Minke',
+		wave_goodbye: 'Diga olá para\ndinheiro estável!',
+		easily: 'Envie, economize e invista facilmente com a Minke',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
-		import_or_restore: 'Importar Carteira',
+		import_or_restore: 'Importar Carteira Existente',
 		i_have_a_referral_code: 'Eu tenho um código de indicação',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',

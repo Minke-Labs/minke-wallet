@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { walletCreatedImg } from '@images';
-import { Text, Button, ScreenLoadingIndicator, LoadingScreen, ModalBase, ModalReusables } from '@components';
+import {
+	Text,
+	Button,
+	ScreenLoadingIndicator,
+	LoadingScreen,
+	ModalBase,
+	ModalReusables,
+	View
+} from '@components';
 import { iCloudBackup, useLanguage } from '@hooks';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
-import styles from './WalletCreatedScreen.styles';
 import { useWalletCreatedScreen } from './WalletCreatedScreen.hooks';
 
 const WalletCreatedScreen = () => {
@@ -26,19 +33,22 @@ const WalletCreatedScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<View style={styles.container}>
-					<Image source={walletCreatedImg} style={styles.image} />
+				<View flex1 main="space-between" cross="center">
+					<Image
+						source={walletCreatedImg}
+						style={{ width: 263, height: 320 }}
+					/>
 
-					<View style={styles.textContainer}>
-						<Text center weight="extraBold" type="h2" marginBottom={16}>
+					<View>
+						<Text center weight="bold" type="hMedium" mb="xxs">
 							{i18n.t('WalletCreatedScreen.wallet_created')}
 						</Text>
-						<Text center color="text2" width={258}>
+						<Text center type="bMedium" color="text2" width={279}>
 							{i18n.t('WalletCreatedScreen.need_backup')}
 						</Text>
 					</View>
 
-					<View style={styles.buttonContainer}>
+					<View ph="s" mb="xl">
 						<Button
 							title={i18n.t('Components.Buttons.backup_to_icloud', { cloudPlatform })}
 							iconRight="cloud"
