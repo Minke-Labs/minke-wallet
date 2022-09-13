@@ -909,6 +909,11 @@ export default {
 				your_points_will_appear_here: 'Your points will appear here',
 				lets_get_started: "Let's get started?",
 				earn_points: 'Earn points'
+			},
+			NoTransactions: {
+				your_transactions: 'Your transactions will appear here',
+				lets_get_started: "Let's get started?",
+				add_funds: 'Add funds to start'
 			}
 		},
 		Expander: {

@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, FlatList } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { TransactionPeriod } from '@components';
+import { TransactionPeriod, EmptyStates } from '@components';
 import Header from './Header/Header';
 import Selector from './Selector/Selector';
 import HeaderContainer from './HeaderContainer/HeaderContainer';
@@ -19,17 +19,21 @@ const TransactionsScreen = () => {
 				<Header />
 				<Selector {...{ active, setActive }} />
 			</HeaderContainer>
-			<FlatList
-				style={{ paddingHorizontal: 24 }}
-				data={transactions}
-				renderItem={({ item }) => (
-					<TransactionPeriod
-						data={item.data}
-						title={item.title}
-					/>
-				)}
-				keyExtractor={(item) => item.title}
-			/>
+			{transactions.length > 0 ? (
+				<FlatList
+					style={{ paddingHorizontal: 24 }}
+					data={transactions}
+					renderItem={({ item }) => (
+						<TransactionPeriod
+							data={item.data}
+							title={item.title}
+						/>
+					)}
+					keyExtractor={(item) => item.title}
+				/>
+			) : (
+				<EmptyStates.NoTransactions />
+			)}
 		</BasicLayout>
 	);
 };

@@ -914,6 +914,11 @@ export default {
 				your_points_will_appear_here: 'Seus pontos aparecerão aqui',
 				lets_get_started: 'Vamos começar?',
 				earn_points: 'Ganhar pontos'
+			},
+			NoTransactions: {
+				your_transactions: 'Suas transações aparecerão aqui',
+				lets_get_started: 'Vamos começar?',
+				add_funds: 'Adicione fundos para começar'
 			}
 		},
 		Expander: {
