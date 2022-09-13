@@ -14,13 +14,19 @@ interface LanguageContextProps {
 	setLanguage: (l: string) => void;
 }
 
+const getTheRightPt = (lan: string) => {
+	if (lan.toLowerCase() === 'pt' || lan.toLowerCase() === 'pt-pt') return 'pt-BR';
+	return lan;
+};
+
 export const LanguageContext = createContext<LanguageContextProps>({} as LanguageContextProps);
 
 const LanguageProvider: React.FC = ({ children }) => {
 	const { country } = useCountry();
 	const languages = Object.keys(availableLanguagues);
+
 	const [language, setLanguage] = useState(
-		languages.includes(Localization.locale) ? Localization.locale : languages[0]
+		languages.includes(getTheRightPt(Localization.locale)) ? Localization.locale : languages[0]
 	);
 
 	i18n.translations = availableLanguagues;
@@ -30,7 +36,9 @@ const LanguageProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchLocation = async () => {
 			const storedLanguage = await AsyncStorage.getItem('@language');
-			if (storedLanguage) setLanguage(storedLanguage);
+			if (storedLanguage) {
+				setLanguage(storedLanguage);
+			}
 		};
 		fetchLocation();
 	}, []);
