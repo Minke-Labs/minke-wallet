@@ -29,6 +29,8 @@ const InvestmentsScreen = () => {
 		return <BlankStates.Type2 title={i18n.t('InvestmentsScreen.investments')} />;
 	}
 
+	const investments = investmentTokens.sort((a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0));
+
 	return (
 		<AssetsLayout
 			headerValue={walletBalance}
@@ -47,7 +49,7 @@ const InvestmentsScreen = () => {
 					{/* <Selector {...{ active, setActive }} /> */}
 
 					<View pr="xs">
-						{investmentTokens.map((item: InvestmentToken) => (
+						{investments.map((item: InvestmentToken) => (
 							<TokenItemCard
 								key={item.address}
 								token={item.symbol.toLowerCase() as TokenType}
