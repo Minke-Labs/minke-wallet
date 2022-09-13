@@ -3,7 +3,7 @@ import { Paper, View, Text, TokenItemCard, Touchable, BlankStates } from '@compo
 import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
-import { fetchTokensPriceChange, truncBalances } from '@models/token';
+import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview: React.FC = () => {
 	const { i18n } = useLanguage();
@@ -30,13 +30,11 @@ export const AccountsOverview: React.FC = () => {
 				const investedTokens = await fetchTokensPriceChange(tokens);
 				const sorted = investedTokens.sort((a: any, b: any) => (b.perc || 0) - (a.perc || 0));
 
-				const truncated = truncBalances(sorted);
-
 				const highlights = [];
-				highlights.push(truncated[0]);
+				highlights.push(sorted[0]);
 
 				if (tokens.length > 1) {
-					highlights.push(truncated[truncated.length - 1]);
+					highlights.push(sorted[sorted.length - 1]);
 				}
 
 				setInvestmentHighlights(highlights);
