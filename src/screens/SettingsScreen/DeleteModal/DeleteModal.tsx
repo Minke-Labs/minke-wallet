@@ -20,6 +20,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () => {
+		onDismiss();
 		Alert.alert(i18n.t('SettingsScreen.DeleteModal.are_you_sure'), '', [
 			{
 				text: i18n.t('SettingsScreen.DeleteModal.cancel'),
