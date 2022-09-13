@@ -11,8 +11,11 @@ interface TitleContainerProps {
 	token: string;
 }
 
+const truncVal = (val: number) => Math.trunc(val);
+const valLen = (val: number) => String(truncVal(val)).length;
+
 export const truncBalance = (num: number) => {
-	if (String(num).length > 6) return Math.trunc(num);
+	if (String(num).length > 6) return truncVal(num);
 	return num;
 };
 
@@ -28,8 +31,8 @@ export const TitleContainer: React.FC<TitleContainerProps> = ({
 		mt="s"
 		mh="xs"
 		mb="xs"
-		row={String(value).length <= 5}
-		cross={String(value).length <= 5 ? 'center' : 'flex-start'}
+		row={valLen(value) <= 5}
+		cross={valLen(value) <= 5 ? 'center' : 'flex-start'}
 	>
 		<View row cross="center">
 			<Text type="hLarge" weight="bold">
