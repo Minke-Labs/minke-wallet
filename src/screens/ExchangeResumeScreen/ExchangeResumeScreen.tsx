@@ -47,7 +47,7 @@ const ExchangeResumeScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} marginBottom={36} />
+				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} mb="m" />
 
 				<Paper mb="s" m="xs" mh="xs">
 					<View

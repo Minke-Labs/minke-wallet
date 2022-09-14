@@ -47,7 +47,7 @@ const DevSettingsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<Header title="Dev settings" marginBottom={8} />
+			<Header title="Dev settings" mb="xxs" />
 			<View p="m">
 				<Text mb="xs">{address}</Text>
 				<Text mb="xs">Device ID: {deviceId}</Text>

@@ -20,7 +20,7 @@ const RedeemConfirmScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header title={i18n.t('RedeemConfirmScreen.confirmation')} marginBottom={36} />
+				<Header title={i18n.t('RedeemConfirmScreen.confirmation')} mb="m" />
 
 				<Paper mb="s" m="xs">
 					<View style={styles.container}>
