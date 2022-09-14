@@ -1,13 +1,14 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { whale2Img } from '@images';
-import { useLanguage } from '@hooks';
+import { useLanguage, useNavigation } from '@hooks';
 import View from '@src/components/View/View';
 import Text from '@src/components/Text/Text';
 import Button from '@src/components/Button/Button';
 
 const NoTransactions = () => {
 	const { i18n } = useLanguage();
+	const navigation = useNavigation();
 	return (
 		<View flex1 main="center" cross="center" pv="xs" ph="s">
 			<Image source={whale2Img} style={{ width: 152, height: 152 }} />
@@ -22,6 +23,7 @@ const NoTransactions = () => {
 			<Button
 				iconLeft="add"
 				title={i18n.t('Components.EmptyStates.NoTransactions.add_funds')}
+				onPress={() => navigation.navigate('AddFundsScreen', {})}
 			/>
 		</View>
 	);
