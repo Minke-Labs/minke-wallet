@@ -78,10 +78,11 @@ const BalanceProvider: React.FC = ({ children }) => {
 					);
 					const promises = allTokens.map(async (t) => {
 						const { id, name } = await coinFromSymbol(t.symbol);
+
 						return {
+							...t,
 							id,
-							name,
-							...t
+							name
 						};
 					});
 					allTokens = await Promise.all(promises);
