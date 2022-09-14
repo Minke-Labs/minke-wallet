@@ -29,7 +29,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "72",
+      "buildNumber": "73",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -40,7 +40,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 44
+      "versionCode": 45
     },
     "web": {
       "favicon": "./assets/favicon.png"
