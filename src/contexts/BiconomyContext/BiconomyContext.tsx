@@ -1,23 +1,21 @@
-import React, { createContext, useEffect, useMemo } from 'react';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@src/stores/WalletStore';
+import React, { useState, createContext, useEffect, useMemo } from 'react';
 import { providers } from 'ethers';
 // @ts-ignore
 import { Biconomy } from '@biconomy/mexa';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 export const BiconomyContext = createContext<any>(null);
 
 const BiconomyProvider: React.FC = ({ children }) => {
-	const wallet = useState(globalWalletState());
 	const {
 		network: { jsonRpcProvider, biconomyAPIKey },
 		address,
 		privateKey
-	} = wallet.value;
+	} = useGlobalWalletState();
 
-	const [biconomyClient, setBiconomyClient] = React.useState<any | null>();
-	const [status, setStatus] = React.useState('');
-	const [gaslessEnabled, setGaslessEnabled] = React.useState(true);
+	const [biconomyClient, setBiconomyClient] = useState<any | null>();
+	const [status, setStatus] = useState('');
+	const [gaslessEnabled, setGaslessEnabled] = useState(true);
 
 	const canSubmitGaslessTransaction = async () => {
 		if (biconomyAPIKey && address && privateKey) {

@@ -1,8 +1,9 @@
-import { useNavigation } from '@hooks';
-import { whale2Img } from '@images';
 import React from 'react';
-import { View, Image, FlatList, TouchableOpacity } from 'react-native';
+import { Image, FlatList } from 'react-native';
 import { SvgUri } from 'react-native-svg';
+import { View, Touchable } from '@components';
+import { whale2Img } from '@images';
+import { useNavigation } from '@hooks';
 import { ItemHeader } from '../ItemHeader/ItemHeader';
 import styles from './Item.styles';
 import { ItemProps } from './Item.types';
@@ -10,21 +11,25 @@ import { ItemProps } from './Item.types';
 const Item: React.FC<ItemProps> = ({ collection }) => {
 	const navigation = useNavigation();
 	return (
-		<View style={styles.container}>
+		<View mb="s">
 			<ItemHeader collection={collection} />
-			<View style={styles.body}>
+			<View row>
 				<FlatList
 					data={collection}
 					keyExtractor={(item) => item.id.toString()}
 					renderItem={({ item }) => {
-						const { image_thumbnail_url: thumb, image_original_url: original, image_url: imageUrl } = item;
+						const {
+							image_thumbnail_url: thumb,
+							image_original_url: original,
+							image_url: imageUrl
+						} = item;
 						const image = thumb || imageUrl || original;
 
 						return (
-							<TouchableOpacity onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
+							<Touchable onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
 								{image ? (
 									image.endsWith('.svg') ? (
-										<View style={{ borderRadius: 8, overflow: 'hidden', marginRight: 8 }}>
+										<View mr="xxs" br="xxs" style={{ overflow: 'hidden' }}>
 											<SvgUri uri={image} width={56} height={56} />
 										</View>
 									) : (
@@ -33,7 +38,7 @@ const Item: React.FC<ItemProps> = ({ collection }) => {
 								) : (
 									<Image source={whale2Img} style={styles.image} />
 								)}
-							</TouchableOpacity>
+							</Touchable>
 						);
 					}}
 					horizontal

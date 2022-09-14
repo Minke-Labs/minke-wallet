@@ -55,7 +55,7 @@ const useImportWalletScreen = () => {
 
 			if (savedWallet) {
 				state.set(await walletState(savedWallet));
-				navigation.navigate('WalletScreen');
+				navigation.navigate('HomeScreen');
 			} else {
 				const minkeWallet: MinkeWallet = {
 					id: `wallet_${Date.now()}`,
@@ -66,14 +66,14 @@ const useImportWalletScreen = () => {
 					primary: false
 				};
 				state.set(await walletState(minkeWallet));
-				navigation.navigate('WalletScreen');
+				navigation.navigate('HomeScreen');
 			}
 		}
 	};
 
 	const onNetworkChange = async () => {
 		await switchWallet(importedAccount);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	const switchWalletConnectAccount = async (accounts: string[], chainId: number) => {

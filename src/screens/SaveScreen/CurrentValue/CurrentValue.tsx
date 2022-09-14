@@ -47,7 +47,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.depositButton} onPress={() => navigation.navigate('DepositScreen')}>
-					<Icon name="saveStroke" color="cta1" size={20} />
+					<Icon name="save" color="cta1" size={20} />
 					<Text marginBottom={4} style={{ marginLeft: 8 }}>
 						{i18n.t('SaveScreen.CurrentValue.deposit')}
 					</Text>

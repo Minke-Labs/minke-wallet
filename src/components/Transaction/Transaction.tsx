@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useLanguage, useNavigation, useTransaction } from '@hooks';
-import Text from '../Text/Text';
-import TransactionIcon from '../TransactionIcon/TransactionIcon';
+import Text from '@src/components/Text/Text';
+import TransactionIcon from '@src/components/TransactionIcon/TransactionIcon';
 import { styles } from './Transaction.styles';
 import { TransactionProps } from './Transaction.types';
 
@@ -17,7 +17,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction }) => {
 		<TouchableOpacity
 			activeOpacity={0.6}
 			style={styles.container}
-			onPress={() => navigation.navigate('TransactionScreen', { transaction })}
+			onPress={() => navigation.navigate('TransactionsDetailScreen', { transaction })}
 		>
 			<View style={[styles.leftContainer]}>
 				<TransactionIcon {...{ received, failed, pending, topUp, exchange, deposit, withdraw }} />

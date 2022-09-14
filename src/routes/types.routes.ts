@@ -4,10 +4,15 @@ import { ZapperTransaction } from '@models/wallet';
 
 export type RootStackParamList = {
 	AccountsScreen: undefined;
-	AssetsScreen: { coin: MinkeToken };
+	InvestmentsDetailScreen: { coin: MinkeToken };
 	ManualBackupScreen: { walletId: string };
 	NFTScreen: undefined;
 	NFTDetailScreen: { nft: NFT };
+	HomeScreen: undefined;
+	MinkeHubScreen: undefined;
+	StablecoinsScreen: undefined;
+	InvestmentsScreen: undefined;
+	StablecoinsDetailScreen: { coin: MinkeToken };
 	BackupSettingsScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };
@@ -15,14 +20,12 @@ export type RootStackParamList = {
 	ChangeCountryScreen: undefined;
 	DepositScreen: undefined;
 	ExchangeResumeScreen: undefined;
-	ExchangeScreen: undefined;
+	ExchangeScreen: { sourceToken?: MinkeToken; destToken?: MinkeToken };
 	SaveScreen: undefined;
 	SettingsScreen: undefined;
 	TransactionsScreen: undefined;
 	USDCoinScreen: undefined;
-	WalletAssetsScreen: undefined;
 	WalletCreatedScreen: undefined;
-	WalletScreen: undefined;
 	WelcomeScreen: undefined; // undefined because you aren't passing any params to the home screen
 	DepositWithdrawalSuccessScreen: { type: 'deposit' | 'withdrawal' };
 	BackupToICloudScreen: { missingPassword: boolean; walletId?: string | undefined; restoreBackups?: boolean };
@@ -37,8 +40,8 @@ export type RootStackParamList = {
 	TransferWaitScreen: { transferId: string };
 	DevSettingsScreen: undefined;
 	ImportWalletScreen: undefined;
-	AddFundsScreen: undefined;
-	TransactionScreen: { transaction: ZapperTransaction };
+	AddFundsScreen: { topupToken?: MinkeToken };
+	TransactionsDetailScreen: { transaction: ZapperTransaction };
 	MoonpayWaitScreen: { transactionId: string };
 	Test: undefined;
 };

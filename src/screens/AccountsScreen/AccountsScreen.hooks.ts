@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
 import { walletState } from '@src/stores/WalletStore';
 import { useWalletState, useNavigation } from '@hooks';
@@ -11,7 +11,7 @@ export const useAccountsScreen = () => {
 	const { state } = useWalletState();
 	const { address } = state.value;
 
-	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
+	const [wallets, setWallets] = useState<AllMinkeWallets | null>();
 
 	useEffect(() => {
 		const fetchWallets = async () => {
@@ -22,7 +22,7 @@ export const useAccountsScreen = () => {
 
 	const onSelectWallet = async (wallet: MinkeWallet) => {
 		state.set(await walletState(wallet));
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	return {

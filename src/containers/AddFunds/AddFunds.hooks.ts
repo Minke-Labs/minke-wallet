@@ -13,7 +13,7 @@ export const useAddFunds = ({ visible, onDismiss }: UseAddFundsProps) => {
 
 	const onBuy = () => {
 		onDismiss();
-		navigation.navigate('AddFundsScreen');
+		navigation.navigate('AddFundsScreen', {});
 	};
 
 	useEffect(() => {

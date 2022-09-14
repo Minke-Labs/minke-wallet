@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { useTheme } from '@hooks';
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import {
@@ -6,13 +5,13 @@ import {
 	Animated as ReactAnimated,
 	TextInput,
 	Text,
-	TouchableOpacity,
 	TextStyle,
 	TouchableWithoutFeedback,
 	LayoutChangeEvent
 } from 'react-native';
 import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
 import Icon from '../Icon/Icon';
+import Touchable from '../Touchable/Touchable';
 import { makeStyles } from './Input.styles';
 import { InputProps, InputRef } from './Input.types';
 
@@ -283,13 +282,13 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 						{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
 
 						{isPassword && (
-							<TouchableOpacity style={styles.toggleButton} onPress={() => toggleVisibility()}>
+							<Touchable style={styles.toggleButton} onPress={() => toggleVisibility()}>
 								{secureText ? (
 									<Icon name="eyeCross" size={24} color="cta1" />
 								) : (
 									<Icon name="eyeStroke" size={24} color="cta1" />
 								)}
-							</TouchableOpacity>
+							</Touchable>
 						)}
 					</View>
 				</Animated.View>

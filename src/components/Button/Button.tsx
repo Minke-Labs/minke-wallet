@@ -1,33 +1,35 @@
 import React from 'react';
-import { useTheme } from '@hooks';
-import { ColorType } from '@styles';
-import { Keyboard, TouchableOpacity } from 'react-native';
-
-import { styles } from './Button.styles';
-import { ButtonProps } from './Button.types';
-
+import { Keyboard } from 'react-native';
+import { spacing, ColorType } from '@styles';
+import View from '../View/View';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
-
-const getKeyByValue = (object: ColorType, value: string) =>
-	Object.keys(object).find((key) => object[key as keyof ColorType] === value) as keyof ColorType;
+import Touchable from '../Touchable/Touchable';
+import { ButtonProps } from './Button.types';
 
 const Button: React.FC<ButtonProps> = ({
 	title = 'button',
 	mode = 'contained',
+	disabled = false,
 	iconLeft,
 	iconRight,
-	disabled = false,
-	marginBottom = 0,
-	onPress,
-	alert
+	mb,
+	br = 's',
+	alert,
+	onPress
 }) => {
-	const { colors } = useTheme();
-	const color = alert ? colors.alert1 : mode === 'contained' ? colors.text11 : colors.text7;
+	const color = alert ? 'alert1' : (disabled || mode === 'contained') ? 'text11' : 'text7';
+	const chosenMode = disabled ? 'contained' : mode;
+
+	const { borderColor, borderWidth } =
+	(chosenMode === 'outlined' || alert)
+		? { borderColor: color, borderWidth: 1 }
+		: { borderColor: 'transparent', borderWidth: 0 };
 
 	const backgroundColor = () => {
-		if (disabled) return colors.detail2;
-		if (mode === 'contained') return colors.cta1;
+		if (disabled) return 'detail2';
+		if (alert) return 'transparent';
+		if (chosenMode === 'contained') return 'cta1';
 		return 'transparent';
 	};
 
@@ -36,28 +38,50 @@ const Button: React.FC<ButtonProps> = ({
 		onPress!();
 	};
 
-	const { borderColor, borderWidth } =
-		mode === 'outlined'
-			? { borderColor: color, borderWidth: 1 }
-			: { borderColor: undefined, borderWidth: undefined };
-
 	return (
-		<TouchableOpacity
-			activeOpacity={0.8}
+		<Touchable
 			disabled={disabled}
 			onPress={handlePress}
-			style={[styles.button, { backgroundColor: backgroundColor(), borderColor, borderWidth, marginBottom }]}
+			h={40}
+			mb={mb}
+			row
 		>
-			{iconLeft && (
-				<Icon name={iconLeft} size={18} style={{ marginRight: 9.25 }} color={getKeyByValue(colors, color)} />
-			)}
-			<Text weight="medium" style={{ color }}>
-				{title}
-			</Text>
-			{iconRight && (
-				<Icon name={iconRight} size={18} style={{ marginLeft: 9.25 }} color={getKeyByValue(colors, color)} />
-			)}
-		</TouchableOpacity>
+			<View
+				br={br}
+				bgc={backgroundColor()}
+				w="100%"
+				h="100%"
+				row
+				main="center"
+				cross="center"
+				bw={borderWidth}
+				bc={borderColor as keyof ColorType}
+			>
+				{iconLeft && (
+					<Icon
+						name={iconLeft}
+						size={18}
+						style={{ marginRight: spacing.xxs }}
+						color={color}
+					/>
+				)}
+				<Text
+					type="lMedium"
+					weight="semiBold"
+					color={color}
+				>
+					{title}
+				</Text>
+				{iconRight && (
+					<Icon
+						name={iconRight}
+						size={18}
+						style={{ marginRight: spacing.xxs }}
+						color={color}
+					/>
+				)}
+			</View>
+		</Touchable>
 	);
 };
 

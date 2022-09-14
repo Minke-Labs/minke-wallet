@@ -1,7 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, View, useColorScheme } from 'react-native';
+import { TouchableOpacity, useColorScheme } from 'react-native';
 import { useTheme, useLanguage } from '@hooks';
-import { Text, Icon } from '@components';
+import { Text, Icon, View } from '@components';
 import { BlurView } from 'expo-blur';
 import { REFERRAL_POINTS_TO_USD_CONVERSION } from '@helpers/utilities';
 import { makeStyles } from './CurrentValue.styles';
@@ -21,35 +21,52 @@ export const CurrentValue = ({
 	const styles = makeStyles(colors);
 
 	return (
-		<View style={styles.container}>
+		<View
+			mt="m"
+			br="s"
+			style={{ overflow: 'hidden' }}
+		>
 			<BlurView intensity={12} tint={scheme === 'dark' ? 'dark' : 'light'} style={styles.glassContainer}>
-				<Text type="p2" color="text3" weight="bold" marginBottom={8}>
+				<Text type="p2" color="text3" weight="bold" mb="xxs">
 					{i18n.t('ReferralScreen.CurrentValue.owned')}
 				</Text>
-				<Text type="textLarge" weight="medium" marginBottom={14}>
+				<Text type="textLarge" weight="medium" mb="xs">
 					{points} {i18n.t('ReferralScreen.CurrentValue.pts')}
 				</Text>
-				<View style={styles.interestContainer}>
-					<View style={[styles.infoRow, { marginBottom: 4 }]}>
+				<View
+					cross="center"
+					pv="xxxs"
+					ph="xxs"
+					br="xxs"
+					mb="xs"
+				>
+					<View
+						row
+						mb="xxxs"
+						main="center"
+						cross="center"
+					>
 						<Text type="a" color="text4">
 							${points * REFERRAL_POINTS_TO_USD_CONVERSION}
 						</Text>
 					</View>
 				</View>
 			</BlurView>
-			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+			<View row>
 				<TouchableOpacity
 					style={[styles.depositButton, { borderRightColor: colors.background2, borderRightWidth: 2 }]}
 					onPress={onRedeemPress}
 				>
 					<Icon name="minusStroke" color="cta1" size={20} />
-					<Text marginBottom={4} style={{ marginLeft: 8 }}>
+					<View mr="xxxs" />
+					<Text mb="xxxs">
 						{i18n.t('ReferralScreen.CurrentValue.redeem')}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={styles.depositButton} onPress={onEarnPress}>
-					<Icon name="saveStroke" color="cta1" size={20} />
-					<Text marginBottom={4} style={{ marginLeft: 8 }}>
+					<Icon name="save" color="cta1" size={20} />
+					<View mr="xxxs" />
+					<Text mb="xxxs">
 						{i18n.t('ReferralScreen.CurrentValue.earn')}
 					</Text>
 				</TouchableOpacity>

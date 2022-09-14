@@ -1,32 +1,13 @@
 import React from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
-import { useTheme } from '@hooks';
+import { ViewType } from '@styles';
+import View from '@src/components/View/View';
 
-interface BoxProps {
-	br: number;
-	mt: number;
-	mb: number;
-	w: number | string;
-	h: number | string;
-	style: StyleProp<ViewStyle>;
+interface BoxProps extends ViewType {
+	invert?: boolean;
 }
 
-const Box: React.FC<Partial<BoxProps>> = ({ br = 0, mt = 0, mb = 0, w, h, style }) => {
-	const { colors } = useTheme();
-
-	return (
-		<View
-			style={{
-				backgroundColor: colors.background3,
-				height: h,
-				width: w,
-				borderRadius: br,
-				marginTop: mt,
-				marginBottom: mb,
-				...(style as object)
-			}}
-		/>
-	);
-};
+const Box: React.FC<Partial<BoxProps>> = ({ br = 'xs', invert, ...rest }) => (
+	<View bgc={invert ? 'background8' : 'background3'} br={br} {...{ ...rest }} />
+);
 
 export default Box;

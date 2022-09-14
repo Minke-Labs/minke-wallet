@@ -4,6 +4,8 @@ import SearchTokens from './SearchTokens/SearchTokens';
 import TransactionWait from './TransactionWait/TransactionWait';
 import WrongNetwork from './WrongNetwork/WrongNetwork';
 import SearchCurrencies from './SearchCurrencies/SearchCurrencies';
+import Send from './Send/Send';
+import ImportWallet from './ImportWallet/ImportWallet';
 
 export default {
 	ComingSoon,
@@ -11,5 +13,7 @@ export default {
 	SearchTokens,
 	SearchCurrencies,
 	TransactionWait,
-	WrongNetwork
+	WrongNetwork,
+	Send,
+	ImportWallet
 };

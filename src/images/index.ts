@@ -25,8 +25,12 @@ import krakenMStable from './krakenMStable.png';
 import metamask from './metamask.png';
 import trustWallet from './trust-wallet.png';
 import rainbow from './rainbow.png';
+import waveLight from './wave_light.png';
+import waveDark from './wave_dark.png';
 
 export {
+	waveLight,
+	waveDark,
 	welcomeImg,
 	waveWelcomeFooterDarkImg,
 	waveWelcomeFooterImg,

@@ -3,6 +3,8 @@ import { token, TokenType } from './tokens';
 import { colors, ColorType } from './colors';
 import { flag, FlagType, allCountries } from './flags';
 import { countries, CountriesType } from './countries';
+import { spacing, SpacingType } from './spacing';
+import { shadow, ShadowType } from './shadow';
 import { fontType, FontTypeType, fontWeight, FontWeightType } from './fonts';
 import {
 	screenHeight,
@@ -11,15 +13,19 @@ import {
 	deviceWidth,
 	statusBarHeight,
 	navigationBarHeight,
-	os
+	os,
+	statusBar
 } from './dimensions';
+import { ViewType } from './types';
 
 export {
 	icon,
 	token,
+	shadow,
 	colors,
 	flag,
 	allCountries,
+	spacing,
 	fontType,
 	countries,
 	fontWeight,
@@ -29,15 +35,19 @@ export {
 	deviceWidth,
 	statusBarHeight,
 	navigationBarHeight,
-	os
+	os,
+	statusBar
 };
 
 export type {
 	IconType,
 	TokenType,
+	ShadowType,
 	ColorType,
+	SpacingType,
 	FlagType,
 	FontTypeType,
 	CountriesType,
-	FontWeightType
+	FontWeightType,
+	ViewType
 };

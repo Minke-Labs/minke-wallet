@@ -2,7 +2,8 @@ import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { partition } from 'lodash';
-import { usdCoin } from './deposit';
+import { coinFromSymbol } from '@helpers/utilities';
+import { depositStablecoins, usdCoin } from './deposit';
 import { network } from './network';
 import { MinkeToken } from './types/token.types';
 import { DepositableToken, DepositTokens, Stables } from './types/depositTokens.types';
@@ -225,4 +226,31 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 	return [[], []];
 };
 
-export { fetchInterestBearingTokens };
+const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
+	const { id: networkId } = await network();
+	const contracts = Object.values(stables[networkId]).filter(({ symbol }) => depositStablecoins.includes(symbol));
+
+	const provider = await getProvider();
+
+	const promises = contracts.map(async ({ address, decimals, symbol }): Promise<MinkeToken> => {
+		const stablecoin = new Contract(address, erc20abi, provider);
+		const balance: BigNumber = await stablecoin.balanceOf(wallet);
+		const formatedBalance = formatUnits(balance, decimals);
+		const { id, name } = await coinFromSymbol(symbol);
+
+		return {
+			address,
+			symbol,
+			decimals,
+			balance: formatedBalance,
+			balanceUSD: Number(formatedBalance),
+			id,
+			name
+		};
+	});
+
+	const tokens = await Promise.all(promises);
+	return tokens.filter(({ balanceUSD = 0 }) => balanceUSD > 0);
+};
+
+export { fetchInterestBearingTokens, fetchStablecoins };

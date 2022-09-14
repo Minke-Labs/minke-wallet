@@ -43,7 +43,7 @@ const useMoonpayWaitScreen = (transactionId: string) => {
 	const success = status === 'completed';
 
 	const onFinish = () => {
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	useEffect(() => {

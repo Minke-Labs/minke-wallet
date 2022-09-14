@@ -31,7 +31,7 @@ const TransactionIcon: React.FC<TransactionIconProps> = ({
 			<Icon
 				name={
 					deposit || withdraw
-						? 'saveStroke'
+						? 'save'
 						: exchange
 						? 'exchangeStroke'
 						: topUp

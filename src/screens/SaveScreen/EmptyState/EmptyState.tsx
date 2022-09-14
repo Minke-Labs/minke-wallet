@@ -26,7 +26,7 @@ const EmptyState = () => {
 
 			<View style={{ paddingHorizontal: 16, width: '100%' }}>
 				<Button
-					iconLeft="addStroke"
+					iconLeft="add"
 					title={i18n.t('Components.Buttons.deposit')}
 					onPress={() => navigation.navigate('DepositScreen')}
 				/>

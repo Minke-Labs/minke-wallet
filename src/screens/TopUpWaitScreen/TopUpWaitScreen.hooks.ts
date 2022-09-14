@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigation, useTransactions, useWyreOrderStatus } from '@hooks';
+import { useGlobalWalletState, useNavigation, useTransactions, useWyreOrderStatus } from '@hooks';
 import { WYRE_ORDER_STATUS_TYPES } from '@models/types/wyre.types';
 import { useState } from '@hookstate/core';
 import { globalTopUpState, TopUpState } from '@stores/TopUpStore';
-import { globalWalletState } from '@stores/WalletStore';
 
 export const useTopUpWaitScreen = () => {
 	const navigation = useNavigation();
 	const topUpState = useState(globalTopUpState());
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 	const { addPendingTransaction } = useTransactions();
 
 	const { status, transactionHash, orderId } = useWyreOrderStatus();
@@ -20,7 +19,7 @@ export const useTopUpWaitScreen = () => {
 
 	const onFinish = () => {
 		topUpState.set({} as TopUpState);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	useEffect(() => {

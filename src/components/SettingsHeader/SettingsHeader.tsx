@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
 import { useLanguage, useNavigation } from '@hooks';
-import Icon from '../Icon/Icon';
-import Text from '../Text/Text';
-import styles from './SettingsHeader.styles';
+import Icon from '@src/components/Icon/Icon';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
+import Touchable from '@src/components/Touchable/Touchable';
 import { SettingsHeaderProps } from './SettingsHeader.types';
 
+// @@@TODO: ALL HEADERS WILL BECOME ONE
 const SettingsHeader: React.FC<SettingsHeaderProps> = ({ onPress, done = true, title }) => {
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
@@ -13,23 +14,36 @@ const SettingsHeader: React.FC<SettingsHeaderProps> = ({ onPress, done = true, t
 	const goBack = () => navigation.goBack();
 
 	return (
-		<View style={styles.container}>
-			<View style={{ flexDirection: 'row' }}>
-				<TouchableOpacity
-					style={{ flexDirection: 'row', alignContent: 'center' }}
-					activeOpacity={0.6}
-					onPress={goBack}
-				>
-					<Icon name="arrowBackStroke" color="text7" size={24} style={{ marginRight: 12 }} />
-					<Text weight="extraBold">{title}</Text>
-				</TouchableOpacity>
+		<View
+			h={48}
+			ph="xs"
+			row
+			main="space-between"
+			cross="center"
+		>
+			<View row>
+				<Touchable row cross="center" onPress={goBack}>
+					<Icon
+						name="arrowBackStroke"
+						color="text7"
+						size={24}
+					/>
+					<View mr="xxs" />
+					<Text type="hSmall" weight="bold">
+						{title}
+					</Text>
+				</Touchable>
 			</View>
 			{done && (
-				<TouchableOpacity activeOpacity={0.6} {...{ onPress }}>
-					<Text weight="medium" color="text7" type="a">
+				<Touchable {...{ onPress }}>
+					<Text
+						weight="semiBold"
+						color="cta1"
+						type="lMedium"
+					>
 						{i18n.t('Components.SettingsHeader.done')}
 					</Text>
-				</TouchableOpacity>
+				</Touchable>
 			)}
 		</View>
 	);

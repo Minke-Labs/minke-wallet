@@ -1,17 +1,14 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
+import Touchable from '../Touchable/Touchable';
 
 interface MaxButtonProps {
 	onPress: () => void;
 }
 
 const MaxButton: React.FC<MaxButtonProps> = ({ onPress }) => (
-	<TouchableOpacity
-		onPress={onPress}
-		style={{ flexDirection: 'row', alignItems: 'center' }}
-	>
+	<Touchable onPress={onPress} row>
 		<Icon
 			name="sparkleStroke"
 			size={20}
@@ -25,7 +22,7 @@ const MaxButton: React.FC<MaxButtonProps> = ({ onPress }) => (
 		>
 			Max
 		</Text>
-	</TouchableOpacity>
+	</Touchable>
 );
 
 export default MaxButton;

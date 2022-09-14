@@ -21,3 +21,7 @@ export interface TopupToken extends MinkeToken {
 	wyreSymbol?: string | undefined;
 	moonpaySymbol?: string | undefined;
 }
+
+export interface InvestmentToken extends MinkeToken {
+	perc?: number | undefined;
+}

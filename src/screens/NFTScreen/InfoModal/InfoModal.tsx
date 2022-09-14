@@ -14,11 +14,11 @@ export const InfoModal: React.FC<InfoModalProps> = ({ onPress }) => {
 					{i18n.t('NFTScreen.InfoModal.how_are_valued')}
 				</Text>
 				<TouchableOpacity onPress={onPress}>
-					<Icon name="closeStroke" size={24} color="cta1" />
+					<Icon name="close" size={24} color="cta1" />
 				</TouchableOpacity>
 			</View>
 
-			<Text type="bSmall" marginBottom={32} color="text2" width={343}>
+			<Text type="bSmall" mb="m" color="text2" width={343}>
 				{i18n.t('NFTScreen.InfoModal.desc')}
 			</Text>
 		</View>

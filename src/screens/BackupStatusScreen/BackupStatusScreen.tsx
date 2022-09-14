@@ -2,7 +2,15 @@ import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import { Button, Text, Icon, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Modal } from '@components';
+import {
+	Button,
+	Text,
+	Icon,
+	ScreenLoadingIndicator,
+	LoadingScreen,
+	ModalReusables,
+	ModalBase
+} from '@components';
 import RNUxcam from 'react-native-ux-cam';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
@@ -17,13 +25,13 @@ const BackedUp: React.FC<{ address: string }> = ({ address }) => {
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<Text weight="extraBold" type="h2" center marginBottom={24} width={275}>
+			<Text weight="extraBold" type="h2" center mb="s" width={275}>
 				{i18n.t('BackupStatusScreen.your_wallet_is_backed_up')}
 			</Text>
-			<Text type="p" weight="regular" center marginBottom={48}>
+			<Text type="p" weight="regular" center mb="xl">
 				{smallWalletAddress(address, 9)}
 			</Text>
-			<Text weight="medium" center marginBottom={40}>
+			<Text weight="medium" center mb="l">
 				{i18n.t('BackupStatusScreen.if_you_lose', { cloudPlatform })}
 			</Text>
 		</>
@@ -37,20 +45,20 @@ const NotBackedUp: React.FC<{ handleIcloudBackup: () => void; address: string }>
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<Text weight="extraBold" type="h2" center marginBottom={24} width={275} color="alert1">
+			<Text weight="extraBold" type="h2" center mb="s" width={275} color="alert1">
 				{i18n.t('BackupStatusScreen.your_wallet_is_not_backed_up')}
 			</Text>
-			<Text type="p" weight="regular" center marginBottom={48}>
+			<Text type="p" weight="regular" center mb="xl">
 				{smallWalletAddress(address, 9)}
 			</Text>
-			<Text weight="medium" center marginBottom={40}>
+			<Text weight="medium" center mb="l">
 				{i18n.t('BackupStatusScreen.your_keys_your_coins')}
 			</Text>
 			<Button
 				title={i18n.t('BackupStatusScreen.back_up_to_icloud', { cloudPlatform })}
 				onPress={handleIcloudBackup}
-				iconRight="cloudStroke"
-				marginBottom={24}
+				iconRight="cloud"
+				mb="s"
 			/>
 		</>
 	);
@@ -93,7 +101,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 
 	const onSelectWallet = async (walletIn: MinkeWallet) => {
 		state.set(await walletState(walletIn));
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	return (
@@ -103,7 +111,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
 						<Icon name="arrowBackStroke" color="text7" size={24} />
 					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('WalletScreen')}>
+					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('HomeScreen')}>
 						<Text weight="medium" color="text7" type="a">
 							{i18n.t('BackupStatusScreen.done')}
 						</Text>
@@ -132,7 +140,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 					{address !== addressState && (
 						<Button
 							title={i18n.t('BackupStatusScreen.go_to_wallet')}
-							marginBottom={21}
+							mb="xs"
 							onPress={() => onSelectWallet(wallet)}
 						/>
 					)}
@@ -141,8 +149,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 							onPress={() =>
 								showAuthenticationPrompt({
 									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
-								})
-							}
+								})}
 							title={i18n.t('BackupStatusScreen.view_secret_phrase')}
 							mode="outlined"
 						/>
@@ -150,13 +157,13 @@ const BackupStatusScreen = ({ route }: Props) => {
 				</ScrollView>
 			</BasicLayout>
 
-			<Modal isVisible={!!error} onDismiss={() => setError(undefined)}>
+			<ModalBase isVisible={!!error} onDismiss={() => setError(undefined)}>
 				<ModalReusables.Error
 					onDismiss={() => setError(undefined)}
 					title={i18n.t('BackupStatusScreen.backup_error')}
 					description={error}
 				/>
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

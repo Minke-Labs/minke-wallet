@@ -1,8 +1,7 @@
-import React, { createContext, useMemo } from 'react';
-import { useState } from '@hookstate/core';
+import React, { useState, createContext, useMemo } from 'react';
 import * as Amplitude from 'expo-analytics-amplitude';
-import { globalWalletState } from '@src/stores/WalletStore';
 import { AMPLITUDE_PROJECT_API } from '@env';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 export type TrackingOptions = {
 	[key: string]: any;
@@ -21,13 +20,12 @@ const apiKey = AMPLITUDE_PROJECT_API || process.env.AMPLITUDE_PROJECT_API;
 export const AmplitudeContext = createContext<any>(null);
 
 const AmplitudeProvider: React.FC = ({ children }) => {
-	const wallet = useState(globalWalletState());
 	const {
 		address,
 		network: { name: network }
-	} = wallet.value;
+	} = useGlobalWalletState();
 
-	const [isInitialized, setIsInitialized] = React.useState(false);
+	const [isInitialized, setIsInitialized] = useState(false);
 
 	const initialize = async () => {
 		if (isInitialized || __DEV__) return;

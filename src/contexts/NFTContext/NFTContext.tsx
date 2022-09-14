@@ -8,13 +8,17 @@ interface NFTContextProps {
 	assets: NFT[];
 	nftsByCollection: { [key: string]: NFT[] };
 	estimatedValue: string;
+	networth: number;
+	loading: boolean;
 }
 
 export const NFTContext = createContext<NFTContextProps>({} as NFTContextProps);
 
 const NFTProvider: React.FC = ({ children }) => {
+	const [loading, setLoading] = useState(true);
 	const { address } = useWallets();
 	const [assets, setAssets] = useState<NFT[]>([]);
+	const [networth, setNetworth] = useState(0);
 	const [estimatedValue, setEstimatedValue] = useState('0');
 
 	useEffect(() => {
@@ -24,10 +28,13 @@ const NFTProvider: React.FC = ({ children }) => {
 		};
 		const fetchEstimatedValue = async () => {
 			const netWorth = await fetchNFTNetWorth(address);
-			setEstimatedValue(numberFormat(+netWorth || 0, 2));
+			const value = +netWorth || 0;
+			setNetworth(value);
+			setEstimatedValue(numberFormat(value, 2));
 		};
 		fetchAssets();
 		fetchEstimatedValue();
+		setLoading(false);
 	}, [address]);
 
 	const nftsByCollection = assets?.reduce((acc: any, curr: any) => {
@@ -39,9 +46,12 @@ const NFTProvider: React.FC = ({ children }) => {
 		() => ({
 			assets,
 			nftsByCollection,
-			estimatedValue
+			estimatedValue,
+			networth,
+			loading,
+			setLoading
 		}),
-		[assets, estimatedValue, address]
+		[assets, estimatedValue, address, networth, loading]
 	);
 
 	return <NFTContext.Provider value={obj}>{children}</NFTContext.Provider>;

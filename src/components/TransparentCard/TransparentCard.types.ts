@@ -1,5 +1,7 @@
+import { SpacingType } from '@styles';
+
 export interface TransparentCardProps {
-	marginBottom: number;
+	mb: SpacingType;
 	row: boolean;
-	padding: number;
+	p: SpacingType;
 }

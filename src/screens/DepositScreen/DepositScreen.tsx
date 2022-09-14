@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, BlankStates } from '@components';
-import { useDepositProtocols } from '@hooks';
+import { ModalBase, BlankStates } from '@components';
+import { useDepositProtocols, useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import { AddFunds } from '@containers';
 import Deposit from './Deposit/Deposit';
@@ -9,32 +9,55 @@ import NotAbleToSaveModal from './NotAbleToSaveModal/NotAbleToSaveModal';
 import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
-	const { notAbleToSaveVisible, notAbleToSaveDismiss, dismissAddFunds, addFundsVisible, onAddFunds } =
-		useDepositScreen();
-	const { setSelectedUSDCoin, depositableToken, selectedProtocol, ableToDeposit, approved, setApproved, apy } =
-		useDepositProtocols();
 	RNUxcam.tagScreenName('DepositScreen');
+	const { i18n } = useLanguage();
 
-	if (ableToDeposit === undefined) return <BlankStates.Deposit />;
+	const {
+		notAbleToSaveVisible,
+		notAbleToSaveDismiss,
+		dismissAddFunds,
+		addFundsVisible,
+		onAddFunds
+	} = useDepositScreen();
+
+	const {
+		setSelectedUSDCoin,
+		depositableToken,
+		selectedProtocol,
+		ableToDeposit,
+		approved,
+		setApproved,
+		apy
+	} = useDepositProtocols();
+
+	if (ableToDeposit === undefined) {
+		return (
+			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />
+		);
+	}
 
 	if (!ableToDeposit) {
 		return (
 			<>
-				<Modal isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
+				<ModalBase isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
 					<NotAbleToSaveModal
 						visible={notAbleToSaveVisible}
 						onDismiss={notAbleToSaveDismiss}
 						onAddFunds={onAddFunds}
 					/>
-				</Modal>
-				<Modal isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
+				</ModalBase>
+				<ModalBase isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
 					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
-				</Modal>
+				</ModalBase>
 			</>
 		);
 	}
 
-	if (approved === undefined) return <BlankStates.Deposit />;
+	if (approved === undefined) {
+		return (
+			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />
+		);
+	}
 
 	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
 	return <OpenSavings onApprove={() => setApproved(true)} />;

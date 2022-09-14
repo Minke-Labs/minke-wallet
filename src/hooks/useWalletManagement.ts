@@ -1,8 +1,7 @@
-import { useState } from '@hookstate/core';
 import { Network, networks } from '@models/network';
-import { globalWalletState } from '@stores/WalletStore';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import WalletConnect from '@walletconnect/client';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 interface UseWalletManagement {
 	canSendTransactions: boolean;
@@ -13,7 +12,8 @@ interface UseWalletManagement {
 }
 
 const useWalletManagement = (): UseWalletManagement => {
-	const { address, privateKey, network } = useState(globalWalletState()).value;
+	const { address, privateKey, network } = useGlobalWalletState();
+
 	const connector = useWalletConnect();
 	const { connected, accounts, chainId } = connector;
 

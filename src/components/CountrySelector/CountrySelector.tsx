@@ -35,7 +35,7 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc, on
 	return (
 		<View style={{ flex: 1 }}>
 			{desc && (
-				<Text type="bMedium" marginBottom={24}>
+				<Text type="bMedium" mb="s">
 					{i18n.t('Components.CountrySelector.to_offer')}
 				</Text>
 			)}

@@ -10,11 +10,11 @@ import ListItem from './ListItem/ListItem';
 import styles from './ChangeNetworkScreen.styles';
 
 const ChangeNetworkScreen = () => {
+	RNUxcam.tagScreenName('ChangeNetworkScreen');
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 	const { selectNetwork, network } = useNetwork();
-	RNUxcam.tagScreenName('ChangeNetworkScreen');
 
 	return (
 		<BasicLayout>

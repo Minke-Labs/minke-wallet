@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
-	Modal,
+	ModalBase,
 	TokenCard,
 	HapticButton,
 	ModalReusables,
@@ -10,16 +10,15 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	BlankStates
+	Warning,
+	View
 } from '@components';
 import { BasicLayout } from '@layouts';
 import { useNavigation, useLanguage } from '@hooks';
-import RNUxcam from 'react-native-ux-cam';
 import { debounce } from 'lodash';
 import { MinkeToken } from '@models/types/token.types';
-import Warning from '../ExchangeScreen/Warning/Warning';
+import { os } from '@styles';
 import useWithdrawScreen from './WithdrawScreen.hooks';
-import styles from './WithdrawScreen.styles';
 
 const WithdrawScreen = () => {
 	RNUxcam.tagScreenName('WithdrawScreen');
@@ -48,14 +47,12 @@ const WithdrawScreen = () => {
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
-	if (token === undefined) return <BlankStates.Withdraw />;
-
 	return (
 		<>
 			<BasicLayout>
 				<Header title={`${i18n.t('WithdrawScreen.withdraw')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
-				<Paper padding={16} marginBottom={42} margin={16}>
+				<Paper p="xs" mb="l" mh="xs">
 					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
@@ -63,7 +60,7 @@ const WithdrawScreen = () => {
 					<GasSelector />
 				</View>
 
-				<View style={styles.depositButton}>
+				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					{nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 					<HapticButton
 						title={i18n.t('Components.Buttons.withdraw')}
@@ -71,15 +68,16 @@ const WithdrawScreen = () => {
 						onPress={onWithdraw}
 					/>
 					{!canSendTransactions && (
-						<View style={{ marginTop: 8 }}>
+						<View mt="xxs">
 							<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
 						</View>
 					)}
 				</View>
+
 				<KeyboardSpacer />
 			</BasicLayout>
 
-			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+			<ModalBase isVisible={searchVisible} onDismiss={hideModal}>
 				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
@@ -89,9 +87,9 @@ const WithdrawScreen = () => {
 					selected={[token?.symbol.toLowerCase()]}
 					withdraw
 				/>
-			</Modal>
+			</ModalBase>
 
-			<Modal
+			<ModalBase
 				isVisible={waitingTransaction}
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
@@ -104,8 +102,8 @@ const WithdrawScreen = () => {
 						withdraw
 					/>
 				)}
-			</Modal>
-			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+			</ModalBase>
+			<ModalBase isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
@@ -113,7 +111,7 @@ const WithdrawScreen = () => {
 						showHeader
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

@@ -13,7 +13,7 @@ export const useNotAbleToSaveModal = ({ onDismiss, onAddFunds, visible }: UseNot
 
 	const goToExchange = () => {
 		onDismiss();
-		navigation.navigate('ExchangeScreen');
+		navigation.navigate('ExchangeScreen', {});
 	};
 
 	const onAddFundsPressed = () => {

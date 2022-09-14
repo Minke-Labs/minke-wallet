@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
+import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { globalWalletState } from '@stores/WalletStore';
 import { createReferralCode } from '@src/services/apis';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 const useReferralCode = () => {
-	const [code, setCode] = React.useState<string>();
-	const { address } = useState(globalWalletState()).value;
+	const [code, setCode] = useState<string>();
+	const { address } = useGlobalWalletState();
 
 	useEffect(() => {
 		const fetchCode = async () => {

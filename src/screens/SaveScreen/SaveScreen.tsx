@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { Modal, BlankStates } from '@components';
-import { BasicLayout } from '@layouts';
-import { useDepositProtocols, useTokens } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
-import EmptyState from './EmptyState/EmptyState';
+import { ModalBase, BlankStates } from '@components';
+import { BasicLayout } from '@layouts';
+import { useDepositProtocols, useBalances, useLanguage } from '@hooks';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
 import { CurrentValue } from './CurrentValue/CurrentValue';
@@ -12,17 +11,17 @@ import { Background } from './Background/Background';
 import InfoModal from './InfoModal';
 
 const SaveScreen = () => {
+	RNUxcam.tagScreenName('SaveScreen');
+	const { i18n } = useLanguage();
 	const [isModalVisible, setModalVisible] = useState(false);
 	const { apy, selectedProtocol } = useDepositProtocols();
-	const { interestTokens, depositedBalance } = useTokens();
-	RNUxcam.tagScreenName('SaveScreen');
+	const { interestTokens, depositedBalance } = useBalances();
 
-	if (!interestTokens) return <BlankStates.Save />;
-	if (interestTokens.length === 0) return <EmptyState />;
+	if (!interestTokens) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Save')} />;
 
 	return (
 		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
+			<BasicLayout hideSafeAreaView bgc="detail4">
 				<SafeAreaView>
 					<Background>
 						<Header onInfo={() => setModalVisible(true)} />
@@ -32,14 +31,15 @@ const SaveScreen = () => {
 				<Body {...{ interestTokens }} />
 			</BasicLayout>
 
-			<Modal isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
+			<ModalBase isVisible={isModalVisible} onDismiss={() => setModalVisible(false)}>
 				{selectedProtocol?.id === 'aave' ? (
 					<InfoModal.Aave onDismiss={() => setModalVisible(false)} />
 				) : (
 					<InfoModal.MStable onDismiss={() => setModalVisible(false)} />
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };
+
 export default SaveScreen;

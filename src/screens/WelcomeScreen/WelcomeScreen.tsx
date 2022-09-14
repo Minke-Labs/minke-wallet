@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
-import { Text, Button, LoadingScreen, Icon } from '@components';
-import { useLanguage, useNavigation } from '@hooks';
-import RNUxcam from 'react-native-ux-cam';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
+import { Text, Button, LoadingScreen, Icon, Touchable, View } from '@components';
+import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
 import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';
@@ -18,7 +16,7 @@ const WelcomeScreen = () => {
 	const { onCreateWallet, onImportWallet, loading } = useWelcomeScreen();
 	const navigation = useNavigation();
 	const { disableCode } = useEnterReferralCodeScreen();
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 
 	return (
 		<BasicLayout>
@@ -39,7 +37,7 @@ const WelcomeScreen = () => {
 						{loading ? (
 							<LoadingScreen title={i18n.t('WelcomeScreen.creating')} />
 						) : (
-							<Button title={i18n.t('WelcomeScreen.create')} onPress={onCreateWallet} marginBottom={16} />
+							<Button title={i18n.t('WelcomeScreen.create')} onPress={onCreateWallet} mb="xs" />
 						)}
 						{!loading && (
 							<>
@@ -47,7 +45,7 @@ const WelcomeScreen = () => {
 									title={i18n.t('WelcomeScreen.import_or_restore')}
 									mode="outlined"
 									onPress={onImportWallet}
-									marginBottom={16}
+									mb="xs"
 								/>
 								{disableCode ? (
 									<View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -58,13 +56,13 @@ const WelcomeScreen = () => {
 									</View>
 								) : (
 									!!address && (
-										<TouchableOpacity
+										<Touchable
 											onPress={() => navigation.navigate('EnterReferralCodeScreen')}
 										>
 											<Text type="a" weight="semiBold" color="cta1">
 												{i18n.t('WelcomeScreen.i_have_a_referral_code')}
 											</Text>
-										</TouchableOpacity>
+										</Touchable>
 									)
 								)}
 							</>

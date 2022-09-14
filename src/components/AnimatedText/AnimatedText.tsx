@@ -27,7 +27,6 @@ const AnimatedText: React.FC<TextComponentProps> = ({
 			underlineColorAndroid="transparent"
 			editable={false}
 			value={text.value}
-			// multiline
 			style={[styles.text, style]}
 			{...{ animatedProps }}
 		/>

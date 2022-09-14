@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button, Icon, Input, LoadingScreen, Text } from '@components';
 import { BasicLayout } from '@layouts';
 import { Image, TouchableOpacity, View } from 'react-native';
@@ -12,8 +12,8 @@ import styles from './CreateBackupPassword.styles';
 const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const [password, setPassword] = React.useState<string>();
-	const [passwordConfirmation, setPasswordConfirmation] = React.useState<string>();
+	const [password, setPassword] = useState<string>();
+	const [passwordConfirmation, setPasswordConfirmation] = useState<string>();
 	const { walletCloudBackup, isWalletLoading } = useWalletCloudBackup();
 
 	const keyboardVisible = useKeyboard();
@@ -54,10 +54,10 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 				</View>
 			)}
 			<View style={{ paddingHorizontal: 24 }}>
-				<Text type="h3" weight="extraBold" marginBottom={8}>
+				<Text type="h3" weight="extraBold" mb="xxs">
 					{i18n.t('BackupToICloudScreen.CreateBackupPassword.choose_password')}
 				</Text>
-				<Text type="p2" weight="medium" color="text2" marginBottom={32}>
+				<Text type="p2" weight="medium" color="text2" mb="m">
 					{i18n.t('BackupToICloudScreen.CreateBackupPassword.memorable_password')}{' '}
 					<Text type="p2" weight="bold">
 						{i18n.t('BackupToICloudScreen.CreateBackupPassword.not_recoverable')}
@@ -90,7 +90,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 
 				<Button
 					title={i18n.t('Components.Buttons.backup_to_icloud', { cloudPlatform })}
-					iconRight="cloudStroke"
+					iconRight="cloud"
 					disabled={!isPasswordValid}
 					onPress={onConfirmBackup}
 				/>

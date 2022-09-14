@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { SettingsHeader, CountrySelector, Text } from '@components';
+import { SettingsHeader, CountrySelector, Snackbar } from '@components';
 import { BasicLayout } from '@layouts';
-import { Snackbar } from 'react-native-paper';
 import { useNavigation, useLanguage, useCountry } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 
 const ChangeCountryScreen = () => {
+	RNUxcam.tagScreenName('ChangeCountryScreen');
 	const { i18n } = useLanguage();
 	const { country } = useCountry();
 	const navigation = useNavigation();
 	const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-	RNUxcam.tagScreenName('ChangeCountryScreen');
-
 	const handlePress = () => {
 		if (!country) setSnackbarVisible(true);
-		else navigation.navigate('WalletScreen');
+		else navigation.navigate('HomeScreen');
 	};
 
 	return (
@@ -32,9 +30,11 @@ const ChangeCountryScreen = () => {
 					</View>
 				</View>
 			</BasicLayout>
-			<Snackbar duration={2000} onDismiss={() => setSnackbarVisible(false)} visible={snackbarVisible}>
-				<Text color="text11">{i18n.t('Components.CountrySelector.select')}</Text>
-			</Snackbar>
+			<Snackbar
+				onDismiss={() => setSnackbarVisible(false)}
+				visible={snackbarVisible}
+				title={i18n.t('Components.Snackbar.select')}
+			/>
 		</>
 	);
 };

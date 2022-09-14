@@ -1,5 +1,6 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
-import AssetsScreen from './AssetsScreen/AssetsScreen';
+import InvestmentsDetailScreen from './InvestmentsDetailScreen/InvestmentsDetailScreen';
+import StablecoinsDetailScreen from './StablecoinsDetailScreen/StablecoinsDetailScreen';
 import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
 import NFTScreen from './NFTScreen/NFTScreen';
 import NFTDetailScreen from './NFTDetailScreen/NFTDetailScreen';
@@ -9,16 +10,18 @@ import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
 import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import ChangeCountryScreen from './ChangeCountryScreen/ChangeCountryScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
+import HomeScreen from './HomeScreen/HomeScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
+import StablecoinsScreen from './StablecoinsScreen/StablecoinsScreen';
+import MinkeHubScreen from './MinkeHubScreen/MinkeHubScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
+import InvestmentsScreen from './InvestmentsScreen/InvestmentsScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
-import WalletAssetsScreen from './WalletAssetsScreen/WalletAssetsScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
-import WalletScreen from './WalletScreen/WalletScreen';
 import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
@@ -32,20 +35,23 @@ import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
 import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
 import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
 import AddFundsScreen from './AddFundsScreen/AddFundsScreen';
-import TransactionScreen from './TransactionScreen/TransactionScreen';
+import TransactionsDetailScreen from './TransactionsDetailScreen/TransactionsDetailScreen';
 import MoonpayWaitScreen from './TopUpWaitScreen/Moonpay/MoonpayWaitScreen';
 import Test from './Test/Test';
 
 const screensObj = {
 	AccountsScreen,
-	AssetsScreen,
+	InvestmentsDetailScreen,
+	StablecoinsDetailScreen,
 	ManualBackupScreen,
 	NFTScreen,
 	NFTDetailScreen,
 	BackupSettingsScreen,
 	ChangeLanguageScreen,
+	HomeScreen,
 	BackupStatusScreen,
 	ChangeNetworkScreen,
+	StablecoinsScreen,
 	ChangeCountryScreen,
 	DepositScreen,
 	DepositWithdrawalSuccessScreen,
@@ -55,9 +61,9 @@ const screensObj = {
 	SettingsScreen,
 	TransactionsScreen,
 	USDCoinScreen,
-	WalletAssetsScreen,
+	MinkeHubScreen,
 	WalletCreatedScreen,
-	WalletScreen,
+	InvestmentsScreen,
 	WelcomeScreen,
 	BackupToICloudScreen,
 	TopUpWaitScreen,
@@ -71,7 +77,7 @@ const screensObj = {
 	DevSettingsScreen,
 	ImportWalletScreen,
 	AddFundsScreen,
-	TransactionScreen,
+	TransactionsDetailScreen,
 	MoonpayWaitScreen,
 	Test
 };

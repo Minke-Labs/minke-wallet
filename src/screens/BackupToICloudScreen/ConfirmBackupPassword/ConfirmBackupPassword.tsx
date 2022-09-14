@@ -43,7 +43,7 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 					state.set(await walletState(wallets[0]));
 				}
 
-				if (country) navigation.navigate('WalletScreen');
+				if (country) navigation.navigate('HomeScreen');
 				else navigation.navigate('ChangeCountryScreen');
 			} else {
 				onError(i18n.t('Logs.couldnt_restore_backup'));
@@ -77,10 +77,10 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 				</View>
 			)}
 			<View style={{ paddingHorizontal: 24 }}>
-				<Text type="h3" weight="extraBold" marginBottom={8}>
+				<Text type="h3" weight="extraBold" mb="xxs">
 					{i18n.t('Logs.couldnt_restore_backup')}
 				</Text>
-				<Text type="p2" weight="medium" color="text2" marginBottom={32}>
+				<Text type="p2" weight="medium" color="text2" mb="m">
 					{i18n.t('BackupToICloudScreen.ConfirmBackupPassword.to')}
 					{restoreBackups
 						? i18n.t('BackupToICloudScreen.ConfirmBackupPassword.restore_from')
@@ -105,7 +105,7 @@ const ConfirmBackupPassword = ({ walletId, onError, restoreBackups = false }: Ba
 							? i18n.t('Components.Buttons.confirm_restore')
 							: i18n.t('Components.Buttons.confirm_backup')
 					}
-					iconRight="cloudStroke"
+					iconRight="cloud"
 					disabled={!isPasswordValid}
 					onPress={onConfirm}
 				/>

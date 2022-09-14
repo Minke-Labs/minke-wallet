@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
-import { globalWalletState } from '@stores/WalletStore';
 import { useState } from '@hookstate/core';
 import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@models/wyre';
 import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 import useTimeout from '../useTimeout';
 import { OnPurchaseParams, UseWyreApplePay, UseWyreApplePayError } from './types';
 import useAmplitude from '../useAmplitude';
 
 export default function useWyreApplePay(): UseWyreApplePay {
-	const { address: accountAddress, network } = useState(globalWalletState()).value;
+	const { address: accountAddress, network } = useGlobalWalletState();
 	const topUpState = useState(globalTopUpState());
 	const [isPaymentComplete, setPaymentComplete] = React.useState(false);
 	const [orderCurrency, setOrderCurrency] = React.useState<string | null>(null);

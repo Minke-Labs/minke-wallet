@@ -1,14 +1,21 @@
 import React from 'react';
 import { useTheme } from '@hooks';
-import { View, TextInput, Text } from 'react-native';
+import { View, TextInput } from 'react-native';
+import Text from '@src/components/Text/Text';
 import styles from './TextArea.styles';
 import { TextAreaProps } from './TextArea.types';
 
+// @@@TODO: Ask Franz about the screen where this is used in order to refactor.
 const TextArea: React.FC<TextAreaProps> = ({ label, value, onChangeText, numberOfLines = 6, style }) => {
 	const { colors } = useTheme();
 	return (
 		<View>
-			<Text style={[styles.label, { color: colors.text7 }]}>{label}</Text>
+			<Text
+				color="text7"
+				style={styles.label}
+			>
+				{label}
+			</Text>
 			<TextInput
 				style={[
 					styles.textarea,

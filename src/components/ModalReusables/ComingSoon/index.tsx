@@ -16,12 +16,16 @@ const ComingSoonModal: React.FC<ComingSoonModalProps> = ({ onDismiss }) => {
 			<View style={styles.container}>
 				<Image source={whale4Img} style={styles.image} />
 				<Text weight="extraBold" center>
-					{i18n.t('Components.ComingSoonModal.coming_soon')}
+					{i18n.t('Components.ModalReusables.ComingSoonModal.coming_soon')}
 				</Text>
-				<Text weight="extraBold" center marginBottom={45}>
-					{i18n.t('Components.ComingSoonModal.devs_doing_something')}
+				<Text weight="extraBold" center mb="xl">
+					{i18n.t('Components.ModalReusables.ComingSoonModal.devs_doing_something')}
 				</Text>
-				<Button title="Ok, got it" onPress={onDismiss} marginBottom={8} />
+				<Button
+					title={i18n.t('Components.ModalReusables.ComingSoonModal.got_it')}
+					onPress={onDismiss}
+					mb="xxs"
+				/>
 			</View>
 		</SafeAreaView>
 	);

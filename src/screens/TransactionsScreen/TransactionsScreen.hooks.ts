@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import { ZapperTransaction } from '@models/wallet';
 import { useTransactions } from '@hooks';
 import { TransactionPeriod } from '@src/contexts/TransactionsContext/TransactionsContext';
 
 export const useTransactionsScreen = () => {
-	const [active, setActive] = React.useState(0);
+	const [active, setActive] = useState(0);
 	const { transactions } = useTransactions();
 
 	const filteredTransactions = (txs: TransactionPeriod[]): TransactionPeriod[] => {

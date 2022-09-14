@@ -34,7 +34,7 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 			{usdAmount ? (
 				<Text
 					style={{ marginTop: 16 }}
-					marginBottom={4}
+					mb="xxxs"
 					weight="semiBold"
 					type="lMedium"
 				>

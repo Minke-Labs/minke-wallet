@@ -1,17 +1,17 @@
 import React from 'react';
 import { TouchableOpacity, View, ScrollView, Image } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { Button, Icon, Input, Text } from '@components';
-import { useLanguage, useNavigation } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { whale5Img as whaleImage } from '@images';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import useEnterReferralCodeScreen from './EnterReferralCodeScreen.hooks';
 import styles from './EnterReferralCodeScreen.styles';
 
 const EnterReferralCodeScreen = () => {
-	const { address } = useState(globalWalletState()).value;
+	RNUxcam.tagScreenName('EnterReferralCodeScreen');
+	const { address } = useGlobalWalletState();
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const { code, setCode, invalidCode, onConfirm, loading, disableCode } = useEnterReferralCodeScreen();
@@ -28,9 +28,9 @@ const EnterReferralCodeScreen = () => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						activeOpacity={0.6}
-						onPress={() => (address ? navigation.navigate('WalletScreen') : navigation.goBack())}
+						onPress={() => (address ? navigation.navigate('HomeScreen') : navigation.goBack())}
 					>
-						<Icon name="closeStroke" color="text7" size={24} />
+						<Icon name="close" color="text7" size={24} />
 					</TouchableOpacity>
 				</View>
 
@@ -41,18 +41,18 @@ const EnterReferralCodeScreen = () => {
 					}}
 				>
 					<Image source={whaleImage} style={styles.image} />
-					<Text type="h2" weight="bold" style={styles.title} width={280} center marginBottom={24}>
+					<Text type="h2" weight="bold" style={styles.title} width={280} center mb="s">
 						{i18n.t('EnterReferralCodeScreen.get_rewarded_for_saving_money')}
 					</Text>
 					{disableCode ? (
 						<>
-							<Text type="h2" weight="bold" style={styles.code} width={280} center marginBottom={48}>
+							<Text type="h2" weight="bold" style={styles.code} width={280} center mb="xl">
 								{code}
 							</Text>
 							<Button
-								onPress={() => navigation.navigate('AddFundsScreen')}
+								onPress={() => navigation.navigate('AddFundsScreen', {})}
 								title={i18n.t('EnterReferralCodeScreen.buy_usdc')}
-								marginBottom={24}
+								mb="xxs"
 							/>
 						</>
 					) : (
@@ -74,12 +74,12 @@ const EnterReferralCodeScreen = () => {
 								}
 								disabled={invalidCode || loading}
 								onPress={onConfirm}
-								marginBottom={8}
+								mb="xxs"
 							/>
 						</>
 					)}
 
-					<Text type="a" color="text3" weight="semiBold" center marginBottom={8} width={293}>
+					<Text type="a" color="text3" weight="semiBold" center mb="xxs" width={293}>
 						{i18n.t('EnterReferralCodeScreen.referral_note')}
 					</Text>
 				</ScrollView>

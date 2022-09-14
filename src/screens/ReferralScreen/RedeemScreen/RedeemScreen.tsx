@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, View, TouchableWithoutFeedback } from 'react-native';
-import { Button, Header, Modal, ModalReusables, TokenCard } from '@components';
+import { Button, Header, ModalBase, ModalReusables, TokenCard } from '@components';
 import { useLanguage, useMinkeRewards, useNavigation, useTheme, useWalletState } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -74,7 +74,7 @@ const RedeemScreen = ({ route }: Props) => {
 					</>
 				</TouchableWithoutFeedback>
 			</BasicLayout>
-			<Modal isVisible={wrongNetwork} onDismiss={dismissModal}>
+			<ModalBase isVisible={wrongNetwork} onDismiss={dismissModal}>
 				{wrongNetwork && (
 					<ModalReusables.WrongNetwork
 						network={networks.matic}
@@ -84,10 +84,10 @@ const RedeemScreen = ({ route }: Props) => {
 						})}
 					/>
 				)}
-			</Modal>
-			<Modal isVisible={notEnoughPoints} onDismiss={dismissModal}>
+			</ModalBase>
+			<ModalBase isVisible={notEnoughPoints} onDismiss={dismissModal}>
 				{notEnoughPoints && <NotEnoughPointsModal code={code} onDismiss={dismissModal} />}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

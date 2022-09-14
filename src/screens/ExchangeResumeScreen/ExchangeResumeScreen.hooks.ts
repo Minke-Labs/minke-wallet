@@ -41,7 +41,7 @@ const useExchangeResumeScreen = () => {
 		exchange.toAmount.set(undefined);
 		exchange.gas.set(undefined);
 		setVisible(false);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	const startCounter = useCallback(() => {
@@ -179,7 +179,7 @@ const useExchangeResumeScreen = () => {
 							address,
 							biconomy,
 							contract: sellTokenAddress,
-							privateKey,
+							privateKey: privateKey!,
 							spender: exchangeContract
 						});
 
@@ -194,7 +194,7 @@ const useExchangeResumeScreen = () => {
 						biconomy,
 						depositContract: exchangeContract,
 						gasPrice,
-						privateKey,
+						privateKey: privateKey!,
 						swapData: data,
 						token: sellTokenAddress,
 						toToken: buyTokenAddress,
@@ -218,7 +218,7 @@ const useExchangeResumeScreen = () => {
 						]
 					});
 
-					navigation.navigate('WalletScreen');
+					navigation.navigate('HomeScreen');
 				} else {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
 					const { maxFeePerGas, maxPriorityFeePerGas } = exchange.gas.value || {};
@@ -226,7 +226,7 @@ const useExchangeResumeScreen = () => {
 					if (!isApproved) {
 						const { transaction: approvalTransaction } = await approveSpending({
 							userAddress: address,
-							privateKey,
+							privateKey: privateKey!,
 							contractAddress: sellTokenAddress,
 							spender: allowanceTarget,
 							maxFeePerGas: maxFeePerGas!,
@@ -244,12 +244,12 @@ const useExchangeResumeScreen = () => {
 						chainId,
 						data,
 						gasPrice: BigNumber.from(gasPrice),
-						gasLimit: Math.max(500000, +gasLimit),
+						gasLimit: Math.max(700000, +gasLimit),
 						nonce,
 						to: toAddress,
 						value: BigNumber.from(value)
 					};
-					const walletObject = new Wallet(wallet.privateKey.value, provider);
+					const walletObject = new Wallet(wallet.privateKey.value!, provider);
 					const signedTx = await walletObject.signTransaction(txDefaults);
 					const transaction = await provider.sendTransaction(signedTx as string);
 					const converted = convertTransactionResponse({
@@ -266,7 +266,7 @@ const useExchangeResumeScreen = () => {
 					const { hash } = transaction;
 					track('Exchanged', { to: to.symbol, from: from.symbol, gasless: false, hash });
 					setTransactionHash(hash);
-					navigation.navigate('WalletScreen');
+					navigation.navigate('HomeScreen');
 				}
 			} catch (e) {
 				onBlockchainError(e);

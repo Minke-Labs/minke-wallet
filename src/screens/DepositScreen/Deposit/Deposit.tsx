@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
 import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/types/token.types';
 import {
-	Modal,
+	ModalBase,
 	TokenCard,
 	HapticButton,
 	ModalReusables,
@@ -11,16 +10,17 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	BlankStates
+	BlankStates,
+	Warning,
+	View
 } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
-import Warning from '@src/screens/ExchangeScreen/Warning/Warning';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import { DepositProtocol } from '@models/deposit';
+import { os } from '@styles';
 import { useDeposit } from './Deposit.hooks';
-import styles from './Deposit.styles';
 
 interface DepositProps {
 	apy: string;
@@ -59,7 +59,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 	}, []);
 
 	if (!token) {
-		return <BlankStates.Deposit />;
+		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />;
 	}
 
 	return (
@@ -67,15 +67,20 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 			<BasicLayout>
 				<Header title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`} marginBottom={60} />
 
-				<Paper padding={16} marginBottom={42} margin={16}>
-					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
+				<Paper p="xs" mb="l" mh="xs">
+					<TokenCard
+						onPress={showModal}
+						token={token}
+						updateQuotes={debounce(updateAmount, 500)}
+						apy={apy}
+					/>
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
 					<GasSelector />
 				</View>
 
-				<View style={styles.depositButton}>
+				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					{!!nativeToken && !enoughForGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 					<HapticButton
 						title={i18n.t('Components.Buttons.deposit')}
@@ -91,7 +96,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 				<KeyboardSpacer />
 			</BasicLayout>
 
-			<Modal isVisible={searchVisible} onDismiss={hideModal}>
+			<ModalBase isVisible={searchVisible} onDismiss={hideModal}>
 				<ModalReusables.SearchTokens
 					visible={searchVisible}
 					onDismiss={hideModal}
@@ -100,9 +105,9 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
-			</Modal>
+			</ModalBase>
 
-			<Modal
+			<ModalBase
 				isVisible={waitingTransaction}
 				onDismiss={() => navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' })}
 			>
@@ -115,8 +120,8 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 						deposit
 					/>
 				)}
-			</Modal>
-			<Modal isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
+			</ModalBase>
+			<ModalBase isVisible={blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
@@ -124,7 +129,7 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 						showHeader
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

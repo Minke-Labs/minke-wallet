@@ -60,7 +60,6 @@ class WithdrawService {
 					amount,
 					minAmount,
 					maxFeePerGas,
-					maxPriorityFeePerGas,
 					interestBearingToken,
 					token,
 					biconomy

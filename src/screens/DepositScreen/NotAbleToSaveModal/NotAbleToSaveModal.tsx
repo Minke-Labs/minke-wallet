@@ -17,10 +17,10 @@ const NotAbleToSaveModal: React.FC<NotAbleToSaveModalProps> = ({ onDismiss, onAd
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
 			<View style={{ paddingHorizontal: 24 }}>
-				<Text type="h3" weight="extraBold" marginBottom={8}>
+				<Text type="h3" weight="extraBold" mb="xxs">
 					{i18n.t('DepositScreen.NotAbleToSaveModal.not_able')}
 				</Text>
-				<Text type="p" marginBottom={40}>
+				<Text type="p" mb="l">
 					{i18n.t('DepositScreen.NotAbleToSaveModal.need_funds_in')}
 					<Text weight="bold">{defaultUSDCoin}</Text>.
 				</Text>

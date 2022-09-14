@@ -1,18 +1,26 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text, Header, HapticButton, Paper, Modal, ModalReusables } from '@components';
+import {
+	Text,
+	Header,
+	HapticButton,
+	Paper,
+	ModalBase,
+	ModalReusables,
+	View
+} from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
 import RNUxcam from 'react-native-ux-cam';
+import { os } from '@styles';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
 import { TokenDetail } from './TokenDetail/TokenDetail';
-import { makeStyles } from './ExchangeResumeScreen.styles';
 import { Rate } from './Rate/Rate';
 import { GasSelected } from './GasSelected/GasSelected';
 
 const ExchangeResumeScreen = () => {
+	RNUxcam.tagScreenName('ExchangeResumeScreen');
 	const {
 		priceQuote,
 		from,
@@ -35,17 +43,34 @@ const ExchangeResumeScreen = () => {
 	} = useExchangeResumeScreen();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
-	RNUxcam.tagScreenName('ExchangeResumeScreen');
 
 	return (
 		<>
 			<BasicLayout>
 				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} marginBottom={36} />
 
-				<Paper marginBottom={24} margin={16}>
-					<View style={styles.container}>
-						<View style={styles.containerLeft}>
+				<Paper mb="s" m="xs" mh="xs">
+					<View
+						row
+						main="center"
+						cross="center"
+						style={{
+							borderBottomWidth: 1,
+							borderBottomColor: colors.background1
+						}}
+					>
+
+						<View
+							flex1
+							h="100%"
+							pt="s"
+							cross="center"
+							pb="xs"
+							style={{
+								borderRightWidth: 1,
+								borderRightColor: colors.background1
+							}}
+						>
 							<TokenDetail
 								token={from}
 								amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
@@ -53,7 +78,8 @@ const ExchangeResumeScreen = () => {
 								loading={!priceQuote}
 							/>
 						</View>
-						<View style={styles.containerRight}>
+
+						<View flex1 pt="s" pb="xs" cross="center">
 							<TokenDetail
 								token={to}
 								amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
@@ -61,18 +87,22 @@ const ExchangeResumeScreen = () => {
 								loading={!priceQuote}
 							/>
 						</View>
+
 						<DirectionButton disabled right />
 					</View>
-					<View style={styles.containerBottom}>
-						<Text type="lSmall" weight="semiBold" style={{ marginRight: 8 }}>
+
+					<View row pv="xs" main="center">
+						<Text type="lSmall" weight="semiBold">
 							{i18n.t('ExchangeResumeScreen.rate_fixed_for')}
 						</Text>
+						<View mr="xxs" />
 						{!loading && <Rate count={count} />}
 					</View>
+
 				</Paper>
 
-				<Paper marginBottom={24} padding={24} margin={16}>
-					<View style={styles.infoTop}>
+				<Paper mb="s" p="s" mh="xs">
+					<View row main="space-between" mb="xs">
 						<Text weight="semiBold" color="text3" type="lMedium">
 							{i18n.t('ExchangeResumeScreen.rate')}
 						</Text>
@@ -80,7 +110,8 @@ const ExchangeResumeScreen = () => {
 							{exchangeSummary()}
 						</Text>
 					</View>
-					<View style={styles.infoBottom}>
+
+					<View row main="space-between">
 						<Text weight="semiBold" color="text3" type="lMedium">
 							{i18n.t('ExchangeResumeScreen.swapping_via')}
 						</Text>
@@ -92,23 +123,28 @@ const ExchangeResumeScreen = () => {
 
 				{!gasless && <GasSelected />}
 
-				<View style={styles.haptic}>
+				<View
+					mb="m"
+					mh="xs"
+					style={{ marginTop: os === 'android' ? undefined : 'auto' }}
+				>
 					<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />
 				</View>
+
 			</BasicLayout>
 
-			<Modal isVisible={visible} onDismiss={hideModal}>
+			<ModalBase isVisible={visible} onDismiss={hideModal}>
 				<ModalReusables.TransactionWait
 					onDismiss={hideModal}
 					fromToken={from}
 					toToken={to}
 					transactionHash={transactionHash}
 				/>
-			</Modal>
-			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+			</ModalBase>
+			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
-			</Modal>
-			<Modal isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
+			</ModalBase>
+			<ModalBase isVisible={!!blockchainError} onDismiss={() => setBlockchainError(false)}>
 				{blockchainError && (
 					<ModalReusables.Error
 						description={i18n.t('Components.ModalReusables.Error.Blockchain.description')}
@@ -116,7 +152,7 @@ const ExchangeResumeScreen = () => {
 						showHeader
 					/>
 				)}
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

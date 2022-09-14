@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Image, SafeAreaView, Linking, StatusBar } from 'react-native';
 import { SvgUri } from 'react-native-svg';
-import { Text, Button } from '@components';
+import RNUxcam from 'react-native-ux-cam';
+import { Text, Button, Expander } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
@@ -12,13 +13,13 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import { getCollectionStats } from '@src/services/apis';
 import { whale2Img } from '@images';
 import { Bottom } from './Bottom/Bottom';
-import { Expander } from './Expander/Expander';
 import { Panel } from './Panel/Panel';
 import styles from './NFTDetailScreen.styles';
 import { Header } from './Header/Header';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'NFTDetailScreen'>;
 const NFTDetailScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('NFTDetailScreen');
 	const { nft } = route.params;
 	const { colors } = useTheme();
 	const { i18n } = useLanguage();
@@ -91,7 +92,7 @@ const NFTDetailScreen = ({ route }: Props) => {
 				<Button
 					iconRight="openInNew"
 					title={i18n.t('NFTDetailScreen.view_on_openSea')}
-					marginBottom={16}
+					mb="xs"
 					onPress={() => Linking.openURL(nft.permalink)}
 				/>
 				{!!nft.collection.description && (

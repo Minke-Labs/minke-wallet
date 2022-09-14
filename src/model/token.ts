@@ -3,9 +3,9 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { network, networks } from './network';
-import { MinkeToken } from './types/token.types';
+import { MinkeToken, InvestmentToken } from './types/token.types';
 
-export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD', 'TUSD'];
+export const stablecoins = ['USDC', 'DAI', 'USDT'];
 export const exchangebleTokens = [
 	'ETH',
 	'MATIC',
@@ -57,6 +57,7 @@ interface QuoteParams {
 	affiliateAddress: string;
 	buyTokenPercentageFee: number;
 	skipValidation: boolean;
+	excludedSources: string;
 }
 
 export const getExchangePrice = async ({
@@ -73,11 +74,12 @@ export const getExchangePrice = async ({
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	if (chainId === networks.matic.chainId) {
-		if (sellToken === '0x0000000000000000000000000000000000001010') {
+		const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
+		if (natives.includes(sellToken)) {
 			sellToken = 'MATIC';
 		}
 
-		if (buyToken === '0x0000000000000000000000000000000000001010') {
+		if (natives.includes(buyToken)) {
 			buyToken = 'MATIC';
 		}
 	}
@@ -88,6 +90,7 @@ export const getExchangePrice = async ({
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		buyTokenPercentageFee: 0.005,
+		excludedSources: 'MeshSwap',
 		skipValidation: true
 	};
 
@@ -122,13 +125,21 @@ export const getTokenVolume = async (token: string) => {
 	return result.json();
 };
 
-export const getTokenMarketCap = async (tokenName: string) => {
-	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenName}`;
+export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoTokenMarketCap[]> => {
+	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenIds}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
-	const mktCapArr = toJson.map((item: any) => ({ id: item.id, market_cap: item.market_cap }));
-	const mktCap = mktCapArr.find((item: any) => item.id === tokenName.toLowerCase());
-	return mktCap.market_cap;
+	return toJson;
+};
+
+export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<InvestmentToken[]> => {
+	const ids = tokens.map(({ id }) => id);
+	const marketCaps = await getTokenMarketCap(ids.join(','));
+
+	return tokens.map((t) => ({
+		...t,
+		...{ perc: marketCaps.find(({ id }) => id === t.id)?.price_change_percentage_24h }
+	}));
 };
 
 export const ether: MinkeToken = {
@@ -222,27 +233,12 @@ export interface AccountBalance {
 	balance: number; // total
 	depositedBalance: number; // deposited amount
 	walletBalance: number; // available in the wallet (not deposited)
+	stablecoinsBalance: number; // USDT, USDC, DAI usd balances sum
 	tokens: MinkeToken[];
+	stablecoins: MinkeToken[];
 	interestTokens: MinkeToken[];
-	depositableTokens: MinkeToken[];
 	withdrawableTokens: MinkeToken[];
-}
-
-export interface CovalentToken {
-	contract_decimals: number;
-	contract_name: string;
-	contract_ticker_symbol: string;
-	contract_address: string;
-	logo_url: string;
-	last_transferred_at: string;
-	type: string;
-	balance: string;
-	balance_24h: string;
-	quote_rate: number;
-	quote_rate_24h: number;
-	quote: number;
-	quote_24h: number;
-	nft_data: null;
+	loading: boolean;
 }
 
 export interface CovalentAavePool {
@@ -255,4 +251,11 @@ export interface CovalentAavePool {
 		contract_ticker_symbol: string;
 	};
 	supply_apy: number;
+}
+
+interface CoingeckoTokenMarketCap {
+	id: string;
+	market_cap: string;
+	errors?: string[];
+	price_change_percentage_24h: number;
 }

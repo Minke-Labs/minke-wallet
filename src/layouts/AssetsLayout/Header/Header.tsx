@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon, Text } from '@components';
-import { View, TouchableOpacity } from 'react-native';
+import { Icon, Text, Touchable } from '@components';
+import { View } from 'react-native';
 import { useNavigation } from '@hooks';
 import { HeaderProps } from './Header.types';
 import styles from './Header.styles';
@@ -12,16 +12,16 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 		<View>
 			<View style={styles.container}>
 				<View style={styles.leftContainer}>
-					<TouchableOpacity onPress={() => navigation.goBack()}>
+					<Touchable onPress={() => navigation.goBack()}>
 						<Icon name="arrowBackStroke" size={24} color="text7" style={{ marginRight: 12 }} />
-					</TouchableOpacity>
+					</Touchable>
 					<Text type="h3" weight="extraBold">
 						{title}
 					</Text>
 				</View>
-				<TouchableOpacity onPress={() => navigation.navigate('SettingsScreen')}>
+				<Touchable onPress={() => navigation.navigate('SettingsScreen')}>
 					<Icon size={24} color="text7" />
-				</TouchableOpacity>
+				</Touchable>
 			</View>
 		</View>
 	);

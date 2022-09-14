@@ -9,9 +9,9 @@ import styles from './BackupSettingsScreen.styles';
 import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
 
 const BackupSettingsScreen = () => {
+	RNUxcam.tagScreenName('BackupSettingsScreen');
 	const { i18n } = useLanguage();
 	const { wallets, goBack, onSelectWallet } = useBackupSettingsScreen();
-	RNUxcam.tagScreenName('BackupSettingsScreen');
 
 	return (
 		<BasicLayout>

@@ -24,13 +24,13 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
 				<Text weight="extraBold" center>
 					{title || i18n.t('Components.ModalReusables.Error.title')}
 				</Text>
-				<Text weight="extraBold" center marginBottom={45}>
+				<Text weight="extraBold" center mb="xl">
 					{description || i18n.t('Components.ModalReusables.Error.description')}
 				</Text>
 				<Button
 					title={buttonLabel || i18n.t('Components.ModalReusables.Error.buttonLabel')}
 					onPress={onDismiss}
-					marginBottom={8}
+					mb="xxs"
 				/>
 			</View>
 		</SafeAreaView>

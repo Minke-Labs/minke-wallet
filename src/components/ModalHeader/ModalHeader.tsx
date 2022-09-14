@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
 import { deviceWidth } from '@styles';
-import Text from '../Text/Text';
-import styles from './ModalHeader.styles';
-import Icon from '../Icon/Icon';
+import Text from '@src/components/Text/Text';
+import Icon from '@src/components/Icon/Icon';
+import Touchable from '@src/components/Touchable/Touchable';
+import View from '@src/components/View/View';
 
 interface ModalHeaderProps {
 	onBack?: () => void;
@@ -12,12 +12,18 @@ interface ModalHeaderProps {
 }
 
 const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = '' }) => (
-	<View style={styles.container}>
-		<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+	<View
+		h={64}
+		row
+		main="space-between"
+		cross="center"
+		ph="xs"
+	>
+		<View row cross="center">
 			{!!onBack && (
-				<TouchableOpacity onPress={onBack} activeOpacity={0.8}>
+				<Touchable onPress={onBack}>
 					<Icon name="arrowBackStroke" size={24} color="text7" />
-				</TouchableOpacity>
+				</Touchable>
 			)}
 			{!!title && (
 				<Text type="hSmall" weight="bold" style={{ marginLeft: 8, maxWidth: deviceWidth * 0.8 }}>
@@ -26,9 +32,9 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({ onBack, onDismiss, title = ''
 			)}
 		</View>
 
-		<TouchableOpacity onPress={onDismiss} activeOpacity={0.8}>
-			<Icon name="closeStroke" size={24} color="text7" />
-		</TouchableOpacity>
+		<Touchable onPress={onDismiss}>
+			<Icon name="close" size={24} color="text7" />
+		</Touchable>
 	</View>
 );
 

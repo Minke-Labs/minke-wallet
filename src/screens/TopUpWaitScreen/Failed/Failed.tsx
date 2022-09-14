@@ -12,7 +12,7 @@ export const Failed: React.FC<FailedProps> = ({ orderId, onFinish }) => {
 	return (
 		<View>
 			<View style={[styles.container, styles.failed]}>
-				<Icon name="closeStroke" color="alert1" size={32} />
+				<Icon name="close" color="alert1" size={32} />
 			</View>
 			<Text type="h3" weight="extraBold" center width={275} marginBottom={24}>
 				{i18n.t('TopUpWaitScreen.Failed.something_gone_wrong')}

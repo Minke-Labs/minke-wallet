@@ -20,13 +20,13 @@ const ListItem: React.FC<ListItemProps> = ({ label, backedUp, onPress }) => {
 			<View style={{ width: 30 }}>
 				{backedUp ? (
 					<View style={{ alignItems: 'center' }}>
-						<Icon name="cloudStroke" size={24} color="alert3" />
+						<Icon name="cloud" size={24} color="alert3" />
 						<Text type="span" weight="regular" width={30}>
 							Done
 						</Text>
 					</View>
 				) : (
-					<Icon name="backupStroke" size={24} color="detail2" />
+					<Icon name="backup" size={24} color="detail2" />
 				)}
 			</View>
 		</TouchableOpacity>

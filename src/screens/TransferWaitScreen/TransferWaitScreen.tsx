@@ -1,27 +1,28 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import useWyreTransferStatus from '@src/hooks/useWyreTransferStatus';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useTransactions } from '@hooks';
+import { useGlobalWalletState, useNavigation, useTransactions } from '@hooks';
 import { useState } from '@hookstate/core';
 import { globalRedeemState, RedeemState } from '@stores/RedeemStore';
-import { globalWalletState } from '@stores/WalletStore';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Processing } from '../TopUpWaitScreen/Processing/Processing';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'TransferWaitScreen'>;
 const TransferWaitScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('TransferWaitScreen');
 	const { transferId } = route.params;
 	const { transactionHash, amount, currency } = useWyreTransferStatus(transferId);
 	const navigation = useNavigation();
 	const redeemState = useState(globalRedeemState());
-	const { address } = useState(globalWalletState()).value;
+	const { address } = useGlobalWalletState();
 	const { addPendingTransaction } = useTransactions();
 
 	const onFinish = () => {
 		redeemState.set({} as RedeemState);
-		navigation.navigate('WalletScreen');
+		navigation.navigate('HomeScreen');
 	};
 
 	useEffect(() => {

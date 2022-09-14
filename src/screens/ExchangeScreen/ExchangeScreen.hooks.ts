@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Logger from '@utils/logger';
 import { Keyboard } from 'react-native';
-import { useTokens, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
+import { useBalances, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, constants, utils } from 'ethers';
 import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
@@ -16,29 +16,35 @@ interface PriceParams {
 	side?: ExchangeParams['side'];
 }
 
-export const useExchangeScreen = () => {
+interface UseExchangeScreenParams {
+	sourceToken?: MinkeToken;
+	destToken?: MinkeToken;
+}
+
+export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenParams) => {
 	const { nativeToken, balance } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const [fromToken, setFromToken] = React.useState<MinkeToken>();
-	const [toToken, setToToken] = React.useState<MinkeToken>();
+	const [fromToken, setFromToken] = React.useState<MinkeToken>(sourceToken as MinkeToken);
+	const [toToken, setToToken] = React.useState<MinkeToken>(destToken as MinkeToken);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
 	const [showOnlyOwnedTokens, setShowOnlyOwnedTokens] = React.useState(true);
 	const [quote, setQuote] = React.useState<Quote | null>();
-	const [ownedTokens, setOwnedTokens] = React.useState<string[]>();
 	const [error, setError] = React.useState('');
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const { gaslessEnabled } = useBiconomy();
-	const { tokens: walletTokens } = useTokens();
+	const { tokens, stablecoins } = useBalances();
+	const walletTokens = [...stablecoins, ...tokens];
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
+	const gasValueInEth = formatUnits(maxFeePerGas);
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -58,7 +64,7 @@ export const useExchangeScreen = () => {
 		if (fromToken && toToken) {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
-			const { address: destToken, decimals: destDecimals } = toToken;
+			const { address: destinationToken, decimals: destDecimals } = toToken;
 			const {
 				reason,
 				message,
@@ -72,7 +78,7 @@ export const useExchangeScreen = () => {
 			} = await getExchangePrice({
 				address: wallet.address.value,
 				srcToken,
-				destToken,
+				destToken: destinationToken,
 				srcDecimals,
 				destDecimals,
 				amount,
@@ -198,7 +204,10 @@ export const useExchangeScreen = () => {
 	};
 
 	const canChangeDirections =
-		!loadingPrices && fromToken && toToken && ownedTokens?.includes(toToken.symbol.toLowerCase());
+		!loadingPrices &&
+		fromToken &&
+		toToken &&
+		walletTokens.map(({ symbol }) => symbol.toLowerCase()).includes(toToken.symbol.toLowerCase());
 
 	const directionSwap = () => {
 		if (canChangeDirections) {
@@ -220,20 +229,18 @@ export const useExchangeScreen = () => {
 	};
 
 	useEffect(() => {
-		if (walletTokens) {
-			setOwnedTokens(walletTokens.map(({ symbol }) => symbol.toLowerCase()));
-		}
-	}, [walletTokens]);
-
-	useEffect(() => {
 		exchange.set({} as ExchangeState);
 	}, []);
 
 	useEffect(() => {
-		if (!!defaultToken && !fromToken) {
+		if (destToken && defaultToken && defaultToken.symbol !== destToken.symbol) {
+			setFromToken(defaultToken);
+		} else if (destToken && nativeToken) {
+			setFromToken(nativeToken);
+		} else if (!!defaultToken && !fromToken) {
 			setFromToken(defaultToken);
 		} else if (defaultToken === null) {
-			setFromToken(nativeToken);
+			setFromToken(nativeToken as MinkeToken);
 		}
 	}, [defaultToken]);
 
@@ -261,14 +268,14 @@ export const useExchangeScreen = () => {
 			const isNativeToken = fromToken.symbol === nativeToken.symbol;
 			if (isNativeToken) {
 				const transactionPrice = maxFeePerGas.mul(300000); // gas price * gas limit
-				const gasValueInEth = formatUnits(transactionPrice);
-				const newBalance = +fromToken.balance - +gasValueInEth;
+				const nativeTokenTransactionPrice = formatUnits(transactionPrice);
+				const newBalance = +fromToken.balance - +nativeTokenTransactionPrice;
 				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
 				fromToken.balance = String(newBalance);
 				setFromToken(fromToken);
 			}
 		}
-	}, [maxFeePerGas, fromToken, nativeToken]);
+	}, [gasValueInEth, fromToken?.symbol, nativeToken?.symbol]);
 
 	// @TODO: multiply by the gas usage of the blockchain transaction
 	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);

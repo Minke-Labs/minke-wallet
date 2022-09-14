@@ -84,16 +84,16 @@ const AvatarProvider: React.FC = ({ children }) => {
 	const handleMinkeAvatarSelect = async (id: AvatarId) => {
 		const avatarObj = { id, customImage: null };
 		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
-		setSavedAvatar({ id, customImage: null });
+		setSavedAvatar(avatarObj);
 	};
 
 	const pickImage = async () => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.Images,
 			allowsEditing: true,
-			aspect: [4, 3],
+			aspect: [4, 4],
 			exif: false,
-			quality: 0
+			quality: 0.5
 		});
 
 		if (!result.cancelled) return { uri: result.uri };

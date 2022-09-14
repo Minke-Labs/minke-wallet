@@ -1,23 +1,24 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@hooks';
 import { TransactionPeriod as ITransactionPeriod } from '@src/contexts/TransactionsContext/TransactionsContext';
-import Text from '../Text/Text';
-import Transaction from '../Transaction/Transaction';
-
-const styles = StyleSheet.create({
-	section: {
-		marginTop: 8,
-		marginBottom: 32,
-		borderBottomWidth: 1
-	}
-});
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
+import Transaction from '@src/components/Transaction/Transaction';
 
 const TransactionPeriod: React.FC<ITransactionPeriod> = ({ title, data }) => {
 	const { colors } = useTheme();
 	return (
-		<View style={[styles.section, { borderBottomColor: colors.background1 }]}>
-			<Text type="a" weight="bold" color="text3" marginBottom={16}>
+		<View
+			mt="xxs"
+			mb="m"
+			style={{ borderBottomWidth: 1, borderBottomColor: colors.background1 }}
+		>
+			<Text
+				type="a"
+				weight="bold"
+				color="text3"
+				mb="xs"
+			>
 				{title}
 			</Text>
 			{data.map((item) => (

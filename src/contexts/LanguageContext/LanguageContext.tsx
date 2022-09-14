@@ -14,14 +14,21 @@ interface LanguageContextProps {
 	setLanguage: (l: string) => void;
 }
 
+type LanguageMapping = keyof typeof languageMapping;
+const languageMapping = {
+	pt: 'pt-BR',
+	'pt-PT': 'pt-BR',
+	'pt-BR': 'pt-BR',
+	en: 'en'
+};
+
 export const LanguageContext = createContext<LanguageContextProps>({} as LanguageContextProps);
 
 const LanguageProvider: React.FC = ({ children }) => {
 	const { country } = useCountry();
 	const languages = Object.keys(availableLanguagues);
-	const [language, setLanguage] = useState(
-		languages.includes(Localization.locale) ? Localization.locale : languages[0]
-	);
+
+	const [language, setLanguage] = useState(languageMapping[Localization.locale as LanguageMapping] || languages[0]);
 
 	i18n.translations = availableLanguagues;
 	i18n.locale = language;
@@ -30,7 +37,9 @@ const LanguageProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchLocation = async () => {
 			const storedLanguage = await AsyncStorage.getItem('@language');
-			if (storedLanguage) setLanguage(storedLanguage);
+			if (storedLanguage) {
+				setLanguage(storedLanguage);
+			}
 		};
 		fetchLocation();
 	}, []);

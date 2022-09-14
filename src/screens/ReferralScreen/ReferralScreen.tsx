@@ -1,8 +1,9 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { Modal } from '@components';
-import { useReferralCode, useNavigation, useMinkeRewards } from '@hooks';
+import { BlankStates, ModalBase } from '@components';
+import { useReferralCode, useNavigation, useMinkeRewards, useLanguage } from '@hooks';
 import { Background } from './Background/Background';
 import { Header } from './Header/Header';
 import { CurrentValue } from './CurrentValue/CurrentValue';
@@ -12,16 +13,20 @@ import EarnModal from './EarnModal/EarnModal';
 import { Body } from './Body/Body';
 
 const ReferralScreen = () => {
+	RNUxcam.tagScreenName('ReferralScreen');
+	const { i18n } = useLanguage();
 	const { helpModalVisible, onHelpPress, onHelpDismiss, earnModalVisible, onEarnPress, onEarnDismiss } =
 		useReferralScreen();
 	const navigation = useNavigation();
 	const { code } = useReferralCode();
 	const onRedeemPress = () => navigation.navigate('RedeemScreen', { code });
-	const { rewards, points } = useMinkeRewards();
+	const { rewards, points, loading } = useMinkeRewards();
+
+	if (loading) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Referral')} />;
 
 	return (
 		<>
-			<BasicLayout hideSafeAreaView bg="detail4">
+			<BasicLayout hideSafeAreaView bgc="detail4">
 				<SafeAreaView>
 					<Background>
 						<Header onHelpPress={onHelpPress} />
@@ -30,12 +35,13 @@ const ReferralScreen = () => {
 				</SafeAreaView>
 				<Body rewards={rewards} onEarnPress={onEarnPress} />
 			</BasicLayout>
-			<Modal isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
+
+			<ModalBase isVisible={helpModalVisible} onDismiss={onHelpDismiss}>
 				<HelpModal onDismiss={onHelpDismiss} />
-			</Modal>
-			<Modal isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
+			</ModalBase>
+			<ModalBase isVisible={earnModalVisible} onDismiss={onEarnDismiss}>
 				<EarnModal onDismiss={onEarnDismiss} code={code} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

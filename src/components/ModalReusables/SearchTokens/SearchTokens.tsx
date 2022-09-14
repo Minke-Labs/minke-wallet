@@ -1,12 +1,9 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { useTheme, useLanguage, useTokens } from '@hooks';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useTheme, useLanguage, useGlobalWalletState, useBalances } from '@hooks';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
-import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { networks } from '@models/network';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
@@ -15,6 +12,7 @@ import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIn
 import SearchInput from '../../SearchInput/SearchInput';
 import Text from '../../Text/Text';
 import Token from '../../Token/Token';
+import Touchable from '../../Touchable/Touchable';
 import EmptyStates from '../../EmptyStates';
 import { SearchTokensProps } from './SearchTokens.types';
 import { makeStyles } from './SearchTokens.styles';
@@ -29,14 +27,14 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	withdraw = false
 }) => {
 	const { i18n } = useLanguage();
-	const [tokens, setTokens] = React.useState<Array<MinkeToken>>();
-	const [filteredTokens, setFilteredTokens] = React.useState<Array<MinkeToken>>();
-	const [search, setSearch] = React.useState('');
-	const [loading, setLoading] = React.useState(true);
-	const { withdrawableTokens } = useTokens();
+	const [tokens, setTokens] = useState<Array<MinkeToken>>();
+	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
+	const [search, setSearch] = useState('');
+	const [loading, setLoading] = useState(true);
+	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { network } = useState(globalWalletState()).value;
+	const { network } = useGlobalWalletState();
 
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {
@@ -98,14 +96,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		setSearch('');
 	}, [visible]);
 
-	useEffect(() => {
-		const filterTokens = async () => {
-			setLoading(true);
-			removeSelectedTokens(tokens || []);
-		};
-		filterTokens();
-	}, [selected]);
-
 	const onSearch = (text: string) => {
 		setSearch(text);
 
@@ -142,9 +132,10 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				<FlatList
 					style={styles.list}
 					data={filterByExchangebleToken()}
+					showsVerticalScrollIndicator={false}
 					keyExtractor={(token) => token.address}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+						<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>
 								<Token name={item.symbol.toLowerCase() as TokenType} size={40} />
 							</View>
@@ -152,7 +143,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
 								<Text style={styles.tokenItemName}>{item.symbol}</Text>
 							</View>
-						</TouchableOpacity>
+						</Touchable>
 					)}
 				/>
 

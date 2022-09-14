@@ -1,71 +1,35 @@
-import React, { useEffect } from 'react';
-import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import Animated, {
-	interpolate,
-	useAnimatedStyle,
-	useDerivedValue,
-	useSharedValue,
-	withTiming
-} from 'react-native-reanimated';
-import { useTheme } from '@hooks';
-import { screenHeight, navigationBarHeight, statusBarHeight } from '@styles';
-import styles from './Modal.styles';
+import React from 'react';
+import ModalBase from '../ModalBase/ModalBase';
+import View from '../View/View';
+import Icon from '../Icon/Icon';
+import Touchable from '../Touchable/Touchable';
 
 interface ModalProps {
 	isVisible: boolean;
 	onDismiss: () => void;
-	center?: boolean;
+	onBack?: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, onDismiss, isVisible, center }) => {
-	const { colors } = useTheme();
-	const top = useSharedValue(screenHeight);
-
-	const isActive = useDerivedValue<boolean>(() => {
-		if (top.value > screenHeight - 10) return false;
-		return true;
-	}, [top]);
-
-	const backdropAnimatedStyle = useAnimatedStyle(() => ({
-		display: isActive.value ? 'flex' : 'none',
-		opacity: interpolate(top.value, [0, screenHeight], [1, 0])
-	}));
-
-	const statusBar = navigationBarHeight === 0 ? statusBarHeight || 0 : 0;
-	const animatedStyles = useAnimatedStyle(() => ({
-		transform: [{ translateY: top.value - navigationBarHeight - statusBar }]
-	}));
-
-	useEffect(() => {
-		top.value = withTiming(isVisible ? 0 : screenHeight);
-		if (!isVisible) {
-			Keyboard.dismiss();
-		}
-	}, [isVisible]);
-
-	if (!isVisible) {
-		return <View />;
-	}
-
-	return (
-		<View style={styles.fullScreen}>
-			<TouchableWithoutFeedback onPress={onDismiss}>
-				<Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
-			</TouchableWithoutFeedback>
-			<Animated.View
-				style={[
-					styles.container,
-					animatedStyles,
-					{
-						backgroundColor: colors.background1,
-						...(center && { alignItems: 'center' })
-					}
-				]}
+const Modal: React.FC<ModalProps> = ({ isVisible, onDismiss, onBack, children }) => (
+	<ModalBase isVisible={isVisible} onDismiss={onDismiss}>
+		<View p="xs">
+			<View
+				row
+				main={onBack ? 'space-between' : 'flex-end'}
+				mb="xs"
 			>
-				{children}
-			</Animated.View>
+				{!!onBack && (
+					<Touchable onPress={onBack}>
+						<Icon size={24} name="chevronLeft" color="cta1" />
+					</Touchable>
+				)}
+				<Touchable onPress={onDismiss}>
+					<Icon size={24} name="close" color="cta1" />
+				</Touchable>
+			</View>
+			{children}
 		</View>
-	);
-};
+	</ModalBase>
+);
 
 export default Modal;

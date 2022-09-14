@@ -1,4 +1,5 @@
 import AaveReusables from './AaveReusables';
+import AnimatedView from './AnimatedView/AnimatedView';
 import BlankStates from './BlankStates';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import Text from './Text/Text';
@@ -7,6 +8,8 @@ import Icon from './Icon/Icon';
 import CountrySelector from './CountrySelector/CountrySelector';
 import Token from './Token/Token';
 import TokenAmountInput from './TokenAmountInput/TokenAmountInput';
+import ModalBase from './ModalBase/ModalBase';
+import Expander from './Expander/Expander';
 import Modal from './Modal/Modal';
 import FullModal from './FullModal/FullModal';
 import GasOption from './GasOption/GasOption';
@@ -29,12 +32,14 @@ import LoadingScreen from './LoadingScreen/LoadingScreen';
 import MaxButton from './MaxButton/MaxButton';
 import Flag from './Flag/Flag';
 import FlagItem from './FlagItem/FlagItem';
-import Card from './Card/Card';
 import CoinSelector from './CoinSelector/CoinSelector';
 import OnrampButton from './OnrampButton/OnrampButton';
 import Paper from './Paper/Paper';
 import TransparentCard from './TransparentCard/TransparentCard';
 import TokenCard from './TokenCard/TokenCard';
+import IconItem from './IconItem/IconItem';
+import TokenItem from './TokenItem/TokenItem';
+import TokenItemCard from './TokenItemCard/TokenItemCard';
 import HapticButton from './HapticButton/HapticButton';
 import Header from './Header/Header';
 import TransactionIcon from './TransactionIcon/TransactionIcon';
@@ -49,15 +54,25 @@ import PercChange from './PercChange/PercChange';
 import PaperTouchable from './PaperTouchable/PaperTouchable';
 import ApplePayButton from './ApplePayButton/ApplePayButton';
 import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
-import ProgressButton from './ProgressButton/ProgressButton';
 import TransactionPeriod from './TransactionPeriod/TransactionPeriod';
 import EmptyStates from './EmptyStates';
 import WatchModeTag from './WatchModeTag/WatchModeTag';
 import FiatCard from './FiatCard/FiatCard';
 import CurrencySelector from './CurrencySelector/CurrencySelector';
+import Touchable from './Touchable/Touchable';
+import Scroll from './Scroll/Scroll';
+import View from './View/View';
+import IconBox from './IconBox/IconBox';
+import FloatingSelector from './FloatingSelector/FloatingSelector';
+import Warning from './Warning/Warning';
+import Balance from './Balance/Balance';
+import SendModalComponent from './SendModalComponent/SendModalComponent';
+import AppTour from './AppTour';
 
 export {
 	AaveReusables,
+	Expander,
+	AnimatedView,
 	BlankStates,
 	ActivityIndicator,
 	Text,
@@ -67,7 +82,8 @@ export {
 	Icon,
 	Token,
 	TokenAmountInput,
-	Modal,
+	ModalBase,
+	IconItem,
 	FullModal,
 	GasOption,
 	GasOptionInner,
@@ -77,6 +93,7 @@ export {
 	SettingsHeader,
 	Snackbar,
 	ModalReusables,
+	Modal,
 	MStableReusables,
 	SearchInput,
 	TextArea,
@@ -96,11 +113,12 @@ export {
 	Paper,
 	Flag,
 	FlagItem,
-	Card,
 	CoinSelector,
 	TransparentCard,
 	DescTransparentCard,
 	TokenCard,
+	TokenItem,
+	TokenItemCard,
 	PendingTransaction,
 	PercChange,
 	PaperTouchable,
@@ -108,10 +126,18 @@ export {
 	ScreenLoadingIndicator,
 	Transaction,
 	TransactionIcon,
-	ProgressButton,
 	TransactionPeriod,
 	EmptyStates,
 	WatchModeTag,
 	FiatCard,
-	CurrencySelector
+	CurrencySelector,
+	View,
+	Touchable,
+	Scroll,
+	IconBox,
+	FloatingSelector,
+	Warning,
+	Balance,
+	SendModalComponent,
+	AppTour
 };

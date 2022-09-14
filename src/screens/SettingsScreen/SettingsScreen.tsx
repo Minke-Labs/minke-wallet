@@ -1,16 +1,22 @@
-import React, { useCallback } from 'react';
-import { View, ScrollView } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { ScrollView } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
-import { LoadingScreen, SettingsHeader, Text, Modal } from '@components';
+import {
+	View,
+	LoadingScreen,
+	SettingsHeader,
+	Text,
+	ModalBase,
+	IconItem
+} from '@components';
 import { useNavigation, useLanguage, useWalletState } from '@hooks';
 import { networks } from '@models/network';
-import RNUxcam from 'react-native-ux-cam';
 import Intercom from '@intercom/intercom-react-native';
 import RNTestFlight from 'react-native-test-flight';
 import { walletState } from '@stores/WalletStore';
 import { walletCreate } from '@models/wallet';
-import SettingsOption from './SettingsOption/SettingsOption';
 import styles from './SettingsScreen.styles';
 import DeleteModal from './DeleteModal/DeleteModal';
 
@@ -22,8 +28,8 @@ const SettingsScreen = () => {
 		network: { chainId }
 	} = state.value;
 	const navigation = useNavigation();
-	const [creatingWallet, setCreatingWallet] = React.useState(false);
-	const [deleteModal, setDeleteModal] = React.useState(false);
+	const [creatingWallet, setCreatingWallet] = useState(false);
+	const [deleteModal, setDeleteModal] = useState(false);
 
 	const goBack = () => navigation.goBack();
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
@@ -60,88 +66,123 @@ const SettingsScreen = () => {
 						<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 							{i18n.t('SettingsScreen.my_wallet')}
 						</Text>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.backup')}
-							icon="backupStroke"
+						<IconItem
+							title={i18n.t('SettingsScreen.backup')}
+							icon="backup"
 							onPress={onBackup}
+							rightButton
+							mb="m"
 						/>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.switch_account')}
+						<IconItem
+							title={i18n.t('SettingsScreen.switch_account')}
 							onPress={onAccounts}
 							icon="switchWallet"
+							rightButton
+							mb="m"
 						/>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.new_wallet')}
+						<IconItem
+							title={i18n.t('SettingsScreen.new_wallet')}
 							icon="walletStroke"
 							onPress={onCreateWallet}
+							rightButton
+							mb="m"
 						/>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.enter_referral_code')}
+						<IconItem
+							title={i18n.t('SettingsScreen.enter_referral_code')}
 							icon="borrowStroke"
 							onPress={onEnterReferralCode}
+							rightButton
+							mb="m"
 						/>
 						<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 							{i18n.t('SettingsScreen.my_account')}
 						</Text>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.country')}
+						<IconItem
+							title={i18n.t('SettingsScreen.country')}
 							icon="globe"
 							onPress={onChangeCountry}
+							rightButton
+							mb="m"
 						/>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.network')}
+						<IconItem
+							title={i18n.t('SettingsScreen.network')}
 							icon="networkStroke"
 							onPress={onChangeNetwork}
+							rightButton
+							mb="m"
 						/>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.usd_coin')}
-							icon="dollarStroke"
+						<IconItem
+							title={i18n.t('SettingsScreen.usd_coin')}
+							icon="dollar"
 							onPress={onDollarSettings}
+							rightButton
+							mb="m"
 						/>
 						{chainId !== networks.mainnet.chainId && (
-							<SettingsOption
-								label={i18n.t('SettingsScreen.savings_account')}
-								icon="vaultStroke"
+							<IconItem
+								title={i18n.t('SettingsScreen.savings_account')}
+								icon="vault"
 								onPress={onSavingAccount}
+								rightButton
+								mb="m"
 							/>
 						)}
+
 						<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 							{i18n.t('SettingsScreen.help')}
 						</Text>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.contact_support')}
-							icon="helpStroke"
+
+						<IconItem
+							title={i18n.t('SettingsScreen.contact_support')}
+							icon="help"
 							onPress={onContactSupport}
+							rightButton
+							mb="m"
 						/>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.help_centre')}
+
+						<IconItem
+							title={i18n.t('SettingsScreen.help_centre')}
 							icon="questionMark"
 							onPress={onHelpCentre}
 							newTab
+							mb="m"
 						/>
+
 						<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 							{i18n.t('SettingsScreen.other')}
 						</Text>
-						<SettingsOption
-							label={i18n.t('SettingsScreen.language')}
+
+						<IconItem
+							title={i18n.t('SettingsScreen.language')}
 							icon="siteStroke"
 							onPress={onChangeLanguage}
+							rightButton
+							mb="m"
 						/>
+
 						{(RNTestFlight.isTestFlight || __DEV__) && (
-							<SettingsOption label="Development" icon="gear" onPress={onDevSettings} />
+							<IconItem
+								title="Development"
+								icon="gear"
+								onPress={onDevSettings}
+								rightButton
+								mb="m"
+							/>
 						)}
-						<SettingsOption
-							label={i18n.t('SettingsScreen.delete_wallet')}
-							icon="closeStroke"
+
+						<IconItem
+							title={i18n.t('SettingsScreen.delete_wallet')}
+							icon="close"
 							onPress={() => setDeleteModal(true)}
 							alert
+							mb="m"
 						/>
 					</ScrollView>
 				</View>
 			</BasicLayout>
-			<Modal isVisible={deleteModal} onDismiss={() => setDeleteModal(false)}>
+			<ModalBase isVisible={deleteModal} onDismiss={() => setDeleteModal(false)}>
 				<DeleteModal onDismiss={() => setDeleteModal(false)} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };

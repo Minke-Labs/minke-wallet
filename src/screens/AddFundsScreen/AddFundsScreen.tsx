@@ -1,16 +1,17 @@
 import React from 'react';
-import { Keyboard, TouchableOpacity, View } from 'react-native';
+import { Keyboard, TouchableOpacity } from 'react-native';
 import {
 	ApplePayButton,
 	FiatCard,
 	FullModal,
 	GenericPayButton,
 	Header,
-	Modal,
+	ModalBase,
 	ModalReusables,
 	OnrampButton,
 	Text,
-	TokenCard
+	TokenCard,
+	View
 } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
@@ -18,14 +19,17 @@ import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { debounce } from 'lodash';
 import WebView from 'react-native-webview';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@src/routes/types.routes';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useAddFundsScreen from './AddFundsScreen.hooks';
-import { makeStyles } from './AddFundsScreen.styles';
 
-const AddFundsScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'AddFundsScreen'>;
+const AddFundsScreen = ({ route }: Props) => {
+	RNUxcam.tagScreenName('AddFundsScreen');
+	const { topupToken } = route.params;
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const {
 		currency,
 		selectCurrency,
@@ -57,8 +61,7 @@ const AddFundsScreen = () => {
 		disableMoonPay,
 		onMoonpayPurchase,
 		moonPaySpecialButton
-	} = useAddFundsScreen();
-	RNUxcam.tagScreenName('AddFundsScreen');
+	} = useAddFundsScreen(topupToken);
 
 	return (
 		<>
@@ -66,9 +69,18 @@ const AddFundsScreen = () => {
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
 					<Header title={i18n.t('AddFundsScreen.header')} marginBottom={36} />
 
-					<View style={styles.container}>
-						<View style={styles.top}>
-							<Text type="lSmall" weight="semiBold" color="text1" marginBottom={8}>
+					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
+						<View
+							ph="xs"
+							pt="xs"
+							pb="s"
+							w="100%"
+							style={{
+								borderBottomWidth: 1,
+								borderBottomColor: colors.background1
+							}}
+						>
+							<Text type="lSmall" weight="semiBold" color="text1" mb="xxs">
 								{i18n.t('AddFundsScreen.you_pay')}
 							</Text>
 							<FiatCard
@@ -80,8 +92,9 @@ const AddFundsScreen = () => {
 								autoFocus={false}
 							/>
 						</View>
-						<View style={styles.bottom}>
-							<Text type="lSmall" weight="semiBold" color="text1">
+
+						<View ph="xs" pb="xs" pt="s" w="100%">
+							<Text type="lSmall" weight="semiBold" color="text1" mb="xxs">
 								{i18n.t('AddFundsScreen.you_receive')}
 							</Text>
 							<TokenCard
@@ -98,7 +111,8 @@ const AddFundsScreen = () => {
 
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
-					<View style={styles.buttons}>
+
+					<View mh="xs" mb="xs">
 						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
@@ -127,18 +141,19 @@ const AddFundsScreen = () => {
 							/>
 						)}
 					</View>
+
 					<KeyboardSpacer />
 				</TouchableOpacity>
 			</BasicLayout>
-			<Modal isVisible={currencySearchVisible} onDismiss={dismissCurrencySearch}>
+			<ModalBase isVisible={currencySearchVisible} onDismiss={dismissCurrencySearch}>
 				<ModalReusables.SearchCurrencies
 					visible={currencySearchVisible}
 					onDismiss={dismissCurrencySearch}
 					onCurrencySelect={selectCurrency}
 					selected={currency}
 				/>
-			</Modal>
-			<Modal isVisible={tokenSearchVisible} onDismiss={dismissTokenSearch}>
+			</ModalBase>
+			<ModalBase isVisible={tokenSearchVisible} onDismiss={dismissTokenSearch}>
 				<ModalReusables.SearchTokens
 					visible={tokenSearchVisible}
 					onDismiss={dismissTokenSearch}
@@ -147,10 +162,10 @@ const AddFundsScreen = () => {
 					showOnlyOwnedTokens
 					selected={[token?.symbol.toLowerCase()]}
 				/>
-			</Modal>
-			<Modal isVisible={!!error} onDismiss={() => setError('')}>
+			</ModalBase>
+			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
-			</Modal>
+			</ModalBase>
 			<FullModal visible={!!orderLink} onClose={() => setOrderLink('')}>
 				<WebView
 					source={{ uri: orderLink }}

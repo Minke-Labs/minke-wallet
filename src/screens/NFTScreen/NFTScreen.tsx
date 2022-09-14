@@ -1,38 +1,53 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
+import RNUxcam from 'react-native-ux-cam';
 import { AssetsLayout } from '@layouts';
-import { Text, Icon, Modal, BlankStates, EmptyStates } from '@components';
+import { View, Text, Icon, ModalBase, BlankStates, EmptyStates, Touchable } from '@components';
 import { useLanguage, useNFT } from '@hooks';
 import { InfoModal } from './InfoModal/InfoModal';
 import Item from './Item/Item';
 
 const NFTScreen = () => {
-	const { assets, estimatedValue, nftsByCollection } = useNFT();
+	RNUxcam.tagScreenName('NFTScreen');
+	const {
+		nftsByCollection,
+		networth,
+		loading
+	} = useNFT();
 	const [infoModal, setInfoModal] = useState(false);
 	const { i18n } = useLanguage();
 
-	if (!assets) return <BlankStates.NFT />;
+	if (loading) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.NFT')} />;
 
 	const data = Object.keys(nftsByCollection);
 
 	return (
 		<>
 			<AssetsLayout
-				headerValue={estimatedValue}
+				headerValue={networth}
 				headerTitle={
-					<TouchableOpacity
-						style={{ flexDirection: 'row', alignItems: 'center' }}
+					<Touchable
+						row
+						cross="center"
 						onPress={() => setInfoModal(true)}
 					>
-						<Text style={{ marginRight: 8 }}>{i18n.t('NFTScreen.estimated_value')}</Text>
-						<Icon name="infoStroke" size={20} color="cta1" />
-					</TouchableOpacity>
+						<Text>
+							{i18n.t('NFTScreen.estimated_value')}
+						</Text>
+						<View mr="xxs" />
+						<Icon
+							name="infoStroke"
+							size={20}
+							color="cta1"
+						/>
+					</Touchable>
 				}
 			>
-				<View style={{ paddingHorizontal: 16, paddingTop: 24, flex: 1 }}>
-					<Text type="tMedium" weight="bold" marginBottom={24}>
+				<View ph="xs" pt="s" flex1>
+					<Text type="tMedium" weight="bold" mb="s">
 						{i18n.t('NFTScreen.assets')}
 					</Text>
+
 					{data.length > 0 ? (
 						<FlatList
 							data={data}
@@ -42,12 +57,13 @@ const NFTScreen = () => {
 					) : (
 						<EmptyStates.NoTokens />
 					)}
+
 				</View>
 			</AssetsLayout>
 
-			<Modal isVisible={infoModal} onDismiss={() => setInfoModal(false)}>
+			<ModalBase isVisible={infoModal} onDismiss={() => setInfoModal(false)}>
 				<InfoModal onPress={() => setInfoModal(false)} />
-			</Modal>
+			</ModalBase>
 		</>
 	);
 };
