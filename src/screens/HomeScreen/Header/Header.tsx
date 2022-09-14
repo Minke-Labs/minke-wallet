@@ -39,7 +39,7 @@ const Header: React.FC = () => {
 							<Text type="hMedium" weight="bold">
 								{accountName}
 							</Text>
-							<View ml="xs">
+							<View ml="xxs">
 								<Icon name="copy" size={24} color="text7" />
 							</View>
 						</View>
