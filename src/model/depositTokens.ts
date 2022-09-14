@@ -250,7 +250,7 @@ const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 	});
 
 	const tokens = await Promise.all(promises);
-	return tokens;
+	return tokens.filter(({ balanceUSD = 0 }) => balanceUSD > 0);
 };
 
 export { fetchInterestBearingTokens, fetchStablecoins };

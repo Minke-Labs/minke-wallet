@@ -14,11 +14,6 @@ interface TitleContainerProps {
 const truncVal = (val: number) => Math.trunc(val);
 const valLen = (val: number) => String(truncVal(val)).length;
 
-export const truncBalance = (num: number) => {
-	if (String(num).length > 6) return truncVal(num);
-	return num;
-};
-
 export const TitleContainer: React.FC<TitleContainerProps> = ({
 	received,
 	topUp,
@@ -27,17 +22,11 @@ export const TitleContainer: React.FC<TitleContainerProps> = ({
 	value,
 	token
 }) => (
-	<View
-		mt="s"
-		mh="xs"
-		mb="xs"
-		row={valLen(value) <= 5}
-		cross={valLen(value) <= 5 ? 'center' : 'flex-start'}
-	>
+	<View mt="s" mh="xs" mb="xs" row={valLen(value) <= 5} cross={valLen(value) <= 5 ? 'center' : 'flex-start'}>
 		<View row cross="center">
 			<Text type="hLarge" weight="bold">
 				{received || topUp || exchange || withdraw ? '+' : '-'}
-				{truncBalance(value)}
+				{value}
 			</Text>
 			<View mh="xxs">
 				<Token name={token.toLowerCase() as TokenType} size={32} glow />

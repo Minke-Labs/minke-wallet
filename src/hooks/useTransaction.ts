@@ -97,7 +97,7 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 	return {
 		received,
 		fromAmount: truncate((exchange ? sourceToken?.amount : amount)!, 6),
-		value: truncate((exchange ? toToken?.amount : amount)!, 6),
+		value: truncate((deposit ? sourceToken?.amount : exchange ? toToken?.amount : amount)!, 6),
 		token: withdraw
 			? toToken!.symbol
 			: deposit

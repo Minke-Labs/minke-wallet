@@ -57,6 +57,7 @@ interface QuoteParams {
 	affiliateAddress: string;
 	buyTokenPercentageFee: number;
 	skipValidation: boolean;
+	excludedSources: string;
 }
 
 export const getExchangePrice = async ({
@@ -89,6 +90,7 @@ export const getExchangePrice = async ({
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		buyTokenPercentageFee: 0.005,
+		excludedSources: 'MeshSwap',
 		skipValidation: true
 	};
 
