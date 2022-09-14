@@ -27,6 +27,7 @@ import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
+import SendToBankScreen from './SendToBankScreen/SendToBankScreen';
 import ReferralScreen from './ReferralScreen/ReferralScreen';
 import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
 import RedeemConfirmScreen from './ReferralScreen/RedeemConfirmScreen/RedeemConfirmScreen';
@@ -79,6 +80,7 @@ const screensObj = {
 	AddFundsScreen,
 	TransactionsDetailScreen,
 	MoonpayWaitScreen,
+	SendToBankScreen,
 	Test
 };
 

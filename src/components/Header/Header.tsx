@@ -19,6 +19,7 @@ const Header: React.FC<HeaderProps> = ({ title, marginBottom = 0 }) => {
 			row
 			cross="center"
 			style={{ marginBottom }}
+			w="100%"
 		>
 			<Touchable
 				row

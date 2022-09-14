@@ -27,6 +27,7 @@ import trustWallet from './trust-wallet.png';
 import rainbow from './rainbow.png';
 import waveLight from './wave_light.png';
 import waveDark from './wave_dark.png';
+import OffRampImg from './offRampImg.png';
 
 export {
 	waveLight,
@@ -57,5 +58,6 @@ export {
 	krakenMStable,
 	metamask,
 	trustWallet,
-	rainbow
+	rainbow,
+	OffRampImg
 };
