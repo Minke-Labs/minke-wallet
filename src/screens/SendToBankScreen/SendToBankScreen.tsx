@@ -8,9 +8,8 @@ import { NewBankButton } from './NewBankButton/NewBankButton';
 
 const SendToBankScreen = () => (
 	<BasicLayout>
-		<Header title="Sell" />
+		<Header title="Sell" mb="m" />
 		<View cross="center" ph="xs">
-			<View mb="m" />
 			<Image
 				source={OffRampImg}
 				style={{ width: 277, height: 216 }}

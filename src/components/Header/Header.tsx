@@ -4,21 +4,24 @@ import Icon from '@src/components/Icon/Icon';
 import Text from '@src/components/Text/Text';
 import View from '@src/components/View/View';
 import Touchable from '@src/components/Touchable/Touchable';
+import { SpacingType } from '@styles';
 
 interface HeaderProps {
 	title: string;
-	marginBottom?: number;
+	mb?: SpacingType;
+	link?: string;
+	onLinkClick?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, marginBottom = 0 }) => {
+const Header: React.FC<HeaderProps> = ({ title, link, onLinkClick, mb }) => {
 	const navigation = useNavigation();
 	return (
 		<View
-			mb="xxs"
 			ph="xs"
 			row
+			main="space-between"
 			cross="center"
-			style={{ marginBottom }}
+			mb={mb || 'xxs'}
 			w="100%"
 		>
 			<Touchable
@@ -33,6 +36,13 @@ const Header: React.FC<HeaderProps> = ({ title, marginBottom = 0 }) => {
 					{title}
 				</Text>
 			</Touchable>
+			{!!link && (
+				<Touchable onPress={onLinkClick}>
+					<Text type="lMedium" color="cta1" weight="semiBold">
+						{link}
+					</Text>
+				</Touchable>
+			)}
 		</View>
 	);
 };

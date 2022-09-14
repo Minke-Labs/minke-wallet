@@ -28,7 +28,8 @@ const Routes: React.FC = () => {
 	const walletState = useState(globalWalletState());
 	const { address } = walletState.value;
 
-	const initialScreen = walletState.value.walletId ? 'HomeScreen' : 'WelcomeScreen';
+	// const initialScreen = walletState.value.walletId ? 'HomeScreen' : 'WelcomeScreen';
+	const initialScreen = walletState.value.walletId ? 'OffRampBankFormScreen' : 'WelcomeScreen';
 
 	const urlRedirect = (event: any) => {
 		const { url } = event;

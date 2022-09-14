@@ -14,6 +14,7 @@ import HomeScreen from './HomeScreen/HomeScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
+import OffRampBankFormScreen from './OffRampBankFormScreen/OffRampBankFormScreen';
 import StablecoinsScreen from './StablecoinsScreen/StablecoinsScreen';
 import MinkeHubScreen from './MinkeHubScreen/MinkeHubScreen';
 import SaveScreen from './SaveScreen/SaveScreen';
@@ -58,6 +59,7 @@ const screensObj = {
 	DepositWithdrawalSuccessScreen,
 	ExchangeResumeScreen,
 	ExchangeScreen,
+	OffRampBankFormScreen,
 	SaveScreen,
 	SettingsScreen,
 	TransactionsScreen,

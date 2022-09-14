@@ -2,6 +2,7 @@ import AaveReusables from './AaveReusables';
 import AnimatedView from './AnimatedView/AnimatedView';
 import BlankStates from './BlankStates';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
+import TelephoneInput from './TelephoneInput';
 import Text from './Text/Text';
 import Button from './Button/Button';
 import Icon from './Icon/Icon';
@@ -98,6 +99,7 @@ export {
 	SearchInput,
 	TextArea,
 	HapticButton,
+	TelephoneInput,
 	Header,
 	TokenInputInner,
 	TouchableShrinks,
