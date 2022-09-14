@@ -78,16 +78,6 @@ export default {
 			mstable: 'Open mStable\nSavings Account',
 			this_transaction: 'This transaction will cost a few cents.'
 		},
-		OpenMStable: {
-			open_account: 'Open Account',
-			open_mstable: 'Open mStable\nSavings Account',
-			what_is: 'What is mStable?',
-			mstable_des:
-				'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems: \n\n- Significant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example). \n\n - Lack of yield in fiat currencies and pegged crypto assets. \n\n - Lack of protection against permanent capital loss in pegged crypto assets.',
-			view_site: 'View Site',
-			learn_more: 'Learn More',
-			this_transaction: 'This transaction will cost a few cents.'
-		},
 		NotAbleToSaveModal: {
 			not_able: 'Not able to save',
 			need_funds_in: 'First you need to have funds in ',
@@ -1029,7 +1019,7 @@ export default {
 			Info: {
 				what_is: 'What is mStable?',
 				mstable_des:
-					'mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets. The protocol was created to address three major problems:\n\nSignificant fragmentation in same-peg crypto assets (there are currently at least 5 major USD pegged crypto assets on Ethereum, for example.\n\nLack of yield in fiat currencies and pegged crypto assets.\n\nLack of protection against permanent capital loss in pegged crypto assets',
+					'mStable is a DeFi protocol that generates a variable yield across multiple stablecoins through lending and trading fees.\n\nWhen you deposit your stablecoins on mStable they are deposited in savings pools to generate interest. You also generate additional yield on your deposit when the mStable protocol is used to swap between stablecoins. For example, when swapping between USDC and USDT.\n\nmStable is auditzed by ConsenSys, Certik and Peckshield.',
 				view_site: 'View Site',
 				learn_more: 'Learn More'
 			}

@@ -79,16 +79,6 @@ export default {
 			mstable: 'Abrir uma conta na mStable',
 			this_transaction: 'Esta transação vai custar alguns centavos.'
 		},
-		OpenMStable: {
-			open_account: 'Abrir Conta',
-			open_mstable: 'Abrir uma conta\nna mStable',
-			what_is: 'O que é a mStable?',
-			mstable_des:
-				'mStable é serviço de infraestrutura para crypto ativos autônoma e não custodial. O protocolo foi criado para corrigir três problemas: \n\n- Fragmentação significativa entre ativos com o mesmo mecanismo de funcionamento (há pelo menos 5 grandes stablecoins vinculadas ao dólar americano na rede Ethereum, por exemplo). \n\n - Falta de rendimentos em stablecoins e moedas fiduciárias. \n\n - Falta de proteção contra perda de capital em crypto ativos vinculados a uma outra moeda.',
-			view_site: 'Ver Site',
-			learn_more: 'Ver Mais',
-			this_transaction: 'Esta transação vai custar alguns centavos.'
-		},
 		NotAbleToSaveModal: {
 			not_able: 'Não foi possível salvar',
 			need_funds_in: 'Primeiro você precisa ter fundos em ',
@@ -1034,7 +1024,7 @@ export default {
 			Info: {
 				what_is: 'O que é o mStable?',
 				mstable_des:
-					'O mStable é uma infraestrutura autônoma e sem custódia para ativos criptográficos de valor atrelado. O protocolo foi criado para resolver três problemas principais: \n\nfragmentação significativa em ativos criptográficos de mesma indexação (atualmente, existem pelo menos 5 ativos criptográficos indexados em dólares principais no Ethereum, por exemplo). \n\nFalta de rendimento em moedas fiduciárias e ativos criptográficos atrelados.\n\nFalta de proteção contra perda de capital permanente em ativos criptográficos atrelados.',
+					'O mStable é um protocolo DeFi que gera um rendimento variável em várias stablecoins por meio de taxas de empréstimo e troca.\n\nQuando você deposita suas stablecoins no mStable, elas são depositadas em pools de poupança para gerar juros. Você também gera rendimento adicional em seu depósito quando o protocolo mStable é usado para trocar entre stablecoins. Por exemplo, ao trocar entre USDC e USDT.\n\nO mStable é auditado pela ConsenSys, Certik e Peckshield.',
 				view_site: 'Ver o Site',
 				learn_more: 'Ver Mais'
 			}
