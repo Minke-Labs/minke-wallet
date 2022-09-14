@@ -69,6 +69,10 @@ export const fiatCurrencies: { [key: string]: Currency } = {
 		code: 'ILS',
 		country: 'IL'
 	},
+	INR: {
+		code: 'INR',
+		country: 'IN'
+	},
 	JOD: {
 		code: 'JOD',
 		country: 'JO'

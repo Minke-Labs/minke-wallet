@@ -732,6 +732,10 @@ export default {
 		CN: {
 			name: 'China',
 			currencyName: 'Chinese Yuan'
+		},
+		IN: {
+			name: 'India',
+			currencyName: 'Indian rupee'
 		}
 	},
 
