@@ -36,7 +36,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br, invert }
 	}, []);
 
 	return (
-		<View bgc={invert ? 'background2' : 'background1'} flex1 br={br}>
+		<View bgc={invert ? 'background7' : 'background1'} flex1 br={br}>
 			<SafeAreaView />
 			{!!title && (
 				<ModalHeader
@@ -54,7 +54,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br, invert }
 					</View>
 				)}
 			>
-				<BasicLayout hideSafeAreaView center bgc={invert ? 'background1' : 'background2'}>
+				<BasicLayout hideSafeAreaView center>
 					{children}
 					<AnimatedView
 						h="100%"

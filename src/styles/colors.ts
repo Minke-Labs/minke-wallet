@@ -11,6 +11,8 @@ const lightTheme = {
 	background3: '#F4F6F8',
 	background4: '#FFFCF5',
 	background5: '#FFFFFF',
+	background7: '#FFFFFF',
+	background8: '#F4F6F8',
 
 	cta1: '#006AA6',
 	cta2: '#D0D0D0',
@@ -61,6 +63,8 @@ const darkTheme = {
 	background3: '#2A4967',
 	background4: '#374C63', // Missing color, I just repeated above's for now.
 	background5: '#22374C',
+	background7: '#22374C',
+	background8: '#2A4967',
 
 	cta1: '#0090E0',
 	cta2: '#D0D0D0',

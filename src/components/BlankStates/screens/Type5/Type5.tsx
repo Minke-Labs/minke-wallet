@@ -9,21 +9,21 @@ const Type5: React.FC = () => (
 			<View pl="s" pr="xl" w="100%" br="xs" pv="xl">
 
 				<View h={40} row mb="m">
-					<Box round={40} />
+					<Box invert round={40} />
 					<View mr="xxs" />
-					<Box h={40} br="xs" flex1 />
+					<Box invert h={40} br="xs" flex1 />
 				</View>
 
 				<View h={40} row mb="m">
-					<Box round={40} />
+					<Box invert round={40} />
 					<View mr="xxs" />
-					<Box h={40} br="xs" flex1 />
+					<Box invert h={40} br="xs" flex1 />
 				</View>
 
 				<View h={40} row>
-					<Box round={40} />
+					<Box invert round={40} />
 					<View mr="xxs" />
-					<Box h={40} br="xs" flex1 />
+					<Box invert h={40} br="xs" flex1 />
 				</View>
 
 			</View>
