@@ -12,7 +12,7 @@ const lightTheme = {
 	background4: '#FFFCF5',
 	background5: '#FFFFFF',
 	background7: '#FFFFFF',
-	background8: '#F4F6F8',
+	background8: '#FAF7F3',
 
 	cta1: '#006AA6',
 	cta2: '#D0D0D0',
