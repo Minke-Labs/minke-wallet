@@ -3,24 +3,44 @@ import React, { useState } from 'react';
 import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
 import { AreaObjType } from '@src/components/TelephoneInput/TelephoneInput.types';
-import { Step3 } from './Steps';
+import { useFormProgress } from '@hooks';
+import { Step1, Step2, Step3 } from './Steps';
+
+export const getStep = (type: number) => {
+	switch (type) {
+		case 0:
+			return {
+				component: <Step1 />
+			};
+		case 1:
+			return {
+				component: <Step2 />
+			};
+		case 2:
+			return {
+				component: <Step3 />
+			};
+		default:
+			return {};
+	}
+};
 
 const OffRampBankFormScreen = () => {
-	const [iso, setIso] = useState<AreaObjType>('US');
-	const [text, setText] = useState('');
+	const { currentStep, goForward } = useFormProgress();
+
 	return (
 		<BasicLayout>
 			<Header
-				onLinkClick={() => null}
+				onLinkClick={goForward}
 				title="Personal information"
 				link="Next"
 				mb="m"
 			/>
+
 			<View ph="xs">
-
-				<Step3 />
-
+				{getStep(currentStep).component}
 			</View>
+
 		</BasicLayout>
 	);
 };

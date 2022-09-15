@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import { TelephoneInput, Text, Input } from '@components';
 import { AreaObjType } from '@src/components/TelephoneInput/TelephoneInput.types';
 
-type Iso = 'US' | 'BR' | 'AU';
+// type Iso = 'US' | 'BR' | 'AU';
 
-interface Step1Props {
-	text: string;
-	setText: (val: string) => void;
-	iso: Iso;
-	setIso: (val: Iso) => void;
-}
-
-const Step1: React.FC<Step1Props> = ({ text, setIso, setText, iso }) => {
+const Step1: React.FC = () => {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [iso, setIso] = useState<AreaObjType>('US');
+	const [text, setText] = useState('');
 
 	return (
 		<>
