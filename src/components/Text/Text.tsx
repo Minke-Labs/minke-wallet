@@ -7,7 +7,7 @@ import { TextComponentProps } from './Text.types';
 const TextComponent: React.FC<Partial<TextComponentProps>> = ({
 	children,
 	weight = 'regular',
-	type = 'p',
+	type = 'bMedium',
 	color = 'text1',
 	marginBottom = 0,
 	width = 0,

@@ -5,6 +5,7 @@ import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
 import TelephoneInput from './TelephoneInput';
 import Text from './Text/Text';
 import Button from './Button/Button';
+import ChangeCountry from './ChangeCountry/ChangeCountry';
 import Icon from './Icon/Icon';
 import CountrySelector from './CountrySelector/CountrySelector';
 import Token from './Token/Token';
@@ -79,6 +80,7 @@ export {
 	Text,
 	AnimatedText,
 	Button,
+	ChangeCountry,
 	WhiteButton,
 	Icon,
 	Token,

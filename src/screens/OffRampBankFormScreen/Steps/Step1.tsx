@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TelephoneInput, Text, Input } from '@components';
+import { TelephoneInput, Text, Input, ChangeCountry } from '@components';
 import { AreaObjType } from '@src/components/TelephoneInput/TelephoneInput.types';
 
 // type Iso = 'US' | 'BR' | 'AU';
@@ -11,6 +11,8 @@ const Step1: React.FC = () => {
 
 	return (
 		<>
+			<ChangeCountry />
+
 			<Text type="lMedium" weight="semiBold" mb="xs">
 				Personal information
 			</Text>
@@ -18,6 +20,7 @@ const Step1: React.FC = () => {
 			<Input
 				label="First name"
 				mb="s"
+				// error
 			/>
 
 			<Input

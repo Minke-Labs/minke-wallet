@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { View, Header } from '@components';
+import { View, Header, Scroll } from '@components';
 import { BasicLayout } from '@layouts';
-import { AreaObjType } from '@src/components/TelephoneInput/TelephoneInput.types';
 import { useFormProgress } from '@hooks';
 import { Step1, Step2, Step3 } from './Steps';
 
@@ -30,11 +29,12 @@ const OffRampBankFormScreen = () => {
 
 	return (
 		<BasicLayout>
+
 			<Header
 				onLinkClick={goForward}
 				title="Personal information"
 				link="Next"
-				mb="m"
+				mb="l"
 			/>
 
 			<View ph="xs">

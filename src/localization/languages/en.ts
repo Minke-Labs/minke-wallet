@@ -773,19 +773,6 @@ export default {
 				or: 'or',
 				copy: 'Copy wallet address'
 			},
-			ChooseQuantityModal: {
-				select_country: 'Select your country of residence to access your local payments option',
-				change_country: 'Change country',
-				buy_some: 'Buy some {{symbol}}',
-				with: ' with',
-				to_start_using: ' to start using Minke:',
-				choose_another_amount: 'Choose another amount',
-				or_deposit: 'or deposit',
-				send_from: 'Send from ',
-				or_another_exchange: ' or another exchange',
-				copy_address: 'Copy address',
-				address_copied: 'Address copied!'
-			},
 			SelectorModal: {
 				add_funds: 'Add funds',
 				buy_crypto: 'Buy crypto',
@@ -890,6 +877,10 @@ export default {
 			loading: 'Loading',
 			swap: 'Swap',
 			buy_usdc_now: 'Buy USDC now'
+		},
+		ChangeCountry: {
+			select_country: 'Select your country of residence to access your local payments option',
+			change_country: 'Change country'
 		},
 		CountrySelector: {
 			country: 'Country',
