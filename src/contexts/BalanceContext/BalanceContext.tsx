@@ -44,7 +44,6 @@ const BalanceProvider: React.FC = ({ children }) => {
 					(t) => t.address.toLowerCase() === suggested.address.toLowerCase()
 				);
 				if (found) return found;
-
 				return suggested;
 			}),
 		[suggestedTokens]
