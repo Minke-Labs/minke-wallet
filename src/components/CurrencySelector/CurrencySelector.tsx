@@ -9,12 +9,7 @@ import Flag from '../Flag/Flag';
 import { CurrencySelectorProps, TitlesProps } from './CurrencySelector.types';
 
 const NoTokenIcon = () => (
-	<View
-		round={40}
-		bgc="background6"
-		main="center"
-		cross="center"
-	>
+	<View round={40} bgc="background6" main="center" cross="center">
 		<Icon name="dollar" color="cta1" size={30} />
 	</View>
 );
@@ -54,14 +49,7 @@ const CurrencySelector: React.FC<CurrencySelectorProps> = ({ onPress, notTouchab
 		<View row mb="xs" cross="center">
 			{currency ? <Flag size={28} name={countries[currency.country] as FlagType} /> : <NoTokenIcon />}
 
-			<View
-				row
-				ml="xxs"
-				main="space-between"
-				cross="center"
-				h="100%"
-				flex1
-			>
+			<View row ml="xxs" main="space-between" cross="center" h="100%" flex1>
 				{currency ? <Titles {...{ currency, notTouchable }} /> : <TitlesEmpty />}
 			</View>
 		</View>
