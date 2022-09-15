@@ -112,29 +112,51 @@ const AddFundsScreen = ({ route }: Props) => {
 						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
 						)}
-						{!!useMoonpay &&
-							(moonPaySpecialButton ? (
+						{!!useMoonpay && (
+							<>
+								{moonPaySpecialButton ? (
+									<>
+										{!useApplePay && (
+											<GenericPayButton
+												disabled={disableMoonPay}
+												marginBottom={16}
+												onPress={onMoonpayPurchase}
+											/>
+										)}
+										<OnrampButton
+											marginBottom={16}
+											currency={currency}
+											onPress={onMoonpayPurchase}
+											disabled={disableMoonPay}
+										/>
+									</>
+								) : (
+									<GenericPayButton
+										disabled={disableMoonPay}
+										marginBottom={16}
+										onPress={onMoonpayPurchase}
+										showAppleGooglePay={!useApplePay}
+									/>
+								)}
+							</>
+						)}
+
+						{!!useBanxa && (
+							<>
+								{!useApplePay && !useMoonpay && (
+									<GenericPayButton
+										disabled={disableMoonPay}
+										marginBottom={16}
+										onPress={onMoonpayPurchase}
+									/>
+								)}
 								<OnrampButton
 									marginBottom={16}
 									currency={currency}
-									onPress={onMoonpayPurchase}
-									disabled={disableMoonPay}
+									onPress={onOnrampBanxaPurchase}
+									disabled={disableBanxa}
 								/>
-							) : (
-								<GenericPayButton
-									disabled={disableMoonPay}
-									marginBottom={16}
-									onPress={onMoonpayPurchase}
-								/>
-							))}
-
-						{!!useBanxa && (
-							<OnrampButton
-								marginBottom={16}
-								currency={currency}
-								onPress={onOnrampBanxaPurchase}
-								disabled={disableBanxa}
-							/>
+							</>
 						)}
 					</View>
 

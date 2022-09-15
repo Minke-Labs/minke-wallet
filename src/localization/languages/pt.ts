@@ -737,7 +737,7 @@ export default {
 		},
 		IN: {
 			name: 'Índia',
-			currencyName: 'Rupia indiana'
+			currencyName: 'Rupia Indiana'
 		}
 	},
 
