@@ -38,14 +38,15 @@ const BalanceProvider: React.FC = ({ children }) => {
 	};
 
 	const fillSuggestedTokens = useCallback(
-		(tokensWithBalance: MinkeToken[]): MinkeToken[] =>
-			suggestedTokens.map((suggested) => {
+		(tokensWithBalance: MinkeToken[]): MinkeToken[] => {
+			const notFoundTokens = suggestedTokens.filter((suggested) => {
 				const found = tokensWithBalance.find(
 					(t) => t.address.toLowerCase() === suggested.address.toLowerCase()
 				);
-				if (found) return found;
-				return suggested;
-			}),
+				return !found;
+			});
+			return [...tokensWithBalance, ...notFoundTokens];
+		},
 		[suggestedTokens]
 	);
 

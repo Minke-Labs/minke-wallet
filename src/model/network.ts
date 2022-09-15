@@ -75,7 +75,7 @@ export const networks: Networks = {
 		suggestedTokens: [
 			{
 				symbol: 'ETH',
-				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+				address: '0x0000000000000000000000000000000000000000',
 				decimals: 18,
 				balance: '0',
 				balanceUSD: 0
