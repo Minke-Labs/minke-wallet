@@ -7,7 +7,7 @@ import {
 	ALCHEMY_API_KEY_MATIC,
 	ALCHEMY_API_KEY_GOERLI
 } from '@env';
-import { TopupToken } from './types/token.types';
+import { MinkeToken, TopupToken } from './types/token.types';
 
 export interface Network {
 	chainId: number;
@@ -38,6 +38,7 @@ export interface Network {
 		depositContract: string;
 	};
 	coingeckoPlatform: string;
+	suggestedTokens: MinkeToken[];
 }
 
 export interface Networks {
@@ -70,7 +71,14 @@ export const networks: Networks = {
 		coingeckoPlatform: 'ethereum',
 		aave: {
 			depositContract: '0x411F4d453d530a1daDb9bA153C93448b9e83c592'
-		}
+		},
+		suggestedTokens: [
+			{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 },
+			{ symbol: 'WBTC', address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', decimals: 8 },
+			{ symbol: 'SHIB', address: '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE', decimals: 18 },
+			{ symbol: 'MATIC', address: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0', decimals: 18 },
+			{ symbol: 'UNI', address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', decimals: 18 }
+		]
 	},
 	matic: {
 		chainId: 137,
@@ -113,7 +121,14 @@ export const networks: Networks = {
 		aave: {
 			depositContract: '0x467ebEE3755455A5F2bE81ca50b738D7a375F56a'
 		},
-		coingeckoPlatform: 'polygon-pos'
+		coingeckoPlatform: 'polygon-pos',
+		suggestedTokens: [
+			{ symbol: 'WETH', address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', decimals: 18 },
+			{ symbol: 'MATIC', address: '0x0000000000000000000000000000000000000000', decimals: 18 },
+			{ symbol: 'MTA', address: '0xF501dd45a1198C2E1b5aEF5314A68B9006D842E0', decimals: 18 },
+			{ symbol: 'QUICK', address: '0xB5C064F955D8e7F38fE0460C556a72987494eE17', decimals: 18, id: 'quickswap' },
+			{ symbol: 'PolyDoge', address: '0x8A953CfE442c5E8855cc6c61b1293FA648BAE472', decimals: 18 }
+		]
 	},
 	kovan: {
 		chainId: 42,
@@ -132,7 +147,8 @@ export const networks: Networks = {
 		coingeckoPlatform: 'ethereum',
 		aave: {
 			depositContract: ''
-		}
+		},
+		suggestedTokens: []
 	},
 	goerli: {
 		chainId: 5,
@@ -154,7 +170,8 @@ export const networks: Networks = {
 		coingeckoPlatform: 'ethereum',
 		aave: {
 			depositContract: ''
-		}
+		},
+		suggestedTokens: []
 	}
 };
 

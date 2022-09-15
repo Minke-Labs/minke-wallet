@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo } from 'react';
 import EventSource from 'react-native-sse';
 import { useState } from '@hookstate/core';
 import { AccountBalance } from '@models/token';
@@ -10,7 +10,7 @@ import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTok
 import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
-import { coinFromSymbol } from '@helpers/utilities';
+import { searchCoinData } from '@helpers/utilities';
 import { parse, ZapperCustomEvents } from './utils';
 
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
@@ -18,7 +18,7 @@ export const BalanceContext = createContext<AccountBalance>({} as AccountBalance
 const BalanceProvider: React.FC = ({ children }) => {
 	const {
 		address,
-		network: { zapperNetwork }
+		network: { zapperNetwork, suggestedTokens, coingeckoPlatform }
 	} = useState(globalWalletState()).value;
 	const { id: selectedProtocol } = useState(globalDepositState()).value;
 	const [tokens, setTokens] = React.useState<MinkeToken[]>([]);
@@ -36,6 +36,19 @@ const BalanceProvider: React.FC = ({ children }) => {
 			setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 		}
 	};
+
+	const fillSuggestedTokens = useCallback(
+		(tokensWithBalance: MinkeToken[]): MinkeToken[] =>
+			suggestedTokens.map((suggested) => {
+				const found = tokensWithBalance.find(
+					(t) => t.address.toLowerCase() === suggested.address.toLowerCase()
+				);
+				if (found) return found;
+
+				return suggested;
+			}),
+		[suggestedTokens]
+	);
 
 	useEffect(() => {
 		fetchInterests();
@@ -55,7 +68,6 @@ const BalanceProvider: React.FC = ({ children }) => {
 				// @ts-ignore
 				eventSource.addEventListener('balance', async ({ data }) => {
 					const parsedDatas = JSON.parse(data);
-
 					const {
 						appId,
 						balance: { wallet }
@@ -73,11 +85,13 @@ const BalanceProvider: React.FC = ({ children }) => {
 					allTokens = allTokens.filter(
 						({ symbol, balance = '0', name = '' }) =>
 							!interestBearingTokens.includes(symbol.toLowerCase()) &&
+							!depositStablecoins.includes(symbol) &&
 							+balance > 0 &&
 							!isValidDomain(name)
 					);
+					allTokens = fillSuggestedTokens(allTokens);
 					const promises = allTokens.map(async (t) => {
-						const { id, name } = await coinFromSymbol(t.symbol);
+						const { id, name } = await searchCoinData(t.address, coingeckoPlatform, t.symbol, t.id);
 
 						return {
 							...t,
@@ -87,7 +101,6 @@ const BalanceProvider: React.FC = ({ children }) => {
 					});
 					allTokens = await Promise.all(promises);
 					setStablecoins(await fetchStablecoins(address));
-					allTokens = allTokens.filter(({ symbol }) => !depositStablecoins.includes(symbol));
 					setTokens(allTokens);
 					eventSource.close();
 					setLoading(false);
@@ -126,7 +139,16 @@ const BalanceProvider: React.FC = ({ children }) => {
 			stablecoinsBalance,
 			loading
 		}),
-		[address, zapperNetwork, selectedProtocol, tokens, interestTokens, withdrawableTokens, loading]
+		[
+			address,
+			zapperNetwork,
+			selectedProtocol,
+			tokens,
+			interestTokens,
+			withdrawableTokens,
+			loading,
+			coingeckoPlatform
+		]
 	);
 
 	return <BalanceContext.Provider value={obj}>{children}</BalanceContext.Provider>;
