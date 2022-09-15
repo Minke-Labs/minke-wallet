@@ -132,4 +132,4 @@ export const makeOrder = async ({ params }: MakeOrder) => {
 	return res.data.data.order.checkout_url;
 };
 
-export const availableFiatCurrencies: { [key: string]: Currency } = pick(fiatCurrencies, 'GBP', 'CAD', 'TRY', 'AUD');
+export const availableFiatCurrencies: { [key: string]: Currency } = pick(fiatCurrencies, 'CAD', 'TRY', 'AUD');

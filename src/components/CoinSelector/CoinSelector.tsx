@@ -10,12 +10,7 @@ import Touchable from '@src/components/Touchable/Touchable';
 import { CoinSelectorProps, TitlesProps } from './CoinSelector.types';
 
 const NoTokenIcon: React.FC<{ inline: boolean }> = ({ inline }) => (
-	<View
-		round={inline ? 28 : 40}
-		bgc="background6"
-		main="center"
-		cross="center"
-	>
+	<View round={inline ? 28 : 40} bgc="background6" main="center" cross="center">
 		<Icon name="dollar" color="cta1" size={30} />
 	</View>
 );
