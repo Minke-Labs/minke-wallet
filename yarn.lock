@@ -3011,6 +3011,13 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
+"@types/react-native-safari-view@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-native-safari-view/-/react-native-safari-view-2.0.5.tgz#447cf6b48dc9431d71f6b758479ca87df3fa2ab7"
+  integrity sha512-Tzkh23ZGG0hLmS4uRyPrj/WxroIfegxBQVHxiRE0EK5wnhXEwmX8jpjj3WQJiSl1xPyFozXfmpjpKeRM4Aapmg==
+  dependencies:
+    "@types/react-native" "*"
+
 "@types/react-native-vector-icons@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.10.tgz#9bfd6e64dd37b8119425496b5e53ff91d034efa9"
@@ -10335,6 +10342,11 @@ react-native-redash@^16.2.3:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
     parse-svg-path "^0.1.2"
+
+react-native-safari-view@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-safari-view/-/react-native-safari-view-2.1.0.tgz#1e0cd12c62bce79bc1759c7e281646b08b61c959"
+  integrity sha512-FbmAXcjEDcOh+ymYDiiDa+5zhDdVkQN1wI1/1pMeRNXXe40ZZssRF1R6LZg6oocQxPVAbIJ/9+W6s0luiVO7KA==
 
 react-native-safe-area-context@3.3.2:
   version "3.3.2"

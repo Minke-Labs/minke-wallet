@@ -37,6 +37,7 @@ import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
 import AddFundsScreen from './AddFundsScreen/AddFundsScreen';
 import TransactionsDetailScreen from './TransactionsDetailScreen/TransactionsDetailScreen';
 import MoonpayWaitScreen from './TopUpWaitScreen/Moonpay/MoonpayWaitScreen';
+import WebViewScreen from './WebViewScreen/WebViewScreen';
 import Test from './Test/Test';
 
 const screensObj = {
@@ -79,6 +80,7 @@ const screensObj = {
 	AddFundsScreen,
 	TransactionsDetailScreen,
 	MoonpayWaitScreen,
+	WebViewScreen,
 	Test
 };
 
