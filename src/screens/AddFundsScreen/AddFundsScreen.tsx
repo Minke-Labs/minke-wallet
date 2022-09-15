@@ -3,7 +3,6 @@ import { Keyboard, TouchableOpacity } from 'react-native';
 import {
 	ApplePayButton,
 	FiatCard,
-	FullModal,
 	GenericPayButton,
 	Header,
 	ModalBase,
@@ -18,7 +17,6 @@ import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { debounce } from 'lodash';
-import WebView from 'react-native-webview';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
@@ -53,8 +51,6 @@ const AddFundsScreen = ({ route }: Props) => {
 		onApplePayPurchase,
 		disableBanxa,
 		onOnrampBanxaPurchase,
-		orderLink,
-		setOrderLink,
 		useApplePay,
 		useBanxa,
 		useMoonpay,
@@ -166,19 +162,6 @@ const AddFundsScreen = ({ route }: Props) => {
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
 			</ModalBase>
-			<FullModal visible={!!orderLink} onClose={() => setOrderLink('')}>
-				<WebView
-					source={{ uri: orderLink }}
-					sharedCookiesEnabled
-					onNavigationStateChange={(e) => {
-						if (e.url.includes('#')) {
-							setOrderLink('');
-						}
-					}}
-					enableApplePay
-					useWebKit
-				/>
-			</FullModal>
 		</>
 	);
 };
