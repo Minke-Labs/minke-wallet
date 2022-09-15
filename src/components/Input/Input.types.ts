@@ -1,4 +1,5 @@
 import { TextInputProps, StyleProp, ViewStyle } from 'react-native';
+import { SpacingType } from '@styles';
 
 interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	label?: string;
@@ -11,6 +12,7 @@ interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	error?: boolean;
 	small?: boolean;
 	style?: StyleProp<ViewStyle>;
+	mb?: SpacingType;
 }
 
 interface InputRef {

@@ -10,8 +10,9 @@ import {
 	LayoutChangeEvent
 } from 'react-native';
 import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
-import Icon from '../Icon/Icon';
-import Touchable from '../Touchable/Touchable';
+import ComponentsView from '@src/components/View/View';
+import Icon from '@src/components/Icon/Icon';
+import Touchable from '@src/components/Touchable/Touchable';
 import { makeStyles } from './Input.styles';
 import { InputProps, InputRef } from './Input.types';
 
@@ -34,6 +35,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		small,
 		value = '',
 		onSelectionChange,
+		mb,
 		style,
 		...rest
 	},
@@ -235,65 +237,67 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	};
 
 	return (
-		<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
-			<View style={{ flexDirection: 'row', ...(style as object) }}>
-				<Animated.View
-					style={[
-						{
-							borderColor: error ? colors.alert1 : isFocusedState ? colors.cta1 : colors.cta2
-						},
-						styles.container
-					]}
-				>
-					<View
-						style={{
-							flex: 1,
-							flexDirection: 'row',
-							alignItems: 'center'
-						}}
+		<ComponentsView mb={mb}>
+			<TouchableWithoutFeedback onPress={setFocus} onLayout={onLayout}>
+				<View style={{ flexDirection: 'row', ...(style as object) }}>
+					<Animated.View
+						style={[
+							{
+								borderColor: error ? colors.alert1 : isFocusedState ? colors.cta1 : colors.cta2
+							},
+							styles.container
+						]}
 					>
-						{!small && (
-							<AnimatedText
-								onPress={setFocus}
-								style={[
-									labelStyle,
-									styles.label,
-									{
-										fontSize: fontSizeAnimated,
-										transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
-									}
-								]}
-							>
-								{label}
-							</AnimatedText>
-						)}
+						<View
+							style={{
+								flex: 1,
+								flexDirection: 'row',
+								alignItems: 'center'
+							}}
+						>
+							{!small && (
+								<AnimatedText
+									onPress={setFocus}
+									style={[
+										labelStyle,
+										styles.label,
+										{
+											fontSize: fontSizeAnimated,
+											transform: [{ translateX: leftAnimated }, { translateY: topAnimated }]
+										}
+									]}
+								>
+									{label}
+								</AnimatedText>
+							)}
 
-						<TextInput
-							onSubmitEditing={onSubmitEditing}
-							secureTextEntry={isPassword !== undefined ? isPassword && secureText : false}
-							onFocus={onFocus !== undefined ? onFocus : handleFocus}
-							onBlur={onBlur !== undefined ? onBlur : handleBlur}
-							ref={inputRef}
-							onChangeText={onChangeTextCallback}
-							style={styles.input}
-							{...{ value, multiline, ...rest }}
-						/>
+							<TextInput
+								onSubmitEditing={onSubmitEditing}
+								secureTextEntry={isPassword !== undefined ? isPassword && secureText : false}
+								onFocus={onFocus !== undefined ? onFocus : handleFocus}
+								onBlur={onBlur !== undefined ? onBlur : handleBlur}
+								ref={inputRef}
+								onChangeText={onChangeTextCallback}
+								style={styles.input}
+								{...{ value, multiline, ...rest }}
+							/>
 
-						{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
+							{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
 
-						{isPassword && (
-							<Touchable style={styles.toggleButton} onPress={() => toggleVisibility()}>
-								{secureText ? (
-									<Icon name="eyeCross" size={24} color="cta1" />
-								) : (
-									<Icon name="eyeStroke" size={24} color="cta1" />
-								)}
-							</Touchable>
-						)}
-					</View>
-				</Animated.View>
-			</View>
-		</TouchableWithoutFeedback>
+							{isPassword && (
+								<Touchable style={styles.toggleButton} onPress={() => toggleVisibility()}>
+									{secureText ? (
+										<Icon name="eyeCross" size={24} color="cta1" />
+									) : (
+										<Icon name="eyeStroke" size={24} color="cta1" />
+									)}
+								</Touchable>
+							)}
+						</View>
+					</Animated.View>
+				</View>
+			</TouchableWithoutFeedback>
+		</ComponentsView>
 	);
 };
 
