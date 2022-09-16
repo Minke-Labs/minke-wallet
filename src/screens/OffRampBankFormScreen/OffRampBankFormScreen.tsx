@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
-import { View, Header, Scroll } from '@components';
+import React from 'react';
+import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
-import { useFormProgress } from '@hooks';
+import { useFormProgress, useNavigation } from '@hooks';
 import { Step1, Step2, Step3 } from './Steps';
 
 export const getStep = (type: number) => {
@@ -35,14 +34,25 @@ export const getStep = (type: number) => {
 };
 
 const OffRampBankFormScreen = () => {
-	const { currentStep, goForward } = useFormProgress();
+	const navigation = useNavigation();
+	const { currentStep, goForward, goBack } = useFormProgress();
+
+	const handleBack = () => {
+		if (currentStep === 0) return navigation.goBack();
+		return goBack();
+	};
+
+	const handleForward = () => {
+		if (currentStep === 2) return navigation.navigate('OffRampSendScreen');
+		return goForward();
+	};
 
 	return (
 		<BasicLayout>
 
 			<Header
-				onPress={() => null}
-				onLinkClick={goForward}
+				onPress={handleBack}
+				onLinkClick={handleForward}
 				title={getStep(currentStep).title}
 				link={getStep(currentStep).link}
 				mb="l"

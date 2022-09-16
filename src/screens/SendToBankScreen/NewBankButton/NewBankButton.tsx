@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Paper, Touchable, Icon } from '@components';
 
 interface NewBankButtonProps {
-	onPress?: () => void;
+	onPress: () => void;
 }
 
 export const NewBankButton: React.FC<NewBankButtonProps> = ({ onPress }) => (

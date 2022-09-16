@@ -16,6 +16,7 @@ export type RootStackParamList = {
 	StablecoinsDetailScreen: { coin: MinkeToken };
 	BackupSettingsScreen: undefined;
 	OffRampBankFormScreen: undefined;
+	OffRampSendScreen: undefined;
 	SendToBankScreen: undefined;
 	ChangeLanguageScreen: undefined;
 	BackupStatusScreen: { walletId: string; finishedBackup?: boolean };

@@ -33,7 +33,9 @@ const SendToBankScreen = () => {
 					</Text>
 				</View>
 
-				<NewBankButton />
+				<NewBankButton
+					onPress={() => navigation.navigate('OffRampBankFormScreen')}
+				/>
 
 			</View>
 		</BasicLayout>
