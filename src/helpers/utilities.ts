@@ -2,6 +2,7 @@ import { BigNumber, FixedNumber } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from 'i18n-js';
+import { Coin } from '@models/wallet';
 
 export function convertEthToUsd(ethValue: BigNumber, ethInUsd: string, round = 2): string {
 	const formatedEthInUsd = Math.trunc((+ethInUsd * 100) / 100)
@@ -17,10 +18,21 @@ interface CoingeckoToken {
 	name: string;
 }
 
-export const coinFromSymbol = async (symbol: string): Promise<CoingeckoToken> => {
+const coinFromSymbol = async (symbol: string, coins: Coin[]): Promise<CoingeckoToken> =>
+	coins.find((coin) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
+
+export const searchCoinData = async (
+	contract: string,
+	network: string,
+	symbol: string,
+	id?: string
+): Promise<CoingeckoToken> => {
 	const coinList = await AsyncStorage.getItem('@listCoins');
-	const coins = JSON.parse(coinList!);
-	return coins.find((coin: any) => coin.symbol.toLowerCase() === symbol.toLowerCase()) || ({} as CoingeckoToken);
+	const coins: Coin[] = JSON.parse(coinList!);
+	if (id) return coins.find((coin) => coin.id.toLowerCase() === id.toLowerCase()) || ({} as CoingeckoToken);
+	return (
+		coins.find(({ platforms }) => contract.toLowerCase() === platforms[network]) || coinFromSymbol(symbol, coins)
+	);
 };
 
 export const numberFormat = (value: number, digits?: number) =>

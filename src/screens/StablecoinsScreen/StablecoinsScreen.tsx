@@ -1,18 +1,9 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
-import {
-	Icon,
-	Text,
-	View,
-	TokenItemCard,
-	EmptyStates,
-	ActivityIndicator,
-	BlankStates
-} from '@components';
+import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
-import { TokenType } from '@styles';
 import { depositStablecoins } from '@models/deposit';
 
 const StablecoinsScreen = () => {
@@ -78,13 +69,8 @@ const StablecoinsScreen = () => {
 							stablecoins.map((coin) => (
 								<TokenItemCard
 									key={coin.symbol}
-									token={coin.symbol.toLowerCase() as TokenType}
-									name={coin.name}
-									symbol={coin.symbol}
-									balance={coin.balance}
-									balanceUSD={coin.balanceUSD}
+									token={coin}
 									onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin })}
-									stablecoin
 									paper
 								/>
 							))

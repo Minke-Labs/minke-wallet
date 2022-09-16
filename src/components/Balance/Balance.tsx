@@ -51,9 +51,10 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 						{!stablecoin && <Selector coinSymbol={coin.symbol} {...{ active, setActive }} />}
 					</View>
 					<Text type="dMedium">
-						{coin.balance ? active
-							? `${tokenBalanceFormat(coin.balance!)} ${coin.symbol}`
-							: `${numberFormat(coin.balanceUSD!)}`
+						{coin.balance
+							? active
+								? `${tokenBalanceFormat(coin.balance!)} ${coin.symbol}`
+								: `${numberFormat(coin.balanceUSD!)}`
 							: `${numberFormat(0)}`}
 					</Text>
 				</View>

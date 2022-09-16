@@ -2,7 +2,7 @@ import { BigNumber, Contract } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { partition } from 'lodash';
-import { coinFromSymbol } from '@helpers/utilities';
+import { searchCoinData } from '@helpers/utilities';
 import { depositStablecoins, usdCoin } from './deposit';
 import { network } from './network';
 import { MinkeToken } from './types/token.types';
@@ -227,7 +227,7 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 };
 
 const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
-	const { id: networkId } = await network();
+	const { id: networkId, coingeckoPlatform } = await network();
 	const contracts = Object.values(stables[networkId]).filter(({ symbol }) => depositStablecoins.includes(symbol));
 
 	const provider = await getProvider();
@@ -236,7 +236,7 @@ const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 		const stablecoin = new Contract(address, erc20abi, provider);
 		const balance: BigNumber = await stablecoin.balanceOf(wallet);
 		const formatedBalance = formatUnits(balance, decimals);
-		const { id, name } = await coinFromSymbol(symbol);
+		const { id, name } = await searchCoinData(address, coingeckoPlatform, symbol);
 
 		return {
 			address,

@@ -5,7 +5,7 @@ import { globalWalletState } from '@stores/WalletStore';
 import { ExchangeRoute, getExchangePrice } from '@models/token';
 import { useAmplitude, useBiconomy, useNavigation, useTransactions } from '@hooks';
 import Logger from '@utils/logger';
-import { coinFromSymbol, tokenBalanceFormat } from '@helpers/utilities';
+import { searchCoinData, tokenBalanceFormat } from '@helpers/utilities';
 import { approveSpending } from '@models/contract';
 import { getProvider } from '@models/wallet';
 import { convertTransactionResponse } from '@models/transaction';
@@ -18,6 +18,9 @@ import { isExchangeGasless } from '@models/exchange';
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
 	const wallet = useState(globalWalletState());
+	const {
+		network: { coingeckoPlatform }
+	} = wallet.value;
 	const navigation = useNavigation();
 	const { to, from, fromAmount, toAmount, lastConversion, gas = {} as Gas } = exchange.value;
 	const [priceQuote, setPriceQuote] = React.useState<ExchangeRoute>();
@@ -80,8 +83,8 @@ const useExchangeResumeScreen = () => {
 	};
 
 	const loadFiatPrices = async () => {
-		const { id: fromId } = await coinFromSymbol(from.symbol);
-		const { id: toId } = await coinFromSymbol(to.symbol);
+		const fromId = from.id || (await searchCoinData(from.address, coingeckoPlatform, from.symbol, from.id)).id;
+		const toId = to.id || (await searchCoinData(to.address, coingeckoPlatform, to.symbol, to.id)).id;
 
 		const result = await fetch(
 			`https://api.coingecko.com/api/v3/simple/price?ids=${fromId},${toId}&vs_currencies=usd`

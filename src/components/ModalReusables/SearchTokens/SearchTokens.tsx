@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { useTheme, useLanguage, useGlobalWalletState, useBalances } from '@hooks';
+import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
-import { networks } from '@models/network';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
+import { networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -33,8 +33,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [loading, setLoading] = useState(true);
 	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
-	const styles = makeStyles(colors);
 	const { network } = useGlobalWalletState();
+	const styles = makeStyles(colors);
 
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {

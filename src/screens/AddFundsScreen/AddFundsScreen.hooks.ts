@@ -132,8 +132,6 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 			redirectURL: Linking.createURL('/moonpayWaitScreen')
 		};
 
-		console.log(params);
-
 		const query = `?${qs.stringify(params)}`;
 		const host = MOONPAY_BUY_URL || process.env.MOONPAY_BUY_URL;
 		const originalUrl = `${host}${query}`;
