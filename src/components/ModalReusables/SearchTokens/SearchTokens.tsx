@@ -6,6 +6,7 @@ import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { TokenType } from '@src/styles';
+import { networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -15,7 +16,6 @@ import Touchable from '../../Touchable/Touchable';
 import EmptyStates from '../../EmptyStates';
 import { SearchTokensProps } from './SearchTokens.types';
 import { makeStyles } from './SearchTokens.styles';
-import { networks } from '@models/network';
 
 const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
