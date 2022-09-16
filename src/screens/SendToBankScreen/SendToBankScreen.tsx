@@ -4,32 +4,40 @@ import { Image } from 'react-native';
 import { OffRampImg } from '@images';
 import { View, Text, Header } from '@components';
 import { BasicLayout } from '@layouts';
+import { useNavigation } from '@hooks';
 import { NewBankButton } from './NewBankButton/NewBankButton';
 
-const SendToBankScreen = () => (
-	<BasicLayout>
-		<Header title="Sell" mb="m" />
-		<View cross="center" ph="xs">
-			<Image
-				source={OffRampImg}
-				style={{ width: 277, height: 216 }}
+const SendToBankScreen = () => {
+	const navigation = useNavigation();
+	return (
+		<BasicLayout>
+			<Header
+				onPress={() => navigation.goBack()}
+				title="Sell"
+				mb="m"
 			/>
-			<View mb="xs" />
+			<View cross="center" ph="xs">
+				<Image
+					source={OffRampImg}
+					style={{ width: 277, height: 216 }}
+				/>
+				<View mb="xs" />
 
-			<Text type="hSmall" weight="bold" mb="xxs">
-				Send funds back to your bank
-			</Text>
-
-			<View mh="xs" mb="m" w="100%">
-				<Text type="bSmall" center>
-					Easily sell your crypto and send back to your preferred bank account with Minke. Just provide your bank details and we will take care of the rest.
+				<Text type="hSmall" weight="bold" mb="xxs">
+					Send funds back to your bank
 				</Text>
+
+				<View mh="xs" mb="m" w="100%">
+					<Text type="bSmall" center>
+						Easily sell your crypto and send back to your preferred bank account with Minke. Just provide your bank details and we will take care of the rest.
+					</Text>
+				</View>
+
+				<NewBankButton />
+
 			</View>
-
-			<NewBankButton />
-
-		</View>
-	</BasicLayout>
-);
+		</BasicLayout>
+	);
+};
 
 export default SendToBankScreen;

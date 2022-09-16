@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, TouchableOpacity } from 'react-native';
-import { useTheme, useLanguage, useKeyboard } from '@hooks';
+import { useTheme, useLanguage, useKeyboard, useNavigation } from '@hooks';
 import { os } from '@styles';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
@@ -25,6 +25,7 @@ import DirectionButton from './DirectionButton/DirectionButton';
 type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
 const ExchangeScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('ExchangeScreen');
+	const navigation = useNavigation();
 	const { sourceToken, destToken } = route.params || {};
 	const { colors } = useTheme();
 	const {
@@ -62,7 +63,11 @@ const ExchangeScreen = ({ route }: Props) => {
 		<>
 			<BasicLayout>
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-					<Header title={i18n.t('ExchangeScreen.exchange')} mb="m" />
+					<Header
+						onPress={() => navigation.goBack()}
+						title={i18n.t('ExchangeScreen.exchange')}
+						mb="m"
+					/>
 
 					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
 						<View

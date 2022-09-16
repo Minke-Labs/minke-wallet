@@ -9,18 +9,28 @@ export const getStep = (type: number) => {
 	switch (type) {
 		case 0:
 			return {
-				component: <Step1 />
+				component: <Step1 />,
+				title: 'Personal information',
+				link: 'Next'
 			};
 		case 1:
 			return {
-				component: <Step2 />
+				component: <Step2 />,
+				title: 'Place of residence',
+				link: 'Next'
 			};
 		case 2:
 			return {
-				component: <Step3 />
+				component: <Step3 />,
+				title: 'Bank details',
+				link: 'Save & continue'
 			};
 		default:
-			return {};
+			return {
+				component: <Step1 />,
+				title: 'Personal information',
+				link: 'Next'
+			};
 	}
 };
 
@@ -31,9 +41,10 @@ const OffRampBankFormScreen = () => {
 		<BasicLayout>
 
 			<Header
+				onPress={() => null}
 				onLinkClick={goForward}
-				title="Personal information"
-				link="Next"
+				title={getStep(currentStep).title}
+				link={getStep(currentStep).link}
 				mb="l"
 			/>
 

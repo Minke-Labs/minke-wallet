@@ -9,7 +9,7 @@ import {
 	View
 } from '@components';
 import { BasicLayout } from '@layouts';
-import { useLanguage, useTheme } from '@hooks';
+import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
 import RNUxcam from 'react-native-ux-cam';
 import { os } from '@styles';
@@ -21,6 +21,7 @@ import { GasSelected } from './GasSelected/GasSelected';
 
 const ExchangeResumeScreen = () => {
 	RNUxcam.tagScreenName('ExchangeResumeScreen');
+	const navigation = useNavigation();
 	const {
 		priceQuote,
 		from,
@@ -47,7 +48,11 @@ const ExchangeResumeScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header title={i18n.t('ExchangeResumeScreen.exchange_resume')} mb="m" />
+				<Header
+					onPress={() => navigation.goBack()}
+					title={i18n.t('ExchangeResumeScreen.exchange_resume')}
+					mb="m"
+				/>
 
 				<Paper mb="s" m="xs" mh="xs">
 					<View

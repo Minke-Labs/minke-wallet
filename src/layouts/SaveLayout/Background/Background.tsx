@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, ImageBackground, Image, SafeAreaView } from 'react-native';
-import { useTheme, useDepositProtocols, useLanguage } from '@hooks';
+import { useTheme, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
 import { wavesBackground, krakenAave2, krakenMStable } from '@images';
 import { Header } from '@components';
 import { makeStyles } from './Background.styles';
 
 export const Background: React.FC = ({ children }) => {
+	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const { i18n } = useLanguage();
@@ -20,7 +21,10 @@ export const Background: React.FC = ({ children }) => {
 				/>
 				<View>
 					<SafeAreaView />
-					<Header title={i18n.t('SaveScreen.Header.save')} />
+					<Header
+						onPress={() => navigation.goBack()}
+						title={i18n.t('SaveScreen.Header.save')}
+					/>
 				</View>
 			</View>
 			<View style={styles.contentContainer}>{children}</View>

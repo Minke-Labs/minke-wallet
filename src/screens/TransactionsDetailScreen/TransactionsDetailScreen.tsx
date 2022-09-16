@@ -7,7 +7,7 @@ import {
 	Scroll
 } from '@components';
 import { BasicLayout } from '@layouts';
-import { useGlobalWalletState, useLanguage, useTransaction } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation, useTransaction } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { networks } from '@models/network';
@@ -18,6 +18,7 @@ import { AddressesContainer } from './AddressesContainer/AddressesContainer';
 type Props = NativeStackScreenProps<RootStackParamList, 'TransactionsDetailScreen'>;
 const TransactionsDetailScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('TransactionsDetailScreen');
+	const navigation = useNavigation();
 	const { transaction } = route.params;
 	const { i18n } = useLanguage();
 	const { network } = useGlobalWalletState();
@@ -51,7 +52,10 @@ const TransactionsDetailScreen = ({ route }: Props) => {
 	return (
 		<BasicLayout>
 			<Scroll>
-				<Header title={description} />
+				<Header
+					onPress={() => navigation.goBack()}
+					title={description}
+				/>
 
 				<TitleContainer
 					{...{

@@ -5,9 +5,10 @@ import { Button, Header, Text, View } from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUniqueId } from 'react-native-device-info';
 import { deleteAllBackups } from '@models/cloudBackup';
-import { useGlobalWalletState } from '@hooks';
+import { useGlobalWalletState, useNavigation } from '@hooks';
 
 const DevSettingsScreen = () => {
+	const navigation = useNavigation();
 	const { address } = useGlobalWalletState();
 
 	const resetAppTour = async () => {
@@ -47,7 +48,11 @@ const DevSettingsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<Header title="Dev settings" mb="xxs" />
+			<Header
+				onPress={() => navigation.goBack()}
+				title="Dev settings"
+				mb="xxs"
+			/>
 			<View p="m">
 				<Text mb="xs">{address}</Text>
 				<Text mb="xs">Device ID: {deviceId}</Text>

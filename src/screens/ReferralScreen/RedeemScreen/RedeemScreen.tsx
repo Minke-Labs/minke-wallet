@@ -36,7 +36,11 @@ const RedeemScreen = ({ route }: Props) => {
 			<BasicLayout>
 				<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 					<>
-						<Header title={i18n.t('ReferralScreen.RedeemScreen.redeem_minke_points')} mb="m" />
+						<Header
+							onPress={() => navigation.goBack()}
+							title={i18n.t('ReferralScreen.RedeemScreen.redeem_minke_points')}
+							mb="m"
+						/>
 						<View style={styles.container}>
 							<View style={styles.top}>
 								<TokenCard
