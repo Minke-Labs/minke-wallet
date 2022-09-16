@@ -8,9 +8,9 @@
     <true/>
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>0</integer>
-    <key>EXUpdatesSDKVersion</key>
-    <string>44.0.0</string>
     <key>EXUpdatesURL</key>
-    <string>https://exp.host/@minkelabs/minke-wallet</string>
+    <string>https://u.expo.dev/653ea46f-9f69-4240-8fc2-a3ef10e74cfb</string>
+    <key>EXUpdatesRuntimeVersion</key>
+    <string>1.0.0</string>
   </dict>
 </plist>

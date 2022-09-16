@@ -68,6 +68,7 @@
     "expo-secure-store": "~11.1.0",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
+    "expo-updates": "~0.11.7",
     "global": "^4.4.0",
     "https-browserify": "0.0.1",
     "i18n-js": "^3.9.2",

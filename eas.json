@@ -14,7 +14,8 @@
 			"distribution": "internal",
 			"android": {
 				"image": "latest"
-			}
+			},
+			"channel": "preview"
 		},
 		"production": {
 			"ios": {
@@ -23,7 +24,8 @@
 			"android": {
 				"image": "latest",
 				"autoIncrement": "versionCode"
-			}
+			},
+			"channel": "production"
 		}
 	},
 	"submit": {
