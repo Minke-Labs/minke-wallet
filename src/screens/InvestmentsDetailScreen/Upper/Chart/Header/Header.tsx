@@ -10,7 +10,6 @@ const Header: React.FC<HeaderProps> = ({ price, current, graphs }) => {
 
 	return (
 		<View cross="center">
-
 			<AnimatedText
 				marginBottom={4}
 				text={price}
@@ -22,7 +21,6 @@ const Header: React.FC<HeaderProps> = ({ price, current, graphs }) => {
 			/>
 
 			<PercChange {...{ percZero, percChange, data, current, graphs }} />
-
 		</View>
 	);
 };

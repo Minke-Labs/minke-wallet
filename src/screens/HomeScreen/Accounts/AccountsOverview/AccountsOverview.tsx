@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Paper, View, Text, TokenItemCard, Touchable, BlankStates } from '@components';
 import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
-import { TokenType } from '@styles';
 import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview: React.FC = () => {
@@ -72,13 +71,8 @@ export const AccountsOverview: React.FC = () => {
 					</View>
 
 					<TokenItemCard
-						token={showingStable.symbol.toLowerCase() as TokenType}
-						name={showingStable.name}
-						symbol={showingStable.symbol}
-						balance={showingStable.balance}
-						balanceUSD={showingStable.balanceUSD}
+						token={showingStable}
 						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: showingStable })}
-						stablecoin
 					/>
 				</>
 			)}
@@ -100,12 +94,7 @@ export const AccountsOverview: React.FC = () => {
 			{investmentHighlights.map((token) => (
 				<TokenItemCard
 					key={token.address}
-					token={token.symbol.toLowerCase() as TokenType}
-					name={token.name}
-					symbol={token.symbol}
-					balance={token.balance}
-					balanceUSD={token.balanceUSD}
-					perc={token.perc}
+					token={token}
 					onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: token })}
 				/>
 			))}

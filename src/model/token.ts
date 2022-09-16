@@ -73,14 +73,23 @@ export const getExchangePrice = async ({
 	const { apiUrl0x, chainId } = await network();
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
-	if (chainId === networks.matic.chainId) {
-		const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
-		if (natives.includes(sellToken)) {
+	const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
+	if (natives.includes(sellToken)) {
+		if (chainId === networks.matic.chainId) {
 			sellToken = 'MATIC';
 		}
 
-		if (natives.includes(buyToken)) {
+		if (chainId === networks.mainnet.chainId) {
+			sellToken = 'ETH';
+		}
+	}
+	if (natives.includes(buyToken)) {
+		if (chainId === networks.matic.chainId) {
 			buyToken = 'MATIC';
+		}
+
+		if (chainId === networks.mainnet.chainId) {
+			buyToken = 'ETH';
 		}
 	}
 	const quoteParams: QuoteParams = {

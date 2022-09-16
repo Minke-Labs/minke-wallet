@@ -4,7 +4,6 @@ import RNUxcam from 'react-native-ux-cam';
 import { Text, View, TokenItemCard, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useLanguage, useNavigation } from '@hooks';
-import { TokenType } from '@styles';
 import { InvestmentToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
 // import Selector from './Selector/Selector';
@@ -52,12 +51,7 @@ const InvestmentsScreen = () => {
 						{investments.map((item: InvestmentToken) => (
 							<TokenItemCard
 								key={item.address}
-								token={item.symbol.toLowerCase() as TokenType}
-								name={item.name!}
-								symbol={item.symbol}
-								balance={item.balance}
-								balanceUSD={item.balanceUSD}
-								perc={item.perc}
+								token={item}
 								onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: item })}
 							/>
 						))}
