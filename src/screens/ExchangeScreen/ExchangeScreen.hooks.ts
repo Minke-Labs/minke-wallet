@@ -40,7 +40,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens, stablecoins } = useBalances();
-	const walletTokens = [...stablecoins, ...tokens];
+	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
 	const { defaultToken } = useDepositProtocols();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};

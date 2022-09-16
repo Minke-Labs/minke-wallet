@@ -20,11 +20,11 @@ export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsPro
 		fetchImage();
 	}, []);
 
-	const tokensToExchange = tokens ?
-		tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase())) :
-		[];
+	const tokensToExchange = tokens
+		? tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase()))
+		: [];
 
-	const listTokens = [...stablecoins, ...tokensToExchange];
+	const listTokens = [...stablecoins, ...tokensToExchange.filter((t) => (t.balanceUSD || 0) > 0)];
 
 	return {
 		image,
