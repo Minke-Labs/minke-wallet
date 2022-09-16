@@ -1,15 +1,15 @@
 import React, { useEffect, useCallback } from 'react';
-import { useTheme } from '@hooks';
-import { View, ScrollView } from 'react-native';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
 import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from 'ethers';
-import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
-import GasOption from '../GasOption/GasOption';
-import styles from './GasSelector.styles';
+import ActivityIndicator from '@src/components/ActivityIndicator/ActivityIndicator';
+import GasOption from '@src/components/GasOption/GasOption';
+import View from '@src/components/View/View';
+import Scroll from '@src/components/Scroll/Scroll';
+import { IndicatorContainer } from './IndicatorContainer';
 
 interface Wait {
 	normal: number;
@@ -23,13 +23,12 @@ const defaultWait: Wait = {
 	fast: 5
 };
 
-type Speeds = 'fast' | 'normal' | 'slow';
+export type Speeds = 'fast' | 'normal' | 'slow';
 type Price = { [key: string]: number } & { suggestBaseFee: BigNumber };
 type WaitTime = { [key: string]: number | null };
 
 const GasSelector = () => {
 	const [type, setType] = React.useState<Speeds>('fast');
-	const { colors } = useTheme();
 
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const [gasPrice, setGasPrice] = React.useState<Price>({} as Price);
@@ -165,14 +164,9 @@ const GasSelector = () => {
 	}
 
 	return (
-		<View style={{ alignItems: 'center' }}>
-			<ScrollView
-				style={{ marginBottom: 12 }}
-				horizontal
-				showsVerticalScrollIndicator={false}
-				showsHorizontalScrollIndicator={false}
-			>
-				<View style={styles.container}>
+		<View cross="center">
+			<Scroll mb="xxs" hideIndicator horizontal>
+				<View row ph="xs" mb="xxs">
 					<GasOption
 						type="fast"
 						onSelectGas={() => handleClick('fast')}
@@ -190,26 +184,9 @@ const GasSelector = () => {
 						usdPrice={usdPrice}
 					/>
 				</View>
-			</ScrollView>
+			</Scroll>
 
-			<View style={styles.indicatorContainer}>
-				<View
-					style={[
-						styles.indicatorLeft,
-						{
-							backgroundColor: type === 'fast' ? colors.cta1 : colors.text5
-						}
-					]}
-				/>
-				<View
-					style={[
-						styles.indicatorRight,
-						{
-							backgroundColor: type === 'normal' ? colors.cta1 : colors.text5
-						}
-					]}
-				/>
-			</View>
+			<IndicatorContainer type={type} />
 		</View>
 	);
 };

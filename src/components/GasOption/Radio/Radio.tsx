@@ -1,34 +1,21 @@
 import React from 'react';
-import { View } from 'react-native';
-import { useTheme } from '@hooks';
+import View from '@src/components/View/View';
 
 interface RadioProps {
 	selected: boolean;
 }
 
-const Radio: React.FC<RadioProps> = ({ selected }) => {
-	const { colors } = useTheme();
-	return (
-		<View style={{
-			width: 14,
-			height: 14,
-			borderRadius: 7,
-			borderWidth: 1,
-			borderColor: selected ? colors.cta1 : colors.detail1,
-			backgroundColor: '#ffffff',
-			justifyContent: 'center',
-			alignItems: 'center'
-		}}
-		>
-			<View style={{
-				width: 8,
-				height: 8,
-				borderRadius: 4,
-				...(selected && { backgroundColor: colors.cta1 })
-			}}
-			/>
-		</View>
-	);
-};
+const Radio: React.FC<RadioProps> = ({ selected }) => (
+	<View
+		round={14}
+		bw={1}
+		bc={selected ? 'cta1' : 'detail1'}
+		main="center"
+		cross="center"
+		mr="xxs"
+	>
+		<View round={8} {...(selected && { bgc: 'cta1' })} />
+	</View>
+);
 
 export default Radio;
