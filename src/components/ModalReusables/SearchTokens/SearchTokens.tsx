@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { useTheme, useLanguage, useBalances } from '@hooks';
+import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
 import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
@@ -15,6 +15,7 @@ import Touchable from '../../Touchable/Touchable';
 import EmptyStates from '../../EmptyStates';
 import { SearchTokensProps } from './SearchTokens.types';
 import { makeStyles } from './SearchTokens.styles';
+import { networks } from '@models/network';
 
 const SearchTokens: React.FC<SearchTokensProps> = ({
 	visible,
@@ -32,6 +33,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [loading, setLoading] = useState(true);
 	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
+	const { network } = useGlobalWalletState();
 	const styles = makeStyles(colors);
 
 	const removeSelectedTokens = useCallback(
@@ -63,7 +65,25 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		const loadTokens = async () => {
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
-				const allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
+				let allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
+				if (!withdraw && network.id === networks.matic.id) {
+					allTokens = allTokens.map((t) => {
+						if (t.symbol === 'QUICK') {
+							const token = t;
+							// QUICK changed address
+							token.address = '0xb5c064f955d8e7f38fe0460c556a72987494ee17';
+							return token;
+						}
+
+						if (t.address.toLowerCase() === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
+							const token = t;
+							token.symbol = 'PolyDoge';
+							return token;
+						}
+
+						return t;
+					});
+				}
 				setTokens(allTokens);
 				removeSelectedTokens(allTokens);
 				setLoading(false);
