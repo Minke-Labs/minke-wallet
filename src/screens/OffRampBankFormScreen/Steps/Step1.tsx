@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { TelephoneInput, Text, Input, ChangeCountry } from '@components';
 import { AreaObjType } from '@src/components/TelephoneInput/TelephoneInput.types';
@@ -7,7 +8,10 @@ import { AreaObjType } from '@src/components/TelephoneInput/TelephoneInput.types
 const Step1: React.FC = () => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [iso, setIso] = useState<AreaObjType>('US');
-	const [text, setText] = useState('');
+	const [telephone, setTelephone] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [firstNameError, setFirstNameError] = useState(true);
+	const [lastName, setLastName] = useState('');
 
 	return (
 		<>
@@ -18,12 +22,17 @@ const Step1: React.FC = () => {
 			</Text>
 
 			<Input
+				onChangeText={(val) => setFirstName(val)}
+				value={firstName}
 				label="First name"
-				mb="s"
-				// error
+				mb={firstNameError ? 'xxs' : 's'}
+				error={firstNameError}
+				errorDesc="Invalid characters. Use only (A-Z)"
 			/>
 
 			<Input
+				onChangeText={(val) => setLastName(val)}
+				value={lastName}
 				label="Last name"
 				mb="s"
 			/>
@@ -35,8 +44,8 @@ const Step1: React.FC = () => {
 
 			<TelephoneInput.Input
 				label="Mobile number"
-				value={text}
-				onChangeText={(t) => setText(t)}
+				value={telephone}
+				onChangeText={(t) => setTelephone(t)}
 				openModal={() => setModalVisible(true)}
 				iso={iso}
 			/>

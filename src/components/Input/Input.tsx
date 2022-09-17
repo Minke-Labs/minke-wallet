@@ -4,19 +4,20 @@ import {
 	View,
 	Animated as ReactAnimated,
 	TextInput,
-	Text,
 	TextStyle,
 	TouchableWithoutFeedback,
-	LayoutChangeEvent
+	LayoutChangeEvent,
+	Text as ReactText
 } from 'react-native';
 import Animated, { EasingNode, timing, interpolateColors } from 'react-native-reanimated';
 import ComponentsView from '@src/components/View/View';
 import Icon from '@src/components/Icon/Icon';
 import Touchable from '@src/components/Touchable/Touchable';
+import Text from '@src/components/Text/Text';
 import { makeStyles } from './Input.styles';
 import { InputProps, InputRef } from './Input.types';
 
-const AnimatedText = Animated.createAnimatedComponent(Text);
+const AnimatedText = Animated.createAnimatedComponent(ReactText);
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 	{
@@ -36,6 +37,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		value = '',
 		onSelectionChange,
 		mb,
+		errorDesc,
 		style,
 		...rest
 	},
@@ -223,7 +225,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 
 	const labelStyle: TextStyle = {
 		// @ts-ignore
-		color: interpolateColors(fontColorAnimated, {
+		color: error ? colors.alert1 : interpolateColors(fontColorAnimated, {
 			inputRange: [0, 1],
 			outputColorRange: [colors.text4, colors.cta1]
 		})
@@ -248,13 +250,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							styles.container
 						]}
 					>
-						<View
-							style={{
-								flex: 1,
-								flexDirection: 'row',
-								alignItems: 'center'
-							}}
-						>
+						<ComponentsView flex1 row cross="center">
 							{!small && (
 								<AnimatedText
 									onPress={setFocus}
@@ -282,7 +278,14 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 								{...{ value, multiline, ...rest }}
 							/>
 
-							{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
+							{error && (
+								<Icon
+									name="errorStroke"
+									size={24}
+									color="alert1"
+									style={{ marginRight: 8 }}
+								/>
+							)}
 
 							{isPassword && (
 								<Touchable style={styles.toggleButton} onPress={() => toggleVisibility()}>
@@ -293,10 +296,17 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 									)}
 								</Touchable>
 							)}
-						</View>
+						</ComponentsView>
 					</Animated.View>
 				</View>
 			</TouchableWithoutFeedback>
+			{error && (
+				<ComponentsView ph="s" mt="xxxs">
+					<Text type="lSmall" color="alert1" weight="semiBold">
+						{errorDesc}
+					</Text>
+				</ComponentsView>
+			)}
 		</ComponentsView>
 	);
 };
