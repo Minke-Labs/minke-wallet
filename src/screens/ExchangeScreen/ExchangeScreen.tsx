@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, TouchableOpacity } from 'react-native';
-import { useTheme, useLanguage, useKeyboard, useNavigation } from '@hooks';
+import { useLanguage, useKeyboard, useNavigation } from '@hooks';
 import { os } from '@styles';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
@@ -13,21 +13,20 @@ import {
 	TokenCard,
 	BlankStates,
 	Warning,
-	View
+	View,
+	ExchangeContainer
 } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
-import DirectionButton from './DirectionButton/DirectionButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
 const ExchangeScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('ExchangeScreen');
 	const navigation = useNavigation();
 	const { sourceToken, destToken } = route.params || {};
-	const { colors } = useTheme();
 	const {
 		fromToken,
 		toToken,
@@ -69,17 +68,8 @@ const ExchangeScreen = ({ route }: Props) => {
 						mb="m"
 					/>
 
-					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
-						<View
-							ph="xs"
-							pt="xs"
-							pb="s"
-							w="100%"
-							style={{
-								borderBottomWidth: 1,
-								borderBottomColor: colors.background1
-							}}
-						>
+					<ExchangeContainer
+						upperComponent={
 							<TokenCard
 								updateQuotes={debounce(updateFromQuotes, 500)}
 								conversionAmount={fromConversionAmount}
@@ -87,9 +77,8 @@ const ExchangeScreen = ({ route }: Props) => {
 								onPress={showModalFrom}
 								exchange
 							/>
-						</View>
-
-						<View ph="xs" pb="xs" pt="s" w="100%">
+						}
+						lowerComponent={
 							<TokenCard
 								updateQuotes={debounce(updateToQuotes, 500)}
 								conversionAmount={toConversionAmount}
@@ -99,14 +88,11 @@ const ExchangeScreen = ({ route }: Props) => {
 								exchange
 								disableAmountValidation
 							/>
-						</View>
-
-						<DirectionButton
-							onPress={directionSwap}
-							loading={loadingPrices}
-							disabled={!canChangeDirections}
-						/>
-					</View>
+						}
+						onPress={directionSwap}
+						loading={loadingPrices}
+						disabled={!canChangeDirections}
+					/>
 
 					<View style={{ display: keyboardVisible ? 'none' : 'flex' }}>
 						<View mb="s" style={{ display: gasless ? 'none' : 'flex' }}>

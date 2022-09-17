@@ -58,6 +58,7 @@ import ApplePayButton from './ApplePayButton/ApplePayButton';
 import ScreenLoadingIndicator from './ScreenLoadingIndicator/ScreenLoadingIndicator';
 import TransactionPeriod from './TransactionPeriod/TransactionPeriod';
 import EmptyStates from './EmptyStates';
+import ExchangeContainer from './ExchangeContainer/ExchangeContainer';
 import WatchModeTag from './WatchModeTag/WatchModeTag';
 import FiatCard from './FiatCard/FiatCard';
 import CurrencySelector from './CurrencySelector/CurrencySelector';
@@ -132,6 +133,7 @@ export {
 	TransactionIcon,
 	TransactionPeriod,
 	EmptyStates,
+	ExchangeContainer,
 	WatchModeTag,
 	FiatCard,
 	CurrencySelector,
