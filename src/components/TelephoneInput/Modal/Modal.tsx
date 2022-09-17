@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import ModalBase from '@src/components/ModalBase/ModalBase';
+import { FlatList } from 'react-native';
+import ModalComponent from '@src/components/Modal/Modal';
+import View from '@src/components/View/View';
 import { AreaObjType } from '../TelephoneInput.types';
 import { areaObj } from '../TelephoneInput.utils';
 import { Item } from './Item';
@@ -17,8 +18,8 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onDismiss, setValue }) => {
 		setValue(val as AreaObjType);
 	};
 	return (
-		<ModalBase isVisible={isVisible} onDismiss={onDismiss}>
-			<View style={{ padding: 16 }}>
+		<ModalComponent isVisible={isVisible} onDismiss={onDismiss}>
+			<View ph="xs">
 				<FlatList
 					data={Object.keys(areaObj)}
 					showsVerticalScrollIndicator={false}
@@ -31,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onDismiss, setValue }) => {
 					keyExtractor={(item) => item}
 				/>
 			</View>
-		</ModalBase>
+		</ModalComponent>
 	);
 };
 
