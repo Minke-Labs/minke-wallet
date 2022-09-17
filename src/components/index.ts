@@ -2,7 +2,7 @@ import AaveReusables from './AaveReusables';
 import AnimatedView from './AnimatedView/AnimatedView';
 import BlankStates from './BlankStates';
 import ActivityIndicator from './ActivityIndicator/ActivityIndicator';
-import TelephoneInput from './TelephoneInput';
+import TelephoneInput from './TelephoneInput/TelephoneInput';
 import Text from './Text/Text';
 import Button from './Button/Button';
 import ChangeCountry from './ChangeCountry/ChangeCountry';
