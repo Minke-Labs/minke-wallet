@@ -54,7 +54,7 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br, invert }
 					</View>
 				)}
 			>
-				<BasicLayout hideSafeAreaView center>
+				<BasicLayout hideSafeAreaView center hidePadding>
 					{children}
 					<AnimatedView
 						h="100%"

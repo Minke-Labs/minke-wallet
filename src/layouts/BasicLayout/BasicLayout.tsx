@@ -10,16 +10,17 @@ import { BasicLayoutProps } from './BasicLayout.types';
 interface BaseProps {
 	bgc?: keyof ColorType;
 	center?: boolean;
+	hidePadding?: boolean;
 }
 
-const Base: React.FC<BaseProps> = ({ children, bgc, center }) => {
+const Base: React.FC<BaseProps> = ({ children, bgc, center, hidePadding }) => {
 	const { colors } = useTheme();
 	return (
 		<View
 			style={{
 				flex: 1,
 				backgroundColor: colors[bgc!],
-				paddingTop: RNStatusBar.currentHeight,
+				...(!hidePadding && { paddingTop: RNStatusBar.currentHeight }),
 				...(center && { alignItems: 'center' })
 			}}
 		>
@@ -34,6 +35,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = ({
 	center,
 	style,
 	bgc = 'background1',
+	hidePadding = false,
 	hideSafeAreaView = false
 }) => {
 	const { name } = useRoute();
@@ -47,7 +49,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = ({
 	if (hideSafeAreaView) {
 		return (
 			<View style={style ?? styles.container}>
-				<Base bgc={bgc as keyof ColorType} center={center}>
+				<Base bgc={bgc as keyof ColorType} center={center} hidePadding={hidePadding}>
 					{children}
 				</Base>
 			</View>
@@ -57,7 +59,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = ({
 	return (
 		<View style={{ flex: 1, backgroundColor: colors[bgc! as keyof ColorType] }}>
 			<SafeAreaView style={[style || styles.container]}>
-				<Base bgc={bgc as keyof ColorType} center={center}>
+				<Base bgc={bgc as keyof ColorType} center={center} hidePadding={hidePadding}>
 					{children}
 				</Base>
 			</SafeAreaView>
