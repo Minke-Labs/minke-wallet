@@ -7,7 +7,7 @@ const Step1: React.FC = () => {
 
 	return (
 		<>
-			<ChangeCountry />
+			<ChangeCountry setCountry={(val) => handleFormChange('country', val)} />
 
 			<Text type="lMedium" weight="semiBold" mb="xs">
 				Personal information

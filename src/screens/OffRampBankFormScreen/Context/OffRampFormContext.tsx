@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import { useCountry } from '@hooks';
+import { CountriesType } from '@styles';
 import React, { createContext, useMemo, useState } from 'react';
 
 type Form = {
@@ -11,6 +13,7 @@ type Form = {
 	postalCode: string;
 	accountNumber: string;
 	routingNumber: string;
+	country: CountriesType;
 };
 
 // const isValidName = (value: string) => {
@@ -26,6 +29,7 @@ type Form = {
 export const OffRampFormContext = createContext<any>(null);
 
 const OffRampFormProvider: React.FC = ({ children }) => {
+	const { country } = useCountry();
 	const [form, setForm] = useState<Form>({
 		firstName: '',
 		lastName: '',
@@ -35,7 +39,8 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 		state: '',
 		postalCode: '',
 		accountNumber: '',
-		routingNumber: ''
+		routingNumber: '',
+		country
 	});
 
 	const handleFormChange = (field: string, txt: string) => {

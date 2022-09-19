@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCountry, useLanguage } from '@hooks';
 import { deviceHeight, countries } from '@styles';
 import View from '@src/components/View/View';
@@ -10,10 +10,19 @@ import CountrySelector from '@src/components/CountrySelector/CountrySelector';
 
 const isoByCountry = (val: string) => Object.keys(countries).find((key: string) => countries[key] === val);
 
-const ChangeCountry = () => {
+interface ChangeCountryProps {
+	setCountry: (val: any) => void;
+}
+
+const ChangeCountry: React.FC<ChangeCountryProps> = ({ setCountry }) => {
 	const { country } = useCountry();
 	const [isModalVisible, setIsModalvisible] = useState(false);
 	const { i18n } = useLanguage();
+
+	useEffect(() => {
+		setCountry(country);
+	}, [country]);
+
 	return (
 		<>
 			<View mb="s">
