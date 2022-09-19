@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
 import { useFormProgress, useNavigation } from '@hooks';
 import { Step1, Step2, Step3 } from './Steps';
-import OffRampFormProvider from './Context/OffRampFormContext';
+import { OffRampFormContext } from './Context/OffRampFormContext';
 
 export const getStep = (type: number) => {
 	switch (type) {
@@ -34,9 +34,10 @@ export const getStep = (type: number) => {
 	}
 };
 
-const OffRampBankFormScreen = () => {
+export const OffRampBankForm = () => {
 	const navigation = useNavigation();
 	const { currentStep, goForward, goBack } = useFormProgress();
+	const { form } = useContext(OffRampFormContext);
 
 	const handleBack = () => {
 		if (currentStep === 0) return navigation.goBack();
@@ -44,12 +45,15 @@ const OffRampBankFormScreen = () => {
 	};
 
 	const handleForward = () => {
-		if (currentStep === 2) return navigation.navigate('OffRampSendScreen');
+		if (currentStep === 2) {
+			console.log(form);
+			return navigation.navigate('OffRampSendScreen');
+		}
 		return goForward();
 	};
 
 	return (
-		<OffRampFormProvider>
+		<>
 			<BasicLayout>
 
 				<Header
@@ -65,8 +69,6 @@ const OffRampBankFormScreen = () => {
 				</View>
 
 			</BasicLayout>
-		</OffRampFormProvider>
+		</>
 	);
 };
-
-export default OffRampBankFormScreen;

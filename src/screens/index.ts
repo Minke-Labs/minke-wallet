@@ -14,7 +14,7 @@ import HomeScreen from './HomeScreen/HomeScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
-import OffRampBankFormScreen from './OffRampBankFormScreen/OffRampBankFormScreen';
+import OffRampBankFormScreen from './OffRampBankFormScreen';
 import OffRampSendScreen from './OffRampSendScreen/OffRampSendScreen';
 import StablecoinsScreen from './StablecoinsScreen/StablecoinsScreen';
 import MinkeHubScreen from './MinkeHubScreen/MinkeHubScreen';
