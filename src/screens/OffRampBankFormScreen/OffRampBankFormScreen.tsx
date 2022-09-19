@@ -3,6 +3,7 @@ import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
 import { useFormProgress, useNavigation } from '@hooks';
 import { Step1, Step2, Step3 } from './Steps';
+import OffRampFormProvider from './Context/OffRampFormContext';
 
 export const getStep = (type: number) => {
 	switch (type) {
@@ -48,21 +49,23 @@ const OffRampBankFormScreen = () => {
 	};
 
 	return (
-		<BasicLayout>
+		<OffRampFormProvider>
+			<BasicLayout>
 
-			<Header
-				onPress={handleBack}
-				onLinkClick={handleForward}
-				title={getStep(currentStep).title}
-				link={getStep(currentStep).link}
-				mb="l"
-			/>
+				<Header
+					onPress={handleBack}
+					onLinkClick={handleForward}
+					title={getStep(currentStep).title}
+					link={getStep(currentStep).link}
+					mb="l"
+				/>
 
-			<View ph="xs">
-				{getStep(currentStep).component}
-			</View>
+				<View ph="xs">
+					{getStep(currentStep).component}
+				</View>
 
-		</BasicLayout>
+			</BasicLayout>
+		</OffRampFormProvider>
 	);
 };
 
