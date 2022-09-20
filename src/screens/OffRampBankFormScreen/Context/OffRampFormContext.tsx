@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useCountry } from '@hooks';
 import { CountriesType } from '@styles';
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useMemo, useState, useEffect } from 'react';
 
 type Form = {
 	firstName: string;
@@ -16,10 +16,22 @@ type Form = {
 	country: CountriesType;
 };
 
-// const isValidName = (value: string) => {
-// const regx = /^[a-z ,.'-]+$/i;
-// return regx.test(value);
-// };
+type FormError = {
+	firstName: boolean;
+	lastName: boolean;
+	birthday: boolean;
+	address: boolean;
+	city: boolean;
+	state: boolean;
+	postalCode: boolean;
+	accountNumber: boolean;
+	routingNumber: boolean;
+};
+
+const isValidName = (value: string) => {
+	const regx = /^[a-z ,.'-]+$/i;
+	return regx.test(value);
+};
 
 // const isValidBirthday = (value: string) => {
 // const regx = /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
@@ -43,19 +55,41 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 		country
 	});
 
+	const [error, setError] = useState<FormError>({
+		firstName: false,
+		lastName: false,
+		birthday: false,
+		address: false,
+		city: false,
+		state: false,
+		postalCode: false,
+		accountNumber: false,
+		routingNumber: false
+	});
+
 	const handleFormChange = (field: string, txt: string) => {
 		const formObj = { ...form, [field]: txt };
 		setForm(formObj);
 	};
 
+	const handleError = (field: string, type: boolean) => {
+		const errorObj = { ...error, [field]: type };
+		setError(errorObj);
+	};
+
+	useEffect(() => {
+		if (form.firstName.length > 0 && !isValidName(form.firstName)) setError({ ...error, firstName: true });
+		else setError({ ...error, firstName: false });
+	}, [form]);
+
 	const obj = useMemo(() => ({
 		form,
-		handleFormChange
+		handleFormChange,
+		error,
+		handleError
 	}), [form]);
 
 	return <OffRampFormContext.Provider value={obj}>{children}</OffRampFormContext.Provider>;
 };
 
 export default OffRampFormProvider;
-
-// const [firstNameError, setFirstNameError] = useState(form.firstName.label.length > 0 && !isValidName(form.firstName.label));

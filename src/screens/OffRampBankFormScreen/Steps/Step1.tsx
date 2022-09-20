@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
-import { Text, Input, ChangeCountry } from '@components';
+import React, { useContext, useState } from 'react';
+import { Text, Input, ChangeCountry, TelephoneInput } from '@components';
 import { OffRampFormContext } from '../Context/OffRampFormContext';
 
 const Step1: React.FC = () => {
-	const { form, handleFormChange } = useContext(OffRampFormContext);
+	const { form, error, handleFormChange } = useContext(OffRampFormContext);
+	const [telephone, setTelephone] = useState('');
 
 	return (
 		<>
@@ -18,8 +19,8 @@ const Step1: React.FC = () => {
 				mb="s"
 				onChangeText={(val) => handleFormChange('firstName', val)}
 				value={form.firstName}
-				// error={firstNameError}
-				// errorDesc="Invalid characters. Use only (A-Z)"
+				error={error.firstName}
+				errorDesc="Invalid characters. Use only (A-Z)"
 			/>
 
 			<Input
@@ -27,8 +28,8 @@ const Step1: React.FC = () => {
 				mb="s"
 				onChangeText={(val) => handleFormChange('lastName', val)}
 				value={form.lastName}
-				// error={form.lastName.length > 0 && !isValidName(form.lastName)}
-				// errorDesc="Invalid characters. Use only (A-Z)"
+				error={error.lastName}
+				errorDesc="Invalid characters. Use only (A-Z)"
 			/>
 
 			<Input
@@ -40,11 +41,11 @@ const Step1: React.FC = () => {
 				// errorDesc="Invalid birthday format. Please use dd/mm/yyyy format."
 			/>
 
-			{/* <TelephoneInput
+			<TelephoneInput
 				label="Mobile number"
 				value={telephone}
 				onChangeText={(t) => setTelephone(t)}
-			/> */}
+			/>
 		</>
 	);
 };

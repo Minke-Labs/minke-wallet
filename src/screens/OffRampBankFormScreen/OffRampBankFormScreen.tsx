@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useContext } from 'react';
 import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
@@ -49,6 +50,10 @@ export const OffRampBankForm = () => {
 			console.log(form);
 			return navigation.navigate('OffRampSendScreen');
 		}
+		// if (Object.values(error).find((val) => val === true)) {
+		// console.log(Object.values(error));
+		// return null;
+		// }
 		return goForward();
 	};
 
