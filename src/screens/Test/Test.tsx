@@ -1,11 +1,6 @@
 import React from 'react';
-import { BasicLayout } from '@layouts';
-import { Token } from '@components';
+import { BlankStates } from '@components';
 
-const Test = () => (
-	<BasicLayout>
-		<Token name="polydoge" />
-	</BasicLayout>
-);
+const Test = () => <BlankStates.Type2 title="Test" />;
 
 export default Test;
