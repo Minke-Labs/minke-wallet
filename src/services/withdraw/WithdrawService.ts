@@ -1,4 +1,5 @@
 import { ApprovalState } from '@models/deposit';
+import gasLimits, { Networks } from '@models/gas';
 import { network } from '@models/network';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
@@ -123,12 +124,13 @@ class WithdrawService {
 					token
 				});
 				const { to, data } = tx;
+				const { id } = await network();
 				const hash = await connector.sendTransaction({
 					from: address,
 					to,
 					value: toBn('0').toHexString(),
 					data: data || toBn('0').toHexString(),
-					gasLimit: '800000'
+					gasLimit: gasLimits[id as Networks].withdraw.mstable.toString()
 				});
 				return hash;
 			}

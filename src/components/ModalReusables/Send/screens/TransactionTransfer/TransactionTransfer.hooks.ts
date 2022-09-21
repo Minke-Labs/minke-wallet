@@ -27,6 +27,7 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureEvent } from '@sentry/react-native';
 import { toBn } from 'evm-bn';
+import gasLimits from '@models/gas';
 import { ResultProps } from '../../Send.types';
 
 interface UserProps {
@@ -225,7 +226,7 @@ export const useTransactionTransfer = ({
 							to: addressTo,
 							value: (value || toBn('0')).toHexString(),
 							data: data || toBn('0').toHexString(),
-							gasLimit: '100000'
+							gasLimit: gasLimits.send.toString()
 						});
 
 						addPendingTransaction({

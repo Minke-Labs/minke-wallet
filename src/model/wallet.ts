@@ -13,6 +13,7 @@ import * as qs from 'qs';
 import * as keychain from './keychain';
 import { network as selectedNetwork, Networks, networks } from './network';
 import { loadObject, saveObject } from './keychain';
+import gasLimits from './gas';
 
 const authenticationPrompt = { authenticationPrompt: { title: 'Please authenticate' } };
 
@@ -230,7 +231,7 @@ export const sendTransactionData = async (
 		from,
 		to,
 		gasPrice: parseUnits(gasPrice, 'gwei'),
-		gasLimit: 100000
+		gasLimit: gasLimits.send
 	};
 
 	let tx;

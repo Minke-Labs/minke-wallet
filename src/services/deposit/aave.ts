@@ -1,3 +1,4 @@
+import gasLimits, { Networks } from '@models/gas';
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
@@ -100,7 +101,6 @@ export const depositData = async ({
 		to: aave.depositContract,
 		maxFeePerGas,
 		maxPriorityFeePerGas
-		// gasLimit: 500000
 	};
 	const abi = [
 		// eslint-disable-next-line max-len
@@ -150,6 +150,7 @@ export const deposit = async ({
 		maxPriorityFeePerGas
 	});
 	Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
+	const { id } = await network();
 
 	const { from, to, data, maxFeePerGas: baseFee, maxPriorityFeePerGas: priorityFee } = transaction;
 
@@ -162,7 +163,7 @@ export const deposit = async ({
 		to,
 		data,
 		nonce,
-		gasLimit: 500000,
+		gasLimit: gasLimits[id as Networks].deposit.aave,
 		maxFeePerGas: baseFee,
 		maxPriorityFeePerGas: priorityFee,
 		type: 2,

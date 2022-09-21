@@ -2,6 +2,7 @@ import { BigNumber, Contract, Wallet } from 'ethers';
 import { permitSignature } from '@utils/signing/signing';
 import { getProvider } from './wallet';
 import { network as selectedNetwork } from './network';
+import gasLimits, { Networks } from './gas';
 
 export const withdrawTransaction = async ({
 	address,
@@ -22,14 +23,14 @@ export const withdrawTransaction = async ({
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
 }) => {
-	const { aave } = await selectedNetwork();
+	const { aave, id } = await selectedNetwork();
 
 	const txDefaults = {
 		from: address,
 		to: aave.depositContract,
 		maxFeePerGas,
 		maxPriorityFeePerGas,
-		gasLimit: 500000,
+		gasLimit: gasLimits[id as Networks].withdraw.aave,
 		type: 2
 	};
 
