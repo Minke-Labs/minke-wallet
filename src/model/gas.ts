@@ -43,7 +43,7 @@ const gasLimits: GasLimits = {
 		},
 		withdraw: {
 			aave: 500000,
-			mstable: 700000
+			mstable: 1000000
 		}
 	}
 };

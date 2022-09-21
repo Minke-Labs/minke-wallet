@@ -261,6 +261,7 @@ export const useTransactionTransfer = ({
 						// Pending transaction...
 						addPendingTransaction(
 							convertTransactionResponse({
+								destination: to,
 								transaction,
 								amount: amountToSend,
 								direction: 'outgoing',
@@ -296,7 +297,7 @@ export const useTransactionTransfer = ({
 		const { balance: tokenBalance = '0', balanceUSD = 0, balanceAvailable, balanceAvailableUSD } = token;
 		if (tokenValue) {
 			onChangeAmount((balanceAvailable || tokenBalance).replace(/\./g, decimalSeparator));
-			onChangeNumber(Number(balanceAvailable || balance));
+			onChangeNumber(Number(balanceAvailable || tokenBalance));
 		} else {
 			onChangeAmount((balanceAvailableUSD || balanceUSD).toString().replace(/\./g, decimalSeparator));
 			onChangeNumber(balanceAvailableUSD || balanceUSD);

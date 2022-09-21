@@ -99,7 +99,10 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 							!canSendTransactions ||
 							!enoughGas ||
 							!number ||
-							number > (amountType === 'token' ? Number(token.balance!) : token.balanceUSD!)
+							number >
+								(amountType === 'token'
+									? Number(token.balanceAvailable || token.balance!)
+									: token.balanceAvailableUSD || token.balanceUSD!)
 						}
 						onPress={onSend}
 					/>
