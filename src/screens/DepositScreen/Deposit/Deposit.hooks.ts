@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
 import { MinkeToken } from '@models/types/token.types';
-import { globalWalletState } from '@stores/WalletStore';
 import { globalExchangeState } from '@stores/ExchangeStore';
 import { DepositProtocol, usdCoinSettingsKey } from '@models/deposit';
 import {
@@ -12,7 +11,8 @@ import {
 	useBiconomy,
 	useNativeToken,
 	useTransactions,
-	useWalletManagement
+	useWalletManagement,
+	useGlobalWalletState
 } from '@hooks';
 import Logger from '@utils/logger';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,6 +22,7 @@ import Deposit from '@src/services/deposit/DepositService';
 import { captureException } from '@sentry/react-native';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import { constants } from 'ethers';
+import gasLimits, { Networks } from '@models/gas';
 
 interface UseDepositProps {
 	depositableToken: DepositableToken | undefined;
@@ -35,7 +36,11 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { stablecoins = [] } = useBalances();
-	const { address, privateKey } = globalWalletState().value;
+	const {
+		address,
+		privateKey,
+		network: { id }
+	} = useGlobalWalletState();
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
 	const [token, setToken] = React.useState<MinkeToken>();
@@ -54,8 +59,8 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 		}
 	};
 
-	// @TODO: multiply by the gas usage of the blockchain transaction
-	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
+	const gasUnits = selectedProtocol ? gasLimits[id as Networks].deposit[selectedProtocol.id] : 1;
+	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
 	const canDeposit =
 		token &&
 		token.balance &&

@@ -10,6 +10,7 @@ import { ExchangeState, Conversion, globalExchangeState } from '@stores/Exchange
 import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeGasless, validatedExceptions } from '@models/exchange';
 import { formatUnits } from 'ethers/lib/utils';
+import gasLimits from '@models/gas';
 
 interface PriceParams {
 	amount?: string;
@@ -277,8 +278,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		}
 	}, [gasValueInEth, fromToken?.symbol, nativeToken?.symbol]);
 
-	// @TODO: multiply by the gas usage of the blockchain transaction
-	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
+	const enoughForGas =
+		gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasLimits.exchange)) : true);
 
 	const canSwap = () =>
 		quote &&

@@ -4,12 +4,13 @@ import Text from '@src/components/Text/Text';
 import { numberFormat } from '@helpers/utilities';
 import { useLanguage } from '@hooks';
 import { getEthLastPrice } from '@models/wallet';
+import gasLimits from '@models/gas';
 import { GasPriceLineProps } from './GasPriceLine.types';
 import styles from './GasPriceLine.styles';
 
 const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD }) => {
 	const { i18n } = useLanguage();
-	const coinValue = gas * 41000 * 10 ** -9;
+	const coinValue = gas * gasLimits.send * 10 ** -9;
 	const [usdPrice, setUsdPrice] = useState(priceUSD);
 
 	useEffect(() => {
