@@ -171,6 +171,7 @@ export const useDeposit = ({ depositableToken, selectedProtocol, setSelectedUSDC
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		gasUnits
 	};
 };

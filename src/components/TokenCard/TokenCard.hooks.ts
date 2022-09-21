@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { decimalSeparator } from 'expo-localization';
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken } from '@models/types/token.types';
 
 interface UseTokenCardProps {
-	token: MinkeToken | undefined;
+	token: MinkeGasToken | undefined;
 	updateQuotes?: Function;
 	conversionAmount: string;
 	disableMax: boolean;
@@ -13,7 +13,7 @@ export const useTokenCard = ({ updateQuotes, token, conversionAmount, disableMax
 	const [amount, setAmount] = useState('');
 	// if enabled always set the max according to the balance
 	const [maxModeEnabled, setMaxModeEnabled] = useState(false);
-	const { balance = '0' } = token || {};
+	const { balance = '0', balanceAvailable } = token || {};
 
 	const onChangeText = (value: string) => {
 		let lastValid = amount;
@@ -34,7 +34,7 @@ export const useTokenCard = ({ updateQuotes, token, conversionAmount, disableMax
 
 	const onMaxPress = () => {
 		setMaxModeEnabled(true);
-		setAmount(balance.replace(/\./g, decimalSeparator));
+		setAmount((balanceAvailable || balance).replace(/\./g, decimalSeparator));
 	};
 
 	useEffect(() => {
@@ -59,10 +59,10 @@ export const useTokenCard = ({ updateQuotes, token, conversionAmount, disableMax
 		if (maxModeEnabled && !disableMax && conversionAmount) {
 			onMaxPress();
 		}
-	}, [balance]);
+	}, [balance, balanceAvailable]);
 
 	const isMaxEnabled = !disableMax && token && balance;
-	const invalidAmount = +balance < +amount.replace(/,/g, '.');
+	const invalidAmount = +(balanceAvailable || balance) < +amount.replace(/,/g, '.');
 
 	return {
 		amount,

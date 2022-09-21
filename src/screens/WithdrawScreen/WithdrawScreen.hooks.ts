@@ -164,7 +164,8 @@ const useWithdrawScreen = () => {
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		gasUnits
 	};
 };
 

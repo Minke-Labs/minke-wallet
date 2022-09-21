@@ -43,7 +43,8 @@ const WithdrawScreen = () => {
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		gasUnits
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
@@ -57,7 +58,7 @@ const WithdrawScreen = () => {
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
-					<GasSelector />
+					<GasSelector gasLimit={gasUnits} />
 				</View>
 
 				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>

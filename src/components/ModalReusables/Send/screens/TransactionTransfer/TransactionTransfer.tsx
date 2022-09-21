@@ -63,7 +63,12 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 				symbol={token.symbol}
 				onAmountChange={onChangeAmount}
 				onNumberAmountChange={onChangeNumber}
-				isAmountValid={(number || 0) <= (amountType === 'token' ? Number(token.balance!) : token.balanceUSD!)}
+				isAmountValid={
+					(number || 0) <=
+					(amountType === 'token'
+						? Number(token.balanceAvailable || token.balance!)
+						: token.balanceAvailableUSD || token.balanceUSD!)
+				}
 				autoFocus
 				placeholder={amountType === 'fiat' ? `$00${decimalSeparator}00` : `0${decimalSeparator}00`}
 				onMaxPress={onMaxPress}

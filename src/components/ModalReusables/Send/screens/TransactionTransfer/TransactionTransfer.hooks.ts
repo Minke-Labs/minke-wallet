@@ -19,7 +19,7 @@ import {
 	imageSource,
 	sendTransactionData
 } from '@models/wallet';
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken } from '@models/types/token.types';
 import { decimalSeparator } from 'expo-localization';
 import { approvalState } from '@models/deposit';
 import { gaslessApproval, gaslessSend, sendContract } from '@models/gaslessTransaction';
@@ -40,7 +40,7 @@ interface UseTransactionTransferProps {
 	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	user: UserProps;
-	token: MinkeToken;
+	token: MinkeGasToken;
 }
 
 export const useTransactionTransfer = ({
@@ -102,11 +102,11 @@ export const useTransactionTransfer = ({
 		) {
 			const isNativeToken = token.symbol === chainDefaultToken;
 			if (isNativeToken) {
-				const transactionPrice = +gasPrice.result.ProposeGasPrice * 120000; // gas price * gas limit
+				const transactionPrice = +gasPrice.result.ProposeGasPrice * gasLimits.send; // gas price * gas limit
 				const gasValueInEth = formatUnits(parseUnits(transactionPrice.toString(), 'gwei'));
 				const newBalance = +token.balance - +gasValueInEth;
-				token.balanceUSD = (newBalance * token.balanceUSD!) / +token.balance;
-				token.balance = String(newBalance);
+				token.balanceAvailableUSD = (newBalance * token.balanceUSD!) / +token.balance;
+				token.balanceAvailable = String(newBalance);
 			}
 		}
 	}, [gasPrice, token, chainDefaultToken]);
@@ -293,12 +293,13 @@ export const useTransactionTransfer = ({
 	};
 
 	const onMaxPress = (tokenValue = true) => {
+		const { balance: tokenBalance = '0', balanceUSD = 0, balanceAvailable, balanceAvailableUSD } = token;
 		if (tokenValue) {
-			onChangeAmount(token.balance!.replace(/\./g, decimalSeparator));
-			onChangeNumber(Number(token.balance));
+			onChangeAmount((balanceAvailable || tokenBalance).replace(/\./g, decimalSeparator));
+			onChangeNumber(Number(balanceAvailable || balance));
 		} else {
-			onChangeAmount(token.balanceUSD!.toString().replace(/\./g, decimalSeparator));
-			onChangeNumber(token.balanceUSD);
+			onChangeAmount((balanceAvailableUSD || balanceUSD).toString().replace(/\./g, decimalSeparator));
+			onChangeNumber(balanceAvailableUSD || balanceUSD);
 		}
 	};
 
