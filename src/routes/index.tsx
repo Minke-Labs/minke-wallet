@@ -28,8 +28,8 @@ const Routes: React.FC = () => {
 	const walletState = useState(globalWalletState());
 	const { address } = walletState.value;
 
-	const initialScreen = walletState.value.walletId ? 'HomeScreen' : 'WelcomeScreen';
-	// const initialScreen = 'Test';
+	// const initialScreen = walletState.value.walletId ? 'HomeScreen' : 'WelcomeScreen';
+	const initialScreen = 'Test';
 
 	const urlRedirect = (event: any) => {
 		const { url } = event;
