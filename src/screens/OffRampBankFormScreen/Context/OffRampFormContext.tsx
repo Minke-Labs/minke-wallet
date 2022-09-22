@@ -41,7 +41,7 @@ const isValid = (type: string, val: string) => {
 };
 
 const OffRampFormContext = createContext<any>(null);
-export const useOffRamp = useContext(OffRampFormContext);
+export const useOffRamp = () => useContext(OffRampFormContext);
 
 const OffRampFormProvider: React.FC = ({ children }) => {
 	const { country } = useCountry();

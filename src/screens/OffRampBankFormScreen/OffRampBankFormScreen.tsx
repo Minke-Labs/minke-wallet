@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
 import { useFormProgress, useNavigation } from '@hooks';
 import { Step1, Step2, Step3 } from './Steps';
-import { OffRampFormContext } from './Context/OffRampFormContext';
+import { useOffRamp } from './Context/OffRampFormContext';
 
 export const getStep = (type: number) => {
 	switch (type) {
@@ -38,7 +38,7 @@ export const getStep = (type: number) => {
 export const OffRampBankForm = () => {
 	const navigation = useNavigation();
 	const { currentStep, goForward, goBack } = useFormProgress();
-	const { form } = useContext(OffRampFormContext);
+	const { form } = useOffRamp();
 
 	const handleBack = () => {
 		if (currentStep === 0) return navigation.goBack();
