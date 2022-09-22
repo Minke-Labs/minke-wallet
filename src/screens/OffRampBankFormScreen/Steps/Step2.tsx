@@ -3,13 +3,7 @@ import { Text, Input } from '@components';
 import { OffRampFormContext } from '../Context/OffRampFormContext';
 
 const Step2: React.FC = () => {
-	const {
-		form,
-		handleFormChange,
-		isValidAddress,
-		isValidName,
-		isValidZipCode
-	} = useContext(OffRampFormContext);
+	const { form, handleFormChange, isValid } = useContext(OffRampFormContext);
 
 	return (
 		<>
@@ -22,7 +16,7 @@ const Step2: React.FC = () => {
 				mb="s"
 				onChangeText={(val) => handleFormChange('address', val)}
 				value={form.address}
-				error={form.address.length > 0 && !isValidAddress(form.address)}
+				error={form.address.length > 0 && !isValid('address', form.address)}
 				errorDesc="Invalid Address."
 			/>
 
@@ -31,7 +25,7 @@ const Step2: React.FC = () => {
 				mb="s"
 				onChangeText={(val) => handleFormChange('city', val)}
 				value={form.city}
-				error={form.city.length > 0 && !isValidName(form.city)}
+				error={form.city.length > 0 && !isValid('name', form.city)}
 				errorDesc="Invalid city name."
 			/>
 
@@ -40,7 +34,7 @@ const Step2: React.FC = () => {
 				mb="s"
 				onChangeText={(val) => handleFormChange('state', val)}
 				value={form.state}
-				error={form.state.length > 0 && !isValidName(form.state)}
+				error={form.state.length > 0 && !isValid('name', form.state)}
 				errorDesc="Invalid state name."
 			/>
 
@@ -48,7 +42,7 @@ const Step2: React.FC = () => {
 				label="Postal code"
 				onChangeText={(val) => handleFormChange('postalCode', val)}
 				value={form.postalCode}
-				error={form.postalCode.length > 0 && !isValidZipCode(form.postalCode)}
+				error={form.postalCode.length > 0 && !isValid('zipCode', form.postalCode)}
 				errorDesc="Invalid zip-code name."
 			/>
 		</>

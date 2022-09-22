@@ -6,8 +6,7 @@ const Step2: React.FC = () => {
 	const {
 		form,
 		handleFormChange,
-		isValidAccountNumber,
-		isValidBankRoutingNumber
+		isValid
 	} = useContext(OffRampFormContext);
 
 	return (
@@ -21,7 +20,7 @@ const Step2: React.FC = () => {
 				mb="s"
 				onChangeText={(val) => handleFormChange('accountNumber', val)}
 				value={form.accountNumber}
-				error={form.accountNumber.length > 0 && !isValidAccountNumber(form.accountNumber)}
+				error={form.accountNumber.length > 0 && !isValid('accountNumber', form.accountNumber)}
 				errorDesc="Invalid accountNumber."
 			/>
 
@@ -29,7 +28,7 @@ const Step2: React.FC = () => {
 				label="Routing number"
 				onChangeText={(val) => handleFormChange('routingNumber', val)}
 				value={form.routingNumber}
-				error={form.routingNumber.length > 0 && !isValidBankRoutingNumber(form.routingNumber)}
+				error={form.routingNumber.length > 0 && !isValid('routingNumber', form.routingNumber)}
 				errorDesc="Invalid routingNumber."
 			/>
 		</>
