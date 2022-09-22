@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useCountry } from '@hooks';
 import { CountriesType } from '@styles';
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 type Form = {
 	firstName: string;
@@ -40,7 +40,8 @@ const isValid = (type: string, val: string) => {
 	return regx.test(val);
 };
 
-export const OffRampFormContext = createContext<any>(null);
+const OffRampFormContext = createContext<any>(null);
+export const useOffRamp = useContext(OffRampFormContext);
 
 const OffRampFormProvider: React.FC = ({ children }) => {
 	const { country } = useCountry();

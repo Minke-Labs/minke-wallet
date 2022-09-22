@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, Input, ChangeCountry, TelephoneInput } from '@components';
-import { OffRampFormContext } from '../Context/OffRampFormContext';
+import { useOffRamp } from '../Context/OffRampFormContext';
 
 const Step1: React.FC = () => {
-	const { form, handleFormChange, isValid } = useContext(OffRampFormContext);
+	const { form, handleFormChange, isValid } = useOffRamp();
 	const [telephone, setTelephone] = useState('');
 
 	return (
