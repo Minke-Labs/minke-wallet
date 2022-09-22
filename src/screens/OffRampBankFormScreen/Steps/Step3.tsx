@@ -3,11 +3,7 @@ import { Text, Input } from '@components';
 import { OffRampFormContext } from '../Context/OffRampFormContext';
 
 const Step2: React.FC = () => {
-	const {
-		form,
-		handleFormChange,
-		isValid
-	} = useContext(OffRampFormContext);
+	const { form, handleFormChange, isValid } = useContext(OffRampFormContext);
 
 	return (
 		<>
