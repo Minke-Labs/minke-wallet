@@ -1082,9 +1082,10 @@ export default {
 		},
 		ConnectionRequestModal: {
 			connection_request_from: 'Connection request from:',
-			connect: 'Connect',
 			switch_wallet: 'Switch wallet',
-			switch_network: 'Switch network'
+			switch_network: 'Switch network',
+			cancel: 'Cancel',
+			connect: 'Connect'
 		}
 	},
 
