@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View } from '@components';
+import { ModalBase, Text, View } from '@components';
 import WalletConnect from '@walletconnect/client';
 import { useGlobalWalletState } from '@hooks';
 import { parseWalletConnectUri } from '@walletconnect/utils';
 import { BasicLayout } from '@layouts';
+import ConnectionRequestModal from '@src/components/WalletConnect/ConnectionRequestModal';
 
 const Test = () => {
 	const {
@@ -11,7 +12,7 @@ const Test = () => {
 		network: { chainId }
 	} = useGlobalWalletState();
 	const uri =
-		'wc:6a792cff-6f5c-451b-9cbc-6726b31ce3e7@1?bridge=https%3A%2F%2Fz.bridge.walletconnect.org&key=84e20c1f703dd13823834d48ec554948c3bbefb67b94ccb7a01af49ad3ae04bf';
+		'wc:eb2d55a1-93b9-4a81-a734-7e72bffc70e2@1?bridge=https%3A%2F%2F6.bridge.walletconnect.org&key=eed3261027556ebf71857f5ee6b7a289e1f709df8a2dcafe0ccd41cfb7b0ddcc';
 
 	console.log(parseWalletConnectUri(uri));
 	const connector = new WalletConnect({
@@ -59,12 +60,16 @@ const Test = () => {
 		}
 		*/
 		console.log('approving');
+		// check if it's already connected
+		// ask the user and approve or reject the request
 		connector.approveSession({
 			accounts: [address],
 			chainId
 		});
 		const { peerId, session } = connector;
 		console.log('connected to', { peerId, session });
+		// save session
+		// start listening
 	});
 
 	// Subscribe to call requests
@@ -98,17 +103,22 @@ const Test = () => {
 			throw error;
 		}
 
-		connector.killSession();
+		// delete from the storage
 	});
 
 	return (
-		<BasicLayout>
-			<View flex1 bw={2}>
-				<Text>Marcos {connector.connected.toString()}</Text>
-				<Text>Marcos {connector.chainId}</Text>
-				<Text>Marcos {connector.accounts[0]}</Text>
-			</View>
-		</BasicLayout>
+		<>
+			<BasicLayout>
+				<View flex1 bw={2}>
+					<Text>Marcos {connector.connected.toString()}</Text>
+					<Text>Marcos {connector.chainId}</Text>
+					<Text>Marcos {connector.accounts[0]}</Text>
+				</View>
+			</BasicLayout>
+			<ModalBase isVisible={true} onDismiss={() => {}}>
+				<ConnectionRequestModal />
+			</ModalBase>
+		</>
 	);
 };
 

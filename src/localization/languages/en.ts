@@ -1079,6 +1079,12 @@ export default {
 		WatchModeTag: {
 			this_wallet_needs_to_be_reconnected: 'This wallet needs to be reconnected to {{network}}.',
 			import_wallet: 'Import wallet to send transaction'
+		},
+		ConnectionRequestModal: {
+			connection_request_from: 'Connection request from:',
+			connect: 'Connect',
+			switch_wallet: 'Switch wallet',
+			switch_network: 'Switch network'
 		}
 	},
 
