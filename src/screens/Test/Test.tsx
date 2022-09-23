@@ -6,40 +6,32 @@ import ConnectionRequestModal from '@src/components/WalletConnect/ConnectionRequ
 
 const Test = () => {
 	const [visible, setVisible] = useState(false);
+	const [wc, setWc] = useState<WalletConnect>();
 
 	const uri =
-		'wc:0555bd36-e9e2-4545-9cea-2de600812c2c@1?bridge=https%3A%2F%2Fb.bridge.walletconnect.org&key=48aaa377e90e8ecc8967599dc886241e1f90cb413f5744fad95295fea29bdddb';
+		'wc:5d58fd74-da0f-4d19-8305-bf0a146d8d49@1?bridge=https%3A%2F%2F6.bridge.walletconnect.org&key=9adcf1023d820972126bc485456bcde28c7c6db78c87e765718b86407df9946c';
 
-	const connect = (address: string, chainId: number) => {
-		const connector = new WalletConnect({
-			// Required
-			uri,
-			// Required
-			clientMeta: {
-				description: 'WalletConnect Developer App',
-				url: 'https://walletconnect.org',
-				icons: ['https://walletconnect.org/walletconnect-logo.png'],
-				name: 'WalletConnect'
-			}
-		});
-		// Check if connection is already established
-		if (!connector.connected) {
-			// create new session
-			console.log('connecting');
-			connector.createSession();
-		} else {
-			console.log('connected!!');
+	const connector = new WalletConnect({
+		// Required
+		uri,
+		// Required
+		clientMeta: {
+			description: 'WalletConnect Developer App',
+			url: 'https://walletconnect.org',
+			icons: ['https://walletconnect.org/walletconnect-logo.png'],
+			name: 'WalletConnect'
+		}
+	});
+
+	connector.on('session_request', (error, payload) => {
+		console.log('session_request', payload);
+		if (error) {
+			throw error;
 		}
 
-		connector.on('session_request', (error, payload) => {
-			console.log('session_request', payload);
-			if (error) {
-				throw error;
-			}
+		// Handle Session Request
 
-			// Handle Session Request
-
-			/* payload:
+		/* payload:
 			{
 				id: 1,
 				jsonrpc: '2.0'.
@@ -55,34 +47,23 @@ const Test = () => {
 				}]
 			}
 			*/
-			console.log('approving');
-			// check if it's already connected
-			// ask the user and approve or reject the request
-			connector.approveSession({
-				accounts: [address],
-				chainId
-			});
-			const { peerId, session } = connector;
-			console.log('connected to', { peerId, session });
-			// save session
-			// start listening
+		setWc(connector);
+		setVisible(true);
+	});
 
-			setVisible(false);
-		});
+	// Subscribe to call requests
+	connector.on('call_request', (error, payload) => {
+		console.log('call_request', payload);
+		if (error) {
+			throw error;
+		}
 
-		// Subscribe to call requests
-		connector.on('call_request', (error, payload) => {
-			console.log('call_request', payload);
-			if (error) {
-				throw error;
-			}
+		const { clientId, peerId, peerMeta } = connector;
+		console.log({ clientId, peerId, peerMeta });
 
-			const { clientId, peerId, peerMeta } = connector;
-			console.log({ clientId, peerId, peerMeta });
+		// Handle Call Request
 
-			// Handle Call Request
-
-			/* payload:
+		/* payload:
 			{
 				id: 1,
 				jsonrpc: '2.0'.
@@ -93,16 +74,29 @@ const Test = () => {
 				]
 			}
 			*/
+	});
+
+	connector.on('disconnect', (error, payload) => {
+		console.log('disconnect', payload);
+		if (error) {
+			throw error;
+		}
+
+		// delete from the storage
+	});
+
+	const connect = (address: string, chainId: number) => {
+		wc!.approveSession({
+			accounts: [address],
+			chainId
 		});
 
-		connector.on('disconnect', (error, payload) => {
-			console.log('disconnect', payload);
-			if (error) {
-				throw error;
-			}
+		setVisible(false);
+	};
 
-			// delete from the storage
-		});
+	const dismiss = () => {
+		wc?.rejectSession();
+		setVisible(false);
 	};
 
 	return (
@@ -112,8 +106,8 @@ const Test = () => {
 					<Button title="Connect" onPress={() => setVisible(true)} />
 				</View>
 			</BasicLayout>
-			<ModalBase isVisible={visible} onDismiss={() => setVisible(false)}>
-				<ConnectionRequestModal onDismiss={() => setVisible(false)} onConnect={connect} />
+			<ModalBase isVisible={visible} onDismiss={dismiss}>
+				<ConnectionRequestModal onDismiss={dismiss} onConnect={connect} />
 			</ModalBase>
 		</>
 	);
