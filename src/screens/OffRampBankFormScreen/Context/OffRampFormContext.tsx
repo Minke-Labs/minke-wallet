@@ -1,30 +1,34 @@
+/* eslint-disable no-console */
+/* eslint-disable no-tabs */
 /* eslint-disable max-len */
-import { useCountry } from '@hooks';
-import { CountriesType } from '@styles';
-import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
+// import { useCountry } from '@hooks';
+// import { CountriesType } from '@styles';
+import { useFormProgress, useNavigation } from '@hooks';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 type Form = {
-	firstName: string;
-	lastName: string;
-	birthday: string;
-	address: string;
-	city: string;
-	state: string;
-	postalCode: string;
-	accountNumber: string;
-	routingNumber: string;
-	country: CountriesType;
-};
-
-type FormError = {
-	firstName: boolean;
-	lastName: boolean;
-	birthday: boolean;
+	firstName: {
+		txt: string;
+		error: string;
+	};
+	lastName: {
+		txt: string;
+		error: string;
+	};
+	// lastName: string;
+	// birthday: string;
+	// address: string;
+	// city: string;
+	// state: string;
+	// postalCode: string;
+	// accountNumber: string;
+	// routingNumber: string;
+	// country: CountriesType;
 };
 
 const chooseRegex = (type: string) => {
 	switch (type) {
-		case 'name':
+		case 'firstName' || 'lastName':
 			return /^[a-z ,.'-]+$/i;
 		case 'birthday':
 			return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
@@ -50,50 +54,106 @@ const OffRampFormContext = createContext<any>(null);
 export const useOffRamp = () => useContext(OffRampFormContext);
 
 const OffRampFormProvider: React.FC = ({ children }) => {
-	const { country } = useCountry();
+	const navigation = useNavigation();
+	const { currentStep, goForward, goBack } = useFormProgress();
+
+	// const { country } = useCountry();
 	const [form, setForm] = useState<Form>({
-		firstName: '',
-		lastName: '',
-		birthday: '',
-		address: '',
-		city: '',
-		state: '',
-		postalCode: '',
-		accountNumber: '',
-		routingNumber: '',
-		country
+		firstName: {
+			txt: '',
+			error: ''
+		},
+		lastName: {
+			txt: '',
+			error: ''
+		}
+		// lastName: '',
+		// birthday: '',
+		// address: '',
+		// city: '',
+		// state: '',
+		// postalCode: '',
+		// accountNumber: '',
+		// routingNumber: '',
+		// country
 	});
 
-	const [error, setError] = useState<FormError>({
-		firstName: false,
-		lastName: false,
-		birthday: false
-	});
+	const handleChange = (name: string, value: string) => {
+		setForm((prev) => ({
+			...prev,
+			[name]: {
+				...prev[name as keyof Form],
+				txt: value,
+				dirty: true
+			}
+		}));
 
-	const handleFormChange = (field: string, txt: string) => {
-		const formObj = {
-			...form, [field]: txt
-		};
-		setForm(formObj);
+		if (value !== '') {
+			if (!isValid(name, value)) {
+				setForm((prev) => ({
+					...prev,
+					[name]: {
+						...prev[name as keyof Form],
+						error: 'Invalid characters. Use only (A-Z)'
+					}
+				}));
+			} else {
+				setForm((prev) => ({
+					...prev,
+					[name]: {
+						...prev[name as keyof Form],
+						error: ''
+					}
+				}));
+			}
+		} else {
+			setForm((prev) => ({
+				...prev,
+				[name]: {
+					...prev[name as keyof Form],
+					error: ''
+				}
+			}));
+		}
 	};
 
-	const handleFormError = (field: string, bol: boolean) => {
-		const errorObj = { ...error, [field]: bol };
-		setError(errorObj);
+	const setErrorRequired = (name: string) => {
+		setForm((prev) => ({
+			...prev,
+			[name]: {
+				...prev[name as keyof Form],
+				error: 'This field is required'
+			}
+		}));
 	};
 
-	useEffect(() => {
-		handleFormError('firstName', form.firstName.length > 0 && !isValid('name', form.firstName));
-		handleFormError('lastName', form.lastName.length > 0 && !isValid('name', form.lastName));
-		handleFormError('birthday', form.birthday.length > 0 && !isValid('birthday', form.birthday));
-	}, [form]);
+	const handleForward = () => {
+		if (currentStep === 0) {
+			if (form.firstName.txt.trim() === '') setErrorRequired('firstName');
+			if (form.lastName.txt.trim() === '') setErrorRequired('lastName');
+
+			const isThereError = Object.values(form).some((item) => (item.txt.trim() === '') || (item.error.trim() !== ''));
+			if (isThereError) return null;
+			return goForward();
+		}
+		return null;
+	};
+
+	const handleBack = () => {
+		if (currentStep === 0) return navigation.goBack();
+		return goBack();
+	};
 
 	const obj = useMemo(() => ({
 		form,
-		handleFormChange,
 		isValid,
-		error
-	}), [error, form]);
+		handleChange,
+		handleForward,
+		currentStep,
+		goForward,
+		goBack,
+		handleBack
+	}), [form, currentStep]);
 
 	return <OffRampFormContext.Provider value={obj}>{children}</OffRampFormContext.Provider>;
 };

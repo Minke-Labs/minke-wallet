@@ -37,7 +37,6 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		value = '',
 		onSelectionChange,
 		mb,
-		errorDesc,
 		style,
 		...rest
 	},
@@ -278,7 +277,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 								{...{ value, multiline, ...rest }}
 							/>
 
-							{error && (
+							{!!error && (
 								<Icon
 									name="errorStroke"
 									size={24}
@@ -300,10 +299,10 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 					</Animated.View>
 				</View>
 			</TouchableWithoutFeedback>
-			{error && (
+			{!!error && (
 				<ComponentsView ph="s" mt="xxxs">
 					<Text type="lSmall" color="alert1" weight="semiBold">
-						{errorDesc}
+						{error}
 					</Text>
 				</ComponentsView>
 			)}

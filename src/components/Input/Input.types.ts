@@ -9,8 +9,7 @@ interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	multiline?: true | false;
 	onTogglePassword?: (show: boolean) => void;
 	togglePassword?: boolean;
-	error?: boolean;
-	errorDesc?: string;
+	error: string;
 	small?: boolean;
 	style?: StyleProp<ViewStyle>;
 	mb?: SpacingType;

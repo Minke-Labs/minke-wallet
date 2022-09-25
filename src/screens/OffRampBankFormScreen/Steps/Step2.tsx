@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Text, Input } from '@components';
 import { useOffRamp } from '../Context/OffRampFormContext';
@@ -11,7 +12,7 @@ const Step2: React.FC = () => {
 				Place of residence
 			</Text>
 
-			<Input
+			{/* <Input
 				label="Address"
 				mb="s"
 				onChangeText={(val) => handleFormChange('address', val)}
@@ -44,7 +45,7 @@ const Step2: React.FC = () => {
 				value={form.postalCode}
 				error={form.postalCode.length > 0 && !isValid('zipCode', form.postalCode)}
 				errorDesc="Invalid zip-code name."
-			/>
+			/> */}
 		</>
 	);
 };

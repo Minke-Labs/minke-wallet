@@ -1,8 +1,6 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { View, Header } from '@components';
 import { BasicLayout } from '@layouts';
-import { useFormProgress, useNavigation } from '@hooks';
 import { Step1, Step2, Step3 } from './Steps';
 import { useOffRamp } from './Context/OffRampFormContext';
 
@@ -36,26 +34,7 @@ export const getStep = (type: number) => {
 };
 
 export const OffRampBankForm = () => {
-	const navigation = useNavigation();
-	const { currentStep, goForward, goBack } = useFormProgress();
-	const { form } = useOffRamp();
-
-	const handleBack = () => {
-		if (currentStep === 0) return navigation.goBack();
-		return goBack();
-	};
-
-	const handleForward = () => {
-		if (currentStep === 2) {
-			console.log(form);
-			return navigation.navigate('OffRampSendScreen');
-		}
-		// if (Object.values(error).find((val) => val === true)) {
-		// console.log(Object.values(error));
-		// return null;
-		// }
-		return goForward();
-	};
+	const { currentStep, handleForward, handleBack } = useOffRamp();
 
 	return (
 		<>

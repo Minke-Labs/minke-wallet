@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { Text, Input, ChangeCountry, TelephoneInput } from '@components';
 import { useOffRamp } from '../Context/OffRampFormContext';
 
 const Step1: React.FC = () => {
-	const { form, handleFormChange, error } = useOffRamp();
-	const [telephone, setTelephone] = useState('');
+	const { handleFormChange, error, form, isValid, handleChange } = useOffRamp();
 
 	return (
 		<>
-			<ChangeCountry setCountry={(val) => handleFormChange('country', val)} />
+			{/* <ChangeCountry setCountry={(val) => handleFormChange('country', val)} /> */}
 
 			<Text type="lMedium" weight="semiBold" mb="xs">
 				Personal information
@@ -17,21 +17,19 @@ const Step1: React.FC = () => {
 			<Input
 				label="First Name"
 				mb="s"
-				onChangeText={(val) => handleFormChange('firstName', val)}
-				value={form.firstName}
-				error={error.firstName}
-				errorDesc="Invalid characters. Use only (A-Z)"
+				onChangeText={(val) => handleChange('firstName', val)}
+				value={form.firstName.txt}
+				error={form.firstName.error}
 			/>
 
 			<Input
 				label="Last Name"
 				mb="s"
-				onChangeText={(val) => handleFormChange('lastName', val)}
-				value={form.lastName}
-				error={error.lastName}
-				errorDesc="Invalid characters. Use only (A-Z)"
+				onChangeText={(val) => handleChange('lastName', val)}
+				value={form.lastName.txt}
+				error={form.lastName.error}
 			/>
-
+			{/*
 			<Input
 				label="Birthday"
 				mb="s"
@@ -45,7 +43,7 @@ const Step1: React.FC = () => {
 				label="Mobile number"
 				value={telephone}
 				onChangeText={(t) => setTelephone(t)}
-			/>
+			/> */}
 		</>
 	);
 };
