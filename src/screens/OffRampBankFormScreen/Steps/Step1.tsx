@@ -29,16 +29,16 @@ const Step1: React.FC = () => {
 				value={form.lastName.txt}
 				error={form.lastName.error}
 			/>
-			{/*
+
 			<Input
 				label="Birthday"
 				mb="s"
-				onChangeText={(val) => handleFormChange('birthday', val)}
-				value={form.birthday}
-				error={error.birthday}
-				errorDesc="Invalid birthday format. Please use dd/mm/yyyy format."
+				onChangeText={(val) => handleChange('birthday', val)}
+				value={form.birthday.txt}
+				error={form.birthday.error}
+				// errorDesc="Invalid birthday format. Please use dd/mm/yyyy format."
 			/>
-
+			{/*
 			<TelephoneInput
 				label="Mobile number"
 				value={telephone}

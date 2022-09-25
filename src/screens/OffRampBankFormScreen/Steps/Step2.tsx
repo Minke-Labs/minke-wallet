@@ -4,7 +4,7 @@ import { Text, Input } from '@components';
 import { useOffRamp } from '../Context/OffRampFormContext';
 
 const Step2: React.FC = () => {
-	const { form, handleFormChange, isValid } = useOffRamp();
+	const { form, handleChange } = useOffRamp();
 
 	return (
 		<>
@@ -12,40 +12,40 @@ const Step2: React.FC = () => {
 				Place of residence
 			</Text>
 
-			{/* <Input
+			<Input
 				label="Address"
 				mb="s"
-				onChangeText={(val) => handleFormChange('address', val)}
-				value={form.address}
-				error={form.address.length > 0 && !isValid('address', form.address)}
-				errorDesc="Invalid Address."
+				onChangeText={(val) => handleChange('address', val)}
+				value={form.address.txt}
+				error={form.address.error}
+				// errorDesc="Invalid Address."
 			/>
 
 			<Input
 				label="City"
 				mb="s"
-				onChangeText={(val) => handleFormChange('city', val)}
-				value={form.city}
-				error={form.city.length > 0 && !isValid('name', form.city)}
-				errorDesc="Invalid city name."
+				onChangeText={(val) => handleChange('city', val)}
+				value={form.city.txt}
+				error={form.city.error}
+				// errorDesc="Invalid city name."
 			/>
 
 			<Input
 				label="State"
 				mb="s"
-				onChangeText={(val) => handleFormChange('state', val)}
-				value={form.state}
-				error={form.state.length > 0 && !isValid('name', form.state)}
-				errorDesc="Invalid state name."
+				onChangeText={(val) => handleChange('state', val)}
+				value={form.state.txt}
+				error={form.state.error}
+				// errorDesc="Invalid state name."
 			/>
 
 			<Input
 				label="Postal code"
-				onChangeText={(val) => handleFormChange('postalCode', val)}
-				value={form.postalCode}
-				error={form.postalCode.length > 0 && !isValid('zipCode', form.postalCode)}
-				errorDesc="Invalid zip-code name."
-			/> */}
+				onChangeText={(val) => handleChange('postalCode', val)}
+				value={form.postalCode.txt}
+				error={form.postalCode.error}
+				// errorDesc="Invalid zip-code name."
+			/>
 		</>
 	);
 };

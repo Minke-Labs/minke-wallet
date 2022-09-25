@@ -15,14 +15,34 @@ type Form = {
 		txt: string;
 		error: string;
 	};
-	// lastName: string;
-	// birthday: string;
-	// address: string;
-	// city: string;
-	// state: string;
-	// postalCode: string;
-	// accountNumber: string;
-	// routingNumber: string;
+	birthday: {
+		txt: string;
+		error: string;
+	};
+	address: {
+		txt: string;
+		error: string;
+	};
+	city: {
+		txt: string;
+		error: string;
+	};
+	state: {
+		txt: string;
+		error: string;
+	};
+	postalCode: {
+		txt: string;
+		error: string;
+	};
+	accountNumber: {
+		txt: string;
+		error: string;
+	};
+	routingNumber: {
+		txt: string;
+		error: string;
+	};
 	// country: CountriesType;
 };
 
@@ -33,11 +53,13 @@ const chooseRegex = (type: string) => {
 		case 'birthday':
 			return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
 		case 'address':
-			return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
+			// return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
+			return /^[a-z ,.'-]+$/i; // TEMP
 		case 'zipCode':
 			return /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/;
 		case 'accountNumber':
-			return /^Acc(?:oun)?t(?:\s+Number)?.+[\d-]+$/gm;
+			// return /^Acc(?:oun)?t(?:\s+Number)?.+[\d-]+$/gm;
+			return /^[a-z ,.'-]+$/i; // TEMP
 		case 'routingNumber':
 			return /^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$/;
 		default:
@@ -66,15 +88,35 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 		lastName: {
 			txt: '',
 			error: ''
+		},
+		birthday: {
+			txt: '',
+			error: ''
+		},
+		address: {
+			txt: '',
+			error: ''
+		},
+		city: {
+			txt: '',
+			error: ''
+		},
+		state: {
+			txt: '',
+			error: ''
+		},
+		postalCode: {
+			txt: '',
+			error: ''
+		},
+		accountNumber: {
+			txt: '',
+			error: ''
+		},
+		routingNumber: {
+			txt: '',
+			error: ''
 		}
-		// lastName: '',
-		// birthday: '',
-		// address: '',
-		// city: '',
-		// state: '',
-		// postalCode: '',
-		// accountNumber: '',
-		// routingNumber: '',
 		// country
 	});
 
@@ -131,11 +173,36 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 		if (currentStep === 0) {
 			if (form.firstName.txt.trim() === '') setErrorRequired('firstName');
 			if (form.lastName.txt.trim() === '') setErrorRequired('lastName');
+			if (form.birthday.txt.trim() === '') setErrorRequired('birthday');
 
-			const isThereError = Object.values(form).some((item) => (item.txt.trim() === '') || (item.error.trim() !== ''));
-			if (isThereError) return null;
+			if ((form.firstName.txt.trim() === '') || (form.firstName.error.trim() !== '')) return null;
+			if ((form.lastName.txt.trim() === '') || (form.lastName.error.trim() !== '')) return null;
+			if ((form.birthday.txt.trim() === '') || (form.birthday.error.trim() !== '')) return null;
 			return goForward();
 		}
+		if (currentStep === 1) {
+			if (form.address.txt.trim() === '') setErrorRequired('address');
+			if (form.city.txt.trim() === '') setErrorRequired('city');
+			if (form.state.txt.trim() === '') setErrorRequired('state');
+			if (form.postalCode.txt.trim() === '') setErrorRequired('postalCode');
+
+			if ((form.address.txt.trim() === '') || (form.address.error.trim() !== '')) return null;
+			if ((form.city.txt.trim() === '') || (form.city.error.trim() !== '')) return null;
+			if ((form.state.txt.trim() === '') || (form.state.error.trim() !== '')) return null;
+			if ((form.postalCode.txt.trim() === '') || (form.postalCode.error.trim() !== '')) return null;
+
+			return goForward();
+		}
+		if (currentStep === 2) {
+			if (form.accountNumber.txt.trim() === '') setErrorRequired('accountNumber');
+			if (form.routingNumber.txt.trim() === '') setErrorRequired('routingNumber');
+
+			if ((form.accountNumber.txt.trim() === '') || (form.accountNumber.error.trim() !== '')) return null;
+			if ((form.routingNumber.txt.trim() === '') || (form.routingNumber.error.trim() !== '')) return null;
+
+			return navigation.navigate('OffRampSendScreen');
+		}
+
 		return null;
 	};
 
@@ -146,7 +213,6 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 
 	const obj = useMemo(() => ({
 		form,
-		isValid,
 		handleChange,
 		handleForward,
 		currentStep,

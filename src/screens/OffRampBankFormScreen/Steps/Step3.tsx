@@ -3,7 +3,7 @@ import { Text, Input } from '@components';
 import { useOffRamp } from '../Context/OffRampFormContext';
 
 const Step2: React.FC = () => {
-	const { form, handleFormChange, isValid } = useOffRamp();
+	const { form, handleChange } = useOffRamp();
 
 	return (
 		<>
@@ -14,18 +14,18 @@ const Step2: React.FC = () => {
 			<Input
 				label="Account number"
 				mb="s"
-				onChangeText={(val) => handleFormChange('accountNumber', val)}
-				value={form.accountNumber}
-				error={form.accountNumber.length > 0 && !isValid('accountNumber', form.accountNumber)}
-				errorDesc="Invalid accountNumber."
+				onChangeText={(val) => handleChange('accountNumber', val)}
+				value={form.accountNumber.txt}
+				error={form.accountNumber.error}
+				// errorDesc="Invalid accountNumber."
 			/>
 
 			<Input
 				label="Routing number"
-				onChangeText={(val) => handleFormChange('routingNumber', val)}
-				value={form.routingNumber}
-				error={form.routingNumber.length > 0 && !isValid('routingNumber', form.routingNumber)}
-				errorDesc="Invalid routingNumber."
+				onChangeText={(val) => handleChange('routingNumber', val)}
+				value={form.routingNumber.txt}
+				error={form.routingNumber.error}
+				// errorDesc="Invalid routingNumber."
 			/>
 		</>
 	);
