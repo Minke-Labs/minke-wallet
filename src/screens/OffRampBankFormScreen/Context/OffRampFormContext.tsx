@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { useCountry } from '@hooks';
 import { CountriesType } from '@styles';
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 
 type Form = {
 	firstName: string;
@@ -14,6 +14,12 @@ type Form = {
 	accountNumber: string;
 	routingNumber: string;
 	country: CountriesType;
+};
+
+type FormError = {
+	firstName: boolean;
+	lastName: boolean;
+	birthday: boolean;
 };
 
 const chooseRegex = (type: string) => {
@@ -58,16 +64,36 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 		country
 	});
 
+	const [error, setError] = useState<FormError>({
+		firstName: false,
+		lastName: false,
+		birthday: false
+	});
+
 	const handleFormChange = (field: string, txt: string) => {
-		const formObj = { ...form, [field]: txt };
+		const formObj = {
+			...form, [field]: txt
+		};
 		setForm(formObj);
 	};
+
+	const handleFormError = (field: string, bol: boolean) => {
+		const errorObj = { ...error, [field]: bol };
+		setError(errorObj);
+	};
+
+	useEffect(() => {
+		handleFormError('firstName', form.firstName.length > 0 && !isValid('name', form.firstName));
+		handleFormError('lastName', form.lastName.length > 0 && !isValid('name', form.lastName));
+		handleFormError('birthday', form.birthday.length > 0 && !isValid('birthday', form.birthday));
+	}, [form]);
 
 	const obj = useMemo(() => ({
 		form,
 		handleFormChange,
-		isValid
-	}), [form]);
+		isValid,
+		error
+	}), [error, form]);
 
 	return <OffRampFormContext.Provider value={obj}>{children}</OffRampFormContext.Provider>;
 };
