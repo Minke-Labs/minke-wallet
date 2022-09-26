@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { Paper, GasOptionInner, View } from '@components';
+import { Paper, GasOptionInner } from '@components';
 import { State, useState } from '@hookstate/core';
 import { estimateGas, getEthLastPrice, estimateConfirmationTime } from '@models/wallet';
 import { ExchangeState, globalExchangeState, Gas } from '@stores/ExchangeStore';
@@ -18,7 +18,7 @@ const defaultWait: Wait = {
 	fast: 5
 };
 
-export const GasSelected = () => {
+export const GasSelected = ({ gasLimit }: { gasLimit: number }) => {
 	const [gasPrice, setGasPrice] = React.useState<number>();
 	const [usdPrice, setUsdPrice] = React.useState<number>();
 	const [wait, setWait] = React.useState<number>(0);
@@ -107,6 +107,7 @@ export const GasSelected = () => {
 				gasPrice={gasPrice!}
 				usdPrice={usdPrice!}
 				waiting={waiting()}
+				gasLimit={gasLimit}
 			/>
 		</Paper>
 	);

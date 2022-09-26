@@ -10,28 +10,18 @@ interface GasOptionInnerProps {
 	gasPrice: number;
 	usdPrice: number;
 	waiting: string | null;
+	gasLimit: number;
 }
 
-const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice, usdPrice }) => {
+const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice, usdPrice, gasLimit }) => {
 	const { i18n } = useLanguage();
 	return (
 		<>
-			<View
-				bgc="background6"
-				round={36}
-				main="center"
-				cross="center"
-				mr="xs"
-			>
-				<Icon
-					name={type === 'fast' ? 'boltStroke' : 'clockStroke'}
-					size={20}
-					color="cta1"
-				/>
+			<View bgc="background6" round={36} main="center" cross="center" mr="xs">
+				<Icon name={type === 'fast' ? 'boltStroke' : 'clockStroke'} size={20} color="cta1" />
 			</View>
 
 			<View row main="space-between" flex1>
-
 				<View>
 					<Text type="span" weight="bold">
 						{i18n.t(`ExchangeScreen.GasSelector.GasOption.${type}`)}
@@ -42,12 +32,11 @@ const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice
 
 				<View>
 					<Text type="span" weight="bold">
-						${tokenBalanceFormat(gasPrice * 41000 * 10 ** -9 * usdPrice, 5)}{' '}
+						${tokenBalanceFormat(gasPrice * gasLimit * 10 ** -9 * usdPrice, 5)}{' '}
 					</Text>
 					<View mb="xxxs" />
 					<Text type="span">{i18n.t('ExchangeScreen.GasSelector.GasOption.transaction_fee')}</Text>
 				</View>
-
 			</View>
 		</>
 	);

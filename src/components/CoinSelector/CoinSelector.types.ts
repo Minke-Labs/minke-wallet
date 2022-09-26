@@ -1,14 +1,14 @@
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken } from '@models/types/token.types';
 
 export interface CoinSelectorProps {
-	token: MinkeToken | undefined;
+	token: MinkeGasToken | undefined;
 	onPress: () => void;
 	notTouchable: boolean;
 	inline?: boolean;
 }
 
 export interface TitlesProps {
-	token: MinkeToken;
+	token: MinkeGasToken;
 	inline?: boolean;
 	notTouchable?: boolean;
 }

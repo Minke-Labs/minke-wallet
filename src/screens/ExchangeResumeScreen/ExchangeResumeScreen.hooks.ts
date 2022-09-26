@@ -14,6 +14,7 @@ import { approvalState } from '@models/deposit';
 import { exchangeContract, gaslessApproval, gaslessExchange } from '@models/gaslessTransaction';
 import { captureException } from '@sentry/react-native';
 import { isExchangeGasless } from '@models/exchange';
+import gasLimits from '@models/gas';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -247,7 +248,7 @@ const useExchangeResumeScreen = () => {
 						chainId,
 						data,
 						gasPrice: BigNumber.from(gasPrice),
-						gasLimit: Math.max(700000, +gasLimit),
+						gasLimit: Math.max(gasLimits.exchange, +gasLimit),
 						nonce,
 						to: toAddress,
 						value: BigNumber.from(value)

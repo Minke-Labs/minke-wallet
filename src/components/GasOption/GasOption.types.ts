@@ -6,4 +6,5 @@ export interface GasOptionProps {
 	gasPrice: number;
 	usdPrice: number;
 	waiting: string | null;
+	gasLimit: number;
 }

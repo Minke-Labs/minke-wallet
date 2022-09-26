@@ -1,3 +1,4 @@
+import gasLimits, { Networks } from '@models/gas';
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
@@ -52,7 +53,7 @@ const mStableDeposit = async ({
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
 }): Promise<DepositReturn> => {
-	const { mStable } = await network();
+	const { mStable, id } = await network();
 
 	const provider = await getProvider();
 	// send signed transaction with ethers
@@ -67,7 +68,7 @@ const mStableDeposit = async ({
 	const txDefaults = {
 		type: 2,
 		chainId: await userSigner.getChainId(),
-		gasLimit: 1000000,
+		gasLimit: gasLimits[id as Networks].deposit.mstable,
 		maxFeePerGas,
 		maxPriorityFeePerGas,
 		nonce

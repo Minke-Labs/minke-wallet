@@ -25,3 +25,8 @@ export interface TopupToken extends MinkeToken {
 export interface InvestmentToken extends MinkeToken {
 	perc?: number | undefined;
 }
+
+export interface MinkeGasToken extends MinkeToken {
+	balanceAvailable?: string;
+	balanceAvailableUSD?: number;
+}

@@ -1,9 +1,9 @@
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken } from '@models/types/token.types';
 import { UserProps, ResultProps } from '../../Send.types';
 
 export interface TransactionTransferProps {
 	user: UserProps;
-	token: MinkeToken;
+	token: MinkeGasToken;
 	onDismiss: () => void;
 	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
