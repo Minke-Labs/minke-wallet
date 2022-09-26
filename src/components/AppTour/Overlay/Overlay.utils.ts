@@ -28,7 +28,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: 76,
 				height: 76,
 				borderRadius: 76 / 2,
-				bottom: deviceHeight * 0.19 - 98 + offset,
+				top: deviceHeight * 0.852 - 9 - offset,
 				left: deviceWidth * 0.5 + 22.2
 			};
 		case 3:
@@ -36,7 +36,7 @@ export const getHole = (type: AppTourStepType) => {
 				width: 76,
 				height: 76,
 				borderRadius: 76 / 2,
-				bottom: deviceHeight * 0.19 - 98 + offset,
+				top: deviceHeight * 0.852 - 9 - offset,
 				left: deviceWidth * 0.4
 			};
 		case 4:
