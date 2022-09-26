@@ -1,15 +1,9 @@
 import React from 'react';
 import RNUxcam from 'react-native-ux-cam';
 import { useLanguage } from '@hooks';
-import {
-	ModalBase,
-	ModalReusables,
-	SettingsHeader,
-	View,
-	IconItem
-} from '@components';
+import { ModalBase, ModalReusables, SettingsHeader, View, IconItem } from '@components';
 import { BasicLayout } from '@layouts';
-import { smallWalletAddress } from '@models/wallet';
+// import { smallWalletAddress } from '@models/wallet';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import useImportWalletScreen from './ImportWalletScreen.hooks';
 
@@ -17,13 +11,13 @@ const ImportWalletScreen = () => {
 	RNUxcam.tagScreenName('ImportWalletScreen');
 	const { i18n } = useLanguage();
 	const {
-		address,
+		// address,
 		goBack,
 		onICloudBackup,
 		walletsBackedUp,
 		latestBackup,
-		connected,
-		toggleWalletConnect,
+		// connected,
+		// toggleWalletConnect,
 		error,
 		dismissError,
 		destNetwork,
@@ -40,15 +34,9 @@ const ImportWalletScreen = () => {
 				<SettingsHeader title={i18n.t('ImportWalletScreen.import_wallet')} onPress={goBack} />
 
 				<View pt="m" p="s">
+					<IconItem title="Import with secret phrase" icon="key" onPress={() => setImportSeed(true)} mb="m" />
 
-					<IconItem
-						title="Import with secret phrase"
-						icon="key"
-						onPress={() => setImportSeed(true)}
-						mb="m"
-					/>
-
-					<IconItem
+					{/* <IconItem
 						title={connected
 							? `${i18n.t('ImportWalletScreen.disconnect_wallet')} - ${smallWalletAddress(address)}`
 							: i18n.t('ImportWalletScreen.connect_wallet')}
@@ -56,7 +44,7 @@ const ImportWalletScreen = () => {
 						onPress={toggleWalletConnect}
 						mb="m"
 						images
-					/>
+					/> */}
 
 					{(walletsBackedUp > 0 || !!latestBackup) && (
 						<IconItem
@@ -71,7 +59,6 @@ const ImportWalletScreen = () => {
 							onPress={onICloudBackup}
 						/>
 					)}
-
 				</View>
 			</BasicLayout>
 

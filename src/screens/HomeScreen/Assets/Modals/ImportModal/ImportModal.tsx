@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { forEach } from 'lodash';
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
+// import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { IconItem } from '@components';
-import { useGlobalWalletState, useLanguage, useNavigation, useWallets } from '@hooks';
-import { smallWalletAddress } from '@models/wallet';
+import { useLanguage, useNavigation, useWallets } from '@hooks';
+// import { smallWalletAddress } from '@models/wallet';
 import { findLatestBackUpOnICloud } from '@models/backup';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 
@@ -17,9 +17,9 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 	const { wallets } = useWallets();
 	const navigation = useNavigation();
 	const [latestBackup, setLatestBackup] = useState<string | null>();
-	const { address } = useGlobalWalletState();
-	const connector = useWalletConnect();
-	const { connected } = connector;
+	// const { address } = useGlobalWalletState();
+	// const connector = useWalletConnect();
+	// const { connected } = connector;
 
 	useEffect(() => {
 		const fetchBackupsFiles = async () => {
@@ -44,18 +44,18 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 		return count;
 	}, [wallets]);
 
-	const toggleWalletConnect = () => {
-		onDismiss();
-		if (connected) {
-			connector.killSession();
-		} else {
-			connector.connect();
-		}
-	};
+	// const toggleWalletConnect = () => {
+	// onDismiss();
+	// if (connected) {
+	// connector.killSession();
+	// } else {
+	// connector.connect();
+	// }
+	// };
 
 	return (
 		<>
-			<IconItem
+			{/* <IconItem
 				title={connected
 					? `${i18n.t('HomeScreen.Assets.Modals.disconnect_wallet')} - ${smallWalletAddress(address)}`
 					: i18n.t('HomeScreen.Assets.Modals.connect_wallet')}
@@ -63,7 +63,7 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 				onPress={toggleWalletConnect}
 				mb="m"
 				images
-			/>
+			/> */}
 
 			<IconItem
 				title={i18n.t('HomeScreen.Assets.Modals.import_with_secret_phrase')}
