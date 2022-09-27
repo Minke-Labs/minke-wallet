@@ -1,5 +1,6 @@
 import { Wallet, Contract, providers, BigNumber, PopulatedTransaction } from 'ethers';
 import Logger from '@utils/logger';
+import gasLimits from '@models/gas';
 import { getProvider } from './wallet';
 import { network } from './network';
 import { approvalState } from './deposit';
@@ -77,7 +78,7 @@ export const onChainApproval = async ({
 	const txDefaults = {
 		type: 2,
 		chainId: await wallet.getChainId(),
-		gasLimit: 100000,
+		gasLimit: gasLimits.approval.toString(),
 		maxFeePerGas,
 		maxPriorityFeePerGas,
 		nonce

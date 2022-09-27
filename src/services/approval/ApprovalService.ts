@@ -1,5 +1,6 @@
 import { onChainApproval, onChainApprovalData } from '@models/contract';
 import { ApprovalState, approvalState } from '@models/deposit';
+import gasLimits from '@models/gas';
 import { gaslessApproval } from '@models/gaslessTransaction';
 import { estimateGas, getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
@@ -68,7 +69,7 @@ class ApprovalService {
 				to,
 				value: toBn('0').toHexString(),
 				data: data || toBn('0').toHexString(),
-				gasLimit: '100000'
+				gasLimit: gasLimits.approval.toString()
 			});
 		} else {
 			const {

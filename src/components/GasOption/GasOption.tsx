@@ -14,7 +14,8 @@ const GasOption: React.FC<GasOptionProps> = ({
 	selected,
 	gasPrice,
 	usdPrice,
-	waiting
+	waiting,
+	gasLimit
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -24,7 +25,7 @@ const GasOption: React.FC<GasOptionProps> = ({
 			<View style={[styles.container, selected ? styles.selectedCard : {}]}>
 				<View style={styles.content}>
 					<Radio selected={selected!} />
-					<GasOptionInner {...{ type, waiting, gasPrice, usdPrice }} />
+					<GasOptionInner {...{ type, waiting, gasPrice, usdPrice, gasLimit }} />
 				</View>
 			</View>
 		</Touchable>

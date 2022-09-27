@@ -7,7 +7,8 @@ export const convertTransactionResponse = ({
 	direction,
 	symbol,
 	pending = true,
-	subTransactions = []
+	subTransactions = [],
+	destination
 }: {
 	transaction: providers.TransactionResponse;
 	amount: string;
@@ -15,11 +16,12 @@ export const convertTransactionResponse = ({
 	symbol: string;
 	pending?: boolean;
 	subTransactions?: ZapperSubtransaction[];
+	destination?: string;
 }): ZapperTransaction => {
 	const { from, to, timestamp, blockHash, hash } = transaction;
 	return {
 		from,
-		destination: to!,
+		destination: destination || to!,
 		timeStamp: (timestamp || new Date().getTime() / 1000).toString(),
 		txSuccessful: pending || !!blockHash,
 		hash,

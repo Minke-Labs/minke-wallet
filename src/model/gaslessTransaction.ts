@@ -120,7 +120,7 @@ export const gaslessExchange = async ({
 		to: depositContract,
 		data: functionSignature,
 		from: address,
-		gasLimit: 5000000,
+		gasLimit: 5000000, // big number to make sure it will go through
 		gasPrice: parseUnits(gasPrice, 'gwei')
 	};
 

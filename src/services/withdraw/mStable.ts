@@ -1,3 +1,4 @@
+import gasLimits, { Networks } from '@models/gas';
 import { network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import { signTypedDataV3 } from '@utils/signing/signing';
@@ -147,7 +148,7 @@ const mStableWithdraw = async ({
 	const wallet = new Wallet(privateKey, provider);
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 	const chainId = await wallet.getChainId();
-	const { mStable } = await network();
+	const { mStable, id } = await network();
 	const { withdrawContract, mAsset } = mStable!;
 	const txDefaults = {
 		type: 2,
@@ -155,7 +156,7 @@ const mStableWithdraw = async ({
 		to: withdrawContract,
 		maxFeePerGas,
 		maxPriorityFeePerGas,
-		gasLimit: 800000,
+		gasLimit: gasLimits[id as Networks].withdraw.mstable,
 		nonce
 	};
 

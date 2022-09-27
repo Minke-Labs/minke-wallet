@@ -27,7 +27,7 @@ type Speeds = 'fast' | 'normal' | 'slow';
 type Price = { [key: string]: number } & { suggestBaseFee: BigNumber };
 type WaitTime = { [key: string]: number | null };
 
-const GasSelector = () => {
+const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
 	const [type, setType] = React.useState<Speeds>('fast');
 	const { colors } = useTheme();
 
@@ -180,6 +180,7 @@ const GasSelector = () => {
 						gasPrice={gasPrice.fast}
 						waiting={waiting('fast')}
 						usdPrice={usdPrice}
+						gasLimit={gasLimit}
 					/>
 					<GasOption
 						type="normal"
@@ -188,6 +189,7 @@ const GasSelector = () => {
 						gasPrice={gasPrice.normal}
 						waiting={waiting('normal')}
 						usdPrice={usdPrice}
+						gasLimit={gasLimit}
 					/>
 				</View>
 			</ScrollView>

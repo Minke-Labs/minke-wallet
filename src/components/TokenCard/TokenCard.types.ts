@@ -1,7 +1,7 @@
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken } from '@models/types/token.types';
 
 export interface TokenCardProps {
-	token: MinkeToken | undefined;
+	token: MinkeGasToken | undefined;
 	onPress?: (() => void) | undefined;
 	disableMax?: boolean;
 	updateQuotes?: Function;

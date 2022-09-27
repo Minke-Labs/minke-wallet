@@ -17,7 +17,7 @@ const NoTokenIcon: React.FC<{ inline: boolean }> = ({ inline }) => (
 
 const Titles: React.FC<TitlesProps> = ({ token, inline, notTouchable = false }) => {
 	const { i18n } = useLanguage();
-	const { balance = '0', balanceUSD = 0, symbol } = token;
+	const { balance = '0', balanceUSD = 0, symbol, balanceAvailable, balanceAvailableUSD } = token;
 	return (
 		<>
 			<View row cross="center">
@@ -28,7 +28,8 @@ const Titles: React.FC<TitlesProps> = ({ token, inline, notTouchable = false }) 
 			</View>
 			<View>
 				<Text type="span" weight="semiBold">
-					{numberFormat(balanceUSD)} ({tokenBalanceFormat(balance, 6)} {symbol}){' '}
+					{numberFormat(balanceAvailableUSD || balanceUSD)} (
+					{tokenBalanceFormat(balanceAvailable || balance, 6)} {symbol}){' '}
 					{!inline && i18n.t('Components.TokenCard.available')}
 				</Text>
 			</View>

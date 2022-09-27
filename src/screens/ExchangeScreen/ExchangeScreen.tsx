@@ -18,6 +18,7 @@ import {
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import gasLimits from '@models/gas';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
 import DirectionButton from './DirectionButton/DirectionButton';
@@ -105,7 +106,7 @@ const ExchangeScreen = ({ route }: Props) => {
 
 					<View style={{ display: keyboardVisible ? 'none' : 'flex' }}>
 						<View mb="s" style={{ display: gasless ? 'none' : 'flex' }}>
-							<GasSelector />
+							<GasSelector gasLimit={gasLimits.exchange} />
 						</View>
 
 						<View mh="xs">
