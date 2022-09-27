@@ -30,6 +30,7 @@ import useWalletManagement from './useWalletManagement';
 import useCurrencies from './useCurrencies';
 import useNFT from './useNFT';
 import useBalances from './useBalances';
+import useWalletConnectSessions from './useWalletConnectSessions';
 
 export {
 	useCountry,
@@ -63,5 +64,6 @@ export {
 	useWalletManagement,
 	useCurrencies,
 	useNFT,
-	useBalances
+	useBalances,
+	useWalletConnectSessions
 };

@@ -9,6 +9,7 @@ import Text from '@src/components/Text/Text';
 import ListItem from '@src/screens/AccountsScreen/ListItem/ListItem';
 import NetworkItem from '@src/screens/ChangeNetworkScreen/ListItem/ListItem';
 import Button from '@src/components/Button/Button';
+import { Meta } from '@src/hooks/useWalletConnectSessions/types';
 import View from '../View/View';
 import Icon from '../Icon/Icon';
 import Token from '../Token/Token';
@@ -16,13 +17,16 @@ import Touchable from '../Touchable/Touchable';
 
 interface Props {
 	onDismiss: () => void;
-	onConnect: (address: string, chainId: number) => void;
+	handleApproval: (approved: boolean, address: string, chainId: number) => void;
+	meta: Meta | undefined;
 }
 
-const ConnectionRequestModal = ({ onDismiss, onConnect }: Props) => {
+const ConnectionRequestModal = ({ onDismiss, handleApproval, meta }: Props) => {
 	const { i18n } = useLanguage();
 	const { walletsWithPk, address: defaultAddress } = useWallets();
-	const { network: defaultNetwork } = useGlobalWalletState();
+	const { chainId, dappName, dappUrl, imageUrl } = meta || {};
+	const { network: settingsNetwork } = useGlobalWalletState();
+	const defaultNetwork = Object.values(networks).find((n) => chainId === n.chainId) || settingsNetwork;
 	const { currentStep, goForward, goBack, setCurrentStep, reset } = useFormProgress();
 	const [selectedWallet, setSelectedWallet] = useState(defaultAddress);
 	const [selectedNetwork, setSelectedNetwork] = useState<Network>(defaultNetwork);
@@ -58,24 +62,26 @@ const ConnectionRequestModal = ({ onDismiss, onConnect }: Props) => {
 						</Text>
 						<View row mb="s" cross="center">
 							<View>
-								<Image
-									width={50}
-									height={50}
-									source={{ uri: 'https://example.walletconnect.org/favicon.ico' }}
-									style={{
-										width: 50,
-										height: 50,
-										borderRadius: 100
-									}}
-								/>
+								{!!imageUrl && (
+									<Image
+										width={50}
+										height={50}
+										source={{ uri: imageUrl }}
+										style={{
+											width: 50,
+											height: 50,
+											borderRadius: 100
+										}}
+									/>
+								)}
 							</View>
 
 							<View ml="xs" flex1>
 								<Text type="hSmall" weight="bold" numberOfLines={1}>
-									WalletConnect Example
+									{dappName}
 								</Text>
 								<Text type="lLarge" weight="semiBold" color="cta1" numberOfLines={1}>
-									https://example.walletconnect.org
+									{dappUrl}
 								</Text>
 							</View>
 						</View>
@@ -125,14 +131,14 @@ const ConnectionRequestModal = ({ onDismiss, onConnect }: Props) => {
 								<Button
 									title={i18n.t('Components.ConnectionRequestModal.cancel')}
 									mode="outlined"
-									onPress={dismiss}
+									onPress={() => handleApproval(false, selectedWallet, selectedNetwork.chainId)}
 								/>
 							</View>
 							<View mr="s" />
 							<View flex1>
 								<Button
 									title={i18n.t('Components.ConnectionRequestModal.connect')}
-									onPress={() => onConnect(selectedWallet, selectedNetwork.chainId)}
+									onPress={() => handleApproval(true, selectedWallet, selectedNetwork.chainId)}
 								/>
 							</View>
 						</View>
