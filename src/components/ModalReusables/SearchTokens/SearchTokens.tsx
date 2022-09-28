@@ -41,7 +41,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			let selectedTokens: MinkeToken[] = allTokens || [];
 
 			if (showOnlyOwnedTokens) {
-				const owned = selectedTokens.map(({ symbol }) => !!symbol && symbol.toLowerCase());
+				const owned = selectedTokens.filter(({ symbol }) => !!symbol).map(({ symbol }) => symbol.toLowerCase());
 				selectedTokens = (ownedTokens || []).filter(
 					({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase())
 				);
@@ -78,6 +78,12 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 						if (t.address.toLowerCase() === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
 							const token = t;
 							token.symbol = 'PolyDoge';
+							return token;
+						}
+
+						if (t.symbol === 'ETH') {
+							const token = t;
+							token.symbol = 'WETH';
 							return token;
 						}
 
