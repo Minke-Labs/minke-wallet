@@ -18,41 +18,6 @@ export default {
 	AssetsScreen: {
 		AboutCoin: {
 			about: 'Sobre '
-		},
-		Balance: {
-			Balance: 'Balance',
-			Buttons: {
-				buy: 'Comprar',
-				sell: 'Vender',
-				send: 'Enviar'
-			}
-		},
-		MarketCap: {
-			market_cap: 'Cap. de mercado',
-			volume: 'Volumen (1D)'
-		},
-		Upper: {
-			Chart: {
-				Changes: {
-					changes: 'Cambios',
-					hour: '1 Hora',
-					day: '1 Día',
-					week: '1 Semana',
-					month: '1 Mes',
-					year: '1 Año',
-					all: 'Todo'
-				},
-				Selection: {
-					Chart: {
-						'1H': '1H',
-						'1D': '1D',
-						'1S': '1S',
-						'1M': '1M',
-						'1A': '1A',
-						All: 'Todo'
-					}
-				}
-			}
 		}
 	},
 	BackupSettingsScreen: {
@@ -113,16 +78,16 @@ export default {
 			mstable: 'Abrir mStable\nSCuenta de Ahorro',
 			this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
 		},
-		OpenMStable: {
-			open_account: 'Abrir Cuenta',
-			open_mstable: 'Abrir mStable\nCuenta de Ahorro',
-			what_is: 'Que es mStable?',
-			mstable_des:
-				'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
-			view_site: 'Ver Sitio',
-			learn_more: 'Aprende Más',
-			this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
-		},
+		// OpenMStable: {
+		// open_account: 'Abrir Cuenta',
+		// open_mstable: 'Abrir mStable\nCuenta de Ahorro',
+		// what_is: 'Que es mStable?',
+		// mstable_des:
+		// 'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
+		// view_site: 'Ver Sitio',
+		// learn_more: 'Aprende Más',
+		// this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
+		// },
 		NotAbleToSaveModal: {
 			not_able: 'No fue posible depositar',
 			need_funds_in: 'Primero necesitas tener fondos ',
@@ -167,6 +132,7 @@ export default {
 			INSUFFICIENT_ASSET_LIQUIDITY: 'insuficiente liquidez de activos'
 		}
 	},
+
 	ImportWalletScreen: {
 		import_wallet: 'Importar Wallet',
 		import_with_secret_phrase: 'Importar con frase secreta o llave privada',
@@ -177,6 +143,36 @@ export default {
 		please_change_network: 'Por favor cambia a {{network}} para conectar esta wallet.',
 		Error: {
 			no_network: 'No soportamos esta red. Por favor, selecciona otra red en la aplicación.'
+		}
+	},
+
+	InvestmentsDetailScreen: {
+		MarketCap: {
+			market_cap: 'Cap. de mercado',
+			volume: 'Volumen (1D)'
+		},
+		Upper: {
+			Chart: {
+				Changes: {
+					changes: 'Cambios',
+					hour: '1 Hora',
+					day: '1 Día',
+					week: '1 Semana',
+					month: '1 Mes',
+					year: '1 Año',
+					all: 'Todo'
+				},
+				Selection: {
+					Chart: {
+						'1H': '1H',
+						'1D': '1D',
+						'1S': '1S',
+						'1M': '1M',
+						'1A': '1A',
+						All: 'Todo'
+					}
+				}
+			}
 		}
 	},
 	ManualBackupScreen: {
@@ -192,6 +188,7 @@ export default {
 			anyone_who_has_these: 'Cualquiera que las tenga puede acceder a tu wallet!'
 		}
 	},
+
 	NFTDetailScreen: {
 		by: 'Por ',
 		Panel: {
@@ -199,12 +196,9 @@ export default {
 			last_sale_price: 'último precio de venta'
 		},
 		view_on_openSea: 'Ver en OpenSea',
-		about: 'Sobre',
-		Expander: {
-			show_less: 'Mostrar menos',
-			show_more: 'Mostrar más'
-		}
+		about: 'Sobre'
 	},
+
 	NFTScreen: {
 		assets: 'Activos',
 		estimated_value: 'Valor estimado',
@@ -281,6 +275,7 @@ export default {
 			points: '{{count}} puntos'
 		}
 	},
+
 	SaveScreen: {
 		interest: '% interes anual',
 		EmptyState: {
@@ -675,6 +670,244 @@ export default {
 			currencyName: 'Yuan Chino'
 		}
 	},
+
+	// HOOKS
+	Hooks: {
+		iCloudBackup: {
+			BACKING_UP_WALLET: 'Generando copia de seguridad...',
+			CREATING_WALLET: 'Creando wallet...',
+			FETCHING_PASSWORD: 'Obteniendo Contraseña...',
+			IMPORTING_WALLET: 'Importando...',
+			RESTORING_WALLET: 'Restaurando...',
+			errors: {
+				KEYCHAIN_ACCESS_ERROR: 'Tiene que autenticar para proceder con la copia de seguridad',
+				ERROR_DECRYPTING_DATA: 'Contraseña incorrecta! Por favor intenta otra vez.',
+				NO_BACKUPS_FOUND: '¡No pudimos encontrar tu anterior copia de seguridad!',
+				ERROR_GETTING_ENCRYPTED_DATA: 'No pudimos acceder a tu copia de seguridad esta vez. Por favor intenta mas tarde.',
+				GENERIC_ERROR: 'Error intentando generar la copia de seguridad. Código de error: %{code}'
+			}
+		}
+	},
+
+	// CONTAINERS
+	Containers: {
+		AddFunds: {
+			Header: {
+				country: 'País'
+			},
+			LocalCurrencyModal: {
+				choose_amount_in: 'Elige el monto en {{currency}}'
+			},
+			ExternalExchangeModal: {
+				external: 'Exchange externo',
+				send_from: 'Envía de Binance, Coinbase, Kraken u otro exchange centralizado.',
+				make_sure: '*Asegurate que la red seleccionada es',
+				or: 'o',
+				copy: 'Copia tu dirección (wallet address)'
+			},
+			ChooseQuantityModal: {
+				select_country: 'Selecciona tu país de residencia para acceder a métodos de pago regional',
+				change_country: 'Cambiar país',
+				buy_some: 'Como algo de {{symbol}}',
+				with: ' con',
+				to_start_using: ' para empezar a usar Minke:',
+				choose_another_amount: 'Elige otro monto',
+				or_deposit: 'o depsoita',
+				send_from: 'Manda de ',
+				or_another_exchange: ' u otro exchange',
+				copy_address: 'Copiar dirección',
+				address_copied: '¡Dirección copiada!'
+			},
+			SelectorModal: {
+				add_funds: 'Agregar fondos',
+				buy_crypto: 'Comprar cripto',
+				apple_card_transfer: '{{pay}}, tarjeta o transeferencia bancaria',
+				send_from_exchange: 'Enviar de Binance, Coinbase, otros',
+				external: 'Exchange externo'
+			},
+			CustomAmountModal: {
+				choose_another_amount: 'Elige otro monto entre {{min}} y {{max}}',
+				use_a_debit_card: 'Usa una tarjeta de débito'
+			}
+		}
+	},
+
+	// COMPONENTS
+	Components: {
+		Balance: {
+			Balance: 'Balance',
+			Buttons: {
+				buy: 'Comprar',
+				sell: 'Vender',
+				send: 'Enviar'
+			}
+		},
+		GenericPayButton: {
+			debit_credit: 'Tarjeta de Debito/Credito'
+		},
+		BlankStates: {
+			NFT: 'NFTs',
+			WalletAssets: 'Wallet',
+			Exchange: 'Exchange',
+			Save: 'Ahorrar',
+			Deposit: 'Depositar',
+			Withdraw: 'Retirar',
+			Send: 'Qué activos quieres enviar a Which asset do you want to send to {{to}}?'
+		},
+		CountrySelector: {
+			country: 'País',
+			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
+			select: 'Selecciona un País'
+		},
+		AaveReusables: {
+			Info: {
+				what_is: 'Qué es Aave?',
+				aave_des:
+					'Aave te permite ganar interes con tu cripto y stablecoins ofreciendo prestamos a usuarios. Aave es un protocolo descentralizado que le permite a los usuarios prestar o tomar prestada criptomonedas. Las tarifas son variables y pueden cambiar en cualquier momento.\n\nLos riesgos incluyen la economía del protocolo, riesgos del mercado, seguridad de los contratos inteligentes, riesgos de contraparte y mas. Aave fue auditado por Trail of Bits y Open Zeppelin.',
+				view_site: 'Ver Sitio',
+				learn_more: 'Aprende más'
+			}
+		},
+		Expander: {
+			show_less: 'Mostrar menos',
+			show_more: 'Mostrar más'
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'Qué es mStable?',
+				mstable_des:
+					'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
+				view_site: 'Ver Sitio',
+				learn_more: 'Aprende más'
+			}
+		},
+		PendingTransactions: {
+			pending: 'Pendiente',
+			success: 'Exito',
+			failed: 'Fallo'
+		},
+		Transaction: {
+			failed: 'Fallo',
+			view_on: 'Ver en',
+			cancel: 'Cancelar',
+			adding_via_apple_pay: 'Agregando via Apple Pay',
+			withdrew_from_savings: 'Reirado',
+			deposited_in_savings: 'Depositado',
+			swap: 'Intercambiado',
+			from: 'De',
+			to: 'A',
+			today: 'Hoy',
+			yesterday: 'Ayer',
+			this_month: 'Este Mes',
+			top_up: 'Agreagar Fondos',
+			savings_withdrew: 'Ahorros (retirado)',
+			savings_deposited: 'Ahorros (depositado)',
+			exchanged: 'Intercambiado',
+			received: 'Recibido',
+			sent: 'Enviado'
+		},
+		LoadingScreen: {
+			this_can_take_a_few_seconds: 'Esto puede tomar unos cuantos segundos'
+		},
+		TokenAmountInput: {
+			send_max: 'Enviar maximo'
+		},
+		NetworkWarning: {
+			NetworkTag: {
+				sending_on: '{{network}} red'
+			}
+		},
+		EmptyStates: {
+			NoTokens: {
+				no_tokens_here: 'No hay tokens acá ({{network}})'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Tus puntos van a aparecer acá',
+				lets_get_started: '¿Empezamos?',
+				earn_points: 'Gana puntos'
+			}
+		},
+		Inputs: {
+			enter_password: 'Ingresa tu contraseña',
+			repeat_password: 'Repite tu contraseña',
+			search: 'Buscar',
+			search_token: 'Buscar token',
+			search_currency: 'Buscar divisa',
+			name: 'Nombre',
+			ens_or_wallet: 'ENS o Wallet Address',
+			enter_code: 'Ingresa código'
+		},
+		Buttons: {
+			backup_to_icloud: 'Generar copia de seguridad a {{cloudPlatform}}',
+			backup_manually: 'Copiar manualmente',
+			confirm_restore: 'Confirma restauración',
+			confirm_backup: 'Confirma copia de seguridad',
+			done: 'Hecho',
+			exchange: 'Intercambiar',
+			deposit: 'Depositar',
+			withdraw: 'Retirar',
+			ok_got_it: 'OK, listo',
+			send: 'Enviar',
+			add_contact: 'Agreagar Contacto',
+			add_funds_to_start: 'Agrega fondo para empezar',
+			share: 'Compartir',
+			pay_with: 'Pagar con ',
+			use_code: 'Usa código',
+			loading: 'Cargando',
+			swap: 'Intercambiar'
+		},
+		ModalReusables: {
+			TransactionWaitModal: {
+				transaction_done: 'Transaccón completada',
+				processing_transaction: 'Procesando Transacción',
+				sent: 'Enviado',
+				deposited: 'Depositado',
+				withdrew: 'Retirado',
+				exchanged: 'Intercambiado',
+				sending: 'Enviando',
+				depositing: 'Depositando',
+				withdrawing: 'Retirando',
+				exchanging: 'Intercambiando',
+				in: 'en',
+				for: 'por',
+				transaction: 'Transacción'
+			},
+			Error: {
+				title: '¡Ups!',
+				description: 'Algo salió mal, nuestros desarrolladores han sido notificados.',
+				buttonLabel: 'Ok, listo',
+				Blockchain: {
+					description: 'Algo salió mal al comunicarnos con la blockchain'
+				}
+			},
+			ComingSoonModal: {
+				coming_soon: '¡Pronto!',
+				devs_doing_something: 'Los desarroladores estan haciendo algo.'
+			}
+		},
+		SettingsHeader: {
+			done: 'Hecho'
+		},
+		TokenCard: {
+			choose_token: 'Elige token',
+			choose_currency: 'Elige divisa',
+			available: 'Disponible'
+		},
+		InterestBanner: {
+			interest: '% interesa anual'
+		},
+		WatchModeTag: {
+			this_wallet_needs_to_be_reconnected: 'Esta wallet necesita ser reconectada a {{network}}.',
+			import_wallet: 'Importar wallet o mandar transacción'
+		}
+	},
+
+	// LOGS
+	Logs: {
+		couldnt_restore_backup: 'No pudimos restaurar tus copias de seguridad',
+		not_enough_balance_for_gas: 'No tienes fondos suficientes para pagar la comision de red'
+	},
+
 	WalletAssetsScreen: {
 		header: 'Wallet',
 		ValueBox: {
@@ -856,222 +1089,5 @@ export default {
 		exchange_rate: 'Tasa de cambio',
 		savings_account: 'Cuenta de Ahorro:',
 		received_from: 'Recibido de:'
-	},
-	Hooks: {
-		iCloudBackup: {
-			BACKING_UP_WALLET: 'Generando copia de seguridad...',
-			CREATING_WALLET: 'Creando wallet...',
-			FETCHING_PASSWORD: 'Obteniendo Contraseña...',
-			IMPORTING_WALLET: 'Importando...',
-			RESTORING_WALLET: 'Restaurando...',
-			errors: {
-				KEYCHAIN_ACCESS_ERROR: 'Tiene que autenticar para proceder con la copia de seguridad',
-				ERROR_DECRYPTING_DATA: 'Contraseña incorrecta! Por favor intenta otra vez.',
-				NO_BACKUPS_FOUND: '¡No pudimos encontrar tu anterior copia de seguridad!',
-				ERROR_GETTING_ENCRYPTED_DATA: 'No pudimos acceder a tu copia de seguridad esta vez. Por favor intenta mas tarde.',
-				GENERIC_ERROR: 'Error intentando generar la copia de seguridad. Código de error: %{code}'
-			}
-		}
-	},
-	Containers: {
-		AddFunds: {
-			Header: {
-				country: 'País'
-			},
-			LocalCurrencyModal: {
-				choose_amount_in: 'Elige el monto en {{currency}}'
-			},
-			ExternalExchangeModal: {
-				external: 'Exchange externo',
-				send_from: 'Envía de Binance, Coinbase, Kraken u otro exchange centralizado.',
-				make_sure: '*Asegurate que la red seleccionada es',
-				or: 'o',
-				copy: 'Copia tu dirección (wallet address)'
-			},
-			ChooseQuantityModal: {
-				select_country: 'Selecciona tu país de residencia para acceder a métodos de pago regional',
-				change_country: 'Cambiar país',
-				buy_some: 'Como algo de {{symbol}}',
-				with: ' con',
-				to_start_using: ' para empezar a usar Minke:',
-				choose_another_amount: 'Elige otro monto',
-				or_deposit: 'o depsoita',
-				send_from: 'Manda de ',
-				or_another_exchange: ' u otro exchange',
-				copy_address: 'Copiar dirección',
-				address_copied: '¡Dirección copiada!'
-			},
-			SelectorModal: {
-				add_funds: 'Agregar fondos',
-				buy_crypto: 'Comprar cripto',
-				apple_card_transfer: '{{pay}}, tarjeta o transeferencia bancaria',
-				send_from_exchange: 'Enviar de Binance, Coinbase, otros',
-				external: 'Exchange externo'
-			},
-			CustomAmountModal: {
-				choose_another_amount: 'Elige otro monto entre {{min}} y {{max}}',
-				use_a_debit_card: 'Usa una tarjeta de débito'
-			}
-		}
-	},
-	Components: {
-		GenericPayButton: {
-			debit_credit: 'Tarjeta de Debito/Credito'
-		},
-		BlankStates: {
-			NFT: 'NFTs',
-			WalletAssets: 'Wallet',
-			Exchange: 'Exchange',
-			Save: 'Ahorrar',
-			Deposit: 'Depositar',
-			Withdraw: 'Retirar',
-			Send: 'Qué activos quieres enviar a Which asset do you want to send to {{to}}?'
-		},
-		CountrySelector: {
-			country: 'País',
-			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
-			select: 'Selecciona un País'
-		},
-		AaveReusables: {
-			Info: {
-				what_is: 'Qué es Aave?',
-				aave_des:
-					'Aave te permite ganar interes con tu cripto y stablecoins ofreciendo prestamos a usuarios. Aave es un protocolo descentralizado que le permite a los usuarios prestar o tomar prestada criptomonedas. Las tarifas son variables y pueden cambiar en cualquier momento.\n\nLos riesgos incluyen la economía del protocolo, riesgos del mercado, seguridad de los contratos inteligentes, riesgos de contraparte y mas. Aave fue auditado por Trail of Bits y Open Zeppelin.',
-				view_site: 'Ver Sitio',
-				learn_more: 'Aprende más'
-			}
-		},
-		MStableReusables: {
-			Info: {
-				what_is: 'Qué es mStable?',
-				mstable_des:
-					'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
-				view_site: 'Ver Sitio',
-				learn_more: 'Aprende más'
-			}
-		},
-		PendingTransactions: {
-			pending: 'Pendiente',
-			success: 'Exito',
-			failed: 'Fallo'
-		},
-		Transaction: {
-			failed: 'Fallo',
-			view_on: 'Ver en',
-			cancel: 'Cancelar',
-			adding_via_apple_pay: 'Agregando via Apple Pay',
-			withdrew_from_savings: 'Reirado',
-			deposited_in_savings: 'Depositado',
-			swap: 'Intercambiado',
-			from: 'De',
-			to: 'A',
-			today: 'Hoy',
-			yesterday: 'Ayer',
-			this_month: 'Este Mes',
-			top_up: 'Agreagar Fondos',
-			savings_withdrew: 'Ahorros (retirado)',
-			savings_deposited: 'Ahorros (depositado)',
-			exchanged: 'Intercambiado',
-			received: 'Recibido',
-			sent: 'Enviado'
-		},
-		LoadingScreen: {
-			this_can_take_a_few_seconds: 'Esto puede tomar unos cuantos segundos'
-		},
-		TokenAmountInput: {
-			send_max: 'Enviar maximo'
-		},
-		NetworkWarning: {
-			NetworkTag: {
-				sending_on: '{{network}} red'
-			}
-		},
-		EmptyStates: {
-			NoTokens: {
-				no_tokens_here: 'No hay tokens acá ({{network}})'
-			},
-			NoReferralPoints: {
-				your_points_will_appear_here: 'Tus puntos van a aparecer acá',
-				lets_get_started: '¿Empezamos?',
-				earn_points: 'Gana puntos'
-			}
-		},
-		Inputs: {
-			enter_password: 'Ingresa tu contraseña',
-			repeat_password: 'Repite tu contraseña',
-			search: 'Buscar',
-			search_token: 'Buscar token',
-			search_currency: 'Buscar divisa',
-			name: 'Nombre',
-			ens_or_wallet: 'ENS o Wallet Address',
-			enter_code: 'Ingresa código'
-		},
-		Buttons: {
-			backup_to_icloud: 'Generar copia de seguridad a {{cloudPlatform}}',
-			backup_manually: 'Copiar manualmente',
-			confirm_restore: 'Confirma restauración',
-			confirm_backup: 'Confirma copia de seguridad',
-			done: 'Hecho',
-			exchange: 'Intercambiar',
-			deposit: 'Depositar',
-			withdraw: 'Retirar',
-			ok_got_it: 'OK, listo',
-			send: 'Enviar',
-			add_contact: 'Agreagar Contacto',
-			add_funds_to_start: 'Agrega fondo para empezar',
-			share: 'Compartir',
-			pay_with: 'Pagar con ',
-			use_code: 'Usa código',
-			loading: 'Cargando',
-			swap: 'Intercambiar'
-		},
-		ModalReusables: {
-			TransactionWaitModal: {
-				transaction_done: 'Transaccón completada',
-				processing_transaction: 'Procesando Transacción',
-				sent: 'Enviado',
-				deposited: 'Depositado',
-				withdrew: 'Retirado',
-				exchanged: 'Intercambiado',
-				sending: 'Enviando',
-				depositing: 'Depositando',
-				withdrawing: 'Retirando',
-				exchanging: 'Intercambiando',
-				in: 'en',
-				for: 'por',
-				transaction: 'Transacción'
-			},
-			Error: {
-				title: '¡Ups!',
-				description: 'Algo salió mal, nuestros desarrolladores han sido notificados.',
-				buttonLabel: 'Ok, listo',
-				Blockchain: {
-					description: 'Algo salió mal al comunicarnos con la blockchain'
-				}
-			},
-			ComingSoonModal: {
-				coming_soon: '¡Pronto!',
-				devs_doing_something: 'Los desarroladores estan haciendo algo.'
-			}
-		},
-		SettingsHeader: {
-			done: 'Hecho'
-		},
-		TokenCard: {
-			choose_token: 'Elige token',
-			choose_currency: 'Elige divisa',
-			available: 'Disponible'
-		},
-		InterestBanner: {
-			interest: '% interesa anual'
-		},
-		WatchModeTag: {
-			this_wallet_needs_to_be_reconnected: 'Esta wallet necesita ser reconectada a {{network}}.',
-			import_wallet: 'Importar wallet o mandar transacción'
-		}
-	},
-	Logs: {
-		couldnt_restore_backup: 'No pudimos restaurar tus copias de seguridad',
-		not_enough_balance_for_gas: 'No tienes fondos suficientes para pagar la comision de red'
 	}
 };
