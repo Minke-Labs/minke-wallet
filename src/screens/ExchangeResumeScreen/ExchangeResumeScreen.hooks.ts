@@ -103,8 +103,8 @@ const useExchangeResumeScreen = () => {
 	};
 
 	const onBlockchainError = (e: any) => {
+		Logger.sentry('Exchange resume blockchain error', e);
 		captureException(e);
-		Logger.error('Exchange resume blockchain error', e);
 		setVisible(false);
 		setBlockchainError(true);
 		setLoading(false);
