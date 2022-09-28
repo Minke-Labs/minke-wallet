@@ -232,7 +232,7 @@ export default {
 		fluctuating_value: 'Moedas com valor flutuante',
 		savings: 'Depósitos',
 		earn_passive_income: 'Ganhe renda passiva com suas stablecoins',
-		nfts_and_collectibles: 'Tokens não fungíveis e colecionáveis',
+		nfts_and_collectibles: 'NFTs e colecionáveis',
 		others: 'Outros',
 		send_to_bank: 'Enviar ao banco',
 		convert_to_local: 'Converter para sua moeda local',
