@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme } from '@hooks';
+import { useNavigation, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { makeStyles } from '../TopUpWaitScreen.styles';
@@ -14,8 +14,14 @@ const MoonpayWaitScreen = ({ route }: Props) => {
 	const { transactionId } = route.params;
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
+	const navigation = useNavigation();
 
 	const { isFailed, checking, processing, onFinish, success, transactionHash } = useMoonpayWaitScreen(transactionId);
+
+	if (!transactionId) {
+		navigation.navigate('HomeScreen');
+	}
+
 	return (
 		<View style={styles.container}>
 			{isFailed && <Failed {...{ onFinish }} orderId={transactionId} />}

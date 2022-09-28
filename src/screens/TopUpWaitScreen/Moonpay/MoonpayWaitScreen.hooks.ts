@@ -33,6 +33,8 @@ const useMoonpayWaitScreen = (transactionId: string) => {
 	}, [transaction]);
 
 	useEffect(() => {
+		if (!transactionId) return;
+
 		fetchTransaction();
 	}, [transactionId]);
 

@@ -129,7 +129,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 			quoteCurrencyAmount: fiat ? undefined : tokenAmount,
 			lockAmount: true,
 			language: i18n.locale,
-			redirectURL: Linking.createURL('/moonpayWaitScreen')
+			redirectURL: encodeURI(Linking.createURL('/moonpayWaitScreen'))
 		};
 
 		const query = `?${qs.stringify(params)}`;
