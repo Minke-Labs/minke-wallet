@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { Text, Icon, Touchable } from '@components';
+import { Header } from '@components';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import styles from './AccountsScreen.styles';
@@ -10,26 +10,18 @@ import { useAccountsScreen } from './AccountsScreen.hooks';
 
 const AccountsScreen = () => {
 	RNUxcam.tagScreenName('AccountsScreen');
-	const { address, wallets, goBack, onSelectWallet, onImportWallet } = useAccountsScreen();
+	const { address, wallets, onSelectWallet, onImportWallet } = useAccountsScreen();
 	const { i18n } = useLanguage();
 
 	return (
 		<BasicLayout>
-			<View style={styles.header}>
-				<Touchable onPress={goBack}>
-					<Icon name="arrowBackStroke" color="text7" size={24} />
-				</Touchable>
-				<Touchable onPress={onImportWallet}>
-					<Text weight="medium" color="text7" type="a">
-						{i18n.t('AccountsScreen.import_or_restore')}
-					</Text>
-				</Touchable>
-			</View>
+			<Header
+				title={i18n.t('AccountsScreen.accounts')}
+				rightAction={i18n.t('AccountsScreen.import_or_restore')}
+				onRightActionClick={onImportWallet}
+			/>
 
 			<View style={styles.container}>
-				<Text weight="extraBold" type="h3">
-					{i18n.t('AccountsScreen.accounts')}
-				</Text>
 				<SafeAreaView>
 					<FlatList
 						style={{ paddingTop: 24, paddingBottom: 24 }}

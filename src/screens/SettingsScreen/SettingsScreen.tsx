@@ -3,14 +3,7 @@ import { ScrollView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
-import {
-	View,
-	LoadingScreen,
-	SettingsHeader,
-	Text,
-	ModalBase,
-	IconItem
-} from '@components';
+import { View, LoadingScreen, Header, Text, ModalBase, IconItem } from '@components';
 import { useNavigation, useLanguage, useWalletState } from '@hooks';
 import { networks } from '@models/network';
 import Intercom from '@intercom/intercom-react-native';
@@ -31,7 +24,6 @@ const SettingsScreen = () => {
 	const [creatingWallet, setCreatingWallet] = useState(false);
 	const [deleteModal, setDeleteModal] = useState(false);
 
-	const goBack = () => navigation.goBack();
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onChangeCountry = () => navigation.navigate('ChangeCountryScreen');
 	const onChangeLanguage = () => navigation.navigate('ChangeLanguageScreen');
@@ -59,7 +51,7 @@ const SettingsScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<SettingsHeader title={i18n.t('SettingsScreen.title')} onPress={goBack} done={false} />
+				<Header title={i18n.t('SettingsScreen.title')} />
 
 				<View style={styles.container}>
 					<ScrollView showsVerticalScrollIndicator={false}>
@@ -161,13 +153,7 @@ const SettingsScreen = () => {
 						/>
 
 						{(RNTestFlight.isTestFlight || __DEV__) && (
-							<IconItem
-								title="Development"
-								icon="gear"
-								onPress={onDevSettings}
-								rightButton
-								mb="m"
-							/>
+							<IconItem title="Development" icon="gear" onPress={onDevSettings} rightButton mb="m" />
 						)}
 
 						<IconItem

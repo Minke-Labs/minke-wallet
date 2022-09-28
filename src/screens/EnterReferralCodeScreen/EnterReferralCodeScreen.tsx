@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, View, ScrollView, Image } from 'react-native';
+import { ScrollView, Image } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { Button, Icon, Input, Text } from '@components';
+import { Button, Header, Input, Text } from '@components';
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { whale5Img as whaleImage } from '@images';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -19,20 +19,11 @@ const EnterReferralCodeScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<View style={[styles.row, styles.header]}>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()} style={styles.row}>
-						<Icon name="arrowBackStroke" color="text7" size={24} />
-						<Text weight="extraBold" type="h3">
-							{i18n.t('EnterReferralCodeScreen.enter_referral_code')}
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						activeOpacity={0.6}
-						onPress={() => (address ? navigation.navigate('HomeScreen') : navigation.goBack())}
-					>
-						<Icon name="close" color="text7" size={24} />
-					</TouchableOpacity>
-				</View>
+				<Header
+					title={i18n.t('EnterReferralCodeScreen.enter_referral_code')}
+					done
+					onRightActionClick={() => (address ? navigation.navigate('HomeScreen') : navigation.goBack())}
+				/>
 
 				<ScrollView
 					style={styles.padding}

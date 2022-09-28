@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { usdCoinSettingsKey, usdCoin as selectedUSDCoin } from '@models/deposit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@hooks';
 
 export const useUSDCoinScreen = () => {
-	const navigation = useNavigation();
 	const [usdCoin, setUsdCoin] = useState('');
-
-	const goBack = () => navigation.goBack();
 
 	const onSelectCoin = async (token: string) => {
 		await AsyncStorage.setItem(usdCoinSettingsKey, token);
@@ -24,7 +20,6 @@ export const useUSDCoinScreen = () => {
 
 	return {
 		usdCoin,
-		onSelectCoin,
-		goBack
+		onSelectCoin
 	};
 };

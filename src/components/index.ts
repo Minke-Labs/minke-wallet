@@ -47,7 +47,6 @@ import TokenInputInner from './TokenInputInner/TokenInputInner';
 import TouchableShrinks from './TouchableShrinks/TouchableShrinks';
 import Transaction from './Transaction/Transaction';
 import WhiteButton from './WhiteButton/WhiteButton';
-import SettingsHeader from './SettingsHeader/SettingsHeader';
 import Snackbar from './Snackbar/Snackbar';
 import PendingTransaction from './PendingTransaction/PendingTransaction';
 import PercChange from './PercChange/PercChange';
@@ -90,7 +89,6 @@ export {
 	CountrySelector,
 	GasSelector,
 	ModalHeader,
-	SettingsHeader,
 	Snackbar,
 	ModalReusables,
 	Modal,
