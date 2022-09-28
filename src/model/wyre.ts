@@ -242,6 +242,7 @@ export const reserveWyreOrder = async ({
 	};
 
 	const response = await wyreApi.post(`${baseUrl}/v3/orders/reserve`, data, headers);
+	console.log(response);
 	return response;
 };
 
@@ -383,7 +384,10 @@ export const getOrderId = async ({
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${wyreAuthToken}`
 		};
+		console.log({ wyreAuthToken });
+		console.log(baseUrl, { data, headers });
 		const response = await wyreApi.post(`${baseUrl}/v3/apple-pay/process/partner`, data, headers);
+		console.log(baseUrl, response);
 		const orderId = get(response, 'id', null);
 
 		if (orderId) {

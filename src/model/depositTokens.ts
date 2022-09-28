@@ -53,6 +53,13 @@ const stables: Stables = {
 			decimals: 18,
 			symbol: 'imUSD'
 		}
+	},
+	goerli: {
+		USDC: {
+			address: '0x179c54e1fEa2Cd75de3Dc5fa61869B93d8C5b317',
+			decimals: 6,
+			symbol: 'USDC'
+		}
 	}
 };
 
@@ -229,7 +236,6 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 	const { id: networkId, coingeckoPlatform } = await network();
 	const contracts = Object.values(stables[networkId]).filter(({ symbol }) => depositStablecoins.includes(symbol));
-
 	const provider = await getProvider();
 
 	const promises = contracts.map(async ({ address, decimals, symbol }): Promise<MinkeToken> => {
@@ -237,7 +243,6 @@ const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 		const balance: BigNumber = await stablecoin.balanceOf(wallet);
 		const formatedBalance = formatUnits(balance, decimals);
 		const { id, name } = await searchCoinData(address, coingeckoPlatform, symbol);
-
 		return {
 			address,
 			symbol,

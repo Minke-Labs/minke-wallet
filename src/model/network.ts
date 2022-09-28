@@ -3,7 +3,6 @@ import {
 	ALCHEMY_API_URL_POLYGON_MAINNET,
 	BICONOMY_API_KEY_POLYGON_MAINNET,
 	ALCHEMY_API_KEY_ETHEREUM,
-	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_KEY_MATIC,
 	ALCHEMY_API_KEY_GOERLI
 } from '@env';
@@ -44,7 +43,6 @@ export interface Network {
 export interface Networks {
 	mainnet: Network;
 	matic: Network;
-	kovan: Network;
 	goerli: Network;
 }
 
@@ -191,26 +189,6 @@ export const networks: Networks = {
 			}
 		]
 	},
-	kovan: {
-		chainId: 42,
-		name: 'Kovan',
-		id: 'kovan',
-		wyreSRN: 'ethereum',
-		testnet: true,
-		etherscanURL: 'https://kovan.etherscan.io/',
-		etherscanAPIURL: 'https://api-kovan.etherscan.io/',
-		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
-		zapperNetwork: 'ethereum',
-		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
-		topUpTokens: [{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }],
-		transactionTimesEndpoint: true,
-		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
-		coingeckoPlatform: 'ethereum',
-		aave: {
-			depositContract: ''
-		},
-		suggestedTokens: []
-	},
 	goerli: {
 		chainId: 5,
 		name: 'Goerli',
@@ -223,8 +201,8 @@ export const networks: Networks = {
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpTokens: [
-			{ symbol: 'USDC', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 },
-			{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }
+			{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 },
+			{ symbol: 'USDC', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 }
 		],
 		transactionTimesEndpoint: true,
 		alchemyAPIKey: (ALCHEMY_API_KEY_GOERLI || process.env.ALCHEMY_API_KEY_GOERLI)!,
