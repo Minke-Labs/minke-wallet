@@ -11,15 +11,16 @@ import {
 	useBiconomy,
 	useTransactions,
 	useDepositProtocols,
-	useWalletManagement
+	useWalletManagement,
+	useGlobalWalletState
 } from '@hooks';
 import Logger from '@utils/logger';
-import { globalWalletState } from '@stores/WalletStore';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import WithdrawService from '@src/services/withdraw/WithdrawService';
 import { captureException } from '@sentry/react-native';
 import { constants } from 'ethers';
+import gasLimits, { Networks } from '@models/gas';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
@@ -36,7 +37,11 @@ const useWithdrawScreen = () => {
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
-	const { address, privateKey } = globalWalletState().value;
+	const {
+		address,
+		privateKey,
+		network: { id }
+	} = useGlobalWalletState();
 	const { defaultToken, selectedProtocol, apy } = useDepositProtocols(true);
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 
@@ -62,8 +67,8 @@ const useWithdrawScreen = () => {
 		setToken(selectedToken);
 	};
 
-	// @TODO: multiply by the gas usage of the blockchain transaction
-	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
+	const gasUnits = selectedProtocol ? gasLimits[id as Networks].deposit[selectedProtocol.id] : 1;
+	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
 
 	const canWithdraw =
 		canSendTransactions &&
@@ -159,7 +164,8 @@ const useWithdrawScreen = () => {
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		gasUnits
 	};
 };
 

@@ -19,7 +19,7 @@ import {
 	imageSource,
 	sendTransactionData
 } from '@models/wallet';
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken } from '@models/types/token.types';
 import { decimalSeparator } from 'expo-localization';
 import { approvalState } from '@models/deposit';
 import { gaslessApproval, gaslessSend, sendContract } from '@models/gaslessTransaction';
@@ -27,6 +27,7 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureEvent } from '@sentry/react-native';
 import { toBn } from 'evm-bn';
+import gasLimits from '@models/gas';
 import { ResultProps } from '../../Send.types';
 
 interface UserProps {
@@ -39,7 +40,7 @@ interface UseTransactionTransferProps {
 	onError: () => void;
 	sentSuccessfully: (obj: ResultProps) => void;
 	user: UserProps;
-	token: MinkeToken;
+	token: MinkeGasToken;
 }
 
 export const useTransactionTransfer = ({
@@ -85,8 +86,7 @@ export const useTransactionTransfer = ({
 
 	useEffect(() => {
 		if (chainDefaultToken && gasPrice?.result.ProposeGasPrice) {
-			const requiredGas = parseUnits(gasPrice?.result.ProposeGasPrice, 'gwei');
-			// @TODO: multiply by the gas usage of the blockchain transaction
+			const requiredGas = parseUnits(gasPrice?.result.ProposeGasPrice, 'gwei').mul(gasLimits.send);
 			setEnoughGas(gasless || !!(balance && gasPrice ? balance.gte(requiredGas) : true));
 		}
 	}, [chainDefaultToken, gasPrice, balance]);
@@ -102,11 +102,11 @@ export const useTransactionTransfer = ({
 		) {
 			const isNativeToken = token.symbol === chainDefaultToken;
 			if (isNativeToken) {
-				const transactionPrice = +gasPrice.result.ProposeGasPrice * 120000; // gas price * gas limit
+				const transactionPrice = +gasPrice.result.ProposeGasPrice * gasLimits.send; // gas price * gas limit
 				const gasValueInEth = formatUnits(parseUnits(transactionPrice.toString(), 'gwei'));
 				const newBalance = +token.balance - +gasValueInEth;
-				token.balanceUSD = (newBalance * token.balanceUSD!) / +token.balance;
-				token.balance = String(newBalance);
+				token.balanceAvailableUSD = (newBalance * token.balanceUSD!) / +token.balance;
+				token.balanceAvailable = String(newBalance);
 			}
 		}
 	}, [gasPrice, token, chainDefaultToken]);
@@ -225,7 +225,7 @@ export const useTransactionTransfer = ({
 							to: addressTo,
 							value: (value || toBn('0')).toHexString(),
 							data: data || toBn('0').toHexString(),
-							gasLimit: '100000'
+							gasLimit: gasLimits.send.toString()
 						});
 
 						addPendingTransaction({
@@ -261,6 +261,7 @@ export const useTransactionTransfer = ({
 						// Pending transaction...
 						addPendingTransaction(
 							convertTransactionResponse({
+								destination: to,
 								transaction,
 								amount: amountToSend,
 								direction: 'outgoing',
@@ -293,12 +294,13 @@ export const useTransactionTransfer = ({
 	};
 
 	const onMaxPress = (tokenValue = true) => {
+		const { balance: tokenBalance = '0', balanceUSD = 0, balanceAvailable, balanceAvailableUSD } = token;
 		if (tokenValue) {
-			onChangeAmount(token.balance!.replace(/\./g, decimalSeparator));
-			onChangeNumber(Number(token.balance));
+			onChangeAmount((balanceAvailable || tokenBalance).replace(/\./g, decimalSeparator));
+			onChangeNumber(Number(balanceAvailable || tokenBalance));
 		} else {
-			onChangeAmount(token.balanceUSD!.toString().replace(/\./g, decimalSeparator));
-			onChangeNumber(token.balanceUSD);
+			onChangeAmount((balanceAvailableUSD || balanceUSD).toString().replace(/\./g, decimalSeparator));
+			onChangeNumber(balanceAvailableUSD || balanceUSD);
 		}
 	};
 

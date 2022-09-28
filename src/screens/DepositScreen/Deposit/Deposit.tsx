@@ -51,7 +51,8 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 		blockchainError,
 		setBlockchainError,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		gasUnits
 	} = useDeposit({ depositableToken, selectedProtocol, setSelectedUSDCoin });
 
 	useEffect(() => {
@@ -72,16 +73,11 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 				/>
 
 				<Paper p="xs" mb="l" mh="xs">
-					<TokenCard
-						onPress={showModal}
-						token={token}
-						updateQuotes={debounce(updateAmount, 500)}
-						apy={apy}
-					/>
+					<TokenCard onPress={showModal} token={token} updateQuotes={debounce(updateAmount, 500)} apy={apy} />
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
-					<GasSelector />
+					<GasSelector gasLimit={gasUnits} />
 				</View>
 
 				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>

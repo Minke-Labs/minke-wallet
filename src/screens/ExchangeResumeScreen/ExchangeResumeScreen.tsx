@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-	Text,
-	Header,
-	HapticButton,
-	Paper,
-	ModalBase,
-	ModalReusables,
-	View
-} from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables, View } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useNavigation, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
 import RNUxcam from 'react-native-ux-cam';
 import { os } from '@styles';
+import gasLimits from '@models/gas';
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useExchangeResumeScreen from './ExchangeResumeScreen.hooks';
 import { TokenDetail } from './TokenDetail/TokenDetail';
@@ -64,7 +57,6 @@ const ExchangeResumeScreen = () => {
 							borderBottomColor: colors.background1
 						}}
 					>
-
 						<View
 							flex1
 							h="100%"
@@ -103,7 +95,6 @@ const ExchangeResumeScreen = () => {
 						<View mr="xxs" />
 						{!loading && <Rate count={count} />}
 					</View>
-
 				</Paper>
 
 				<Paper mb="s" p="s" mh="xs">
@@ -126,16 +117,11 @@ const ExchangeResumeScreen = () => {
 					</View>
 				</Paper>
 
-				{!gasless && <GasSelected />}
+				{!gasless && <GasSelected gasLimit={gasLimits.exchange} />}
 
-				<View
-					mb="m"
-					mh="xs"
-					style={{ marginTop: os === 'android' ? undefined : 'auto' }}
-				>
+				<View mb="m" mh="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />
 				</View>
-
 			</BasicLayout>
 
 			<ModalBase isVisible={visible} onDismiss={hideModal}>

@@ -12,7 +12,8 @@ const GasOption: React.FC<GasOptionProps> = ({
 	selected,
 	gasPrice,
 	usdPrice,
-	waiting
+	waiting,
+	gasLimit
 }) => (
 	<Touchable onPress={onSelectGas} disabled={disabled}>
 		<View
@@ -26,7 +27,7 @@ const GasOption: React.FC<GasOptionProps> = ({
 		>
 			<View row cross="center">
 				<Radio selected={selected!} />
-				<GasOptionInner {...{ type, waiting, gasPrice, usdPrice }} />
+				<GasOptionInner {...{ type, waiting, gasPrice, usdPrice, gasLimit }} />
 			</View>
 		</View>
 	</Touchable>

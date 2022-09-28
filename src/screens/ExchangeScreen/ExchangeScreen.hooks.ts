@@ -5,11 +5,12 @@ import { useBalances, useNavigation, useNativeToken, useBiconomy, useDepositProt
 import { useState, State } from '@hookstate/core';
 import { BigNumber, constants, utils } from 'ethers';
 import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
-import { MinkeToken } from '@models/types/token.types';
+import { MinkeGasToken, MinkeToken } from '@models/types/token.types';
 import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
 import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeGasless, validatedExceptions } from '@models/exchange';
 import { formatUnits } from 'ethers/lib/utils';
+import gasLimits from '@models/gas';
 
 interface PriceParams {
 	amount?: string;
@@ -27,7 +28,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
-	const [fromToken, setFromToken] = React.useState<MinkeToken>(sourceToken as MinkeToken);
+	const [fromToken, setFromToken] = React.useState<MinkeGasToken>(sourceToken as MinkeToken);
 	const [toToken, setToToken] = React.useState<MinkeToken>(destToken as MinkeToken);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
@@ -267,18 +268,18 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		if (!gasless && fromToken && nativeToken && maxFeePerGas && !!fromToken.balance && +fromToken.balance > 0) {
 			const isNativeToken = fromToken.symbol === nativeToken.symbol;
 			if (isNativeToken) {
-				const transactionPrice = maxFeePerGas.mul(300000); // gas price * gas limit
+				const transactionPrice = maxFeePerGas.mul(gasLimits.exchange); // gas price * gas limit
 				const nativeTokenTransactionPrice = formatUnits(transactionPrice);
 				const newBalance = +fromToken.balance - +nativeTokenTransactionPrice;
-				fromToken.balanceUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
-				fromToken.balance = String(newBalance);
+				fromToken.balanceAvailableUSD = (newBalance * fromToken.balanceUSD!) / +fromToken.balance;
+				fromToken.balanceAvailable = String(newBalance);
 				setFromToken(fromToken);
 			}
 		}
 	}, [gasValueInEth, fromToken?.symbol, nativeToken?.symbol]);
 
-	// @TODO: multiply by the gas usage of the blockchain transaction
-	const enoughForGas = gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas) : true);
+	const enoughForGas =
+		gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasLimits.exchange)) : true);
 
 	const canSwap = () =>
 		quote &&
