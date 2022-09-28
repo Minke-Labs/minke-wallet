@@ -36,7 +36,6 @@ const Step1: React.FC = () => {
 				onChangeText={(val) => handleChange('birthday', val)}
 				value={form.birthday.txt}
 				error={form.birthday.error}
-				// errorDesc="Invalid birthday format. Please use dd/mm/yyyy format."
 			/>
 			{/*
 			<TelephoneInput

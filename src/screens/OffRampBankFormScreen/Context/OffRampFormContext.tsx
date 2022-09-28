@@ -46,22 +46,43 @@ type Form = {
 	// country: CountriesType;
 };
 
-const chooseRegex = (type: string) => {
+const getErrorMessage = (type: string) => {
 	switch (type) {
 		case 'firstName' || 'lastName':
-			return /^[a-z ,.'-]+$/i;
+			return 'Invalid characters. Use only (A-Z)';
 		case 'birthday':
-			return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
+			return 'Invalid birthday format. Please use dd/mm/yyyy format.';
 		case 'address':
-			// return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
-			return /^[a-z ,.'-]+$/i; // TEMP
-		case 'zipCode':
-			return /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/;
+			return 'Invalid Address.';
+		case 'city':
+			return 'Invalid City.';
+		case 'state':
+			return 'Invalid State.';
+		case 'postalCode':
+			return 'Invalid Postal Code.';
 		case 'accountNumber':
-			// return /^Acc(?:oun)?t(?:\s+Number)?.+[\d-]+$/gm;
-			return /^[a-z ,.'-]+$/i; // TEMP
+			return 'Invalid Account Number.';
 		case 'routingNumber':
-			return /^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$/;
+			return 'Invalid Routing Number.';
+		default:
+			return 'Invalid characters. Use only (A-Z)';
+	}
+};
+
+const chooseRegex = (type: string) => {
+	switch (type) {
+		// case 'firstName' || 'lastName':
+		// 	return /^[a-z ,.'-]+$/i;
+		// case 'birthday':
+		// 	return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
+		// case 'address':
+		// 	return /^(?:0[1-9]|[12]\d|3[01])([/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$/;
+		// case 'zipCode':
+		// 	return /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/;
+		// case 'accountNumber':
+		// 	return /^Acc(?:oun)?t(?:\s+Number)?.+[\d-]+$/gm;
+		// case 'routingNumber':
+		// 	return /^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$/;
 		default:
 			return /^[a-z ,.'-]+$/i;
 	}
@@ -123,11 +144,7 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 	const handleChange = (name: string, value: string) => {
 		setForm((prev) => ({
 			...prev,
-			[name]: {
-				...prev[name as keyof Form],
-				txt: value,
-				dirty: true
-			}
+			[name]: { ...prev[name as keyof Form], txt: value }
 		}));
 
 		if (value !== '') {
@@ -136,7 +153,7 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 					...prev,
 					[name]: {
 						...prev[name as keyof Form],
-						error: 'Invalid characters. Use only (A-Z)'
+						error: getErrorMessage(name)
 					}
 				}));
 			} else {
@@ -200,6 +217,8 @@ const OffRampFormProvider: React.FC = ({ children }) => {
 			if ((form.accountNumber.txt.trim() === '') || (form.accountNumber.error.trim() !== '')) return null;
 			if ((form.routingNumber.txt.trim() === '') || (form.routingNumber.error.trim() !== '')) return null;
 
+			console.log('\n\n\n');
+			console.log(form);
 			return navigation.navigate('OffRampSendScreen');
 		}
 

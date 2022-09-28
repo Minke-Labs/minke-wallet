@@ -17,7 +17,6 @@ const Step2: React.FC = () => {
 				onChangeText={(val) => handleChange('accountNumber', val)}
 				value={form.accountNumber.txt}
 				error={form.accountNumber.error}
-				// errorDesc="Invalid accountNumber."
 			/>
 
 			<Input
@@ -25,7 +24,6 @@ const Step2: React.FC = () => {
 				onChangeText={(val) => handleChange('routingNumber', val)}
 				value={form.routingNumber.txt}
 				error={form.routingNumber.error}
-				// errorDesc="Invalid routingNumber."
 			/>
 		</>
 	);

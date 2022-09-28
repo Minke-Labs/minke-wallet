@@ -18,7 +18,6 @@ const Step2: React.FC = () => {
 				onChangeText={(val) => handleChange('address', val)}
 				value={form.address.txt}
 				error={form.address.error}
-				// errorDesc="Invalid Address."
 			/>
 
 			<Input
@@ -27,7 +26,6 @@ const Step2: React.FC = () => {
 				onChangeText={(val) => handleChange('city', val)}
 				value={form.city.txt}
 				error={form.city.error}
-				// errorDesc="Invalid city name."
 			/>
 
 			<Input
@@ -36,7 +34,6 @@ const Step2: React.FC = () => {
 				onChangeText={(val) => handleChange('state', val)}
 				value={form.state.txt}
 				error={form.state.error}
-				// errorDesc="Invalid state name."
 			/>
 
 			<Input
@@ -44,7 +41,6 @@ const Step2: React.FC = () => {
 				onChangeText={(val) => handleChange('postalCode', val)}
 				value={form.postalCode.txt}
 				error={form.postalCode.error}
-				// errorDesc="Invalid zip-code name."
 			/>
 		</>
 	);
