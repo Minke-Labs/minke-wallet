@@ -16,6 +16,10 @@
       <category android:name="android.intent.category.BROWSABLE"/>
       <data android:scheme="https"/>
     </intent>
+		<intent>
+			<action android:name="android.intent.action.VIEW" />
+			<data android:scheme="wc"/>
+		</intent>
   </queries>
   <application
     android:name=".MainApplication"
