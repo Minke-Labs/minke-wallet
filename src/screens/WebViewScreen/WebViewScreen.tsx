@@ -11,7 +11,7 @@ const WebViewScreen = ({ route }: Props) => {
 
 	return (
 		<BasicLayout>
-			<Header title={title} marginBottom={8} />
+			<Header title={title} marginBottom="xxs" />
 			<WebView
 				source={{ uri }}
 				sharedCookiesEnabled

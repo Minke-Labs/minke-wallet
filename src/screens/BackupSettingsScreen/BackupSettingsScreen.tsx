@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { BasicLayout } from '@layouts';
-import { SettingsHeader } from '@components';
 import { useLanguage } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
+import { Header } from '@components';
 import ListItem from './ListItem/ListItem';
 import styles from './BackupSettingsScreen.styles';
 import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
@@ -11,11 +11,11 @@ import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
 const BackupSettingsScreen = () => {
 	RNUxcam.tagScreenName('BackupSettingsScreen');
 	const { i18n } = useLanguage();
-	const { wallets, goBack, onSelectWallet } = useBackupSettingsScreen();
+	const { wallets, onSelectWallet } = useBackupSettingsScreen();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title={i18n.t('BackupSettingsScreen.title')} onPress={goBack} done={false} />
+			<Header title={i18n.t('BackupSettingsScreen.title')} />
 
 			<View style={styles.container}>
 				<SafeAreaView>
