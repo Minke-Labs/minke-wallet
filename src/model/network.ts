@@ -5,7 +5,9 @@ import {
 	ALCHEMY_API_KEY_ETHEREUM,
 	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_KEY_MATIC,
-	ALCHEMY_API_KEY_GOERLI
+	ALCHEMY_API_KEY_GOERLI,
+	QUICK_NODE_API_URL_BSC_MAINNET,
+	BICONOMY_API_KEY_BSC_MAINNET
 } from '@env';
 import { MinkeToken, TopupToken } from './types/token.types';
 
@@ -46,6 +48,7 @@ export interface Networks {
 	matic: Network;
 	kovan: Network;
 	goerli: Network;
+	'binance-smart-chain': Network;
 }
 
 export const networks: Networks = {
@@ -61,9 +64,24 @@ export const networks: Networks = {
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpTokens: [
-			{ symbol: 'USDC', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 },
-			{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 },
-			{ symbol: 'USDT', address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', decimals: 6 }
+			{
+				symbol: 'USDC',
+				address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+				decimals: 6,
+				suggestedBuyAmount: 100
+			},
+			{
+				symbol: 'ETH',
+				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+				decimals: 18,
+				suggestedBuyAmount: 0.1
+			},
+			{
+				symbol: 'USDT',
+				address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+				decimals: 6,
+				suggestedBuyAmount: 100
+			}
 		],
 		transactionTimesEndpoint: true,
 		apiUrl0x: 'https://api.0x.org/',
@@ -130,13 +148,15 @@ export const networks: Networks = {
 				moonpaySymbol: 'USDC_POLYGON',
 				wyreSymbol: 'MUSDC',
 				address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
-				decimals: 6
+				decimals: 6,
+				suggestedBuyAmount: 100
 			},
 			{
 				symbol: 'MATIC',
 				moonpaySymbol: 'MATIC_POLYGON',
 				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-				decimals: 18
+				decimals: 18,
+				suggestedBuyAmount: 100
 			}
 		],
 		apiUrl0x: 'https://polygon.api.0x.org/',
@@ -191,6 +211,44 @@ export const networks: Networks = {
 			}
 		]
 	},
+	'binance-smart-chain': {
+		chainId: 56,
+		name: 'Binance Smart Chain',
+		id: 'binance-smart-chain',
+		wyreSRN: '',
+		testnet: false,
+		etherscanURL: 'https://bscscan.com/',
+		etherscanAPIURL: 'https://api.bscscan.com/',
+		etherscanAPIKey: 'T4IR944AI2CXD1RNU14CAPGQR3R9EV6NYK',
+		zapperNetwork: 'binance-smart-chain',
+		nativeToken: { symbol: 'BNB', name: 'BNB' },
+		transactionTimesEndpoint: false,
+		jsonRpcProvider: QUICK_NODE_API_URL_BSC_MAINNET || process.env.QUICK_NODE_API_URL_BSC_MAINNET,
+		biconomyAPIKey: BICONOMY_API_KEY_BSC_MAINNET || process.env.BICONOMY_API_KEY_BSC_MAINNET,
+		topUpTokens: [
+			{
+				symbol: 'BNB',
+				moonpaySymbol: 'BNB_BSC',
+				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+				decimals: 18,
+				suggestedBuyAmount: 0.5
+			},
+			{
+				symbol: 'BUSD',
+				moonpaySymbol: 'BUSD_BSC',
+				address: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
+				decimals: 6,
+				suggestedBuyAmount: 100
+			}
+		],
+		apiUrl0x: 'https://bsc.api.0x.org/',
+		alchemyAPIKey: '',
+		aave: {
+			depositContract: ''
+		},
+		coingeckoPlatform: 'binance-smart-chain',
+		suggestedTokens: []
+	},
 	kovan: {
 		chainId: 42,
 		name: 'Kovan',
@@ -202,7 +260,14 @@ export const networks: Networks = {
 		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
-		topUpTokens: [{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }],
+		topUpTokens: [
+			{
+				symbol: 'ETH',
+				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+				decimals: 18,
+				suggestedBuyAmount: 0.1
+			}
+		],
 		transactionTimesEndpoint: true,
 		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
 		coingeckoPlatform: 'ethereum',
@@ -223,8 +288,18 @@ export const networks: Networks = {
 		zapperNetwork: 'ethereum',
 		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
 		topUpTokens: [
-			{ symbol: 'USDC', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6 },
-			{ symbol: 'ETH', address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimals: 18 }
+			{
+				symbol: 'USDC',
+				address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+				decimals: 6,
+				suggestedBuyAmount: 100
+			},
+			{
+				symbol: 'ETH',
+				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+				decimals: 18,
+				suggestedBuyAmount: 0.1
+			}
 		],
 		transactionTimesEndpoint: true,
 		alchemyAPIKey: (ALCHEMY_API_KEY_GOERLI || process.env.ALCHEMY_API_KEY_GOERLI)!,

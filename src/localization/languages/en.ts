@@ -94,7 +94,7 @@ export default {
 		enter_referral_code: 'Enter referral code',
 		get_rewarded_for_saving_money: 'Get rewarded with better money!',
 		or: 'or',
-		buy_usdc: 'Buy USDC',
+		buy_token: 'Buy {{token}}',
 		referral_note:
 			'This code can only be used once. After buying stablecoins you and your friend will each get up to 100 Minke points.',
 		invalid_code: 'Invalid code',
@@ -131,7 +131,7 @@ export default {
 				stablecoins: 'Stablecoins'
 			},
 			AccountsEmpty: {
-				buy_usdc_now: 'Buy USDC now!\nNo personal ID required.',
+				buy_token_now: 'Buy {{token}} now!\nNo personal ID required.',
 				purchase: 'Purchase in a few clicks with:'
 			}
 		},
@@ -890,7 +890,7 @@ export default {
 			use_code: 'Use code',
 			loading: 'Loading',
 			swap: 'Swap',
-			buy_usdc_now: 'Buy USDC now'
+			buy_token_now: 'Buy {{token}} now'
 		},
 		CountrySelector: {
 			country: 'Country',

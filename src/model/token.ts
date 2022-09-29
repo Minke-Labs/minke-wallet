@@ -5,7 +5,7 @@ import * as qs from 'qs';
 import { network, networks } from './network';
 import { MinkeToken, InvestmentToken } from './types/token.types';
 
-export const stablecoins = ['USDC', 'DAI', 'USDT'];
+export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 export const exchangebleTokens = [
 	'ETH',
 	'MATIC',

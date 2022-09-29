@@ -11,7 +11,11 @@ import styles from './EnterReferralCodeScreen.styles';
 
 const EnterReferralCodeScreen = () => {
 	RNUxcam.tagScreenName('EnterReferralCodeScreen');
-	const { address } = useGlobalWalletState();
+	const {
+		address,
+		network: { topUpTokens }
+	} = useGlobalWalletState();
+	const [defaultToken] = topUpTokens;
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const { code, setCode, invalidCode, onConfirm, loading, disableCode } = useEnterReferralCodeScreen();
@@ -42,7 +46,7 @@ const EnterReferralCodeScreen = () => {
 							</Text>
 							<Button
 								onPress={() => navigation.navigate('AddFundsScreen', {})}
-								title={i18n.t('EnterReferralCodeScreen.buy_usdc')}
+								title={i18n.t('EnterReferralCodeScreen.buy_token', { token: defaultToken.symbol })}
 								mb="xxs"
 							/>
 						</>

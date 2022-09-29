@@ -4,7 +4,7 @@ import RNUxcam from 'react-native-ux-cam';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
-import { depositStablecoins } from '@models/deposit';
+import { stablecoins as coins } from '@models/token';
 
 const StablecoinsScreen = () => {
 	RNUxcam.tagScreenName('StablecoinsScreen');
@@ -12,7 +12,7 @@ const StablecoinsScreen = () => {
 	const navigation = useNavigation();
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
-	const stablecoins = depositStablecoins.map((symbol) => {
+	const stablecoins = coins.map((symbol) => {
 		const found = walletStablecoins.find((s) => s.symbol === symbol);
 		if (found) {
 			return found;

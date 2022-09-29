@@ -34,4 +34,6 @@ declare module '@env' {
 	export const MOONPAY_API_KEY: string;
 	export const MOONPAY_SECRET_KEY: string;
 	export const OPENSEA_API_KEY: string;
+	export const QUICK_NODE_API_URL_BSC_MAINNET: string;
+	export const BICONOMY_API_KEY_BSC_MAINNET: string;
 }

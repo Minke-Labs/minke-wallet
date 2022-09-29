@@ -1,13 +1,13 @@
 import React, { createContext, useCallback, useEffect, useMemo } from 'react';
 import EventSource from 'react-native-sse';
 import { useState } from '@hookstate/core';
-import { AccountBalance } from '@models/token';
+import { stablecoins as coins, AccountBalance } from '@models/token';
 import { generateEventSourceDict, generateUrl } from '@src/services/apis/zapper/zapper';
 import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/types/token.types';
 import Logger from '@utils/logger';
 import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTokens';
-import { depositStablecoins, interestBearingTokens } from '@models/deposit';
+import { interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
 import { searchCoinData } from '@helpers/utilities';
@@ -16,6 +16,7 @@ import { parse, ZapperCustomEvents } from './utils';
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
 
 const BalanceProvider: React.FC = ({ children }) => {
+	// const address = '0x5f5e3148532d1682866131a1971bb74a92d96376';
 	const {
 		address,
 		network: { zapperNetwork, suggestedTokens, coingeckoPlatform }
@@ -85,7 +86,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 					allTokens = allTokens.filter(
 						({ symbol, balance = '0', name = '' }) =>
 							!interestBearingTokens.includes(symbol.toLowerCase()) &&
-							!depositStablecoins.includes(symbol) &&
+							!coins.includes(symbol) &&
 							+balance > 0 &&
 							!isValidDomain(name)
 					);

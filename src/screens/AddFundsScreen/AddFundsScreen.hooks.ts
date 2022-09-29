@@ -24,7 +24,7 @@ import SafariView from 'react-native-safari-view';
 
 const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { address, network } = useGlobalWalletState();
-	const { topUpTokens, nativeToken } = network;
+	const { topUpTokens, nativeToken, wyreSRN } = network;
 	const [currency, setCurrency] = useState<Currency>();
 	const [token, setToken] = useState<TopupToken>(topupToken as MinkeToken);
 	const [currencySearchVisible, setCurrencySearchVisible] = useState(false);
@@ -37,7 +37,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();
-	const useApplePay = Platform.OS === 'ios' && currency && providers.wyre.includes(currency);
+	const useApplePay = Platform.OS === 'ios' && !!wyreSRN && currency && providers.wyre.includes(currency);
 	const useBanxa = currency && providers.banxa.includes(currency);
 	const useMoonpay = currency && !useBanxa && providers.moonpay.includes(currency);
 	const moonPaySpecialButton = useMoonpay && ['BRL', 'EUR', 'GBP'].includes(currency.code);
@@ -343,7 +343,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 
 	useEffect(() => {
 		if (token && currency && countryIso && !tokenAmount && !fiatAmount) {
-			updateToken('100');
+			updateToken(token.suggestedBuyAmount?.toString() || '100');
 		}
 	}, [token, currency, countryIso]);
 
