@@ -275,7 +275,6 @@ export default {
 			points: '{{count}} puntos'
 		}
 	},
-
 	SaveScreen: {
 		interest: '% interes anual',
 		EmptyState: {
@@ -347,6 +346,17 @@ export default {
 			funds_being_deposited: 'Tus fondos estan siendo depositados en tu wallet...',
 			done: 'Hecho'
 		}
+	},
+	TransactionsDetailScreen: {
+		transaction_type: 'Tipo de transacción:',
+		date: 'Fecha:',
+		sent_to: 'Enviar a:',
+		exchanged: 'Intercambiado:',
+		exchange_details: '{{fromAmount}} {{from}} por {{toAmount}} {{to}}',
+		hash: 'Hash',
+		exchange_rate: 'Tasa de cambio',
+		savings_account: 'Cuenta de Ahorro:',
+		received_from: 'Recibido de:'
 	},
 	TransactionsScreen: {
 		Header: {
@@ -734,31 +744,6 @@ export default {
 
 	// COMPONENTS
 	Components: {
-		Balance: {
-			Balance: 'Balance',
-			Buttons: {
-				buy: 'Comprar',
-				sell: 'Vender',
-				send: 'Enviar'
-			}
-		},
-		GenericPayButton: {
-			debit_credit: 'Tarjeta de Debito/Credito'
-		},
-		BlankStates: {
-			NFT: 'NFTs',
-			WalletAssets: 'Wallet',
-			Exchange: 'Exchange',
-			Save: 'Ahorrar',
-			Deposit: 'Depositar',
-			Withdraw: 'Retirar',
-			Send: 'Qué activos quieres enviar a Which asset do you want to send to {{to}}?'
-		},
-		CountrySelector: {
-			country: 'País',
-			to_offer: 'To offer you the best options to buy crypto please select your country of residence:',
-			select: 'Selecciona un País'
-		},
 		AaveReusables: {
 			Info: {
 				what_is: 'Qué es Aave?',
@@ -768,74 +753,24 @@ export default {
 				learn_more: 'Aprende más'
 			}
 		},
-		Expander: {
-			show_less: 'Mostrar menos',
-			show_more: 'Mostrar más'
-		},
-		MStableReusables: {
-			Info: {
-				what_is: 'Qué es mStable?',
-				mstable_des:
-					'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
-				view_site: 'Ver Sitio',
-				learn_more: 'Aprende más'
+
+		Balance: {
+			Balance: 'Balance',
+			Buttons: {
+				buy: 'Comprar',
+				sell: 'Vender',
+				send: 'Enviar'
 			}
 		},
-		PendingTransactions: {
-			pending: 'Pendiente',
-			success: 'Exito',
-			failed: 'Fallo'
-		},
-		Transaction: {
-			failed: 'Fallo',
-			view_on: 'Ver en',
-			cancel: 'Cancelar',
-			adding_via_apple_pay: 'Agregando via Apple Pay',
-			withdrew_from_savings: 'Reirado',
-			deposited_in_savings: 'Depositado',
-			swap: 'Intercambiado',
-			from: 'De',
-			to: 'A',
-			today: 'Hoy',
-			yesterday: 'Ayer',
-			this_month: 'Este Mes',
-			top_up: 'Agreagar Fondos',
-			savings_withdrew: 'Ahorros (retirado)',
-			savings_deposited: 'Ahorros (depositado)',
-			exchanged: 'Intercambiado',
-			received: 'Recibido',
-			sent: 'Enviado'
-		},
-		LoadingScreen: {
-			this_can_take_a_few_seconds: 'Esto puede tomar unos cuantos segundos'
-		},
-		TokenAmountInput: {
-			send_max: 'Enviar maximo'
-		},
-		NetworkWarning: {
-			NetworkTag: {
-				sending_on: '{{network}} red'
-			}
-		},
-		EmptyStates: {
-			NoTokens: {
-				no_tokens_here: 'No hay tokens acá ({{network}})'
-			},
-			NoReferralPoints: {
-				your_points_will_appear_here: 'Tus puntos van a aparecer acá',
-				lets_get_started: '¿Empezamos?',
-				earn_points: 'Gana puntos'
-			}
-		},
-		Inputs: {
-			enter_password: 'Ingresa tu contraseña',
-			repeat_password: 'Repite tu contraseña',
-			search: 'Buscar',
-			search_token: 'Buscar token',
-			search_currency: 'Buscar divisa',
-			name: 'Nombre',
-			ens_or_wallet: 'ENS o Wallet Address',
-			enter_code: 'Ingresa código'
+		BlankStates: {
+			NFT: 'NFTs',
+			WalletAssets: 'Wallet',
+			Exchange: 'Exchange',
+			Save: 'Ahorrar',
+			Deposit: 'Depositar',
+			Withdraw: 'Retirar',
+			Send: 'Qué activos quieres enviar a Which asset do you want to send to {{to}}?',
+			Referral: 'Remisión'
 		},
 		Buttons: {
 			backup_to_icloud: 'Generar copia de seguridad a {{cloudPlatform}}',
@@ -854,7 +789,49 @@ export default {
 			pay_with: 'Pagar con ',
 			use_code: 'Usa código',
 			loading: 'Cargando',
-			swap: 'Intercambiar'
+			swap: 'Intercambiar',
+			buy_usdc_now: 'Compre USDC ahora'
+		},
+		CountrySelector: {
+			country: 'País',
+			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
+			// select: 'Selecciona un País'
+		},
+
+		EmptyStates: {
+			NoTokens: {
+				no_tokens_here: 'No hay tokens acá ({{network}})'
+			},
+			NoReferralPoints: {
+				your_points_will_appear_here: 'Tus puntos van a aparecer acá',
+				lets_get_started: '¿Empezamos?',
+				earn_points: 'Gana puntos'
+			}
+		},
+
+		Expander: {
+			show_less: 'Mostrar menos',
+			show_more: 'Mostrar más'
+		},
+
+		GenericPayButton: {
+			debit_credit: 'Tarjeta de Debito/Credito'
+		},
+		Inputs: {
+			enter_password: 'Ingresa tu contraseña',
+			repeat_password: 'Repite tu contraseña',
+			search: 'Buscar',
+			search_token: 'Buscar token',
+			search_currency: 'Buscar divisa',
+			name: 'Nombre',
+			ens_or_wallet: 'ENS o Wallet Address',
+			enter_code: 'Ingresa código'
+		},
+		InterestBanner: {
+			interest: '% interesa anual'
+		},
+		LoadingScreen: {
+			this_can_take_a_few_seconds: 'Esto puede tomar unos cuantos segundos'
 		},
 		ModalReusables: {
 			TransactionWaitModal: {
@@ -882,162 +859,8 @@ export default {
 			},
 			ComingSoonModal: {
 				coming_soon: '¡Pronto!',
-				devs_doing_something: 'Los desarroladores estan haciendo algo.'
-			}
-		},
-		SettingsHeader: {
-			done: 'Hecho'
-		},
-		TokenCard: {
-			choose_token: 'Elige token',
-			choose_currency: 'Elige divisa',
-			available: 'Disponible'
-		},
-		InterestBanner: {
-			interest: '% interesa anual'
-		},
-		WatchModeTag: {
-			this_wallet_needs_to_be_reconnected: 'Esta wallet necesita ser reconectada a {{network}}.',
-			import_wallet: 'Importar wallet o mandar transacción'
-		}
-	},
-
-	// LOGS
-	Logs: {
-		couldnt_restore_backup: 'No pudimos restaurar tus copias de seguridad',
-		not_enough_balance_for_gas: 'No tienes fondos suficientes para pagar la comision de red'
-	},
-
-	WalletAssetsScreen: {
-		header: 'Wallet',
-		ValueBox: {
-			current_value: 'Valor actual'
-		},
-		AssetList: {
-			Header: {
-				asset_header: 'Activo'
-			},
-			Selector: {
-				all_coins: 'Todas las monedas',
-				stable_coins: 'Stablecoins'
-			},
-			Card: {
-				your_wallet_balance: 'El balance de tu wallet'
-			}
-		},
-		AssetListEmpty: {
-			no_tokens_yet: 'No tienes tokens todavía',
-			lets_buy_some: 'Deseas comprar?',
-			add_funds_to_start: 'Agrega fondos para empezar'
-		}
-	},
-	WalletScreen: {
-		AppTour: {
-			Boxes: {
-				Steps: {
-					Step0: {
-						welcome: 'Bienvenido a Minke!',
-						your_new_favorite:
-							'Tu nueva forma favorita the ahorrar en stablecoins y ganar hasta 5% de intereses anuales.'
-					},
-					Step1: {
-						add_funds: 'Agregar fondos',
-						you_can_buy: 'Puedes comprar USDC en 3 clicks con Apple Pay o con tu medio de pagos local.'
-					},
-					Step2: {
-						save: 'Ahorrar',
-						get_up_to: 'Gana hasta 5% de intereses anuales en stablecoins con mStable u Aave.'
-					},
-					Step3: {
-						send: 'Enviar',
-						send_tokens_to: 'Manda tokens a otra wallet o a un exchange como Binance o Coinbase.'
-					},
-					Step4: {
-						exchange: 'Intercambiar',
-						swap: 'Intercambia entre tokens.'
-					},
-					Step5: {
-						receive: 'Recibe',
-						copy_your:
-							'Recibe fondos de un amigo o envía fondos a tu wallet desde un exchange como Binance o Coinbase.',
-						finish: 'Hecho'
-					}
-				},
-				Arrow: {
-					back: 'Atrás',
-					next: 'Siguiente'
-				}
-			}
-		},
-		Content: {
-			transactions: 'Transacciones',
-			accounts: 'Cuentas'
-		},
-		Header: {
-			welcome: 'Bienvenido',
-			points: 'puntos',
-			invite_a_friend: 'Invita a un amigo!'
-		},
-		AssetsPanel: {
-			your_total_assets: 'Todos tus activos',
-			add_funds: 'Agrega Fondos',
-			save: 'Ahorrar'
-		},
-		ActionPanel: {
-			send: 'Enviar',
-			exchange: 'Intercambiar',
-			receive: 'Recibir',
-			are_you_sure: 'Estas seguro?',
-			cancel: 'Cancelar'
-		},
-		ModalsImport: {
-			address_copied: 'Dirección copiada!'
-		},
-		TransactionsTable: {
-			see_all: 'Ver todo'
-		},
-		components: {
-			Stories: {
-				learn_about_minke: 'Aprende sobre Minke'
-			}
-		},
-		screens: {
-			Accounts: {
-				wallet: 'Wallet',
-				available_funds_in_your_wallet: 'Fondos disponibles en tu wallet',
-				savings: 'Ahorros',
-				funds_deposited_in_savings: 'Fondos depositados en ahorros',
-				borrowing: 'Prestamos',
-				open_loans: 'Prestamos abiertos',
-				coming_soon: 'Pronto',
-				points: 'Puntos',
-				points_earned: 'Refiere a un amigo, gana cripto!',
-				nfts: 'NFTs',
-				estimated_value: 'Valor estimado',
-				value: '$29,214.63'
-			},
-			Transactions: {
-				NoTransactionsYet: {
-					no_transactions_here: 'Ninguna transacción',
-					lets_get_started: 'Empezamos?'
-				}
-			}
-		},
-		Modals: {
-			AvatarModal: {
-				Chosen: {
-					edit: 'Edita tu avatar',
-					select: 'Selecciona un avatar de Minke',
-					choose: 'Elige de tu libreria'
-				},
-				Select: {
-					select: 'Selecciona tu Avatar'
-				}
-			},
-			ReceiveModal: {
-				sending_on: 'Enviando en',
-				receive: 'Recibir',
-				show_qr: 'Muestra tu código QR o comparte tu información'
+				devs_doing_something: 'Los desarroladores estan haciendo algo.',
+				got_it: 'Ok, entendí'
 			},
 			SendModal: {
 				components: {
@@ -1077,17 +900,70 @@ export default {
 				},
 				add: '+ Agregar'
 			}
+		},
+		MStableReusables: {
+			Info: {
+				what_is: 'Qué es mStable?',
+				mstable_des:
+					'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
+				view_site: 'Ver Sitio',
+				learn_more: 'Aprende más'
+			}
+		},
+		NetworkWarning: {
+			NetworkTag: {
+				sending_on: '{{network}} red'
+			}
+		},
+		PendingTransactions: {
+			pending: 'Pendiente',
+			success: 'Exito',
+			failed: 'Fallo'
+		},
+		SettingsHeader: {
+			done: 'Hecho'
+		},
+
+		TokenAmountInput: {
+			send_max: 'Enviar maximo'
+		},
+		TokenCard: {
+			choose_token: 'Elige token',
+			choose_currency: 'Elige divisa',
+			available: 'Disponible'
+		},
+		TokenItemCard: {
+			buy: 'Comprar'
+		},
+		Transaction: {
+			failed: 'Fallo',
+			view_on: 'Ver en',
+			cancel: 'Cancelar',
+			adding_via_apple_pay: 'Agregando via Apple Pay',
+			withdrew_from_savings: 'Reirado',
+			deposited_in_savings: 'Depositado',
+			swap: 'Intercambiado',
+			from: 'De',
+			to: 'A',
+			today: 'Hoy',
+			yesterday: 'Ayer',
+			this_month: 'Este Mes',
+			top_up: 'Agreagar Fondos',
+			savings_withdrew: 'Ahorros (retirado)',
+			savings_deposited: 'Ahorros (depositado)',
+			exchanged: 'Intercambiado',
+			received: 'Recibido',
+			sent: 'Enviado'
+		},
+		WatchModeTag: {
+			this_wallet_needs_to_be_reconnected: 'Esta wallet necesita ser reconectada a {{network}}.',
+			import_wallet: 'Importar wallet o mandar transacción'
 		}
 	},
-	TransactionScreen: {
-		transaction_type: 'Tipo de transacción:',
-		date: 'Fecha:',
-		sent_to: 'Enviar a:',
-		exchanged: 'Intercambiado:',
-		exchange_details: '{{fromAmount}} {{from}} por {{toAmount}} {{to}}',
-		hash: 'Hash',
-		exchange_rate: 'Tasa de cambio',
-		savings_account: 'Cuenta de Ahorro:',
-		received_from: 'Recibido de:'
+
+	// LOGS
+	Logs: {
+		couldnt_restore_backup: 'No pudimos restaurar tus copias de seguridad',
+		not_enough_balance_for_gas: 'No tienes fondos suficientes para pagar la comision de red'
 	}
 };
