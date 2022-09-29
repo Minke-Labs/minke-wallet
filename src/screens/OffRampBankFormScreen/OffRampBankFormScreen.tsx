@@ -41,11 +41,11 @@ export const OffRampBankForm = () => {
 			<BasicLayout>
 
 				<Header
-					onPress={handleBack}
-					onLinkClick={handleForward}
+					onBack={handleBack}
+					onRightActionClick={handleForward}
 					title={getStep(currentStep).title}
-					link={getStep(currentStep).link}
-					mb="l"
+					rightAction={getStep(currentStep).link}
+					marginBottom="l"
 				/>
 
 				<View ph="xs">

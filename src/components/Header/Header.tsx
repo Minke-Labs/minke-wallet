@@ -12,6 +12,7 @@ interface HeaderProps {
 	done?: boolean;
 	rightAction?: string | JSX.Element;
 	onRightActionClick?: () => void;
+	onBack?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -19,7 +20,8 @@ const Header: React.FC<HeaderProps> = ({
 	onRightActionClick,
 	marginBottom = 'zero',
 	rightAction = '',
-	done = false
+	done = false,
+	onBack
 }) => {
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
@@ -28,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({
 	return (
 		<View h={48} ph="xs" row main="space-between" cross="center" mb={marginBottom}>
 			<View row>
-				<Touchable row cross="center" onPress={() => navigation.goBack()}>
+				<Touchable row cross="center" onPress={onBack ? () => onBack() : () => navigation.goBack()}>
 					<Icon name="arrowBackStroke" color="text7" size={24} />
 					<View mr="xxs" />
 					<Text type="hSmall" weight="bold">
