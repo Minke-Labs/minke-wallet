@@ -1,21 +1,19 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { SettingsHeader, FlagItem } from '@components';
+import { Header, FlagItem } from '@components';
 import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
+import { useLanguage } from '@hooks';
 import { FlagType } from '@styles';
 import RNUxcam from 'react-native-ux-cam';
 import { languageArr } from './ChangeLanguageScreen.utils';
 
 const ChangeLanguageScreen = () => {
 	RNUxcam.tagScreenName('ChangeLanguageScreen');
-	const navigation = useNavigation();
-	const goBack = () => navigation.goBack();
 	const { i18n, language, setLanguage } = useLanguage();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader title={i18n.t('ChangeLanguageScreen.header_title')} onPress={goBack} />
+			<Header title={i18n.t('ChangeLanguageScreen.header_title')} done />
 			<View style={{ flex: 1, paddingHorizontal: 16 }}>
 				<View style={{ marginTop: 24, flex: 1 }}>
 					<View style={{ flex: 1 }}>

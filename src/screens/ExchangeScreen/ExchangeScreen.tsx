@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, TouchableOpacity } from 'react-native';
-import { useLanguage, useKeyboard, useNavigation } from '@hooks';
+import { useLanguage, useKeyboard } from '@hooks';
 import { os } from '@styles';
 import { debounce } from 'lodash';
 import { BasicLayout } from '@layouts';
@@ -26,7 +26,6 @@ import { useExchangeScreen } from './ExchangeScreen.hooks';
 type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
 const ExchangeScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('ExchangeScreen');
-	const navigation = useNavigation();
 	const { sourceToken, destToken } = route.params || {};
 	const {
 		fromToken,
@@ -63,11 +62,7 @@ const ExchangeScreen = ({ route }: Props) => {
 		<>
 			<BasicLayout>
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-					<Header
-						onPress={() => navigation.goBack()}
-						title={i18n.t('ExchangeScreen.exchange')}
-						mb="m"
-					/>
+					<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom="m" />
 
 					<ExchangeContainer
 						upperComponent={

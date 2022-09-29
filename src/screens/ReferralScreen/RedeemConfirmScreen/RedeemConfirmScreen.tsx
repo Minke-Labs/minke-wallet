@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Header, HapticButton, Paper, ModalBase, ModalReusables } from '@components';
 import { BasicLayout } from '@layouts';
-import { useLanguage, useNavigation, useTheme } from '@hooks';
+import { useLanguage, useTheme } from '@hooks';
 import RNUxcam from 'react-native-ux-cam';
 import DirectionButton from '@src/screens/ExchangeScreen/DirectionButton/DirectionButton';
 import { TokenDetail } from '@src/screens/ExchangeResumeScreen/TokenDetail/TokenDetail';
@@ -10,7 +10,6 @@ import { makeStyles } from './RedeemConfirmScreen.styles';
 import useRedeemConfirmScreenHooks from './RedeemConfirmScreen.hooks';
 
 const RedeemConfirmScreen = () => {
-	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -21,11 +20,7 @@ const RedeemConfirmScreen = () => {
 	return (
 		<>
 			<BasicLayout>
-				<Header
-					onPress={() => navigation.goBack()}
-					title={i18n.t('RedeemConfirmScreen.confirmation')}
-					mb="m"
-				/>
+				<Header title={i18n.t('RedeemConfirmScreen.confirmation')} marginBottom="m" />
 
 				<Paper mb="s" m="xs">
 					<View style={styles.container}>

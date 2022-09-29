@@ -67,9 +67,8 @@ const Deposit: React.FC<DepositProps> = ({ apy, depositableToken, selectedProtoc
 		<>
 			<BasicLayout>
 				<Header
-					onPress={() => navigation.goBack()}
 					title={`${i18n.t('DepositScreen.Deposit.deposit')} ${token?.symbol ?? ''}`}
-					mb="xxl"
+					marginBottom="xxl"
 				/>
 
 				<Paper p="xs" mb="l" mh="xs">

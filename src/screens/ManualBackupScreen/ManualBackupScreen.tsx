@@ -1,13 +1,14 @@
 import React from 'react';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import { Icon, ScreenLoadingIndicator, Text, Snackbar } from '@components';
-import { useNavigation, useLanguage, useCountry } from '@hooks';
-import { View, TouchableOpacity, FlatList } from 'react-native';
-import { getSeedPhrase } from '@models/wallet';
+import { ScreenLoadingIndicator, Text, Snackbar, Header, Button, View } from '@components';
+import { useNavigation, useLanguage, useCountry, useWallets } from '@hooks';
+import { View as RNView, FlatList, ScrollView } from 'react-native';
+import { getSeedPhrase, MinkeWallet } from '@models/wallet';
 import * as Clipboard from 'expo-clipboard';
 import RNUxcam from 'react-native-ux-cam';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { globalWalletState, walletState } from '@stores/WalletStore';
 import { RootStackParamList } from '@src/routes/types.routes';
 import Card from './Card/Card';
 import CopyButton from './CopyButton/CopyButton';
@@ -24,6 +25,8 @@ const ManualBackupScreen = ({ route }: Props) => {
 	const loadSeed = getSeedPhrase(walletId!);
 	const seed = useState(loadSeed);
 	const { country } = useCountry();
+	const state = useState(globalWalletState());
+	const { wallets } = useWallets();
 	if (seed.promised) return <ScreenLoadingIndicator />;
 
 	const onCopyToClipboard = () => {
@@ -36,43 +39,49 @@ const ManualBackupScreen = ({ route }: Props) => {
 		else navigation.navigate('ChangeCountryScreen');
 	};
 
+	const goToWallet = async () => {
+		const wallet: MinkeWallet = wallets[walletId!];
+		state.set(await walletState(wallet));
+		onFinish();
+	};
+
 	return (
 		<>
 			<BasicLayout>
-				<View style={styles.headerContainer}>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-						<Icon name="arrowBackStroke" size={24} color="text7" />
-					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={onFinish}>
-						<Text weight="medium" type="a" color="text7">
-							{i18n.t('ManualBackupScreen.done')}
+				<Header
+					title={i18n.t('ManualBackupScreen.recovery_phrase')}
+					marginBottom="xs"
+					done
+					onRightActionClick={onFinish}
+				/>
+				<ScrollView
+					contentContainerStyle={{
+						alignItems: 'center'
+					}}
+				>
+					<RNView style={styles.container}>
+						<Text color="text2" width={290} mb="l">
+							{i18n.t('ManualBackupScreen.write_this_down')}
 						</Text>
-					</TouchableOpacity>
-				</View>
 
-				<View style={styles.container}>
-					<Text weight="extraBold" type="h3" mb="xxs">
-						{i18n.t('ManualBackupScreen.recovery_phrase')}
-					</Text>
+						<RNView ref={(view: any) => RNUxcam.occludeSensitiveView(view)}>
+							<FlatList
+								keyExtractor={(item, idx) => `${item}-${idx}`}
+								data={seed.value?.split(' ')}
+								renderItem={({ item, index }) => <Card title={item} idx={index + 1} />}
+								numColumns={2}
+								style={{ flexGrow: 0, marginBottom: 24 }}
+							/>
+						</RNView>
 
-					<Text color="text2" width={290} mb="l">
-						{i18n.t('ManualBackupScreen.write_this_down')}
-					</Text>
+						<Warning />
 
-					<View ref={(view: any) => RNUxcam.occludeSensitiveView(view)}>
-						<FlatList
-							keyExtractor={(item, idx) => `${item}-${idx}`}
-							data={seed.value?.split(' ')}
-							renderItem={({ item, index }) => <Card title={item} idx={index + 1} />}
-							numColumns={2}
-							style={{ flexGrow: 0, marginBottom: 24 }}
-						/>
-					</View>
-
-					<Warning />
-
-					<CopyButton onPress={onCopyToClipboard} />
-				</View>
+						<View mb="xxs">
+							<CopyButton onPress={onCopyToClipboard} />
+						</View>
+						<Button title={i18n.t('ManualBackupScreen.go_to_wallet')} onPress={goToWallet} />
+					</RNView>
+				</ScrollView>
 			</BasicLayout>
 			<Snackbar
 				onDismiss={() => setSnackbarVisible(false)}

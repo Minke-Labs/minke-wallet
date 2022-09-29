@@ -1,9 +1,9 @@
 import React from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
-import { SettingsHeader } from '@components';
+import { Header } from '@components';
 import { BasicLayout } from '@layouts';
-import { useDepositProtocols, useLanguage, useNavigation } from '@hooks';
+import { useDepositProtocols, useLanguage } from '@hooks';
 import { availableDepositProtocols } from '@models/deposit';
 import ListItem from '../USDCoinScreen/ListItem/ListItem';
 import styles from './SavingAccountsScreen.styles';
@@ -11,15 +11,11 @@ import styles from './SavingAccountsScreen.styles';
 const SavingAccountsScreen = () => {
 	RNUxcam.tagScreenName('SavingAccountsScreen');
 	const { selectedProtocol, onChangeProtocol } = useDepositProtocols();
-	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader
-				title={i18n.t('SavingAccountsScreen.title')}
-				onPress={() => navigation.goBack()}
-			/>
+			<Header title={i18n.t('SavingAccountsScreen.title')} done />
 
 			<View style={styles.container}>
 				<SafeAreaView>

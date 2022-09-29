@@ -12,7 +12,7 @@ import {
 	TokenCard,
 	View
 } from '@components';
-import { useLanguage, useNavigation, useTheme } from '@hooks';
+import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
 import RNUxcam from 'react-native-ux-cam';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -25,7 +25,6 @@ import useAddFundsScreen from './AddFundsScreen.hooks';
 type Props = NativeStackScreenProps<RootStackParamList, 'AddFundsScreen'>;
 const AddFundsScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('AddFundsScreen');
-	const navigation = useNavigation();
 	const { topupToken } = route.params;
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -64,11 +63,7 @@ const AddFundsScreen = ({ route }: Props) => {
 		<>
 			<BasicLayout>
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-					<Header
-						onPress={() => navigation.goBack()}
-						title={i18n.t('AddFundsScreen.header')}
-						mb="m"
-					/>
+					<Header title={i18n.t('AddFundsScreen.header')} marginBottom="m" />
 
 					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
 						<View
