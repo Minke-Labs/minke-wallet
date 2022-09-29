@@ -16,23 +16,24 @@ interface ChangeCountryProps {
 
 const ChangeCountry: React.FC<ChangeCountryProps> = ({ setCountry }) => {
 	const { country } = useCountry();
+	const [countrySelected, setCountrySelected] = useState(country);
 	const [isModalVisible, setIsModalvisible] = useState(false);
 	const { i18n } = useLanguage();
 
 	useEffect(() => {
-		setCountry(country);
-	}, [country]);
+		setCountry(countrySelected);
+	}, [countrySelected]);
 
 	return (
 		<>
 			<View mb="s">
 				<View row>
-					<Flag name={country} size={40} />
+					<Flag name={countrySelected} size={40} />
 					<View mr="xxs" />
 					<View flex1>
 						<View mb="xxs">
 							<Text type="bMedium" weight="semiBold">
-								{i18n.t(`LocationContext.${isoByCountry(country)}.name`)}
+								{i18n.t(`LocationContext.${isoByCountry(countrySelected)}.name`)}
 							</Text>
 							<Text type="bSmall" width={237}>
 								{i18n.t('Components.ChangeCountry.select_country')}
@@ -48,7 +49,10 @@ const ChangeCountry: React.FC<ChangeCountryProps> = ({ setCountry }) => {
 			</View>
 			<Modal isVisible={isModalVisible} onDismiss={() => setIsModalvisible(false)}>
 				<View ph="xs" h={deviceHeight * 0.6}>
-					<CountrySelector onCountrySelected={(() => setIsModalvisible(false))} />
+					<CountrySelector
+						onCountrySelected={(() => setIsModalvisible(false))}
+						onlyPick={(val) => setCountrySelected(val)}
+					/>
 				</View>
 			</Modal>
 		</>

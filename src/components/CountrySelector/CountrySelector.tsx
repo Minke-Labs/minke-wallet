@@ -10,9 +10,15 @@ interface CountrySelectorProps {
 	limitHeight?: boolean;
 	desc?: boolean;
 	onCountrySelected?: () => void;
+	onlyPick?: (val: string) => void;
 }
 
-const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc, onCountrySelected }) => {
+const CountrySelector: React.FC<CountrySelectorProps> = ({
+	limitHeight,
+	desc,
+	onCountrySelected,
+	onlyPick
+}) => {
 	const { country, setCountry } = useCountry();
 	const [filtered, setFiltered] = useState<any>(allCountries);
 	const { i18n } = useLanguage();
@@ -25,7 +31,11 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ limitHeight, desc, on
 	};
 
 	const selectCountry = (item: any) => {
-		setCountry(item.flag);
+		if (onlyPick) {
+			onlyPick(item.flag);
+		} else {
+			setCountry(item.flag);
+		}
 		if (onCountrySelected) {
 			Keyboard.dismiss();
 			onCountrySelected();
