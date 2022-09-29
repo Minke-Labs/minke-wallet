@@ -797,7 +797,6 @@ export default {
 			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
 			// select: 'Selecciona un País'
 		},
-
 		EmptyStates: {
 			NoTokens: {
 				no_tokens_here: 'No hay tokens acá ({{network}})'
@@ -806,14 +805,35 @@ export default {
 				your_points_will_appear_here: 'Tus puntos van a aparecer acá',
 				lets_get_started: '¿Empezamos?',
 				earn_points: 'Gana puntos'
+			},
+			NoTransactions: {
+				your_transactions: 'Tus transacciones van a aparecer acá',
+				lets_get_started: '¿Empezamos?',
+				add_funds: 'Agrega fondos para empezar'
 			}
 		},
-
 		Expander: {
 			show_less: 'Mostrar menos',
 			show_more: 'Mostrar más'
 		},
-
+		FloatingSelector: {
+			Actions: {
+				exchange: 'Intercambiar',
+				swap: 'Intercambia un token por otro',
+				send: 'Enviar',
+				receive: 'Recibir',
+				to_another: 'A otra wallet o exchange',
+				from_another: 'Desde otra wallet o exchange',
+				transactions: 'Transacciones',
+				history_of_account_transactions: 'Historial de transacciones de la cuenta'
+			},
+			Modals: {
+				ReceiveModal: {
+					receive: 'Recibir',
+					show_qr: 'Muestra el código QR o comparte tu información'
+				}
+			}
+		},
 		GenericPayButton: {
 			debit_credit: 'Tarjeta de Debito/Credito'
 		},
@@ -920,10 +940,10 @@ export default {
 			success: 'Exito',
 			failed: 'Fallo'
 		},
-		SettingsHeader: {
-			done: 'Hecho'
+		Snackbar: {
+			address_copied: 'Dirección copiada',
+			select: 'Selecciona un País'
 		},
-
 		TokenAmountInput: {
 			send_max: 'Enviar maximo'
 		},
