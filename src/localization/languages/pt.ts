@@ -32,9 +32,9 @@ export default {
 		back_up_to_icloud: 'Backup no {{cloudPlatform}}',
 		backup: 'Backup',
 		done: 'Pronto',
-		go_to_wallet: 'Ir para a carteira',
 		view_secret_phrase: 'Ver Frase Secreta',
-		backup_error: 'Erro no backup'
+		backup_error: 'Erro no backup',
+		go_to_wallet: 'Ir para a carteira'
 	},
 	BackupToICloudScreen: {
 		CreateBackupPassword: {
@@ -221,7 +221,8 @@ export default {
 		Warning: {
 			minke_will_never_ask: 'A Minke nunca solicita essas palavras',
 			anyone_who_has_these: 'Com elas qualquer um pode acessar sua carteira!'
-		}
+		},
+		go_to_wallet: 'Ir para a carteira'
 	},
 	MinkeHubScreen: {
 		minke_hub: 'Minke Hub',
@@ -231,7 +232,7 @@ export default {
 		fluctuating_value: 'Moedas com valor flutuante',
 		savings: 'Depósitos',
 		earn_passive_income: 'Ganhe renda passiva com suas stablecoins',
-		nfts_and_collectibles: 'Tokens não fungíveis e colecionáveis',
+		nfts_and_collectibles: 'NFTs e colecionáveis',
 		others: 'Outros',
 		send_to_bank: 'Enviar ao banco',
 		convert_to_local: 'Converter para sua moeda local',
@@ -940,6 +941,9 @@ export default {
 		GenericPayButton: {
 			debit_credit: 'Cartão de Débito/Crédito'
 		},
+		Header: {
+			done: 'Pronto'
+		},
 		Inputs: {
 			enter_password: 'Entre a senha',
 			repeat_password: 'Repita a senha',
@@ -1042,9 +1046,6 @@ export default {
 			pending: 'Pendente',
 			success: 'Sucesso',
 			failed: 'Falhou'
-		},
-		SettingsHeader: {
-			done: 'Pronto'
 		},
 		Snackbar: {
 			address_copied: 'Endereço copiado',

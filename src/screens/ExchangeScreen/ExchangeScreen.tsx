@@ -63,7 +63,7 @@ const ExchangeScreen = ({ route }: Props) => {
 		<>
 			<BasicLayout>
 				<TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={() => Keyboard.dismiss()}>
-					<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom={36} />
+					<Header title={i18n.t('ExchangeScreen.exchange')} marginBottom="m" />
 
 					<View bgc="background5" br="xs" mh="xs" mb="s" main="center" cross="center">
 						<View

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { SettingsHeader } from '@components';
+import { Header } from '@components';
 import { useLanguage } from '@hooks';
 import { depositStablecoins as stablecoins } from '@models/deposit';
 import styles from './USDCoinScreen.styles';
@@ -12,14 +12,11 @@ import { useUSDCoinScreen } from './USDCoinScreen.hooks';
 const USDCoinScreen = () => {
 	RNUxcam.tagScreenName('USDCoinScreen');
 	const { i18n } = useLanguage();
-	const { usdCoin, onSelectCoin, goBack } = useUSDCoinScreen();
+	const { usdCoin, onSelectCoin } = useUSDCoinScreen();
 
 	return (
 		<BasicLayout>
-			<SettingsHeader
-				title={i18n.t('USDCoinScreen.usd_asset')}
-				onPress={goBack}
-			/>
+			<Header title={i18n.t('USDCoinScreen.usd_asset')} done />
 
 			<View style={styles.container}>
 				<SafeAreaView>

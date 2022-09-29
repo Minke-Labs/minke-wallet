@@ -23,7 +23,7 @@ const CreateBackupPassword = ({ walletId, onError }: BackupToICloudProps) => {
 
 	const onSuccess = async () => {
 		if (password) await saveBackupPassword(password);
-		navigation.navigate('BackupStatusScreen', { walletId: walletId || '', finishedBackup: true });
+		navigation.navigate('HomeScreen');
 	};
 
 	const onConfirmBackup = useCallback(async () => {

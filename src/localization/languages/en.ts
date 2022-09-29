@@ -31,9 +31,9 @@ export default {
 		back_up_to_icloud: 'Back up to {{cloudPlatform}}',
 		backup: 'Backup',
 		done: 'Done',
-		go_to_wallet: 'Go to Wallet',
 		view_secret_phrase: 'View Secret Phrase',
-		backup_error: 'Backup error'
+		backup_error: 'Backup error',
+		go_to_wallet: 'Go to Wallet'
 	},
 	BackupToICloudScreen: {
 		CreateBackupPassword: {
@@ -220,7 +220,8 @@ export default {
 		Warning: {
 			minke_will_never_ask: 'Minke will never ask for these words',
 			anyone_who_has_these: 'Anyone who has these can access your wallet!'
-		}
+		},
+		go_to_wallet: 'Go to Wallet'
 	},
 	MinkeHubScreen: {
 		minke_hub: 'Minke Hub',
@@ -935,6 +936,9 @@ export default {
 		GenericPayButton: {
 			debit_credit: 'Debit/Credit card'
 		},
+		Header: {
+			done: 'Done'
+		},
 		Inputs: {
 			enter_password: 'Enter password',
 			repeat_password: 'Repeat password',
@@ -1037,9 +1041,6 @@ export default {
 			pending: 'Pending',
 			success: 'Success',
 			failed: 'Failed'
-		},
-		SettingsHeader: {
-			done: 'Done'
 		},
 		Snackbar: {
 			address_copied: 'Address copied',

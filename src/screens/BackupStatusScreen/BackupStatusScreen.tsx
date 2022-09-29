@@ -1,16 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 import { useState } from '@hookstate/core';
 import { BasicLayout } from '@layouts';
-import {
-	Button,
-	Text,
-	Icon,
-	ScreenLoadingIndicator,
-	LoadingScreen,
-	ModalReusables,
-	ModalBase
-} from '@components';
+import { Button, Text, ScreenLoadingIndicator, LoadingScreen, ModalReusables, ModalBase, Header } from '@components';
 import RNUxcam from 'react-native-ux-cam';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
@@ -107,16 +99,7 @@ const BackupStatusScreen = ({ route }: Props) => {
 	return (
 		<>
 			<BasicLayout>
-				<View style={styles.header}>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-						<Icon name="arrowBackStroke" color="text7" size={24} />
-					</TouchableOpacity>
-					<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('HomeScreen')}>
-						<Text weight="medium" color="text7" type="a">
-							{i18n.t('BackupStatusScreen.done')}
-						</Text>
-					</TouchableOpacity>
-				</View>
+				<Header title={i18n.t('BackupStatusScreen.backup')} done />
 
 				<ScrollView
 					style={styles.padding}
@@ -124,12 +107,6 @@ const BackupStatusScreen = ({ route }: Props) => {
 						alignItems: 'center'
 					}}
 				>
-					<View style={{ width: '100%', marginBottom: 32 }}>
-						<Text weight="extraBold" type="h3">
-							{i18n.t('BackupStatusScreen.backup')}
-						</Text>
-					</View>
-
 					<Image source={backupImg} style={styles.image} />
 
 					{finishedBackup || backedUp ? (
@@ -146,10 +123,13 @@ const BackupStatusScreen = ({ route }: Props) => {
 					)}
 					{seed.value && (
 						<Button
-							onPress={() =>
-								showAuthenticationPrompt({
-									onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
-								})}
+							onPress={
+								() =>
+									showAuthenticationPrompt({
+										onSuccess: () => navigation.navigate('ManualBackupScreen', { walletId })
+									})
+								// eslint-disable-next-line react/jsx-curly-newline
+							}
 							title={i18n.t('BackupStatusScreen.view_secret_phrase')}
 							mode="outlined"
 						/>
