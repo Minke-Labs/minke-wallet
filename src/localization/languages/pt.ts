@@ -145,6 +145,7 @@ export default {
 				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada',
 				restore_from_cloud: 'Recuperar do {{cloudPlatform}}',
 				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
+				no_backups_found: 'Nenhum backup encontrado',
 				AvatarModal: {
 					Main: {
 						edit: 'Editar seu avatar',

@@ -14,7 +14,6 @@ const ImportWalletScreen = () => {
 		address,
 		onICloudBackup,
 		walletsBackedUp,
-		latestBackup,
 		connected,
 		toggleWalletConnect,
 		error,
@@ -52,19 +51,17 @@ const ImportWalletScreen = () => {
 						images
 					/>
 
-					{(walletsBackedUp > 0 || !!latestBackup) && (
-						<IconItem
-							title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
-							{...(walletsBackedUp > 0 && {
-								desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
-									count: walletsBackedUp,
-									plural: walletsBackedUp > 1 ? 's' : ''
-								})}`
-							})}
-							icon="cloud"
-							onPress={onICloudBackup}
-						/>
-					)}
+					<IconItem
+						title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
+						{...(walletsBackedUp > 0 && {
+							desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
+								count: walletsBackedUp,
+								plural: walletsBackedUp > 1 ? 's' : ''
+							})}`
+						})}
+						icon="cloud"
+						onPress={onICloudBackup}
+					/>
 				</View>
 			</BasicLayout>
 

@@ -144,6 +144,7 @@ export default {
 				import_with_secret_phrase: 'Import with secret phrase or private key',
 				restore_from_cloud: 'Restore from {{cloudPlatform}}',
 				backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+				no_backups_found: 'No backups found',
 				AvatarModal: {
 					Main: {
 						edit: 'Edit your avatar image',
