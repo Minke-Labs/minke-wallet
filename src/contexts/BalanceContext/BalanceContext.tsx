@@ -12,6 +12,7 @@ import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
 import { searchCoinData } from '@helpers/utilities';
 import { parse, ZapperCustomEvents } from './utils';
+import useCovalentBalances from './useCovalentBalances';
 
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
 
@@ -35,6 +36,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 			setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 			setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 		}
+		setStablecoins(await fetchStablecoins(address));
 	};
 
 	const fillSuggestedTokens = useCallback(
@@ -50,6 +52,30 @@ const BalanceProvider: React.FC = ({ children }) => {
 		[suggestedTokens]
 	);
 
+	const processTokens = async (coins: MinkeToken[]) => {
+		let allTokens = coins.filter(
+			({ symbol, balance = '0', name = '' }) =>
+				!interestBearingTokens.includes(symbol.toLowerCase()) &&
+				!depositStablecoins.includes(symbol) &&
+				+balance > 0 &&
+				!isValidDomain(name)
+		);
+		allTokens = fillSuggestedTokens(allTokens);
+		const promises = allTokens.map(async (t) => {
+			const { id, name } = await searchCoinData(t.address, coingeckoPlatform, t.symbol, t.id);
+
+			return {
+				...t,
+				id,
+				name
+			};
+		});
+		allTokens = await Promise.all(promises);
+		setTokens(allTokens);
+		setStablecoins(await fetchStablecoins(address));
+		setLoading(false);
+	};
+
 	useEffect(() => {
 		fetchInterests();
 	}, [selectedProtocol, address, zapperNetwork]);
@@ -57,60 +83,54 @@ const BalanceProvider: React.FC = ({ children }) => {
 	useEffect(() => {
 		const fetchBalances = async (loadingUI = true) => {
 			if (address) {
-				if (loadingUI) setLoading(true);
-				const tokensBalances: MinkeToken[][] = [];
-				const url = generateUrl([address], [zapperNetwork]);
-				const eventSourceDict = generateEventSourceDict();
-				const eventSource = new EventSource<ZapperCustomEvents>(url, eventSourceDict);
+				let fallbacking = false;
+				try {
+					if (loadingUI) setLoading(true);
+					const tokensBalances: MinkeToken[][] = [];
+					const url = generateUrl([address], [zapperNetwork]);
+					const eventSourceDict = generateEventSourceDict();
+					const eventSource = new EventSource<ZapperCustomEvents>(url, eventSourceDict);
 
-				// when balance event is received, the data is parsed
-				// Zapper objects can be huge so parsing logic is extracted to ./utils.js
-				// @ts-ignore
-				eventSource.addEventListener('balance', async ({ data }) => {
-					const parsedDatas = JSON.parse(data);
-					const {
-						appId,
-						balance: { wallet }
-					} = parsedDatas;
-					const apiTokens = Object.keys(wallet);
-					if (appId === 'tokens' && apiTokens.length > 0) {
-						const parsed = parse(wallet);
-						tokensBalances.push(parsed);
-					}
-				});
-
-				// when the data feed has been completely sent
-				eventSource.addEventListener('end', async () => {
-					let allTokens = tokensBalances.flat();
-					allTokens = allTokens.filter(
-						({ symbol, balance = '0', name = '' }) =>
-							!interestBearingTokens.includes(symbol.toLowerCase()) &&
-							!depositStablecoins.includes(symbol) &&
-							+balance > 0 &&
-							!isValidDomain(name)
-					);
-					allTokens = fillSuggestedTokens(allTokens);
-					const promises = allTokens.map(async (t) => {
-						const { id, name } = await searchCoinData(t.address, coingeckoPlatform, t.symbol, t.id);
-
-						return {
-							...t,
-							id,
-							name
-						};
+					// when balance event is received, the data is parsed
+					// Zapper objects can be huge so parsing logic is extracted to ./utils.js
+					// @ts-ignore
+					eventSource.addEventListener('balance', async ({ data }) => {
+						const parsedDatas = JSON.parse(data);
+						const {
+							appId,
+							balance: { wallet }
+						} = parsedDatas;
+						const apiTokens = Object.keys(wallet);
+						if (appId === 'tokens' && apiTokens.length > 0) {
+							const parsed = parse(wallet);
+							tokensBalances.push(parsed);
+						}
 					});
-					allTokens = await Promise.all(promises);
-					setStablecoins(await fetchStablecoins(address));
-					setTokens(allTokens);
-					eventSource.close();
-					setLoading(false);
-				});
 
-				// @ts-ignore
-				eventSource.addEventListener('error', ({ message }) => {
-					setLoading(false);
-					Logger.log('Zapper API Error :', message);
-				});
+					// when the data feed has been completely sent
+					eventSource.addEventListener('end', async () => {
+						await processTokens(tokensBalances.flat());
+						eventSource.close();
+					});
+
+					// @ts-ignore
+					eventSource.addEventListener('error', async ({ message }) => {
+						Logger.log('Zapper API Error :', message);
+						fallbacking = true;
+						const { tokens: allTokens } = await useCovalentBalances(address);
+						await processTokens(allTokens);
+					});
+				} catch {
+					if (!fallbacking) {
+						// already fallback with Covalent
+						fallbacking = true;
+						const { tokens: allTokens } = await useCovalentBalances(address);
+						await processTokens(allTokens);
+					} else {
+						setTokens([]);
+						setLoading(false);
+					}
+				}
 			}
 		};
 		fetchBalances();

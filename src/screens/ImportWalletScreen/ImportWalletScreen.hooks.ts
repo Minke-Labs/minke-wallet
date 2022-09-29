@@ -117,7 +117,7 @@ const useImportWalletScreen = () => {
 		if (connected) {
 			connector.killSession();
 		} else {
-			connector.connect();
+			connector.connect({ chainId: network.chainId });
 		}
 	};
 

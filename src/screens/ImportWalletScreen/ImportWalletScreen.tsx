@@ -33,7 +33,12 @@ const ImportWalletScreen = () => {
 				<Header title={i18n.t('ImportWalletScreen.import_wallet')} done />
 
 				<View pt="m" p="s">
-					<IconItem title="Import with secret phrase" icon="key" onPress={() => setImportSeed(true)} mb="m" />
+					<IconItem
+						title={i18n.t('ImportWalletScreen.import_with_secret_phrase')}
+						icon="key"
+						onPress={() => setImportSeed(true)}
+						mb="m"
+					/>
 
 					<IconItem
 						title={

@@ -27,7 +27,7 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
 				<View row cross="center" main="space-between">
 					<View row>
 						<Text type="lLarge" weight="semiBold">
-							{tokenName.length < 10 ? tokenName : `${tokenName.substring(0, 7)}...`}
+							{tokenName.length < 20 ? tokenName : `${tokenName.substring(0, 17)}...`}
 						</Text>
 						<View mr="xxs" />
 						{!!perc && <Tag perc={perc} />}
@@ -47,7 +47,7 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
 
 					{!hideValues && (
 						<Text type="bDetail" color="text3">
-							{tokenBalanceFormat(balance || '0', 4)}
+							{tokenBalanceFormat(balance || '0')}
 						</Text>
 					)}
 				</View>

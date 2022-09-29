@@ -146,7 +146,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 								<Token name={item.symbol.toLowerCase() as TokenType} size={40} />
 							</View>
 							<View style={styles.tokenItemNameContainer}>
-								<Text style={styles.tokenItemSymbol}>{item.symbol}</Text>
+								<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
 								<Text style={styles.tokenItemName}>{item.symbol}</Text>
 							</View>
 						</Touchable>

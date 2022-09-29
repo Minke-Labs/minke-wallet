@@ -13,7 +13,8 @@ import {
 	TokenCard,
 	BlankStates,
 	Warning,
-	View
+	View,
+	WatchModeTag
 } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
@@ -50,7 +51,9 @@ const ExchangeScreen = ({ route }: Props) => {
 		ownedTokens,
 		error,
 		setError,
-		gasless
+		gasless,
+		canSendTransactions,
+		needToChangeNetwork
 	} = useExchangeScreen({ sourceToken, destToken });
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
@@ -115,6 +118,11 @@ const ExchangeScreen = ({ route }: Props) => {
 					</View>
 
 					<View mh="xs" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
+						{!canSendTransactions && (
+							<View mb="xxs">
+								<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+							</View>
+						)}
 						<Button
 							title={i18n.t('ExchangeScreen.review')}
 							onPress={goToExchangeResume}

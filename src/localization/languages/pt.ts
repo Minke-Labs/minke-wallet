@@ -142,7 +142,7 @@ export default {
 			Modals: {
 				connect_wallet: 'Conectar Carteira',
 				disconnect_wallet: 'Disconectar Carteira',
-				import_with_secret_phrase: 'Importar com frase de recuperação',
+				import_with_secret_phrase: 'Importar com frase de recuperação ou chave privada',
 				restore_from_cloud: 'Recuperar do {{cloudPlatform}}',
 				backup_wallets_count: 'Você tem %{count} carteira%{plural} no backup',
 				AvatarModal: {
