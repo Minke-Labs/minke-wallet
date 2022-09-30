@@ -227,18 +227,18 @@ export const networks: Networks = {
 		biconomyAPIKey: BICONOMY_API_KEY_BSC_MAINNET || process.env.BICONOMY_API_KEY_BSC_MAINNET,
 		topUpTokens: [
 			{
-				symbol: 'BNB',
-				moonpaySymbol: 'BNB_BSC',
-				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-				decimals: 18,
-				suggestedBuyAmount: 0.5
-			},
-			{
 				symbol: 'BUSD',
 				moonpaySymbol: 'BUSD_BSC',
-				address: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
-				decimals: 6,
+				address: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+				decimals: 18,
 				suggestedBuyAmount: 100
+			},
+			{
+				symbol: 'BNB',
+				moonpaySymbol: 'BNB_BSC',
+				address: '0x0000000000000000000000000000000000000000',
+				decimals: 18,
+				suggestedBuyAmount: 0.5
 			}
 		],
 		apiUrl0x: 'https://bsc.api.0x.org/',
@@ -247,7 +247,57 @@ export const networks: Networks = {
 			depositContract: ''
 		},
 		coingeckoPlatform: 'binance-smart-chain',
-		suggestedTokens: []
+		suggestedTokens: [
+			{
+				symbol: 'BNB',
+				address: '0x0000000000000000000000000000000000000000',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'CAKE',
+				address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'BTCB',
+				address: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ETH',
+				address: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'XRP',
+				address: '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ADA',
+				address: '0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'DOGE',
+				address: '0xba2ae424d960c26247dd6c32edc70b295c744c43',
+				decimals: 8,
+				balance: '0',
+				balanceUSD: 0
+			}
+		]
 	},
 	kovan: {
 		chainId: 42,

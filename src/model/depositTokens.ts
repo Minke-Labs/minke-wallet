@@ -57,8 +57,8 @@ export const stables: Stables = {
 	'binance-smart-chain': {
 		BUSD: {
 			symbol: 'BUSD',
-			address: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
-			decimals: 6
+			address: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+			decimals: 18
 		}
 	}
 };

@@ -41,7 +41,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {
 			let selectedTokens: MinkeToken[] = allTokens || [];
-
 			if (showOnlyOwnedTokens) {
 				const owned = selectedTokens.filter(({ symbol }) => !!symbol).map(({ symbol }) => symbol.toLowerCase());
 				selectedTokens = (ownedTokens || []).filter(
