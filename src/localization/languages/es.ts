@@ -2,7 +2,7 @@
 export default {
 	// SCREENS
 	AccountsScreen: {
-		import_or_restore: 'Import o Restaurar',
+		import_or_restore: 'Importar o Restaurar',
 		accounts: 'Cuentas'
 	},
 	AddFundsScreen: {
@@ -69,7 +69,7 @@ export default {
 			done: 'Hecho'
 		},
 		Deposit: {
-			deposit: 'Deposito',
+			deposit: 'Deposita',
 			balance: 'Balance: '
 		},
 		OpenSavings: {
@@ -101,7 +101,7 @@ export default {
 		you_withdrawn: 'Haz retirado exitosamente!'
 	},
 	EnterReferralCodeScreen: {
-		enter_referral_code: 'Ingresa tú código de referencia',
+		enter_referral_code: 'Ingresa tú código',
 		get_rewarded_for_saving_money: '¡Sé recompensado con mejor dinero!',
 		or: 'or',
 		buy_usdc: 'Compra USDC',
@@ -146,7 +146,7 @@ export default {
 			}
 		},
 		Assets: {
-			your_total_assets: 'Tus divisas totales',
+			your_total_assets: 'Balance total',
 			add_funds: 'Agrega fondos',
 			Modals: {
 				connect_wallet: 'Connecta tu wallet',
@@ -239,8 +239,8 @@ export default {
 		coins_pegged_to: 'Monedas pegadas al dólar',
 		investments: 'Inversiones',
 		fluctuating_value: 'Monedas con valor fluctuante',
-		savings: 'Savings',
-		earn_passive_income: 'Gana intereses pasivos con tus stablecoins',
+		savings: 'Ahorros',
+		earn_passive_income: 'Gana intereses con tus stablecoins',
 		nfts_and_collectibles: 'NFTs y coleccionables',
 		others: 'Otros',
 		send_to_bank: 'Manda a tu banco',
@@ -350,7 +350,7 @@ export default {
 			deposit: 'Depositar'
 		},
 		Body: {
-			deposit: '{{source}} Depositar'
+			deposit: '{{source}} deposito'
 		},
 		InfoModal: {
 			Aave: 'Aave savings account'
@@ -368,7 +368,7 @@ export default {
 			keep_wallet: 'Mantener wallet',
 			are_you_sure: 'Estas seguro que quieres borrar esta wallet?',
 			recover:
-				'Solo la podras recuperar con tu llave privada o tu   {{os}} contraseña de recuperación (se esta guardada en {{os}})',
+				'Solo la podras recuperar con tu llave privada o tu {{os}} (si esta guardada en {{os}})',
 			cancel: 'Cancelar'
 		},
 		title: 'Ajustes',
@@ -378,7 +378,7 @@ export default {
 		language: 'Idioma',
 		network: 'Red',
 		new_wallet: 'Nueva Wallet',
-		usd_coin: 'US Dollar Coin',
+		usd_coin: 'Activo USD',
 		contact_support: 'Soporte Técnico',
 		help_centre: 'Centro de Ayuda',
 		switch_account: 'Cambiar de Cuenta',
@@ -903,8 +903,7 @@ export default {
 		},
 		CountrySelector: {
 			country: 'País',
-			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
-			// select: 'Selecciona un País'
+			to_offer: 'Para ofrecerte las mejores opciones para comprar cripto por favor selecciona tu país de residencia:'
 		},
 		EmptyStates: {
 			NoTokens: {
@@ -990,7 +989,7 @@ export default {
 				}
 			},
 			ComingSoonModal: {
-				coming_soon: '¡Pronto!',
+				coming_soon: '¡Oops!',
 				devs_doing_something: 'Los desarroladores estan haciendo algo.',
 				got_it: 'Ok, entendí'
 			},
@@ -1018,7 +1017,7 @@ export default {
 						}
 					},
 					TransactionSelectFunds: {
-						which: 'Cuál ',
+						which: 'Que ',
 						asset: 'activo ',
 						want_to_send: 'quieres enviar a ',
 						Card: {
@@ -1044,7 +1043,7 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: '{{network}} red'
+				sending_on: 'Red {{network}}'
 			}
 		},
 		PendingTransactions: {
