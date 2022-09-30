@@ -1,3 +1,5 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/indent */
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
@@ -61,11 +63,16 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		[ownedTokens, selected]
 	);
 
+	const priorities = ['MATIC', 'ETH', 'DAI', 'USDT', 'USDC'];
 	useEffect(() => {
 		const loadTokens = async () => {
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
-				let allTokens = withdraw ? withdrawableTokens : (await paraswapTokens()).tokens;
+				let allTokens = withdraw
+					? withdrawableTokens
+					: (await paraswapTokens()).tokens.sort(
+							(a, b) => priorities.indexOf(b.symbol) - priorities.indexOf(a.symbol)
+					  );
 				if (!withdraw && network.id === networks.matic.id) {
 					allTokens = allTokens.map((t) => {
 						if (t.symbol === 'QUICK') {
