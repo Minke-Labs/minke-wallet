@@ -132,7 +132,49 @@ export default {
 			INSUFFICIENT_ASSET_LIQUIDITY: 'insuficiente liquidez de activos'
 		}
 	},
-
+	HomeScreen: {
+		Accounts: {
+			AccountsOverview: {
+				overview: 'Cuentas',
+				see_all: 'Ver todo',
+				investments_highlight: 'Inversiones destacadas',
+				stablecoins: 'Stablecoins'
+			},
+			AccountsEmpty: {
+				buy_usdc_now: '¡Compa USDC ahora!\nSin documento de identidad.',
+				purchase: 'Compra en unos pocos clicks:'
+			}
+		},
+		Assets: {
+			your_total_assets: 'Tus divisas totales',
+			add_funds: 'Agrega fondos',
+			Modals: {
+				connect_wallet: 'Connecta tu wallet',
+				disconnect_wallet: 'Desconecta tu Wallet',
+				import_with_secret_phrase: 'Importar con frase secreta',
+				restore_from_cloud: 'Restaura de {{cloudPlatform}}',
+				backup_wallets_count: 'Tienes %{count} wallet%{plural} aseguradas',
+				AvatarModal: {
+					Main: {
+						edit: 'Edita tu avatar',
+						select: 'Selecciona un avatar de Minke',
+						choose: 'Selecciona de la libreria'
+					},
+					Select: {
+						select: 'Selecciona tu avatar'
+					}
+				}
+			}
+		},
+		Header: {
+			welcome: 'Bienvenido',
+			points: 'puntos',
+			invite_a_friend: '¡Invita a tus amigos!'
+		},
+		Stories: {
+			learn_about_minke: 'Aprende sobre Minke'
+		}
+	},
 	ImportWalletScreen: {
 		import_wallet: 'Importar Wallet',
 		import_with_secret_phrase: 'Importar con frase secreta o llave privada',
@@ -169,9 +211,9 @@ export default {
 					Chart: {
 						'1H': '1H',
 						'1D': '1D',
-						'1S': '1S',
+						'1W': '1S',
 						'1M': '1M',
-						'1A': '1A',
+						'1Y': '1A',
 						All: 'Todo'
 					}
 				}
@@ -185,13 +227,28 @@ export default {
 		done: 'Hecho',
 		recovery_phrase: 'Frase de recuperación',
 		write_this_down: 'Escribela en un papel o guardala en tu gestor de contraseñas.',
-		address_copied: 'Dirección copiada!',
 		Warning: {
 			minke_will_never_ask: 'Minke te va a preguntar por estas palabras',
 			anyone_who_has_these: 'Cualquiera que las tenga puede acceder a tu wallet!'
-		}
+		},
+		go_to_wallet: 'Ir a la wallet'
 	},
-
+	MinkeHubScreen: {
+		minke_hub: 'Minke Hub',
+		accounts: 'Cuentas',
+		coins_pegged_to: 'Monedas pegadas al dólar',
+		investments: 'Inversiones',
+		fluctuating_value: 'Monedas con valor fluctuante',
+		savings: 'Savings',
+		earn_passive_income: 'Gana intereses pasivos con tus stablecoins',
+		nfts_and_collectibles: 'NFTs y coleccionables',
+		others: 'Otros',
+		send_to_bank: 'Manda a tu banco',
+		convert_to_local: 'Convierte a tu moneda local',
+		referral: 'Referidos',
+		refer_and_earn: 'Refiere a un amigo y gana cripto gratis',
+		stablecoins: 'Stablecoins'
+	},
 	NFTDetailScreen: {
 		by: 'Por ',
 		Panel: {
@@ -311,7 +368,8 @@ export default {
 			keep_wallet: 'Mantener wallet',
 			are_you_sure: 'Estas seguro que quieres borrar esta wallet?',
 			recover:
-				'Solo la podras recuperar con tu llave privada o tu   {{os}} contraseña de recuperación (se esta guardada en {{os}})'
+				'Solo la podras recuperar con tu llave privada o tu   {{os}} contraseña de recuperación (se esta guardada en {{os}})',
+			cancel: 'Cancelar'
 		},
 		title: 'Ajustes',
 		creating_wallet: 'Creando Wallet',
@@ -685,6 +743,10 @@ export default {
 		CN: {
 			name: 'China',
 			currencyName: 'Yuan Chino'
+		},
+		IN: {
+			name: 'India',
+			currencyName: 'Indian Rupee'
 		}
 	},
 
@@ -774,15 +836,19 @@ export default {
 					},
 					Step2: {
 						save: 'Ahorrar',
-						get_up_to: 'Gana hasta 5% de intereses anuales en stablecoins con mStable u Aave.'
+						earn_up_to: 'Gana hasta 5% de intereses anuales en stablecoins con mStable u Aave.'
 					},
 					Step3: {
 						send: 'Enviar',
-						send_tokens_to: 'Manda tokens a otra wallet o a un exchange como Binance o Coinbase.'
+						send_tokens_to: 'Manda tokens a otra wallet o a un exchange como Binance o Coinbase.',
+						receive: 'Recibir',
+						receive_funds:
+							'Reciba fondos de un amigo o envíe fondos a su billetera desde un intercambio como Coinbase.'
 					},
 					Step4: {
-						exchange: 'Intercambiar',
-						swap: 'Intercambia entre tokens.'
+						earn_minke_points: 'Gane puntos Minke',
+						refer_a_friend:
+							'Recomiende a un amigo y gane hasta $10 en USDC cuando compre su primer USDC o haga un intercambio.'
 					},
 					Step5: {
 						receive: 'Recibe',
@@ -798,7 +864,7 @@ export default {
 			}
 		},
 		Balance: {
-			Balance: 'Balance',
+			balance: 'Balance',
 			Buttons: {
 				buy: 'Comprar',
 				sell: 'Vender',
@@ -879,6 +945,9 @@ export default {
 		},
 		GenericPayButton: {
 			debit_credit: 'Tarjeta de Debito/Credito'
+		},
+		Header: {
+			done: 'Hecho'
 		},
 		Inputs: {
 			enter_password: 'Ingresa tu contraseña',

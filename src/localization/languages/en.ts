@@ -31,9 +31,9 @@ export default {
 		back_up_to_icloud: 'Back up to {{cloudPlatform}}',
 		backup: 'Backup',
 		done: 'Done',
+		go_to_wallet: 'Go to Wallet',
 		view_secret_phrase: 'View Secret Phrase',
-		backup_error: 'Backup error',
-		go_to_wallet: 'Go to Wallet'
+		backup_error: 'Backup error'
 	},
 	BackupToICloudScreen: {
 		CreateBackupPassword: {
