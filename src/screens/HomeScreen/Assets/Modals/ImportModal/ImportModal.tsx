@@ -16,7 +16,12 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 	const { toggleWalletConnect, connected, walletsBackedUp, onICloudBackup } = useImportWalletScreen();
 
 	const backupICloud = async () => {
+		onDismiss();
 		await onICloudBackup();
+	};
+
+	const walletConnect = () => {
+		toggleWalletConnect();
 		onDismiss();
 	};
 
@@ -29,7 +34,7 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 						: i18n.t('HomeScreen.Assets.Modals.connect_wallet')
 				}
 				icon="help"
-				onPress={toggleWalletConnect}
+				onPress={walletConnect}
 				mb="m"
 				images
 			/>
