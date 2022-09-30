@@ -145,7 +145,10 @@ export default {
 			no_network: 'No soportamos esta red. Por favor, selecciona otra red en la aplicación.'
 		}
 	},
-
+	InvestmentsScreen: {
+		investments: 'Inversiones',
+		current_value: 'Valor actual'
+	},
 	InvestmentsDetailScreen: {
 		MarketCap: {
 			market_cap: 'Cap. de mercado',
@@ -198,7 +201,6 @@ export default {
 		view_on_openSea: 'Ver en OpenSea',
 		about: 'Sobre'
 	},
-
 	NFTScreen: {
 		assets: 'Activos',
 		estimated_value: 'Valor estimado',
@@ -329,6 +331,11 @@ export default {
 		savings_account: 'Cuenta de Ahorros',
 		enter_referral_code: 'Ingresa código de referencia',
 		delete_wallet: 'Eliminar wallet'
+	},
+	StablecoinsScreen: {
+		current_value: 'Valor actual',
+		get_annualized_interest: '{{apy}}% interes anual',
+		stablecoins: 'Stablecoins'
 	},
 	TopUpWaitScreen: {
 		Failed: {
@@ -753,7 +760,43 @@ export default {
 				learn_more: 'Aprende más'
 			}
 		},
-
+		AppTour: {
+			Boxes: {
+				Steps: {
+					Step0: {
+						welcome: 'Bienvenido a Minke!',
+						your_new_favorite:
+											'Tu nueva forma favorita de usar stablecoins como USDC y USDT. Compra, envía y ahorra sin comisiones de transacción.'
+					},
+					Step1: {
+						add_funds: 'Agregar fondos',
+						you_can_buy: 'Puedes comprar USDC en 3 clicks con Apple Pay o con tu medio de pagos local.'
+					},
+					Step2: {
+						save: 'Ahorrar',
+						get_up_to: 'Gana hasta 5% de intereses anuales en stablecoins con mStable u Aave.'
+					},
+					Step3: {
+						send: 'Enviar',
+						send_tokens_to: 'Manda tokens a otra wallet o a un exchange como Binance o Coinbase.'
+					},
+					Step4: {
+						exchange: 'Intercambiar',
+						swap: 'Intercambia entre tokens.'
+					},
+					Step5: {
+						receive: 'Recibe',
+						copy_your:
+											'Recibe fondos de un amigo o envía fondos a tu wallet desde un exchange como Binance o Coinbase.',
+						finish: 'Hecho'
+					}
+				},
+				Arrow: {
+					back: 'Atrás',
+					next: 'Siguiente'
+				}
+			}
+		},
 		Balance: {
 			Balance: 'Balance',
 			Buttons: {
