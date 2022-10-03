@@ -69,7 +69,6 @@ const LanguageProvider: React.FC = ({ children }) => {
 			await AsyncStorage.setItem('@language', language!);
 		};
 		storeLocalization();
-		console.log('LANGUAGE: ', language);
 	}, [language, country]);
 
 	const countries: Country[] = useMemo(

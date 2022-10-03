@@ -25,15 +25,16 @@ export default {
 	},
 	BackupStatusScreen: {
 		your_wallet_is_backed_up: '¡Tu wallet esta segura!',
-		if_you_lose: 'Si pierdes este dispositivo puedes recuperar la copia de tu wallet encriptada de {{cloudPlatform}}.',
+		if_you_lose:
+			'Si pierdes este dispositivo puedes recuperar la copia de tu wallet encriptada de {{cloudPlatform}}.',
 		your_wallet_is_not_backed_up: '¡Tu wallet no esta asegurada!',
 		your_keys_your_coins: 'Tus llaves tus dinero. Haz una copia de seguridad en caso de perdida.',
 		back_up_to_icloud: 'Copiar a {{cloudPlatform}}',
 		backup: 'Copia de seguridad',
 		done: 'Completo',
-		go_to_wallet: 'Ir a la wallet',
 		view_secret_phrase: 'Ver Frase Secreta',
-		backup_error: 'Error de copia de seguridad'
+		backup_error: 'Error de copia de seguridad',
+		go_to_wallet: 'Ir a la wallet'
 	},
 	BackupToICloudScreen: {
 		CreateBackupPassword: {
@@ -270,7 +271,8 @@ export default {
 		confirmation: 'Confirmación',
 		rate_fixed_for: 'Tasa fija por:',
 		errors: {
-			failed_claim: 'Tú canjeo no fue completado. Por favor, contacta a nuestro soporte técnico. Your redeem was not completed. Please, contact our support.',
+			failed_claim:
+				'Tú canjeo no fue completado. Por favor, contacta a nuestro soporte técnico. Your redeem was not completed. Please, contact our support.',
 			invalid_request: 'Pedido invalido'
 		}
 	},
@@ -307,7 +309,8 @@ export default {
 		Modals: {
 			HelpModal: {
 				how_minke_points_work: '¿Cómo funcionan los puntos Minke?',
-				rewards_explanation: 'Los puntos Minke son recompensas que recibes cuando realizas ciertas acciones en la aplicación.',
+				rewards_explanation:
+					'Los puntos Minke son recompensas que recibes cuando realizas ciertas acciones en la aplicación.',
 				you_can_earn_points_by: 'Puedes ganar puntos Minke:',
 				topping_up_for_the_first_time: 'Agregando fondos por primera vez.',
 				refering_minke: 'Refiriendo Minke a amigos y familiares.',
@@ -367,8 +370,7 @@ export default {
 			delete_wallet: 'Borrar wallet',
 			keep_wallet: 'Mantener wallet',
 			are_you_sure: 'Estas seguro que quieres borrar esta wallet?',
-			recover:
-				'Solo la podras recuperar con tu llave privada o tu {{os}} (si esta guardada en {{os}})',
+			recover: 'Solo la podras recuperar con tu llave privada o tu {{os}} (si esta guardada en {{os}})',
 			cancel: 'Cancelar'
 		},
 		title: 'Ajustes',
@@ -397,7 +399,8 @@ export default {
 	},
 	TopUpWaitScreen: {
 		Failed: {
-			something_gone_wrong: 'Oh no! Algo salio mal. Por favor intenta otra vez mas tarde o contacta soporte técnico.',
+			something_gone_wrong:
+				'Oh no! Algo salio mal. Por favor intenta otra vez mas tarde o contacta soporte técnico.',
 			reference: 'Referencia: '
 		},
 		Processing: {
@@ -762,7 +765,8 @@ export default {
 				KEYCHAIN_ACCESS_ERROR: 'Tiene que autenticar para proceder con la copia de seguridad',
 				ERROR_DECRYPTING_DATA: 'Contraseña incorrecta! Por favor intenta otra vez.',
 				NO_BACKUPS_FOUND: '¡No pudimos encontrar tu anterior copia de seguridad!',
-				ERROR_GETTING_ENCRYPTED_DATA: 'No pudimos acceder a tu copia de seguridad esta vez. Por favor intenta mas tarde.',
+				ERROR_GETTING_ENCRYPTED_DATA:
+					'No pudimos acceder a tu copia de seguridad esta vez. Por favor intenta mas tarde.',
 				GENERIC_ERROR: 'Error intentando generar la copia de seguridad. Código de error: %{code}'
 			}
 		}
@@ -828,7 +832,7 @@ export default {
 					Step0: {
 						welcome: 'Bienvenido a Minke!',
 						your_new_favorite:
-											'Tu nueva forma favorita de usar stablecoins como USDC y USDT. Compra, envía y ahorra sin comisiones de transacción.'
+							'Tu nueva forma favorita de usar stablecoins como USDC y USDT. Compra, envía y ahorra sin comisiones de transacción.'
 					},
 					Step1: {
 						add_funds: 'Agregar fondos',
@@ -853,7 +857,7 @@ export default {
 					Step5: {
 						receive: 'Recibe',
 						copy_your:
-											'Recibe fondos de un amigo o envía fondos a tu wallet desde un exchange como Binance o Coinbase.',
+							'Recibe fondos de un amigo o envía fondos a tu wallet desde un exchange como Binance o Coinbase.',
 						finish: 'Hecho'
 					}
 				},
@@ -903,7 +907,8 @@ export default {
 		},
 		CountrySelector: {
 			country: 'País',
-			to_offer: 'Para ofrecerte las mejores opciones para comprar cripto por favor selecciona tu país de residencia:'
+			to_offer:
+				'Para ofrecerte las mejores opciones para comprar cripto por favor selecciona tu país de residencia:'
 		},
 		EmptyStates: {
 			NoTokens: {
