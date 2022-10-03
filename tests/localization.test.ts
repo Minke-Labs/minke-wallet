@@ -1,6 +1,6 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import { en, pt } from '@src/localization/languages';
+import { en, pt, es } from '@src/localization/languages';
 
 test('all languages have the same keys', () => {
 	const compareObjects = (obj1: Object, obj2: Object) => {
@@ -20,4 +20,5 @@ test('all languages have the same keys', () => {
 		}
 	};
 	compareObjects(en, pt);
+	compareObjects(en, es);
 });
