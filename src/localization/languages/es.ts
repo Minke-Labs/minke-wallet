@@ -142,7 +142,7 @@ export default {
 				stablecoins: 'Stablecoins'
 			},
 			AccountsEmpty: {
-				buy_usdc_now: '¡Compa USDC ahora!\nSin documento de identidad.',
+				buy_usdc_now: '¡Compra USDC ahora!\nSin documento de identidad.',
 				purchase: 'Compra en unos pocos clicks:'
 			}
 		},
