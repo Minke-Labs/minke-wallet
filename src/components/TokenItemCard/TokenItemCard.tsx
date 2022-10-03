@@ -19,8 +19,8 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({ token, paper, onPress }) 
 	const {
 		network: { topUpTokens }
 	} = useGlobalWalletState();
-	const { balanceUSD } = token;
-	const showBuyButton = (balanceUSD || 0) === 0;
+	const { balanceUSD, balance } = token;
+	const showBuyButton = (balanceUSD || 0) === 0 && (balance || '0') === '0';
 
 	const handleBuy = (coin: MinkeToken) => {
 		if (topUpTokens.map((t) => t.symbol).includes(coin.symbol)) {

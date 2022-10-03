@@ -3,8 +3,9 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useBalances, useDepositProtocols, useLanguage, useNavigation } from '@hooks';
+import { useBalances, useDepositProtocols, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { depositStablecoins } from '@models/deposit';
+import { stables } from '@models/depositTokens';
 
 const StablecoinsScreen = () => {
 	RNUxcam.tagScreenName('StablecoinsScreen');
@@ -12,19 +13,23 @@ const StablecoinsScreen = () => {
 	const navigation = useNavigation();
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
+	const {
+		network: { id }
+	} = useGlobalWalletState();
 	const stablecoins = depositStablecoins.map((symbol) => {
 		const found = walletStablecoins.find((s) => s.symbol === symbol);
 		if (found) {
 			return found;
 		}
 
+		const { address = '', decimals = 0 } = stables[id][symbol] || {};
 		return {
 			symbol,
 			name: symbol,
 			balance: '0',
 			balanceUSD: 0,
-			address: '',
-			decimals: 0
+			address,
+			decimals
 		};
 	});
 

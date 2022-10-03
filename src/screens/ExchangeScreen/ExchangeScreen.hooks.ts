@@ -1,7 +1,15 @@
 import React, { useEffect } from 'react';
 import Logger from '@utils/logger';
 import { Keyboard } from 'react-native';
-import { useBalances, useNavigation, useNativeToken, useBiconomy, useDepositProtocols, useLanguage } from '@hooks';
+import {
+	useBalances,
+	useNavigation,
+	useNativeToken,
+	useBiconomy,
+	useDepositProtocols,
+	useLanguage,
+	useWalletManagement
+} from '@hooks';
 import { useState, State } from '@hookstate/core';
 import { BigNumber, constants, utils } from 'ethers';
 import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
@@ -46,6 +54,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
 	const gasValueInEth = formatUnits(maxFeePerGas);
+	const { canSendTransactions, needToChangeNetwork } = useWalletManagement();
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -291,7 +300,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		+(exchange.value.fromAmount || 0) > 0 &&
 		+fromToken.balance >= +(exchange.value.fromAmount || 0) &&
 		!loadingPrices &&
-		enoughForGas;
+		enoughForGas &&
+		canSendTransactions;
 
 	return {
 		fromToken,
@@ -316,6 +326,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		quote,
 		error,
 		setError,
-		gasless
+		gasless,
+		canSendTransactions,
+		needToChangeNetwork
 	};
 };

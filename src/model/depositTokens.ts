@@ -9,7 +9,7 @@ import { MinkeToken } from './types/token.types';
 import { DepositableToken, DepositTokens, Stables } from './types/depositTokens.types';
 import { erc20abi, getProvider } from './wallet';
 
-const stables: Stables = {
+export const stables: Stables = {
 	matic: {
 		USDC: {
 			address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',

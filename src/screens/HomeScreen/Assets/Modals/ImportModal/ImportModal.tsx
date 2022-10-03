@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { forEach } from 'lodash';
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
+import React from 'react';
 import { IconItem } from '@components';
-import { useGlobalWalletState, useLanguage, useNavigation, useWallets } from '@hooks';
+import { useGlobalWalletState, useLanguage } from '@hooks';
 import { smallWalletAddress } from '@models/wallet';
-import { findLatestBackUpOnICloud } from '@models/backup';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
+import useImportWalletScreen from '@src/screens/ImportWalletScreen/ImportWalletScreen.hooks';
 
 interface ImportModalProps {
 	onImportSeed: () => void;
@@ -14,53 +12,29 @@ interface ImportModalProps {
 
 const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { wallets } = useWallets();
-	const navigation = useNavigation();
-	const [latestBackup, setLatestBackup] = useState<string | null>();
 	const { address } = useGlobalWalletState();
-	const connector = useWalletConnect();
-	const { connected } = connector;
+	const { toggleWalletConnect, connected, walletsBackedUp, onICloudBackup } = useImportWalletScreen();
 
-	useEffect(() => {
-		const fetchBackupsFiles = async () => {
-			setLatestBackup(await findLatestBackUpOnICloud());
-		};
-
-		fetchBackupsFiles();
-	}, []);
-
-	const onICloudBackup = () => {
-		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
+	const backupICloud = async () => {
 		onDismiss();
+		await onICloudBackup();
 	};
 
-	const walletsBackedUp = useMemo(() => {
-		let count = 0;
-		forEach(wallets, (wallet) => {
-			if (wallet.backedUp) {
-				count += 1;
-			}
-		});
-		return count;
-	}, [wallets]);
-
-	const toggleWalletConnect = () => {
+	const walletConnect = () => {
+		toggleWalletConnect();
 		onDismiss();
-		if (connected) {
-			connector.killSession();
-		} else {
-			connector.connect();
-		}
 	};
 
 	return (
 		<>
 			<IconItem
-				title={connected
-					? `${i18n.t('HomeScreen.Assets.Modals.disconnect_wallet')} - ${smallWalletAddress(address)}`
-					: i18n.t('HomeScreen.Assets.Modals.connect_wallet')}
+				title={
+					connected
+						? `${i18n.t('HomeScreen.Assets.Modals.disconnect_wallet')} - ${smallWalletAddress(address)}`
+						: i18n.t('HomeScreen.Assets.Modals.connect_wallet')
+				}
 				icon="help"
-				onPress={toggleWalletConnect}
+				onPress={walletConnect}
 				mb="m"
 				images
 			/>
@@ -72,20 +46,18 @@ const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) =>
 				mb="m"
 			/>
 
-			{(walletsBackedUp > 0 || !!latestBackup) && (
-				<IconItem
-					title={i18n.t('HomeScreen.Assets.Modals.restore_from_cloud', { cloudPlatform })}
-					{...(walletsBackedUp > 0 && {
-						desc: `${i18n.t('HomeScreen.Assets.Modals.backup_wallets_count', {
-							count: walletsBackedUp,
-							plural: walletsBackedUp > 1 ? 's' : ''
-						})}`
-					})}
-					icon="cloud"
-					onPress={onICloudBackup}
-					mb="m"
-				/>
-			)}
+			<IconItem
+				title={i18n.t('HomeScreen.Assets.Modals.restore_from_cloud', { cloudPlatform })}
+				{...(walletsBackedUp > 0 && {
+					desc: `${i18n.t('HomeScreen.Assets.Modals.backup_wallets_count', {
+						count: walletsBackedUp,
+						plural: walletsBackedUp > 1 ? 's' : ''
+					})}`
+				})}
+				icon="cloud"
+				onPress={backupICloud}
+				mb="m"
+			/>
 		</>
 	);
 };

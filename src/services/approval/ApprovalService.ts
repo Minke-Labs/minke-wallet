@@ -10,12 +10,6 @@ import { toBn } from 'evm-bn';
 import { DepositReturn } from '../deposit/deposit.types';
 
 class ApprovalService {
-	protocol: string;
-
-	constructor(protocol: string) {
-		this.protocol = protocol;
-	}
-
 	public static async approveState(address: string, contract: string, spender: string): Promise<ApprovalState> {
 		const approval = await approvalState(address, contract, spender);
 		return approval;
@@ -92,7 +86,6 @@ class ApprovalService {
 			await provider.waitForTransaction(hash);
 			return hash;
 		}
-		return null;
 
 		return null;
 	}

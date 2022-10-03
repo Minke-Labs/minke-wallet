@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useNavigation, useWallets } from '@hooks';
+import React, { useMemo } from 'react';
+import { useLanguage, useNavigation, useWallets } from '@hooks';
 import { findLatestBackUpOnICloud } from '@models/backup';
 import { forEach } from 'lodash';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
@@ -7,6 +7,7 @@ import { useState } from '@hookstate/core';
 import { globalWalletState, walletState } from '@stores/WalletStore';
 import { MinkeWallet } from '@models/wallet';
 import { Network, networks } from '@models/network';
+import { Alert } from 'react-native';
 
 const useImportWalletScreen = () => {
 	const navigation = useNavigation();
@@ -18,13 +19,10 @@ const useImportWalletScreen = () => {
 	const [destNetwork, setDestNetwork] = React.useState<Network>();
 	const [importSeed, setImportSeed] = React.useState(false);
 	const [importedAccount, setImportAccount] = React.useState('');
+	const { i18n } = useLanguage();
 
-	const onICloudBackup = () => {
-		navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
-	};
 	const goBack = () => navigation.goBack();
 	const { wallets } = useWallets();
-	const [latestBackup, setLatestBackup] = React.useState<string | null>();
 
 	const dismissError = () => {
 		setError(undefined);
@@ -38,14 +36,6 @@ const useImportWalletScreen = () => {
 		setImportSeed(false);
 		navigation.navigate('WalletCreatedScreen');
 	};
-
-	useEffect(() => {
-		const fetchBackupsFiles = async () => {
-			setLatestBackup(await findLatestBackUpOnICloud());
-		};
-
-		fetchBackupsFiles();
-	}, []);
 
 	const switchWallet = async (newAccount: string) => {
 		setDestNetwork(undefined);
@@ -103,6 +93,16 @@ const useImportWalletScreen = () => {
 		switchWalletConnectAccount(accounts, chainId);
 	});
 
+	const onICloudBackup = async () => {
+		const latestBackup = await findLatestBackUpOnICloud();
+
+		if (latestBackup) {
+			navigation.navigate('BackupToICloudScreen', { missingPassword: false, restoreBackups: true });
+		} else {
+			Alert.alert(i18n.t('HomeScreen.Assets.Modals.no_backups_found'));
+		}
+	};
+
 	const walletsBackedUp = useMemo(() => {
 		let count = 0;
 		forEach(wallets, (wallet) => {
@@ -117,7 +117,7 @@ const useImportWalletScreen = () => {
 		if (connected) {
 			connector.killSession();
 		} else {
-			connector.connect();
+			connector.connect({ chainId: network.chainId });
 		}
 	};
 
@@ -126,7 +126,6 @@ const useImportWalletScreen = () => {
 		onICloudBackup,
 		goBack,
 		walletsBackedUp,
-		latestBackup,
 		toggleWalletConnect,
 		connected,
 		error,

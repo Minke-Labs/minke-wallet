@@ -171,7 +171,7 @@ class WithdrawService {
 		walletConnect: boolean;
 		connector: WalletConnect;
 	}): Promise<DepositReturn> {
-		const approval = await new ApprovalService(this.protocol).approve({
+		const approval = await new ApprovalService().approve({
 			gasless,
 			address,
 			privateKey,
