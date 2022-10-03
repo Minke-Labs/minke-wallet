@@ -1,6 +1,7 @@
-import { en, pt } from './languages';
+import { en, pt, es } from './languages';
 
 export const availableLanguagues = {
 	en,
-	pt
+	pt,
+	es
 };

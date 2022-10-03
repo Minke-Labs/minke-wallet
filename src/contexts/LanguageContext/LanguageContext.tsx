@@ -19,7 +19,27 @@ const languageMapping = {
 	pt: 'pt-BR',
 	'pt-PT': 'pt-BR',
 	'pt-BR': 'pt-BR',
-	en: 'en'
+	en: 'en',
+	es: 'es-ES',
+	'es-ES': 'es-ES',
+	'es-AR': 'es-ES',
+	'es-BO': 'es-ES',
+	'es-CL': 'es-ES',
+	'es-EC': 'es-ES',
+	'es-CO': 'es-ES',
+	'es-CR': 'es-ES',
+	'es-DO': 'es-ES',
+	'es-GT': 'es-ES',
+	'es-HN': 'es-ES',
+	'es-MX': 'es-ES',
+	'es-NI': 'es-ES',
+	'es-PA': 'es-ES',
+	'es-PE': 'es-ES',
+	'es-PR': 'es-ES',
+	'es-PY': 'es-ES',
+	'es-SV': 'es-ES',
+	'es-UY': 'es-ES',
+	'es-VE': 'es-ES'
 };
 
 export const LanguageContext = createContext<LanguageContextProps>({} as LanguageContextProps);
