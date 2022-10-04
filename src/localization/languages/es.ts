@@ -142,7 +142,7 @@ export default {
 				stablecoins: 'Stablecoins'
 			},
 			AccountsEmpty: {
-				buy_usdc_now: '¡Compra USDC ahora!\nSin documento de identidad.',
+				buy_token_now: '¡Compra {{token}} ahora!\nSin documento de identidad.',
 				purchase: 'Compra en unos pocos clicks:'
 			}
 		},
@@ -903,7 +903,7 @@ export default {
 			use_code: 'Usa código',
 			loading: 'Cargando',
 			swap: 'Intercambiar',
-			buy_usdc_now: 'Compre USDC ahora'
+			buy_token_now: 'Compre {{token}} ahora'
 		},
 		CountrySelector: {
 			country: 'País',

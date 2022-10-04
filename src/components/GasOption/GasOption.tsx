@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View as RNView } from 'react-native';
 import { useTheme } from '@hooks';
 import Radio from './Radio/Radio';
 import { makeStyles } from './GasOption.styles';
@@ -22,12 +22,12 @@ const GasOption: React.FC<GasOptionProps> = ({
 
 	return (
 		<Touchable onPress={onSelectGas} disabled={disabled}>
-			<View style={[styles.container, selected ? styles.selectedCard : {}]}>
-				<View style={styles.content}>
+			<RNView style={[styles.container, selected ? styles.selectedCard : {}]}>
+				<RNView style={styles.content}>
 					<Radio selected={selected!} />
 					<GasOptionInner {...{ type, waiting, gasPrice, usdPrice, gasLimit }} />
-				</View>
-			</View>
+				</RNView>
+			</RNView>
 		</Touchable>
 	);
 };

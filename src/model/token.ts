@@ -171,14 +171,22 @@ export const matic: MinkeToken = {
 	symbol: 'MATIC'
 };
 
+export const bnb: MinkeToken = {
+	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+	decimals: 18,
+	symbol: 'BNB'
+};
+
 export const nativeTokens: NativeTokens = {
 	ETH: ether,
-	MATIC: matic
+	MATIC: matic,
+	BNB: bnb
 };
 
 export interface NativeTokens {
 	ETH: MinkeToken;
 	MATIC: MinkeToken;
+	BNB: MinkeToken;
 }
 
 export interface TokenResponse {
