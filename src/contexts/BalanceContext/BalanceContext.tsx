@@ -122,6 +122,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 					});
 				} catch {
 					if (!fallbacking) {
+						Logger.log('Covalent fallback');
 						// already fallback with Covalent
 						fallbacking = true;
 						const { tokens: allTokens } = await useCovalentBalances(address);
