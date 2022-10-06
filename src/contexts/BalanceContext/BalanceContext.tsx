@@ -86,46 +86,50 @@ const BalanceProvider: React.FC = ({ children }) => {
 				let fallbacking = false;
 				try {
 					if (loadingUI) setLoading(true);
-					const tokensBalances: MinkeToken[][] = [];
-					const url = generateUrl([address], [zapperNetwork]);
-					const eventSourceDict = generateEventSourceDict();
-					const eventSource = new EventSource<ZapperCustomEvents>(url, eventSourceDict);
-
-					// when balance event is received, the data is parsed
-					// Zapper objects can be huge so parsing logic is extracted to ./utils.js
-					// @ts-ignore
-					eventSource.addEventListener('balance', async ({ data }) => {
-						const parsedDatas = JSON.parse(data);
-						const {
-							appId,
-							balance: { wallet }
-						} = parsedDatas;
-						const apiTokens = Object.keys(wallet);
-						if (appId === 'tokens' && apiTokens.length > 0) {
-							const parsed = parse(wallet);
-							tokensBalances.push(parsed);
-						}
-					});
-
-					// when the data feed has been completely sent
-					eventSource.addEventListener('end', async () => {
-						await processTokens(tokensBalances.flat());
-						eventSource.close();
-					});
-
-					// @ts-ignore
-					eventSource.addEventListener('error', async ({ message }) => {
-						Logger.log('Zapper API Error :', message);
-						fallbacking = true;
-						const { tokens: allTokens } = await useCovalentBalances(address);
-						await processTokens(allTokens);
-					});
+					const { tokens: allTokens } = await useCovalentBalances(address);
+					await processTokens(allTokens);
 				} catch {
 					if (!fallbacking) {
-						// already fallback with Covalent
 						fallbacking = true;
-						const { tokens: allTokens } = await useCovalentBalances(address);
-						await processTokens(allTokens);
+						try {
+							const tokensBalances: MinkeToken[][] = [];
+							const url = generateUrl([address], [zapperNetwork]);
+							const eventSourceDict = generateEventSourceDict();
+							const eventSource = new EventSource<ZapperCustomEvents>(url, eventSourceDict);
+
+							// when balance event is received, the data is parsed
+							// Zapper objects can be huge so parsing logic is extracted to ./utils.js
+							// @ts-ignore
+							eventSource.addEventListener('balance', async ({ data }) => {
+								const parsedDatas = JSON.parse(data);
+								const {
+									appId,
+									balance: { wallet }
+								} = parsedDatas;
+								const apiTokens = Object.keys(wallet);
+								if (appId === 'tokens' && apiTokens.length > 0) {
+									const parsed = parse(wallet);
+									tokensBalances.push(parsed);
+								}
+							});
+
+							// when the data feed has been completely sent
+							eventSource.addEventListener('end', async () => {
+								await processTokens(tokensBalances.flat());
+								eventSource.close();
+							});
+
+							// @ts-ignore
+							eventSource.addEventListener('error', async ({ message }) => {
+								Logger.log('Zapper API Error :', message);
+								setTokens([]);
+								setLoading(false);
+							});
+						} catch (error) {
+							Logger.error('Error on Zapper API fallback');
+							setTokens([]);
+							setLoading(false);
+						}
 					} else {
 						setTokens([]);
 						setLoading(false);
