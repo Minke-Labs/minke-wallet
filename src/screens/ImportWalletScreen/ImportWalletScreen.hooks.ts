@@ -114,13 +114,10 @@ const useImportWalletScreen = () => {
 	}, [wallets]);
 
 	const toggleWalletConnect = () => {
-		console.log('toggling WC');
 		if (connected) {
 			connector.killSession();
 		} else {
 			connector.on('connect', (e, payload) => {
-				console.log('error', e);
-				console.log('payload', payload);
 				if (e) {
 					throw e;
 				}
