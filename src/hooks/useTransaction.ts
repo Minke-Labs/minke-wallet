@@ -63,7 +63,7 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 			}
 		};
 		formatAddress();
-	}, []);
+	}, [transaction]);
 
 	const openTransaction = async () => {
 		const { etherscanURL } = await network();
