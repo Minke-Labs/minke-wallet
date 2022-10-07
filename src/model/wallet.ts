@@ -315,7 +315,7 @@ export const getZapperTransactions = async (address: string): Promise<ZapperTran
 	return response.json();
 };
 
-export const getTokenList = async (): Promise<Array<Coin>> => {
+export const getTokenList = async (): Promise<Coin[] | CoingeckoError> => {
 	const result = await fetch('https://api.coingecko.com/api/v3/coins/list?include_platform=true');
 	return result.json();
 };
@@ -487,6 +487,13 @@ export interface Coin {
 	name: string;
 	platforms: {
 		[key: string]: string;
+	};
+}
+
+export interface CoingeckoError {
+	status: {
+		error_code: number;
+		error_message: string;
 	};
 }
 

@@ -59,7 +59,7 @@ export const useStablecoinsDetailScreen = (coin: MinkeToken) => {
 	}, []);
 
 	return {
-		description: tokenData?.description[i18n.currentLocale()] || tokenData?.description.en,
+		description: tokenData ? tokenData?.description[i18n.currentLocale()] || tokenData?.description.en : '',
 		tokenVolume,
 		marketCap
 	};

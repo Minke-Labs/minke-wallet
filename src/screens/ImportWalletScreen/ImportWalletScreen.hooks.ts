@@ -117,6 +117,13 @@ const useImportWalletScreen = () => {
 		if (connected) {
 			connector.killSession();
 		} else {
+			connector.on('connect', (e, payload) => {
+				if (e) {
+					throw e;
+				}
+				const { accounts, chainId } = payload.params[0];
+				switchWalletConnectAccount(accounts, chainId);
+			});
 			connector.connect({ chainId: network.chainId });
 		}
 	};
@@ -135,7 +142,9 @@ const useImportWalletScreen = () => {
 		importSeed,
 		setImportSeed,
 		onSeedImportFinished,
-		onNetworkChange
+		onNetworkChange,
+		connector,
+		switchWalletConnectAccount
 	};
 };
 

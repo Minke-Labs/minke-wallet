@@ -146,6 +146,10 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenIds}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
+	const error = !!toJson.status;
+	if (error) {
+		return [];
+	}
 	return toJson;
 };
 

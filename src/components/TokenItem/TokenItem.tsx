@@ -27,7 +27,7 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
 				<View row cross="center" main="space-between">
 					<View row>
 						<Text type="lLarge" weight="semiBold">
-							{tokenName.length < 20 ? tokenName : `${tokenName.substring(0, 17)}...`}
+							{tokenName.length < 18 ? tokenName : `${tokenName.substring(0, 15)}...`}
 						</Text>
 						<View mr="xxs" />
 						{!!perc && <Tag perc={perc} />}

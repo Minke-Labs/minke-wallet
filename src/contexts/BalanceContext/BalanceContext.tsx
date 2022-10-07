@@ -90,6 +90,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 					await processTokens(allTokens);
 				} catch {
 					if (!fallbacking) {
+						Logger.log('Zapper fallback');
 						fallbacking = true;
 						try {
 							const tokensBalances: MinkeToken[][] = [];
