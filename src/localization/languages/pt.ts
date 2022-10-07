@@ -97,7 +97,7 @@ export default {
 		or: 'ou',
 		buy_usdc: 'Comprar USDC',
 		referral_note:
-			'Esse código pode ser usado somente uma vez. Depois de comprar ou converter stablecoins você e o seu amigo vão receber até 100 pontos Minke cada.',
+			'Esse código pode ser usado somente uma vez. Depois de comprar ou converter stablecoins você e o seu amigo vão receber até 50 pontos Minke cada.',
 		invalid_code: 'Código inválido',
 		your_code_is_invalid: 'Seu código não existe ou já está em uso em uma das suas carteiras.'
 	},
@@ -312,12 +312,12 @@ export default {
 				earn_minke_points: 'Ganhe pontos Minke!',
 				refer_a_friend: 'Indique um amigo',
 				when_your_friends_top_up:
-					'Quando seu amigo comprar stablecoins ou converter para elas no app da Minke vocês dois ganham até 100 points (valem $10 dólares americanos) ',
+					'Quando seu amigo comprar ou trocar por stablecoins, ele receberá até 50 pontos Minke. Você ganhará uma comissão de 20% de pontos por indicação.',
 				top_up: 'Adicione Fundos',
 				get_rewarded: 'Ganhe recompensas!',
 				coming_soon: '(Em breve)',
 				share_text:
-					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $10 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
+					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $5 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
 			}
 		},
 		Body: {

@@ -96,7 +96,7 @@ export default {
 		or: 'or',
 		buy_usdc: 'Buy USDC',
 		referral_note:
-			'This code can only be used once. After buying stablecoins you and your friend will each get up to 100 Minke points.',
+			'This code can only be used once. After buying stablecoins you and your friend will each get up to 50 Minke points.',
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
@@ -310,12 +310,12 @@ export default {
 				earn_minke_points: 'Earn Minke points!',
 				refer_a_friend: 'Refer a friend',
 				when_your_friends_top_up:
-					'When your friend buys stablecoins or exchanges for them in Minke you will both get up to 100 points (worth $10).',
+					'When your friend buys or exchanges for stablecoins they will get up to 50 Minke points. You will earn a 20% points commission per referral.',
 				top_up: 'Top-up',
 				get_rewarded: 'Get rewarded with better money!',
 				coming_soon: '(Coming soon)',
 				share_text:
-					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $10 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref"
+					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $5 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref"
 			}
 		},
 		Body: {
