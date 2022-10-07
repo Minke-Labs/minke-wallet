@@ -28,7 +28,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
 	const [loading, setLoading] = React.useState(true);
 
-	const fetchInterests = async () => {
+	const fetchInterests = useCallback(async () => {
 		if (selectedProtocol) {
 			const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
 			const [withdrawable] = allInterestTokens;
@@ -37,7 +37,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 			setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 		}
 		setStablecoins(await fetchStablecoins(address));
-	};
+	}, [address, selectedProtocol]);
 
 	const fillSuggestedTokens = useCallback(
 		(tokensWithBalance: MinkeToken[]): MinkeToken[] => {
