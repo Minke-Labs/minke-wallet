@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconItem } from '@components';
-import { useGlobalWalletState, useLanguage } from '@hooks';
+import { useLanguage } from '@hooks';
 import { smallWalletAddress } from '@models/wallet';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import useImportWalletScreen from '@src/screens/ImportWalletScreen/ImportWalletScreen.hooks';
@@ -12,8 +12,7 @@ interface ImportModalProps {
 
 const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { address } = useGlobalWalletState();
-	const { toggleWalletConnect, connected, walletsBackedUp, onICloudBackup } = useImportWalletScreen();
+	const { toggleWalletConnect, connected, walletsBackedUp, onICloudBackup, address } = useImportWalletScreen();
 
 	const backupICloud = async () => {
 		onDismiss();
