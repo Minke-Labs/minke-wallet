@@ -55,8 +55,7 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 		let { positions = [] } = payload?.positions || {};
 		positions = positions.filter(({ chain, type }) => type === 'asset' && chain === zapperNetwork);
 
-		return positions.map((lala) => {
-			const { asset, quantity, value } = lala;
+		return positions.map(({ asset, quantity, value }) => {
 			const { symbol, asset_code: assetCode, name, implementations = {} } = asset;
 			const { address: tokenAddress = assetCode, decimals = asset.decimals } = implementations[zapperNetwork];
 			const balance = formatUnits(quantity, decimals);
