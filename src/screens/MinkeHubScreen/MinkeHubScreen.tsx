@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import RNUxcam from 'react-native-ux-cam';
 import { SafeAreaView, ScrollView } from 'react-native';
-import { Text, View, ModalReusables, ModalBase, FloatingSelector } from '@components';
+import { Text, View, ModalReusables, ModalBase, FloatingSelector, Touchable, Icon } from '@components';
 import { BasicLayout } from '@layouts';
 import { useBalances, useLanguage, useNavigation, useNFT } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
@@ -22,12 +22,17 @@ const MinkeHubScreen = () => {
 				<SafeAreaView />
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<View p="xs">
-						<View row cross="center" mb="s">
-							<Text type="hMedium" weight="bold">
-								{i18n.t('MinkeHubScreen.minke_hub')}
-							</Text>
-							<View mr="xxs" />
-							<MinkeLogo />
+						<View row main="space-between">
+							<View row cross="center" mb="s">
+								<Text type="hMedium" weight="bold">
+									{i18n.t('MinkeHubScreen.minke_hub')}
+								</Text>
+								<View mr="xxs" />
+								<MinkeLogo />
+							</View>
+							<Touchable onPress={() => navigation.navigate('SettingsScreen')}>
+								<Icon name="gear" size={28} color="cta1" />
+							</Touchable>
 						</View>
 						<Text type="lMedium" weight="semiBold" color="text3" mb="xxs">
 							{i18n.t('MinkeHubScreen.accounts')}

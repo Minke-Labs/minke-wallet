@@ -7,7 +7,6 @@ export const makeStyles = (colors: ColorType) =>
 			backgroundColor: colors.background3
 		},
 		container: {
-			paddingHorizontal: 24,
 			borderBottomLeftRadius: 24,
 			borderBottomRightRadius: 24,
 			backgroundColor: colors.background1

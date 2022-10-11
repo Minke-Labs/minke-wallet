@@ -67,6 +67,12 @@ export const walletState = async (wallet: MinkeWallet | undefined): Promise<Wall
 const getCoinList = async () => {
 	try {
 		const data = await getTokenList();
+		// @ts-ignore
+		const error = !!data.status;
+		if (error) {
+			await AsyncStorage.setItem('@listCoins', JSON.stringify(coins));
+			return coins;
+		}
 		await AsyncStorage.setItem('@listCoins', JSON.stringify(data));
 		return data;
 	} catch (error) {

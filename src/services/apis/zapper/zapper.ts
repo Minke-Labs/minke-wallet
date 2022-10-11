@@ -24,6 +24,7 @@ export const generateUrl = (addresses: string[], networks: string[]) => {
 
 export const generateEventSourceDict = () => ({
 	withCredentials: true,
+	timeout: 5000,
 	headers: {
 		'Content-Type': 'text/event-stream',
 		'User-Agent': 'Mozilla/5.0',

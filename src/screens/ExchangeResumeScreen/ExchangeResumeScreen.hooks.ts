@@ -229,7 +229,7 @@ const useExchangeResumeScreen = () => {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
 
 					if (!isApproved) {
-						new ApprovalService().approve({
+						await new ApprovalService().approve({
 							address,
 							biconomy,
 							connector,

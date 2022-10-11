@@ -105,8 +105,8 @@ export const getExchangePrice = async ({
 		takerAddress: address.toLowerCase(),
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
-		buyTokenPercentageFee: 0.005,
-		slippagePercentage: 0.03,
+		buyTokenPercentageFee: 0.0085,
+		slippagePercentage: 0.05,
 		excludedSources: 'MeshSwap,Curve_V2',
 		skipValidation: true
 	};
@@ -146,6 +146,10 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenIds}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
+	const error = !!toJson.status;
+	if (error) {
+		return [];
+	}
 	return toJson;
 };
 
