@@ -315,7 +315,6 @@ export default {
 				you_can_earn_points_by: 'Puedes ganar puntos Minke:',
 				topping_up_for_the_first_time: 'Agregando fondos por primera vez.',
 				refering_minke: 'Refiriendo Minke a amigos y familiares.',
-				exchanging_for_the_first_time: 'Intercambiando por primera vez',
 				what_can_you_do: '¿Que puedes hacer con tus puntos?',
 				you_can_redeem_your_points: 'Puedes canjear tus puntos por recompensas en USDC en Polygon.'
 			},
@@ -324,11 +323,10 @@ export default {
 				refer_a_friend: 'Refiriendo a un amigo',
 				when_your_friends_top_up:
 					'Cuando tu amigo compre o intercambie monedas estables, obtendrá hasta 50 puntos Minke. Obtendrá una comisión del 20% en puntos por referencia.',
-				top_up: 'Agregar fondos',
-				get_rewarded: '¡Sé recompensado con mejor dinero!',
-				coming_soon: '(Pronto)',
 				share_text:
-					'¡Hola! Estuve usando Minke para ganarle a la inflación con stablecoins de valor igual al dólar. Ambos vamos a recibir hasta $5 en USDC al registrarte y hacer tu primer compra o intercambio. Mi código de invitación es {{code}} - registrate acá: https://minke.onelink.me/rwwq/ref'
+					'¡Hola! Estuve usando Minke para ganarle a la inflación con stablecoins de valor igual al dólar. Ambos vamos a recibir hasta $5 en USDC al registrarte y hacer tu primer compra o intercambio. Mi código de invitación es {{code}} - registrate acá: https://minke.onelink.me/rwwq/ref',
+				points_are_distributed:
+					'Los puntos se distribuyen cada 24 horas hasta las 12:00 UTC de lunes a viernes.'
 			}
 		},
 		Body: {
