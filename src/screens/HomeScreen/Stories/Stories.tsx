@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { Paper, Text } from '@components';
 import { useColorScheme, Platform } from 'react-native';
-import { useLanguage, useWalletState } from '@hooks';
+import { useGlobalWalletState, useLanguage } from '@hooks';
 import { STORYTELLER_KEY, STORYTELLER_ANDROID_KEY } from '@env';
 import Storyteller, { StorytellerRowView, UIStyle } from '@getstoryteller/react-native-storyteller-sdk';
 import { storytellerTheme } from './storytellerTheme';
 
 export const Stories = () => {
-	const { state } = useWalletState();
 	const { language, i18n } = useLanguage();
-	const { address: walletAddress } = state.value;
+	const { address: walletAddress } = useGlobalWalletState();
 	const scheme = useColorScheme();
 	const rowRef = useRef<StorytellerRowView>(null);
 	const apiKey =

@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
-import { useState } from '@hookstate/core';
 import RNUxcam from 'react-native-ux-cam';
 import crypto from 'crypto';
 import { INTERCOM_KEY } from '@env';
 import Intercom from '@intercom/intercom-react-native';
 import { TransactionsProvider } from '@contexts';
-import { useWalletState } from '@hooks';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Linking from 'expo-linking';
 import screensObj from '@screens';
 import Logger from '@utils/logger';
+import { useGlobalWalletState } from '@hooks';
 import { RootStackParamList } from './types.routes';
-import { globalWalletState } from '../stores/WalletStore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const prefix = Linking.createURL('/');
@@ -22,13 +20,11 @@ RNUxcam.setAutomaticScreenNameTagging(false);
 const screenNamesArr = Object.keys(screensObj);
 
 const Routes: React.FC = () => {
-	const { accountName } = useWalletState();
-	RNUxcam.setUserIdentity(accountName);
+	const state = useGlobalWalletState();
+	const { address, walletId } = state;
+	RNUxcam.setUserIdentity(address);
 
-	const walletState = useState(globalWalletState());
-	const { address } = walletState.value;
-
-	const initialScreen = walletState.value.walletId ? 'HomeScreen' : 'WelcomeScreen';
+	const initialScreen = walletId ? 'HomeScreen' : 'WelcomeScreen';
 	// const initialScreen = 'Test';
 
 	const urlRedirect = (event: any) => {
@@ -48,10 +44,10 @@ const Routes: React.FC = () => {
 	useEffect(() => {
 		const intercomKey = INTERCOM_KEY || process.env.INTERCOM_KEY;
 		const hmac = crypto.createHmac('sha256', intercomKey!);
-		hmac.update(accountName);
+		hmac.update(address);
 		const sign = hmac.digest('hex');
 		Intercom.setUserHash(sign);
-		Intercom.registerIdentifiedUser({ userId: accountName });
+		Intercom.registerIdentifiedUser({ userId: address });
 	}, [address]);
 
 	const linking = {

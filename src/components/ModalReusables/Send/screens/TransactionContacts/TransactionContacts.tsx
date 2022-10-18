@@ -12,7 +12,6 @@ import styles from './TransactionContacts.styles';
 import { NoContactsYet } from './NoContactsYet/NoContactsYet';
 import { useTransactionContacts } from './TransactionContacts.hooks';
 
-// @TODO: Marcos accept address with a bad format
 const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected }) => {
 	const { i18n } = useLanguage();
 	const { contactList, address, setAddress, keyboardVisible, validAddress, onSendAddress } = useTransactionContacts({

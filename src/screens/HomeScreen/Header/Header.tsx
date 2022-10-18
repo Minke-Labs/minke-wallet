@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as Haptics from 'expo-haptics';
 import * as Clipboard from 'expo-clipboard';
 import { View, Text, Icon, ScreenLoadingIndicator, Snackbar, Touchable } from '@components';
 import { useLanguage, useMinkeRewards, useNavigation, useWalletState } from '@hooks';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
 
 const Header: React.FC = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { points } = useMinkeRewards();
-	const [snackbarVisible, setSnackbarVisible] = useState(false);
-	const { accountName, state } = useWalletState();
+	const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+	const { accountName } = useWalletState();
+	const state = useState(globalWalletState());
 	const { address } = state.value;
 
 	const onPointsPress = () => navigation.navigate('ReferralScreen');

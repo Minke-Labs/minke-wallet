@@ -1,9 +1,9 @@
 import { Share } from 'react-native';
-import { useWalletState } from '@hooks';
+import { useGlobalWalletState, useWalletState } from '@hooks';
 
 export const useReceiveModal = () => {
-	const { state, ensName } = useWalletState();
-	const { address } = state.value;
+	const { customDomain } = useWalletState();
+	const { address } = useGlobalWalletState();
 
 	const onShare = async () => {
 		await Share.share({ message: address });
@@ -11,7 +11,7 @@ export const useReceiveModal = () => {
 
 	return {
 		address: address || '',
-		ensName,
+		customDomain,
 		onShare
 	};
 };

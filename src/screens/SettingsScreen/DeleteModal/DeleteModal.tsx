@@ -1,11 +1,12 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { walletState, emptyWallet } from '@stores/WalletStore';
+import { walletState, emptyWallet, globalWalletState } from '@stores/WalletStore';
 import { walletDelete, getAllWallets, deletePrivateKey } from '@models/wallet';
 import { useAuthentication, useLanguage, useNavigation, useWalletState } from '@hooks';
 import { Text, ModalHeader, Button, View } from '@components';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
+import { useState } from '@hookstate/core';
 
 interface DeleteModalProps {
 	onDismiss: () => void;
@@ -13,10 +14,11 @@ interface DeleteModalProps {
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { state, accountName } = useWalletState();
+	const { accountName } = useWalletState();
 	const navigation = useNavigation();
 	const { showAuthenticationPrompt } = useAuthentication();
 	const connector = useWalletConnect();
+	const state = useState(globalWalletState());
 	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () => {
