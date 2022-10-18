@@ -37,7 +37,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 
 							const { address } = state.value;
 
-							if (connected && accounts[0] === address) {
+							if (connected && accounts[0].toLowerCase() === address.toLowerCase()) {
 								connector.killSession();
 							}
 							await deletePrivateKey(address);
@@ -66,9 +66,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 				<Text type="tSmall" weight="bold" mb="xxs">
 					{i18n.t('SettingsScreen.DeleteModal.are_you_sure')} ({accountName})
 				</Text>
-				<Text mb="m">
-					{i18n.t('SettingsScreen.DeleteModal.recover', { os: cloudPlatform })}
-				</Text>
+				<Text mb="m">{i18n.t('SettingsScreen.DeleteModal.recover', { os: cloudPlatform })}</Text>
 
 				<View row mb="xxxl">
 					<View flex1>
@@ -81,10 +79,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 					</View>
 					<View mr="s" />
 					<View flex1>
-						<Button
-							title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')}
-							onPress={onDismiss}
-						/>
+						<Button title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')} onPress={onDismiss} />
 					</View>
 				</View>
 			</View>
