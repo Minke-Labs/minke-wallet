@@ -15,7 +15,7 @@ import {
 	estimateGas,
 	sendTransaction,
 	EstimateGasResponse,
-	resolveENSAddress,
+	resolveDomainAddress,
 	imageSource,
 	sendTransactionData
 } from '@models/wallet';
@@ -137,8 +137,8 @@ export const useTransactionTransfer = ({
 					tokenAmount = (Number(token.balance) * number) / token.balanceUSD;
 				}
 
-				const ens = user.address;
-				const to = (await resolveENSAddress(ens)) || ens;
+				const domain = user.address;
+				const to = (await resolveDomainAddress(domain)) || domain;
 				const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
 
 				onDismiss();

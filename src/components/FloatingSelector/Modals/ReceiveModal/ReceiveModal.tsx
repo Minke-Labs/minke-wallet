@@ -21,16 +21,10 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 
 	return (
 		<SafeAreaView>
-
 			<ModalHeader {...{ onDismiss }} />
 
 			<View ph="s" cross="center">
-
-				<Text
-					width="100%"
-					type="hMedium"
-					weight="bold"
-				>
+				<Text width="100%" type="hMedium" weight="bold">
 					{i18n.t('Components.FloatingSelector.Modals.ReceiveModal.receive')}
 				</Text>
 

@@ -46,14 +46,16 @@ const TransactionContacts: React.FC<TransactionContactsProps> = ({ onSelected })
 					(contactList!.length > 0 ? (
 						<>
 							<Text center weight="extraBold" type="p" mb="m" style={{ marginTop: 32 }}>
-								{i18n.t('Components.ModalReusables.SendModal.screens.TransactionContacts.choose_from_saved')}
+								{i18n.t(
+									'Components.ModalReusables.SendModal.screens.TransactionContacts.choose_from_saved'
+								)}
 							</Text>
 							<FlatList
 								style={styles.contactsList}
 								keyExtractor={(item, idx) => `${item.address}-${idx}`}
 								data={contactList}
 								renderItem={({ item }) => (
-									<ContactItem contact={item} onSelected={() => onSelected(item)} />
+									<ContactItem contact={item} onSelected={() => onSelected!(item)} />
 								)}
 							/>
 						</>

@@ -8,7 +8,7 @@ import { backupUserDataIntoCloud } from '@models/cloudBackup';
 import { seedPhraseKey, privateKeyKey, allWalletsKey } from '@utils/keychainConstants';
 import { captureException } from '@sentry/react-native';
 import Logger from '@utils/logger';
-import { ZAPPER_API_KEY } from '@env';
+import { UNSTOPPABLE_DOMAINS_API_KEY, ZAPPER_API_KEY } from '@env';
 import * as qs from 'qs';
 import * as keychain from './keychain';
 import { network as selectedNetwork, Networks, networks } from './network';
@@ -36,15 +36,58 @@ export const getProvider = async (network?: string) => {
 	return new providers.AlchemyProvider(blockchain, alchemyAPIKey);
 };
 
-export const getENSAddress = async (address: string) => {
+const getENSAddress = async (address: string) => {
 	const name = (await getProvider(networks.mainnet.id)).lookupAddress(address);
 	return name;
 };
 
-export const resolveENSAddress = async (ensAddress: string) => {
+const getUnstoppableDomain = async (address: string) => {
+	try {
+		const response = await fetch(`https://resolve.unstoppabledomains.com/domains/?owners=${address}`, {
+			headers: {
+				Authorization: `Bearer ${UNSTOPPABLE_DOMAINS_API_KEY || process.env.UNSTOPPABLE_DOMAINS_API_KEY}`
+			}
+		});
+
+		const { data = [] } = await response.json();
+		const [record] = data;
+		return record?.id || '';
+	} catch (error) {
+		Logger.error('Unstoppable Domains owners API Error', error);
+		return '';
+	}
+};
+
+export const getCustomDomain = async (address: string) => {
+	const ens = await getENSAddress(address);
+	return ens || (await getUnstoppableDomain(address));
+};
+
+const resolveENSAddress = async (ensAddress: string) => {
 	const name = (await getProvider(networks.mainnet.id)).resolveName(ensAddress);
 	return name;
 };
+
+const resolveUnstoppableDomainAddress = async (domain: string): Promise<string> => {
+	try {
+		const { id } = await selectedNetwork();
+		const response = await fetch(`https://resolve.unstoppabledomains.com/domains/${domain}`, {
+			headers: {
+				Authorization: `Bearer ${UNSTOPPABLE_DOMAINS_API_KEY || process.env.UNSTOPPABLE_DOMAINS_API_KEY}`
+			}
+		});
+
+		const { records = {} } = await response.json();
+		return networks.matic.id === id ? records['crypto.MATIC.version.MATIC.address'] : records['crypto.ETH.address'];
+	} catch (error) {
+		Logger.error('Unstoppable Domains API Error', error);
+		return '';
+	}
+};
+
+// resolve ENS / Unstoppable Domain address into a 0x1234 address
+export const resolveDomainAddress = async (domain: string) =>
+	(await resolveENSAddress(domain)) || (await resolveUnstoppableDomainAddress(domain));
 
 export const getPrivateKey = async (address: string): Promise<string | null> => {
 	const key = `${address}_${privateKeyKey}`;

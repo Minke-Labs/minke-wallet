@@ -33,13 +33,13 @@ const Header: React.FC = () => {
 	return (
 		<>
 			<View row main="space-between" cross="flex-end" mb="xs">
-				<View>
+				<View style={{ maxWidth: 240 }}>
 					<Text type="lMedium" weight="semiBold">
 						{i18n.t('HomeScreen.Header.welcome')}
 					</Text>
 					<Touchable onPress={handlePress}>
 						<View row cross="center">
-							<Text type="hMedium" weight="bold">
+							<Text type="hMedium" weight="bold" numberOfLines={1}>
 								{accountName}
 							</Text>
 							<View ml="xxs">

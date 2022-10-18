@@ -34,4 +34,5 @@ declare module '@env' {
 	export const MOONPAY_API_KEY: string;
 	export const MOONPAY_SECRET_KEY: string;
 	export const OPENSEA_API_KEY: string;
+	export const UNSTOPPABLE_DOMAINS_API_KEY: string;
 }
