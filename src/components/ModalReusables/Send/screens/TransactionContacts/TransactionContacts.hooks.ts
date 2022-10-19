@@ -51,7 +51,8 @@ export const useTransactionContacts = ({ onSelected, onContactAdded }: Transacti
 		debouncedSearch(a);
 	};
 
-	const validAddress = !!address && (isAddress(address) || isAddress(customDomain || ''));
+	const validAddress =
+		!!address && (address !== deboucedAddress || isAddress(address) || isAddress(customDomain || ''));
 
 	const onSendAddress = () => {
 		if (validAddress && onSelected) {

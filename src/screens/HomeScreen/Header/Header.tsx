@@ -33,7 +33,7 @@ const Header: React.FC = () => {
 	return (
 		<>
 			<View row main="space-between" cross="flex-end" mb="xs">
-				<View style={{ maxWidth: 240 }}>
+				<View style={{ maxWidth: 200 }}>
 					<Text type="lMedium" weight="semiBold">
 						{i18n.t('HomeScreen.Header.welcome')}
 					</Text>
