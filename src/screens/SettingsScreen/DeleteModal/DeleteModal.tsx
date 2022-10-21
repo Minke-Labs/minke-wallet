@@ -39,7 +39,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 
 							const { address } = state.value;
 
-							if (connected && accounts[0] === address) {
+							if (connected && accounts[0].toLowerCase() === address.toLowerCase()) {
 								connector.killSession();
 							}
 							await deletePrivateKey(address);

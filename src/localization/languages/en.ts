@@ -302,7 +302,6 @@ export default {
 				you_can_earn_points_by: 'You can earn points by:',
 				topping_up_for_the_first_time: 'Topping up for the first time.',
 				refering_minke: 'Referring Minke to friends and family.',
-				exchanging_for_the_first_time: 'Exchanging for the first time',
 				what_can_you_do: 'What can you do with your points?',
 				you_can_redeem_your_points: 'You can redeem your points for rewards in USDC on Polygon. '
 			},
@@ -311,11 +310,9 @@ export default {
 				refer_a_friend: 'Refer a friend',
 				when_your_friends_top_up:
 					'When your friend buys or exchanges for stablecoins they will get up to 50 Minke points. You will earn a 20% points commission per referral.',
-				top_up: 'Top-up',
-				get_rewarded: 'Get rewarded with better money!',
-				coming_soon: '(Coming soon)',
 				share_text:
-					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $5 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref"
+					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $5 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref",
+				points_are_distributed: 'Points are distributed every 24 hours by 12:00 UTC on weekdays.'
 			}
 		},
 		Body: {

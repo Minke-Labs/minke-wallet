@@ -7,6 +7,7 @@ import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimesta
 import { groupBy } from 'lodash';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
+import Logger from '@utils/logger';
 import useLanguage from '../../hooks/useLanguage';
 
 export interface TransactionPeriod {
@@ -41,11 +42,15 @@ const TransactionsProvider: React.FC = ({ children }) => {
 
 	const fetchTransactions = async () => {
 		setLoading(true);
-		const { data = [] } = await getZapperTransactions(address!);
-		state.merge({ transactions: data });
+		try {
+			const { data = [] } = await getZapperTransactions(address!);
+			state.merge({ transactions: data });
+			setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
+			setLastTransationsFetch(new Date().getTime());
+		} catch (error) {
+			Logger.log('Zapper transactions error', error);
+		}
 		setLoading(false);
-		setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
-		setLastTransationsFetch(new Date().getTime());
 	};
 
 	useFocusEffect(() => {
