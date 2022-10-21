@@ -29,7 +29,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "96",
+      "buildNumber": "97",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -58,6 +58,11 @@
       "favicon": "./assets/favicon.png"
     },
     "description": "",
-    "userInterfaceStyle": "automatic"
+    "userInterfaceStyle": "automatic",
+    "extra": {
+      "eas": {
+        "projectId": "653ea46f-9f69-4240-8fc2-a3ef10e74cfb"
+      }
+    }
   }
 }
