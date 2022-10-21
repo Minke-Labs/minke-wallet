@@ -944,7 +944,7 @@ export default {
 			search_token: 'Search token',
 			search_currency: 'Search currency',
 			name: 'Name',
-			ens_or_wallet: 'ENS or Wallet Address',
+			ens_or_wallet: 'ENS, Unstoppable Domain or Wallet Address',
 			enter_code: 'Enter code'
 		},
 		InterestBanner: {
@@ -998,7 +998,7 @@ export default {
 					},
 					TransactionContacts: {
 						sent_to_address: 'Send to an address',
-						address_or_ens: 'Address or ENS',
+						address_or_ens: 'Address, ENS or Unstoppable Domain',
 						choose_from_saved: 'Or choose from a saved address',
 						NoContactsYet: {
 							no_contacts_yet: 'No contacts yet',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Keyboard, View, TouchableWithoutFeedback } from 'react-native';
 import { Button, Header, ModalBase, ModalReusables, TokenCard } from '@components';
-import { useLanguage, useMinkeRewards, useNavigation, useTheme, useWalletState } from '@hooks';
+import { useGlobalWalletState, useLanguage, useMinkeRewards, useNavigation, useTheme } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { networks } from '@models/network';
@@ -18,10 +18,9 @@ const RedeemScreen = ({ route }: Props) => {
 	const { code } = route.params;
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
-	const { state } = useWalletState();
 	const {
 		network: { chainId }
-	} = state.value;
+	} = useGlobalWalletState();
 	const { points, loading: loadingPoints } = useMinkeRewards();
 	const notEnoughPoints = !loadingPoints && points <= 0;
 	const wrongNetwork = chainId !== networks.matic.chainId;

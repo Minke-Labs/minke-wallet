@@ -29,7 +29,6 @@ const fontType = {
 		fontSize: 18,
 		lineHeight: 22
 	},
-	// @TODO: Talk to Romullo about these new sizes
 	p2: {
 		fontSize: 16,
 		lineHeight: 19

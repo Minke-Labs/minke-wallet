@@ -7,11 +7,11 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { useLanguage } from '@hooks';
 import styles from './AddContact.styles';
 import { AddContactProps } from './AddContact.types';
-import { useAddContact } from './AddContact.hooks';
+import { useTransactionContacts } from '../TransactionContacts/TransactionContacts.hooks';
 
 const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 	const { i18n } = useLanguage();
-	const { name, setName, address, setAddress, ensAddress, validAddress, onContactCreate } = useAddContact({
+	const { name, setName, address, setAddress, customDomain, validAddress, onContactCreate } = useTransactionContacts({
 		onContactAdded
 	});
 
@@ -36,7 +36,7 @@ const AddContact: React.FC<AddContactProps> = ({ onContactAdded }) => {
 				autoCorrect={false}
 				autoCompleteType="off"
 				autoCapitalize="none"
-				error={address === '' && ensAddress === ''}
+				error={address === '' && customDomain === ''}
 				style={{ marginBottom: 24 }}
 			/>
 

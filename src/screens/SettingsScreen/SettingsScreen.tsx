@@ -1,28 +1,29 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
 import { View, LoadingScreen, Header, Text, ModalBase, IconItem } from '@components';
-import { useNavigation, useLanguage, useWalletState } from '@hooks';
+import { useNavigation, useLanguage } from '@hooks';
 import { networks } from '@models/network';
 import Intercom from '@intercom/intercom-react-native';
 import RNTestFlight from 'react-native-test-flight';
-import { walletState } from '@stores/WalletStore';
+import { globalWalletState, walletState } from '@stores/WalletStore';
 import { walletCreate } from '@models/wallet';
+import { useState } from '@hookstate/core';
 import styles from './SettingsScreen.styles';
 import DeleteModal from './DeleteModal/DeleteModal';
 
 const SettingsScreen = () => {
 	RNUxcam.tagScreenName('SettingsScreen');
 	const { i18n } = useLanguage();
-	const { state } = useWalletState();
+	const state = useState(globalWalletState());
 	const {
 		network: { chainId }
 	} = state.value;
 	const navigation = useNavigation();
-	const [creatingWallet, setCreatingWallet] = useState(false);
-	const [deleteModal, setDeleteModal] = useState(false);
+	const [creatingWallet, setCreatingWallet] = React.useState(false);
+	const [deleteModal, setDeleteModal] = React.useState(false);
 
 	const onBackup = () => navigation.navigate('BackupSettingsScreen');
 	const onChangeCountry = () => navigation.navigate('ChangeCountryScreen');

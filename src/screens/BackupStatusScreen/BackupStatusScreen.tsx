@@ -6,10 +6,10 @@ import { Button, Text, ScreenLoadingIndicator, LoadingScreen, ModalReusables, Mo
 import RNUxcam from 'react-native-ux-cam';
 import { smallWalletAddress, getSeedPhrase, MinkeWallet } from '@models/wallet';
 import { backupImg } from '@images';
-import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage, useWalletState } from '@hooks';
+import { useNavigation, iCloudBackup, useWallets, useAuthentication, useLanguage } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { walletState } from '@src/stores/WalletStore';
+import { globalWalletState, walletState } from '@src/stores/WalletStore';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import styles from './BackupStatusScreen.styles';
 
@@ -60,7 +60,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'BackupStatusScreen'>;
 const BackupStatusScreen = ({ route }: Props) => {
 	RNUxcam.tagScreenName('BackupStatusScreen');
 	const { i18n } = useLanguage();
-	const { state } = useWalletState();
+	const state = useState(globalWalletState());
 	const { address: addressState } = state.value;
 
 	const navigation = useNavigation();
