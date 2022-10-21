@@ -121,8 +121,8 @@ export const useTransactionTransfer = ({
 		Logger.error('Sending blockchain error', e);
 		captureEvent(e);
 		setSending(false);
-		onDismiss();
 		onError();
+		onDismiss();
 	};
 
 	const onSend = async () => {
@@ -219,13 +219,14 @@ export const useTransactionTransfer = ({
 							token.decimals
 						);
 
-						const { from, value, data, to: addressTo } = tx;
+						const { from, value, data, to: addressTo, gasPrice: transactionGasPrice } = tx;
 						hash = await connector.sendTransaction({
 							from,
 							to: addressTo,
 							value: (value || toBn('0')).toHexString(),
 							data: data || toBn('0').toHexString(),
-							gasLimit: gasLimits.send.toString()
+							gasLimit: gasLimits.send.toString(),
+							gasPrice: transactionGasPrice.toHexString()
 						});
 
 						addPendingTransaction({

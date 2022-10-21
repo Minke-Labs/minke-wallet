@@ -1,8 +1,6 @@
 import React, { createContext, useCallback, useEffect, useMemo } from 'react';
-import EventSource from 'react-native-sse';
 import { useState } from '@hookstate/core';
 import { AccountBalance } from '@models/token';
-import { generateEventSourceDict, generateUrl } from '@src/services/apis/zapper/zapper';
 import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/types/token.types';
 import Logger from '@utils/logger';
@@ -11,8 +9,8 @@ import { depositStablecoins, interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
 import { searchCoinData } from '@helpers/utilities';
-import { parse, ZapperCustomEvents } from './utils';
 import useCovalentBalances from './useCovalentBalances';
+import useZerionBalances from './useZerionBalances/useZerionBalances';
 
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
 
@@ -42,9 +40,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 	const fillSuggestedTokens = useCallback(
 		(tokensWithBalance: MinkeToken[]): MinkeToken[] => {
 			const notFoundTokens = suggestedTokens.filter((suggested) => {
-				const found = tokensWithBalance.find(
-					(t) => t.address.toLowerCase() === suggested.address.toLowerCase()
-				);
+				const found = tokensWithBalance.find((t) => t.symbol.toLowerCase() === suggested.symbol.toLowerCase());
 				return !found;
 			});
 			return [...tokensWithBalance, ...notFoundTokens];
@@ -54,23 +50,30 @@ const BalanceProvider: React.FC = ({ children }) => {
 
 	const processTokens = async (coins: MinkeToken[]) => {
 		let allTokens = coins.filter(
-			({ symbol, balance = '0', name = '' }) =>
+			({ symbol, balance = '0', name = '', balanceUSD = 0 }) =>
 				!interestBearingTokens.includes(symbol.toLowerCase()) &&
 				!depositStablecoins.includes(symbol) &&
 				+balance > 0 &&
-				!isValidDomain(name)
+				balanceUSD > 0 &&
+				!isValidDomain(name) &&
+				!isValidDomain(symbol)
 		);
-		allTokens = fillSuggestedTokens(allTokens);
-		const promises = allTokens.map(async (t) => {
-			const { id, name } = await searchCoinData(t.address, coingeckoPlatform, t.symbol, t.id);
 
-			return {
-				...t,
-				id,
-				name
-			};
-		});
-		allTokens = await Promise.all(promises);
+		allTokens = fillSuggestedTokens(allTokens);
+		try {
+			const promises = allTokens.map(async (t) => {
+				const { id, name } = await searchCoinData(t.address, coingeckoPlatform, t.symbol, t.id);
+
+				return {
+					...t,
+					id,
+					name: t.name || name
+				};
+			});
+			allTokens = await Promise.all(promises);
+		} catch (error) {
+			Logger.log('Error on coingecko API', error);
+		}
 		setTokens(allTokens);
 		setStablecoins(await fetchStablecoins(address));
 		setLoading(false);
@@ -86,51 +89,14 @@ const BalanceProvider: React.FC = ({ children }) => {
 				let fallbacking = false;
 				try {
 					if (loadingUI) setLoading(true);
-					const { tokens: allTokens } = await useCovalentBalances(address);
+					const allTokens = await useZerionBalances({ address });
 					await processTokens(allTokens);
-				} catch {
+				} catch (error) {
 					if (!fallbacking) {
-						Logger.log('Zapper fallback');
+						Logger.log('Covalent fallback', error);
 						fallbacking = true;
-						try {
-							const tokensBalances: MinkeToken[][] = [];
-							const url = generateUrl([address], [zapperNetwork]);
-							const eventSourceDict = generateEventSourceDict();
-							const eventSource = new EventSource<ZapperCustomEvents>(url, eventSourceDict);
-
-							// when balance event is received, the data is parsed
-							// Zapper objects can be huge so parsing logic is extracted to ./utils.js
-							// @ts-ignore
-							eventSource.addEventListener('balance', async ({ data }) => {
-								const parsedDatas = JSON.parse(data);
-								const {
-									appId,
-									balance: { wallet }
-								} = parsedDatas;
-								const apiTokens = Object.keys(wallet);
-								if (appId === 'tokens' && apiTokens.length > 0) {
-									const parsed = parse(wallet);
-									tokensBalances.push(parsed);
-								}
-							});
-
-							// when the data feed has been completely sent
-							eventSource.addEventListener('end', async () => {
-								await processTokens(tokensBalances.flat());
-								eventSource.close();
-							});
-
-							// @ts-ignore
-							eventSource.addEventListener('error', async ({ message }) => {
-								Logger.log('Zapper API Error :', message);
-								setTokens([]);
-								setLoading(false);
-							});
-						} catch (error) {
-							Logger.error('Error on Zapper API fallback');
-							setTokens([]);
-							setLoading(false);
-						}
+						const { tokens: allTokens } = await useCovalentBalances(address);
+						await processTokens(allTokens);
 					} else {
 						setTokens([]);
 						setLoading(false);

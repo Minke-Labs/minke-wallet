@@ -5,6 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp } from '@models/timestamps';
 import { groupBy } from 'lodash';
+import Logger from '@utils/logger';
 import useWalletState from '../../hooks/useWalletState';
 import useLanguage from '../../hooks/useLanguage';
 
@@ -40,11 +41,15 @@ const TransactionsProvider: React.FC = ({ children }) => {
 
 	const fetchTransactions = async () => {
 		setLoading(true);
-		const { data = [] } = await getZapperTransactions(address!);
-		state.merge({ transactions: data });
+		try {
+			const { data = [] } = await getZapperTransactions(address!);
+			state.merge({ transactions: data });
+			setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
+			setLastTransationsFetch(new Date().getTime());
+		} catch (error) {
+			Logger.log('Zapper transactions error', error);
+		}
 		setLoading(false);
-		setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
-		setLastTransationsFetch(new Date().getTime());
 	};
 
 	useFocusEffect(() => {
