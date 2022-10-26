@@ -3,6 +3,7 @@ import { useGlobalWalletState, useNavigation, useTransactions, useWyreOrderStatu
 import { WYRE_ORDER_STATUS_TYPES } from '@models/types/wyre.types';
 import { useState } from '@hookstate/core';
 import { globalTopUpState, TopUpState } from '@stores/TopUpStore';
+import SafariView from 'react-native-safari-view';
 
 export const useTopUpWaitScreen = () => {
 	const navigation = useNavigation();
@@ -18,13 +19,28 @@ export const useTopUpWaitScreen = () => {
 	const success = status === WYRE_ORDER_STATUS_TYPES.success;
 
 	const onFinish = () => {
-		topUpState.set({} as TopUpState);
+		topUpState.merge({} as TopUpState);
 		navigation.navigate('HomeScreen');
 	};
 
+	const { sourceAmount, authenticationUrl } = topUpState.value;
+
+	useEffect(() => {
+		if (authenticationUrl) {
+			SafariView.show({
+				url: authenticationUrl
+			});
+		}
+	}, [authenticationUrl]);
+
+	useEffect(() => {
+		if (processing) {
+			SafariView.dismiss();
+		}
+	}, [processing]);
+
 	useEffect(() => {
 		const addTransaction = async (hash: string) => {
-			const { sourceAmount } = topUpState.value;
 			addPendingTransaction({
 				topUp: true,
 				hash,
