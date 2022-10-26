@@ -1,13 +1,16 @@
 import { useState, useCallback, useEffect } from 'react';
 import { isAddress } from 'ethers/lib/utils';
-import { resolveENSAddress, smallWalletAddress } from '@models/wallet';
+import { resolveDomainAddress, smallWalletAddress } from '@models/wallet';
 import { useKeyboard, useWallets, useGlobalContactState } from '@hooks';
-import { ContactItem } from '@models/contact';
+import { contactCreate, ContactItem } from '@models/contact';
+import { debounce } from 'lodash';
 import { TransactionContactsProps } from './TransactionContacts.types';
 
-export const useTransactionContacts = ({ onSelected }: TransactionContactsProps) => {
+export const useTransactionContacts = ({ onSelected, onContactAdded }: TransactionContactsProps) => {
+	const [name, setName] = useState<string>();
 	const [address, setAddress] = useState('');
-	const [ensAddress, setEnsAddress] = useState<string>();
+	const [deboucedAddress, setDebouncedAddress] = useState('');
+	const [customDomain, setCustomDomain] = useState<string>();
 	const state = useGlobalContactState();
 	const { contactList = [] } = state.value;
 	const keyboardVisible = useKeyboard();
@@ -25,30 +28,58 @@ export const useTransactionContacts = ({ onSelected }: TransactionContactsProps)
 	);
 
 	useEffect(() => {
-		const lookForENS = async () => {
-			if (address && address.includes('.')) {
-				setEnsAddress((await resolveENSAddress(address)) || undefined);
+		const lookForCustomDomain = async () => {
+			if (deboucedAddress && deboucedAddress.includes('.')) {
+				setCustomDomain((await resolveDomainAddress(address)) || undefined);
 			} else {
-				setEnsAddress(undefined);
+				setCustomDomain(undefined);
 			}
 		};
-		lookForENS();
-	}, [address]);
 
-	const validAddress = !!address && (isAddress(address) || isAddress(ensAddress || ''));
+		lookForCustomDomain();
+	}, [deboucedAddress]);
+
+	const debouncedSearch = useCallback(
+		debounce((search: string) => {
+			setDebouncedAddress(search);
+		}, 850),
+		[]
+	);
+
+	const handleAddressChange = (a: string) => {
+		setAddress(a);
+		debouncedSearch(a);
+	};
+
+	const validAddress =
+		!!address && (address !== deboucedAddress || isAddress(address) || isAddress(customDomain || ''));
 
 	const onSendAddress = () => {
-		if (validAddress) {
+		if (validAddress && onSelected) {
 			onSelected({ name: address, address });
 		}
 	};
 
+	const onContactCreate = async () => {
+		if (name && validAddress) {
+			const newContact = await contactCreate(name, address);
+			if (newContact) {
+				state.contactList.merge([newContact]);
+				if (onContactAdded) onContactAdded();
+			}
+		}
+	};
+
 	return {
+		name,
+		setName,
+		customDomain,
 		contactList: [...contactList, ...availableAddresses()],
 		address,
-		setAddress,
+		setAddress: handleAddressChange,
 		keyboardVisible,
 		validAddress,
-		onSendAddress
+		onSendAddress,
+		onContactCreate
 	};
 };

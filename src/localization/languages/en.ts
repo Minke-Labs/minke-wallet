@@ -96,7 +96,7 @@ export default {
 		or: 'or',
 		buy_usdc: 'Buy USDC',
 		referral_note:
-			'This code can only be used once. After buying stablecoins you and your friend will each get up to 100 Minke points.',
+			'This code can only be used once. After buying stablecoins you and your friend will each get up to 50 Minke points.',
 		invalid_code: 'Invalid code',
 		your_code_is_invalid: 'Your code does not exist or is already in use in one of your wallets'
 	},
@@ -141,9 +141,10 @@ export default {
 			Modals: {
 				connect_wallet: 'Connect Wallet',
 				disconnect_wallet: 'Disconnect Wallet',
-				import_with_secret_phrase: 'Import with secret phrase',
+				import_with_secret_phrase: 'Import with secret phrase or private key',
 				restore_from_cloud: 'Restore from {{cloudPlatform}}',
 				backup_wallets_count: 'You have %{count} wallet%{plural} backed up',
+				no_backups_found: 'No backups found',
 				AvatarModal: {
 					Main: {
 						edit: 'Edit your avatar image',
@@ -301,7 +302,6 @@ export default {
 				you_can_earn_points_by: 'You can earn points by:',
 				topping_up_for_the_first_time: 'Topping up for the first time.',
 				refering_minke: 'Referring Minke to friends and family.',
-				exchanging_for_the_first_time: 'Exchanging for the first time',
 				what_can_you_do: 'What can you do with your points?',
 				you_can_redeem_your_points: 'You can redeem your points for rewards in USDC on Polygon. '
 			},
@@ -309,12 +309,10 @@ export default {
 				earn_minke_points: 'Earn Minke points!',
 				refer_a_friend: 'Refer a friend',
 				when_your_friends_top_up:
-					'When your friend buys stablecoins or exchanges for them in Minke you will both get up to 100 points (worth $10).',
-				top_up: 'Top-up',
-				get_rewarded: 'Get rewarded with better money!',
-				coming_soon: '(Coming soon)',
+					'When your friend buys or exchanges for stablecoins they will get up to 50 Minke points. You will earn a 20% points commission per referral.',
 				share_text:
-					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $10 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref"
+					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $5 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref",
+				points_are_distributed: 'Points are distributed every 24 hours by 12:00 UTC on weekdays.'
 			}
 		},
 		Body: {
@@ -946,7 +944,7 @@ export default {
 			search_token: 'Search token',
 			search_currency: 'Search currency',
 			name: 'Name',
-			ens_or_wallet: 'ENS or Wallet Address',
+			ens_or_wallet: 'ENS, Unstoppable Domain or Wallet Address',
 			enter_code: 'Enter code'
 		},
 		InterestBanner: {
@@ -1000,7 +998,7 @@ export default {
 					},
 					TransactionContacts: {
 						sent_to_address: 'Send to an address',
-						address_or_ens: 'Address or ENS',
+						address_or_ens: 'Address, ENS or Unstoppable Domain',
 						choose_from_saved: 'Or choose from a saved address',
 						NoContactsYet: {
 							no_contacts_yet: 'No contacts yet',

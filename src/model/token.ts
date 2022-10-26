@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
+import { stables } from './depositTokens';
 import { network, networks } from './network';
 import { MinkeToken, InvestmentToken } from './types/token.types';
 
@@ -31,9 +32,14 @@ export const exchangebleTokens = [
 ];
 
 export const paraswapTokens = async (): Promise<TokenResponse> => {
-	const { chainId } = await network();
-	const result = await fetch(`https://apiv5.paraswap.io/tokens/${chainId}`);
-	return result.json();
+	const { chainId, id, suggestedTokens } = await network();
+	try {
+		const result = await fetch(`https://apiv5.paraswap.io/tokens/${chainId}`);
+		return await result.json();
+	} catch {
+		const suggestedStables = Object.values(stables[id]);
+		return { tokens: [...suggestedStables, ...suggestedTokens] };
+	}
 };
 
 export interface ExchangeParams {
@@ -58,6 +64,7 @@ interface QuoteParams {
 	buyTokenPercentageFee: number;
 	skipValidation: boolean;
 	excludedSources: string;
+	slippagePercentage: number;
 }
 
 export const getExchangePrice = async ({
@@ -98,8 +105,9 @@ export const getExchangePrice = async ({
 		takerAddress: address.toLowerCase(),
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
-		buyTokenPercentageFee: 0.005,
-		excludedSources: 'MeshSwap',
+		buyTokenPercentageFee: 0.0085,
+		slippagePercentage: 0.05,
+		excludedSources: 'MeshSwap,Curve_V2',
 		skipValidation: true
 	};
 
@@ -138,6 +146,10 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 	const baseURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=false&ids=${tokenIds}`;
 	const result = await fetch(baseURL);
 	const toJson = await result.json();
+	const error = !!toJson.status;
+	if (error) {
+		return [];
+	}
 	return toJson;
 };
 

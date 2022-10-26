@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAllWallets, AllMinkeWallets } from '@models/wallet';
-import { useWalletState, useNavigation } from '@hooks';
+import { useNavigation, useGlobalWalletState } from '@hooks';
 
 export const useBackupSettingsScreen = () => {
 	const navigation = useNavigation();
@@ -8,8 +8,7 @@ export const useBackupSettingsScreen = () => {
 	const goBack = () => navigation.goBack();
 
 	const [wallets, setWallets] = useState<AllMinkeWallets | null>();
-	const { state } = useWalletState();
-	const { address } = state.value;
+	const { address } = useGlobalWalletState();
 
 	useEffect(() => {
 		const fetchWallets = async () => {

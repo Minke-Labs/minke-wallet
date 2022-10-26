@@ -160,7 +160,7 @@ class DepositService {
 		connector: WalletConnect;
 		walletConnect?: boolean;
 	}): Promise<DepositReturn> {
-		return new ApprovalService(this.protocol).approve({
+		return new ApprovalService().approve({
 			gasless,
 			address,
 			privateKey,

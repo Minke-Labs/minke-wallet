@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { getENSAddress, smallWalletAddress, ZapperTransaction } from '@models/wallet';
+import { getCustomDomain, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
 import { network } from '@src/model/network';
@@ -55,15 +55,15 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 			if (contact?.name) {
 				setFormattedSource(contact.name);
 			} else {
-				const ens = await getENSAddress(source);
-				if (ens) {
-					const ensContact = await searchContact(ens);
-					setFormattedSource(ensContact?.name || ens);
+				const customDomain = await getCustomDomain(source);
+				if (customDomain) {
+					const customDomainContact = await searchContact(customDomain);
+					setFormattedSource(customDomainContact?.name || customDomain);
 				}
 			}
 		};
 		formatAddress();
-	}, []);
+	}, [transaction]);
 
 	const openTransaction = async () => {
 		const { etherscanURL } = await network();

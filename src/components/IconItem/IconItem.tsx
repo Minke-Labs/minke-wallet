@@ -32,23 +32,13 @@ const Images = () => (
 	</View>
 );
 
-const IconItem: React.FC<IconItemProps> = ({
-	mb,
-	title,
-	desc,
-	icon,
-	alert,
-	rightButton,
-	newTab,
-	images,
-	onPress
-}) => (
+const IconItem: React.FC<IconItemProps> = ({ mb, title, desc, icon, alert, rightButton, newTab, images, onPress }) => (
 	<View mb={mb}>
 		<Touchable onPress={onPress}>
 			<View row main="space-between" cross="center">
 				<View row cross="center">
 					<IconBox icon={icon} bgc="background2" alert={alert} />
-					<View>
+					<View flex1>
 						<Text type="lLarge" weight="semiBold" color={alert ? 'alert1' : 'text1'}>
 							{title}
 						</Text>
@@ -59,22 +49,9 @@ const IconItem: React.FC<IconItemProps> = ({
 						)}
 					</View>
 					{images && <Images />}
-
 				</View>
-				{rightButton && (
-					<Icon
-						name="chevronRight"
-						size={24}
-						color={alert ? 'alert1' : 'cta1'}
-					/>
-				)}
-				{newTab && (
-					<Icon
-						name="openInNew"
-						size={24}
-						color={alert ? 'alert1' : 'cta1'}
-					/>
-				)}
+				{rightButton && <Icon name="chevronRight" size={24} color={alert ? 'alert1' : 'cta1'} />}
+				{newTab && <Icon name="openInNew" size={24} color={alert ? 'alert1' : 'cta1'} />}
 			</View>
 		</Touchable>
 	</View>

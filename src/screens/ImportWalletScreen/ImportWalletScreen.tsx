@@ -14,7 +14,6 @@ const ImportWalletScreen = () => {
 		address,
 		onICloudBackup,
 		walletsBackedUp,
-		latestBackup,
 		connected,
 		toggleWalletConnect,
 		error,
@@ -33,7 +32,12 @@ const ImportWalletScreen = () => {
 				<Header title={i18n.t('ImportWalletScreen.import_wallet')} done />
 
 				<View pt="m" p="s">
-					<IconItem title="Import with secret phrase" icon="key" onPress={() => setImportSeed(true)} mb="m" />
+					<IconItem
+						title={i18n.t('ImportWalletScreen.import_with_secret_phrase')}
+						icon="key"
+						onPress={() => setImportSeed(true)}
+						mb="m"
+					/>
 
 					<IconItem
 						title={
@@ -47,19 +51,17 @@ const ImportWalletScreen = () => {
 						images
 					/>
 
-					{(walletsBackedUp > 0 || !!latestBackup) && (
-						<IconItem
-							title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
-							{...(walletsBackedUp > 0 && {
-								desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
-									count: walletsBackedUp,
-									plural: walletsBackedUp > 1 ? 's' : ''
-								})}`
-							})}
-							icon="cloud"
-							onPress={onICloudBackup}
-						/>
-					)}
+					<IconItem
+						title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
+						{...(walletsBackedUp > 0 && {
+							desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
+								count: walletsBackedUp,
+								plural: walletsBackedUp > 1 ? 's' : ''
+							})}`
+						})}
+						icon="cloud"
+						onPress={onICloudBackup}
+					/>
 				</View>
 			</BasicLayout>
 

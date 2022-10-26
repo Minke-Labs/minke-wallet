@@ -5,7 +5,7 @@ import { getTokenMarketCap, getTokenData, getTokenVolume } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 
 export const useInvestmentsDetailScreen = (coin: MinkeToken) => {
-	const { i18n } = useLanguage();
+	const { language } = useLanguage();
 	const [tokenData, setTokenData] = useState<any>(null);
 	const [tokenVolume, setTokenVolume] = useState<any>(null);
 	const [marketCap, setMarketCap] = useState<any>(null);
@@ -58,8 +58,9 @@ export const useInvestmentsDetailScreen = (coin: MinkeToken) => {
 		fetchTokenVolume();
 	}, []);
 
+	const dataIsPresent = !!(tokenData && tokenData?.description);
 	return {
-		description: tokenData?.description[i18n.currentLocale()] || tokenData?.description.en,
+		description: dataIsPresent ? tokenData?.description[language] || tokenData?.description.en : '',
 		tokenVolume,
 		marketCap
 	};

@@ -6,8 +6,8 @@ export default StyleSheet.create({
 	},
 	image: {
 		alignSelf: 'center',
-		width: 147,
-		height: 137,
+		width: 145,
+		height: 134,
 		marginBottom: 16
 	},
 	row: {

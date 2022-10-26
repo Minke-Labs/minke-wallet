@@ -41,23 +41,29 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 			defaultValue: name
 		});
 
-	const onSearch = (text: string) => {
-		setSearch(text);
-		let source;
-		if (text) {
-			source = currencies.filter((c) => currencyName(c).toLowerCase().includes(text.toLowerCase()));
-		} else {
-			source = currencies;
-		}
-		setFilteredCurrencies((source || []).filter(({ country }) => country !== selected?.country));
-	};
-
 	const countryName = ({ country }: Currency) => {
 		if (!country) return '';
 
 		const capitalized = country.charAt(0).toUpperCase() + country.slice(1);
 		const defaultValue = capitalized.split(/(?=[A-Z])/).join(' ');
 		return i18n.t(`LocationContext.${country}.name`, { defaultValue });
+	};
+
+	const onSearch = (text: string) => {
+		setSearch(text);
+		let source;
+		if (text) {
+			const query = text.toLowerCase();
+			source = currencies.filter(
+				(c) =>
+					c.code.toLowerCase().includes(query) ||
+					currencyName(c).toLowerCase().includes(query) ||
+					countryName(c).toLowerCase().includes(query)
+			);
+		} else {
+			source = currencies;
+		}
+		setFilteredCurrencies((source || []).filter(({ country }) => country !== selected?.country));
 	};
 
 	if (!visible) {
@@ -88,7 +94,9 @@ const SearchCurrencies: React.FC<SearchCurrenciesProps> = ({ visible, onDismiss,
 								<Flag size={40} name={countries[item.country] as FlagType} />
 							</View>
 							<View style={styles.tokenItemNameContainer}>
-								<Text style={styles.tokenItemSymbol}>{countryName(item)}</Text>
+								<Text style={styles.tokenItemSymbol}>
+									{countryName(item)} - {item.code}
+								</Text>
 								<Text style={styles.tokenItemName}>{currencyName(item)}</Text>
 							</View>
 						</Touchable>

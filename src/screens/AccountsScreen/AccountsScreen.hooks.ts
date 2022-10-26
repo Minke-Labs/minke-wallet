@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MinkeWallet, getAllWallets, AllMinkeWallets } from '@models/wallet';
-import { walletState } from '@src/stores/WalletStore';
-import { useWalletState, useNavigation } from '@hooks';
+import { globalWalletState, walletState } from '@src/stores/WalletStore';
+import { useNavigation } from '@hooks';
+import { useState } from '@hookstate/core';
 
 export const useAccountsScreen = () => {
 	const navigation = useNavigation();
 	const goBack = () => navigation.goBack();
 	const onImportWallet = () => navigation.navigate('ImportWalletScreen');
 
-	const { state } = useWalletState();
+	const state = useState(globalWalletState());
 	const { address } = state.value;
 
-	const [wallets, setWallets] = useState<AllMinkeWallets | null>();
+	const [wallets, setWallets] = React.useState<AllMinkeWallets | null>();
 
 	useEffect(() => {
 		const fetchWallets = async () => {
