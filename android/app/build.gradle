@@ -136,8 +136,8 @@ android {
         applicationId 'com.minkeapp.minkewallet'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 62
-        versionName "0.0.22"
+        versionCode 66
+        versionName "0.0.23"
     }
     splits {
         abi {
