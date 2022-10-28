@@ -4,6 +4,7 @@ import { MinkeToken } from '@models/types/token.types';
 import { network } from '@models/network';
 import { formatUnits } from 'ethers/lib/utils';
 import { AddressSocket, RequestBody, UseZerionBalancesParams, ZerionTokenData } from './useZerionBalances.types';
+import { getProvider } from '@models/wallet';
 
 const BASE_URL = 'wss://api-v4.zerion.io/';
 
@@ -43,7 +44,7 @@ const get = (socketNamespace: AddressSocket, requestBody: RequestBody): Promise<
 
 const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<MinkeToken[]> => {
 	try {
-		const { zapperNetwork } = await network();
+		const { zapperNetwork, nativeToken, id } = await network();
 		const { payload }: ZerionTokenData = await get(addressSocket, {
 			scope: ['positions'],
 			payload: {
@@ -54,13 +55,12 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 		});
 		let { positions = [] } = payload?.positions || {};
 		positions = positions.filter(({ chain, type }) => type === 'asset' && chain === zapperNetwork);
-
-		return positions.map(({ asset, quantity, value }) => {
-			const { symbol, asset_code: assetCode, name, implementations = {} } = asset;
+		const promises = positions.map(async ({ asset, quantity, value }) => {
+			const { symbol, asset_code: assetCode, name, implementations = {}, price } = asset;
 			const { address: tokenAddress = assetCode, decimals = asset.decimals } = implementations[zapperNetwork];
-			const balance = formatUnits(quantity, decimals);
+			let balance = formatUnits(quantity, decimals);
 
-			return {
+			const token = {
 				address: tokenAddress || '0x0000000000000000000000000000000000000000',
 				symbol,
 				decimals,
@@ -68,7 +68,18 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 				balanceUSD: value || 0,
 				name
 			};
+
+			if (symbol === nativeToken.symbol) {
+				const provider = await getProvider(id);
+				const blockchainBalance = await provider.getBalance(address);
+				balance = formatUnits(blockchainBalance, decimals);
+				const balanceUSD = Number(balance) * price.value;
+				return { ...token, ...{ balance, balanceUSD } };
+			}
+			return token;
 		});
+
+		return await Promise.all(promises);
 	} catch {
 		return [];
 	}
