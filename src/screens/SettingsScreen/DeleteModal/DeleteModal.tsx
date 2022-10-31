@@ -1,11 +1,12 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { walletState, emptyWallet } from '@stores/WalletStore';
+import { walletState, emptyWallet, globalWalletState } from '@stores/WalletStore';
 import { walletDelete, getAllWallets, deletePrivateKey } from '@models/wallet';
 import { useAuthentication, useLanguage, useNavigation, useWalletState } from '@hooks';
 import { Text, ModalHeader, Button, View } from '@components';
 import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
+import { useState } from '@hookstate/core';
 
 interface DeleteModalProps {
 	onDismiss: () => void;
@@ -13,10 +14,11 @@ interface DeleteModalProps {
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { state, accountName } = useWalletState();
+	const { accountName } = useWalletState();
 	const navigation = useNavigation();
 	const { showAuthenticationPrompt } = useAuthentication();
 	const connector = useWalletConnect();
+	const state = useState(globalWalletState());
 	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () => {
@@ -37,7 +39,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 
 							const { address } = state.value;
 
-							if (connected && accounts[0] === address) {
+							if (connected && accounts[0].toLowerCase() === address.toLowerCase()) {
 								connector.killSession();
 							}
 							await deletePrivateKey(address);
@@ -66,9 +68,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 				<Text type="tSmall" weight="bold" mb="xxs">
 					{i18n.t('SettingsScreen.DeleteModal.are_you_sure')} ({accountName})
 				</Text>
-				<Text mb="m">
-					{i18n.t('SettingsScreen.DeleteModal.recover', { os: cloudPlatform })}
-				</Text>
+				<Text mb="m">{i18n.t('SettingsScreen.DeleteModal.recover', { os: cloudPlatform })}</Text>
 
 				<View row mb="xxxl">
 					<View flex1>
@@ -81,10 +81,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 					</View>
 					<View mr="s" />
 					<View flex1>
-						<Button
-							title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')}
-							onPress={onDismiss}
-						/>
+						<Button title={i18n.t('SettingsScreen.DeleteModal.keep_wallet')} onPress={onDismiss} />
 					</View>
 				</View>
 			</View>

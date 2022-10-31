@@ -36,4 +36,6 @@ declare module '@env' {
 	export const OPENSEA_API_KEY: string;
 	export const QUICK_NODE_API_URL_BSC_MAINNET: string;
 	export const BICONOMY_API_KEY_BSC_MAINNET: string;
+	export const UNSTOPPABLE_DOMAINS_API_KEY: string;
+	export const ZERION_API_TOKEN: string;
 }

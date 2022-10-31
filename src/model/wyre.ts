@@ -385,9 +385,10 @@ export const getOrderId = async ({
 		};
 		const response = await wyreApi.post(`${baseUrl}/v3/apple-pay/process/partner`, data, headers);
 		const orderId = get(response, 'id', null);
+		const authenticationUrl = get(response, 'authenticationUrl', null);
 
 		if (orderId) {
-			return { orderId };
+			return { orderId, authenticationUrl };
 		}
 
 		const { errorCode, message, type } = response;
@@ -397,7 +398,6 @@ export const getOrderId = async ({
 			errorMessage: message
 		};
 	} catch (error: any) {
-		captureException(error);
 		const {
 			data: { errorCode, message, type }
 		} = error;

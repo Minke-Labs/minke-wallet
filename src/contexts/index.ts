@@ -5,12 +5,14 @@ import BiconomyProvider, { BiconomyContext } from './BiconomyContext/BiconomyCon
 import CountryProvider, { CountryContext } from './CountryContext/CountryContext';
 import LanguageProvider, { LanguageContext } from './LanguageContext/LanguageContext';
 import NetworkProvider, { NetworkContext } from './NetworkContext/NetworkContext';
+import WalletProvider, { WalletContext } from './WalletContext/WalletContext';
 import TransactionsProvider, { TransactionsContext } from './TransactionsContext/TransactionsContext';
 import NFTProvider, { NFTContext } from './NFTContext/NFTContext';
 import BalanceProvider, { BalanceContext } from './BalanceContext/BalanceContext';
 import WalletConnectProvider from './WalletConnectContext/WalletConnectContext';
 
 export {
+	WalletContext,
 	BalanceContext,
 	ThemeContext,
 	AmplitudeContext,
@@ -25,6 +27,7 @@ export {
 };
 
 export const providers = [
+	WalletProvider,
 	BalanceProvider,
 	ThemeProvider,
 	AmplitudeProvider,

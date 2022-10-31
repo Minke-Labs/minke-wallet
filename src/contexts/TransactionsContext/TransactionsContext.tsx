@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
 import { filterPendingTransactions } from '@models/transaction';
 import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp } from '@models/timestamps';
 import { groupBy } from 'lodash';
-import useWalletState from '../../hooks/useWalletState';
+import { useState } from '@hookstate/core';
+import { globalWalletState } from '@stores/WalletStore';
+import Logger from '@utils/logger';
 import useLanguage from '../../hooks/useLanguage';
 
 export interface TransactionPeriod {
@@ -28,10 +30,10 @@ export const TransactionsContext = React.createContext<TransactionContextProps>(
 
 const TransactionsProvider: React.FC = ({ children }) => {
 	const { i18n } = useLanguage();
-	const { state } = useWalletState();
-	const [loading, setLoading] = useState(true);
-	const [pendingTransactions, setPendingTransactions] = useState<ZapperTransaction[]>([]);
-	const [lastTransactionsFetch, setLastTransationsFetch] = useState<number>();
+	const state = useState(globalWalletState());
+	const [loading, setLoading] = React.useState(true);
+	const [pendingTransactions, setPendingTransactions] = React.useState<ZapperTransaction[]>([]);
+	const [lastTransactionsFetch, setLastTransationsFetch] = React.useState<number>();
 	const {
 		address,
 		network: { chainId },
@@ -40,11 +42,15 @@ const TransactionsProvider: React.FC = ({ children }) => {
 
 	const fetchTransactions = async () => {
 		setLoading(true);
-		const { data = [] } = await getZapperTransactions(address!);
-		state.merge({ transactions: data });
+		try {
+			const { data = [] } = await getZapperTransactions(address!);
+			state.merge({ transactions: data });
+			setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
+			setLastTransationsFetch(new Date().getTime());
+		} catch (error) {
+			Logger.log('Zapper transactions error', error);
+		}
 		setLoading(false);
-		setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
-		setLastTransationsFetch(new Date().getTime());
 	};
 
 	useFocusEffect(() => {

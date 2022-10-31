@@ -52,7 +52,7 @@ const MinkeHubScreen = () => {
 							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('InvestmentsScreen')}
-								icon="crypto"
+								icon="investments"
 								title={i18n.t('MinkeHubScreen.investments')}
 								desc={i18n.t('MinkeHubScreen.fluctuating_value')}
 								number={walletBalance}
@@ -62,7 +62,7 @@ const MinkeHubScreen = () => {
 						<View mb="xs" row main="center">
 							<Card
 								onPress={() => navigation.navigate('SaveScreen')}
-								icon="dollar"
+								icon="vault"
 								title={i18n.t('MinkeHubScreen.savings')}
 								desc={i18n.t('MinkeHubScreen.earn_passive_income')}
 								number={depositedBalance}
@@ -70,7 +70,7 @@ const MinkeHubScreen = () => {
 							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('NFTScreen')}
-								icon="crypto"
+								icon="canvas"
 								title="NFTs"
 								desc={i18n.t('MinkeHubScreen.nfts_and_collectibles')}
 								number={networth}
@@ -84,7 +84,7 @@ const MinkeHubScreen = () => {
 						<View mb="xs" row main="center">
 							<Card
 								onPress={() => setModal(true)}
-								icon="vault"
+								icon="bank"
 								title={i18n.t('MinkeHubScreen.send_to_bank')}
 								desc={i18n.t('MinkeHubScreen.convert_to_local')}
 								hideLoading

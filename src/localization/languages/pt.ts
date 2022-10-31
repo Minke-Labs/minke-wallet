@@ -304,7 +304,6 @@ export default {
 				you_can_earn_points_by: 'Você pode ganhar pontos por:',
 				topping_up_for_the_first_time: 'Adicionar fundos pela primeira vez.',
 				refering_minke: 'Indicando a Minke para seus amigos e família.',
-				exchanging_for_the_first_time: 'Convertendo pela primeira vez.',
 				what_can_you_do: 'O que você pode fazer com seus pontos?',
 				you_can_redeem_your_points: 'Você pode trocar seus pontos por recompensas em USDC na rede Polygon. '
 			},
@@ -313,11 +312,9 @@ export default {
 				refer_a_friend: 'Indique um amigo',
 				when_your_friends_top_up:
 					'Quando seu amigo comprar ou trocar por stablecoins, ele receberá até 50 pontos Minke. Você ganhará uma comissão de 20% de pontos por indicação.',
-				top_up: 'Adicione Fundos',
-				get_rewarded: 'Ganhe recompensas!',
-				coming_soon: '(Em breve)',
 				share_text:
-					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $5 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref'
+					'Oi! Eu tenho usado Minke para vencer a inflação com stablecoins. Nós receberemos até $5 USDC quando você se inscrever e fizer seu primeiro depósito ou conversão. Meu código de convite é {{code}} - inscreva-se aqui: https://minke.onelink.me/rwwq/ref',
+				points_are_distributed: 'Os pontos são distribuidos a cada 24 horas, ao meio-dia nos dias de semana.'
 			}
 		},
 		Body: {
@@ -952,7 +949,7 @@ export default {
 			search_token: 'Procurar token',
 			search_currency: 'Procurar moeda',
 			name: 'Nome',
-			ens_or_wallet: 'ENS ou Endereço da Carteira',
+			ens_or_wallet: 'ENS, Unstoppable Domain ou Endereço da Carteira',
 			enter_code: 'Digitar código'
 		},
 		InterestBanner: {
@@ -1006,7 +1003,7 @@ export default {
 					},
 					TransactionContacts: {
 						sent_to_address: 'Envie para algum endereço',
-						address_or_ens: 'Endereço ou ENS',
+						address_or_ens: 'Endereço, ENS ou Unstoppable Domain',
 						choose_from_saved: 'Ou escolha um endereço já salvo',
 						NoContactsYet: {
 							no_contacts_yet: 'Nenhum contato disponível',

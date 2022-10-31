@@ -13,7 +13,7 @@ import { useReceiveModal } from './ReceiveModal.hooks';
 
 const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { address, ensName, onShare } = useReceiveModal();
+	const { address, customDomain, onShare } = useReceiveModal();
 
 	if (!address) {
 		return <ActivityIndicator />;
@@ -21,16 +21,10 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 
 	return (
 		<SafeAreaView>
-
 			<ModalHeader {...{ onDismiss }} />
 
 			<View ph="s" cross="center">
-
-				<Text
-					width="100%"
-					type="hMedium"
-					weight="bold"
-				>
+				<Text width="100%" type="hMedium" weight="bold">
 					{i18n.t('Components.FloatingSelector.Modals.ReceiveModal.receive')}
 				</Text>
 
@@ -38,31 +32,17 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onDismiss }) => {
 					{i18n.t('Components.FloatingSelector.Modals.ReceiveModal.show_qr')}
 				</Text>
 
-				<View
-					br="xs"
-					bgc="text11"
-					main="center"
-					cross="center"
-					mb="s"
-					w={280}
-					h={280}
-				>
-					<QRCode
-						value={address}
-						size={216}
-						color="#34769D"
-					/>
+				<View br="xs" bgc="text11" main="center" cross="center" mb="s" w={280} h={280}>
+					<QRCode value={address} size={216} color="#34769D" />
 				</View>
 
 				<View mb="s" main="center">
-					{!!ensName && (
+					{!!customDomain && (
 						<Text weight="extraBold" type="h3">
-							{ensName}
+							{customDomain}
 						</Text>
 					)}
-					<Text style={{ textAlign: 'center' }}>
-						{address}
-					</Text>
+					<Text style={{ textAlign: 'center' }}>{address}</Text>
 				</View>
 
 				<NetworkWarning.Tag />

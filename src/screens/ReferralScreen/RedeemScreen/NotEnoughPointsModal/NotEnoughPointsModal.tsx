@@ -40,24 +40,16 @@ const NotEnoughPointsModal = ({ code, onDismiss }: { code: string | undefined; o
 					)}
 				</View>
 
-				<Text type="a" weight="semiBold" color="text3" marginBottom={16}>
+				<Text type="bMedium" weight="regular" color="text3" marginBottom={16}>
 					{i18n.t('ReferralScreen.Modals.EarnModal.when_your_friends_top_up')}
 				</Text>
-				<View style={styles.row}>
-					<Text type="p" weight="bold" color="text2">
-						{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.topping_up')}
-					</Text>
-					<Text type="a" weight="semiBold" color="text2">
-						{i18n.t('ReferralScreen.Modals.EarnModal.coming_soon')}
-					</Text>
-				</View>
-				<Text type="a" weight="semiBold" color="text3" marginBottom={32}>
-					{i18n.t('ReferralScreen.Modals.EarnModal.get_rewarded')}
+				<Text type="bMedium" weight="regular" color="text3" marginBottom={32}>
+					{i18n.t('ReferralScreen.Modals.EarnModal.points_are_distributed')}
 				</Text>
-				<Text type="tSmall" weight="bold" color="text2">
+				<Text type="tSmall" weight="bold" color="text2" marginBottom={16}>
 					{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.what_can_you_do_with_your_points')}
 				</Text>
-				<Text type="tSmall" weight="regular" color="text2" marginBottom={40}>
+				<Text type="bMedium" weight="regular" color="text3" marginBottom={12}>
 					{i18n.t('ReferralScreen.RedeemScreen.Modals.NotEnoughPoints.you_can_redeem')}
 				</Text>
 			</View>

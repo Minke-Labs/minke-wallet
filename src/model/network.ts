@@ -3,7 +3,6 @@ import {
 	ALCHEMY_API_URL_POLYGON_MAINNET,
 	BICONOMY_API_KEY_POLYGON_MAINNET,
 	ALCHEMY_API_KEY_ETHEREUM,
-	ALCHEMY_API_KEY_KOVAN,
 	ALCHEMY_API_KEY_MATIC,
 	ALCHEMY_API_KEY_GOERLI,
 	QUICK_NODE_API_URL_BSC_MAINNET,
@@ -46,7 +45,6 @@ export interface Network {
 export interface Networks {
 	mainnet: Network;
 	matic: Network;
-	kovan: Network;
 	goerli: Network;
 	'binance-smart-chain': Network;
 }
@@ -298,33 +296,6 @@ export const networks: Networks = {
 				balanceUSD: 0
 			}
 		]
-	},
-	kovan: {
-		chainId: 42,
-		name: 'Kovan',
-		id: 'kovan',
-		wyreSRN: 'ethereum',
-		testnet: true,
-		etherscanURL: 'https://kovan.etherscan.io/',
-		etherscanAPIURL: 'https://api-kovan.etherscan.io/',
-		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
-		zapperNetwork: 'ethereum',
-		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
-		topUpTokens: [
-			{
-				symbol: 'ETH',
-				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-				decimals: 18,
-				suggestedBuyAmount: 0.1
-			}
-		],
-		transactionTimesEndpoint: true,
-		alchemyAPIKey: (ALCHEMY_API_KEY_KOVAN || process.env.ALCHEMY_API_KEY_KOVAN)!,
-		coingeckoPlatform: 'ethereum',
-		aave: {
-			depositContract: ''
-		},
-		suggestedTokens: []
 	},
 	goerli: {
 		chainId: 5,

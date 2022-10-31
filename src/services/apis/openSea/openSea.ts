@@ -22,6 +22,10 @@ const customCollections: { [key: string]: { slug: string; name: string } } = {
 	'0x4051fcd217f76c7a8d07f83a870443027dbab3f7': {
 		slug: 'cocktailbarpunks',
 		name: 'CocktailBarPunks'
+	},
+	'0x2953399124f0cbb46d2cbacd8a89cf0599974963': {
+		slug: 'opensea-collections',
+		name: 'OpenSea Collections'
 	}
 };
 

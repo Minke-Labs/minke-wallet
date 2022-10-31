@@ -15,7 +15,7 @@ import {
 	estimateGas,
 	sendTransaction,
 	EstimateGasResponse,
-	resolveENSAddress,
+	resolveDomainAddress,
 	imageSource,
 	sendTransactionData
 } from '@models/wallet';
@@ -121,8 +121,8 @@ export const useTransactionTransfer = ({
 		Logger.error('Sending blockchain error', e);
 		captureEvent(e);
 		setSending(false);
-		onDismiss();
 		onError();
+		onDismiss();
 	};
 
 	const onSend = async () => {
@@ -137,8 +137,8 @@ export const useTransactionTransfer = ({
 					tokenAmount = (Number(token.balance) * number) / token.balanceUSD;
 				}
 
-				const ens = user.address;
-				const to = (await resolveENSAddress(ens)) || ens;
+				const domain = user.address;
+				const to = (await resolveDomainAddress(domain)) || domain;
 				const amountToSend = tokenAmount.toString().replace(new RegExp(`\\${decimalSeparator}`), '.');
 
 				onDismiss();
@@ -219,13 +219,14 @@ export const useTransactionTransfer = ({
 							token.decimals
 						);
 
-						const { from, value, data, to: addressTo } = tx;
+						const { from, value, data, to: addressTo, gasPrice: transactionGasPrice } = tx;
 						hash = await connector.sendTransaction({
 							from,
 							to: addressTo,
 							value: (value || toBn('0')).toHexString(),
 							data: data || toBn('0').toHexString(),
-							gasLimit: gasLimits.send.toString()
+							gasLimit: gasLimits.send.toString(),
+							gasPrice: transactionGasPrice.toHexString()
 						});
 
 						addPendingTransaction({

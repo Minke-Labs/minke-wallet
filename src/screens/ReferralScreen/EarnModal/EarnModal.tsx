@@ -36,16 +36,8 @@ const EarnModal = ({ onDismiss, code }: { onDismiss: () => void; code: string | 
 				<Text type="a" weight="semiBold" color="text3" style={{ width: '100%' }} marginBottom={24}>
 					{i18n.t('ReferralScreen.Modals.EarnModal.when_your_friends_top_up')}
 				</Text>
-				<View style={styles.row}>
-					<Text type="p" weight="bold" color="text2">
-						{i18n.t('ReferralScreen.Modals.EarnModal.top_up')}
-					</Text>
-					<Text type="a" weight="semiBold" color="text2">
-						{i18n.t('ReferralScreen.Modals.EarnModal.coming_soon')}
-					</Text>
-				</View>
 				<Text type="a" weight="semiBold" color="text3" style={{ width: '100%' }} marginBottom={40}>
-					{i18n.t('ReferralScreen.Modals.EarnModal.get_rewarded')}
+					{i18n.t('ReferralScreen.Modals.EarnModal.points_are_distributed')}
 				</Text>
 			</View>
 		</SafeAreaView>
