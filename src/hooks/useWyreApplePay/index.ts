@@ -84,7 +84,11 @@ export default function useWyreApplePay(): UseWyreApplePay {
 
 			if (applePayResponse) {
 				track('Confirmed Apple Pay Payment');
-				const { orderId: id, errorMessage } = await getOrderId({
+				const {
+					orderId: id,
+					errorMessage,
+					authenticationUrl
+				} = await getOrderId({
 					referenceInfo,
 					paymentResponse: applePayResponse,
 					amount: sourceAmountWithFees,
@@ -101,7 +105,8 @@ export default function useWyreApplePay(): UseWyreApplePay {
 						orderId: id,
 						paymentResponse: applePayResponse,
 						referenceInfo,
-						sourceAmount: value.toString()
+						sourceAmount: value.toString(),
+						authenticationUrl
 					});
 					applePayResponse.complete('success');
 					setOrderId(id);

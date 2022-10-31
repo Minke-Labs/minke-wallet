@@ -12,6 +12,7 @@ export interface TopUpState {
 	orderId: string;
 	paymentResponse: any;
 	sourceAmount: string;
+	authenticationUrl: string;
 }
 
 const globalStateInit = createState({} as TopUpState);

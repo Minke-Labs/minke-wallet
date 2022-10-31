@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from 'react';
-import { captureException } from '@sentry/react-native';
 import { network as selectedNetwork } from '@models/network';
 import { globalTopUpState } from '@stores/TopUpStore';
 import { useState } from '@hookstate/core';
@@ -34,11 +33,10 @@ const useWyreOrderStatus = () => {
 
 				if (transferId && !transfer) {
 					setTransfer(transferId);
-				} else if (!isFailed) {
+				} else if (!isFailed && !transfer) {
 					orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries - 1, remainingErrorTries), 1000);
 				}
 			} catch (error) {
-				captureException(error);
 				if (remainingErrorTries === 0) return;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				orderStatusHandle = setTimeout(() => getOrderStatus(remainingTries, remainingErrorTries - 1), 5000);
@@ -63,7 +61,6 @@ const useWyreOrderStatus = () => {
 					);
 				}
 			} catch (error) {
-				captureException(error);
 				if (remainingErrorTries === 0) return;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				transferHashHandle = setTimeout(() => getTransferHash(remainingTries, remainingErrorTries - 1), 5000);
