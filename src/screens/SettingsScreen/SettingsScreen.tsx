@@ -111,7 +111,7 @@ const SettingsScreen = () => {
 							rightButton
 							mb="m"
 						/>
-						{chainId !== networks.mainnet.chainId && (
+						{chainId === networks.matic.chainId && (
 							<IconItem
 								title={i18n.t('SettingsScreen.savings_account')}
 								icon="vault"

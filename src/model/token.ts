@@ -3,7 +3,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
-import { network, networks } from './network';
+import { network } from './network';
 import { MinkeToken, InvestmentToken } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
@@ -79,27 +79,15 @@ export const getExchangePrice = async ({
 	destDecimals,
 	quote = false
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { apiUrl0x, chainId } = await network();
+	const { apiUrl0x, nativeToken } = await network();
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
 	if (natives.includes(sellToken)) {
-		if (chainId === networks.matic.chainId) {
-			sellToken = 'MATIC';
-		}
-
-		if (chainId === networks.mainnet.chainId) {
-			sellToken = 'ETH';
-		}
+		sellToken = nativeToken.symbol;
 	}
 	if (natives.includes(buyToken)) {
-		if (chainId === networks.matic.chainId) {
-			buyToken = 'MATIC';
-		}
-
-		if (chainId === networks.mainnet.chainId) {
-			buyToken = 'ETH';
-		}
+		buyToken = nativeToken.symbol;
 	}
 	const quoteParams: QuoteParams = {
 		sellToken,
@@ -118,7 +106,6 @@ export const getExchangePrice = async ({
 	} else {
 		quoteParams.buyAmount = formatUnits(toBn(amount, destDecimals), 'wei');
 	}
-
 	const url = `${apiUrl0x}swap/v1/${quote ? 'quote' : 'price'}?${qs.stringify(quoteParams)}`;
 	const result = await fetch(url);
 	return result.json();

@@ -59,6 +59,21 @@ export const stables: Stables = {
 			symbol: 'BUSD',
 			address: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
 			decimals: 18
+		},
+		USDC: {
+			symbol: 'USDC',
+			decimals: 18,
+			address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d'
+		},
+		DAI: {
+			symbol: 'DAI',
+			decimals: 18,
+			address: '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3'
+		},
+		USDT: {
+			symbol: 'USDT',
+			decimals: 18,
+			address: '0x55d398326f99059ff775485246999027b3197955'
 		}
 	},
 	goerli: {

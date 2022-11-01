@@ -34,6 +34,9 @@ export interface ZerionAsset {
 			decimals: number;
 		};
 	};
+	price: {
+		value: number;
+	};
 }
 
 export interface ZerionTokenData {

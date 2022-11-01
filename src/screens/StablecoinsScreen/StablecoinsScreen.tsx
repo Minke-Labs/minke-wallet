@@ -52,20 +52,22 @@ const StablecoinsScreen = () => {
 						{i18n.t('StablecoinsScreen.stablecoins')}
 					</Text>
 
-					<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>
-						<View row>
-							{apy ? (
-								<>
-									<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
-										{i18n.t('StablecoinsScreen.get_annualized_interest', { apy })}
-									</Text>
-									<Icon name="chevronRight" size={20} color="cta1" />
-								</>
-							) : (
-								<ActivityIndicator size={16} />
-							)}
-						</View>
-					</TouchableOpacity>
+					{!!apy && apy !== '0.00' && (
+						<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>
+							<View row>
+								{apy ? (
+									<>
+										<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
+											{i18n.t('StablecoinsScreen.get_annualized_interest', { apy })}
+										</Text>
+										<Icon name="chevronRight" size={20} color="cta1" />
+									</>
+								) : (
+									<ActivityIndicator size={16} />
+								)}
+							</View>
+						</TouchableOpacity>
+					)}
 
 					<View pr="xs">
 						{stablecoins === undefined ? (

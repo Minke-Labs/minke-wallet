@@ -5,8 +5,7 @@ import {
 	ALCHEMY_API_KEY_ETHEREUM,
 	ALCHEMY_API_KEY_MATIC,
 	ALCHEMY_API_KEY_GOERLI,
-	QUICK_NODE_API_URL_BSC_MAINNET,
-	BICONOMY_API_KEY_BSC_MAINNET
+	QUICK_NODE_API_URL_BSC_MAINNET
 } from '@env';
 import { MinkeToken, TopupToken } from './types/token.types';
 
@@ -222,7 +221,6 @@ export const networks: Networks = {
 		nativeToken: { symbol: 'BNB', name: 'BNB' },
 		transactionTimesEndpoint: false,
 		jsonRpcProvider: QUICK_NODE_API_URL_BSC_MAINNET || process.env.QUICK_NODE_API_URL_BSC_MAINNET,
-		biconomyAPIKey: BICONOMY_API_KEY_BSC_MAINNET || process.env.BICONOMY_API_KEY_BSC_MAINNET,
 		topUpTokens: [
 			{
 				symbol: 'BUSD',
