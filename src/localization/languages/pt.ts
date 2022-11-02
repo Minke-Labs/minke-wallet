@@ -352,6 +352,14 @@ export default {
 	SavingAccountsScreen: {
 		title: 'Conta de investimentos'
 	},
+	SecurityScreen: {
+		title: 'Segurança',
+		disable_authentication: 'Disabilitar autenticação',
+		disable_auth_text:
+			'Desabilita a confirmação facial ou por código ao fazer transações ou acessar as suas chaves secretas.',
+		are_you_sure: 'Você tem certeza?',
+		cancel: 'Cancelar'
+	},
 	SettingsScreen: {
 		DeleteModal: {
 			delete_wallet: 'Deletar carteira',
@@ -378,7 +386,8 @@ export default {
 		other: 'Outros',
 		savings_account: 'Conta de Investimentos',
 		enter_referral_code: 'Inserir código de indicação',
-		delete_wallet: 'Deletar carteira'
+		delete_wallet: 'Deletar carteira',
+		security: 'Segurança'
 	},
 	StablecoinsScreen: {
 		current_value: 'Valor atual',
