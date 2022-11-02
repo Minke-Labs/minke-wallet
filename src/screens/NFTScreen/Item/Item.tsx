@@ -18,19 +18,18 @@ const Item: React.FC<ItemProps> = ({ collection }) => {
 					data={collection}
 					keyExtractor={(item) => item.id.toString()}
 					renderItem={({ item }) => {
-						const {
-							image_thumbnail_url: thumb,
-							image_original_url: original,
-							image_url: imageUrl
-						} = item;
+						const { image_thumbnail_url: thumb, image_original_url: original, image_url: imageUrl } = item;
 						const image = thumb || imageUrl || original;
 
 						return (
-							<Touchable onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}>
+							<Touchable
+								onPress={() => navigation.navigate('NFTDetailScreen', { nft: item })}
+								style={{ maxHeight: 56 }}
+							>
 								{image ? (
 									image.endsWith('.svg') ? (
 										<View mr="xxs" br="xxs" style={{ overflow: 'hidden' }}>
-											<SvgUri uri={image} width={56} height={56} />
+											<SvgUri uri={image} width={56} />
 										</View>
 									) : (
 										<Image source={{ uri: image }} style={styles.image} />
