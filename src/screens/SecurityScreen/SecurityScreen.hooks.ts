@@ -7,20 +7,20 @@ const disableAuthenticationKey = '@disableAuthentication';
 
 const useSecurityScreen = () => {
 	const { i18n } = useLanguage();
-	const [authenticationDisabled, setAuthenticationDisabled] = useState(true);
+	const [authenticationEnabled, setAuthenticationEnabled] = useState(true);
 	const onConfirm = async () => {
-		const enabled = !authenticationDisabled;
+		const enabled = !authenticationEnabled;
 		// nothing in the setting means it is enabled
-		if (!enabled) {
+		if (enabled) {
 			await AsyncStorage.removeItem(disableAuthenticationKey);
 		} else {
 			await AsyncStorage.setItem(disableAuthenticationKey, 'true');
 		}
-		setAuthenticationDisabled(enabled);
+		setAuthenticationEnabled(enabled);
 	};
 
 	const toggleSwitch = () => {
-		if (!authenticationDisabled) {
+		if (authenticationEnabled) {
 			Alert.alert(i18n.t('SecurityScreen.are_you_sure'), '', [
 				{
 					text: i18n.t('SecurityScreen.cancel'),
@@ -39,7 +39,7 @@ const useSecurityScreen = () => {
 	useEffect(() => {
 		const loadSettings = async () => {
 			const stored = await AsyncStorage.getItem(disableAuthenticationKey);
-			setAuthenticationDisabled(!!stored);
+			setAuthenticationEnabled(!stored);
 		};
 
 		loadSettings();
@@ -47,7 +47,7 @@ const useSecurityScreen = () => {
 
 	return {
 		toggleSwitch,
-		authenticationDisabled
+		authenticationEnabled
 	};
 };
 

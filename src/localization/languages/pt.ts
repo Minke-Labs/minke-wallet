@@ -354,9 +354,7 @@ export default {
 	},
 	SecurityScreen: {
 		title: 'Segurança',
-		disable_authentication: 'Disabilitar autenticação',
-		disable_auth_text:
-			'Desabilita a confirmação facial ou por código ao fazer transações ou acessar as suas chaves secretas.',
+		require_biometric: 'Exigir identificação biométrica ou PIN para realizar transações',
 		are_you_sure: 'Você tem certeza?',
 		cancel: 'Cancelar'
 	},
