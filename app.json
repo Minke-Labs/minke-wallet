@@ -12,7 +12,7 @@
     "name": "Minke",
     "slug": "minke-wallet",
     "owner": "minkelabs",
-    "version": "0.0.23",
+    "version": "0.0.24",
     "scheme": "com.minkeapp.minkewallet",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,7 +29,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "100",
+      "buildNumber": "101",
       "config": {
         "usesNonExemptEncryption": false
       },
