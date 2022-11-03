@@ -12,7 +12,7 @@ const InvestmentsScreen = () => {
 	RNUxcam.tagScreenName('InvestmentsScreen');
 	const { i18n } = useLanguage();
 	const { tokens, walletBalance } = useBalances();
-	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>();
+	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>(tokens);
 	const navigation = useNavigation();
 
 	useEffect(() => {
