@@ -2,7 +2,7 @@ import React, { createContext, useMemo, useEffect, useState } from 'react';
 import { NFT } from '@models/types/nft.types';
 import { numberFormat } from '@helpers/utilities';
 import { fetchNFTNetWorth, getAssets } from '@src/services/apis';
-import useWallets from '../../hooks/useWallets';
+import useGlobalWalletState from '../../hooks/useGlobalWalletState';
 
 interface NFTContextProps {
 	assets: NFT[];
@@ -16,7 +16,7 @@ export const NFTContext = createContext<NFTContextProps>({} as NFTContextProps);
 
 const NFTProvider: React.FC = ({ children }) => {
 	const [loading, setLoading] = useState(true);
-	const { address } = useWallets();
+	const { address } = useGlobalWalletState();
 	const [assets, setAssets] = useState<NFT[]>([]);
 	const [networth, setNetworth] = useState(0);
 	const [estimatedValue, setEstimatedValue] = useState('0');

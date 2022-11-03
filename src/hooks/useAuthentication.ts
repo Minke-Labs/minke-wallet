@@ -1,6 +1,7 @@
 import { delay } from '@helpers/utilities';
 import { Alert } from 'react-native';
 import * as LocalAuthentication from 'expo-local-authentication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthPrompProps {
 	onSuccess: () => void;
@@ -14,6 +15,14 @@ interface UseAuthenticationProps {
 const useAuthentication = (): UseAuthenticationProps => {
 	const showAuthenticationPrompt = async ({ onSuccess, onError }: AuthPrompProps) => {
 		try {
+			const stored = await AsyncStorage.getItem('@disableAuthentication');
+			const authenticationDisabled = !!stored;
+
+			if (authenticationDisabled) {
+				onSuccess();
+				return;
+			}
+
 			// Authenticate user
 			const securityLevel = await LocalAuthentication.getEnrolledLevelAsync();
 			const { success } = await LocalAuthentication.authenticateAsync();

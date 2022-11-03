@@ -350,6 +350,12 @@ export default {
 	SavingAccountsScreen: {
 		title: 'Savings account'
 	},
+	SecurityScreen: {
+		title: 'Security',
+		require_biometric: 'Require Biometric or Pin Identification to Transact',
+		are_you_sure: 'Are you sure?',
+		cancel: 'Cancel'
+	},
 	SettingsScreen: {
 		DeleteModal: {
 			delete_wallet: 'Delete wallet',
@@ -376,7 +382,8 @@ export default {
 		other: 'Other',
 		savings_account: 'Savings Account',
 		enter_referral_code: 'Enter referral code',
-		delete_wallet: 'Delete wallet'
+		delete_wallet: 'Delete wallet',
+		security: 'Security'
 	},
 	StablecoinsScreen: {
 		current_value: 'Current value',

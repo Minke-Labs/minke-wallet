@@ -36,6 +36,7 @@ const SettingsScreen = () => {
 	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
 	const onEnterReferralCode = () => navigation.navigate('EnterReferralCodeScreen');
 	const onHelpCentre = () => Intercom.displayHelpCenter();
+	const onEnterSecurity = () => navigation.navigate('SecurityScreen');
 
 	const onCreateWallet = useCallback(async () => {
 		setCreatingWallet(true);
@@ -149,6 +150,14 @@ const SettingsScreen = () => {
 							title={i18n.t('SettingsScreen.language')}
 							icon="siteStroke"
 							onPress={onChangeLanguage}
+							rightButton
+							mb="m"
+						/>
+
+						<IconItem
+							title={i18n.t('SettingsScreen.security')}
+							icon="gear"
+							onPress={onEnterSecurity}
 							rightButton
 							mb="m"
 						/>

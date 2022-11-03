@@ -364,6 +364,12 @@ export default {
 	SavingAccountsScreen: {
 		title: 'Cuenta de ahorros'
 	},
+	SecurityScreen: {
+		title: 'Seguridad',
+		require_biometric: 'Requerir identificación biométrica o PIN para realizar transacciones',
+		are_you_sure: 'Estas seguro?',
+		cancel: 'Cancelar'
+	},
 	SettingsScreen: {
 		DeleteModal: {
 			delete_wallet: 'Borrar wallet',
@@ -389,7 +395,8 @@ export default {
 		other: 'Otros',
 		savings_account: 'Cuenta de Ahorros',
 		enter_referral_code: 'Ingresa código de referencia',
-		delete_wallet: 'Eliminar wallet'
+		delete_wallet: 'Eliminar wallet',
+		security: 'Seguridad'
 	},
 	StablecoinsScreen: {
 		current_value: 'Valor actual',

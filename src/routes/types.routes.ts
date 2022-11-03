@@ -45,5 +45,6 @@ export type RootStackParamList = {
 	TransactionsDetailScreen: { transaction: ZapperTransaction };
 	MoonpayWaitScreen: { transactionId: string };
 	WebViewScreen: { title: string; uri: string; onNavigationStateChange?: (event: WebViewNavigation) => void };
+	SecurityScreen: undefined;
 	Test: undefined;
 };

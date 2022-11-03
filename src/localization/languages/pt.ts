@@ -352,6 +352,12 @@ export default {
 	SavingAccountsScreen: {
 		title: 'Conta de investimentos'
 	},
+	SecurityScreen: {
+		title: 'Segurança',
+		require_biometric: 'Exigir identificação biométrica ou PIN para realizar transações',
+		are_you_sure: 'Você tem certeza?',
+		cancel: 'Cancelar'
+	},
 	SettingsScreen: {
 		DeleteModal: {
 			delete_wallet: 'Deletar carteira',
@@ -378,7 +384,8 @@ export default {
 		other: 'Outros',
 		savings_account: 'Conta de Investimentos',
 		enter_referral_code: 'Inserir código de indicação',
-		delete_wallet: 'Deletar carteira'
+		delete_wallet: 'Deletar carteira',
+		security: 'Segurança'
 	},
 	StablecoinsScreen: {
 		current_value: 'Valor atual',
