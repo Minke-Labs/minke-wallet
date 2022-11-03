@@ -43,16 +43,19 @@ export const getAssets = async (owner: string): Promise<NFT[]> => {
 	const assets: NFT[] = ownedNfts.map(({ tokenId, media, title, description, contract }) => {
 		const [data] = media;
 		const { name, slug } = customCollections[contract.address];
+		const { gateway } = data || {};
+
 		return {
 			id: tokenId,
-			image_thumbnail_url: data.gateway,
-			image_url: data.gateway,
+			image_original_url: gateway,
+			image_thumbnail_url: gateway,
+			image_url: gateway,
 			name: title,
 			permalink: `https://opensea.io/assets/matic/${contract.address}/${tokenId}`,
 			collection: {
 				description,
 				name,
-				image_url: data.gateway,
+				image_url: gateway,
 				slug
 			},
 			last_sale: null,
