@@ -47,7 +47,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase())
 				);
 			}
-
 			if (selected && selected.length > 0) {
 				const filter = _.filter(
 					selectedTokens,
@@ -62,7 +61,11 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		[ownedTokens, selected]
 	);
 
-	const priorities = ['MATIC', 'ETH', 'DAI', 'USDT', 'USDC'];
+	const priorities = [
+		...network.suggestedTokens.map((t) => t.symbol),
+		...['BNB', 'MATIC', 'ETH', 'BUSD', 'DAI', 'USDT', 'USDC']
+	];
+
 	useEffect(() => {
 		const loadTokens = async () => {
 			if (withdraw || (tokens || []).length === 0) {
@@ -119,10 +122,13 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		}
 	};
 
-	const filterByExchangebleToken = useCallback(
-		() => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol)),
-		[filteredTokens, exchangebleTokens]
-	);
+	const filterByExchangebleToken = useCallback(() => {
+		if (network.chainId === networks.matic.chainId) {
+			return filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol));
+		}
+
+		return filteredTokens;
+	}, [filteredTokens, exchangebleTokens, network.chainId]);
 
 	if (!visible) {
 		return null;

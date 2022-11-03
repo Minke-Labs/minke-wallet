@@ -64,7 +64,7 @@ const MinkeHubScreen = () => {
 						</View>
 
 						<View mb="xs" row>
-							{chainId === networks['binance-smart-chain'].chainId && (
+							{chainId !== networks['binance-smart-chain'].chainId && (
 								<>
 									<Card
 										onPress={() => navigation.navigate('SaveScreen')}
