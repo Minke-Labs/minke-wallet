@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
-import { Text, View, TokenItemCard, BlankStates } from '@components';
+import { Text, View, TokenItemCard, BlankStates, SearchInput } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken } from '@models/types/token.types';
@@ -13,6 +13,7 @@ const InvestmentsScreen = () => {
 	const { i18n } = useLanguage();
 	const { tokens, walletBalance } = useBalances();
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>(tokens);
+	const [search, setSearch] = useState('');
 	const navigation = useNavigation();
 
 	useEffect(() => {
@@ -28,7 +29,19 @@ const InvestmentsScreen = () => {
 		return <BlankStates.Type2 title={i18n.t('InvestmentsScreen.investments')} />;
 	}
 
-	const investments = investmentTokens.sort((a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0));
+	let investments = investmentTokens;
+
+	if (search) {
+		const query = search.toLowerCase();
+		investments = investmentTokens.filter(
+			(t) =>
+				t.symbol.toLowerCase().includes(query) ||
+				t.name?.toLowerCase().includes(query) ||
+				t.address.toLowerCase().includes(query)
+		);
+	}
+
+	investments = investments.sort((a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0));
 
 	return (
 		<AssetsLayout
@@ -44,6 +57,15 @@ const InvestmentsScreen = () => {
 					<Text type="tSmall" weight="bold" mb="s">
 						{i18n.t('InvestmentsScreen.investments')}
 					</Text>
+
+					<View pr="xs">
+						<SearchInput
+							marginBottom={24}
+							placeholder={i18n.t('Components.Inputs.search')}
+							search={search}
+							onSearch={(val) => setSearch(val)}
+						/>
+					</View>
 
 					{/* <Selector {...{ active, setActive }} /> */}
 
