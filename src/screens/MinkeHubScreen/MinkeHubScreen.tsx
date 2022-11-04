@@ -20,6 +20,8 @@ const MinkeHubScreen = () => {
 		network: { chainId }
 	} = useGlobalWalletState();
 
+	const showSaving = chainId !== networks['binance-smart-chain'].chainId;
+
 	return (
 		<>
 			<BasicLayout>
@@ -63,8 +65,8 @@ const MinkeHubScreen = () => {
 							/>
 						</View>
 
-						<View mb="xs" row>
-							{chainId !== networks['binance-smart-chain'].chainId && (
+						<View mb="xs" row main="center">
+							{showSaving && (
 								<>
 									<Card
 										onPress={() => navigation.navigate('SaveScreen')}

@@ -6,13 +6,13 @@ const lightTheme = {
 	alert5: '#1867FA',
 	alert6: '#FABA18',
 
-	background1: '#F2EAE1',
-	background2: '#FAF7F3',
+	background1: '#F4F6F8',
+	background2: '#FBFBFB',
 	background3: '#F4F6F8',
 	background4: '#FFFCF5',
 	background5: '#FFFFFF',
 	background7: '#FFFFFF',
-	background8: '#FAF7F3',
+	background8: '#FBFBFB',
 
 	cta1: '#006AA6',
 	cta2: '#D0D0D0',
