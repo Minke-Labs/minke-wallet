@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { TokenType } from '@styles';
 import Text from '@src/components/Text/Text';
 import Token from '@src/components/Token/Token';
 import { tokenBalanceFormat } from '@helpers/utilities';
@@ -16,7 +15,7 @@ const Card: React.FC<CardProps> = ({ token, onSelected }) => {
 			{...(!onSelected && { activeOpacity: 1 })}
 			style={styles.container}
 		>
-			<Token name={token.symbol.toLowerCase() as TokenType} size={40} />
+			<Token token={token} size={40} />
 			<View style={styles.titleContainer}>
 				<Text weight="bold" type="p2">
 					{token.name}

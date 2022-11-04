@@ -33,7 +33,7 @@ const InvestmentsScreen = () => {
 
 	if (search) {
 		const query = search.toLowerCase();
-		investments = investmentTokens.filter(
+		investments = investments.filter(
 			(t) =>
 				t.symbol.toLowerCase().includes(query) ||
 				t.name?.toLowerCase().includes(query) ||

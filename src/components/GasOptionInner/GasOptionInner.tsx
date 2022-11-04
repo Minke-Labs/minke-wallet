@@ -4,7 +4,6 @@ import { tokenBalanceFormat } from '@helpers/utilities';
 import Text from '@src/components/Text/Text';
 import Icon from '@src/components/Icon/Icon';
 import View from '@src/components/View/View';
-import { TokenType } from '@styles';
 import Token from '../Token/Token';
 
 interface GasOptionInnerProps {
@@ -42,7 +41,7 @@ const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice
 						<View row main="center">
 							<Text type="span">Fee Paid in </Text>
 							<View main="center">
-								<Token name={nativeToken.symbol.toLowerCase() as TokenType} size={12} />
+								<Token token={nativeToken} size={12} />
 							</View>
 							<Text type="span" weight="bold">
 								{' '}

@@ -7,7 +7,6 @@ import _ from 'lodash';
 import { paraswapTokens, exchangebleTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { TokenType } from '@src/styles';
 import { networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
@@ -155,7 +154,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					renderItem={({ item }) => (
 						<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
 							<View style={{ marginRight: 16 }}>
-								<Token name={item.symbol.toLowerCase() as TokenType} size={40} />
+								<Token token={item} size={40} />
 							</View>
 							<View style={styles.tokenItemNameContainer}>
 								<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>

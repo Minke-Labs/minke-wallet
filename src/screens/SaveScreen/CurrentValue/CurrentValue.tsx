@@ -27,7 +27,7 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 				<View style={styles.interestContainer}>
 					{!!selectedProtocol && (
 						<View style={styles.infoRow}>
-							<Token name={selectedProtocol.id} size={20} />
+							<Token token={{ symbol: selectedProtocol.id, address: '', decimals: 0 }} size={20} />
 							<Text weight="semiBold" type="lSmall" style={{ marginLeft: 4 }}>
 								{selectedProtocol.name}
 							</Text>

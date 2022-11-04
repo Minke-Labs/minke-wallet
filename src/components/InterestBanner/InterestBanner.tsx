@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useDepositProtocols, useLanguage, useTheme } from '@hooks';
-import { TokenType } from '@styles';
 import { addColorOpacity } from '@helpers/utilities';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
@@ -16,14 +15,7 @@ const Inner: React.FC<InterestBannerProps> = ({ token, bold, apy }) => {
 	const styles = makeStyles(!!bold, colors);
 	return (
 		<View style={styles.container}>
-			{
-				token && (
-					<Token
-						name={selectedProtocol?.id as TokenType}
-						size={16}
-					/>
-				)
-			}
+			{token && <Token token={{ symbol: selectedProtocol?.id || '', address: '', decimals: 0 }} size={16} />}
 			<Icon
 				name="iconUp"
 				color={bold ? 'text11' : 'alert3'}
@@ -38,17 +30,14 @@ const Inner: React.FC<InterestBannerProps> = ({ token, bold, apy }) => {
 				type={bold ? 'lMedium' : 'lSmall'}
 				color={bold ? 'text11' : 'alert3'}
 			>
-				{apy}{i18n.t('Components.InterestBanner.interest')}
+				{apy}
+				{i18n.t('Components.InterestBanner.interest')}
 			</Text>
 		</View>
 	);
 };
 
-const InterestBanner: React.FC<InterestBannerProps> = ({
-	apy,
-	token = false,
-	bold = false
-}) => {
+const InterestBanner: React.FC<InterestBannerProps> = ({ apy, token = false, bold = false }) => {
 	if (bold) {
 		return (
 			<View

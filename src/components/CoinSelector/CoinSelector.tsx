@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLanguage } from '@hooks';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-import { TokenType } from '@styles';
 import View from '@src/components/View/View';
 import Text from '@src/components/Text/Text';
 import Icon from '@src/components/Icon/Icon';
@@ -53,11 +52,7 @@ const TitlesEmpty = () => {
 const CoinSelector: React.FC<CoinSelectorProps> = ({ onPress, notTouchable, token, inline = false }) => (
 	<Touchable onPress={onPress} opacity={notTouchable ? 1 : 0.6}>
 		<View row mb="xs" cross="center">
-			{token ? (
-				<Token name={(token.symbol || '').toLowerCase() as TokenType} size={inline ? 28 : 40} />
-			) : (
-				<NoTokenIcon {...{ inline }} />
-			)}
+			{token ? <Token token={token} size={inline ? 28 : 40} /> : <NoTokenIcon {...{ inline }} />}
 
 			<View
 				main="space-between"

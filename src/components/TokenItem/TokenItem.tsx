@@ -2,7 +2,6 @@ import React from 'react';
 import { useNetwork } from '@hooks';
 import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
 import { InvestmentToken } from '@models/types/token.types';
-import { TokenType } from '@styles';
 import Text from '../Text/Text';
 import Token from '../Token/Token';
 import View from '../View/View';
@@ -20,7 +19,7 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
 
 	return (
 		<View row cross="center" w="100%">
-			<Token name={symbol.toLowerCase() as TokenType} size={39} />
+			<Token token={token} size={39} />
 			<View mr="xxs" />
 
 			<View flex1>

@@ -2,7 +2,6 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme, useLanguage } from '@hooks';
 import { Icon, Text, Token } from '@components';
-import { TokenType } from '@styles';
 import { styles } from './ListItem.styles';
 import { ListItemProps } from './ListItem.types';
 
@@ -16,7 +15,7 @@ const ListItem: React.FC<ListItemProps> = ({ label, selected, onPress, token, te
 			disabled={selected}
 		>
 			<View style={styles.leftContainer}>
-				<Token outline={selected} name={token?.toLowerCase() as TokenType} size={32} />
+				<Token outline={selected} token={token} size={32} />
 				<Text style={{ marginLeft: 8 }} weight={selected ? 'bold' : 'medium'}>
 					{label}
 				</Text>

@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image } from 'react-native';
-import { token } from '@styles';
+import { token as tokenImages, TokenType } from '@styles';
 import { whale3Img } from '@images';
 import { Svg, Path } from 'react-native-svg';
 import { addColorOpacity } from '@helpers/utilities';
 import { TokenProps, ContentProps } from './Token.types';
 
 const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
-	const dArr = token[name].slice(1);
+	const dArr = tokenImages[name].slice(1);
 	return (
 		<Svg width={size} height={size} viewBox="0 0 32 32" fill="none">
 			{dArr.map((d, idx) => (
@@ -17,21 +17,27 @@ const Content: React.FC<ContentProps> = ({ name, size, tokenColor }) => {
 	);
 };
 
-const Token: React.FC<Partial<TokenProps>> = ({ name, size = 96, outline, glow }) => {
-	if (!token[name!]) {
+const Token: React.FC<TokenProps> = ({ token, size = 96, outline, glow }) => {
+	const { id = '', symbol = '' } = token || {};
+	const formattedName = symbol!.toLowerCase() as TokenType;
+	const [source, setSource] = useState({
+		uri: `https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/128/${id.toLowerCase()}.png`
+	});
+	if (!formattedName || !tokenImages[formattedName]) {
 		return (
 			<Image
-				source={whale3Img}
+				source={source}
 				style={{
 					width: size,
 					height: size,
 					borderRadius: size / 2
 				}}
+				onError={() => setSource(whale3Img)}
 			/>
 		);
 	}
 
-	const tokenColor = token[name!][0];
+	const tokenColor = tokenImages[formattedName][0];
 
 	if (outline && !glow) {
 		return (
@@ -46,7 +52,7 @@ const Token: React.FC<Partial<TokenProps>> = ({ name, size = 96, outline, glow }
 					borderColor: tokenColor
 				}}
 			>
-				<Content {...{ size, tokenColor }} name={name!} />
+				<Content {...{ size, tokenColor }} name={formattedName} />
 			</View>
 		);
 	}
@@ -63,12 +69,12 @@ const Token: React.FC<Partial<TokenProps>> = ({ name, size = 96, outline, glow }
 					backgroundColor: addColorOpacity(tokenColor, 0.25)
 				}}
 			>
-				<Content {...{ size, tokenColor }} name={name!} />
+				<Content {...{ size, tokenColor }} name={formattedName} />
 			</View>
 		);
 	}
 
-	return <Content {...{ size, tokenColor }} name={name!} />;
+	return <Content {...{ size, tokenColor }} name={formattedName} />;
 };
 
 export default Token;

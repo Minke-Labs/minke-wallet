@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, Token, View } from '@components';
-import { TokenType } from '@styles';
 
 interface TitleContainerProps {
 	received: boolean;
@@ -29,7 +28,7 @@ export const TitleContainer: React.FC<TitleContainerProps> = ({
 				{value}
 			</Text>
 			<View mh="xxs">
-				<Token name={token.toLowerCase() as TokenType} size={32} glow />
+				<Token token={{ symbol: token, address: '', decimals: 0 }} size={32} glow />
 			</View>
 		</View>
 		<Text type="hLarge" weight="bold">

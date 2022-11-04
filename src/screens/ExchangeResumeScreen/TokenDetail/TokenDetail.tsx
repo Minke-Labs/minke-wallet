@@ -1,5 +1,4 @@
 import React from 'react';
-import { TokenType } from '@styles';
 import { Text, Token, ActivityIndicator } from '@components';
 import { tokenBalanceFormat } from '@helpers/utilities';
 import { View } from 'react-native';
@@ -26,31 +25,17 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 
 	return (
 		<>
-			<Token
-				size={48}
-				name={token.symbol.toLowerCase() as TokenType}
-			/>
+			<Token size={48} token={token} />
 
 			{usdAmount ? (
-				<Text
-					style={{ marginTop: 16 }}
-					mb="xxxs"
-					weight="semiBold"
-					type="lMedium"
-				>
+				<Text style={{ marginTop: 16 }} mb="xxxs" weight="semiBold" type="lMedium">
 					${tokenBalanceFormat(usdAmount, 4)}
 				</Text>
 			) : (
 				<ActivityIndicator />
 			)}
 
-			<Text
-				type="lMedium"
-				weight="medium"
-				color="text3"
-				center
-				width={132}
-			>
+			<Text type="lMedium" weight="medium" color="text3" center width={132}>
 				{truncVal(amount)} {token.symbol}
 			</Text>
 		</>
