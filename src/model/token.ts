@@ -7,36 +7,13 @@ import { network } from './network';
 import { MinkeToken, InvestmentToken } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
-export const exchangebleTokens = [
-	'ETH',
-	'MATIC',
-	'USDT',
-	'USDC',
-	'WETH',
-	'WBTC',
-	'CRO',
-	'DAI',
-	'LINK',
-	'UNI',
-	'MANA',
-	'FRAX',
-	'AAVE',
-	'COMP',
-	'CEL',
-	'CRV',
-	'SUSHI',
-	'BAL',
-	'YFI',
-	'QUICK',
-	'PolyDoge',
-	'BNB',
-	'BUSD'
-];
 
-export const paraswapTokens = async (): Promise<TokenResponse> => {
-	const { chainId, id, suggestedTokens } = await network();
+export const tokenList = async (): Promise<TokenResponse> => {
+	const { zapperNetwork, id, suggestedTokens } = await network();
 	try {
-		const result = await fetch(`https://apiv5.paraswap.io/tokens/${chainId}`);
+		const result = await fetch(
+			`https://raw.githubusercontent.com/Minke-Labs/token-lists/main/${zapperNetwork}.tokenlist.json`
+		);
 		return await result.json();
 	} catch {
 		const suggestedStables = Object.values(stables[id]);

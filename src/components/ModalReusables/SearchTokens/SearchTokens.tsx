@@ -4,10 +4,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
 import _ from 'lodash';
-import { paraswapTokens, exchangebleTokens } from '@models/token';
+import { tokenList } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -69,35 +68,11 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		const loadTokens = async () => {
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
-				let allTokens = withdraw
+				const allTokens = withdraw
 					? withdrawableTokens
-					: (await paraswapTokens()).tokens.sort(
+					: (await tokenList()).tokens.sort(
 							(a, b) => priorities.indexOf(b.symbol) - priorities.indexOf(a.symbol)
 					  );
-				if (!withdraw && network.id === networks.matic.id) {
-					allTokens = allTokens.map((t) => {
-						if (t.symbol === 'QUICK') {
-							const token = t;
-							// QUICK changed address
-							token.address = '0xb5c064f955d8e7f38fe0460c556a72987494ee17';
-							return token;
-						}
-
-						if (t.address.toLowerCase() === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
-							const token = t;
-							token.symbol = 'PolyDoge';
-							return token;
-						}
-
-						if (t.symbol === 'ETH') {
-							const token = t;
-							token.symbol = 'WETH';
-							return token;
-						}
-
-						return t;
-					});
-				}
 				setTokens(allTokens);
 				removeSelectedTokens(allTokens);
 				setLoading(false);
@@ -114,20 +89,16 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		setSearch(text);
 
 		if (text) {
-			const data = _.filter(filteredTokens, (token) => token.symbol.toLowerCase().includes(text.toLowerCase()));
+			const query = text.toLowerCase();
+			const data = _.filter(
+				filteredTokens,
+				(token) => token.symbol.toLowerCase().includes(query) || (token.name || '').includes(query)
+			);
 			setFilteredTokens(data);
 		} else {
 			setFilteredTokens(filteredTokens);
 		}
 	};
-
-	const filterByExchangebleToken = useCallback(() => {
-		if (network.chainId === networks.matic.chainId) {
-			return filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol));
-		}
-
-		return filteredTokens;
-	}, [filteredTokens, exchangebleTokens, network.chainId]);
 
 	if (!visible) {
 		return null;
@@ -148,7 +119,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				/>
 				<FlatList
 					style={styles.list}
-					data={filterByExchangebleToken()}
+					data={filteredTokens}
 					showsVerticalScrollIndicator={false}
 					keyExtractor={(token) => token.address}
 					renderItem={({ item }) => (
