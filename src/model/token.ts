@@ -121,7 +121,7 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 
 export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<InvestmentToken[]> => {
 	const ids = tokens.map(({ id }) => id);
-	const marketCaps = await getTokenMarketCap(ids.join(','));
+	const marketCaps = await getTokenMarketCap(ids.filter((id) => !!id).join(','));
 
 	return tokens.map((t) => ({
 		...t,

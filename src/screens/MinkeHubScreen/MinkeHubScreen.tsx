@@ -20,7 +20,7 @@ const MinkeHubScreen = () => {
 		network: { chainId }
 	} = useGlobalWalletState();
 
-	const showSaving = chainId !== networks['binance-smart-chain'].chainId;
+	const savingEnabled = chainId !== networks['binance-smart-chain'].chainId;
 
 	return (
 		<>
@@ -66,19 +66,14 @@ const MinkeHubScreen = () => {
 						</View>
 
 						<View mb="xs" row main="center">
-							{showSaving && (
-								<>
-									<Card
-										onPress={() => navigation.navigate('SaveScreen')}
-										icon="vault"
-										title={i18n.t('MinkeHubScreen.savings')}
-										desc={i18n.t('MinkeHubScreen.earn_passive_income')}
-										number={depositedBalance}
-									/>
-									<View mh="xxs" />
-								</>
-							)}
-
+							<Card
+								onPress={() => (savingEnabled ? navigation.navigate('SaveScreen') : setModal(true))}
+								icon="vault"
+								title={i18n.t('MinkeHubScreen.savings')}
+								desc={i18n.t('MinkeHubScreen.earn_passive_income')}
+								number={depositedBalance}
+							/>
+							<View mh="xxs" />
 							<Card
 								onPress={() => navigation.navigate('NFTScreen')}
 								icon="canvas"
