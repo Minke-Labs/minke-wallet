@@ -39,7 +39,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { i18n, countries: banxaCountries } = useLanguage();
 	const useApplePay = Platform.OS === 'ios' && !!wyreSRN && currency && providers.wyre.includes(currency);
 	const useBanxa = currency && providers.banxa.includes(currency);
-	const useMoonpay = currency && !useBanxa && providers.moonpay.includes(currency);
+	const useMoonpay = currency && (!useBanxa || !useApplePay) && providers.moonpay.includes(currency);
 	const moonPaySpecialButton = useMoonpay && ['BRL', 'EUR', 'GBP'].includes(currency.code);
 	const navigation = useNavigation();
 	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();

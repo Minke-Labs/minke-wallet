@@ -60,8 +60,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	);
 
 	const priorities = [
-		...network.suggestedTokens.map((t) => t.symbol),
-		...['BNB', 'MATIC', 'ETH', 'BUSD', 'DAI', 'USDT', 'USDC']
+		...network.suggestedTokens.map((t) => t.symbol.toUpperCase()),
+		...['MATIC', 'ETH', 'BUSD', 'DAI', 'USDT', 'USDC']
 	];
 
 	useEffect(() => {
@@ -71,7 +71,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				const allTokens = withdraw
 					? withdrawableTokens
 					: (await tokenList()).tokens.sort(
-							(a, b) => priorities.indexOf(b.symbol) - priorities.indexOf(a.symbol)
+							(a, b) =>
+								priorities.indexOf(b.symbol.toUpperCase()) - priorities.indexOf(a.symbol.toUpperCase())
 					  );
 				setTokens(allTokens);
 				removeSelectedTokens(allTokens);
@@ -96,7 +97,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			);
 			setFilteredTokens(data);
 		} else {
-			setFilteredTokens(filteredTokens);
+			setFilteredTokens(tokens);
 		}
 	};
 

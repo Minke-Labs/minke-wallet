@@ -14,7 +14,7 @@ const StablecoinsScreen = () => {
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
 	const {
-		network: { id }
+		network: { id, topUpTokens }
 	} = useGlobalWalletState();
 	const stablecoins = coins.map((symbol) => {
 		const found = walletStablecoins.find((s) => s.symbol === symbol);
@@ -32,6 +32,13 @@ const StablecoinsScreen = () => {
 			decimals
 		};
 	});
+
+	const priorities = topUpTokens.map(({ symbol }) => symbol);
+	stablecoins.sort(
+		(a, b) =>
+			(b.balanceUSD || 0) - (a.balanceUSD || 0) ||
+			priorities.indexOf(b.symbol.toUpperCase()) - priorities.indexOf(a.symbol.toUpperCase())
+	);
 
 	if (!walletStablecoins) {
 		return <BlankStates.Type2 title={i18n.t('StablecoinsScreen.stablecoins')} />;
