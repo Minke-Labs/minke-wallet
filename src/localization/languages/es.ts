@@ -967,7 +967,8 @@ export default {
 			search_currency: 'Buscar divisa',
 			name: 'Nombre',
 			ens_or_wallet: 'ENS, Unstoppable Domain o Wallet Address',
-			enter_code: 'Ingresa código'
+			enter_code: 'Ingresa código',
+			others: 'Otros'
 		},
 		InterestBanner: {
 			interest: '% interesa anual'

@@ -952,7 +952,8 @@ export default {
 			search_currency: 'Search currency',
 			name: 'Name',
 			ens_or_wallet: 'ENS, Unstoppable Domain or Wallet Address',
-			enter_code: 'Enter code'
+			enter_code: 'Enter code',
+			others: 'Others'
 		},
 		InterestBanner: {
 			interest: '% annualized interest'

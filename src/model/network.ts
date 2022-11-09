@@ -89,29 +89,8 @@ export const networks: Networks = {
 		},
 		suggestedTokens: [
 			{
-				symbol: 'ETH',
-				address: '0x0000000000000000000000000000000000000000',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'WBTC',
-				address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-				decimals: 8,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
 				symbol: 'SHIB',
 				address: '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'MATIC',
-				address: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
 				decimals: 18,
 				balance: '0',
 				balanceUSD: 0
@@ -306,6 +285,28 @@ export const networks: Networks = {
 				name: 'Balancer',
 				balance: '0',
 				balanceUSD: 0
+			},
+			{
+				symbol: 'WBTC',
+				address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+				decimals: 8,
+				balance: '0',
+				balanceUSD: 0
+			},
+
+			{
+				symbol: 'MATIC',
+				address: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ETH',
+				address: '0x0000000000000000000000000000000000000000',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
 			}
 		]
 	},
@@ -354,20 +355,6 @@ export const networks: Networks = {
 		},
 		coingeckoPlatform: 'polygon-pos',
 		suggestedTokens: [
-			{
-				symbol: 'WETH',
-				address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'MATIC',
-				address: '0x0000000000000000000000000000000000000000',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
 			{
 				symbol: 'MTA',
 				address: '0xF501dd45a1198C2E1b5aEF5314A68B9006D842E0',
@@ -441,15 +428,6 @@ export const networks: Networks = {
 				name: 'IX',
 				address: '0xe06bd4f5aac8d0aa337d13ec88db6defc6eaeefe',
 				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				id: 'wrapped-bitcoin',
-				symbol: 'WBTC',
-				name: 'Wrapped Bitcoin',
-				address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
-				decimals: 8,
 				balance: '0',
 				balanceUSD: 0
 			},
@@ -551,6 +529,29 @@ export const networks: Networks = {
 				decimals: 18,
 				balance: '0',
 				balanceUSD: 0
+			},
+			{
+				id: 'wrapped-bitcoin',
+				symbol: 'WBTC',
+				name: 'Wrapped Bitcoin',
+				address: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
+				decimals: 8,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'WETH',
+				address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'MATIC',
+				address: '0x0000000000000000000000000000000000000000',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
 			}
 		]
 	},
@@ -590,55 +591,6 @@ export const networks: Networks = {
 		},
 		coingeckoPlatform: 'binance-smart-chain',
 		suggestedTokens: [
-			{
-				symbol: 'BNB',
-				address: '0x0000000000000000000000000000000000000000',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'CAKE',
-				address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'BTCB',
-				address: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'ETH',
-				address: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'XRP',
-				address: '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'ADA',
-				address: '0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
-				symbol: 'DOGE',
-				address: '0xba2ae424d960c26247dd6c32edc70b295c744c43',
-				decimals: 8,
-				balance: '0',
-				balanceUSD: 0
-			},
 			{
 				address: '0x5f320c3b8f82acfe8f2bb1c85d63aa66a7ff524f',
 				decimals: 9,
@@ -694,6 +646,55 @@ export const networks: Networks = {
 				decimals: 18,
 				symbol: 'ABACATE',
 				name: 'Abacate Token',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'CAKE',
+				address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'XRP',
+				address: '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ADA',
+				address: '0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'DOGE',
+				address: '0xba2ae424d960c26247dd6c32edc70b295c744c43',
+				decimals: 8,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'BTCB',
+				address: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ETH',
+				address: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'BNB',
+				address: '0x0000000000000000000000000000000000000000',
+				decimals: 18,
 				balance: '0',
 				balanceUSD: 0
 			}

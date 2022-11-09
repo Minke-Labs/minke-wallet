@@ -328,6 +328,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		setError,
 		gasless,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		searchSource
 	};
 };

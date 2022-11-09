@@ -92,6 +92,9 @@ export const sendPostRequest = async ({ query, params }: SendPostRequest) => {
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 			Authorization: `Bearer ${hmac}`
+		},
+		validateStatus() {
+			return true;
 		}
 	};
 

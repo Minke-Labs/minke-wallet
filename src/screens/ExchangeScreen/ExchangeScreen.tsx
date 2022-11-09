@@ -53,7 +53,8 @@ const ExchangeScreen = ({ route }: Props) => {
 		setError,
 		gasless,
 		canSendTransactions,
-		needToChangeNetwork
+		needToChangeNetwork,
+		searchSource
 	} = useExchangeScreen({ sourceToken, destToken });
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
@@ -141,6 +142,7 @@ const ExchangeScreen = ({ route }: Props) => {
 					ownedTokens={ownedTokens}
 					showOnlyOwnedTokens={showOnlyOwnedTokens}
 					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
+					enableSections={searchSource === 'from'}
 				/>
 			</ModalBase>
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>

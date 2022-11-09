@@ -8,4 +8,5 @@ export interface SearchTokensProps {
 	ownedTokens?: Array<MinkeToken>;
 	selected?: Array<string | undefined>;
 	withdraw?: boolean;
+	enableSections?: boolean;
 }

@@ -23,6 +23,7 @@ const Token: React.FC<TokenProps> = ({ token, size = 96, outline, glow }) => {
 	const [source, setSource] = useState({
 		uri: `https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/128/${id.toLowerCase()}.png`
 	});
+
 	if (!formattedName || !tokenImages[formattedName]) {
 		return (
 			<Image

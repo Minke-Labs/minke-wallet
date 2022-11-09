@@ -957,7 +957,8 @@ export default {
 			search_currency: 'Procurar moeda',
 			name: 'Nome',
 			ens_or_wallet: 'ENS, Unstoppable Domain ou Endereço da Carteira',
-			enter_code: 'Digitar código'
+			enter_code: 'Digitar código',
+			others: 'Outros'
 		},
 		InterestBanner: {
 			interest: '% de juros anuais'
