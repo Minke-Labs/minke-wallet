@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FlatList, SafeAreaView, SectionList } from 'react-native';
 import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
 import _ from 'lodash';
@@ -40,6 +40,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const { colors } = useTheme();
 	const { network } = useGlobalWalletState();
 	const styles = makeStyles(colors);
+	const flatListRef = useRef<FlatList>(null);
+	const sectionListRef = useRef<SectionList>(null);
 
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {
@@ -105,6 +107,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		} else {
 			setFilteredTokens(tokens);
 		}
+		flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
+		sectionListRef.current?.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: 0 });
 	};
 
 	if (!visible) {
@@ -148,6 +152,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				/>
 				{enableSections ? (
 					<FlatList
+						ref={flatListRef}
 						style={styles.list}
 						showsVerticalScrollIndicator={false}
 						keyExtractor={(token: MinkeToken) => token.address}
@@ -166,6 +171,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					/>
 				) : (
 					<SectionList
+						ref={sectionListRef}
 						sections={tokensList}
 						style={styles.list}
 						showsVerticalScrollIndicator={false}
