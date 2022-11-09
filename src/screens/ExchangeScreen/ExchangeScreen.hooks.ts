@@ -243,6 +243,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	}, []);
 
 	useEffect(() => {
+		if (fromToken) return;
+
 		if (destToken && defaultToken && defaultToken.symbol !== destToken.symbol) {
 			setFromToken(defaultToken);
 		} else if (destToken && nativeToken) {
