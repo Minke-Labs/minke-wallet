@@ -592,15 +592,6 @@ export const networks: Networks = {
 		coingeckoPlatform: 'binance-smart-chain',
 		suggestedTokens: [
 			{
-				address: '0x5f320c3b8f82acfe8f2bb1c85d63aa66a7ff524f',
-				decimals: 9,
-				symbol: 'NLC',
-				name: 'Nelore Coin',
-				id: 'nelore-coin',
-				balance: '0',
-				balanceUSD: 0
-			},
-			{
 				address: '0x0f4C0d01F4057dCA10C17120076Bb45A15d4E7Cb',
 				decimals: 18,
 				symbol: 'VLZ',
