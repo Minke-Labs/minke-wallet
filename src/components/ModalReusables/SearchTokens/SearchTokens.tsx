@@ -96,17 +96,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 	const onSearch = (text: string) => {
 		setSearch(text);
-
-		if (text) {
-			const query = text.toLowerCase();
-			const data = _.filter(
-				filteredTokens,
-				(token) => token.symbol.toLowerCase().includes(query) || (token.name || '').includes(query)
-			);
-			setFilteredTokens(data);
-		} else {
-			setFilteredTokens(tokens);
-		}
 		flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
 		sectionListRef.current?.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: 0 });
 	};
@@ -119,6 +108,14 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		return <ScreenLoadingIndicator />;
 	}
 
+	const query = search.toLowerCase();
+	const searchTokens = query
+		? _.filter(
+				filteredTokens,
+				(token) => token.symbol.toLowerCase().includes(query) || (token.name || '').includes(query)
+		  )
+		: filteredTokens;
+
 	const partition = (ary: MinkeToken[], callback: (t: MinkeToken) => boolean) =>
 		ary.reduce(
 			(acc, e) => {
@@ -129,7 +126,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			[[], []]
 		);
 	const [visibleTokens, otherTokens] = partition(
-		filteredTokens || [],
+		searchTokens || [],
 		({ symbol, address }: MinkeToken) =>
 			priorities.includes(symbol) || suggestedAddresses.includes(address.toLowerCase())
 	);
@@ -151,25 +148,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 					{...{ search, onSearch }}
 				/>
 				{enableSections ? (
-					<FlatList
-						ref={flatListRef}
-						style={styles.list}
-						showsVerticalScrollIndicator={false}
-						keyExtractor={(token: MinkeToken) => token.address}
-						data={visibleTokens}
-						renderItem={({ item }) => (
-							<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
-								<View style={{ marginRight: 16 }}>
-									<Token token={item} size={40} />
-								</View>
-								<View style={styles.tokenItemNameContainer}>
-									<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
-									<Text style={styles.tokenItemName}>{item.symbol}</Text>
-								</View>
-							</Touchable>
-						)}
-					/>
-				) : (
 					<SectionList
 						ref={sectionListRef}
 						sections={tokensList}
@@ -215,9 +193,28 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 							)
 						}
 					/>
+				) : (
+					<FlatList
+						ref={flatListRef}
+						style={styles.list}
+						showsVerticalScrollIndicator={false}
+						keyExtractor={(token: MinkeToken) => token.address}
+						data={searchTokens}
+						renderItem={({ item }) => (
+							<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+								<View style={{ marginRight: 16 }}>
+									<Token token={item} size={40} />
+								</View>
+								<View style={styles.tokenItemNameContainer}>
+									<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
+									<Text style={styles.tokenItemName}>{item.symbol}</Text>
+								</View>
+							</Touchable>
+						)}
+					/>
 				)}
 
-				{(filteredTokens || []).length === 0 && <EmptyStates.NoTokens />}
+				{(searchTokens || []).length === 0 && <EmptyStates.NoTokens />}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

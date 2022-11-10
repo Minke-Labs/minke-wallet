@@ -142,7 +142,7 @@ const ExchangeScreen = ({ route }: Props) => {
 					ownedTokens={ownedTokens}
 					showOnlyOwnedTokens={showOnlyOwnedTokens}
 					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
-					enableSections={searchSource === 'from'}
+					enableSections={searchSource === 'to'}
 				/>
 			</ModalBase>
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
