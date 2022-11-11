@@ -107,8 +107,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 			return_url_on_success: '#',
 			wallet_address: address,
 			payment_method_id: id,
-			blockchain: nativeToken.symbol,
-			wallet_address_tag: address
+			blockchain: nativeToken.symbol
 		};
 
 		const url = await makeOrder({ params });
