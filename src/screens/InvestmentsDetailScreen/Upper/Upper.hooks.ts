@@ -14,19 +14,9 @@ export const useUpper = (coin: MinkeToken) => {
 	const current = useSharedValue<GraphIndex>(0);
 
 	const fetchTokenHistory = async () => {
-		const res = await getTokenHistory(coin.id);
-		if (res.errors) {
-			const res = await getTokenHistory(coin.name);
-			if (res.errors) {
-				const res = await getTokenHistory(coin.symbol);
-				if (res.errors) {
-					setTokenHistory(null);
-				} else {
-					setTokenHistory(res);
-				}
-			} else {
-				setTokenHistory(res);
-			}
+		const res = await getTokenHistory(coin);
+		if (res?.errors) {
+			setTokenHistory(null);
 		} else {
 			setTokenHistory(res);
 		}

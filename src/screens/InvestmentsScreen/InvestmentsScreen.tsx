@@ -12,7 +12,7 @@ const InvestmentsScreen = () => {
 	RNUxcam.tagScreenName('InvestmentsScreen');
 	const { i18n } = useLanguage();
 	const { tokens, walletBalance } = useBalances();
-	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>(tokens);
+	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>(tokens.reverse());
 	const [search, setSearch] = useState('');
 	const navigation = useNavigation();
 
@@ -40,7 +40,6 @@ const InvestmentsScreen = () => {
 				t.address.toLowerCase().includes(query)
 		);
 	}
-
 	investments = investments.sort((a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0));
 
 	return (

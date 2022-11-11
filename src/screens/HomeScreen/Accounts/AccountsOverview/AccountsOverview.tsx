@@ -6,12 +6,12 @@ import { fetchTokensPriceChange } from '@models/token';
 
 export const AccountsOverview: React.FC = () => {
 	const { i18n } = useLanguage();
-	const [investmentHighlights, setInvestmentHighlights] = useState<InvestmentToken[]>([]);
 	const {
 		network: { topUpTokens }
 	} = useGlobalWalletState();
 	const navigation = useNavigation();
 	const { stablecoins = [], tokens = [] } = useBalances();
+	const [investmentHighlights, setInvestmentHighlights] = useState<InvestmentToken[]>(tokens);
 	const [defaultToken] = topUpTokens;
 	let biggestBalanceStable = {} as MinkeToken;
 

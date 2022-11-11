@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "3.2.4",
     "@biconomy/mexa": "^2.0.31",
+    "@coingecko/cryptoformat": "^0.5.4",
     "@ethersproject/shims": "^5.4.0",
     "@ethersproject/wallet": "^5.4.0",
     "@expo-google-fonts/inter": "^0.2.0",

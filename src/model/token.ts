@@ -88,24 +88,82 @@ export const getExchangePrice = async ({
 	return result.json();
 };
 
-export const getTokenHistory = async (token = 'ethereum') => {
+const fetchTokenHistory = async (query: string) => {
+	if (!query) return null;
+
 	const baseURL = 'https://www.coinbase.com/api/v2/assets/prices/';
-	const result = await fetch(`${baseURL}${token.toLowerCase()}?base=USD`);
+	const result = await fetch(`${baseURL}${query.toLowerCase()}?base=USD`);
 	return result.json();
 };
 
-export const getTokenData = async (token = 'ethereum') => {
+export const getTokenHistory = async (token: MinkeToken) => {
+	const { id, name, symbol } = token;
+	let res = await fetchTokenHistory(id!);
+	if (!res || res.errors) {
+		res = await fetchTokenHistory(name!);
+		if (!res || res.errors) {
+			res = await fetchTokenHistory(symbol);
+			if (!res || res.errors) {
+				return null;
+			}
+			return res;
+		}
+		return res;
+	}
+	return res;
+};
+
+const fetchTokenData = async (query: string) => {
+	if (!query) return null;
+
 	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
 	const result = await fetch(
-		`${baseURL}${token.toLowerCase()}?localization=false&tickers=false&community_data=false&developer_data=false`
+		`${baseURL}${query.toLowerCase()}?localization=false&tickers=false&community_data=false&developer_data=false`
 	);
+
 	return result.json();
 };
 
-export const getTokenVolume = async (token: string) => {
+export const getTokenData = async (token: MinkeToken) => {
+	const { id, name, symbol } = token;
+	let res = await fetchTokenData(id!);
+	if (!res || res.errors) {
+		res = await fetchTokenData(name!);
+		if (!res || res.errors) {
+			res = await fetchTokenData(symbol);
+			if (!res || res.errors) {
+				return null;
+			}
+			return res;
+		}
+		return res;
+	}
+	return res;
+};
+
+const fetchTokenVolume = async (query: string) => {
+	if (!query) return null;
+
 	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
-	const result = await fetch(`${baseURL}${token.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`);
+	const result = await fetch(`${baseURL}${query.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`);
 	return result.json();
+};
+
+export const getTokenVolume = async (token: MinkeToken) => {
+	const { id, name, symbol } = token;
+	let res = await fetchTokenVolume(id!);
+	if (!res || res.errors) {
+		res = await fetchTokenVolume(name!);
+		if (!res || res.errors) {
+			res = await fetchTokenVolume(symbol);
+			if (!res || res.errors) {
+				return null;
+			}
+			return res;
+		}
+		return res;
+	}
+	return res;
 };
 
 export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoTokenMarketCap[]> => {

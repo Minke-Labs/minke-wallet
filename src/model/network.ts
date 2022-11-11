@@ -592,6 +592,15 @@ export const networks: Networks = {
 		coingeckoPlatform: 'binance-smart-chain',
 		suggestedTokens: [
 			{
+				id: 'xmine',
+				symbol: 'XMN',
+				name: 'Xmine',
+				address: '0x0fa9651a0ecc19906843c13c60443300b9d37355',
+				decimals: 9,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
 				address: '0x0f4C0d01F4057dCA10C17120076Bb45A15d4E7Cb',
 				decimals: 18,
 				symbol: 'VLZ',
