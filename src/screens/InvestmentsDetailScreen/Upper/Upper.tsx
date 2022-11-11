@@ -21,7 +21,7 @@ export const Upper: React.FC<UpperProps> = ({ coin }) => {
 					}}
 				/>
 			) : (
-				tokenHistory !== null && <View style={{ height: 390 }} />
+				<View style={{ height: 390 }} />
 			)}
 		</>
 	);
