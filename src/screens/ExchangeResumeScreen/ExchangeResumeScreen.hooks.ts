@@ -89,18 +89,20 @@ const useExchangeResumeScreen = () => {
 		const fromId = from.id || (await searchCoinData(from.address, coingeckoPlatform, from.symbol, from.id)).id;
 		const toId = to.id || (await searchCoinData(to.address, coingeckoPlatform, to.symbol, to.id)).id;
 
-		const result = await fetch(
-			`https://api.coingecko.com/api/v3/simple/price?ids=${fromId},${toId}&vs_currencies=usd`
-		);
+		if (fromId && toId) {
+			const result = await fetch(
+				`https://api.coingecko.com/api/v3/simple/price?ids=${fromId},${toId}&vs_currencies=usd`
+			);
 
-		const quotes = await result.json();
+			const quotes = await result.json();
 
-		if (quotes[fromId]?.usd) {
-			setFromFiatPrice(quotes[fromId].usd * +(fromAmount || 1));
-		}
+			if (quotes[fromId]?.usd) {
+				setFromFiatPrice(quotes[fromId].usd * +(fromAmount || 1));
+			}
 
-		if (quotes[toId]?.usd) {
-			setToFiatPrice(quotes[toId].usd * +(toAmount || 1));
+			if (quotes[toId]?.usd) {
+				setToFiatPrice(quotes[toId].usd * +(toAmount || 1));
+			}
 		}
 	};
 
