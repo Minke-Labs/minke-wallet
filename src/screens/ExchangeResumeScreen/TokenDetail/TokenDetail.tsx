@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Token, ActivityIndicator } from '@components';
-import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
+import { numberFormat } from '@helpers/utilities';
 import { View } from 'react-native';
 import { TokenDetailProps } from './TokenDetail.types';
 
