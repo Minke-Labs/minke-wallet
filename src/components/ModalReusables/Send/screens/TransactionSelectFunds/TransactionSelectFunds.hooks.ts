@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { imageSource } from '@models/wallet';
 import { useBalances } from '@hooks';
-import { exchangebleTokens } from '@models/token';
 import { UserProps } from '../../Send.types';
 
 interface UseTransactionSelectFundsProps {
@@ -20,11 +19,7 @@ export const useTransactionSelectFunds = ({ user }: UseTransactionSelectFundsPro
 		fetchImage();
 	}, []);
 
-	const tokensToExchange = tokens
-		? tokens.filter(({ symbol }) => exchangebleTokens.includes(symbol.toUpperCase()))
-		: [];
-
-	const listTokens = [...stablecoins, ...tokensToExchange.filter((t) => (t.balanceUSD || 0) > 0)];
+	const listTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
 
 	return {
 		image,

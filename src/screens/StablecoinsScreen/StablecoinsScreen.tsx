@@ -4,7 +4,7 @@ import RNUxcam from 'react-native-ux-cam';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useDepositProtocols, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
-import { depositStablecoins } from '@models/deposit';
+import { stablecoins as coins } from '@models/token';
 import { stables } from '@models/depositTokens';
 
 const StablecoinsScreen = () => {
@@ -14,9 +14,9 @@ const StablecoinsScreen = () => {
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
 	const {
-		network: { id }
+		network: { id, topUpTokens }
 	} = useGlobalWalletState();
-	const stablecoins = depositStablecoins.map((symbol) => {
+	const stablecoins = coins.map((symbol) => {
 		const found = walletStablecoins.find((s) => s.symbol === symbol);
 		if (found) {
 			return found;
@@ -32,6 +32,13 @@ const StablecoinsScreen = () => {
 			decimals
 		};
 	});
+
+	const priorities = topUpTokens.map(({ symbol }) => symbol);
+	stablecoins.sort(
+		(a, b) =>
+			(b.balanceUSD || 0) - (a.balanceUSD || 0) ||
+			priorities.indexOf(b.symbol.toUpperCase()) - priorities.indexOf(a.symbol.toUpperCase())
+	);
 
 	if (!walletStablecoins) {
 		return <BlankStates.Type2 title={i18n.t('StablecoinsScreen.stablecoins')} />;
@@ -52,20 +59,22 @@ const StablecoinsScreen = () => {
 						{i18n.t('StablecoinsScreen.stablecoins')}
 					</Text>
 
-					<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>
-						<View row>
-							{apy ? (
-								<>
-									<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
-										{i18n.t('StablecoinsScreen.get_annualized_interest', { apy })}
-									</Text>
-									<Icon name="chevronRight" size={20} color="cta1" />
-								</>
-							) : (
-								<ActivityIndicator size={16} />
-							)}
-						</View>
-					</TouchableOpacity>
+					{!!apy && apy !== '0.00' && (
+						<TouchableOpacity onPress={() => navigation.navigate('SaveScreen')}>
+							<View row>
+								{apy ? (
+									<>
+										<Text type="lMedium" weight="semiBold" color="cta1" mb="xs">
+											{i18n.t('StablecoinsScreen.get_annualized_interest', { apy })}
+										</Text>
+										<Icon name="chevronRight" size={20} color="cta1" />
+									</>
+								) : (
+									<ActivityIndicator size={16} />
+								)}
+							</View>
+						</TouchableOpacity>
+					)}
 
 					<View pr="xs">
 						{stablecoins === undefined ? (

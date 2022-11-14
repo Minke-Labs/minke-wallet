@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Animated, { runOnJS, useDerivedValue, interpolate, SharedValue } from 'react-native-reanimated';
-import { round, Vector } from 'react-native-redash';
+import { Vector } from 'react-native-redash';
 import { screenWidth } from '@styles';
+import { formatCurrency } from '@coingecko/cryptoformat';
 import { buildGraph } from './Chart.utils';
 import { Prices, GraphIndex } from './Chart.types';
 
@@ -13,6 +14,7 @@ interface UseChartProps {
 
 export const useChart = ({ tokenHistory, current, translation }: UseChartProps) => {
 	const [percChange, setPercChange] = useState(0);
+	const [price, setPrice] = useState({ value: '' });
 	const values = tokenHistory.data.prices as Prices;
 
 	const graphs = [
@@ -52,14 +54,20 @@ export const useChart = ({ tokenHistory, current, translation }: UseChartProps) 
 		setPercChange(graphs[currentValue].data.percentChange);
 	};
 
+	const setOnPrice = (currentValue: number) => {
+		setPrice({
+			value: formatCurrency(currentValue, 'USD', 'en', false, { decimalPlaces: 18, significantFigures: 6 })
+		});
+	};
+
 	useDerivedValue(() => {
 		runOnJS(setOnJSThread)(current.value);
 	});
 
 	const data = useDerivedValue(() => graphs[current.value].data);
-	const price = useDerivedValue(() => {
+	useDerivedValue(() => {
 		const p = interpolate(translation.y.value, [0, screenWidth], [data.value.maxPrice, data.value.minPrice]);
-		return `$ ${round(p, 2).toLocaleString('en-US', { currency: 'USD' })}`;
+		runOnJS(setOnPrice)(p);
 	});
 
 	return {

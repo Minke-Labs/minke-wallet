@@ -27,6 +27,7 @@ import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import Logger from '@utils/logger';
 import { captureEvent } from '@sentry/react-native';
 import { toBn } from 'evm-bn';
+import { POLYGON_GASLESS_TOKENS } from '@models/exchange';
 import gasLimits from '@models/gas';
 import { ResultProps } from '../../Send.types';
 
@@ -61,7 +62,7 @@ export const useTransactionTransfer = ({
 	const [enoughGas, setEnoughGas] = useState(true);
 	const { addPendingTransaction } = useTransactions();
 	const { gaslessEnabled, biconomy } = useBiconomy();
-	const gasless = gaslessEnabled && chainDefaultToken !== token.symbol;
+	const gasless = gaslessEnabled && POLYGON_GASLESS_TOKENS.includes(token.address.toLowerCase());
 	const { balance } = useNativeToken();
 	const navigation = useNavigation();
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();

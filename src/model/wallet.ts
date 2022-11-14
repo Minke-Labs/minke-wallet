@@ -32,8 +32,11 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 
 export const getProvider = async (network?: string) => {
 	const blockchain = network || (await selectedNetwork()).id;
-	const { alchemyAPIKey } = networks[blockchain as keyof Networks];
-	return new providers.AlchemyProvider(blockchain, alchemyAPIKey);
+	const { alchemyAPIKey, jsonRpcProvider } = networks[blockchain as keyof Networks];
+	if (alchemyAPIKey) {
+		return new providers.AlchemyProvider(blockchain, alchemyAPIKey);
+	}
+	return new providers.JsonRpcProvider(jsonRpcProvider);
 };
 
 const getENSAddress = async (address: string) => {

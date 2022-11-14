@@ -20,31 +20,17 @@ const InvestmentsDetailScreen = ({ route }: Props) => {
 		<BasicLayout hideSafeAreaView bgc="detail4">
 			<Scroll hideIndicator>
 				<SafeAreaView>
-
 					<Upper coin={coin} />
 
-					<View
-						ph="xs"
-						pt="xs"
-						h="100%"
-						bgc="background1"
-						btlr="s"
-						btrr="s"
-					>
-
+					<View ph="xs" pt="xs" h="100%" bgc="background1" btlr="s" btrr="s">
 						{coin && <Balance coin={coin} />}
 
 						{marketCap > 0 && !!tokenVolume && (
-							<MarketCap
-								tokenVolume={tokenVolume.total_volumes}
-								marketCap={marketCap}
-							/>
+							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />
 						)}
 
 						{!!description && <Expander title={coin.name!} desc={description} />}
-
 					</View>
-
 				</SafeAreaView>
 			</Scroll>
 		</BasicLayout>

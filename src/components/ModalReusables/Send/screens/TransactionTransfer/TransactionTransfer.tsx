@@ -8,7 +8,6 @@ import HapticButton from '@src/components/HapticButton/HapticButton';
 import WatchModeTag from '@src/components/WatchModeTag/WatchModeTag';
 import TokenAmountInput from '@src/components/TokenAmountInput/TokenAmountInput';
 import ActivityIndicator from '@src/components/ActivityIndicator/ActivityIndicator';
-import { TokenType } from '@styles';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { decimalSeparator } from 'expo-localization';
 import { useKeyboard, useLanguage } from '@hooks';
@@ -43,7 +42,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 			<>
 				{!keyboardVisible && (
 					<View style={styles.imageContainer}>
-						<Token name={token.symbol.toLowerCase() as TokenType} size={64} />
+						<Token token={token} size={64} />
 						{image && <Image style={[styles.image, { marginLeft: -20, zIndex: -1 }]} source={image} />}
 					</View>
 				)}

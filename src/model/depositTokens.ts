@@ -3,7 +3,7 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import { partition } from 'lodash';
 import { searchCoinData } from '@helpers/utilities';
-import { depositStablecoins, usdCoin } from './deposit';
+import { usdCoin } from './deposit';
 import { network } from './network';
 import { MinkeToken } from './types/token.types';
 import { DepositableToken, DepositTokens, Stables } from './types/depositTokens.types';
@@ -52,6 +52,28 @@ export const stables: Stables = {
 			address: '0x30647a72Dc82d7Fbb1123EA74716aB8A317Eac19',
 			decimals: 18,
 			symbol: 'imUSD'
+		}
+	},
+	'binance-smart-chain': {
+		BUSD: {
+			symbol: 'BUSD',
+			address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+			decimals: 18
+		},
+		USDC: {
+			symbol: 'USDC',
+			decimals: 18,
+			address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d'
+		},
+		DAI: {
+			symbol: 'DAI',
+			decimals: 18,
+			address: '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3'
+		},
+		USDT: {
+			symbol: 'USDT',
+			decimals: 18,
+			address: '0x55d398326f99059ff775485246999027b3197955'
 		}
 	},
 	goerli: {
@@ -235,7 +257,10 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 
 const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 	const { id: networkId, coingeckoPlatform } = await network();
-	const contracts = Object.values(stables[networkId]).filter(({ symbol }) => depositStablecoins.includes(symbol));
+	const contracts = Object.values(stables[networkId]).filter(
+		({ symbol }) => ['USDC', 'DAI', 'USDT', 'BUSD'].includes(symbol)
+		// eslint-disable-next-line function-paren-newline
+	);
 	const provider = await getProvider();
 
 	const promises = contracts.map(async ({ address, decimals, symbol }): Promise<MinkeToken> => {

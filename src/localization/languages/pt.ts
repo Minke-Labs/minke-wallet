@@ -95,7 +95,7 @@ export default {
 		enter_referral_code: 'Código de indicação',
 		get_rewarded_for_saving_money: 'Receba recompensas!',
 		or: 'ou',
-		buy_usdc: 'Comprar USDC',
+		buy_token: 'Comprar {{token}}',
 		referral_note:
 			'Esse código pode ser usado somente uma vez. Depois de comprar ou converter stablecoins você e o seu amigo vão receber até 50 pontos Minke cada.',
 		invalid_code: 'Código inválido',
@@ -132,7 +132,7 @@ export default {
 				stablecoins: 'Stablecoins'
 			},
 			AccountsEmpty: {
-				buy_usdc_now: 'Compre USDC agora!\nNenhuma identificação pessoal necessária.',
+				buy_token_now: 'Compre {{token}} agora!\nNenhuma identificação pessoal necessária.',
 				purchase: 'Compre em poucos cliques com:'
 			}
 		},
@@ -899,7 +899,7 @@ export default {
 			use_code: 'Usar código',
 			loading: 'Carregando',
 			swap: 'Trocar',
-			buy_usdc_now: 'Compre USDC agora'
+			buy_token_now: 'Compre {{token}} agora'
 		},
 		CountrySelector: {
 			country: 'País',
@@ -957,7 +957,8 @@ export default {
 			search_currency: 'Procurar moeda',
 			name: 'Nome',
 			ens_or_wallet: 'ENS, Unstoppable Domain ou Endereço da Carteira',
-			enter_code: 'Digitar código'
+			enter_code: 'Digitar código',
+			others: 'Outros'
 		},
 		InterestBanner: {
 			interest: '% de juros anuais'

@@ -5,7 +5,6 @@ import { Button } from 'react-native-paper';
 import { useTheme, useLanguage } from '@hooks';
 import { network } from '@models/network';
 import { smallWalletAddress } from '@src/model/wallet';
-import { TokenType } from '@src/styles';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import { makeStyles } from './TransactionWait.styles';
 import Token from '../../Token/Token';
@@ -37,14 +36,14 @@ const TransactionWaitModal = ({
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.modalRow}>
 				<View style={toToken ? { marginRight: 56 } : {}}>
-					<Token name={fromToken.symbol.toLowerCase() as TokenType} size={50} />
+					<Token token={fromToken} size={50} />
 				</View>
 				{!!toToken && (
 					<>
 						<View style={styles.exchangeResumeBackground}>
 							<Icon name="arrowRight" color="cta1" size={24} />
 						</View>
-						<Token name={toToken.symbol.toLowerCase() as TokenType} size={50} />
+						<Token token={toToken} size={50} />
 					</>
 				)}
 			</View>

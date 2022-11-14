@@ -1,14 +1,15 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState, useEffect, useCallback } from 'react';
-import { FlatList, SafeAreaView, View } from 'react-native';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { FlatList, SafeAreaView, SectionList } from 'react-native';
 import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
 import _ from 'lodash';
-import { paraswapTokens, exchangebleTokens } from '@models/token';
+import { tokenList } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { TokenType } from '@src/styles';
-import { networks } from '@models/network';
+import Icon from '@src/components/Icon/Icon';
+import View from '@src/components/View/View';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -26,29 +27,31 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	ownedTokens = [],
 	showOnlyOwnedTokens,
 	selected,
-	withdraw = false
+	withdraw = false,
+	enableSections = false
 }) => {
 	const { i18n } = useLanguage();
 	const [tokens, setTokens] = useState<Array<MinkeToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
+	const [hideOtherTokens, setHideOtherTokens] = useState(true);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
 	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
 	const { network } = useGlobalWalletState();
 	const styles = makeStyles(colors);
+	const flatListRef = useRef<FlatList>(null);
+	const sectionListRef = useRef<SectionList>(null);
 
 	const removeSelectedTokens = useCallback(
 		(allTokens: MinkeToken[]) => {
 			let selectedTokens: MinkeToken[] = allTokens || [];
-
 			if (showOnlyOwnedTokens) {
 				const owned = selectedTokens.filter(({ symbol }) => !!symbol).map(({ symbol }) => symbol.toLowerCase());
 				selectedTokens = (ownedTokens || []).filter(
 					({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase())
 				);
 			}
-
 			if (selected && selected.length > 0) {
 				const filter = _.filter(
 					selectedTokens,
@@ -63,40 +66,22 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		[ownedTokens, selected]
 	);
 
-	const priorities = ['MATIC', 'ETH', 'DAI', 'USDT', 'USDC'];
+	const priorities = ['MATIC', 'ETH', 'BUSD', 'DAI', 'USDT', 'USDC'];
+	const suggestedAddresses = network.suggestedTokens.map(({ address }) => address.toLowerCase());
+
 	useEffect(() => {
 		const loadTokens = async () => {
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
-				let allTokens = withdraw
+				const allTokens = withdraw
 					? withdrawableTokens
-					: (await paraswapTokens()).tokens.sort(
-							(a, b) => priorities.indexOf(b.symbol) - priorities.indexOf(a.symbol)
+					: (await tokenList()).tokens.sort(
+							(a, b) =>
+								priorities.indexOf(b.symbol.toUpperCase()) -
+									priorities.indexOf(a.symbol.toUpperCase()) ||
+								suggestedAddresses.indexOf(b.address.toLowerCase()) -
+									suggestedAddresses.indexOf(a.address.toLowerCase())
 					  );
-				if (!withdraw && network.id === networks.matic.id) {
-					allTokens = allTokens.map((t) => {
-						if (t.symbol === 'QUICK') {
-							const token = t;
-							// QUICK changed address
-							token.address = '0xb5c064f955d8e7f38fe0460c556a72987494ee17';
-							return token;
-						}
-
-						if (t.address.toLowerCase() === '0x8a953cfe442c5e8855cc6c61b1293fa648bae472') {
-							const token = t;
-							token.symbol = 'PolyDoge';
-							return token;
-						}
-
-						if (t.symbol === 'ETH') {
-							const token = t;
-							token.symbol = 'WETH';
-							return token;
-						}
-
-						return t;
-					});
-				}
 				setTokens(allTokens);
 				removeSelectedTokens(allTokens);
 				setLoading(false);
@@ -111,19 +96,9 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 
 	const onSearch = (text: string) => {
 		setSearch(text);
-
-		if (text) {
-			const data = _.filter(filteredTokens, (token) => token.symbol.toLowerCase().includes(text.toLowerCase()));
-			setFilteredTokens(data);
-		} else {
-			setFilteredTokens(filteredTokens);
-		}
+		flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
+		sectionListRef.current?.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: 0 });
 	};
-
-	const filterByExchangebleToken = useCallback(
-		() => filteredTokens!.filter((item) => exchangebleTokens.includes(item.symbol)),
-		[filteredTokens, exchangebleTokens]
-	);
 
 	if (!visible) {
 		return null;
@@ -133,34 +108,113 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		return <ScreenLoadingIndicator />;
 	}
 
+	const query = search.toLowerCase();
+	const searchTokens = query
+		? _.filter(
+				filteredTokens,
+				(token) => token.symbol.toLowerCase().includes(query) || (token.name || '').includes(query)
+		  )
+		: filteredTokens;
+
+	const partition = (ary: MinkeToken[], callback: (t: MinkeToken) => boolean) =>
+		ary.reduce(
+			(acc, e) => {
+				// @ts-ignore
+				acc[callback(e) ? 0 : 1].push(e);
+				return acc;
+			},
+			[[], []]
+		);
+	const [visibleTokens, otherTokens] = partition(
+		searchTokens || [],
+		({ symbol, address }: MinkeToken) =>
+			priorities.includes(symbol) || suggestedAddresses.includes(address.toLowerCase())
+	);
+
+	const othersLabel = i18n.t('Components.Inputs.others');
+
+	const tokensList = [
+		{ title: '', data: visibleTokens },
+		{ title: othersLabel, data: otherTokens }
+	];
+
 	return (
 		<SafeAreaView>
 			<ModalHeader {...{ onDismiss }} />
-			<View style={{ paddingLeft: 24, paddingRight: 24 }}>
+			<View pl="s" pr="s">
 				<SearchInput
 					marginBottom={24}
 					placeholder={i18n.t('Components.Inputs.search_token')}
 					{...{ search, onSearch }}
 				/>
-				<FlatList
-					style={styles.list}
-					data={filterByExchangebleToken()}
-					showsVerticalScrollIndicator={false}
-					keyExtractor={(token) => token.address}
-					renderItem={({ item }) => (
-						<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
-							<View style={{ marginRight: 16 }}>
-								<Token name={item.symbol.toLowerCase() as TokenType} size={40} />
-							</View>
-							<View style={styles.tokenItemNameContainer}>
-								<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
-								<Text style={styles.tokenItemName}>{item.symbol}</Text>
-							</View>
-						</Touchable>
-					)}
-				/>
+				{enableSections ? (
+					<SectionList
+						ref={sectionListRef}
+						sections={tokensList}
+						style={styles.list}
+						showsVerticalScrollIndicator={false}
+						keyExtractor={(token: MinkeToken) => token.address}
+						renderItem={({ item, section }) => {
+							if (hideOtherTokens && section.title === othersLabel && !search) {
+								return <></>;
+							}
+							return (
+								<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+									<View mr="xs">
+										<Token token={item} size={40} />
+									</View>
+									<View style={styles.tokenItemNameContainer}>
+										<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
+										<Text style={styles.tokenItemName}>{item.symbol}</Text>
+									</View>
+								</Touchable>
+							);
+						}}
+						// @ts-ignore
+						renderSectionHeader={({ section: { title, data } }) =>
+							!!title &&
+							data.length > 0 && (
+								<Touchable
+									onPress={() => setHideOtherTokens(!hideOtherTokens)}
+									row
+									mb="xs"
+									cross="center"
+								>
+									<View>
+										<Text color="text1" weight="bold" type="bMedium">
+											{title}
+										</Text>
+									</View>
 
-				{(filteredTokens || []).length === 0 && <EmptyStates.NoTokens />}
+									<View w={24}>
+										<Icon name={hideOtherTokens ? 'chevronRight' : 'chevronDown'} size={24} />
+									</View>
+								</Touchable>
+							)
+						}
+					/>
+				) : (
+					<FlatList
+						ref={flatListRef}
+						style={styles.list}
+						showsVerticalScrollIndicator={false}
+						keyExtractor={(token: MinkeToken) => token.address}
+						data={searchTokens}
+						renderItem={({ item }) => (
+							<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+								<View style={{ marginRight: 16 }}>
+									<Token token={item} size={40} />
+								</View>
+								<View style={styles.tokenItemNameContainer}>
+									<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
+									<Text style={styles.tokenItemName}>{item.symbol}</Text>
+								</View>
+							</Touchable>
+						)}
+					/>
+				)}
+
+				{(searchTokens || []).length === 0 && <EmptyStates.NoTokens />}
 				<KeyboardSpacer />
 			</View>
 		</SafeAreaView>

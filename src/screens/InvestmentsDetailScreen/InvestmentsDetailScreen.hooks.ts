@@ -11,32 +11,19 @@ export const useInvestmentsDetailScreen = (coin: MinkeToken) => {
 	const [marketCap, setMarketCap] = useState<any>(null);
 
 	const fetchTokenData = async () => {
-		const res = await getTokenData(coin.id);
-		if (res.errors) {
-			const res = await getTokenData(coin.name);
-			if (res.errors) {
-				const res = await getTokenData(coin.symbol);
-				if (res.errors) setTokenData(null);
-				else setTokenData(res);
-			} else {
-				setTokenData(res);
-			}
+		const res = await getTokenData(coin);
+		if (res?.error) {
+			setTokenData(null);
 		} else {
 			setTokenData(res);
 		}
 	};
 
 	const fetchTokenVolume = async () => {
-		const res = await getTokenVolume(coin.id!);
-		if (res.errors) {
-			const res = await getTokenVolume(coin.name!);
-			if (res.errors) {
-				const res = await getTokenVolume(coin.symbol);
-				if (res.errors) setTokenVolume(null);
-				else setTokenVolume(res);
-			} else {
-				setTokenVolume(res);
-			}
+		const res = await getTokenVolume(coin);
+
+		if (res?.error) {
+			setTokenVolume(null);
 		} else {
 			setTokenVolume(res);
 		}

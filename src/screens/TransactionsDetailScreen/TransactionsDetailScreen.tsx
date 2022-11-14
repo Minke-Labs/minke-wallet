@@ -1,11 +1,6 @@
 import React from 'react';
 import RNUxcam from 'react-native-ux-cam';
-import {
-	Header,
-	Button,
-	View,
-	Scroll
-} from '@components';
+import { Header, Button, View, Scroll } from '@components';
 import { BasicLayout } from '@layouts';
 import { useGlobalWalletState, useLanguage, useTransaction } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -21,7 +16,8 @@ const TransactionsDetailScreen = ({ route }: Props) => {
 	const { transaction } = route.params;
 	const { i18n } = useLanguage();
 	const { network } = useGlobalWalletState();
-	const explorer = network.id === networks.matic.id ? 'PolygonScan' : 'EtherScan';
+	const explorer =
+		network.id === networks.matic.id ? 'PolygonScan' : networks['binance-smart-chain'].id ? 'BSCScan' : 'EtherScan';
 
 	const {
 		received,

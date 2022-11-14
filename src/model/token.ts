@@ -3,38 +3,17 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
-import { network, networks } from './network';
+import { network } from './network';
 import { MinkeToken, InvestmentToken } from './types/token.types';
 
-export const stablecoins = ['USDC', 'DAI', 'USDT'];
-export const exchangebleTokens = [
-	'ETH',
-	'MATIC',
-	'USDT',
-	'USDC',
-	'WETH',
-	'WBTC',
-	'CRO',
-	'DAI',
-	'LINK',
-	'UNI',
-	'MANA',
-	'FRAX',
-	'AAVE',
-	'COMP',
-	'CEL',
-	'CRV',
-	'SUSHI',
-	'BAL',
-	'YFI',
-	'QUICK',
-	'PolyDoge'
-];
+export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 
-export const paraswapTokens = async (): Promise<TokenResponse> => {
-	const { chainId, id, suggestedTokens } = await network();
+export const tokenList = async (): Promise<TokenResponse> => {
+	const { zapperNetwork, id, suggestedTokens } = await network();
 	try {
-		const result = await fetch(`https://apiv5.paraswap.io/tokens/${chainId}`);
+		const result = await fetch(
+			`https://raw.githubusercontent.com/Minke-Labs/token-lists/main/${zapperNetwork}.tokenlist.json`
+		);
 		return await result.json();
 	} catch {
 		const suggestedStables = Object.values(stables[id]);
@@ -77,27 +56,15 @@ export const getExchangePrice = async ({
 	destDecimals,
 	quote = false
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { apiUrl0x, chainId } = await network();
+	const { apiUrl0x, nativeToken } = await network();
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
 	if (natives.includes(sellToken)) {
-		if (chainId === networks.matic.chainId) {
-			sellToken = 'MATIC';
-		}
-
-		if (chainId === networks.mainnet.chainId) {
-			sellToken = 'ETH';
-		}
+		sellToken = nativeToken.symbol;
 	}
 	if (natives.includes(buyToken)) {
-		if (chainId === networks.matic.chainId) {
-			buyToken = 'MATIC';
-		}
-
-		if (chainId === networks.mainnet.chainId) {
-			buyToken = 'ETH';
-		}
+		buyToken = nativeToken.symbol;
 	}
 	const quoteParams: QuoteParams = {
 		sellToken,
@@ -116,30 +83,87 @@ export const getExchangePrice = async ({
 	} else {
 		quoteParams.buyAmount = formatUnits(toBn(amount, destDecimals), 'wei');
 	}
-
 	const url = `${apiUrl0x}swap/v1/${quote ? 'quote' : 'price'}?${qs.stringify(quoteParams)}`;
 	const result = await fetch(url);
 	return result.json();
 };
 
-export const getTokenHistory = async (token = 'ethereum') => {
+const fetchTokenHistory = async (query: string) => {
+	if (!query) return null;
+
 	const baseURL = 'https://www.coinbase.com/api/v2/assets/prices/';
-	const result = await fetch(`${baseURL}${token.toLowerCase()}?base=USD`);
+	const result = await fetch(`${baseURL}${query.toLowerCase()}?base=USD`);
 	return result.json();
 };
 
-export const getTokenData = async (token = 'ethereum') => {
+export const getTokenHistory = async (token: MinkeToken) => {
+	const { id, name, symbol } = token;
+	let res = await fetchTokenHistory(id!);
+	if (!res || res.errors) {
+		res = await fetchTokenHistory(name!);
+		if (!res || res.errors) {
+			res = await fetchTokenHistory(symbol);
+			if (!res || res.errors) {
+				return null;
+			}
+			return res;
+		}
+		return res;
+	}
+	return res;
+};
+
+const fetchTokenData = async (query: string) => {
+	if (!query) return null;
+
 	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
 	const result = await fetch(
-		`${baseURL}${token.toLowerCase()}?localization=false&tickers=false&community_data=false&developer_data=false`
+		`${baseURL}${query.toLowerCase()}?localization=false&tickers=false&community_data=false&developer_data=false`
 	);
+
 	return result.json();
 };
 
-export const getTokenVolume = async (token: string) => {
+export const getTokenData = async (token: MinkeToken) => {
+	const { id, name, symbol } = token;
+	let res = await fetchTokenData(id!);
+	if (!res || res.errors) {
+		res = await fetchTokenData(name!);
+		if (!res || res.errors) {
+			res = await fetchTokenData(symbol);
+			if (!res || res.errors) {
+				return null;
+			}
+			return res;
+		}
+		return res;
+	}
+	return res;
+};
+
+const fetchTokenVolume = async (query: string) => {
+	if (!query) return null;
+
 	const baseURL = 'https://api.coingecko.com/api/v3/coins/';
-	const result = await fetch(`${baseURL}${token.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`);
+	const result = await fetch(`${baseURL}${query.toLowerCase()}/market_chart?vs_currency=usd&days=1&interval=daily`);
 	return result.json();
+};
+
+export const getTokenVolume = async (token: MinkeToken) => {
+	const { id, name, symbol } = token;
+	let res = await fetchTokenVolume(id!);
+	if (!res || res.errors) {
+		res = await fetchTokenVolume(name!);
+		if (!res || res.errors) {
+			res = await fetchTokenVolume(symbol);
+			if (!res || res.errors) {
+				return null;
+			}
+			return res;
+		}
+		return res;
+	}
+	return res;
 };
 
 export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoTokenMarketCap[]> => {
@@ -155,7 +179,7 @@ export const getTokenMarketCap = async (tokenIds: string): Promise<CoingeckoToke
 
 export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<InvestmentToken[]> => {
 	const ids = tokens.map(({ id }) => id);
-	const marketCaps = await getTokenMarketCap(ids.join(','));
+	const marketCaps = await getTokenMarketCap(ids.filter((id) => !!id).join(','));
 
 	return tokens.map((t) => ({
 		...t,
@@ -175,14 +199,22 @@ export const matic: MinkeToken = {
 	symbol: 'MATIC'
 };
 
+export const bnb: MinkeToken = {
+	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+	decimals: 18,
+	symbol: 'BNB'
+};
+
 export const nativeTokens: NativeTokens = {
 	ETH: ether,
-	MATIC: matic
+	MATIC: matic,
+	BNB: bnb
 };
 
 export interface NativeTokens {
 	ETH: MinkeToken;
 	MATIC: MinkeToken;
+	BNB: MinkeToken;
 }
 
 export interface TokenResponse {

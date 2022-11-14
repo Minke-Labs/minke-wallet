@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { TokenType } from '@styles';
-import { useNetwork } from '@hooks';
+import { useGlobalWalletState } from '@hooks';
 import ModalBase from '../../ModalBase/ModalBase';
 import Token from '../../Token/Token';
 import Text from '../../Text/Text';
@@ -11,8 +10,8 @@ import { NetworkModalProps } from './NetworkModal.types';
 import styles from './NetworkModal.styles';
 
 const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => {
-	const { network } = useNetwork();
-
+	const { network } = useGlobalWalletState();
+	// @TODO Marcos Translate
 	return (
 		<ModalBase {...{ isVisible, onDismiss }}>
 			<View style={styles.container}>
@@ -22,13 +21,13 @@ const NetworkModal: React.FC<NetworkModalProps> = ({ isVisible, onDismiss }) => 
 					</Touchable>
 				</View>
 
-				<Token size={56} glow name={network?.id as TokenType} />
+				<Token size={56} glow token={{ symbol: network.id, decimals: 0, address: '' }} />
 				<Text type="h3" weight="extraBold" mb="xs" style={{ marginTop: 40 }}>
-					{network?.name} network
+					{network.name} network
 				</Text>
 				<Text center mb="xxl">
 					If you&apos;re receiving from an exchange or wallet make sure they support withdrawals on the{' '}
-					{network?.name} network.
+					{network.name} network.
 				</Text>
 			</View>
 		</ModalBase>

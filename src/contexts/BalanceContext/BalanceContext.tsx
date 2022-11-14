@@ -1,11 +1,11 @@
 import React, { createContext, useCallback, useEffect, useMemo } from 'react';
 import { useState } from '@hookstate/core';
-import { AccountBalance } from '@models/token';
+import { stablecoins as stbCoins, AccountBalance } from '@models/token';
 import { globalWalletState } from '@stores/WalletStore';
 import { MinkeToken } from '@models/types/token.types';
 import Logger from '@utils/logger';
 import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTokens';
-import { depositStablecoins, interestBearingTokens } from '@models/deposit';
+import { interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
 import { globalDepositState } from '@stores/DepositStore';
 import { searchCoinData } from '@helpers/utilities';
@@ -52,7 +52,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 		let allTokens = coins.filter(
 			({ symbol, balance = '0', name = '', balanceUSD = 0 }) =>
 				!interestBearingTokens.includes(symbol.toLowerCase()) &&
-				!depositStablecoins.includes(symbol) &&
+				!stbCoins.includes(symbol) &&
 				+balance > 0 &&
 				balanceUSD > 0 &&
 				!isValidDomain(name) &&

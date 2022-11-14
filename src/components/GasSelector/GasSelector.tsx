@@ -42,7 +42,7 @@ const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
 	const fetchGas = async () => {
 		const gas = await estimateGas();
 		const {
-			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, suggestBaseFee }
+			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, suggestBaseFee = '0' }
 		} = gas;
 		// @ts-ignore
 		setGasPrice({ normal: +normal, fast: +fast, suggestBaseFee: parseUnits(suggestBaseFee, 'gwei') });

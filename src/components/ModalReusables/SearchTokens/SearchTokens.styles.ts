@@ -33,6 +33,7 @@ export const makeStyles = (colors: ColorType) =>
 			fontSize: 16
 		},
 		list: {
-			maxHeight: deviceHeight * 0.3
+			maxHeight: deviceHeight * 0.3,
+			marginBottom: 24
 		}
 	});

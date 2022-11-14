@@ -8,13 +8,16 @@ const POINTS = 30;
 export const height = 264;
 
 export const buildGraph = (datapoints: DataPoints, label?: string) => {
-	const { length } = datapoints.prices;
-	const priceList = datapoints.prices.slice(0, Math.min(length, POINTS));
+	let { prices } = datapoints;
+	if (prices.length === 0) {
+		prices = [['0', 1667466660]];
+	}
+	const priceList = prices.slice(0, Math.min(prices.length, POINTS));
 
 	// I REVERSED IT HERE BECAUSE THE API ORDER DATE IS DESC, AND THE AREA WON'T WORK OTHERWISE
 	const formattedValues = priceList.reverse().map((price) => [parseFloat(price[0]), price[1]] as [number, number]);
 
-	const prices = formattedValues.map((value) => value[0]);
+	const formattedPrices = formattedValues.map((value) => value[0]);
 	const dates = formattedValues.map((value) => value[1]);
 
 	const minDate = Math.min(...dates);
@@ -22,8 +25,8 @@ export const buildGraph = (datapoints: DataPoints, label?: string) => {
 
 	const scaleX = scaleLinear().domain([minDate, maxDate]).range([0, screenWidth]);
 
-	const minPrice = Math.min(...prices);
-	const maxPrice = Math.max(...prices);
+	const minPrice = Math.min(...formattedPrices);
+	const maxPrice = Math.max(...formattedPrices);
 
 	const scaleY = scaleLinear().domain([minPrice, maxPrice]).range([height, 0]);
 
@@ -35,13 +38,15 @@ export const buildGraph = (datapoints: DataPoints, label?: string) => {
 			.curve(shape.curveBasis)(formattedValues) as string
 	);
 
+	const { percent_change: percentChange } = datapoints;
+
 	return {
 		label,
 		scaleX,
 		scaleY,
 		minPrice,
 		maxPrice,
-		percentChange: datapoints.percent_change,
+		percentChange,
 		path: d
 	};
 };

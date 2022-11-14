@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
-import {
-	Text,
-	Paper,
-	Icon, Token,
-	Snackbar,
-	View,
-	Touchable
-} from '@components';
+import { Text, Paper, Icon, Token, Snackbar, View, Touchable } from '@components';
 import { useLanguage } from '@hooks';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { smallWalletAddress, ZapperSubtransaction } from '@models/wallet';
-import { TokenType } from '@styles';
 import { truncate } from '@src/hooks/useTransaction';
 
 interface AddressesContainerProps {
@@ -66,20 +58,12 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 						{i18n.t('TransactionsDetailScreen.hash')}
 					</Text>
 
-					<Touchable
-						onPress={onCopyHashToClipboard}
-						row
-						w="100%"
-						main="space-between"
-						cross="center"
-						mb="xs"
-					>
+					<Touchable onPress={onCopyHashToClipboard} row w="100%" main="space-between" cross="center" mb="xs">
 						<Text type="lLarge" weight="regular" width={242}>
 							{smallWalletAddress(hash, 12)}
 						</Text>
 						<Icon name="copy" size={20} color="text7" />
 					</Touchable>
-
 				</>
 				{deposit || withdraw ? (
 					<>
@@ -87,7 +71,7 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 							{i18n.t('TransactionsDetailScreen.savings_account')}
 						</Text>
 						<View row cross="center">
-							<Token name={protocol.toLowerCase() as TokenType} size={20} />
+							<Token token={{ symbol: protocol, address: '', decimals: 0 }} size={20} />
 							<View mr="xxs" />
 							<Text type="lLarge" weight="regular">
 								{protocol}
@@ -127,19 +111,12 @@ export const AddressesContainer: React.FC<AddressesContainerProps> = ({
 								: i18n.t('TransactionsDetailScreen.sent_to')}
 						</Text>
 
-						<Touchable
-							onPress={onCopyToClipboard}
-							row
-							w="100%"
-							main="space-between"
-							cross="center"
-						>
+						<Touchable onPress={onCopyToClipboard} row w="100%" main="space-between" cross="center">
 							<Text type="lLarge" weight="regular" width={242}>
 								{formattedSource}
 							</Text>
 							<Icon name="copy" size={20} color="text7" />
 						</Touchable>
-
 					</>
 				)}
 			</Paper>

@@ -1,13 +1,9 @@
-import {
-	Theme,
-	ElementAlignment,
-	TextCase
-} from '@getstoryteller/react-native-storyteller-sdk';
+import { Theme, ElementAlignment, TextCase } from '@getstoryteller/react-native-storyteller-sdk';
 
 export const storytellerTheme: Theme = {
 	light: {
 		colors: {
-			primary: '#F2EAE1',
+			primary: '#F4F6F8',
 			success: '#30C061',
 			alert: '#C03030',
 			white: {

@@ -3,8 +3,9 @@ import RNUxcam from 'react-native-ux-cam';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { Text, View, ModalReusables, ModalBase, FloatingSelector, Touchable, Icon } from '@components';
 import { BasicLayout } from '@layouts';
-import { useBalances, useLanguage, useNavigation, useNFT } from '@hooks';
+import { useBalances, useGlobalWalletState, useLanguage, useNavigation, useNFT } from '@hooks';
 import { numberFormat } from '@helpers/utilities';
+import { networks } from '@models/network';
 import MinkeLogo from './MinkeLogo.svg';
 import { Card } from './Card/Card';
 
@@ -15,6 +16,11 @@ const MinkeHubScreen = () => {
 	const navigation = useNavigation();
 	const { balance, stablecoinsBalance, depositedBalance, walletBalance } = useBalances();
 	const { networth } = useNFT();
+	const {
+		network: { chainId }
+	} = useGlobalWalletState();
+
+	const savingEnabled = chainId !== networks['binance-smart-chain'].chainId;
 
 	return (
 		<>
@@ -61,7 +67,7 @@ const MinkeHubScreen = () => {
 
 						<View mb="xs" row main="center">
 							<Card
-								onPress={() => navigation.navigate('SaveScreen')}
+								onPress={() => (savingEnabled ? navigation.navigate('SaveScreen') : setModal(true))}
 								icon="vault"
 								title={i18n.t('MinkeHubScreen.savings')}
 								desc={i18n.t('MinkeHubScreen.earn_passive_income')}

@@ -11,8 +11,7 @@ export const styles = StyleSheet.create({
 	},
 	leftContainer: {
 		flexDirection: 'row',
-		alignItems: 'center',
-		width: '50%'
+		alignItems: 'center'
 	},
 	tag: {
 		paddingHorizontal: 8,

@@ -1,7 +1,8 @@
+import { MinkeToken } from '@models/types/token.types';
 import { TokenType } from '@styles';
 
 export interface TokenProps {
-	name: TokenType;
+	token: MinkeToken;
 	size: number;
 	outline?: boolean;
 	glow?: boolean;
