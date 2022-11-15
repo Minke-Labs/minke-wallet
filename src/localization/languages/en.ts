@@ -309,7 +309,7 @@ export default {
 				earn_minke_points: 'Earn Minke points!',
 				refer_a_friend: 'Refer a friend',
 				when_your_friends_top_up:
-					'When your friend buys or exchanges for stablecoins they will get up to 50 Minke points. You will earn a 20% points commission per referral.',
+					'When your friend purchases stablecoins they will get up to 50 Minke points. You will earn a 20% points commission per referral.',
 				share_text:
 					"Hi! I've been using Minke to beat inflation with US dollar stablecoins. We will both receive up to $5 USDC when you signup and make your first purchase or exchange. My invite code is {{code}} - signup here: https://minke.onelink.me/rwwq/ref",
 				points_are_distributed: 'Points are distributed every 24 hours by 12:00 UTC on weekdays.'
