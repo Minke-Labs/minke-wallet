@@ -2,6 +2,7 @@ export interface MinkeToken {
 	symbol: string;
 	decimals: number;
 	address: string;
+	chainId: number;
 	id?: string;
 	name?: string;
 	image?: string; // TODO: @Marcos - Remove this field
