@@ -1,23 +1,27 @@
+import Logger from '@utils/logger';
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
-import { network } from './network';
+import { network, networks } from './network';
 import { MinkeToken, InvestmentToken } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 
-export const tokenList = async (): Promise<TokenResponse> => {
-	const { zapperNetwork, id, suggestedTokens } = await network();
+export const tokenList = async (chainId: number): Promise<MinkeToken[]> => {
+	const selectedNetwork = chainId ? Object.values(networks).find((n) => n.chainId === chainId) : await network();
+	const { zapperNetwork, id, suggestedTokens } = selectedNetwork;
 	try {
 		const result = await fetch(
 			`https://raw.githubusercontent.com/Minke-Labs/token-lists/main/${zapperNetwork}.tokenlist.json`
 		);
-		return await result.json();
-	} catch {
+		const { tokens } = await result.json();
+		return tokens.map((t: MinkeToken) => ({ ...t, ...{ chainId: selectedNetwork.chainId } }));
+	} catch (error) {
+		Logger.log('Error in the tokenList', error);
 		const suggestedStables = Object.values(stables[id]);
-		return { tokens: [...suggestedStables, ...suggestedTokens] };
+		return [...suggestedStables, ...suggestedTokens];
 	}
 };
 
@@ -30,6 +34,7 @@ export interface ExchangeParams {
 	side: 'SELL' | 'BUY';
 	amount: string;
 	quote?: boolean; // price or quote request
+	chainId: number | undefined;
 }
 
 interface QuoteParams {
@@ -54,9 +59,11 @@ export const getExchangePrice = async ({
 	amount,
 	srcDecimals,
 	destDecimals,
-	quote = false
+	quote = false,
+	chainId
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { apiUrl0x, nativeToken } = await network();
+	const nw = Object.values(networks).find((n) => n.chainId === chainId);
+	const { apiUrl0x, nativeToken } = nw || (await network());
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
@@ -190,19 +197,22 @@ export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<Inve
 export const ether: MinkeToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-	decimals: 18
+	decimals: 18,
+	chainId: 1
 };
 
 export const matic: MinkeToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	symbol: 'MATIC'
+	symbol: 'MATIC',
+	chainId: 137
 };
 
 export const bnb: MinkeToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	symbol: 'BNB'
+	symbol: 'BNB',
+	chainId: 56
 };
 
 export const nativeTokens: NativeTokens = {
@@ -215,10 +225,6 @@ export interface NativeTokens {
 	ETH: MinkeToken;
 	MATIC: MinkeToken;
 	BNB: MinkeToken;
-}
-
-export interface TokenResponse {
-	tokens: Array<MinkeToken>;
 }
 
 interface BestRoute {

@@ -10,6 +10,7 @@ import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Icon from '@src/components/Icon/Icon';
 import View from '@src/components/View/View';
+import { networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -27,6 +28,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	ownedTokens = [],
 	showOnlyOwnedTokens,
 	selected,
+	chainId,
 	withdraw = false,
 	enableSections = false
 }) => {
@@ -47,11 +49,9 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 		(allTokens: MinkeToken[]) => {
 			let selectedTokens: MinkeToken[] = allTokens || [];
 			if (showOnlyOwnedTokens) {
-				const owned = selectedTokens.filter(({ symbol }) => !!symbol).map(({ symbol }) => symbol.toLowerCase());
-				selectedTokens = (ownedTokens || []).filter(
-					({ symbol }) => !!symbol && owned.includes(symbol.toLowerCase())
-				);
+				selectedTokens = ownedTokens;
 			}
+
 			if (selected && selected.length > 0) {
 				const filter = _.filter(
 					selectedTokens,
@@ -75,13 +75,14 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				setLoading(true);
 				const allTokens = withdraw
 					? withdrawableTokens
-					: (await tokenList()).tokens.sort(
+					: (await tokenList(chainId || network.chainId)).sort(
 							(a, b) =>
 								priorities.indexOf(b.symbol.toUpperCase()) -
 									priorities.indexOf(a.symbol.toUpperCase()) ||
 								suggestedAddresses.indexOf(b.address.toLowerCase()) -
 									suggestedAddresses.indexOf(a.address.toLowerCase())
 					  );
+
 				setTokens(allTokens);
 				removeSelectedTokens(allTokens);
 				setLoading(false);
@@ -153,8 +154,9 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 						sections={tokensList}
 						style={styles.list}
 						showsVerticalScrollIndicator={false}
-						keyExtractor={(token: MinkeToken) => token.address}
+						keyExtractor={(token: MinkeToken) => `${token.address}-${token.chainId}`}
 						renderItem={({ item, section }) => {
+							const nw = Object.values(networks).find((n) => n.chainId === item.chainId);
 							if (hideOtherTokens && section.title === othersLabel && !search) {
 								return <></>;
 							}
@@ -164,7 +166,9 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 										<Token token={item} size={40} />
 									</View>
 									<View style={styles.tokenItemNameContainer}>
-										<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
+										<Text style={styles.tokenItemSymbol}>
+											{item.name || item.symbol} {!!nw && `- ${nw.name}`}
+										</Text>
 										<Text style={styles.tokenItemName}>{item.symbol}</Text>
 									</View>
 								</Touchable>
@@ -198,19 +202,24 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 						ref={flatListRef}
 						style={styles.list}
 						showsVerticalScrollIndicator={false}
-						keyExtractor={(token: MinkeToken) => token.address}
+						keyExtractor={(token: MinkeToken) => `${token.address}-${token.chainId}`}
 						data={searchTokens}
-						renderItem={({ item }) => (
-							<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
-								<View style={{ marginRight: 16 }}>
-									<Token token={item} size={40} />
-								</View>
-								<View style={styles.tokenItemNameContainer}>
-									<Text style={styles.tokenItemSymbol}>{item.name || item.symbol}</Text>
-									<Text style={styles.tokenItemName}>{item.symbol}</Text>
-								</View>
-							</Touchable>
-						)}
+						renderItem={({ item }) => {
+							const nw = Object.values(networks).find((n) => n.chainId === item.chainId);
+							return (
+								<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
+									<View style={{ marginRight: 16 }}>
+										<Token token={item} size={40} />
+									</View>
+									<View style={styles.tokenItemNameContainer}>
+										<Text style={styles.tokenItemSymbol}>
+											{item.name || item.symbol} {!!nw && `- ${nw.name}`}
+										</Text>
+										<Text style={styles.tokenItemName}>{item.symbol}</Text>
+									</View>
+								</Touchable>
+							);
+						}}
 					/>
 				)}
 
