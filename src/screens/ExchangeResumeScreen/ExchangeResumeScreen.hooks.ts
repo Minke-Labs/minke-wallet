@@ -74,8 +74,7 @@ const useExchangeResumeScreen = () => {
 				destDecimals,
 				amount: (direction === 'to' ? toAmount : fromAmount) || '',
 				side: direction === 'to' ? 'BUY' : 'SELL',
-				quote: true,
-				chainId: from.chainId
+				quote: true
 			});
 
 			if (result.message || result.reason) {
