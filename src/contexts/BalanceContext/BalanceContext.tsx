@@ -16,9 +16,8 @@ import useZerionBalances from './useZerionBalances/useZerionBalances';
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
 
 const BalanceProvider: React.FC = ({ children }) => {
-	const address = '0xfe6b7a4494b308f8c0025dcc635ac22630ec7330';
 	const {
-		// address,
+		address,
 		network: { chainId }
 	} = useState(globalWalletState()).value;
 	const { id: selectedProtocol } = useState(globalDepositState()).value;
