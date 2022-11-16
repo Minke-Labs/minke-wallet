@@ -7,6 +7,7 @@ export interface TokenProps {
 	size: number;
 	outline?: boolean;
 	glow?: boolean;
+	showNetworkIcon?: boolean;
 }
 
 export interface ContentProps {

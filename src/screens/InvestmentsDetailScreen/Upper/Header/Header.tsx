@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ coin }) => {
 			<View row cross="center" mb="m" ph="s">
 				<Icon name="arrowBackStroke" size={24} color="text7" />
 				<View>
-					<Token token={coin} size={40} />
+					<Token token={coin} size={40} showNetworkIcon={false} />
 				</View>
 
 				<View ml="xxs">

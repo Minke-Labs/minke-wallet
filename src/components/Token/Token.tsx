@@ -44,9 +44,9 @@ const Content: React.FC<ContentProps> = ({ name, size, tokenColor, network }) =>
 	);
 };
 
-const Token: React.FC<TokenProps> = ({ token, size = 96, outline, glow }) => {
+const Token: React.FC<TokenProps> = ({ token, size = 96, outline, glow, showNetworkIcon = true }) => {
 	const { id = '', symbol = '', chainId } = token || {};
-	const network = Object.values(networks).find((n) => n.chainId === chainId);
+	const network = showNetworkIcon ? Object.values(networks).find((n) => n.chainId === chainId) : undefined;
 	const formattedName = symbol!.toLowerCase() as TokenType;
 	const [source, setSource] = useState({
 		uri: `https://raw.githubusercontent.com/ErikThiart/cryptocurrency-icons/master/128/${id.toLowerCase()}.png`

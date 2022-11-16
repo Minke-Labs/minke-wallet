@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { ScrollView, TextInput } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { Text, View, TokenItemCard, BlankStates, SearchInput, Icon, Touchable, Token } from '@components';
 import { AssetsLayout } from '@layouts';
@@ -7,6 +7,7 @@ import { useBalances, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
 import { Network, networks } from '@models/network';
+import { groupBy } from 'lodash';
 // import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
@@ -18,6 +19,7 @@ const InvestmentsScreen = () => {
 	const [enabledSearch, setEnabledSearch] = useState(false);
 	const [chainIdSearch, setChainIdSearch] = useState<number>();
 	const navigation = useNavigation();
+	const ref = useRef<TextInput>(null);
 
 	useEffect(() => {
 		const fetchPriceChanges = async () => {
@@ -29,8 +31,14 @@ const InvestmentsScreen = () => {
 	}, [tokens]);
 
 	const toggleSearch = () => {
-		setEnabledSearch(!enabledSearch);
+		const enabled = !enabledSearch;
+		setEnabledSearch(enabled);
 		setChainIdSearch(undefined);
+		if (enabled) {
+			ref.current?.focus();
+		} else {
+			setSearch('');
+		}
 	};
 
 	if (investmentTokens === undefined) {
@@ -53,9 +61,15 @@ const InvestmentsScreen = () => {
 		investments = investments.filter((t) => t.chainId === chainIdSearch);
 	}
 
-	investments = investments.sort(
-		(a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0) || (b.perc || -100) - (a.perc || -100)
-	);
+	let groupedInvestments = Object.values(groupBy(investments, 'symbol'));
+
+	groupedInvestments = groupedInvestments.sort((first, second) => {
+		const firstBalanceUSD = first.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		const secondBalanceUSD = second.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		const firstPercentage = first[0].perc || -100;
+		const secondPercentage = second[0].perc || -100;
+		return secondBalanceUSD - firstBalanceUSD || secondPercentage - firstPercentage;
+	});
 
 	return (
 		<AssetsLayout
@@ -65,6 +79,7 @@ const InvestmentsScreen = () => {
 					{i18n.t('InvestmentsScreen.current_value')}
 				</Text>
 			}
+			showValue={!enabledSearch}
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl="xs" pt="s">
@@ -72,19 +87,20 @@ const InvestmentsScreen = () => {
 						<Text type="tMedium" weight="bold" mb="s">
 							{i18n.t('InvestmentsScreen.investments')}
 						</Text>
-						<Icon name="searchStroke" color="cta1" size={20} />
+						<Icon name={enabledSearch ? 'close' : 'searchStroke'} color="cta1" size={20} />
 					</Touchable>
 
-					{enabledSearch ? (
-						<View pr="xs">
-							<SearchInput
-								marginBottom={24}
-								placeholder={i18n.t('Components.Inputs.search')}
-								search={search}
-								onSearch={(val) => setSearch(val)}
-							/>
-						</View>
-					) : (
+					<View pr="xs" style={{ display: enabledSearch ? 'flex' : 'none' }}>
+						<SearchInput
+							marginBottom={24}
+							placeholder={i18n.t('Components.Inputs.search')}
+							search={search}
+							onSearch={(val) => setSearch(val)}
+							textInputRef={ref}
+						/>
+					</View>
+
+					{!enabledSearch && (
 						<View row main="space-between" pr="xs" mb="m">
 							{Object.values(networks)
 								.filter((n: Network) => !n.testnet)
@@ -108,13 +124,26 @@ const InvestmentsScreen = () => {
 					{/* <Selector {...{ active, setActive }} /> */}
 
 					<View pr="xs">
-						{investments.map((item: InvestmentToken) => (
-							<TokenItemCard
-								key={item.address}
-								token={item}
-								onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: item })}
-							/>
-						))}
+						{groupedInvestments.map((groupItems: InvestmentToken[]) => {
+							const [item] = groupItems;
+							item.balanceUSD = groupItems.reduce(
+								(partialSum, token) => partialSum + (token.balanceUSD || 0),
+								0
+							);
+							item.balance = groupItems
+								.reduce((partialSum, token) => partialSum + (Number(token.balance) || 0), 0)
+								.toString();
+
+							return (
+								<TokenItemCard
+									key={`${item.address}-${item.chainId}`}
+									token={item}
+									onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: item })}
+									showNetworkIcon={false}
+									chainIds={groupItems.map((i) => i.chainId)}
+								/>
+							);
+						})}
 					</View>
 				</View>
 			</ScrollView>

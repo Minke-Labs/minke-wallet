@@ -1,6 +1,7 @@
 import React from 'react';
 import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
-import { InvestmentToken } from '@models/types/token.types';
+import { InvestmentToken, MinkeToken } from '@models/types/token.types';
+import { Network, networks } from '@models/network';
 import Text from '../Text/Text';
 import Token from '../Token/Token';
 import View from '../View/View';
@@ -8,16 +9,19 @@ import { Tag } from './Tag/Tag';
 
 interface TokenItemProps {
 	token: InvestmentToken;
+	chainIds?: number[];
 	hideValues?: boolean;
+	showNetworkIcon?: boolean;
 }
 
-const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
+const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues, chainIds = [], showNetworkIcon = true }) => {
 	const { name, symbol, balance, balanceUSD, perc } = token;
 	const tokenName = name || symbol;
+	const foundNetworks: Network[] = Object.values(networks).filter((network) => chainIds.includes(network.chainId));
 
 	return (
 		<View row cross="center" w="100%">
-			<Token token={token} size={39} />
+			<Token token={token} size={39} showNetworkIcon={showNetworkIcon} />
 			<View mr="xxs" />
 
 			<View flex1>
@@ -38,9 +42,18 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
 				</View>
 
 				<View row main="space-between">
-					<Text type="lSmall" weight="semiBold">
-						{token.symbol}
-					</Text>
+					<View row main="space-between">
+						<View mr="xxxs">
+							<Text type="lSmall" weight="semiBold">
+								{token.symbol}
+							</Text>
+						</View>
+						{foundNetworks.map(({ nativeToken }) => (
+							<View mr="xxxs">
+								<Token token={nativeToken as MinkeToken} size={16} />
+							</View>
+						))}
+					</View>
 
 					{!hideValues && (
 						<Text type="bDetail" color="text3">
