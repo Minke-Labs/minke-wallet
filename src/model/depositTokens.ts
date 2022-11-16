@@ -4,97 +4,83 @@ import { toBn } from 'evm-bn';
 import { partition } from 'lodash';
 import { searchCoinData } from '@helpers/utilities';
 import { usdCoin } from './deposit';
-import { network, networks } from './network';
+import { network } from './network';
 import { MinkeToken } from './types/token.types';
 import { DepositableToken, DepositTokens, Stables } from './types/depositTokens.types';
 import { erc20abi, getProvider } from './wallet';
 
-const { mainnet, matic, 'binance-smart-chain': bsc, goerli } = networks;
 export const stables: Stables = {
 	matic: {
 		USDC: {
 			address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
 			decimals: 6,
-			symbol: 'USDC',
-			chainId: matic.chainId
+			symbol: 'USDC'
 		},
 		DAI: {
 			address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
 			decimals: 18,
-			symbol: 'DAI',
-			chainId: matic.chainId
+			symbol: 'DAI'
 		},
 		USDT: {
 			address: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
 			decimals: 6,
-			symbol: 'USDT',
-			chainId: matic.chainId
+			symbol: 'USDT'
 		},
 		imUSD: {
 			address: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
 			decimals: 18,
-			symbol: 'imUSD',
-			chainId: matic.chainId
+			symbol: 'imUSD'
 		}
 	},
 	mainnet: {
 		USDC: {
 			address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
 			decimals: 6,
-			symbol: 'USDC',
-			chainId: mainnet.chainId
+			symbol: 'USDC'
 		},
 		DAI: {
 			address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
 			decimals: 18,
-			symbol: 'DAI',
-			chainId: mainnet.chainId
+			symbol: 'DAI'
 		},
 		USDT: {
 			address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
 			decimals: 6,
-			symbol: 'USDT',
-			chainId: mainnet.chainId
+			symbol: 'USDT'
 		},
 		imUSD: {
 			address: '0x30647a72Dc82d7Fbb1123EA74716aB8A317Eac19',
 			decimals: 18,
-			symbol: 'imUSD',
-			chainId: mainnet.chainId
+			symbol: 'imUSD'
 		}
 	},
 	'binance-smart-chain': {
 		BUSD: {
 			symbol: 'BUSD',
 			address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
-			decimals: 18,
-			chainId: bsc.chainId
+			decimals: 18
 		},
 		USDC: {
 			symbol: 'USDC',
 			decimals: 18,
-			address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
-			chainId: bsc.chainId
+			address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d'
 		},
 		DAI: {
 			symbol: 'DAI',
 			decimals: 18,
-			address: '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3',
-			chainId: bsc.chainId
+			address: '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3'
 		},
 		USDT: {
 			symbol: 'USDT',
 			decimals: 18,
-			address: '0x55d398326f99059ff775485246999027b3197955',
-			chainId: bsc.chainId
+			address: '0x55d398326f99059ff775485246999027b3197955'
 		}
 	},
 	goerli: {
 		USDC: {
 			address: '0x179c54e1fEa2Cd75de3Dc5fa61869B93d8C5b317',
 			decimals: 6,
-			symbol: 'USDC',
-			chainId: goerli.chainId
+			symbol: 'USDC'
 		}
 	}
 };
@@ -196,7 +182,7 @@ export const getDepositToken = (id: string, symbol: string, protocol: string): D
 };
 
 const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<[MinkeToken[], MinkeToken[]]> => {
-	const { id, chainId } = await network();
+	const { id } = await network();
 	const provider = await getProvider();
 	const tokens = Object.values(depositTokens[id] || []).flat();
 	if (tokens.length > 0) {
@@ -257,8 +243,7 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 						source
 					},
 					balance: formatedBalance,
-					balanceUSD: Number(formatedBalance),
-					chainId
+					balanceUSD: Number(formatedBalance)
 				};
 			}
 		);
@@ -278,7 +263,7 @@ const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 	);
 	const provider = await getProvider();
 
-	const promises = contracts.map(async ({ address, decimals, symbol, chainId }): Promise<MinkeToken> => {
+	const promises = contracts.map(async ({ address, decimals, symbol }): Promise<MinkeToken> => {
 		const stablecoin = new Contract(address, erc20abi, provider);
 		const balance: BigNumber = await stablecoin.balanceOf(wallet);
 		const formatedBalance = formatUnits(balance, decimals);
@@ -290,8 +275,7 @@ const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 			balance: formatedBalance,
 			balanceUSD: Number(formatedBalance),
 			id,
-			name,
-			chainId
+			name
 		};
 	});
 

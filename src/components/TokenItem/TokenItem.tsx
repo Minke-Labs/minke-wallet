@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNetwork } from '@hooks';
 import { tokenBalanceFormat, numberFormat } from '@helpers/utilities';
 import { InvestmentToken } from '@models/types/token.types';
 import Text from '../Text/Text';
@@ -12,6 +13,7 @@ interface TokenItemProps {
 }
 
 const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
+	const { network } = useNetwork();
 	const { name, symbol, balance, balanceUSD, perc } = token;
 	const tokenName = name || symbol;
 
@@ -39,7 +41,7 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues }) => {
 
 				<View row main="space-between">
 					<Text type="lSmall" weight="semiBold">
-						{token.symbol}
+						{network.name || ''}
 					</Text>
 
 					{!hideValues && (

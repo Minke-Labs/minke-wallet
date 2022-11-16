@@ -35,6 +35,7 @@ export const AccountsOverview: React.FC = () => {
 				if (tokens.length > 1) {
 					highlights.push(sorted[sorted.length - 1]);
 				}
+
 				setInvestmentHighlights(highlights);
 			}
 		};
@@ -92,7 +93,7 @@ export const AccountsOverview: React.FC = () => {
 
 			{investmentHighlights.map((token) => (
 				<TokenItemCard
-					key={`${token.address}-${token.chainId}`}
+					key={token.address}
 					token={token}
 					onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: token })}
 				/>

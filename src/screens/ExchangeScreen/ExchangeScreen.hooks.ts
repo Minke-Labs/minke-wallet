@@ -92,8 +92,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 				srcDecimals,
 				destDecimals,
 				amount,
-				side,
-				chainId: fromToken.chainId
+				side
 			});
 
 			if (message || reason) {

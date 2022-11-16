@@ -25,7 +25,6 @@ export interface Stables {
 			address: string;
 			decimals: number;
 			symbol: string;
-			chainId: number;
 		};
 	};
 }

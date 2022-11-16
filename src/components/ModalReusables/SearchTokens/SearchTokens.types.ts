@@ -9,5 +9,4 @@ export interface SearchTokensProps {
 	selected?: Array<string | undefined>;
 	withdraw?: boolean;
 	enableSections?: boolean;
-	chainId?: number;
 }
