@@ -12,6 +12,7 @@ import { MinkeToken, TopupToken } from './types/token.types';
 export interface Network {
 	chainId: number;
 	name: string;
+	shortName?: string;
 	id: string;
 	testnet: boolean;
 	etherscanURL: string;
@@ -614,6 +615,7 @@ export const networks: Networks = {
 	'binance-smart-chain': {
 		chainId: 56,
 		name: 'Binance Smart Chain',
+		shortName: 'BSC',
 		id: 'binance-smart-chain',
 		wyreSRN: '',
 		testnet: false,

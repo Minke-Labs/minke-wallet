@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
-import { Text, View, TokenItemCard, BlankStates, SearchInput } from '@components';
+import { Text, View, TokenItemCard, BlankStates, SearchInput, Icon, Touchable, Token } from '@components';
 import { AssetsLayout } from '@layouts';
 import { useBalances, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
+import { Network, networks } from '@models/network';
 // import Selector from './Selector/Selector';
 
 const InvestmentsScreen = () => {
@@ -14,6 +15,8 @@ const InvestmentsScreen = () => {
 	const { tokens, walletBalance } = useBalances();
 	const [investmentTokens, setInvestmentTokens] = useState<InvestmentToken[]>(tokens.reverse());
 	const [search, setSearch] = useState('');
+	const [enabledSearch, setEnabledSearch] = useState(false);
+	const [chainIdSearch, setChainIdSearch] = useState<number>();
 	const navigation = useNavigation();
 
 	useEffect(() => {
@@ -24,6 +27,11 @@ const InvestmentsScreen = () => {
 		};
 		fetchPriceChanges();
 	}, [tokens]);
+
+	const toggleSearch = () => {
+		setEnabledSearch(!enabledSearch);
+		setChainIdSearch(undefined);
+	};
 
 	if (investmentTokens === undefined) {
 		return <BlankStates.Type2 title={i18n.t('InvestmentsScreen.investments')} />;
@@ -40,6 +48,11 @@ const InvestmentsScreen = () => {
 				t.address.toLowerCase().includes(query)
 		);
 	}
+
+	if (chainIdSearch) {
+		investments = investments.filter((t) => t.chainId === chainIdSearch);
+	}
+
 	investments = investments.sort(
 		(a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0) || (b.perc || -100) - (a.perc || -100)
 	);
@@ -55,18 +68,42 @@ const InvestmentsScreen = () => {
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl="xs" pt="s">
-					<Text type="tSmall" weight="bold" mb="s">
-						{i18n.t('InvestmentsScreen.investments')}
-					</Text>
+					<Touchable row main="space-between" pr="xs" onPress={toggleSearch}>
+						<Text type="tMedium" weight="bold" mb="s">
+							{i18n.t('InvestmentsScreen.investments')}
+						</Text>
+						<Icon name="searchStroke" color="cta1" size={20} />
+					</Touchable>
 
-					<View pr="xs">
-						<SearchInput
-							marginBottom={24}
-							placeholder={i18n.t('Components.Inputs.search')}
-							search={search}
-							onSearch={(val) => setSearch(val)}
-						/>
-					</View>
+					{enabledSearch ? (
+						<View pr="xs">
+							<SearchInput
+								marginBottom={24}
+								placeholder={i18n.t('Components.Inputs.search')}
+								search={search}
+								onSearch={(val) => setSearch(val)}
+							/>
+						</View>
+					) : (
+						<View row main="space-between" pr="xs" mb="m">
+							{Object.values(networks)
+								.filter((n: Network) => !n.testnet)
+								.map(({ name, shortName, nativeToken, chainId }) => (
+									<Touchable row main="center" p="xxs" onPress={() => setChainIdSearch(chainId)}>
+										<View mr="xxs">
+											<Token token={nativeToken} size={20} />
+										</View>
+										<Text
+											type="lMedium"
+											weight="semiBold"
+											color={chainIdSearch === chainId ? 'text1' : 'text3'}
+										>
+											{shortName || name}
+										</Text>
+									</Touchable>
+								))}
+						</View>
+					)}
 
 					{/* <Selector {...{ active, setActive }} /> */}
 
