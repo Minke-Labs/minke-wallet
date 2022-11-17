@@ -1,6 +1,6 @@
 import { ApprovalState } from '@models/deposit';
 import gasLimits, { Networks } from '@models/gas';
-import { network } from '@models/network';
+import { network, networks } from '@models/network';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
@@ -30,9 +30,11 @@ class WithdrawService {
 		interestBearingToken,
 		biconomy,
 		walletConnect,
-		connector
+		connector,
+		chainId
 	}: WithdrawParams): Promise<WithdrawReturn> {
-		const { isApproved } = await this.approveState(address, interestBearingToken);
+		const { id: networkId } = Object.values(networks).find((n) => n.chainId === chainId);
+		const { isApproved } = await this.approveState(address, interestBearingToken, networkId);
 		if (!isApproved && this.protocol !== 'aave') {
 			// Gasless AAVE withdraw uses a permit signature
 			const hash = await this.approve({
@@ -150,8 +152,8 @@ class WithdrawService {
 		return null;
 	}
 
-	public async approveState(address: string, contract: string): Promise<ApprovalState> {
-		return ApprovalService.approveState(address, contract, await this.withdrawContract());
+	public async approveState(address: string, contract: string, networkId: string): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, await this.withdrawContract(), networkId);
 	}
 
 	public async approve({

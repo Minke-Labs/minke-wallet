@@ -90,7 +90,7 @@ export const onChainApproval = async ({
 	const transaction = await wallet.provider.sendTransaction(signedTx as string);
 	return { transaction };
 };
-
+// @TODO: approve
 export const approveSpending = async ({
 	userAddress,
 	privateKey,
@@ -98,7 +98,8 @@ export const approveSpending = async ({
 	contractAddress,
 	spender,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	networkId
 }: {
 	userAddress: string;
 	privateKey: string;
@@ -107,8 +108,9 @@ export const approveSpending = async ({
 	spender: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	networkId: string;
 }): Promise<ContractApproval> => {
-	const { isApproved } = await approvalState(userAddress, contractAddress, spender);
+	const { isApproved } = await approvalState(userAddress, contractAddress, spender, networkId);
 	if (isApproved) {
 		return { isApproved };
 	}

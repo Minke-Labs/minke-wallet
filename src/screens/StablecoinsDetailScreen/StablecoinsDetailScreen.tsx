@@ -7,7 +7,7 @@ import { useNavigation } from '@hooks';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { Header } from './Header/Header';
-// import ByNetworks from './ByNetworks/ByNetworks';
+import ByNetworks from './ByNetworks/ByNetworks';
 import { useStablecoinsDetailScreen } from './useStablecoinsDetailScreen.hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'StablecoinsDetailScreen'>;
@@ -29,7 +29,7 @@ const StablecoinsDetailScreen = ({ route }: Props) => {
 					<View ph="xs">
 						<Header title={coin.name || ''} symbol={coin.symbol} onPress={() => navigation.goBack()} />
 						<Balance coin={coin} stablecoin />
-						{/* <ByNetworks /> */}
+						<ByNetworks />
 						{!!description && <Expander title={coin.name || ''} desc={description} />}
 					</View>
 				</ScrollView>

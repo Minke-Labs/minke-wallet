@@ -4,7 +4,7 @@ import { toBn } from 'evm-bn';
 import { partition } from 'lodash';
 import { searchCoinData } from '@helpers/utilities';
 import { usdCoin } from './deposit';
-import { network, networks } from './network';
+import { networks } from './network';
 import { MinkeToken } from './types/token.types';
 import { DepositableToken, DepositTokens, Stables } from './types/depositTokens.types';
 import { erc20abi, getProvider } from './wallet';
@@ -196,107 +196,127 @@ export const getDepositToken = (id: string, symbol: string, protocol: string): D
 };
 
 const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<[MinkeToken[], MinkeToken[]]> => {
-	const { id, chainId } = await network();
-	const provider = await getProvider();
-	const tokens = Object.values(depositTokens[id] || []).flat();
-	if (tokens.length > 0) {
-		const protocolAddresses = depositTokens[id][protocol].map(({ interestBearingToken: { address } }) => address);
+	const networkPromises = Object.values(networks).map(async (network) => {
+		const { id: networkId, chainId } = network;
+		const provider = await getProvider(networkId);
+		const tokens = Object.values(depositTokens[networkId] || []).flat();
+		if (tokens.length > 0) {
+			const protocolAddresses = depositTokens[networkId][protocol].map(
+				({ interestBearingToken: { address } }) => address
+			);
 
-		const promises = tokens.map(
-			async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
-				const {
-					address: interestBearingAddress,
-					symbol: interestBearingSymbol,
-					decimals: interestBearingDecimals,
-					exchangeRateContract,
-					convertToDefaultUSD,
-					source
-				} = interestBearingToken;
-				const token = new Contract(interestBearingAddress, erc20abi, provider);
-
-				let balance: BigNumber = await token.balanceOf(wallet);
-				if (exchangeRateContract) {
-					const savingAsset = new Contract(
-						address,
-						['function exchangeRate() public view returns (uint256)'],
-						provider
-					);
-					const exchangeRate: BigNumber = await savingAsset.exchangeRate();
-					balance = toBn(
-						(
-							Number(formatUnits(balance, decimals)) * Number(formatUnits(exchangeRate, decimals))
-						).toString(),
-						decimals
-					);
-				}
-				const formatedBalance = formatUnits(balance, decimals);
-
-				let tokenParams = {
-					address,
-					symbol,
-					decimals,
-					image: symbol,
-					name: symbol
-				};
-
-				if (convertToDefaultUSD) {
-					const defaultToken = await usdCoin();
-					tokenParams = {
-						...stables[id][defaultToken],
-						image: defaultToken,
-						name: defaultToken
-					};
-				}
-
-				return {
-					...tokenParams,
-					interestBearingToken: {
+			const promises = tokens.map(
+				async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
+					const {
 						address: interestBearingAddress,
 						symbol: interestBearingSymbol,
 						decimals: interestBearingDecimals,
+						exchangeRateContract,
+						convertToDefaultUSD,
 						source
-					},
-					balance: formatedBalance,
-					balanceUSD: Number(formatedBalance),
-					chainId
-				};
-			}
-		);
+					} = interestBearingToken;
+					const token = new Contract(interestBearingAddress, erc20abi, provider);
+					let balance: BigNumber = await token.balanceOf(wallet);
+					if (exchangeRateContract) {
+						const savingAsset = new Contract(
+							address,
+							['function exchangeRate() public view returns (uint256)'],
+							provider
+						);
+						const exchangeRate: BigNumber = await savingAsset.exchangeRate();
+						balance = toBn(
+							(
+								Number(formatUnits(balance, decimals)) * Number(formatUnits(exchangeRate, decimals))
+							).toString(),
+							decimals
+						);
+					}
+					const formatedBalance = formatUnits(balance, decimals);
 
-		const minkeTokens = await Promise.all(promises);
-		return partition(minkeTokens, (token) => protocolAddresses.includes(token.interestBearingToken!.address));
-	}
+					let tokenParams = {
+						address,
+						symbol,
+						decimals,
+						image: symbol,
+						name: symbol
+					};
 
-	return [[], []];
+					if (convertToDefaultUSD) {
+						const defaultToken = await usdCoin();
+						tokenParams = {
+							...stables[networkId][defaultToken],
+							image: defaultToken,
+							name: defaultToken
+						};
+					}
+
+					return {
+						...tokenParams,
+						interestBearingToken: {
+							address: interestBearingAddress,
+							symbol: interestBearingSymbol,
+							decimals: interestBearingDecimals,
+							source
+						},
+						balance: formatedBalance,
+						balanceUSD: Number(formatedBalance),
+						chainId
+					};
+				}
+			);
+
+			const minkeTokens = await Promise.all(promises);
+			return partition(minkeTokens, (token) => protocolAddresses.includes(token.interestBearingToken!.address));
+		}
+
+		return [[], []];
+	});
+
+	const interestBearingTokens = await Promise.all(networkPromises);
+	const partitionTokens: [MinkeToken[], MinkeToken[]] = [[], []];
+	interestBearingTokens.forEach((value) => {
+		if (value) {
+			const [withdrawable, rest] = value;
+			partitionTokens[0] = withdrawable;
+			partitionTokens[1] = rest;
+		}
+	});
+
+	return partitionTokens;
 };
 
 const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
-	const { id: networkId, coingeckoPlatform } = await network();
-	const contracts = Object.values(stables[networkId]).filter(
-		({ symbol }) => ['USDC', 'DAI', 'USDT', 'BUSD'].includes(symbol)
-		// eslint-disable-next-line function-paren-newline
-	);
-	const provider = await getProvider();
+	const networkPromises = Object.values(networks).map(async (network) => {
+		const { id: networkId, coingeckoPlatform } = network;
+		const contracts = Object.values(stables[networkId]).filter(
+			({ symbol }) => ['USDC', 'DAI', 'USDT', 'BUSD'].includes(symbol)
+			// eslint-disable-next-line function-paren-newline
+		);
+		const provider = await getProvider(networkId);
 
-	const promises = contracts.map(async ({ address, decimals, symbol, chainId }): Promise<MinkeToken> => {
-		const stablecoin = new Contract(address, erc20abi, provider);
-		const balance: BigNumber = await stablecoin.balanceOf(wallet);
-		const formatedBalance = formatUnits(balance, decimals);
-		const { id, name } = await searchCoinData(address, coingeckoPlatform, symbol);
-		return {
-			address,
-			symbol,
-			decimals,
-			balance: formatedBalance,
-			balanceUSD: Number(formatedBalance),
-			id,
-			name,
-			chainId
-		};
+		const promises = contracts.map(async ({ address, decimals, symbol, chainId }): Promise<MinkeToken> => {
+			const stablecoin = new Contract(address, erc20abi, provider);
+			const balance: BigNumber = await stablecoin.balanceOf(wallet);
+			const formatedBalance = formatUnits(balance, decimals);
+			const { id, name } = await searchCoinData(address, coingeckoPlatform, symbol);
+			return {
+				address,
+				symbol,
+				decimals,
+				balance: formatedBalance,
+				balanceUSD: Number(formatedBalance),
+				id,
+				name,
+				chainId
+			};
+		});
+
+		const tokens = await Promise.all(promises);
+		return tokens.filter(({ balanceUSD = 0 }) => balanceUSD > 0);
 	});
 
-	const tokens = await Promise.all(promises);
-	return tokens.filter(({ balanceUSD = 0 }) => balanceUSD > 0);
+	const networkTokens = await Promise.all(networkPromises);
+	return networkTokens.flat();
 };
 
 export { fetchInterestBearingTokens, fetchStablecoins };

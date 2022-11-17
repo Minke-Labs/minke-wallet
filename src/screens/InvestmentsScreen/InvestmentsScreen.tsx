@@ -83,7 +83,13 @@ const InvestmentsScreen = () => {
 		>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View pl="xs" pt="s">
-					<Touchable row main="space-between" pr="xs" onPress={toggleSearch}>
+					<Touchable
+						row
+						main="space-between"
+						pr="xs"
+						mt={enabledSearch ? 'xs' : undefined}
+						onPress={toggleSearch}
+					>
 						<Text type="tMedium" weight="bold" mb="s">
 							{i18n.t('InvestmentsScreen.investments')}
 						</Text>
@@ -105,7 +111,13 @@ const InvestmentsScreen = () => {
 							{Object.values(networks)
 								.filter((n: Network) => !n.testnet)
 								.map(({ name, shortName, nativeToken, chainId }) => (
-									<Touchable row main="center" p="xxs" onPress={() => setChainIdSearch(chainId)}>
+									<Touchable
+										row
+										main="center"
+										p="xxs"
+										onPress={() => setChainIdSearch(chainId)}
+										key={chainId}
+									>
 										<View mr="xxs">
 											<Token token={nativeToken} size={20} />
 										</View>

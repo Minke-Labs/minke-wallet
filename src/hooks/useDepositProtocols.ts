@@ -9,7 +9,7 @@ import {
 } from '@models/deposit';
 import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { getDepositToken } from '@models/depositTokens';
-import { network } from '@models/network';
+import { network, networks } from '@models/network';
 import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
 import { globalWalletState } from '@stores/WalletStore';
@@ -41,6 +41,7 @@ const useDepositProtocols = (withdraw = false) => {
 		setSelectedProtocol(await fetchDepositProtocol());
 	};
 
+	// @TODO: Marcos (this concept needs to change. All tokens from all networks are depositable)
 	const fetchDepositToken = async () => {
 		if (selectedUSDCoin && selectedProtocol && defaultToken) {
 			const { id } = await network();
@@ -54,7 +55,7 @@ const useDepositProtocols = (withdraw = false) => {
 	};
 
 	const checkAbleToDeposit = async () => {
-		const defaultUSDCoin = await usdCoin();
+		const defaultUSDCoin = selectedUSDCoin;
 		const sourceTokens = withdraw ? withdrawableTokens : tokens;
 		let token = sourceTokens.find((t) => t.symbol === defaultUSDCoin);
 		const hasTheDefaultToken = !!token;
@@ -94,9 +95,13 @@ const useDepositProtocols = (withdraw = false) => {
 				if (protocolApproved) {
 					setApproved(true);
 				} else if (depositableToken) {
+					const { id: networkId } = Object.values(networks).find(
+						(n) => n.chainId === depositableToken.chainId
+					);
 					const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
 						address,
-						depositableToken.address
+						depositableToken.address,
+						networkId
 					);
 					setApproved(isApproved);
 				}

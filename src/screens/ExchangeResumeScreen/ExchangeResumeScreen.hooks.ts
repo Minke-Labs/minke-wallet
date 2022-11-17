@@ -16,6 +16,7 @@ import { isExchangeGasless } from '@models/exchange';
 import gasLimits from '@models/gas';
 import ApprovalService from '@src/services/approval/ApprovalService';
 import { toBn } from 'evm-bn';
+import { networks } from '@models/network';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -176,9 +177,10 @@ const useExchangeResumeScreen = () => {
 				} = priceQuote;
 
 				const { address, privateKey } = wallet.value;
+				const { id: networkId } = Object.values(networks).find((n) => n.chainId === chainId);
 
 				if (gasless) {
-					const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract);
+					const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract, networkId);
 					const provider = biconomy.getEthersProvider();
 
 					if (!isApproved) {
@@ -227,7 +229,7 @@ const useExchangeResumeScreen = () => {
 
 					navigation.navigate('HomeScreen');
 				} else {
-					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
+					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget, networkId);
 
 					if (!isApproved) {
 						await new ApprovalService().approve({

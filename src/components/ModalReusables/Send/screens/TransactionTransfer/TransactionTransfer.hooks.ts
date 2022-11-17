@@ -9,7 +9,7 @@ import {
 	useWalletManagement,
 	useGlobalWalletState
 } from '@hooks';
-import { network } from '@models/network';
+import { network, networks } from '@models/network';
 import { convertTransactionResponse } from '@models/transaction';
 import {
 	estimateGas,
@@ -145,14 +145,11 @@ export const useTransactionTransfer = ({
 				onDismiss();
 				if (gasless) {
 					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
+						token,
 						hash: ''
 					});
-					const { isApproved } = await approvalState(address, token.address, sendContract);
+					const { id: networkId } = Object.values(networks).find((n) => n.chainId === token.chainId);
+					const { isApproved } = await approvalState(address, token.address, sendContract, networkId);
 					const provider = biconomy.getEthersProvider();
 
 					if (!isApproved) {
@@ -180,11 +177,7 @@ export const useTransactionTransfer = ({
 					});
 
 					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
+						token,
 						hash
 					});
 					track('Sent', {
@@ -243,11 +236,7 @@ export const useTransactionTransfer = ({
 						});
 					} else {
 						sentSuccessfully({
-							token: {
-								address: token.address,
-								decimals: token.decimals,
-								symbol: token.symbol
-							},
+							token,
 							hash
 						});
 						const transaction = await sendTransaction(
@@ -273,11 +262,7 @@ export const useTransactionTransfer = ({
 					}
 
 					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
+						token,
 						hash
 					});
 

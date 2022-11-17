@@ -25,15 +25,21 @@ export const fetchMStablePoolData = async (): Promise<MStablePoolData> => {
 };
 
 export const depositableTokenToMinkeToken = (token: DepositableToken): MinkeToken => {
-	const { address, decimals, symbol } = token;
+	const { address, decimals, symbol, chainId } = token;
 	return {
 		address,
 		decimals,
-		symbol
+		symbol,
+		chainId
 	};
 };
 
-export const approvalState = async (owner: string, token: string, spender: string): Promise<ApprovalState> => {
+export const approvalState = async (
+	owner: string,
+	token: string,
+	spender: string,
+	networkId: string
+): Promise<ApprovalState> => {
 	if (
 		[
 			'0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase(),
@@ -42,7 +48,7 @@ export const approvalState = async (owner: string, token: string, spender: strin
 	) {
 		return { isApproved: true };
 	}
-	const contract = new Contract(token, erc20abi, await getProvider());
+	const contract = new Contract(token, erc20abi, await getProvider(networkId));
 	const amount: BigNumber = await contract.balanceOf(owner);
 	const allowance: BigNumber = await contract.allowance(owner, spender);
 

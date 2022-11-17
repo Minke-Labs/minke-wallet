@@ -48,8 +48,8 @@ const TokenItem: React.FC<TokenItemProps> = ({ token, hideValues, chainIds = [],
 								{token.symbol}
 							</Text>
 						</View>
-						{foundNetworks.map(({ nativeToken }) => (
-							<View mr="xxxs">
+						{foundNetworks.map(({ nativeToken, id }) => (
+							<View mr="xxxs" key={id}>
 								<Token token={nativeToken as MinkeToken} size={16} />
 							</View>
 						))}

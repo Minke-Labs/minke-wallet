@@ -14,5 +14,6 @@ export interface WithdrawParams {
 	interestBearingToken: string;
 	walletConnect: boolean;
 	connector: WalletConnect;
+	chainId: number;
 }
 export type WithdrawReturn = string | null;

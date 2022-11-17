@@ -3,6 +3,7 @@ import { Paper, View, Text, TokenItemCard, Touchable, BlankStates } from '@compo
 import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
+import { groupBy } from 'lodash';
 
 export const AccountsOverview: React.FC = () => {
 	const { i18n } = useLanguage();
@@ -14,10 +15,19 @@ export const AccountsOverview: React.FC = () => {
 	const [investmentHighlights, setInvestmentHighlights] = useState<InvestmentToken[]>(tokens);
 	const [defaultToken] = topUpTokens;
 	let biggestBalanceStable = {} as MinkeToken;
+	let biggestBalanceGroup: MinkeToken[] = [];
 
-	stablecoins.forEach((stable) => {
-		if ((stable.balanceUSD || 0) > (biggestBalanceStable?.balanceUSD || 0)) {
+	const groupedStablecoins = Object.values(groupBy(stablecoins, 'symbol'));
+
+	groupedStablecoins.forEach((stableGroup) => {
+		const [stable] = stableGroup;
+		stable.balanceUSD = stableGroup.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		stable.balance = stableGroup
+			.reduce((partialSum, token) => partialSum + (Number(token.balance) || 0), 0)
+			.toString();
+		if (stable.balanceUSD > (biggestBalanceStable?.balanceUSD || 0)) {
 			biggestBalanceStable = stable;
+			biggestBalanceGroup = stableGroup;
 		}
 	});
 
@@ -72,6 +82,8 @@ export const AccountsOverview: React.FC = () => {
 					<TokenItemCard
 						token={showingStable}
 						onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: showingStable })}
+						showNetworkIcon={false}
+						chainIds={biggestBalanceGroup.map((group) => group.chainId)}
 					/>
 				</>
 			)}

@@ -1,5 +1,5 @@
 import { ApprovalState } from '@models/deposit';
-import { network } from '@models/network';
+import { network, networks } from '@models/network';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
 import { toBn } from 'evm-bn';
@@ -28,7 +28,8 @@ class DepositService {
 		connector,
 		walletConnect = false
 	}: DepositParams): Promise<DepositReturn> {
-		const { isApproved } = await this.approveState(address, depositableToken.address);
+		const { id: networkId } = Object.values(networks).find((n) => n.chainId === depositableToken.chainId);
+		const { isApproved } = await this.approveState(address, depositableToken.address, networkId);
 		Logger.log('Deposit approved:', isApproved);
 		if (!isApproved) {
 			await this.approve({
@@ -139,8 +140,9 @@ class DepositService {
 		return this.protocol === 'mstable' ? mStable?.depositContract! : aave.depositContract;
 	}
 
-	public async approveState(address: string, contract: string): Promise<ApprovalState> {
-		return ApprovalService.approveState(address, contract, await this.depositContract());
+	// @TODO: Marcos
+	public async approveState(address: string, contract: string, networkId: string): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, await this.depositContract(), networkId);
 	}
 
 	public async approve({

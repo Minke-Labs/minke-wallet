@@ -10,8 +10,13 @@ import { toBn } from 'evm-bn';
 import { DepositReturn } from '../deposit/deposit.types';
 
 class ApprovalService {
-	public static async approveState(address: string, contract: string, spender: string): Promise<ApprovalState> {
-		const approval = await approvalState(address, contract, spender);
+	public static async approveState(
+		address: string,
+		contract: string,
+		spender: string,
+		networkId: string
+	): Promise<ApprovalState> {
+		const approval = await approvalState(address, contract, spender, networkId);
 		return approval;
 	}
 
