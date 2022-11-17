@@ -18,13 +18,13 @@ const Button: React.FC<ButtonProps> = ({
 	alert,
 	onPress
 }) => {
-	const color = alert ? 'alert1' : (disabled || mode === 'contained') ? 'text11' : 'text7';
+	const color = alert ? 'alert1' : disabled || mode === 'contained' ? 'text11' : 'text7';
 	const chosenMode = disabled ? 'contained' : mode;
 
 	const { borderColor, borderWidth } =
-	(chosenMode === 'outlined' || alert)
-		? { borderColor: color, borderWidth: 1 }
-		: { borderColor: 'transparent', borderWidth: 0 };
+		chosenMode === 'outlined' || alert
+			? { borderColor: color, borderWidth: 1 }
+			: { borderColor: 'transparent', borderWidth: 0 };
 
 	const backgroundColor = () => {
 		if (disabled) return 'detail2';
@@ -39,13 +39,7 @@ const Button: React.FC<ButtonProps> = ({
 	};
 
 	return (
-		<Touchable
-			disabled={disabled}
-			onPress={handlePress}
-			h={40}
-			mb={mb}
-			row
-		>
+		<Touchable disabled={disabled} onPress={handlePress} h={40} mb={mb} row>
 			<View
 				br={br}
 				bgc={backgroundColor()}
@@ -57,29 +51,11 @@ const Button: React.FC<ButtonProps> = ({
 				bw={borderWidth}
 				bc={borderColor as keyof ColorType}
 			>
-				{iconLeft && (
-					<Icon
-						name={iconLeft}
-						size={18}
-						style={{ marginRight: spacing.xxs }}
-						color={color}
-					/>
-				)}
-				<Text
-					type="lMedium"
-					weight="semiBold"
-					color={color}
-				>
+				{iconLeft && <Icon name={iconLeft} size={18} style={{ marginRight: spacing.xxs }} color={color} />}
+				<Text type="lMedium" weight="semiBold" color={color}>
 					{title}
 				</Text>
-				{iconRight && (
-					<Icon
-						name={iconRight}
-						size={18}
-						style={{ marginRight: spacing.xxs }}
-						color={color}
-					/>
-				)}
+				{iconRight && <Icon name={iconRight} size={18} style={{ marginRight: spacing.xxs }} color={color} />}
 			</View>
 		</Touchable>
 	);

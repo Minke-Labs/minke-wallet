@@ -74,7 +74,8 @@ const useExchangeResumeScreen = () => {
 				destDecimals,
 				amount: (direction === 'to' ? toAmount : fromAmount) || '',
 				side: direction === 'to' ? 'BUY' : 'SELL',
-				quote: true
+				quote: true,
+				slippage: exchange.slippage.value
 			});
 
 			if (result.message || result.reason) {
