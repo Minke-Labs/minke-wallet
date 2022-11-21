@@ -120,6 +120,7 @@ const ExchangeScreen = ({ route }: Props) => {
 					<View mh="xs" mb="xs" row cross="center" main="space-between">
 						<View flex1>
 							<Touchable
+								bgc="background5"
 								bc={canChangeDirections ? 'cta1' : 'detail2'}
 								bw={1}
 								br="s"
@@ -143,7 +144,16 @@ const ExchangeScreen = ({ route }: Props) => {
 						</View>
 						<View mh="xxs" />
 						<View flex1>
-							<Touchable bc="cta1" bw={1} br="s" row main="center" pv="xxs" onPress={showSettingsModal}>
+							<Touchable
+								bgc="background5"
+								bc="cta1"
+								bw={1}
+								br="s"
+								row
+								main="center"
+								pv="xxs"
+								onPress={showSettingsModal}
+							>
 								<View mr="xxs">
 									<Text type="lSmall" weight="semiBold" color="cta1">
 										{i18n.t('ExchangeScreen.settings')}
