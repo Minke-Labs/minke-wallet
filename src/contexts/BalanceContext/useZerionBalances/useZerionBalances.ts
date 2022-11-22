@@ -65,7 +65,7 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 			decimals,
 			balance,
 			balanceUSD: value || 0,
-			name
+			name: name.replace('Binance-Peg ', '')
 		};
 
 		if (symbol === nativeToken.symbol) {
