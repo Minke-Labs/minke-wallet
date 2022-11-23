@@ -47,6 +47,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [fromConversionAmount, setFromConversionAmount] = React.useState<string | undefined>();
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
+	const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
+	const [slippage, setSlippage] = React.useState(0.05);
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens, stablecoins } = useBalances();
 	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
@@ -92,7 +94,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 				srcDecimals,
 				destDecimals,
 				amount,
-				side
+				side,
+				slippage
 			});
 
 			if (message || reason) {
@@ -170,7 +173,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 
 	const goToExchangeResume = () => {
 		if (fromToken && toToken) {
-			exchange.merge({ from: fromToken, to: toToken, lastConversion });
+			exchange.merge({ from: fromToken, to: toToken, lastConversion, slippage });
 			navigation.navigate('ExchangeResumeScreen');
 		}
 	};
@@ -269,7 +272,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 				loadPrices({});
 			}
 		}
-	}, [toToken, fromToken]);
+	}, [toToken, fromToken, slippage]);
 
 	useEffect(() => {
 		setGasless(gaslessEnabled && (quote ? quote.gasless : true));
@@ -305,6 +308,19 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		enoughForGas &&
 		canSendTransactions;
 
+	const showSettingsModal = () => {
+		setSettingsModalVisible(true);
+	};
+
+	const dismissSettingsModal = () => {
+		setSettingsModalVisible(false);
+	};
+
+	const onSlippageChanges = (n: number) => {
+		exchange.slippage.set(n);
+		setSlippage(n);
+	};
+
 	return {
 		fromToken,
 		toToken,
@@ -331,6 +347,11 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		gasless,
 		canSendTransactions,
 		needToChangeNetwork,
-		searchSource
+		searchSource,
+		settingsModalVisible,
+		showSettingsModal,
+		dismissSettingsModal,
+		onSlippageChanges,
+		slippage
 	};
 };

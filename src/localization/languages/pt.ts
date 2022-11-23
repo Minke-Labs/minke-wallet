@@ -111,6 +111,8 @@ export default {
 		fetching: 'Buscando...',
 		exchange: 'Converter',
 		review: 'Revisar',
+		flip: 'Inverter',
+		settings: 'Configurações',
 		GasSelector: {
 			GasOption: {
 				transaction_fee: 'Taxa da transação',
@@ -121,6 +123,10 @@ export default {
 		},
 		validations: {
 			INSUFFICIENT_ASSET_LIQUIDITY: 'Não há liquidez insuficiente para o token'
+		},
+		SettingsModal: {
+			max_slippage: 'Slippage máxima',
+			done: 'Pronto'
 		}
 	},
 	HomeScreen: {
@@ -958,7 +964,8 @@ export default {
 			name: 'Nome',
 			ens_or_wallet: 'ENS, Unstoppable Domain ou Endereço da Carteira',
 			enter_code: 'Digitar código',
-			others: 'Outros'
+			others: 'Outros',
+			slippage_tolerance: 'Tolerancia a slippage'
 		},
 		InterestBanner: {
 			interest: '% de juros anuais'
