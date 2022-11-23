@@ -12,7 +12,7 @@
     "name": "Minke",
     "slug": "minke-wallet",
     "owner": "minkelabs",
-    "version": "0.0.26",
+    "version": "0.0.27",
     "scheme": "com.minkeapp.minkewallet",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,7 +29,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "126",
+      "buildNumber": "127",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -45,7 +45,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 85,
+      "versionCode": 86,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
