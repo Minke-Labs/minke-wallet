@@ -592,6 +592,15 @@ export const networks: Networks = {
 		coingeckoPlatform: 'binance-smart-chain',
 		suggestedTokens: [
 			{
+				id: 'nelore-coin',
+				symbol: 'NLC',
+				name: 'Nelore Coin',
+				address: '0x5f320c3b8f82acfe8f2bb1c85d63aa66a7ff524f',
+				decimals: 9,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
 				id: 'xmine',
 				symbol: 'XMN',
 				name: 'Xmine',
@@ -650,9 +659,170 @@ export const networks: Networks = {
 				balanceUSD: 0
 			},
 			{
+				id: 'axie-infinity',
+				symbol: 'AXS',
+				name: 'Axie Infinity',
+				address: '0x715d400f88c167884bbcc41c5fea407ed4d2f8a0',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ALPACA',
+				address: '0x8f0528ce5ef7b51152a59745befdd91d97091d2f',
+				decimals: 18,
+				name: 'Alpaca Finance',
+				id: 'alpaca-finance',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				id: 'winklink-bsc',
+				symbol: 'WIN',
+				name: 'WINkLink BSC',
+				address: '0xaef0d72a118ce24fee3cd1d43d383897d05b4e99',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				id: 'titano',
+				symbol: 'TITANO',
+				name: 'Titano',
+				address: '0x4e3cabd3ad77420ff9031d19899594041c420aee',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: '1INCH',
+				address: '0x111111111117dc0aa78b770fa6a738034120c302',
+				decimals: 18,
+				name: '1inch',
+				id: '1inch',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'LINK',
+				address: '0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd',
+				decimals: 18,
+				name: 'Chainlink',
+				id: 'chainlink',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				id: 'shiba-floki',
+				symbol: 'floki',
+				name: 'Shiba Floki Inu',
+				address: '0x4aadad81487c3fadd9f162b851e6a61b729200cb',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'XTZ',
+				address: '0x16939ef78684453bfdfb47825f8a5f714f12623a',
+				decimals: 18,
+				name: 'Tezos Token',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'SNX',
+				name: 'Synthetix Network Token',
+				address: '0x9ac983826058b8a9c7aa1c9171441191232e8404',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				address: '0x3019bf2a2ef8040c242c9a4c5c4bd4c81678b2a1',
+				decimals: 8,
+				name: 'STEPN',
+				symbol: 'GMT',
+				id: 'stepn',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'COMP',
+				address: '0x52ce071bd9b1c4b00a0b92d298c512478cad67e8',
+				decimals: 18,
+				name: 'Compound',
+				id: 'compound-governance-token',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				address: '0x101d82428437127bf1608f699cd651e6abf9766e',
+				decimals: 18,
+				name: 'Basic Attention Token',
+				symbol: 'BAT',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				address: '0x1fa4a73a3f0133f0025378af00236f3abdee5d63',
+				decimals: 18,
+				name: 'Wrapped Near',
+				symbol: 'WNEAR',
+				id: 'wrapped-near',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'DOT',
+				address: '0x7083609fce4d1d8dc0c979aab8c869ea2c873402',
+				decimals: 18,
+				name: 'Polkadot',
+				id: 'binance-peg-polkadot',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				id: 'binance-peg-avalanche',
+				symbol: 'AVAX',
+				name: 'Avalanche',
+				address: '0x1ce0c2827e2ef14d5c4f29a091d735a204794041',
+				decimals: 18,
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				symbol: 'ATOM',
+				address: '0x0eb3a705fc54725037cc9e008bdede697f62f335',
+				decimals: 18,
+				name: 'Cosmos Hub',
+				id: 'cosmos',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				address: '0xa64455a4553c9034236734faddaddbb64ace4cc7',
+				decimals: 8,
+				name: 'Santos FC Fan Token',
+				symbol: 'SANTOS',
+				id: 'santos-fc-fan-token',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
+				address: '0xc748673057861a797275cd8a068abb95a902e8de',
+				decimals: 9,
+				name: 'Baby Doge Coin',
+				symbol: 'BABYDOGE',
+				id: 'baby-doge-coin',
+				balance: '0',
+				balanceUSD: 0
+			},
+			{
 				symbol: 'CAKE',
 				address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
 				decimals: 18,
+				name: 'PancakeSwap',
+				id: 'pancakeswap-token',
 				balance: '0',
 				balanceUSD: 0
 			},
@@ -660,6 +830,8 @@ export const networks: Networks = {
 				symbol: 'XRP',
 				address: '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
 				decimals: 18,
+				name: 'XRP',
+				id: 'binance-peg-xrp',
 				balance: '0',
 				balanceUSD: 0
 			},
@@ -667,6 +839,8 @@ export const networks: Networks = {
 				symbol: 'ADA',
 				address: '0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
 				decimals: 18,
+				name: 'Cardano',
+				id: 'binance-peg-cardano',
 				balance: '0',
 				balanceUSD: 0
 			},
@@ -674,6 +848,8 @@ export const networks: Networks = {
 				symbol: 'DOGE',
 				address: '0xba2ae424d960c26247dd6c32edc70b295c744c43',
 				decimals: 8,
+				name: 'Dogecoin',
+				id: 'binance-peg-dogecoin',
 				balance: '0',
 				balanceUSD: 0
 			},

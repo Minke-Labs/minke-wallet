@@ -22,6 +22,7 @@ export interface ExchangeState {
 	toAmount: string | undefined;
 	gas: Gas | undefined;
 	lastConversion?: Conversion;
+	slippage: number;
 }
 
 const globalStateInit = createState({} as ExchangeState);

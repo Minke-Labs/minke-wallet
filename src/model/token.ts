@@ -30,6 +30,7 @@ export interface ExchangeParams {
 	side: 'SELL' | 'BUY';
 	amount: string;
 	quote?: boolean; // price or quote request
+	slippage?: number;
 }
 
 interface QuoteParams {
@@ -54,7 +55,8 @@ export const getExchangePrice = async ({
 	amount,
 	srcDecimals,
 	destDecimals,
-	quote = false
+	quote = false,
+	slippage = 0.05
 }: ExchangeParams): Promise<ExchangeRoute> => {
 	const { apiUrl0x, nativeToken } = await network();
 	let sellToken = srcToken.toLowerCase();
@@ -73,8 +75,8 @@ export const getExchangePrice = async ({
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		buyTokenPercentageFee: 0.0085,
-		slippagePercentage: 0.05,
-		excludedSources: 'MeshSwap,Curve_V2',
+		slippagePercentage: slippage,
+		excludedSources: 'MeshSwap,Curve_V2,MDex',
 		skipValidation: true
 	};
 

@@ -110,6 +110,8 @@ export default {
 		fetching: 'Fetching...',
 		exchange: 'Exchange',
 		review: 'Review',
+		flip: 'Flip',
+		settings: 'Settings',
 		GasSelector: {
 			GasOption: {
 				transaction_fee: 'Transaction Fee',
@@ -120,6 +122,10 @@ export default {
 		},
 		validations: {
 			INSUFFICIENT_ASSET_LIQUIDITY: 'Insufficient asset liquidity'
+		},
+		SettingsModal: {
+			max_slippage: 'Max Slippage',
+			done: 'Done'
 		}
 	},
 	HomeScreen: {
@@ -953,7 +959,8 @@ export default {
 			name: 'Name',
 			ens_or_wallet: 'ENS, Unstoppable Domain or Wallet Address',
 			enter_code: 'Enter code',
-			others: 'Others'
+			others: 'Others',
+			slippage_tolerance: 'Slippage tolerance'
 		},
 		InterestBanner: {
 			interest: '% annualized interest'

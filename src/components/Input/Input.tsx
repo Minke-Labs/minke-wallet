@@ -35,6 +35,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 		value = '',
 		onSelectionChange,
 		style,
+		extraText,
 		...rest
 	},
 	ref
@@ -278,7 +279,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
 							style={styles.input}
 							{...{ value, multiline, ...rest }}
 						/>
-
+						{!!extraText && <Text>{extraText}</Text>}
 						{error && <Icon name="errorStroke" size={24} color="alert1" style={{ marginRight: 8 }} />}
 
 						{isPassword && (

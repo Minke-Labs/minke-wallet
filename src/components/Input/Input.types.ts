@@ -11,6 +11,7 @@ interface InputProps extends Omit<TextInputProps, 'secureTextEntry'> {
 	error?: boolean;
 	small?: boolean;
 	style?: StyleProp<ViewStyle>;
+	extraText?: string;
 }
 
 interface InputRef {

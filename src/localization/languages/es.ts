@@ -121,6 +121,8 @@ export default {
 		fetching: 'Buscando...',
 		exchange: 'Intercambiar',
 		review: 'Revisar',
+		flip: 'Invertir',
+		settings: 'Ajustes',
 		GasSelector: {
 			GasOption: {
 				transaction_fee: 'Comision de transacción',
@@ -131,6 +133,10 @@ export default {
 		},
 		validations: {
 			INSUFFICIENT_ASSET_LIQUIDITY: 'insuficiente liquidez de activos'
+		},
+		SettingsModal: {
+			max_slippage: 'Slippage máxima',
+			done: 'Hecho'
 		}
 	},
 	HomeScreen: {
@@ -968,7 +974,8 @@ export default {
 			name: 'Nombre',
 			ens_or_wallet: 'ENS, Unstoppable Domain o Wallet Address',
 			enter_code: 'Ingresa código',
-			others: 'Otros'
+			others: 'Otros',
+			slippage_tolerance: 'Tolerancia a la slippage'
 		},
 		InterestBanner: {
 			interest: '% interesa anual'
