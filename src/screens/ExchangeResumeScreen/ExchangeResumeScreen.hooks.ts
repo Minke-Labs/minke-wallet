@@ -248,7 +248,10 @@ const useExchangeResumeScreen = () => {
 						chainId,
 						data,
 						gasPrice: BigNumber.from(gasPrice),
-						gasLimit: Math.max(gasLimits.exchange, +gasLimit),
+						gasLimit: Math.max(
+							to.suggestedSlippage ? gasLimits.exchange * 1.5 : gasLimits.exchange,
+							+gasLimit
+						),
 						nonce,
 						to: toAddress,
 						value: BigNumber.from(value)

@@ -48,7 +48,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [toConversionAmount, setToConversionAmount] = React.useState<string | undefined>();
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
-	const [slippage, setSlippage] = React.useState(0.05);
+	const [slippage, setSlippage] = React.useState<number>();
 	const { gaslessEnabled } = useBiconomy();
 	const { tokens, stablecoins } = useBalances();
 	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
@@ -291,6 +291,14 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 			}
 		}
 	}, [gasValueInEth, fromToken?.symbol, nativeToken?.symbol]);
+
+	useEffect(() => {
+		if (toToken?.suggestedSlippage) {
+			setSlippage(toToken.suggestedSlippage);
+		} else {
+			setSlippage(undefined);
+		}
+	}, [toToken?.address]);
 
 	const enoughForGas =
 		gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasLimits.exchange)) : true);

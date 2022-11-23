@@ -4,7 +4,7 @@ import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
 import { network } from './network';
-import { MinkeToken, InvestmentToken } from './types/token.types';
+import { MinkeToken, InvestmentToken, MinkeTokenList } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 
@@ -14,7 +14,17 @@ export const tokenList = async (): Promise<TokenResponse> => {
 		const result = await fetch(
 			`https://raw.githubusercontent.com/Minke-Labs/token-lists/main/${zapperNetwork}.tokenlist.json`
 		);
-		return await result.json();
+		const { tokens }: TokenResponse = await result.json();
+		return {
+			tokens: tokens.map((t) => {
+				const { tags = [] } = t;
+				let suggestedSlippage;
+				if (tags.includes('slippage')) {
+					suggestedSlippage = 0.3;
+				}
+				return { ...t, ...{ suggestedSlippage } };
+			})
+		};
 	} catch {
 		const suggestedStables = Object.values(stables[id]);
 		return { tokens: [...suggestedStables, ...suggestedTokens] };
@@ -220,7 +230,7 @@ export interface NativeTokens {
 }
 
 export interface TokenResponse {
-	tokens: Array<MinkeToken>;
+	tokens: Array<MinkeTokenList>;
 }
 
 interface BestRoute {

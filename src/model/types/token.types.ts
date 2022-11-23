@@ -15,6 +15,7 @@ export interface MinkeToken {
 		decimals: number;
 		source: string;
 	};
+	suggestedSlippage?: number;
 }
 
 export interface TopupToken extends MinkeToken {
@@ -30,4 +31,8 @@ export interface InvestmentToken extends MinkeToken {
 export interface MinkeGasToken extends MinkeToken {
 	balanceAvailable?: string;
 	balanceAvailableUSD?: number;
+}
+
+export interface MinkeTokenList extends MinkeToken {
+	tags?: string[];
 }
