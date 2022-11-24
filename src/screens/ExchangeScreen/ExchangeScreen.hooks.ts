@@ -293,7 +293,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	}, [gasValueInEth, fromToken?.symbol, nativeToken?.symbol]);
 
 	useEffect(() => {
-		setSlippage(toToken.suggestedSlippage);
+		setSlippage(toToken?.suggestedSlippage);
 	}, [toToken?.address]);
 
 	const enoughForGas =
