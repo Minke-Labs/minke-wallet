@@ -22,7 +22,7 @@ const instance = axios.create({
 
 const useCovalentBalances = async (address: string) => {
 	try {
-		const { chainId, coingeckoPlatform } = await network();
+		const { chainId, coingeckoPlatform, suggestedTokens } = await network();
 		const { status, data } = await instance.get(`/${chainId}/address/${address}/balances_v2/`);
 		if (status !== 200) Logger.sentry('Balances API failed');
 		const {
@@ -34,8 +34,11 @@ const useCovalentBalances = async (address: string) => {
 		coins = coins.filter(({ platforms }) => !!platforms[coingeckoPlatform]);
 		const curated = coins.map(({ symbol }) => symbol.toLowerCase());
 		const allTokens = await convertTokens({ source: 'covalent', tokens: apiTokens, chainId });
+		const suggested = suggestedTokens.map((t) => t.symbol.toLowerCase());
 
-		const tokens = allTokens.filter((token) => curated.includes(token.symbol.toLowerCase()));
+		const tokens = allTokens.filter(
+			(token) => curated.includes(token.symbol.toLowerCase()) || suggested.includes(token.symbol.toLowerCase())
+		);
 		return {
 			tokens
 		};

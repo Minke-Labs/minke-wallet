@@ -40,7 +40,9 @@ const InvestmentsScreen = () => {
 				t.address.toLowerCase().includes(query)
 		);
 	}
-	investments = investments.sort((a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0));
+	investments = investments.sort(
+		(a, b) => (b.balanceUSD || 0) - (a.balanceUSD || 0) || (Number(b.balance) || 0) - (Number(a.balance) || 0)
+	);
 
 	return (
 		<AssetsLayout
