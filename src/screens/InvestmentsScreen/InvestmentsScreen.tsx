@@ -70,7 +70,7 @@ const InvestmentsScreen = () => {
 		const secondPercentage = second[0].perc || -100;
 		const firstBalance = Number(first[0].balance || '0');
 		const secondBalance = Number(second[0].balance || '0');
-		return secondBalanceUSD - firstBalanceUSD || secondPercentage - firstPercentage || secondBalance - firstBalance;
+		return secondBalanceUSD - firstBalanceUSD || secondBalance - firstBalance || secondPercentage - firstPercentage;
 	});
 
 	return (

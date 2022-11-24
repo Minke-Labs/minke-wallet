@@ -658,7 +658,8 @@ export const networks: Networks = {
 				address: '0x5f320c3b8f82acfe8f2bb1c85d63aa66a7ff524f',
 				decimals: 9,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				id: 'xmine',
@@ -732,7 +733,8 @@ export const networks: Networks = {
 				address: '0x715d400f88c167884bbcc41c5fea407ed4d2f8a0',
 				decimals: 18,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'ALPACA',
@@ -741,7 +743,8 @@ export const networks: Networks = {
 				name: 'Alpaca Finance',
 				id: 'alpaca-finance',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				id: 'winklink-bsc',
@@ -750,7 +753,8 @@ export const networks: Networks = {
 				address: '0xaef0d72a118ce24fee3cd1d43d383897d05b4e99',
 				decimals: 18,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				id: 'titano',
@@ -759,7 +763,8 @@ export const networks: Networks = {
 				address: '0x4e3cabd3ad77420ff9031d19899594041c420aee',
 				decimals: 18,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: '1INCH',
@@ -768,7 +773,8 @@ export const networks: Networks = {
 				name: '1inch',
 				id: '1inch',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'LINK',
@@ -777,16 +783,18 @@ export const networks: Networks = {
 				name: 'Chainlink',
 				id: 'chainlink',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				id: 'shiba-floki',
-				symbol: 'floki',
+				symbol: 'FLOKI',
 				name: 'Shiba Floki Inu',
 				address: '0x4aadad81487c3fadd9f162b851e6a61b729200cb',
 				decimals: 18,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'XTZ',
@@ -794,7 +802,8 @@ export const networks: Networks = {
 				decimals: 18,
 				name: 'Tezos Token',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'SNX',
@@ -802,7 +811,8 @@ export const networks: Networks = {
 				address: '0x9ac983826058b8a9c7aa1c9171441191232e8404',
 				decimals: 18,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				address: '0x3019bf2a2ef8040c242c9a4c5c4bd4c81678b2a1',
@@ -811,7 +821,8 @@ export const networks: Networks = {
 				symbol: 'GMT',
 				id: 'stepn',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'COMP',
@@ -820,7 +831,8 @@ export const networks: Networks = {
 				name: 'Compound',
 				id: 'compound-governance-token',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				address: '0x101d82428437127bf1608f699cd651e6abf9766e',
@@ -828,7 +840,8 @@ export const networks: Networks = {
 				name: 'Basic Attention Token',
 				symbol: 'BAT',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				address: '0x1fa4a73a3f0133f0025378af00236f3abdee5d63',
@@ -837,7 +850,8 @@ export const networks: Networks = {
 				symbol: 'WNEAR',
 				id: 'wrapped-near',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'DOT',
@@ -846,7 +860,8 @@ export const networks: Networks = {
 				name: 'Polkadot',
 				id: 'binance-peg-polkadot',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				id: 'binance-peg-avalanche',
@@ -855,7 +870,8 @@ export const networks: Networks = {
 				address: '0x1ce0c2827e2ef14d5c4f29a091d735a204794041',
 				decimals: 18,
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'ATOM',
@@ -864,7 +880,8 @@ export const networks: Networks = {
 				name: 'Cosmos Hub',
 				id: 'cosmos',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				address: '0xa64455a4553c9034236734faddaddbb64ace4cc7',
@@ -873,7 +890,8 @@ export const networks: Networks = {
 				symbol: 'SANTOS',
 				id: 'santos-fc-fan-token',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				address: '0xc748673057861a797275cd8a068abb95a902e8de',
@@ -882,7 +900,8 @@ export const networks: Networks = {
 				symbol: 'BABYDOGE',
 				id: 'baby-doge-coin',
 				balance: '0',
-				balanceUSD: 0
+				balanceUSD: 0,
+				chainId: 56
 			},
 			{
 				symbol: 'CAKE',

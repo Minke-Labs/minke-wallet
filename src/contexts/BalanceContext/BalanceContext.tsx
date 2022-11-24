@@ -27,6 +27,10 @@ const BalanceProvider: React.FC = ({ children }) => {
 	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
 	const [loading, setLoading] = React.useState(true);
 
+	const suggestedTokens = Object.values(networks)
+		.map((n) => n.suggestedTokens)
+		.flat();
+
 	const fetchInterests = useCallback(async () => {
 		if (selectedProtocol) {
 			const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
@@ -39,9 +43,6 @@ const BalanceProvider: React.FC = ({ children }) => {
 	}, [address, selectedProtocol]);
 
 	const fillSuggestedTokens = (tokensWithBalance: MinkeToken[]): MinkeToken[] => {
-		const suggestedTokens = Object.values(networks)
-			.map((n) => n.suggestedTokens)
-			.flat();
 		const notFoundTokens = suggestedTokens.filter((suggested) => {
 			const found = tokensWithBalance.find((t) => t.symbol.toLowerCase() === suggested.symbol.toLowerCase());
 			return !found;
