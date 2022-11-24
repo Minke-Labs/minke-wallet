@@ -207,7 +207,7 @@ const ExchangeScreen = ({ route }: Props) => {
 			<ModalBase isVisible={settingsModalVisible} onDismiss={dismissSettingsModal}>
 				<SettingsModal
 					onDismiss={dismissSettingsModal}
-					slippageValue={(slippage * 100).toString()}
+					slippageValue={((slippage || 0.05) * 100).toString()}
 					onSlippageChanges={onSlippageChanges}
 				/>
 			</ModalBase>
