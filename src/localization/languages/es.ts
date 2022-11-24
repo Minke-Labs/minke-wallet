@@ -105,7 +105,7 @@ export default {
 		enter_referral_code: 'Ingresa tú código',
 		get_rewarded_for_saving_money: '¡Sé recompensado con mejor dinero!',
 		or: 'or',
-		buy_usdc: 'Compra USDC',
+		buy_token: 'Compra {{token}}',
 		referral_note:
 			'Este código solo puede ser usado una vez. Después de comprar stablecoins tú y tu amigo van a recibir cada uno hasta 50 puntos Minke.',
 		invalid_code: 'Código invalido',
@@ -121,6 +121,8 @@ export default {
 		fetching: 'Buscando...',
 		exchange: 'Intercambiar',
 		review: 'Revisar',
+		flip: 'Invertir',
+		settings: 'Ajustes',
 		GasSelector: {
 			GasOption: {
 				transaction_fee: 'Comision de transacción',
@@ -131,6 +133,10 @@ export default {
 		},
 		validations: {
 			INSUFFICIENT_ASSET_LIQUIDITY: 'insuficiente liquidez de activos'
+		},
+		SettingsModal: {
+			max_slippage: 'Slippage máxima',
+			done: 'Hecho'
 		}
 	},
 	HomeScreen: {
@@ -322,7 +328,7 @@ export default {
 				earn_minke_points: '¡Gana puntos Minke!',
 				refer_a_friend: 'Refiriendo a un amigo',
 				when_your_friends_top_up:
-					'Cuando tu amigo compre o intercambie monedas estables, obtendrá hasta 50 puntos Minke. Obtendrá una comisión del 20% en puntos por referencia.',
+					'Cuando tu amigo compre monedas estables, obtendrá hasta 50 puntos Minke. Obtendrá una comisión del 20% en puntos por referencia.',
 				share_text:
 					'¡Hola! Estuve usando Minke para ganarle a la inflación con stablecoins de valor igual al dólar. Ambos vamos a recibir hasta $5 en USDC al registrarte y hacer tu primer compra o intercambio. Mi código de invitación es {{code}} - registrate acá: https://minke.onelink.me/rwwq/ref',
 				points_are_distributed:
@@ -968,7 +974,8 @@ export default {
 			name: 'Nombre',
 			ens_or_wallet: 'ENS, Unstoppable Domain o Wallet Address',
 			enter_code: 'Ingresa código',
-			others: 'Otros'
+			others: 'Otros',
+			slippage_tolerance: 'Tolerancia a la slippage'
 		},
 		InterestBanner: {
 			interest: '% interesa anual'

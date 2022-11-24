@@ -2,10 +2,9 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { BlankStates, ModalBase } from '@components';
+import { BlankStates, ModalBase, Header, Icon } from '@components';
 import { useReferralCode, useNavigation, useMinkeRewards, useLanguage } from '@hooks';
 import { Background } from './Background/Background';
-import { Header } from './Header/Header';
 import { CurrentValue } from './CurrentValue/CurrentValue';
 import useReferralScreen from './ReferralScreen.hooks';
 import HelpModal from './HelpModal/HelpModal';
@@ -22,14 +21,18 @@ const ReferralScreen = () => {
 	const onRedeemPress = () => navigation.navigate('RedeemScreen', { code });
 	const { rewards, points, loading } = useMinkeRewards();
 
-	if (loading) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Referral')} />;
+	if (loading) return <BlankStates.Type2 title={i18n.t('ReferralScreen.Header.points')} />;
 
 	return (
 		<>
 			<BasicLayout hideSafeAreaView bgc="detail4">
 				<SafeAreaView>
 					<Background>
-						<Header onHelpPress={onHelpPress} />
+						<Header
+							title={i18n.t('ReferralScreen.Header.points')}
+							onRightActionClick={onHelpPress}
+							rightAction={<Icon name="infoStroke" color="text7" size={24} />}
+						/>
 						<CurrentValue points={points} onEarnPress={onEarnPress} onRedeemPress={onRedeemPress} />
 					</Background>
 				</SafeAreaView>

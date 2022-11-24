@@ -51,11 +51,12 @@ const BalanceProvider: React.FC = ({ children }) => {
 
 	const processTokens = async (coins: MinkeToken[]) => {
 		let allTokens = coins.filter(
-			({ symbol, balance = '0', name = '', balanceUSD = 0 }) =>
+			({ symbol, balance = '0', name = '', balanceUSD = 0, address: tokenAddress }) =>
 				!interestBearingTokens.includes(symbol.toLowerCase()) &&
 				!stbCoins.includes(symbol) &&
 				+balance > 0 &&
-				balanceUSD > 0 &&
+				(balanceUSD > 0 ||
+					suggestedTokens.map((t) => t.address.toLowerCase()).includes(tokenAddress.toLowerCase())) &&
 				!isValidDomain(name) &&
 				!isValidDomain(symbol)
 		);
@@ -81,6 +82,20 @@ const BalanceProvider: React.FC = ({ children }) => {
 		setLoading(false);
 	};
 
+	const fallbackWithCovalentData = async (coins: MinkeToken[]) => {
+		const { tokens: allTokens } = await useCovalentBalances(address);
+		const fallback: MinkeToken[] = [];
+		const foundAddresses = coins.map((t) => t.address.toLowerCase());
+		foundAddresses.push('0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+
+		allTokens.forEach((token) => {
+			if (!foundAddresses.includes(token.address.toLowerCase())) {
+				fallback.push(token);
+			}
+		});
+		processTokens([...coins, ...fallback]);
+	};
+
 	useEffect(() => {
 		fetchInterests();
 	}, [selectedProtocol, address, chainId]);
@@ -93,6 +108,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 					if (loadingUI) setLoading(true);
 					const allTokens = await useZerionBalances({ address });
 					await processTokens(allTokens);
+					fallbackWithCovalentData(allTokens);
 				} catch (error) {
 					if (!fallbacking) {
 						Logger.log('Covalent fallback', error);

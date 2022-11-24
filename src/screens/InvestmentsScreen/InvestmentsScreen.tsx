@@ -68,7 +68,9 @@ const InvestmentsScreen = () => {
 		const secondBalanceUSD = second.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
 		const firstPercentage = first[0].perc || -100;
 		const secondPercentage = second[0].perc || -100;
-		return secondBalanceUSD - firstBalanceUSD || secondPercentage - firstPercentage;
+		const firstBalance = Number(first[0].balance || '0');
+		const secondBalance = Number(second[0].balance || '0');
+		return secondBalanceUSD - firstBalanceUSD || secondPercentage - firstPercentage || secondBalance - firstBalance;
 	});
 
 	return (

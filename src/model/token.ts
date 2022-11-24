@@ -5,7 +5,7 @@ import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
 import { network, networks } from './network';
-import { MinkeToken, InvestmentToken } from './types/token.types';
+import { MinkeToken, InvestmentToken, MinkeTokenList } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 
@@ -17,7 +17,14 @@ export const tokenList = async (chainId: number): Promise<MinkeToken[]> => {
 			`https://raw.githubusercontent.com/Minke-Labs/token-lists/main/${zapperNetwork}.tokenlist.json`
 		);
 		const { tokens } = await result.json();
-		return tokens.map((t: MinkeToken) => ({ ...t, ...{ chainId: selectedNetwork.chainId } }));
+		return tokens.map((t: MinkeTokenList) => {
+			const { tags = [] } = t;
+			let suggestedSlippage;
+			if (tags.includes('slippage')) {
+				suggestedSlippage = 0.3;
+			}
+			return { ...t, ...{ suggestedSlippage, chainId: selectedNetwork.chainId } };
+		});
 	} catch (error) {
 		Logger.log('Error in the tokenList', error);
 		const suggestedStables = Object.values(stables[id]);
@@ -35,6 +42,7 @@ export interface ExchangeParams {
 	amount: string;
 	quote?: boolean; // price or quote request
 	chainId: number | undefined;
+	slippage?: number;
 }
 
 interface QuoteParams {
@@ -60,7 +68,8 @@ export const getExchangePrice = async ({
 	srcDecimals,
 	destDecimals,
 	quote = false,
-	chainId
+	chainId,
+	slippage = 0.05
 }: ExchangeParams): Promise<ExchangeRoute> => {
 	const nw = Object.values(networks).find((n) => n.chainId === chainId);
 	const { apiUrl0x, nativeToken } = nw || (await network());
@@ -80,8 +89,8 @@ export const getExchangePrice = async ({
 		feeRecipient: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		buyTokenPercentageFee: 0.0085,
-		slippagePercentage: 0.05,
-		excludedSources: 'MeshSwap,Curve_V2',
+		slippagePercentage: slippage,
+		excludedSources: 'MeshSwap,Curve_V2,MDex',
 		skipValidation: true
 	};
 
@@ -225,6 +234,10 @@ export interface NativeTokens {
 	ETH: MinkeToken;
 	MATIC: MinkeToken;
 	BNB: MinkeToken;
+}
+
+export interface TokenResponse {
+	tokens: Array<MinkeTokenList>;
 }
 
 interface BestRoute {

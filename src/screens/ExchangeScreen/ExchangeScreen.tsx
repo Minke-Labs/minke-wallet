@@ -14,7 +14,10 @@ import {
 	BlankStates,
 	Warning,
 	View,
-	WatchModeTag
+	WatchModeTag,
+	Touchable,
+	Text,
+	Icon
 } from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
@@ -23,6 +26,7 @@ import gasLimits from '@models/gas';
 import { RootStackParamList } from '@src/routes/types.routes';
 import { useExchangeScreen } from './ExchangeScreen.hooks';
 import DirectionButton from './DirectionButton/DirectionButton';
+import SettingsModal from './SettingsModal/SettingsModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;
 const ExchangeScreen = ({ route }: Props) => {
@@ -54,7 +58,12 @@ const ExchangeScreen = ({ route }: Props) => {
 		gasless,
 		canSendTransactions,
 		needToChangeNetwork,
-		searchSource
+		searchSource,
+		settingsModalVisible,
+		dismissSettingsModal,
+		showSettingsModal,
+		onSlippageChanges,
+		slippage
 	} = useExchangeScreen({ sourceToken, destToken });
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
@@ -108,6 +117,53 @@ const ExchangeScreen = ({ route }: Props) => {
 						/>
 					</View>
 
+					<View mh="xs" mb="xs" row cross="center" main="space-between">
+						<View flex1>
+							<Touchable
+								bgc="background5"
+								bc={canChangeDirections ? 'cta1' : 'detail2'}
+								bw={1}
+								br="s"
+								row
+								main="center"
+								pv="xxs"
+								disabled={!canChangeDirections}
+								onPress={directionSwap}
+							>
+								<View mr="xxs">
+									<Text
+										type="lSmall"
+										weight="semiBold"
+										color={canChangeDirections ? 'cta1' : 'detail2'}
+									>
+										{i18n.t('ExchangeScreen.flip')}
+									</Text>
+								</View>
+								<Icon name="swapCurrency" color={canChangeDirections ? 'cta1' : 'detail2'} size={16} />
+							</Touchable>
+						</View>
+						<View mh="xxs" />
+						<View flex1>
+							<Touchable
+								bgc="background5"
+								bc="cta1"
+								bw={1}
+								br="s"
+								row
+								main="center"
+								pv="xxs"
+								onPress={showSettingsModal}
+							>
+								<View mr="xxs">
+									<Text type="lSmall" weight="semiBold" color="cta1">
+										{i18n.t('ExchangeScreen.settings')}
+									</Text>
+								</View>
+								<Icon name="gear" color="cta1" size={16} />
+							</Touchable>
+						</View>
+					</View>
+
 					<View style={{ display: keyboardVisible ? 'none' : 'flex' }}>
 						<View mb="s" style={{ display: gasless ? 'none' : 'flex' }}>
 							<GasSelector gasLimit={gasLimits.exchange} />
@@ -148,6 +204,13 @@ const ExchangeScreen = ({ route }: Props) => {
 			</ModalBase>
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>
 				<ModalReusables.Error onDismiss={() => setError('')} description={error} />
+			</ModalBase>
+			<ModalBase isVisible={settingsModalVisible} onDismiss={dismissSettingsModal}>
+				<SettingsModal
+					onDismiss={dismissSettingsModal}
+					slippageValue={((slippage || 0.05) * 100).toString()}
+					onSlippageChanges={onSlippageChanges}
+				/>
 			</ModalBase>
 		</>
 	);
