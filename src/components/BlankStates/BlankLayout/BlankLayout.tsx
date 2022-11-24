@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
-import {
-	useSharedValue,
-	useAnimatedStyle,
-	withTiming,
-	withRepeat
-} from 'react-native-reanimated';
+import { useSharedValue, useAnimatedStyle, withTiming, withRepeat } from 'react-native-reanimated';
 import { screenWidth, SpacingType } from '@styles';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { useNavigation } from '@hooks';
 import View from '@src/components/View/View';
 import AnimatedView from '@src/components/AnimatedView/AnimatedView';
-import ModalHeader from '@src/components/ModalHeader/ModalHeader';
 import BasicLayout from '@src/layouts/BasicLayout/BasicLayout';
+import Header from '@src/components/Header/Header';
+import Icon from '@src/components/Icon/Icon';
 import { Gradient } from './Gradient';
 
 const timing = { duration: 1200 };
@@ -39,27 +35,24 @@ const BlankLayout: React.FC<BlankLayoutProps> = ({ children, title, br, invert }
 		<View bgc={invert ? 'background7' : 'background1'} flex1 br={br}>
 			<SafeAreaView />
 			{!!title && (
-				<ModalHeader
-					onDismiss={() => navigation.goBack()}
-					onBack={() => navigation.goBack()}
+				<Header
 					title={title}
+					onRightActionClick={() => navigation.goBack()}
+					rightAction={<Icon name="close" size={24} color="text7" />}
 				/>
 			)}
 			<MaskedView
 				androidRenderingMode="software"
 				style={{ flex: 1 }}
-				maskElement={(
+				maskElement={
 					<View flex1 cross="center">
 						{children}
 					</View>
-				)}
+				}
 			>
 				<BasicLayout hideSafeAreaView center hidePadding>
 					{children}
-					<AnimatedView
-						h="100%"
-						style={[{ position: 'absolute', left: 0 }, animatedStyle]}
-					>
+					<AnimatedView h="100%" style={[{ position: 'absolute', left: 0 }, animatedStyle]}>
 						<Gradient />
 					</AnimatedView>
 				</BasicLayout>
