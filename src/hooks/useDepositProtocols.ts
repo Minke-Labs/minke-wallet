@@ -1,20 +1,11 @@
 import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-	DepositProtocol,
-	depositStablecoins,
-	fetchDepositProtocol,
-	fetchMStablePoolData,
-	usdCoin
-} from '@models/deposit';
-import { getAavePools } from '@src/services/apis/covalent/covalent';
+import { DepositProtocol, depositStablecoins, fetchDepositProtocol, usdCoin } from '@models/deposit';
 import { getDepositToken } from '@models/depositTokens';
-import { network, networks } from '@models/network';
+import { network } from '@models/network';
 import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
-import { globalWalletState } from '@stores/WalletStore';
 import { DepositableToken } from '@models/types/depositTokens.types';
-import DepositService from '@src/services/deposit/DepositService';
 import { globalDepositState } from '@stores/DepositStore';
 import useBalances from './useBalances';
 
@@ -22,12 +13,9 @@ const useDepositProtocols = (withdraw = false) => {
 	const [selectedProtocol, setSelectedProtocol] = React.useState<DepositProtocol>();
 	const [selectedUSDCoin, setSelectedUSDCoin] = React.useState('');
 	const [depositableToken, setDepositableToken] = React.useState<DepositableToken>();
-	const [apy, setApy] = React.useState('');
 	const [depositContract, setDepositContract] = React.useState('');
 	const [ableToDeposit, setAbleToDeposit] = React.useState<boolean | undefined>();
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
-	const [approved, setApproved] = React.useState<boolean | undefined>(); // transaction amount is approved?
-	const { address } = useState(globalWalletState()).value;
 	const depositState = useState(globalDepositState());
 	const { stablecoins: tokens, withdrawableTokens } = useBalances();
 
@@ -89,28 +77,6 @@ const useDepositProtocols = (withdraw = false) => {
 	}, []);
 
 	useEffect(() => {
-		const loadApproved = async () => {
-			if (selectedProtocol) {
-				const protocolApproved = await AsyncStorage.getItem(`@approved-${selectedProtocol.id}`);
-				if (protocolApproved) {
-					setApproved(true);
-				} else if (depositableToken) {
-					const { id: networkId } = Object.values(networks).find(
-						(n) => n.chainId === depositableToken.chainId
-					);
-					const { isApproved } = await new DepositService(selectedProtocol.id).approveState(
-						address,
-						depositableToken.address,
-						networkId
-					);
-					setApproved(isApproved);
-				}
-			}
-		};
-		loadApproved();
-	}, [depositableToken, selectedProtocol]);
-
-	useEffect(() => {
 		const fetchDepositContract = async () => {
 			if (selectedProtocol) {
 				if (selectedProtocol.id === 'aave') {
@@ -136,47 +102,12 @@ const useDepositProtocols = (withdraw = false) => {
 		fetchDepositToken();
 	}, [selectedUSDCoin, selectedProtocol, defaultToken]);
 
-	useEffect(() => {
-		const updateApy = async () => {
-			if (selectedProtocol && selectedUSDCoin) {
-				try {
-					if (selectedProtocol.id === 'aave') {
-						const pools = await getAavePools();
-						const pool = pools.find(
-							({ underlying }) =>
-								underlying.contract_ticker_symbol.toLowerCase() === selectedUSDCoin.toLowerCase()
-						);
-						if (pool) {
-							setApy((pool.supply_apy * 100).toFixed(2));
-						}
-					} else {
-						const { name } = await network();
-						const poolData = await fetchMStablePoolData();
-						const pool = poolData.pools.find(
-							({ pair, chain }) => chain === name.toLowerCase() && pair === 'imUSD'
-						);
-						if (pool) {
-							setApy(pool.apyDetails.yieldOnly.toFixed(2));
-						}
-					}
-				} catch {
-					setApy('0.00');
-				}
-			}
-		};
-
-		updateApy();
-	}, [selectedProtocol, selectedUSDCoin]);
-
 	return {
 		selectedProtocol,
-		apy,
 		depositableToken,
 		depositContract,
 		ableToDeposit,
 		defaultToken,
-		approved,
-		setApproved,
 		onChangeProtocol,
 		setSelectedUSDCoin
 	};

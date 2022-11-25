@@ -73,7 +73,7 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 		};
 
 		if (symbol === nativeToken.symbol) {
-			const provider = await getProvider(id);
+			const provider = getProvider(id);
 			const blockchainBalance = await provider.getBalance(address);
 			balance = formatUnits(blockchainBalance, decimals);
 			const balanceUSD = Number(balance) * price.value;

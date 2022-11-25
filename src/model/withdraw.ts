@@ -1,8 +1,8 @@
 import { BigNumber, Contract, Wallet } from 'ethers';
 import { permitSignature } from '@utils/signing/signing';
 import { getProvider } from './wallet';
-import { network as selectedNetwork } from './network';
 import gasLimits, { Networks } from './gas';
+import { Network } from './network';
 
 export const withdrawTransaction = async ({
 	address,
@@ -12,7 +12,8 @@ export const withdrawTransaction = async ({
 	amount,
 	minAmount,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -22,8 +23,9 @@ export const withdrawTransaction = async ({
 	minAmount: string; // WEI
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }) => {
-	const { aave, id } = await selectedNetwork();
+	const { aave, id } = network;
 
 	const txDefaults = {
 		from: address,
@@ -39,8 +41,8 @@ export const withdrawTransaction = async ({
 		'function ZapOutWithPermit(address fromToken, uint256 amountIn, address toToken, uint256 minToTokens, bytes calldata permitSig, address swapTarget, bytes calldata swapData, address affiliate) external returns (uint256)'
 	];
 
-	const provider = await getProvider();
-	const erc20 = new Contract(aave.depositContract, abi, await getProvider());
+	const provider = getProvider(id);
+	const erc20 = new Contract(aave.depositContract, abi, provider);
 	const userSigner = new Wallet(privateKey, provider);
 	const permitSig = await permitSignature({
 		owner: address,

@@ -4,17 +4,14 @@ import Text from '@src/components/Text/Text';
 import Button from '@src/components/Button/Button';
 import ModalHeader from '@src/components/ModalHeader/ModalHeader';
 import { whale4Img } from '@images';
-import { useLanguage, useNetwork } from '@hooks';
-import { Network } from '@models/network';
+import { useLanguage } from '@hooks';
 import styles from './WrongNetwork.styles';
 import { WrongNetworkParams } from './WrongNetwork.types';
 
-const WrongNetwork = ({ onDismiss, network, description, onUpdate }: WrongNetworkParams) => {
+const WrongNetwork = ({ onDismiss, description, onUpdate }: WrongNetworkParams) => {
 	const { i18n } = useLanguage();
-	const { selectNetwork } = useNetwork();
 
-	const onPress = async (ntw: Network) => {
-		await selectNetwork(ntw);
+	const onPress = async () => {
 		if (onUpdate) {
 			onUpdate();
 		}
@@ -33,10 +30,8 @@ const WrongNetwork = ({ onDismiss, network, description, onUpdate }: WrongNetwor
 					{description}
 				</Text>
 				<Button
-					title={i18n.t('ReferralScreen.RedeemScreen.Modals.WrongNetwork.change_to_network', {
-						network: network.name
-					})}
-					onPress={() => onPress(network)}
+					title={i18n.t('ReferralScreen.RedeemScreen.Modals.WrongNetwork.change_to_network')}
+					onPress={onPress}
 					mb="l"
 					mode="outlined"
 				/>

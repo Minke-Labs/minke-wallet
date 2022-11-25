@@ -19,6 +19,7 @@ import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeGasless, validatedExceptions } from '@models/exchange';
 import { formatUnits } from 'ethers/lib/utils';
 import gasLimits from '@models/gas';
+import { networks } from '@models/network';
 
 interface PriceParams {
 	amount?: string;
@@ -31,13 +32,14 @@ interface UseExchangeScreenParams {
 }
 
 export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenParams) => {
-	const { nativeToken, balance } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [fromToken, setFromToken] = React.useState<MinkeGasToken>(sourceToken as MinkeToken);
 	const [toToken, setToToken] = React.useState<MinkeToken>(destToken as MinkeToken);
+	const network = Object.values(networks).find((n) => n.chainId === fromToken?.chainId);
+	const { nativeToken, balance } = useNativeToken(network);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
@@ -357,6 +359,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		showSettingsModal,
 		dismissSettingsModal,
 		onSlippageChanges,
-		slippage
+		slippage,
+		network
 	};
 };

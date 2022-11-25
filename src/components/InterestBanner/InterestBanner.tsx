@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useDepositProtocols, useLanguage, useTheme } from '@hooks';
+import { useLanguage, useTheme } from '@hooks';
 import { addColorOpacity } from '@helpers/utilities';
 import Text from '../Text/Text';
 import Icon from '../Icon/Icon';
@@ -8,14 +8,15 @@ import Token from '../Token/Token';
 import { InterestBannerProps } from './InterestBanner.types';
 import { makeStyles } from './InterestBanner.styles';
 
-const Inner: React.FC<InterestBannerProps> = ({ token, bold, apy }) => {
-	const { selectedProtocol } = useDepositProtocols();
+const Inner: React.FC<InterestBannerProps> = ({ token, bold, apy, depositProtocol }) => {
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const styles = makeStyles(!!bold, colors);
 	return (
 		<View style={styles.container}>
-			{token && <Token token={{ symbol: selectedProtocol?.id || '', address: '', decimals: 0 }} size={16} />}
+			{token && (
+				<Token token={{ symbol: depositProtocol?.id || '', address: '', decimals: 0, chainId: 0 }} size={16} />
+			)}
 			<Icon
 				name="iconUp"
 				color={bold ? 'text11' : 'alert3'}
@@ -37,7 +38,7 @@ const Inner: React.FC<InterestBannerProps> = ({ token, bold, apy }) => {
 	);
 };
 
-const InterestBanner: React.FC<InterestBannerProps> = ({ apy, token = false, bold = false }) => {
+const InterestBanner: React.FC<InterestBannerProps> = ({ apy, depositProtocol, token = false, bold = false }) => {
 	if (bold) {
 		return (
 			<View
@@ -52,7 +53,7 @@ const InterestBanner: React.FC<InterestBannerProps> = ({ apy, token = false, bol
 		);
 	}
 
-	return <Inner {...{ apy, token, bold }} />;
+	return <Inner {...{ apy, token, bold, depositProtocol }} />;
 };
 
 export default InterestBanner;

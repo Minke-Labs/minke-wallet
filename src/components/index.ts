@@ -66,6 +66,7 @@ import FloatingSelector from './FloatingSelector/FloatingSelector';
 import Warning from './Warning/Warning';
 import Balance from './Balance/Balance';
 import SendModalComponent from './SendModalComponent/SendModalComponent';
+import DepositProtocolSelector from './DepositProtocolSelector/DepositProtocolSelector';
 import AppTour from './AppTour';
 
 export {
@@ -137,5 +138,6 @@ export {
 	Warning,
 	Balance,
 	SendModalComponent,
-	AppTour
+	AppTour,
+	DepositProtocolSelector
 };

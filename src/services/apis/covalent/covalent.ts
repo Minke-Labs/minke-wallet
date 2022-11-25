@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Logger from '@utils/logger';
 import { CovalentAavePool } from '@src/model/token';
-import { network } from '@models/network';
 import { COVALENT_API_KEY } from '@env';
 
 const instance = axios.create({
@@ -17,8 +16,7 @@ const instance = axios.create({
 	}
 });
 
-export const getAavePools = async (): Promise<CovalentAavePool[]> => {
-	const { chainId } = await network();
+export const getAavePools = async (chainId: number): Promise<CovalentAavePool[]> => {
 	const { status, data } = await instance.get(`/${chainId}/networks/aave_v2/assets/`);
 	if (status !== 200) Logger.sentry('AAVE Pools API failed');
 	return data.data.items;

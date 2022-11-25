@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
-import { network as selectedNetwork, networks } from './network';
+import { networks, selectedNetwork } from './network';
 import { MinkeToken } from './types/token.types';
 import { DepositableToken } from './types/depositTokens.types';
 import { erc20abi, getProvider } from './wallet';
@@ -48,7 +48,7 @@ export const approvalState = async (
 	) {
 		return { isApproved: true };
 	}
-	const contract = new Contract(token, erc20abi, await getProvider(networkId));
+	const contract = new Contract(token, erc20abi, getProvider(networkId));
 	const amount: BigNumber = await contract.balanceOf(owner);
 	const allowance: BigNumber = await contract.allowance(owner, spender);
 
@@ -64,12 +64,14 @@ export const availableDepositProtocols: DepositProtocols = {
 	mstable: {
 		id: 'mstable',
 		name: 'mStable',
-		icon: 'MTA'
+		icon: 'MTA',
+		chainIds: [networks.matic.chainId]
 	},
 	aave: {
 		id: 'aave',
 		name: 'Aave',
-		icon: 'AAVE'
+		icon: 'AAVE',
+		chainIds: [networks.matic.chainId, networks.mainnet.chainId]
 	}
 };
 
@@ -91,6 +93,7 @@ export interface DepositProtocol {
 	id: 'aave' | 'mstable';
 	name: string;
 	icon: string;
+	chainIds: number[];
 }
 
 export interface ApprovalState {

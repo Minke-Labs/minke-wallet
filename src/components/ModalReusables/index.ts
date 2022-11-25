@@ -4,6 +4,7 @@ import SearchTokens from './SearchTokens/SearchTokens';
 import TransactionWait from './TransactionWait/TransactionWait';
 import WrongNetwork from './WrongNetwork/WrongNetwork';
 import SearchCurrencies from './SearchCurrencies/SearchCurrencies';
+import SearchDepositProtocols from './SearchDepositProtocols/SearchDepositProtocols';
 import Send from './Send/Send';
 import ImportWallet from './ImportWallet/ImportWallet';
 
@@ -15,5 +16,6 @@ export default {
 	TransactionWait,
 	WrongNetwork,
 	Send,
-	ImportWallet
+	ImportWallet,
+	SearchDepositProtocols
 };

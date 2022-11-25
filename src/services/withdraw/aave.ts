@@ -1,4 +1,4 @@
-import { network } from '@models/network';
+import { Network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
@@ -92,7 +92,8 @@ export const withdraw = async ({
 	privateKey,
 	interestBearingToken,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -102,6 +103,7 @@ export const withdraw = async ({
 	interestBearingToken: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }) => {
 	const transaction = await withdrawTransaction({
 		address,
@@ -111,13 +113,14 @@ export const withdraw = async ({
 		toTokenAddress,
 		interestBearingToken,
 		maxFeePerGas,
-		maxPriorityFeePerGas
+		maxPriorityFeePerGas,
+		network
 	});
 	Logger.log(`Withdraw API ${JSON.stringify(transaction)}`);
 
 	const { from, to, data, maxFeePerGas: baseFee, maxPriorityFeePerGas: priorityFee, gasLimit } = transaction;
 
-	const provider = await getProvider();
+	const provider = getProvider(network.id);
 	const wallet = new Wallet(privateKey, provider);
 	const chainId = await wallet.getChainId();
 	const nonce = await provider.getTransactionCount(address, 'latest');

@@ -1009,12 +1009,12 @@ export const networks: Networks = {
 export const networkSettingsKey = '@minke:network';
 export const defaultNetwork = networks.matic;
 
-export const network = async (): Promise<Network> => {
+export const selectedNetwork = async (): Promise<Network> => {
 	const id = await AsyncStorage.getItem(networkSettingsKey);
-	const selectedNetwork = networks[id as keyof Networks];
+	const nw = networks[id as keyof Networks];
 
-	if (id && selectedNetwork) {
-		return selectedNetwork;
+	if (id && nw) {
+		return nw;
 	}
 	return defaultNetwork;
 };

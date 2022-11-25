@@ -21,12 +21,14 @@ import WithdrawService from '@src/services/withdraw/WithdrawService';
 import { captureException } from '@sentry/react-native';
 import { constants } from 'ethers';
 import gasLimits, { Networks } from '@models/gas';
+import { networks } from '@models/network';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
-	const { nativeToken, balance } = useNativeToken();
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [token, setToken] = React.useState<MinkeToken>();
+	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const { nativeToken, balance } = useNativeToken(network);
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
@@ -37,12 +39,9 @@ const useWithdrawScreen = () => {
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
-	const {
-		address,
-		privateKey,
-		network: { id }
-	} = useGlobalWalletState();
-	const { defaultToken, selectedProtocol, apy } = useDepositProtocols(true);
+	const { address, privateKey } = useGlobalWalletState();
+	const apy = '100000';
+	const { defaultToken, selectedProtocol } = useDepositProtocols(true);
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 
 	const showModal = () => {
@@ -67,7 +66,7 @@ const useWithdrawScreen = () => {
 		setToken(selectedToken);
 	};
 
-	const gasUnits = selectedProtocol ? gasLimits[id as Networks].deposit[selectedProtocol.id] : 1;
+	const gasUnits = selectedProtocol ? gasLimits[network.id as Networks].deposit[selectedProtocol.id] : 1;
 	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
 
 	const canWithdraw =
@@ -96,7 +95,8 @@ const useWithdrawScreen = () => {
 					maxPriorityFeePerGas,
 					biconomy,
 					connector,
-					walletConnect
+					walletConnect,
+					chainId: network.chainId
 				});
 
 				if (hash) {
@@ -165,7 +165,8 @@ const useWithdrawScreen = () => {
 		setBlockchainError,
 		canSendTransactions,
 		needToChangeNetwork,
-		gasUnits
+		gasUnits,
+		network
 	};
 };
 

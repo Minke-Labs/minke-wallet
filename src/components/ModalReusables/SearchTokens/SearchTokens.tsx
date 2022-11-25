@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FlatList, SafeAreaView, SectionList } from 'react-native';
-import { useTheme, useLanguage, useBalances, useGlobalWalletState } from '@hooks';
+import { useTheme, useLanguage, useBalances } from '@hooks';
 import _ from 'lodash';
 import { tokenList } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
@@ -27,7 +27,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	onTokenSelect,
 	ownedTokens = [],
 	showOnlyOwnedTokens,
-	selected,
+	selected, // token already selected. token address - chain id: ex 0x1234-137
 	chainId,
 	withdraw = false,
 	enableSections = false
@@ -40,7 +40,6 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [loading, setLoading] = useState(true);
 	const { withdrawableTokens } = useBalances();
 	const { colors } = useTheme();
-	const { network } = useGlobalWalletState();
 	const styles = makeStyles(colors);
 	const flatListRef = useRef<FlatList>(null);
 	const sectionListRef = useRef<SectionList>(null);
@@ -55,7 +54,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			if (selected && selected.length > 0) {
 				const filter = _.filter(
 					selectedTokens,
-					({ symbol }) => !!symbol && !selected.includes(symbol.toLocaleLowerCase())
+					({ address, chainId: tokenChainId }) =>
+						!selected.includes(`${address.toLowerCase()}-${tokenChainId}`)
 				);
 				setFilteredTokens(filter);
 			} else {
@@ -67,7 +67,8 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	);
 
 	const priorities = ['MATIC', 'ETH', 'BUSD', 'DAI', 'USDT', 'USDC'];
-	const suggestedAddresses = network.suggestedTokens.map(({ address }) => address.toLowerCase());
+	// @TODO: all networks
+	const suggestedAddresses: string[] = []; // network.suggestedTokens.map(({ address }) => address.toLowerCase());
 
 	useEffect(() => {
 		const loadTokens = async () => {
@@ -75,7 +76,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				setLoading(true);
 				const allTokens = withdraw
 					? withdrawableTokens
-					: (await tokenList(chainId || network.chainId)).sort(
+					: (await tokenList(chainId)).sort(
 							(a, b) =>
 								priorities.indexOf(b.symbol.toUpperCase()) -
 									priorities.indexOf(a.symbol.toUpperCase()) ||

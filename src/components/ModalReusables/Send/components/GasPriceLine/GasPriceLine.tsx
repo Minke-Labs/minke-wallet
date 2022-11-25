@@ -8,7 +8,7 @@ import gasLimits from '@models/gas';
 import { GasPriceLineProps } from './GasPriceLine.types';
 import styles from './GasPriceLine.styles';
 
-const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD }) => {
+const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD, network }) => {
 	const { i18n } = useLanguage();
 	const coinValue = gas * gasLimits.send * 10 ** -9;
 	const [usdPrice, setUsdPrice] = useState(priceUSD);
@@ -18,7 +18,7 @@ const GasPriceLine: React.FC<GasPriceLineProps> = ({ gas, label, priceUSD }) => 
 			if (!priceUSD) {
 				const {
 					result: { ethusd }
-				} = await getEthLastPrice();
+				} = await getEthLastPrice(network);
 				setUsdPrice(+ethusd);
 			}
 		};

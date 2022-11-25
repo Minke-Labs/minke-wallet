@@ -63,7 +63,8 @@ const ExchangeScreen = ({ route }: Props) => {
 		dismissSettingsModal,
 		showSettingsModal,
 		onSlippageChanges,
-		slippage
+		slippage,
+		network
 	} = useExchangeScreen({ sourceToken, destToken });
 	const { i18n } = useLanguage();
 	const keyboardVisible = useKeyboard();
@@ -166,7 +167,7 @@ const ExchangeScreen = ({ route }: Props) => {
 
 					<View style={{ display: keyboardVisible ? 'none' : 'flex' }}>
 						<View mb="s" style={{ display: gasless ? 'none' : 'flex' }}>
-							<GasSelector gasLimit={gasLimits.exchange} />
+							<GasSelector gasLimit={gasLimits.exchange} network={network} />
 						</View>
 
 						<View mh="xs">
@@ -177,7 +178,7 @@ const ExchangeScreen = ({ route }: Props) => {
 					<View mh="xs" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 						{!canSendTransactions && (
 							<View mb="xxs">
-								<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+								<WatchModeTag needToChangeNetwork={needToChangeNetwork} network={network} />
 							</View>
 						)}
 						<Button
@@ -197,7 +198,10 @@ const ExchangeScreen = ({ route }: Props) => {
 					onTokenSelect={onTokenSelect}
 					ownedTokens={ownedTokens}
 					showOnlyOwnedTokens={showOnlyOwnedTokens}
-					selected={[fromToken?.symbol?.toLowerCase(), toToken?.symbol?.toLowerCase()]}
+					selected={[
+						`${fromToken?.address.toLowerCase()}-${fromToken?.chainId}`,
+						`${toToken?.address.toLowerCase()}-${toToken?.chainId}`
+					]}
 					enableSections={searchSource === 'to'}
 					chainId={searchSource === 'to' && fromToken ? fromToken.chainId : undefined}
 				/>

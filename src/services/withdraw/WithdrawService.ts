@@ -1,6 +1,6 @@
 import { ApprovalState } from '@models/deposit';
 import gasLimits, { Networks } from '@models/gas';
-import { network, networks } from '@models/network';
+import { Network, networks } from '@models/network';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
@@ -33,8 +33,8 @@ class WithdrawService {
 		connector,
 		chainId
 	}: WithdrawParams): Promise<WithdrawReturn> {
-		const { id: networkId } = Object.values(networks).find((n) => n.chainId === chainId);
-		const { isApproved } = await this.approveState(address, interestBearingToken, networkId);
+		const network = Object.values(networks).find((n) => n.chainId === chainId);
+		const { isApproved } = await this.approveState(address, interestBearingToken, network);
 		if (!isApproved && this.protocol !== 'aave') {
 			// Gasless AAVE withdraw uses a permit signature
 			const hash = await this.approve({
@@ -152,8 +152,8 @@ class WithdrawService {
 		return null;
 	}
 
-	public async approveState(address: string, contract: string, networkId: string): Promise<ApprovalState> {
-		return ApprovalService.approveState(address, contract, await this.withdrawContract(), networkId);
+	public async approveState(address: string, contract: string, network: Network): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, await this.withdrawContract(network), network.id);
 	}
 
 	public async approve({
@@ -179,15 +179,16 @@ class WithdrawService {
 			privateKey,
 			contract,
 			biconomy,
-			spender: await this.withdrawContract(),
+			spender: await this.withdrawContract(network),
 			walletConnect,
-			connector
+			connector,
+			network
 		});
 		return approval;
 	}
 
-	private async withdrawContract(): Promise<string> {
-		const { mStable, aave } = await network();
+	private async withdrawContract(network: Network): Promise<string> {
+		const { mStable, aave } = network;
 		return this.protocol === 'mstable' ? mStable?.withdrawContract! : aave.depositContract;
 	}
 }

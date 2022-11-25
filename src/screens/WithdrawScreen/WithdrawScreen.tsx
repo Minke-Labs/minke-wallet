@@ -44,7 +44,8 @@ const WithdrawScreen = () => {
 		setBlockchainError,
 		canSendTransactions,
 		needToChangeNetwork,
-		gasUnits
+		gasUnits,
+		network
 	} = useWithdrawScreen();
 	const { i18n } = useLanguage();
 
@@ -58,7 +59,7 @@ const WithdrawScreen = () => {
 				</Paper>
 
 				<View style={{ display: gaslessEnabled ? 'none' : 'flex' }}>
-					<GasSelector gasLimit={gasUnits} />
+					<GasSelector gasLimit={gasUnits} network={network} />
 				</View>
 
 				<View ph="s" mb="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
@@ -70,7 +71,7 @@ const WithdrawScreen = () => {
 					/>
 					{!canSendTransactions && (
 						<View mt="xxs">
-							<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+							<WatchModeTag needToChangeNetwork={needToChangeNetwork} network={network} />
 						</View>
 					)}
 				</View>
@@ -85,7 +86,7 @@ const WithdrawScreen = () => {
 					onTokenSelect={onTokenSelect}
 					ownedTokens={tokens}
 					showOnlyOwnedTokens
-					selected={[token?.symbol.toLowerCase()]}
+					selected={[`${token?.address.toLowerCase()}-${token?.chainId}`]}
 					withdraw
 				/>
 			</ModalBase>

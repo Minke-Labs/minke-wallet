@@ -178,7 +178,7 @@ const AddFundsScreen = ({ route }: Props) => {
 					onTokenSelect={selectToken}
 					ownedTokens={topUpTokens}
 					showOnlyOwnedTokens
-					selected={[token?.symbol.toLowerCase()]}
+					selected={[`${token?.address.toLowerCase()}-${token?.chainId}`]}
 				/>
 			</ModalBase>
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>

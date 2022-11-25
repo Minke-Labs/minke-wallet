@@ -191,14 +191,15 @@ const depositTokens: DepositTokens = {
 };
 
 export const getDepositToken = (id: string, symbol: string, protocol: string): DepositableToken => {
-	const values = depositTokens[id][protocol];
+	const depositable = depositTokens[id] || {};
+	const values = depositable[protocol];
 	return values.find((t) => symbol.toLowerCase() === t.symbol.toLowerCase()) || values[0];
 };
 
 const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<[MinkeToken[], MinkeToken[]]> => {
 	const networkPromises = Object.values(networks).map(async (network) => {
 		const { id: networkId, chainId } = network;
-		const provider = await getProvider(networkId);
+		const provider = getProvider(networkId);
 		const tokens = Object.values(depositTokens[networkId] || []).flat();
 		if (tokens.length > 0) {
 			const protocolAddresses = depositTokens[networkId][protocol].map(
@@ -292,7 +293,7 @@ const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {
 			({ symbol }) => ['USDC', 'DAI', 'USDT', 'BUSD'].includes(symbol)
 			// eslint-disable-next-line function-paren-newline
 		);
-		const provider = await getProvider(networkId);
+		const provider = getProvider(networkId);
 
 		const promises = contracts.map(async ({ address, decimals, symbol, chainId }): Promise<MinkeToken> => {
 			const stablecoin = new Contract(address, erc20abi, provider);

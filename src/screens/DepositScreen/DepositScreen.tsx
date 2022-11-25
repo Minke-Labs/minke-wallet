@@ -10,57 +10,33 @@ import { useDepositScreen } from './DepositScreen.hooks';
 
 const DepositScreen = () => {
 	RNUxcam.tagScreenName('DepositScreen');
-	const { i18n } = useLanguage();
+	// const { i18n } = useLanguage();
 
-	const {
-		notAbleToSaveVisible,
-		notAbleToSaveDismiss,
-		dismissAddFunds,
-		addFundsVisible,
-		onAddFunds
-	} = useDepositScreen();
+	// const { notAbleToSaveVisible, notAbleToSaveDismiss, dismissAddFunds, addFundsVisible, onAddFunds } =
+	// 	useDepositScreen();
 
-	const {
-		setSelectedUSDCoin,
-		depositableToken,
-		selectedProtocol,
-		ableToDeposit,
-		approved,
-		setApproved,
-		apy
-	} = useDepositProtocols();
+	// if (ableToDeposit === undefined) {
+	// 	return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />;
+	// }
 
-	if (ableToDeposit === undefined) {
-		return (
-			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />
-		);
-	}
+	// if (!ableToDeposit) {
+	// 	return (
+	// 		<>
+	// 			<ModalBase isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
+	// 				<NotAbleToSaveModal
+	// 					visible={notAbleToSaveVisible}
+	// 					onDismiss={notAbleToSaveDismiss}
+	// 					onAddFunds={onAddFunds}
+	// 				/>
+	// 			</ModalBase>
+	// 			<ModalBase isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
+	// 				<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
+	// 			</ModalBase>
+	// 		</>
+	// 	);
+	// }
 
-	if (!ableToDeposit) {
-		return (
-			<>
-				<ModalBase isVisible={notAbleToSaveVisible} onDismiss={notAbleToSaveDismiss}>
-					<NotAbleToSaveModal
-						visible={notAbleToSaveVisible}
-						onDismiss={notAbleToSaveDismiss}
-						onAddFunds={onAddFunds}
-					/>
-				</ModalBase>
-				<ModalBase isVisible={addFundsVisible} onDismiss={dismissAddFunds}>
-					<AddFunds visible={addFundsVisible} onDismiss={dismissAddFunds} />
-				</ModalBase>
-			</>
-		);
-	}
-
-	if (approved === undefined) {
-		return (
-			<BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />
-		);
-	}
-
-	if (approved) return <Deposit {...{ apy, setSelectedUSDCoin, depositableToken, selectedProtocol }} />;
-	return <OpenSavings onApprove={() => setApproved(true)} />;
+	return <Deposit />;
 };
 
 export default DepositScreen;

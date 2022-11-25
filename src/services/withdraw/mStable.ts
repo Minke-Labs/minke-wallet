@@ -1,5 +1,5 @@
 import gasLimits, { Networks } from '@models/gas';
-import { network } from '@models/network';
+import { Network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import { signTypedDataV3 } from '@utils/signing/signing';
 import { BigNumber, Contract, ethers, Wallet } from 'ethers';
@@ -9,10 +9,11 @@ import { toBn } from 'evm-bn';
 export const withdrawAmount = async (
 	amount: string,
 	address: string,
-	interestBearingAddress: string
+	interestBearingAddress: string,
+	network: Network
 ): Promise<BigNumber> => {
-	const { mStable } = await network();
-	const provider = await getProvider();
+	const { mStable } = network;
+	const provider = getProvider(network.id);
 	const savingAsset = new Contract(
 		mStable?.saveAsset!,
 		['function exchangeRate() public view returns (uint256)'],
@@ -39,7 +40,8 @@ const mStableGaslessWithdraw = async ({
 	amount,
 	minAmount,
 	maxFeePerGas,
-	biconomy
+	biconomy,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -48,6 +50,7 @@ const mStableGaslessWithdraw = async ({
 	minAmount: string;
 	maxFeePerGas: BigNumber;
 	biconomy: any;
+	network: Network;
 }) => {
 	const provider = biconomy.getEthersProvider();
 	// send signed transaction with ethers
@@ -58,7 +61,7 @@ const mStableGaslessWithdraw = async ({
 	];
 
 	const contractInterface = new ethers.utils.Interface(abi);
-	const { mStable } = await network();
+	const { mStable } = network;
 	const { withdrawContract, mAsset } = mStable!;
 
 	// Create your target method signature.. here we are calling setQuote() method of our contract
@@ -102,19 +105,21 @@ const mStableWithdrawData = async ({
 	address,
 	amount,
 	minAmount,
-	token
+	token,
+	network
 }: {
 	address: string;
 	amount: BigNumber;
 	minAmount: string;
 	token: string;
+	network: Network;
 }) => {
 	const abi = [
 		// eslint-disable-next-line max-len
 		'function withdrawAndUnwrap(uint256 _amount, uint256 _minAmountOut, address _output, address _beneficiary, address _router, bool _isBassetOut, bytes calldata _permitSig) external returns (uint256 outputQuantity)'
 	];
-	const provider = await getProvider();
-	const { mStable } = await network();
+	const { mStable } = network;
+	const provider = getProvider(network.id);
 	const { withdrawContract, mAsset } = mStable!;
 
 	const erc20 = new Contract(withdrawContract, abi, provider);
@@ -130,7 +135,8 @@ const mStableWithdraw = async ({
 	maxPriorityFeePerGas,
 	amount,
 	minAmount,
-	token
+	token,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -139,16 +145,17 @@ const mStableWithdraw = async ({
 	amount: BigNumber; // BigNumber converted to the im-USD value
 	minAmount: string;
 	token: string;
+	network: Network;
 }) => {
 	const abi = [
 		// eslint-disable-next-line max-len
 		'function withdrawAndUnwrap(uint256 _amount, uint256 _minAmountOut, address _output, address _beneficiary, address _router, bool _isBassetOut, bytes calldata _permitSig) external returns (uint256 outputQuantity)'
 	];
-	const provider = await getProvider();
+	const { mStable, id } = network;
+	const provider = getProvider(id);
 	const wallet = new Wallet(privateKey, provider);
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 	const chainId = await wallet.getChainId();
-	const { mStable, id } = await network();
 	const { withdrawContract, mAsset } = mStable!;
 	const txDefaults = {
 		type: 2,

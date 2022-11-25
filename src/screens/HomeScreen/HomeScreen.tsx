@@ -22,10 +22,11 @@ const HomeScreen = () => {
 
 	useEffect(() => {
 		const fetchStatus = async () => {
-			const provider = await getProvider();
 			const pending = pendingTransactions.filter((t) => t.pending)[0];
 			if (pending) {
 				setTx(pending);
+				// @TODO: check the network of the pending transaction
+				const provider = await getProvider('matic');
 				const { status } = await provider.waitForTransaction(pending.hash);
 				const newTransaction = { ...pending, pending: false, txSuccessful: status === 1 };
 				setTx(newTransaction);

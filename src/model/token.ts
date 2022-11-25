@@ -4,13 +4,13 @@ import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
-import { network, networks } from './network';
+import { networks } from './network';
 import { MinkeToken, InvestmentToken, MinkeTokenList } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 
-export const tokenList = async (chainId: number): Promise<MinkeToken[]> => {
-	const selectedNetwork = chainId ? Object.values(networks).find((n) => n.chainId === chainId) : await network();
+export const tokenList = async (chainId: number | undefined): Promise<MinkeToken[]> => {
+	const selectedNetwork = Object.values(networks).find((n) => n.chainId === chainId);
 	const { zapperNetwork, id, suggestedTokens } = selectedNetwork;
 	try {
 		const result = await fetch(
@@ -72,7 +72,7 @@ export const getExchangePrice = async ({
 	slippage = 0.05
 }: ExchangeParams): Promise<ExchangeRoute> => {
 	const nw = Object.values(networks).find((n) => n.chainId === chainId);
-	const { apiUrl0x, nativeToken } = nw || (await network());
+	const { apiUrl0x, nativeToken } = nw;
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];

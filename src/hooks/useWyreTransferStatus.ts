@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { captureException } from '@sentry/react-native';
-import { network as selectedNetwork } from '@models/network';
+import { selectedNetwork } from '@models/network';
 import { trackWyreTransfer } from '@models/wyre';
 
 const MAX_TRIES = 10 * 60;

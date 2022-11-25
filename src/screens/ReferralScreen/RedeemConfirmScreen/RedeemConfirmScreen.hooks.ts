@@ -6,6 +6,7 @@ import { Wallet } from 'ethers';
 import { getProvider } from '@models/wallet';
 import { claimRewards } from '@src/services/apis/minke/minke';
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
+import { networks } from '@models/network';
 
 const useRedeemConfirmScreenHooks = () => {
 	const [error, setError] = React.useState('');
@@ -29,7 +30,7 @@ const useRedeemConfirmScreenHooks = () => {
 	const onSwapConfirm = async () => {
 		setLoading(true);
 
-		const wallet = new Wallet(privateKey!, await getProvider());
+		const wallet = new Wallet(privateKey!, getProvider(networks.matic.id));
 		const points = value;
 		const timestamp = Math.floor(Date.now() / 1000 + 60); // 1 minute from now
 		const params = {

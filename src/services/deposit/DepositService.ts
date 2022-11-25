@@ -1,5 +1,5 @@
 import { ApprovalState } from '@models/deposit';
-import { network, networks } from '@models/network';
+import { Network, networks } from '@models/network';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
 import { toBn } from 'evm-bn';
@@ -28,8 +28,8 @@ class DepositService {
 		connector,
 		walletConnect = false
 	}: DepositParams): Promise<DepositReturn> {
-		const { id: networkId } = Object.values(networks).find((n) => n.chainId === depositableToken.chainId);
-		const { isApproved } = await this.approveState(address, depositableToken.address, networkId);
+		const network = Object.values(networks).find((n) => n.chainId === depositableToken.chainId);
+		const { isApproved } = await this.approveState(address, depositableToken.address, network);
 		Logger.log('Deposit approved:', isApproved);
 		if (!isApproved) {
 			await this.approve({
@@ -39,7 +39,8 @@ class DepositService {
 				contract: depositableToken.address,
 				biconomy,
 				walletConnect,
-				connector
+				connector,
+				network
 			});
 		}
 
@@ -135,14 +136,13 @@ class DepositService {
 		return null;
 	}
 
-	private async depositContract(): Promise<string> {
-		const { mStable, aave } = await network();
+	private depositContract(network: Network): string {
+		const { mStable, aave } = network;
 		return this.protocol === 'mstable' ? mStable?.depositContract! : aave.depositContract;
 	}
 
-	// @TODO: Marcos
-	public async approveState(address: string, contract: string, networkId: string): Promise<ApprovalState> {
-		return ApprovalService.approveState(address, contract, await this.depositContract(), networkId);
+	public async approveState(address: string, contract: string, network: Network): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, this.depositContract(network), network.id);
 	}
 
 	public async approve({
@@ -152,6 +152,7 @@ class DepositService {
 		contract,
 		biconomy,
 		connector,
+		network,
 		walletConnect = false
 	}: {
 		gasless: boolean;
@@ -161,6 +162,7 @@ class DepositService {
 		biconomy: any;
 		connector: WalletConnect;
 		walletConnect?: boolean;
+		network: Network;
 	}): Promise<DepositReturn> {
 		return new ApprovalService().approve({
 			gasless,
@@ -168,9 +170,10 @@ class DepositService {
 			privateKey,
 			contract,
 			biconomy,
-			spender: await this.depositContract(),
+			spender: this.depositContract(network),
 			connector,
-			walletConnect
+			walletConnect,
+			networkId: network.id
 		});
 	}
 }

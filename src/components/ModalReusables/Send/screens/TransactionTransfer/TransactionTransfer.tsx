@@ -34,7 +34,8 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 		onChangeNumber,
 		onSend,
 		onMaxPress,
-		onTypeChange
+		onTypeChange,
+		network
 	} = useTransactionTransfer({ token, user, onError, ...props });
 
 	return (
@@ -80,6 +81,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 						label="Normal"
 						gas={+gasPrice.result.ProposeGasPrice}
 						priceUSD={+gasPrice.result.UsdPrice!}
+						network={network}
 					/>
 				</View>
 			)}
@@ -110,7 +112,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 
 			{!canSendTransactions && (
 				<View style={{ marginTop: 8 }}>
-					<WatchModeTag needToChangeNetwork={needToChangeNetwork} />
+					<WatchModeTag needToChangeNetwork={needToChangeNetwork} network={network} />
 				</View>
 			)}
 			<KeyboardSpacer />

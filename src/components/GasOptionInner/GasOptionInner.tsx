@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage, useNativeToken } from '@hooks';
 import { tokenBalanceFormat } from '@helpers/utilities';
+import { Network } from '@models/network';
 import Text from '@src/components/Text/Text';
 import Icon from '@src/components/Icon/Icon';
 import View from '@src/components/View/View';
@@ -12,11 +13,12 @@ interface GasOptionInnerProps {
 	usdPrice: number;
 	waiting: string | null;
 	gasLimit: number;
+	network: Network;
 }
 
-const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice, usdPrice, gasLimit }) => {
+const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice, usdPrice, gasLimit, network }) => {
 	const { i18n } = useLanguage();
-	const { nativeToken } = useNativeToken();
+	const { nativeToken } = useNativeToken(network);
 	return (
 		<>
 			<View bgc="background6" round={36} main="center" cross="center" mr="xs" ml="xxxs">
@@ -39,9 +41,9 @@ const GasOptionInner: React.FC<GasOptionInnerProps> = ({ type, waiting, gasPrice
 					<View mb="xxxs" />
 					{!!nativeToken && (
 						<View row main="center">
-							<Text type="span">Fee Paid in </Text>
+							<Text type="span">{i18n.t('ExchangeScreen.GasSelector.GasOption.fee_paid_in')}</Text>
 							<View main="center">
-								<Token token={nativeToken} size={12} />
+								<Token token={nativeToken} size={12} showNetworkIcon={false} />
 							</View>
 							<Text type="span" weight="bold">
 								{' '}

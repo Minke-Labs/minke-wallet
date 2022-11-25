@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { network as selectedNetwork } from '@models/network';
+import { selectedNetwork } from '@models/network';
 import { globalTopUpState } from '@stores/TopUpStore';
 import { useState } from '@hookstate/core';
 import { WYRE_ORDER_STATUS_TYPES } from '@models/types/wyre.types';

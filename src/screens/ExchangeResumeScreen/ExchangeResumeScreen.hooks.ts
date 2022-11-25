@@ -178,7 +178,8 @@ const useExchangeResumeScreen = () => {
 				} = priceQuote;
 
 				const { address, privateKey } = wallet.value;
-				const { id: networkId } = Object.values(networks).find((n) => n.chainId === chainId);
+				const network = Object.values(networks).find((n) => n.chainId === chainId);
+				const { id: networkId } = network;
 
 				if (gasless) {
 					const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract, networkId);
@@ -241,11 +242,12 @@ const useExchangeResumeScreen = () => {
 							gasless,
 							privateKey,
 							spender: allowanceTarget,
-							walletConnect
+							walletConnect,
+							network
 						});
 					}
 
-					const provider = await getProvider();
+					const provider = getProvider(network.id);
 					const nonce = await provider.getTransactionCount(address, 'latest');
 					const txDefaults = {
 						chainId,

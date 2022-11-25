@@ -6,6 +6,7 @@ import DepositService from '@src/services/deposit/DepositService';
 import { getProvider } from '@models/wallet';
 import { captureException } from '@sentry/react-native';
 
+// @TODO: delete
 export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) => {
 	const { biconomy, gaslessEnabled } = useBiconomy();
 	const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 			});
 
 			if (hash) {
-				const provider = await getProvider();
+				const provider = getProvider('WRONG');
 				await provider.waitForTransaction(hash);
 				await AsyncStorage.setItem(`@approved-${selectedProtocol.id}`, 'true');
 				track(`Opened ${selectedProtocol.name} Account`, { hash, gasless: gaslessEnabled });

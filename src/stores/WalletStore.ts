@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import { createState } from '@hookstate/core';
-import { defaultNetwork, Network, network as selectedNetwork } from '@src/model/network';
+import { defaultNetwork, Network, selectedNetwork } from '@src/model/network';
 import {
 	getAllWallets,
 	getPrivateKey,

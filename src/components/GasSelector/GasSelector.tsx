@@ -4,9 +4,9 @@ import { View, ScrollView } from 'react-native';
 import { ExchangeState, Gas, globalExchangeState } from '@stores/ExchangeStore';
 import { State, useState } from '@hookstate/core';
 import { estimateConfirmationTime, estimateGas, getEthLastPrice } from '@models/wallet';
-import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
 import { BigNumber } from 'ethers';
+import { Network } from '@models/network';
 import ActivityIndicator from '../ActivityIndicator/ActivityIndicator';
 import GasOption from '../GasOption/GasOption';
 import styles from './GasSelector.styles';
@@ -27,7 +27,7 @@ type Speeds = 'fast' | 'normal' | 'slow';
 type Price = { [key: string]: number } & { suggestBaseFee: BigNumber };
 type WaitTime = { [key: string]: number | null };
 
-const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
+const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network }) => {
 	const [type, setType] = React.useState<Speeds>('fast');
 	const { colors } = useTheme();
 
@@ -40,7 +40,7 @@ const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
 	const selected = selectedType === type;
 
 	const fetchGas = async () => {
-		const gas = await estimateGas();
+		const gas = await estimateGas(network);
 		const {
 			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, suggestBaseFee = '0' }
 		} = gas;
@@ -62,7 +62,7 @@ const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
 		} else {
 			const {
 				result: { ethusd }
-			} = await getEthLastPrice();
+			} = await getEthLastPrice(network);
 			setUsdPrice(+ethusd);
 		}
 	};
@@ -89,7 +89,7 @@ const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
 	useEffect(() => {
 		const fetchConfirmation = async (gasType: string) => {
 			const value = gasPrice[gasType];
-			const { result } = await estimateConfirmationTime(Number(value) * 1000000000);
+			const { result } = await estimateConfirmationTime(Number(value) * 1000000000, network);
 			if (!Number.isNaN(+result)) {
 				return +result;
 			}
@@ -99,7 +99,7 @@ const GasSelector = ({ gasLimit }: { gasLimit: number }) => {
 		// ethereum network has this endpoint to check the times
 		const fetchConfirmationTimes = async () => {
 			if (gasPrice) {
-				const { transactionTimesEndpoint } = await network();
+				const { transactionTimesEndpoint } = network;
 				if (transactionTimesEndpoint) {
 					const result = await fetchConfirmation(type);
 					setWait({ [type]: result });

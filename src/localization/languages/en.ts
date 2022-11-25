@@ -70,7 +70,8 @@ export default {
 		},
 		Deposit: {
 			deposit: 'Deposit',
-			balance: 'Balance: '
+			balance: 'Balance: ',
+			on: 'on'
 		},
 		OpenSavings: {
 			open_account: 'Open Account',
@@ -117,7 +118,8 @@ export default {
 				transaction_fee: 'Transaction Fee',
 				fast: 'Fast',
 				normal: 'Normal',
-				slow: 'Slow'
+				slow: 'Slow',
+				fee_paid_in: 'Fee Paid in '
 			}
 		},
 		validations: {
@@ -907,9 +909,13 @@ export default {
 			country: 'Country',
 			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
 		},
+		DepositProtocolSelector: {
+			choose_protocol: 'Choose savings account',
+			change_account: 'Change account'
+		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'No tokens here ({{network}})'
+				no_tokens_here: 'No tokens here'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Your points will appear here',
