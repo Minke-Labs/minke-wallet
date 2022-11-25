@@ -21,12 +21,12 @@ export const AccountsOverview: React.FC = () => {
 
 	groupedStablecoins.forEach((stableGroup) => {
 		const [stable] = stableGroup;
-		stable.balanceUSD = stableGroup.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
-		stable.balance = stableGroup
+		const groupBalanceUSD = stableGroup.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		const groupBalance = stableGroup
 			.reduce((partialSum, token) => partialSum + (Number(token.balance) || 0), 0)
 			.toString();
-		if (stable.balanceUSD > (biggestBalanceStable?.balanceUSD || 0)) {
-			biggestBalanceStable = stable;
+		if (groupBalanceUSD > (biggestBalanceStable?.balanceUSD || 0)) {
+			biggestBalanceStable = { ...stable, ...{ balanceUSD: groupBalanceUSD, balance: groupBalance } };
 			biggestBalanceGroup = stableGroup;
 		}
 	});

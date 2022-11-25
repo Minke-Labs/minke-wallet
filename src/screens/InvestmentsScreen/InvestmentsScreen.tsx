@@ -61,9 +61,9 @@ const InvestmentsScreen = () => {
 		investments = investments.filter((t) => t.chainId === chainIdSearch);
 	}
 
-	let groupedInvestments = Object.values(groupBy(investments, 'symbol'));
+	const groupedInvestments = Object.values(groupBy(investments, 'symbol'));
 
-	groupedInvestments = groupedInvestments.sort((first, second) => {
+	groupedInvestments.sort((first, second) => {
 		const firstBalanceUSD = first.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
 		const secondBalanceUSD = second.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
 		const firstPercentage = first[0].perc || -100;
@@ -140,19 +140,24 @@ const InvestmentsScreen = () => {
 					<View pr="xs">
 						{groupedInvestments.map((groupItems: InvestmentToken[]) => {
 							const [item] = groupItems;
-							item.balanceUSD = groupItems.reduce(
-								(partialSum, token) => partialSum + (token.balanceUSD || 0),
-								0
-							);
-							item.balance = groupItems
-								.reduce((partialSum, token) => partialSum + (Number(token.balance) || 0), 0)
-								.toString();
+							const coin = {
+								...item,
+								...{
+									balanceUSD: groupItems.reduce(
+										(partialSum, token) => partialSum + (token.balanceUSD || 0),
+										0
+									),
+									balance: groupItems
+										.reduce((partialSum, token) => partialSum + (Number(token.balance) || 0), 0)
+										.toString()
+								}
+							};
 
 							return (
 								<TokenItemCard
 									key={`${item.address}-${item.chainId}`}
-									token={item}
-									onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: item })}
+									token={coin}
+									onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin })}
 									showNetworkIcon={false}
 									chainIds={groupItems.map((i) => i.chainId)}
 								/>

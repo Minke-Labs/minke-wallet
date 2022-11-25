@@ -905,6 +905,9 @@ export default {
 			swap: 'Swap',
 			buy_token_now: 'Buy {{token}} now'
 		},
+		ByNetworks: {
+			by_networks: 'By networks'
+		},
 		CountrySelector: {
 			country: 'Country',
 			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
