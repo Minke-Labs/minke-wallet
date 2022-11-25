@@ -61,8 +61,11 @@ export const useTransactionTransfer = ({
 	const [amountType, setAmountType] = useState<'fiat' | 'token'>('fiat');
 	const [enoughGas, setEnoughGas] = useState(true);
 	const { addPendingTransaction } = useTransactions();
-	const { gaslessEnabled, biconomy } = useBiconomy();
-	const gasless = gaslessEnabled && POLYGON_GASLESS_TOKENS.includes(token.address.toLowerCase());
+	const { gaslessEnabledMatic, biconomy } = useBiconomy();
+	const gasless =
+		gaslessEnabledMatic &&
+		token.chainId === networks.matic.chainId &&
+		POLYGON_GASLESS_TOKENS.includes(token.address.toLowerCase());
 	const network = Object.values(networks).find((n) => n.chainId === token.chainId);
 	const { balance } = useNativeToken(network);
 	const navigation = useNavigation();

@@ -54,7 +54,8 @@ class DepositService {
 					biconomy,
 					maxFeePerGas,
 					interestBearingToken: depositableToken.interestBearingToken.address,
-					token: depositableToken.address
+					token: depositableToken.address,
+					network
 				});
 
 				return hash;
@@ -68,7 +69,8 @@ class DepositService {
 					maxFeePerGas,
 					maxPriorityFeePerGas,
 					interestBearingTokenAddress: depositableToken.interestBearingToken.address,
-					tokenAddress: depositableToken.address
+					tokenAddress: depositableToken.address,
+					network
 				});
 
 				const hash = await connector.sendTransaction({
@@ -88,7 +90,8 @@ class DepositService {
 				maxFeePerGas,
 				maxPriorityFeePerGas,
 				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
-				tokenAddress: depositableToken.address
+				tokenAddress: depositableToken.address,
+				network
 			});
 
 			return hash;
@@ -102,7 +105,8 @@ class DepositService {
 					minAmount,
 					biconomy,
 					maxFeePerGas,
-					token: depositableToken.address
+					token: depositableToken.address,
+					network
 				});
 				return hash;
 			}
@@ -111,7 +115,8 @@ class DepositService {
 				const { to, data } = await mStableDepositData({
 					amount,
 					minAmount,
-					token: depositableToken.address
+					token: depositableToken.address,
+					network
 				});
 
 				const hash = await connector.sendTransaction({
@@ -129,7 +134,8 @@ class DepositService {
 				minAmount,
 				maxFeePerGas,
 				maxPriorityFeePerGas,
-				token: depositableToken.address
+				token: depositableToken.address,
+				network
 			});
 			return hash;
 		}
@@ -173,7 +179,7 @@ class DepositService {
 			spender: this.depositContract(network),
 			connector,
 			walletConnect,
-			networkId: network.id
+			network
 		});
 	}
 }

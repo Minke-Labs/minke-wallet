@@ -32,6 +32,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	withdraw = false,
 	enableSections = false
 }) => {
+	const { tokens: userTokens } = useBalances();
 	const { i18n } = useLanguage();
 	const [tokens, setTokens] = useState<Array<MinkeToken>>();
 	const [filteredTokens, setFilteredTokens] = useState<Array<MinkeToken>>();
@@ -76,7 +77,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 				setLoading(true);
 				const allTokens = withdraw
 					? withdrawableTokens
-					: (await tokenList(chainId)).sort(
+					: (showOnlyOwnedTokens ? userTokens : await tokenList(chainId)).sort(
 							(a, b) =>
 								priorities.indexOf(b.symbol.toUpperCase()) -
 									priorities.indexOf(a.symbol.toUpperCase()) ||

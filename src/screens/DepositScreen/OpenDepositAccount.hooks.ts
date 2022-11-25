@@ -5,10 +5,11 @@ import Logger from '@utils/logger';
 import DepositService from '@src/services/deposit/DepositService';
 import { getProvider } from '@models/wallet';
 import { captureException } from '@sentry/react-native';
+import { networks } from '@models/network';
 
 // @TODO: delete
 export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) => {
-	const { biconomy, gaslessEnabled } = useBiconomy();
+	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const [loading, setLoading] = useState(false);
 	const [blockchainError, setBlockchainError] = useState(false);
 	const { address, privateKey } = useGlobalWalletState();
@@ -17,6 +18,7 @@ export const useOpenDepositAccount = ({ onApprove }: { onApprove: () => void }) 
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 	const { track } = useAmplitude();
 	const cannotOpenAccount = !depositableToken || !selectedProtocol || !depositContract;
+	const gaslessEnabled = gaslessEnabledMatic && depositableToken?.chainId === networks.matic.chainId;
 
 	const onOpenAccount = async () => {
 		setLoading(true);

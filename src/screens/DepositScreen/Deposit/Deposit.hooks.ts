@@ -37,12 +37,13 @@ export const useDeposit = () => {
 	const [apy, setApy] = React.useState<string>();
 	const { addPendingTransaction } = useTransactions();
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
-	const { biconomy, gaslessEnabled } = useBiconomy();
+	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { stablecoins = [] } = useBalances();
 	const { address, privateKey } = useGlobalWalletState();
 	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
 	const { balance } = useNativeToken(network);
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
@@ -54,8 +55,10 @@ export const useDeposit = () => {
 		}
 	};
 
-	const gasUnits = depositProtocol ? gasLimits[network.id as Networks].deposit[depositProtocol.id] : 1;
-	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
+	const gasUnits = depositProtocol && network ? gasLimits[network.id as Networks].deposit[depositProtocol.id] : 1;
+	const enoughForGas =
+		(gaslessEnabledMatic && network?.chainId === networks.matic.chainId) ||
+		(balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
 	const canDeposit =
 		depositProtocol &&
 		token &&

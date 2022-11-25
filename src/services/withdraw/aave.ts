@@ -13,7 +13,8 @@ export const gaslessWithdraw = async ({
 	interestBearingToken,
 	minAmount,
 	maxFeePerGas,
-	biconomy
+	biconomy,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -23,6 +24,7 @@ export const gaslessWithdraw = async ({
 	minAmount: string;
 	maxFeePerGas: BigNumber;
 	biconomy: any;
+	network: Network;
 }) => {
 	const provider = biconomy.getEthersProvider();
 	// send signed transaction with ethers
@@ -30,7 +32,7 @@ export const gaslessWithdraw = async ({
 
 	const {
 		aave: { depositContract: aaveDepositContract }
-	} = await network();
+	} = network;
 
 	const permitSig = await permitSignature({
 		owner: address,

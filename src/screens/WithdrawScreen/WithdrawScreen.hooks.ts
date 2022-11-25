@@ -24,10 +24,11 @@ import gasLimits, { Networks } from '@models/gas';
 import { networks } from '@models/network';
 
 const useWithdrawScreen = () => {
-	const { biconomy, gaslessEnabled } = useBiconomy();
+	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [token, setToken] = React.useState<MinkeToken>();
 	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
 	const { nativeToken, balance } = useNativeToken(network);
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;

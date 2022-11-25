@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DepositProtocol, depositStablecoins, fetchDepositProtocol, usdCoin } from '@models/deposit';
 import { getDepositToken } from '@models/depositTokens';
-import { network } from '@models/network';
 import { MinkeToken } from '@models/types/token.types';
 import { useState } from '@hookstate/core';
 import { DepositableToken } from '@models/types/depositTokens.types';
 import { globalDepositState } from '@stores/DepositStore';
+import { selectedNetwork } from '@models/network';
 import useBalances from './useBalances';
 
 const useDepositProtocols = (withdraw = false) => {
@@ -29,10 +29,10 @@ const useDepositProtocols = (withdraw = false) => {
 		setSelectedProtocol(await fetchDepositProtocol());
 	};
 
-	// @TODO: Marcos (this concept needs to change. All tokens from all networks are depositable)
+	// @TODO: Delete this file
 	const fetchDepositToken = async () => {
 		if (selectedUSDCoin && selectedProtocol && defaultToken) {
-			const { id } = await network();
+			const { id } = await selectedNetwork();
 			let token = getDepositToken(id, selectedUSDCoin, selectedProtocol.id);
 			if (selectedProtocol.id === 'mstable') {
 				const { address: defaultAddress, symbol, decimals } = defaultToken;
@@ -82,10 +82,10 @@ const useDepositProtocols = (withdraw = false) => {
 				if (selectedProtocol.id === 'aave') {
 					const {
 						aave: { depositContract: aaveDepositContract }
-					} = await network();
+					} = await selectedNetwork();
 					setDepositContract(aaveDepositContract);
 				} else {
-					const { mStable } = await network();
+					const { mStable } = await selectedNetwork();
 					if (mStable) setDepositContract(mStable.depositContract);
 				}
 			}

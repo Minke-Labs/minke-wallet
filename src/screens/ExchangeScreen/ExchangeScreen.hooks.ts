@@ -51,7 +51,8 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
 	const [slippage, setSlippage] = React.useState<number>();
-	const { gaslessEnabled } = useBiconomy();
+	const { gaslessEnabledMatic } = useBiconomy();
+	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
 	const { tokens, stablecoins } = useBalances();
 	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
 	const { defaultToken } = useDepositProtocols();
@@ -119,7 +120,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
 				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) },
-				gasless: await isExchangeGasless(value, sellTokenAddress, to || allowanceTarget)
+				gasless: await isExchangeGasless(value, sellTokenAddress, to || allowanceTarget, network)
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);

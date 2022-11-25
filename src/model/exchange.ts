@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { isExchangeTargetApproved } from './gaslessTransaction';
-import { network, networks } from './network';
+import { Network, networks } from './network';
 
 export const validatedExceptions = ['INSUFFICIENT_ASSET_LIQUIDITY'];
 
@@ -30,12 +30,12 @@ export const POLYGON_GASLESS_TOKENS = [
 	'0xe5417af564e4bfda1c483642db72007871397896' // Gains Network
 ];
 
-export const isGaslessContract = async (contract: string) => {
-	const { chainId } = await network();
+export const isGaslessContract = (contract: string, network: Network) => {
+	const { chainId } = network;
 	return chainId === networks.matic.chainId && POLYGON_GASLESS_TOKENS.includes(contract.toLowerCase());
 };
 
-export const isExchangeGasless = async (value: string, sellTokenAddress: string, contract: string) =>
+export const isExchangeGasless = async (value: string, sellTokenAddress: string, contract: string, network: Network) =>
 	BigNumber.from(value).isZero() &&
-	(await isGaslessContract(sellTokenAddress)) &&
+	isGaslessContract(sellTokenAddress, network) &&
 	(await isExchangeTargetApproved(contract));

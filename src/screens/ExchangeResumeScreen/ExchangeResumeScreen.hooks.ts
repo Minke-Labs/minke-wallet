@@ -1,3 +1,5 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/indent */
 import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
@@ -39,8 +41,10 @@ const useExchangeResumeScreen = () => {
 	const [toFiatPrice, setToFiatPrice] = React.useState<number>();
 	const { addPendingTransaction } = useTransactions();
 	const { track } = useAmplitude();
-	const { gaslessEnabled, biconomy } = useBiconomy();
+	const { gaslessEnabledMatic, biconomy } = useBiconomy();
 	const { canSendTransactions, walletConnect, connector } = useWalletManagement();
+	const network = Object.values(networks).find((n) => n.chainId === from.chainId);
+	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
 
 	const showModal = () => setVisible(true);
 	const hideModal = () => {
@@ -138,7 +142,12 @@ const useExchangeResumeScreen = () => {
 			setGasless(
 				gaslessEnabled &&
 					(priceQuote
-						? await isExchangeGasless(priceQuote.value, priceQuote.sellTokenAddress, priceQuote.to!)
+						? await isExchangeGasless(
+								priceQuote.value,
+								priceQuote.sellTokenAddress,
+								priceQuote.to!,
+								network
+						  )
 						: true)
 			);
 		};
@@ -178,7 +187,6 @@ const useExchangeResumeScreen = () => {
 				} = priceQuote;
 
 				const { address, privateKey } = wallet.value;
-				const network = Object.values(networks).find((n) => n.chainId === chainId);
 				const { id: networkId } = network;
 
 				if (gasless) {

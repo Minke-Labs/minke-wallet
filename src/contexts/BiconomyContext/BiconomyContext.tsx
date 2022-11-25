@@ -3,17 +3,19 @@ import { providers } from 'ethers';
 // @ts-ignore
 import { Biconomy } from '@biconomy/mexa';
 import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
+import { networks } from '@models/network';
 
-export const BiconomyContext = createContext<any>(null);
+interface BiconomyContextProps {
+	gaslessEnabledMatic: boolean;
+	biconomy: any | null;
+}
+
+export const BiconomyContext = createContext<BiconomyContextProps>({} as BiconomyContextProps);
 
 const BiconomyProvider: React.FC = ({ children }) => {
-	const {
-		network: { jsonRpcProvider, biconomyAPIKey },
-		address,
-		privateKey
-	} = useGlobalWalletState();
-
-	const [biconomyClient, setBiconomyClient] = useState<any | null>();
+	const { address, privateKey } = useGlobalWalletState();
+	const { jsonRpcProvider, biconomyAPIKey } = networks.matic;
+	const [biconomyClient, setBiconomyClient] = useState<Biconomy | null>();
 	const [status, setStatus] = useState('');
 	const [gaslessEnabled, setGaslessEnabled] = useState(true);
 
@@ -76,7 +78,7 @@ const BiconomyProvider: React.FC = ({ children }) => {
 	const obj = useMemo(
 		() => ({
 			biconomy: biconomyClient,
-			gaslessEnabled: !!biconomyClient && biconomyClient.status === biconomyClient.READY && gaslessEnabled
+			gaslessEnabledMatic: !!biconomyClient && biconomyClient.status === biconomyClient.READY && gaslessEnabled
 		}),
 		[biconomyClient, status, biconomyAPIKey, address, gaslessEnabled, privateKey]
 	);

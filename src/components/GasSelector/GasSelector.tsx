@@ -40,6 +40,8 @@ const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network
 	const selected = selectedType === type;
 
 	const fetchGas = async () => {
+		if (!network) return;
+
 		const gas = await estimateGas(network);
 		const {
 			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, suggestBaseFee = '0' }
@@ -84,7 +86,7 @@ const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network
 
 	useEffect(() => {
 		fetchGas();
-	}, []);
+	}, [network]);
 
 	useEffect(() => {
 		const fetchConfirmation = async (gasType: string) => {
@@ -110,8 +112,8 @@ const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network
 			}
 		};
 
-		fetchConfirmationTimes();
-	}, [selectedType]);
+		if (network) fetchConfirmationTimes();
+	}, [selectedType, network]);
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -150,6 +152,8 @@ const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network
 		setType(val);
 		onSelectGas(val);
 	};
+
+	if (!network) return <></>;
 
 	if (!gasPrice || !usdPrice) {
 		return (

@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { getCustomDomain, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
-import { network } from '@src/model/network';
+import { selectedNetwork } from '@src/model/network';
 import { depositStablecoins, interestBearingTokens, interestBearingTokensAndProtocols } from '@models/deposit';
 import useLanguage from './useLanguage';
 
@@ -66,7 +66,8 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 	}, [transaction]);
 
 	const openTransaction = async () => {
-		const { etherscanURL } = await network();
+		// @TODO: check the transaction network
+		const { etherscanURL } = await selectedNetwork();
 		Linking.openURL(`${etherscanURL}/tx/${hash}`);
 	};
 

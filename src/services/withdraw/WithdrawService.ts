@@ -44,7 +44,8 @@ class WithdrawService {
 				contract: interestBearingToken,
 				biconomy,
 				walletConnect,
-				connector
+				connector,
+				network
 			});
 
 			if (!hash) {
@@ -65,7 +66,8 @@ class WithdrawService {
 					maxFeePerGas,
 					interestBearingToken,
 					token,
-					biconomy
+					biconomy,
+					network
 				});
 				return hash;
 			}
@@ -79,7 +81,8 @@ class WithdrawService {
 					toTokenAddress: token,
 					interestBearingToken,
 					maxFeePerGas,
-					maxPriorityFeePerGas
+					maxPriorityFeePerGas,
+					network
 				});
 
 				const { from, to, data } = transaction;
@@ -100,7 +103,8 @@ class WithdrawService {
 				toTokenAddress: token,
 				interestBearingToken,
 				maxFeePerGas,
-				maxPriorityFeePerGas
+				maxPriorityFeePerGas,
+				network
 			});
 			return hash;
 		}
@@ -109,11 +113,12 @@ class WithdrawService {
 				const hash = await mStableGaslessWithdraw({
 					address,
 					privateKey: privateKey!,
-					amount: await withdrawAmount(amount, address, interestBearingToken),
+					amount: await withdrawAmount(amount, address, interestBearingToken, network),
 					minAmount,
 					maxFeePerGas,
 					token,
-					biconomy
+					biconomy,
+					network
 				});
 				return hash;
 			}
@@ -121,12 +126,13 @@ class WithdrawService {
 			if (walletConnect) {
 				const tx = await mStableWithdrawData({
 					address,
-					amount: await withdrawAmount(amount, address, interestBearingToken),
+					amount: await withdrawAmount(amount, address, interestBearingToken, network),
 					minAmount,
-					token
+					token,
+					network
 				});
 				const { to, data } = tx;
-				const { id } = await network();
+				const { id } = network;
 				const hash = await connector.sendTransaction({
 					from: address,
 					to,
@@ -140,11 +146,12 @@ class WithdrawService {
 			const hash = await mStableWithdraw({
 				address,
 				privateKey: privateKey!,
-				amount: await withdrawAmount(amount, address, interestBearingToken),
+				amount: await withdrawAmount(amount, address, interestBearingToken, network),
 				minAmount,
 				maxFeePerGas,
 				maxPriorityFeePerGas,
-				token
+				token,
+				network
 			});
 
 			return hash;
@@ -163,7 +170,8 @@ class WithdrawService {
 		contract,
 		biconomy,
 		walletConnect,
-		connector
+		connector,
+		network
 	}: {
 		gasless: boolean;
 		address: string;
@@ -172,6 +180,7 @@ class WithdrawService {
 		biconomy: any;
 		walletConnect: boolean;
 		connector: WalletConnect;
+		network: Network;
 	}): Promise<DepositReturn> {
 		const approval = await new ApprovalService().approve({
 			gasless,

@@ -21,13 +21,6 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { os } from '@styles';
 import { useDeposit } from './Deposit.hooks';
 
-// interface DepositProps {
-// apy: string;
-// depositableToken: DepositableToken | undefined;
-// selectedProtocol: DepositProtocol | undefined;
-// setSelectedUSDCoin: React.Dispatch<React.SetStateAction<string>>;
-// }
-
 const Deposit: React.FC = () => {
 	const { i18n } = useLanguage();
 	const { track } = useAmplitude();
