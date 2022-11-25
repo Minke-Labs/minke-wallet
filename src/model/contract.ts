@@ -3,6 +3,7 @@ import Logger from '@utils/logger';
 import gasLimits from '@models/gas';
 import { getProvider } from './wallet';
 import { approvalState } from './deposit';
+import { Network } from './network';
 
 interface ContractApproval {
 	isApproved?: boolean;
@@ -44,7 +45,6 @@ export const onChainApprovalData = async ({
 	return tx;
 };
 
-// @TODO: network
 export const onChainApproval = async ({
 	privateKey,
 	amount,
@@ -52,7 +52,7 @@ export const onChainApproval = async ({
 	spender,
 	maxFeePerGas,
 	maxPriorityFeePerGas,
-	networkId
+	network
 }: {
 	privateKey: string;
 	amount?: string;
@@ -60,28 +60,38 @@ export const onChainApproval = async ({
 	spender: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
-	networkId: string;
+	network: Network;
 }): Promise<ContractApproval> => {
-	const provider = getProvider(networkId);
+	const provider = getProvider(network.id);
 	const wallet = new Wallet(privateKey, provider);
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
-	const txDefaults = {
-		type: 2,
+	let txDefaults = {
 		chainId: await wallet.getChainId(),
-		gasLimit: gasLimits.approval.toString(),
-		maxFeePerGas,
-		maxPriorityFeePerGas,
 		nonce
 	};
 
-	const tx = await onChainApprovalData({ address: wallet.address, contractAddress, amount, spender, networkId });
+	if (network.eip1559) {
+		txDefaults = {
+			...txDefaults,
+			...{ type: 2, maxFeePerGas, maxPriorityFeePerGas, gasLimit: gasLimits.approval.toString() }
+		};
+	} else {
+		txDefaults = { ...txDefaults, ...{ gasPrice: maxFeePerGas, gasLimit: BigNumber.from(gasLimits.approval) } };
+	}
+
+	const tx = await onChainApprovalData({
+		address: wallet.address,
+		contractAddress,
+		amount,
+		spender,
+		networkId: network.id
+	});
 	Logger.log('onChainApproval', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	const transaction = await wallet.provider.sendTransaction(signedTx as string);
 	return { transaction };
 };
-// @TODO: approve
 export const approveSpending = async ({
 	userAddress,
 	privateKey,
@@ -90,7 +100,7 @@ export const approveSpending = async ({
 	spender,
 	maxFeePerGas,
 	maxPriorityFeePerGas,
-	networkId
+	network
 }: {
 	userAddress: string;
 	privateKey: string;
@@ -99,9 +109,9 @@ export const approveSpending = async ({
 	spender: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
-	networkId: string;
+	network: Network;
 }): Promise<ContractApproval> => {
-	const { isApproved } = await approvalState(userAddress, contractAddress, spender, networkId);
+	const { isApproved } = await approvalState(userAddress, contractAddress, spender, network.id);
 	if (isApproved) {
 		return { isApproved };
 	}
@@ -112,6 +122,6 @@ export const approveSpending = async ({
 		contractAddress,
 		maxFeePerGas,
 		maxPriorityFeePerGas,
-		networkId
+		network
 	});
 };

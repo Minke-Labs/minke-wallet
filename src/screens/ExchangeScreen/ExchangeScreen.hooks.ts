@@ -52,7 +52,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
 	const [slippage, setSlippage] = React.useState<number>();
 	const { gaslessEnabledMatic } = useBiconomy();
-	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
+	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
 	const { tokens, stablecoins } = useBalances();
 	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
 	const { defaultToken } = useDepositProtocols();

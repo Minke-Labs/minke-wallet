@@ -195,7 +195,8 @@ export const useTransactionTransfer = ({
 						timeStamp: (new Date().getTime() / 1000).toString(),
 						amount: amountToSend,
 						direction: 'outgoing',
-						symbol: token.symbol
+						symbol: token.symbol,
+						chainId: network.chainId
 					});
 				} else {
 					const gas = gasPrice.result.ProposeGasPrice;
@@ -232,7 +233,8 @@ export const useTransactionTransfer = ({
 							destination: to,
 							from: address,
 							direction: 'outgoing',
-							symbol: token.symbol
+							symbol: token.symbol,
+							chainId: network.chainId
 						});
 					} else {
 						sentSuccessfully({

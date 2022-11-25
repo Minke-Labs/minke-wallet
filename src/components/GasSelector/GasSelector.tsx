@@ -185,6 +185,7 @@ const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network
 						waiting={waiting('fast')}
 						usdPrice={usdPrice}
 						gasLimit={gasLimit}
+						network={network}
 					/>
 					<GasOption
 						type="normal"
@@ -194,6 +195,7 @@ const GasSelector = ({ gasLimit, network }: { gasLimit: number; network: Network
 						waiting={waiting('normal')}
 						usdPrice={usdPrice}
 						gasLimit={gasLimit}
+						network={network}
 					/>
 				</View>
 			</ScrollView>

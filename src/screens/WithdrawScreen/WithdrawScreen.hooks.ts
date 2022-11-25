@@ -122,7 +122,8 @@ const useWithdrawScreen = () => {
 						subTransactions: [
 							{ type: 'incoming', symbol: token.symbol, amount: +amount },
 							{ type: 'outgoing', symbol: token.interestBearingToken.symbol, amount: +amount }
-						]
+						],
+						chainId: network.chainId
 					});
 
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });

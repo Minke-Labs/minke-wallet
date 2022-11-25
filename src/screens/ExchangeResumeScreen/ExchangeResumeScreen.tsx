@@ -32,7 +32,8 @@ const ExchangeResumeScreen = () => {
 		toFiatPrice,
 		gasless,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		network
 	} = useExchangeResumeScreen();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -63,21 +64,25 @@ const ExchangeResumeScreen = () => {
 								borderRightColor: colors.background1
 							}}
 						>
-							<TokenDetail
-								token={from}
-								amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
-								usdAmount={fromFiatPrice}
-								loading={!priceQuote}
-							/>
+							<View cross="center">
+								<TokenDetail
+									token={from}
+									amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
+									usdAmount={fromFiatPrice}
+									loading={!priceQuote}
+								/>
+							</View>
 						</View>
 
 						<View flex1 pt="s" pb="xs" cross="center">
-							<TokenDetail
-								token={to}
-								amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
-								usdAmount={toFiatPrice}
-								loading={!priceQuote}
-							/>
+							<View cross="center">
+								<TokenDetail
+									token={to}
+									amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
+									usdAmount={toFiatPrice}
+									loading={!priceQuote}
+								/>
+							</View>
 						</View>
 
 						<DirectionButton disabled right />
@@ -112,7 +117,7 @@ const ExchangeResumeScreen = () => {
 					</View>
 				</Paper>
 
-				{!gasless && <GasSelected gasLimit={gasLimits.exchange} />}
+				{!gasless && <GasSelected gasLimit={gasLimits.exchange} network={network} />}
 
 				<View mb="m" mh="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />

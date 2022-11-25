@@ -37,14 +37,18 @@ const TransactionWaitModal = ({
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.modalRow}>
 				<View style={toToken ? { marginRight: 56 } : {}}>
-					<Token token={fromToken} size={50} />
+					<View>
+						<Token token={fromToken} size={50} />
+					</View>
 				</View>
 				{!!toToken && (
 					<>
 						<View style={styles.exchangeResumeBackground}>
 							<Icon name="arrowRight" color="cta1" size={24} />
 						</View>
-						<Token token={toToken} size={50} />
+						<View>
+							<Token token={toToken} size={50} />
+						</View>
 					</>
 				)}
 			</View>

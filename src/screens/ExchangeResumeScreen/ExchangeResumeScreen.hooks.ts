@@ -234,13 +234,13 @@ const useExchangeResumeScreen = () => {
 						subTransactions: [
 							{ type: 'outgoing', symbol: from.symbol, amount: +fromAmount! },
 							{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
-						]
+						],
+						chainId: network.chainId
 					});
 
 					navigation.navigate('HomeScreen');
 				} else {
 					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget, networkId);
-
 					if (!isApproved) {
 						await new ApprovalService().approve({
 							address,
@@ -294,7 +294,8 @@ const useExchangeResumeScreen = () => {
 								{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
 							],
 							destination: addressTo!,
-							from: address
+							from: address,
+							chainId: network.chainId
 						});
 					} else {
 						const walletObject = new Wallet(wallet.privateKey.value!, provider);
@@ -343,7 +344,8 @@ const useExchangeResumeScreen = () => {
 		toFiatPrice,
 		gasless,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		network
 	};
 };
 

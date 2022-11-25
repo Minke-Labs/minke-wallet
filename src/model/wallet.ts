@@ -558,4 +558,5 @@ export interface ZapperTransaction {
 	name?: string;
 	pending?: boolean;
 	topUp?: boolean;
+	chainId: number;
 }

@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { getCustomDomain, smallWalletAddress, ZapperTransaction } from '@models/wallet';
 import { searchContact } from '@models/contact';
 import * as Linking from 'expo-linking';
-import { selectedNetwork } from '@src/model/network';
+import { networks } from '@src/model/network';
 import { depositStablecoins, interestBearingTokens, interestBearingTokensAndProtocols } from '@models/deposit';
 import useLanguage from './useLanguage';
 
@@ -29,7 +29,8 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 		destination,
 		subTransactions = [],
 		pending = false,
-		topUp = false
+		topUp = false,
+		chainId
 	} = transaction;
 	const received = direction === 'incoming';
 	const { i18n } = useLanguage();
@@ -65,10 +66,12 @@ const useTransaction = ({ transaction, walletDigits = 6 }: UseTransactionProps) 
 		formatAddress();
 	}, [transaction]);
 
-	const openTransaction = async () => {
-		// @TODO: check the transaction network
-		const { etherscanURL } = await selectedNetwork();
-		Linking.openURL(`${etherscanURL}/tx/${hash}`);
+	const openTransaction = () => {
+		const network = Object.values(networks).find((n) => n.chainId === chainId);
+		if (network) {
+			const { etherscanURL } = network;
+			Linking.openURL(`${etherscanURL}/tx/${hash}`);
+		}
 	};
 
 	const subtitle = topUp

@@ -76,17 +76,18 @@ class ApprovalService {
 			});
 		} else {
 			const {
-				result: { FastGasPrice: fast, suggestBaseFee }
+				result: { FastGasPrice: fast, suggestBaseFee = '0' }
 			} = await estimateGas(network);
 			const maxPriorityFeePerGas = parseUnits(fast, 'gwei');
 			const maxFeePerGas = parseUnits(suggestBaseFee, 'gwei').add(maxPriorityFeePerGas);
+
 			const { transaction } = await onChainApproval({
 				contractAddress: contract,
 				spender,
 				privateKey: privateKey!,
 				maxFeePerGas,
 				maxPriorityFeePerGas,
-				networkId: network.id
+				network
 			});
 			hash = transaction?.hash;
 		}

@@ -40,6 +40,7 @@ export interface Network {
 	};
 	coingeckoPlatform: string;
 	suggestedTokens: MinkeToken[];
+	eip1559: boolean;
 }
 
 export interface Networks {
@@ -340,7 +341,8 @@ export const networks: Networks = {
 				balanceUSD: 0,
 				chainId: 1
 			}
-		]
+		],
+		eip1559: true
 	},
 	matic: {
 		chainId: 137,
@@ -610,7 +612,8 @@ export const networks: Networks = {
 				balanceUSD: 0,
 				chainId: 137
 			}
-		]
+		],
+		eip1559: true
 	},
 	'binance-smart-chain': {
 		chainId: 56,
@@ -967,7 +970,8 @@ export const networks: Networks = {
 				balanceUSD: 0,
 				chainId: 56
 			}
-		]
+		],
+		eip1559: false
 	},
 	goerli: {
 		chainId: 5,
@@ -1002,7 +1006,8 @@ export const networks: Networks = {
 		aave: {
 			depositContract: ''
 		},
-		suggestedTokens: []
+		suggestedTokens: [],
+		eip1559: true
 	}
 };
 

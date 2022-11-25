@@ -121,7 +121,8 @@ export const useDeposit = () => {
 									symbol: depositableToken.interestBearingToken.symbol,
 									amount: +amount
 								}
-							]
+							],
+							chainId: network.chainId
 						});
 						navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'deposit' });
 					} else {
