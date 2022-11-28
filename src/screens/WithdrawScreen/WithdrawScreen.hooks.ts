@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
 import { MinkeToken } from '@models/types/token.types';
@@ -10,7 +10,6 @@ import {
 	useNativeToken,
 	useBiconomy,
 	useTransactions,
-	useDepositProtocols,
 	useWalletManagement,
 	useGlobalWalletState
 } from '@hooks';
@@ -22,18 +21,19 @@ import { captureException } from '@sentry/react-native';
 import { constants } from 'ethers';
 import gasLimits, { Networks } from '@models/gas';
 import { networks } from '@models/network';
+import { availableDepositProtocols } from '@models/deposit';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [token, setToken] = React.useState<MinkeToken>();
 	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
-	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
+	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
 	const { nativeToken, balance } = useNativeToken(network);
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
-	const { withdrawableTokens: tokens } = useBalances();
+	const { interestTokens: tokens } = useBalances();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
@@ -41,8 +41,10 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = useGlobalWalletState();
-	const apy = '100000';
-	const { defaultToken, selectedProtocol } = useDepositProtocols(true);
+	const apy = '10'; // @TODO fix APY
+	const selectedProtocol = token
+		? availableDepositProtocols[token.interestBearingToken?.source.toLowerCase() || '']
+		: undefined;
 	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
 
 	const showModal = () => {
@@ -67,7 +69,7 @@ const useWithdrawScreen = () => {
 		setToken(selectedToken);
 	};
 
-	const gasUnits = selectedProtocol ? gasLimits[network.id as Networks].deposit[selectedProtocol.id] : 1;
+	const gasUnits = selectedProtocol && network ? gasLimits[network.id as Networks].deposit[selectedProtocol.id] : 1;
 	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
 
 	const canWithdraw =
@@ -139,12 +141,6 @@ const useWithdrawScreen = () => {
 			}
 		}
 	};
-
-	useEffect(() => {
-		if (!!defaultToken && !token) {
-			setToken(defaultToken);
-		}
-	}, [defaultToken]);
 
 	return {
 		searchVisible,

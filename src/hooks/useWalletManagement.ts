@@ -11,6 +11,7 @@ interface UseWalletManagement {
 	connector: WalletConnect;
 }
 
+// @TODO: add network here!
 const useWalletManagement = (): UseWalletManagement => {
 	const { address, privateKey, network } = useGlobalWalletState();
 

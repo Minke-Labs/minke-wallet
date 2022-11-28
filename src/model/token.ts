@@ -309,7 +309,6 @@ export interface AccountBalance {
 	tokens: MinkeToken[];
 	stablecoins: MinkeToken[];
 	interestTokens: MinkeToken[];
-	withdrawableTokens: MinkeToken[];
 	loading: boolean;
 }
 

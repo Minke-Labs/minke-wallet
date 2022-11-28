@@ -8,15 +8,19 @@ import Touchable from '../../Touchable/Touchable';
 import styles from './NetworkTag.styles';
 import { NetworkTagProps } from './NetworkTag.types';
 
-const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, info }) => {
-	const { network } = useGlobalWalletState();
+const NetworkTag: React.FC<NetworkTagProps> = ({ onPress, info, network }) => {
+	const { network: settingsNetwork } = useGlobalWalletState();
 	const { i18n } = useLanguage();
+	const selectedNetwork = network || settingsNetwork;
+
 	return (
 		<View style={[styles.container, { justifyContent: info ? 'space-between' : 'center' }]}>
 			<View style={styles.left}>
-				<Token size={16} token={{ symbol: network.id, address: '', decimals: 0 }} />
+				<Token size={16} token={{ symbol: selectedNetwork.id, address: '', decimals: 0, chainId: 0 }} />
 				<Text type="span" style={{ marginLeft: 8 }}>
-					{i18n.t('Components.NetworkWarning.NetworkTag.sending_on', { network: network?.name })}
+					{i18n.t('Components.NetworkWarning.NetworkTag.sending_on', {
+						network: selectedNetwork.name
+					})}
 				</Text>
 			</View>
 			{info && (

@@ -17,7 +17,7 @@ const useDepositProtocols = (withdraw = false) => {
 	const [ableToDeposit, setAbleToDeposit] = React.useState<boolean | undefined>();
 	const [defaultToken, setDefaultToken] = React.useState<MinkeToken | null>();
 	const depositState = useState(globalDepositState());
-	const { stablecoins: tokens, withdrawableTokens } = useBalances();
+	const { stablecoins: tokens, interestTokens: withdrawableTokens } = useBalances();
 
 	const onChangeProtocol = async (protocol: DepositProtocol) => {
 		await AsyncStorage.setItem('@depositProtocol', protocol.id);

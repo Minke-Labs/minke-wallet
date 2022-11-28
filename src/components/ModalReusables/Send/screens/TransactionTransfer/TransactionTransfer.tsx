@@ -88,7 +88,7 @@ const TransactionTransfer: React.FC<TransactionTransferProps> = ({ token, user, 
 
 			{!enoughGas && <Warning label={i18n.t('Logs.not_enough_balance_for_gas')} />}
 
-			<NetworkWarning.Tag />
+			<NetworkWarning.Tag network={network} />
 
 			<View style={{ marginBottom: 8, marginTop: 24 }}>
 				{sending ? (

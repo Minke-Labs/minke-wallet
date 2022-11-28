@@ -196,16 +196,12 @@ export const getDepositToken = (id: string, symbol: string, protocol: string): D
 	return values.find((t) => symbol.toLowerCase() === t.symbol.toLowerCase()) || values[0];
 };
 
-const fetchInterestBearingTokens = async (wallet: string, protocol: string): Promise<[MinkeToken[], MinkeToken[]]> => {
+const fetchInterestBearingTokens = async (wallet: string): Promise<MinkeToken[]> => {
 	const networkPromises = Object.values(networks).map(async (network) => {
 		const { id: networkId, chainId } = network;
 		const provider = getProvider(networkId);
 		const tokens = Object.values(depositTokens[networkId] || []).flat();
 		if (tokens.length > 0) {
-			const protocolAddresses = depositTokens[networkId][protocol].map(
-				({ interestBearingToken: { address } }) => address
-			);
-
 			const promises = tokens.map(
 				async ({ address, decimals, symbol, interestBearingToken }): Promise<MinkeToken> => {
 					const {
@@ -267,23 +263,14 @@ const fetchInterestBearingTokens = async (wallet: string, protocol: string): Pro
 			);
 
 			const minkeTokens = await Promise.all(promises);
-			return partition(minkeTokens, (token) => protocolAddresses.includes(token.interestBearingToken!.address));
+			return minkeTokens;
 		}
 
-		return [[], []];
+		return [];
 	});
 
 	const interestBearingTokens = await Promise.all(networkPromises);
-	const partitionTokens: [MinkeToken[], MinkeToken[]] = [[], []];
-	interestBearingTokens.forEach((value) => {
-		if (value) {
-			const [withdrawable, rest] = value;
-			partitionTokens[0] = withdrawable;
-			partitionTokens[1] = rest;
-		}
-	});
-
-	return partitionTokens;
+	return interestBearingTokens.flat();
 };
 
 const fetchStablecoins = async (wallet: string): Promise<MinkeToken[]> => {

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { FlatList } from 'react-native-gesture-handler';
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-import { Text, Button, TransactionIcon } from '@components';
+import { Text, Button, Token } from '@components';
 import { makeStyles } from './Body.styles';
 import { BodyProps } from './Body.types';
 import Card from './Card/Card';
@@ -23,7 +23,7 @@ export const Body: React.FC<BodyProps> = ({ interestTokens }) => {
 						showsVerticalScrollIndicator={false}
 						renderItem={({ item, index }) => (
 							<Card
-								image={<TransactionIcon received />}
+								image={<Token token={item} size={32} />}
 								title={item.name!}
 								subtitle={i18n.t('SaveScreen.Body.deposit', {
 									source: item.interestBearingToken!.source

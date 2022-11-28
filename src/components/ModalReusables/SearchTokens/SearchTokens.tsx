@@ -39,7 +39,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	const [hideOtherTokens, setHideOtherTokens] = useState(true);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
-	const { withdrawableTokens } = useBalances();
+	const { interestTokens } = useBalances();
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
 	const flatListRef = useRef<FlatList>(null);
@@ -76,7 +76,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			if (withdraw || (tokens || []).length === 0) {
 				setLoading(true);
 				const allTokens = withdraw
-					? withdrawableTokens
+					? interestTokens
 					: (showOnlyOwnedTokens ? userTokens : await tokenList(chainId)).sort(
 							(a, b) =>
 								priorities.indexOf(b.symbol.toUpperCase()) -
@@ -91,7 +91,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 			}
 		};
 		loadTokens();
-	}, [withdrawableTokens, withdraw]);
+	}, [interestTokens, withdraw]);
 
 	useEffect(() => {
 		setSearch('');

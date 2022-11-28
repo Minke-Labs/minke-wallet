@@ -7,7 +7,6 @@ import Logger from '@utils/logger';
 import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTokens';
 import { interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
-import { globalDepositState } from '@stores/DepositStore';
 import { searchCoinData } from '@helpers/utilities';
 import { networks } from '@models/network';
 import useCovalentBalances from './useCovalentBalances';
@@ -16,15 +15,10 @@ import useZerionBalances from './useZerionBalances/useZerionBalances';
 export const BalanceContext = createContext<AccountBalance>({} as AccountBalance);
 
 const BalanceProvider: React.FC = ({ children }) => {
-	const {
-		address,
-		network: { chainId }
-	} = useState(globalWalletState()).value;
-	const { id: selectedProtocol } = useState(globalDepositState()).value;
+	const { address } = useState(globalWalletState()).value;
 	const [tokens, setTokens] = React.useState<MinkeToken[]>([]);
 	const [stablecoins, setStablecoins] = React.useState<MinkeToken[]>([]);
 	const [interestTokens, setInterestTokens] = React.useState<MinkeToken[]>([]);
-	const [withdrawableTokens, setWithdrawableTokens] = React.useState<MinkeToken[]>([]);
 	const [loading, setLoading] = React.useState(true);
 
 	const suggestedTokens = Object.values(networks)
@@ -32,15 +26,10 @@ const BalanceProvider: React.FC = ({ children }) => {
 		.flat();
 
 	const fetchInterests = useCallback(async () => {
-		if (selectedProtocol) {
-			const allInterestTokens = await fetchInterestBearingTokens(address, selectedProtocol);
-			const [withdrawable] = allInterestTokens;
-			const interest = allInterestTokens.flat();
-			setInterestTokens(interest.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
-			setWithdrawableTokens(withdrawable.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
-		}
+		const allInterestTokens = await fetchInterestBearingTokens(address);
+		setInterestTokens(allInterestTokens.filter(({ balanceUSD = 0 }) => balanceUSD >= 0.001));
 		setStablecoins(await fetchStablecoins(address));
-	}, [address, selectedProtocol]);
+	}, [address]);
 
 	const fillSuggestedTokens = (tokensWithBalance: MinkeToken[]): MinkeToken[] => {
 		const notFoundTokens = suggestedTokens.filter((suggested) => {
@@ -99,7 +88,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 
 	useEffect(() => {
 		fetchInterests();
-	}, [selectedProtocol, address, chainId]);
+	}, [address]);
 
 	useEffect(() => {
 		const fetchBalances = async (loadingUI = true) => {
@@ -129,7 +118,7 @@ const BalanceProvider: React.FC = ({ children }) => {
 			fetchInterests();
 		}, 1000 * 30);
 		return () => clearInterval(intervalId);
-	}, [address, chainId]);
+	}, [address]);
 
 	const stablecoinsBalance = stablecoins.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
 	const walletBalance = tokens.map(({ balanceUSD = 0 }) => balanceUSD).reduce((a, b) => a + b, 0);
@@ -144,12 +133,11 @@ const BalanceProvider: React.FC = ({ children }) => {
 			depositedBalance,
 			walletBalance,
 			interestTokens,
-			withdrawableTokens,
 			stablecoins,
 			stablecoinsBalance,
 			loading
 		}),
-		[address, chainId, selectedProtocol, tokens, interestTokens, withdrawableTokens, loading]
+		[address, tokens, interestTokens, loading]
 	);
 
 	return <BalanceContext.Provider value={obj}>{children}</BalanceContext.Provider>;

@@ -14,7 +14,8 @@ const SaveScreen = () => {
 	RNUxcam.tagScreenName('SaveScreen');
 	const { i18n } = useLanguage();
 	const [isModalVisible, setModalVisible] = useState(false);
-	const { apy, selectedProtocol } = useDepositProtocols();
+	const apy = '10'; // @TODO fix apy
+	const { selectedProtocol } = useDepositProtocols();
 	const { interestTokens, depositedBalance } = useBalances();
 
 	if (!interestTokens) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Save')} />;
