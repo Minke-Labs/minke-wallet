@@ -242,6 +242,10 @@ export default {
 		refer_and_earn: 'Refer a friend and earn free crypto',
 		stablecoins: 'Stablecoins'
 	},
+	NetworkModal: {
+		if_you_receiving: 'If you are receiving from an exchange or wallet make sure they support withdrawals on the ',
+		network: '{{network}} network'
+	},
 	NFTDetailScreen: {
 		by: 'by ',
 		Panel: {

@@ -71,7 +71,8 @@ export default {
 		},
 		Deposit: {
 			deposit: 'Deposita',
-			balance: 'Balance: '
+			balance: 'Balance: ',
+			on: 'en'
 		},
 		NotAbleToSaveModal: {
 			not_able: 'No fue posible depositar',
@@ -112,7 +113,8 @@ export default {
 				transaction_fee: 'Comision de transacción',
 				fast: 'Rápido',
 				normal: 'Normal',
-				slow: 'Lento'
+				slow: 'Lento',
+				fee_paid_in: 'Tarifa en '
 			}
 		},
 		validations: {
@@ -240,6 +242,10 @@ export default {
 		referral: 'Referidos',
 		refer_and_earn: 'Refiere a un amigo y gana cripto gratis',
 		stablecoins: 'Stablecoins'
+	},
+	NetworkModal: {
+		if_you_receiving: 'Si está recibiendo de una exchange o wallet, confirme que hay soporte para na ',
+		network: 'Red {{network}}'
 	},
 	NFTDetailScreen: {
 		by: 'Por ',
@@ -901,10 +907,17 @@ export default {
 			swap: 'Intercambiar',
 			buy_token_now: 'Compre {{token}} ahora'
 		},
+		ByNetworks: {
+			by_networks: 'Redes'
+		},
 		CountrySelector: {
 			country: 'País',
 			to_offer:
 				'Para ofrecerte las mejores opciones para comprar cripto por favor selecciona tu país de residencia:'
+		},
+		DepositProtocolSelector: {
+			choose_protocol: 'Elegir cuenta de ahorros',
+			change_account: 'Eligir cuenta'
 		},
 		EmptyStates: {
 			NoTokens: {
