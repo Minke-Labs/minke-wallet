@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
 import { MinkeToken } from '@models/types/token.types';
@@ -11,7 +11,8 @@ import {
 	useBiconomy,
 	useTransactions,
 	useWalletManagement,
-	useGlobalWalletState
+	useGlobalWalletState,
+	useDepositProtocols
 } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
@@ -26,6 +27,7 @@ import { availableDepositProtocols } from '@models/deposit';
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const [searchVisible, setSearchVisible] = React.useState(false);
+	const [apy, setApy] = React.useState<string>();
 	const [token, setToken] = React.useState<MinkeToken>();
 	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
 	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
@@ -41,11 +43,11 @@ const useWithdrawScreen = () => {
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
 	const { address, privateKey } = useGlobalWalletState();
-	const apy = '10'; // @TODO fix APY
 	const selectedProtocol = token
 		? availableDepositProtocols[token.interestBearingToken?.source.toLowerCase() || '']
 		: undefined;
-	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
+	const { fetchApy } = useDepositProtocols();
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement(network);
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -141,6 +143,16 @@ const useWithdrawScreen = () => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		const getApy = async () => {
+			if (selectedProtocol && token) {
+				setApy(await fetchApy(selectedProtocol, token));
+			}
+		};
+
+		getApy();
+	}, [selectedProtocol]);
 
 	return {
 		searchVisible,

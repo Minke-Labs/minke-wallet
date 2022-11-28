@@ -11,15 +11,14 @@ interface UseWalletManagement {
 	connector: WalletConnect;
 }
 
-// @TODO: add network here!
-const useWalletManagement = (): UseWalletManagement => {
-	const { address, privateKey, network } = useGlobalWalletState();
+const useWalletManagement = (network: Network | undefined): UseWalletManagement => {
+	const { address, privateKey } = useGlobalWalletState();
 
 	const connector = useWalletConnect();
 	const { connected, accounts, chainId } = connector;
 
 	const connectedToWalletConnect = connected && accounts[0].toLowerCase() === address.toLowerCase();
-	const needToChangeNetwork = connectedToWalletConnect && chainId !== network.chainId;
+	const needToChangeNetwork = connectedToWalletConnect && chainId !== network?.chainId;
 	const canSendTransactions = !!privateKey || connectedToWalletConnect;
 	const rightNetwork = Object.values(networks).find((n) => n.chainId === chainId);
 	const walletConnect = canSendTransactions && !needToChangeNetwork && !privateKey && connected;

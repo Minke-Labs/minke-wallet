@@ -59,7 +59,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
 	const gasValueInEth = formatUnits(maxFeePerGas);
-	const { canSendTransactions, needToChangeNetwork } = useWalletManagement();
+	const { canSendTransactions, needToChangeNetwork } = useWalletManagement(network);
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);

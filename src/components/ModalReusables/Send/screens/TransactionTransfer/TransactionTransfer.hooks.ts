@@ -69,7 +69,7 @@ export const useTransactionTransfer = ({
 	const network = Object.values(networks).find((n) => n.chainId === token.chainId);
 	const { balance } = useNativeToken(network);
 	const navigation = useNavigation();
-	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement(network);
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {

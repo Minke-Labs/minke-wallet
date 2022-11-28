@@ -36,13 +36,13 @@ export const useDepositScreen = () => {
 	const [depositProtocol, setDepositProtocol] = React.useState<DepositProtocol>();
 	const [apy, setApy] = React.useState<string>();
 	const { addPendingTransaction } = useTransactions();
-	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
+	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement(network);
 	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const { track } = useAmplitude();
 	const navigation = useNavigation();
 	const { stablecoins = [] } = useBalances();
 	const { address, privateKey } = useGlobalWalletState();
-	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
 	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
 	const { balance } = useNativeToken(network);
 	const { gas } = useState(globalExchangeState()).value;

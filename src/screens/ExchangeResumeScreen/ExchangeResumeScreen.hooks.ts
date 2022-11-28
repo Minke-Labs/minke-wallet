@@ -41,9 +41,9 @@ const useExchangeResumeScreen = () => {
 	const [toFiatPrice, setToFiatPrice] = React.useState<number>();
 	const { addPendingTransaction } = useTransactions();
 	const { track } = useAmplitude();
-	const { gaslessEnabledMatic, biconomy } = useBiconomy();
-	const { canSendTransactions, walletConnect, connector } = useWalletManagement();
 	const network = Object.values(networks).find((n) => n.chainId === from.chainId);
+	const { gaslessEnabledMatic, biconomy } = useBiconomy();
+	const { canSendTransactions, walletConnect, connector } = useWalletManagement(network);
 	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
 
 	const showModal = () => setVisible(true);
