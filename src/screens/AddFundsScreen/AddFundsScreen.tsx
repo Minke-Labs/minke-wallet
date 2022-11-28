@@ -7,6 +7,7 @@ import {
 	Header,
 	ModalBase,
 	ModalReusables,
+	NetworkWarning,
 	OnrampButton,
 	Text,
 	TokenCard,
@@ -56,7 +57,8 @@ const AddFundsScreen = ({ route }: Props) => {
 		useMoonpay,
 		disableMoonPay,
 		onMoonpayPurchase,
-		moonPaySpecialButton
+		moonPaySpecialButton,
+		network
 	} = useAddFundsScreen(topupToken);
 
 	return (
@@ -108,6 +110,9 @@ const AddFundsScreen = ({ route }: Props) => {
 						<DirectionButton loading={loadingPrices} disabled />
 					</View>
 
+					<View mh="xs" mb="xs">
+						<NetworkWarning.Tag network={network} />
+					</View>
 					<View mh="xs" mb="xs">
 						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
