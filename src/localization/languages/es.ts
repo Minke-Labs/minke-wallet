@@ -351,6 +351,9 @@ export default {
 			MStable: 'cuenta de ahorros en mStable'
 		}
 	},
+	SearchDepositProtocols: {
+		title: 'Cuenta de ahorros'
+	},
 	SecurityScreen: {
 		title: 'Seguridad',
 		require_biometric: 'Requerir identificación biométrica o PIN para realizar transacciones',

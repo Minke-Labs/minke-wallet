@@ -349,6 +349,9 @@ export default {
 			MStable: 'mStable savings account'
 		}
 	},
+	SearchDepositProtocols: {
+		title: 'Savings account'
+	},
 	SecurityScreen: {
 		title: 'Security',
 		require_biometric: 'Require Biometric or Pin Identification to Transact',

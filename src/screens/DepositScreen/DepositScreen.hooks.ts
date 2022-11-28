@@ -3,7 +3,7 @@ import { Keyboard } from 'react-native';
 import { useState } from '@hookstate/core';
 import { MinkeToken } from '@models/types/token.types';
 import { globalExchangeState } from '@stores/ExchangeStore';
-import { DepositProtocol, fetchDepositProtocol, fetchMStablePoolData } from '@models/deposit';
+import { DepositProtocol } from '@models/deposit';
 import {
 	useNavigation,
 	useBalances,
@@ -12,7 +12,8 @@ import {
 	useNativeToken,
 	useTransactions,
 	useWalletManagement,
-	useGlobalWalletState
+	useGlobalWalletState,
+	useDepositProtocols
 } from '@hooks';
 import Logger from '@utils/logger';
 import { toBn } from 'evm-bn';
@@ -21,7 +22,6 @@ import Deposit from '@src/services/deposit/DepositService';
 import { captureException } from '@sentry/react-native';
 import { constants } from 'ethers';
 import gasLimits, { Networks } from '@models/gas';
-import { getAavePools } from '@src/services/apis/covalent/covalent';
 import { Network, networks } from '@models/network';
 import { getDepositToken } from '@models/depositTokens';
 
@@ -47,6 +47,7 @@ export const useDepositScreen = () => {
 	const { balance } = useNativeToken(network);
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
+	const { fetchApy, protocol } = useDepositProtocols();
 
 	const updateAmount = (value: string) => {
 		const formatedValue = value.replace(/,/g, '.');
@@ -159,13 +160,9 @@ export const useDepositScreen = () => {
 		setDepositProtocolSearch(false);
 	};
 
-	const fetchSelectedProtocol = async () => {
-		setDepositProtocol(await fetchDepositProtocol());
-	};
-
 	useEffect(() => {
-		fetchSelectedProtocol();
-	}, []);
+		setDepositProtocol(protocol);
+	}, [protocol]);
 
 	useEffect(() => {
 		if (token && depositProtocol && !depositProtocol.chainIds.includes(token.chainId)) {
@@ -175,36 +172,12 @@ export const useDepositScreen = () => {
 
 	useEffect(() => {
 		const updateApy = async () => {
-			if (depositProtocol && token) {
-				try {
-					if (depositProtocol.id === 'aave') {
-						const pools = await getAavePools(token.chainId);
-						const pool = pools.find(
-							({ underlying }) =>
-								underlying.contract_ticker_symbol.toLowerCase() === token.symbol.toLowerCase()
-						);
-						if (pool) {
-							setApy((pool.supply_apy * 100).toFixed(2));
-						}
-					} else {
-						const poolData = await fetchMStablePoolData();
-						const nw = Object.values(networks).find((n) => n.chainId === token?.chainId);
-						const pool = poolData.pools.find(
-							({ pair, chain }) => chain === nw.name.toLowerCase() && pair === 'imUSD'
-						);
-						if (pool) {
-							setApy(pool.apyDetails.yieldOnly.toFixed(2));
-						}
-					}
-				} catch {
-					setApy(undefined);
-				}
-			} else {
-				setApy(undefined);
-			}
+			setApy(await fetchApy(depositProtocol!, token!));
 		};
 
-		updateApy();
+		if (depositProtocol && token) {
+			updateApy();
+		}
 	}, [depositProtocol, token]);
 
 	return {

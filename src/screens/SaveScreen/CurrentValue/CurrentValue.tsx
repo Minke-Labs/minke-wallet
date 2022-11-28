@@ -4,17 +4,15 @@ import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { numberFormat } from '@src/helpers/utilities';
 import { Text, Icon, ActivityIndicator, Token, InterestBanner } from '@components';
 import { BlurView } from 'expo-blur';
-import { availableDepositProtocols } from '@models/deposit';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
 
-export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy }) => {
+export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy, protocol: selectedProtocol }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const scheme = useColorScheme();
 	const styles = makeStyles(colors);
-	const selectedProtocol = availableDepositProtocols.mstable; // @TODO fix protocol
 
 	return (
 		<View style={styles.container}>

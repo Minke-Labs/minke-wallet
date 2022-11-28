@@ -10,10 +10,10 @@ import {
 	GasSelector,
 	Paper,
 	WatchModeTag,
-	// BlankStates,
 	Warning,
 	View,
-	DepositProtocolSelector
+	DepositProtocolSelector,
+	BlankStates
 } from '@components';
 import { useNavigation, useAmplitude, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
@@ -56,9 +56,9 @@ const DepositScreen: React.FC = () => {
 		track('Deposit Screen Opened');
 	}, []);
 
-	// if (!token) {
-	// return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />;
-	// }
+	if (!tokens) {
+		return <BlankStates.Type1 title={i18n.t('Components.BlankStates.Deposit')} />;
+	}
 
 	return (
 		<>

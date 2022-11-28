@@ -6,9 +6,8 @@ import { useGlobalWalletState, useLanguage } from '@hooks';
 import styles from './ExternalExchangeModal.styles';
 
 export const ExternalExchangeModal = () => {
-	const network = { name: 'CHANGE HERE ' }; // @TODO
 	const { i18n } = useLanguage();
-	const { address } = useGlobalWalletState();
+	const { address, network } = useGlobalWalletState();
 
 	const onShare = async () => {
 		await Share.share({ message: address });

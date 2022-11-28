@@ -10,7 +10,6 @@ interface ContractApproval {
 	transaction?: providers.TransactionResponse;
 }
 
-// @TODO: network
 export const onChainApprovalData = async ({
 	address,
 	amount,

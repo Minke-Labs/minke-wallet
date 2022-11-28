@@ -349,6 +349,9 @@ export default {
 			MStable: 'Conta de investimentos na mStable'
 		}
 	},
+	SearchDepositProtocols: {
+		title: 'Conta de investimentos'
+	},
 	SecurityScreen: {
 		title: 'Segurança',
 		require_biometric: 'Exigir identificação biométrica ou PIN para realizar transações',

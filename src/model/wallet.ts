@@ -310,7 +310,6 @@ export const sendTransaction = async (
 	return wallet.provider.sendTransaction(signedTx as string);
 };
 
-// @TODO: network
 export const estimateGas = async (network: Network): Promise<EstimateGasResponse> => {
 	const { gasURL, etherscanAPIURL, etherscanAPIKey: apiKey } = network;
 	const result = await fetch(`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=${apiKey}`);

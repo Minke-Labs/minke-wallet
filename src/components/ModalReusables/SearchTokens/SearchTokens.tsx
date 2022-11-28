@@ -10,7 +10,7 @@ import { MinkeToken } from '@models/types/token.types';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Icon from '@src/components/Icon/Icon';
 import View from '@src/components/View/View';
-import { networks } from '@models/network';
+import { Network, networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import ScreenLoadingIndicator from '../../ScreenLoadingIndicator/ScreenLoadingIndicator';
 import SearchInput from '../../SearchInput/SearchInput';
@@ -68,8 +68,10 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 	);
 
 	const priorities = ['MATIC', 'ETH', 'BUSD', 'DAI', 'USDT', 'USDC'];
-	// @TODO: all networks
-	const suggestedAddresses: string[] = []; // network.suggestedTokens.map(({ address }) => address.toLowerCase());
+	const nws: Network[] = Object.values(networks);
+	const suggestedAddresses = nws
+		.map(({ suggestedTokens }) => suggestedTokens.map(({ address }) => address.toLowerCase()))
+		.flat();
 
 	useEffect(() => {
 		const loadTokens = async () => {
@@ -158,7 +160,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 						showsVerticalScrollIndicator={false}
 						keyExtractor={(token: MinkeToken) => `${token.address}-${token.chainId}`}
 						renderItem={({ item, section }) => {
-							const nw = Object.values(networks).find((n) => n.chainId === item.chainId);
+							const nw = nws.find((n) => n.chainId === item.chainId);
 							if (hideOtherTokens && section.title === othersLabel && !search) {
 								return <></>;
 							}
@@ -207,7 +209,7 @@ const SearchTokens: React.FC<SearchTokensProps> = ({
 						keyExtractor={(token: MinkeToken) => `${token.address}-${token.chainId}`}
 						data={searchTokens}
 						renderItem={({ item }) => {
-							const nw = Object.values(networks).find((n) => n.chainId === item.chainId);
+							const nw = nws.find((n) => n.chainId === item.chainId);
 							return (
 								<Touchable onPress={() => onTokenSelect(item)} style={styles.tokenItem}>
 									<View style={{ marginRight: 16 }}>
