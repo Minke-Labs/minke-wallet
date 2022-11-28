@@ -26,7 +26,6 @@ import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
 import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
 import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
-import SavingAccountsScreen from './SavingAccountsScreen/SavingAccountsScreen';
 import ReferralScreen from './ReferralScreen/ReferralScreen';
 import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
 import RedeemConfirmScreen from './ReferralScreen/RedeemConfirmScreen/RedeemConfirmScreen';
@@ -70,7 +69,6 @@ const screensObj = {
 	BackupToICloudScreen,
 	TopUpWaitScreen,
 	WithdrawScreen,
-	SavingAccountsScreen,
 	ReferralScreen,
 	RedeemScreen,
 	RedeemConfirmScreen,

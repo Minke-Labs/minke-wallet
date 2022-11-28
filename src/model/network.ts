@@ -790,11 +790,11 @@ export const networks: Networks = {
 				chainId: 56
 			},
 			{
-				id: 'shiba-floki',
+				id: 'floki',
 				symbol: 'FLOKI',
-				name: 'Shiba Floki Inu',
-				address: '0x4aadad81487c3fadd9f162b851e6a61b729200cb',
-				decimals: 18,
+				name: 'FLOKI',
+				address: '0xcf0c122c6b73ff809c693db761e7baebe62b6a2e',
+				decimals: 9,
 				balance: '0',
 				balanceUSD: 0,
 				chainId: 56

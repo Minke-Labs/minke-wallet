@@ -73,12 +73,6 @@ export default {
 			deposit: 'Depósito',
 			balance: 'Saldo: '
 		},
-		OpenSavings: {
-			open_account: 'Abrir uma Conta',
-			aave: 'Abrir uma conta na Aave',
-			mstable: 'Abrir uma conta na mStable',
-			this_transaction: 'Esta transação vai custar alguns centavos.'
-		},
 		NotAbleToSaveModal: {
 			not_able: 'Não foi possível salvar',
 			need_funds_in: 'Primeiro você precisa ter fundos em ',
@@ -354,9 +348,6 @@ export default {
 		MStable: {
 			MStable: 'Conta de investimentos na mStable'
 		}
-	},
-	SavingAccountsScreen: {
-		title: 'Conta de investimentos'
 	},
 	SecurityScreen: {
 		title: 'Segurança',

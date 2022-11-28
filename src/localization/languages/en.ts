@@ -73,12 +73,6 @@ export default {
 			balance: 'Balance: ',
 			on: 'on'
 		},
-		OpenSavings: {
-			open_account: 'Open Account',
-			aave: 'Open Aave\nSavings Account',
-			mstable: 'Open mStable\nSavings Account',
-			this_transaction: 'This transaction will cost a few cents.'
-		},
 		NotAbleToSaveModal: {
 			not_able: 'Not able to save',
 			need_funds_in: 'First you need to have funds in ',
@@ -354,9 +348,6 @@ export default {
 		MStable: {
 			MStable: 'mStable savings account'
 		}
-	},
-	SavingAccountsScreen: {
-		title: 'Savings account'
 	},
 	SecurityScreen: {
 		title: 'Security',

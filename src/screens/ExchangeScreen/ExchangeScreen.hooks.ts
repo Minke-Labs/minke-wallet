@@ -6,7 +6,7 @@ import {
 	useNavigation,
 	useNativeToken,
 	useBiconomy,
-	useDepositProtocols,
+	useDefaultStablecoin,
 	useLanguage,
 	useWalletManagement
 } from '@hooks';
@@ -55,7 +55,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
 	const { tokens, stablecoins } = useBalances();
 	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
-	const { defaultToken } = useDepositProtocols();
+	const { defaultStablecoin } = useDefaultStablecoin();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
 	const gasValueInEth = formatUnits(maxFeePerGas);
@@ -252,16 +252,16 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	useEffect(() => {
 		if (fromToken) return;
 
-		if (destToken && defaultToken && defaultToken.symbol !== destToken.symbol) {
-			setFromToken(defaultToken);
+		if (destToken && defaultStablecoin && defaultStablecoin.symbol !== destToken.symbol) {
+			setFromToken(defaultStablecoin);
 		} else if (destToken && nativeToken) {
 			setFromToken(nativeToken);
-		} else if (!!defaultToken && !fromToken) {
-			setFromToken(defaultToken);
-		} else if (defaultToken === null) {
+		} else if (!!defaultStablecoin && !fromToken) {
+			setFromToken(defaultStablecoin);
+		} else if (defaultStablecoin === null) {
 			setFromToken(nativeToken as MinkeToken);
 		}
-	}, [defaultToken]);
+	}, [defaultStablecoin]);
 
 	useEffect(() => {
 		if (fromToken && toToken) {

@@ -3,7 +3,8 @@ import { SafeAreaView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { ModalBase, BlankStates } from '@components';
 import { BasicLayout } from '@layouts';
-import { useDepositProtocols, useBalances, useLanguage } from '@hooks';
+import { useBalances, useLanguage } from '@hooks';
+import { availableDepositProtocols } from '@models/deposit';
 import { Header } from './Header/Header';
 import { Body } from './Body/Body';
 import { CurrentValue } from './CurrentValue/CurrentValue';
@@ -15,7 +16,7 @@ const SaveScreen = () => {
 	const { i18n } = useLanguage();
 	const [isModalVisible, setModalVisible] = useState(false);
 	const apy = '10'; // @TODO fix apy
-	const { selectedProtocol } = useDepositProtocols();
+	const selectedProtocol = availableDepositProtocols.mstable; // @TODO fix protocol
 	const { interestTokens, depositedBalance } = useBalances();
 
 	if (!interestTokens) return <BlankStates.Type2 title={i18n.t('Components.BlankStates.Save')} />;

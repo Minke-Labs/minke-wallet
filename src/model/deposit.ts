@@ -76,13 +76,12 @@ export const availableDepositProtocols: DepositProtocols = {
 };
 
 export const fetchDepositProtocol = async (): Promise<DepositProtocol> => {
-	const depositProtocol = await AsyncStorage.getItem('@depositProtocol');
 	const { chainId } = await selectedNetwork();
 	if (chainId === networks.mainnet.chainId) {
 		return availableDepositProtocols.aave;
 	}
 
-	return depositProtocol ? availableDepositProtocols[depositProtocol] : availableDepositProtocols.mstable;
+	return availableDepositProtocols.mstable;
 };
 
 interface DepositProtocols {

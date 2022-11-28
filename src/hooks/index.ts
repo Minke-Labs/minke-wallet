@@ -20,7 +20,7 @@ import useWallets from './useWallets';
 import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
-import useDepositProtocols from './useDepositProtocols';
+import useDefaultStablecoin from './useDefaultStablecoin';
 import useReferralCode from './useReferralCode';
 import useFirstTime from './useFirstTime';
 import usePrevious from './usePrevious';
@@ -54,7 +54,7 @@ export {
 	useAuthentication,
 	useBiconomy,
 	useNativeToken,
-	useDepositProtocols,
+	useDefaultStablecoin,
 	useReferralCode,
 	useWalletState,
 	useFirstTime,

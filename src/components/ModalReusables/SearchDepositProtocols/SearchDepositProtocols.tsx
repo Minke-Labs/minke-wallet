@@ -25,7 +25,7 @@ const SearchDepositProtocols: React.FC<SearchDepositProtocolsProps> = ({
 
 	return (
 		<SafeAreaView>
-			<ModalHeader title={i18n.t('SavingAccountsScreen.title')} {...{ onDismiss }} />
+			<ModalHeader title={i18n.t('SearchDepositProtocols.title')} {...{ onDismiss }} />
 			<View ph="s">
 				<FlatList
 					data={Object.values(availableDepositProtocols)}

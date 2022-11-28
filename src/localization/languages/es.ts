@@ -73,22 +73,6 @@ export default {
 			deposit: 'Deposita',
 			balance: 'Balance: '
 		},
-		OpenSavings: {
-			open_account: 'Abrir Cuenta',
-			aave: 'Abrir Aave\nCuenta de Ahorro',
-			mstable: 'Abrir mStable\nSCuenta de Ahorro',
-			this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
-		},
-		// OpenMStable: {
-		// open_account: 'Abrir Cuenta',
-		// open_mstable: 'Abrir mStable\nCuenta de Ahorro',
-		// what_is: 'Que es mStable?',
-		// mstable_des:
-		// 'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
-		// view_site: 'Ver Sitio',
-		// learn_more: 'Aprende Más',
-		// this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
-		// },
 		NotAbleToSaveModal: {
 			not_able: 'No fue posible depositar',
 			need_funds_in: 'Primero necesitas tener fondos ',
@@ -366,9 +350,6 @@ export default {
 		MStable: {
 			MStable: 'cuenta de ahorros en mStable'
 		}
-	},
-	SavingAccountsScreen: {
-		title: 'Cuenta de ahorros'
 	},
 	SecurityScreen: {
 		title: 'Seguridad',
