@@ -37,7 +37,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [fromToken, setFromToken] = React.useState<MinkeGasToken>(sourceToken as MinkeToken);
-	const [toToken, setToToken] = React.useState<MinkeToken>(destToken as MinkeToken);
+	const [toToken, setToToken] = React.useState<MinkeToken | undefined>(destToken as MinkeToken);
 	const network = Object.values(networks).find((n) => n.chainId === fromToken?.chainId);
 	const { nativeToken, balance } = useNativeToken(network);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
@@ -76,7 +76,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	};
 
 	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
-		if (fromToken && toToken) {
+		if (fromToken && toToken && fromToken.chainId === toToken.chainId) {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
 			const { address: destinationToken, decimals: destDecimals } = toToken;
@@ -301,6 +301,12 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	useEffect(() => {
 		setSlippage(toToken?.suggestedSlippage);
 	}, [toToken?.address]);
+
+	useEffect(() => {
+		if (fromToken && toToken && fromToken.chainId !== toToken.chainId) {
+			setToToken(undefined);
+		}
+	}, [fromToken]);
 
 	const enoughForGas =
 		gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasLimits.exchange)) : true);
