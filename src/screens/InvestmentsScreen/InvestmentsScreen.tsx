@@ -120,8 +120,9 @@ const InvestmentsScreen = () => {
 										onPress={() => setChainIdSearch(chainId)}
 										key={chainId}
 										bgc={chainIdSearch === chainId ? 'background5' : undefined}
-										bw={chainIdSearch === chainId ? undefined : 1}
-										bc={chainIdSearch === chainId ? undefined : 'text6'}
+										bw={1}
+										bc={chainIdSearch === chainId ? 'background5' : 'text6'}
+										br="s"
 									>
 										<View mr="xxs">
 											<Token token={nativeToken} size={20} />

@@ -57,7 +57,7 @@ export default {
 		header_title: 'Change Language'
 	},
 	ChangeNetworkScreen: {
-		header_title: 'Network',
+		header_title: 'Default Network',
 		ListItem: {
 			test_network: 'test network'
 		}
@@ -377,7 +377,7 @@ export default {
 		backup: 'Backup',
 		country: 'Country',
 		language: 'Language',
-		network: 'Network',
+		network: 'Default Network',
 		new_wallet: 'New Wallet',
 		usd_coin: 'US Dollar Coin',
 		contact_support: 'Contact Support',

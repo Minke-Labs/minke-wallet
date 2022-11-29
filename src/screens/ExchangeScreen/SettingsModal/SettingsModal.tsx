@@ -47,7 +47,15 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onDismiss, slippageValue,
 				/>
 				<View row cross="center" main="space-between" mb="xs">
 					{['1.0', '2.0', '5.0'].map((n) => (
-						<View pv="xxs" key={n} flex1>
+						<View
+							pv="xxs"
+							key={n}
+							flex1
+							bgc={Number(n) === value ? 'background5' : undefined}
+							bw={1}
+							bc={Number(n) === value ? 'background5' : 'text6'}
+							br="s"
+						>
 							<Touchable onPress={() => setSlippage(Number(n).toString())}>
 								<Text type="lSmall" weight="semiBold" center color="text1">
 									{n}%

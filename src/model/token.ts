@@ -90,7 +90,7 @@ export const getExchangePrice = async ({
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		buyTokenPercentageFee: 0.0085,
 		slippagePercentage: slippage,
-		excludedSources: 'MeshSwap,Curve_V2,MDex',
+		excludedSources: 'MeshSwap,Curve_V2,MDex,Balancer_V2,Balancer,DODO',
 		skipValidation: true
 	};
 

@@ -58,7 +58,7 @@ export default {
 		header_title: 'Cambiar Idioma'
 	},
 	ChangeNetworkScreen: {
-		header_title: 'Red',
+		header_title: 'Red Predeterminada',
 		ListItem: {
 			test_network: 'red de prueba'
 		}
@@ -380,7 +380,7 @@ export default {
 		backup: 'Copia de seguridad',
 		country: 'País',
 		language: 'Idioma',
-		network: 'Red',
+		network: 'Red Predeterminada',
 		new_wallet: 'Nueva Wallet',
 		usd_coin: 'Activo USD',
 		contact_support: 'Soporte Técnico',

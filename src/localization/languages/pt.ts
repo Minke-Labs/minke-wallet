@@ -58,7 +58,7 @@ export default {
 		header_title: 'Alterar o Idioma'
 	},
 	ChangeNetworkScreen: {
-		header_title: 'Rede',
+		header_title: 'Rede Padrão',
 		ListItem: {
 			test_network: 'rede de testes'
 		}
@@ -379,7 +379,7 @@ export default {
 		backup: 'Backup',
 		country: 'País',
 		language: 'Idioma',
-		network: 'Rede',
+		network: 'Rede Padrão',
 		new_wallet: 'Nova Carteira',
 		usd_coin: 'Moeda Padrão USD',
 		contact_support: 'Contactar Suporte',
