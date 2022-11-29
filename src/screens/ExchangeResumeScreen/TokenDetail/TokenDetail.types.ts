@@ -5,4 +5,5 @@ export interface TokenDetailProps {
 	amount: string;
 	usdAmount: number | undefined;
 	loading: boolean;
+	showNetworkIcon?: boolean;
 }

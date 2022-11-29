@@ -4,7 +4,13 @@ import { numberFormat } from '@helpers/utilities';
 import { View } from 'react-native';
 import { TokenDetailProps } from './TokenDetail.types';
 
-export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmount, loading }) => {
+export const TokenDetail: React.FC<TokenDetailProps> = ({
+	token,
+	amount,
+	usdAmount,
+	loading,
+	showNetworkIcon = true
+}) => {
 	if (loading) {
 		return (
 			<>
@@ -25,7 +31,7 @@ export const TokenDetail: React.FC<TokenDetailProps> = ({ token, amount, usdAmou
 
 	return (
 		<>
-			<Token size={48} token={token} />
+			<Token size={48} token={token} showNetworkIcon={showNetworkIcon} />
 
 			<Text style={{ marginTop: 16 }} mb="xxxs" weight="semiBold" type="lMedium">
 				{usdAmount ? numberFormat(usdAmount, 4) : '$0'}

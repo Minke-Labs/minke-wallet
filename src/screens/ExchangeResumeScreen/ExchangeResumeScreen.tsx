@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables, View } from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables, View, Token } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
@@ -70,6 +70,7 @@ const ExchangeResumeScreen = () => {
 									amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
 									usdAmount={fromFiatPrice}
 									loading={!priceQuote}
+									showNetworkIcon={false}
 								/>
 							</View>
 						</View>
@@ -81,6 +82,7 @@ const ExchangeResumeScreen = () => {
 									amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
 									usdAmount={toFiatPrice}
 									loading={!priceQuote}
+									showNetworkIcon={false}
 								/>
 							</View>
 						</View>
@@ -98,6 +100,19 @@ const ExchangeResumeScreen = () => {
 				</Paper>
 
 				<Paper mb="s" p="s" mh="xs">
+					<View row main="space-between" mb="xs">
+						<Text weight="semiBold" color="text3" type="lMedium">
+							{i18n.t('ExchangeResumeScreen.network')}
+						</Text>
+						<View row cross="center">
+							<View mr="xxs">
+								<Token token={network.nativeToken} size={24} />
+							</View>
+							<Text weight="bold" color="text2" type="tSmall">
+								{network.name}
+							</Text>
+						</View>
+					</View>
 					<View row main="space-between" mb="xs">
 						<Text weight="semiBold" color="text3" type="lMedium">
 							{i18n.t('ExchangeResumeScreen.rate')}

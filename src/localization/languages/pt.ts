@@ -100,7 +100,8 @@ export default {
 		exchange_resume: 'Confirmação',
 		rate_fixed_for: 'Cotação fixa por:',
 		rate: 'Cotação',
-		swapping_via: 'Convertendo via'
+		swapping_via: 'Convertendo via',
+		network: 'Rede'
 	},
 	ExchangeScreen: {
 		fetching: 'Buscando...',

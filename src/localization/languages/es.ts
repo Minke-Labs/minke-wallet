@@ -100,7 +100,8 @@ export default {
 		exchange_resume: 'Confirmación',
 		rate_fixed_for: 'Tasa fija por:',
 		rate: 'Tasa',
-		swapping_via: 'Intercambiando via'
+		swapping_via: 'Intercambiando via',
+		network: 'Red'
 	},
 	ExchangeScreen: {
 		fetching: 'Buscando...',

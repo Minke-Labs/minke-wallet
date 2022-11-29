@@ -99,7 +99,8 @@ export default {
 		exchange_resume: 'Confirmation',
 		rate_fixed_for: 'Rate fixed for:',
 		rate: 'Rate',
-		swapping_via: 'Swapping via'
+		swapping_via: 'Swapping via',
+		network: 'Network'
 	},
 	ExchangeScreen: {
 		fetching: 'Fetching...',
