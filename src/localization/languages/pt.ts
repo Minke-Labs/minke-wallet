@@ -1059,7 +1059,8 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Enviando na rede {{network}}'
+				sending_on: 'Enviando na rede {{network}}',
+				buying_on: 'Comprando na rede {{network}}'
 			}
 		},
 		PendingTransactions: {
