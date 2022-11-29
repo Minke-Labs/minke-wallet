@@ -65,7 +65,7 @@ const InvestmentsScreen = () => {
 
 	groupedInvestments.sort((first, second) => {
 		const firstBalanceUSD = first.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
-		const secondBalanceUSD = second.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		const secondBalanceUSD: number = second.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
 		const firstPercentage = first[0].perc || -100;
 		const secondPercentage = second[0].perc || -100;
 		const firstBalance = Number(first[0].balance || '0');
@@ -119,6 +119,9 @@ const InvestmentsScreen = () => {
 										p="xxs"
 										onPress={() => setChainIdSearch(chainId)}
 										key={chainId}
+										bgc={chainIdSearch === chainId ? 'background5' : undefined}
+										bw={chainIdSearch === chainId ? undefined : 1}
+										bc={chainIdSearch === chainId ? undefined : 'text6'}
 									>
 										<View mr="xxs">
 											<Token token={nativeToken} size={20} />

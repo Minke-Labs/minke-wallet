@@ -111,8 +111,9 @@ const AddFundsScreen = ({ route }: Props) => {
 					</View>
 
 					<View mh="xs" mb="xs">
-						<NetworkWarning.Tag network={network} />
+						<NetworkWarning.Tag network={network} buying />
 					</View>
+
 					<View mh="xs" mb="xs">
 						{!!useApplePay && (
 							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
