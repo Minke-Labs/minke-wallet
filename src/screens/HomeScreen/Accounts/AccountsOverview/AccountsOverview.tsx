@@ -107,6 +107,8 @@ export const AccountsOverview: React.FC = () => {
 					key={`${token.address}-${token.chainId}`}
 					token={token}
 					onPress={() => navigation.navigate('InvestmentsDetailScreen', { coin: token })}
+					showNetworkIcon={false}
+					chainIds={[token.chainId]}
 				/>
 			))}
 		</Paper>
