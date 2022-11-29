@@ -210,8 +210,10 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		let walletToken = token;
 		if (!token.balance) {
 			walletToken =
-				(walletTokens || []).find(({ address }) => address.toLowerCase() === token.address.toLowerCase()) ||
-				token;
+				(walletTokens || []).find(
+					({ address, chainId }) =>
+						address.toLowerCase() === token.address.toLowerCase() && token.chainId === chainId
+				) || token;
 		}
 		if (searchSource === 'from') {
 			updateFromToken(walletToken);
