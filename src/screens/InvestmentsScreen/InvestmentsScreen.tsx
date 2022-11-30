@@ -121,7 +121,7 @@ const InvestmentsScreen = () => {
 										key={chainId}
 										bgc={chainIdSearch === chainId ? 'background5' : undefined}
 										bw={1}
-										bc={chainIdSearch === chainId ? 'background5' : 'text6'}
+										bc="background5"
 										br="s"
 									>
 										<View mr="xxs">

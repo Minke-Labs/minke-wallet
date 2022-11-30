@@ -3,7 +3,7 @@ import { ScrollView, TouchableOpacity } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankStates } from '@components';
 import { AssetsLayout } from '@layouts';
-import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
+import { useBalances, useDepositProtocols, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { stablecoins as coins } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
 import { Network, networks } from '@models/network';
@@ -15,7 +15,7 @@ const StablecoinsScreen = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
-	const apy = '10';
+	const { apy } = useDepositProtocols();
 	const productionChainIds = Object.values(networks)
 		.filter((n) => !n.testnet)
 		.map((n: Network) => n.chainId);
