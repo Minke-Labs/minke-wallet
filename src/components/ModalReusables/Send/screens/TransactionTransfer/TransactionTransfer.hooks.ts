@@ -9,7 +9,7 @@ import {
 	useWalletManagement,
 	useGlobalWalletState
 } from '@hooks';
-import { network } from '@models/network';
+import { networks } from '@models/network';
 import { convertTransactionResponse } from '@models/transaction';
 import {
 	estimateGas,
@@ -61,19 +61,23 @@ export const useTransactionTransfer = ({
 	const [amountType, setAmountType] = useState<'fiat' | 'token'>('fiat');
 	const [enoughGas, setEnoughGas] = useState(true);
 	const { addPendingTransaction } = useTransactions();
-	const { gaslessEnabled, biconomy } = useBiconomy();
-	const gasless = gaslessEnabled && POLYGON_GASLESS_TOKENS.includes(token.address.toLowerCase());
-	const { balance } = useNativeToken();
+	const { gaslessEnabledMatic, biconomy } = useBiconomy();
+	const gasless =
+		gaslessEnabledMatic &&
+		token.chainId === networks.matic.chainId &&
+		POLYGON_GASLESS_TOKENS.includes(token.address.toLowerCase());
+	const network = Object.values(networks).find((n) => n.chainId === token.chainId);
+	const { balance } = useNativeToken(network);
 	const navigation = useNavigation();
-	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement(network);
 
 	useEffect(() => {
 		const fetchGasPrice = async () => {
-			const result = await estimateGas();
+			const result = await estimateGas(network);
 			setGasPrice(result);
 			const {
 				nativeToken: { symbol }
-			} = await network();
+			} = network;
 			setChainDefaultToken(symbol);
 		};
 
@@ -112,11 +116,7 @@ export const useTransactionTransfer = ({
 		}
 	}, [gasPrice, token, chainDefaultToken]);
 
-	const {
-		address,
-		privateKey,
-		network: { id }
-	} = useGlobalWalletState();
+	const { address, privateKey } = useGlobalWalletState();
 
 	const onBlockchainError = (e: any) => {
 		Logger.error('Sending blockchain error', e);
@@ -145,14 +145,11 @@ export const useTransactionTransfer = ({
 				onDismiss();
 				if (gasless) {
 					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
+						token,
 						hash: ''
 					});
-					const { isApproved } = await approvalState(address, token.address, sendContract);
+					const { id: networkId } = network;
+					const { isApproved } = await approvalState(address, token.address, sendContract, networkId);
 					const provider = biconomy.getEthersProvider();
 
 					if (!isApproved) {
@@ -180,11 +177,7 @@ export const useTransactionTransfer = ({
 					});
 
 					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
+						token,
 						hash
 					});
 					track('Sent', {
@@ -202,7 +195,8 @@ export const useTransactionTransfer = ({
 						timeStamp: (new Date().getTime() / 1000).toString(),
 						amount: amountToSend,
 						direction: 'outgoing',
-						symbol: token.symbol
+						symbol: token.symbol,
+						chainId: network.chainId
 					});
 				} else {
 					const gas = gasPrice.result.ProposeGasPrice;
@@ -215,7 +209,7 @@ export const useTransactionTransfer = ({
 							to,
 							amountToSend,
 							gas,
-							id,
+							network.id,
 							contractAddress,
 							token.decimals
 						);
@@ -239,15 +233,12 @@ export const useTransactionTransfer = ({
 							destination: to,
 							from: address,
 							direction: 'outgoing',
-							symbol: token.symbol
+							symbol: token.symbol,
+							chainId: network.chainId
 						});
 					} else {
 						sentSuccessfully({
-							token: {
-								address: token.address,
-								decimals: token.decimals,
-								symbol: token.symbol
-							},
+							token,
 							hash
 						});
 						const transaction = await sendTransaction(
@@ -255,7 +246,7 @@ export const useTransactionTransfer = ({
 							to,
 							amountToSend,
 							gas,
-							id,
+							network.id,
 							contractAddress,
 							token.decimals
 						);
@@ -273,11 +264,7 @@ export const useTransactionTransfer = ({
 					}
 
 					sentSuccessfully({
-						token: {
-							address: token.address,
-							decimals: token.decimals,
-							symbol: token.symbol
-						},
+						token,
 						hash
 					});
 
@@ -327,6 +314,7 @@ export const useTransactionTransfer = ({
 		onChangeNumber,
 		onSend,
 		onMaxPress,
-		onTypeChange
+		onTypeChange,
+		network
 	};
 };

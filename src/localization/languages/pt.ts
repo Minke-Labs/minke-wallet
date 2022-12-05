@@ -58,7 +58,7 @@ export default {
 		header_title: 'Alterar o Idioma'
 	},
 	ChangeNetworkScreen: {
-		header_title: 'Rede',
+		header_title: 'Rede Padrão',
 		ListItem: {
 			test_network: 'rede de testes'
 		}
@@ -71,13 +71,8 @@ export default {
 		},
 		Deposit: {
 			deposit: 'Depósito',
-			balance: 'Saldo: '
-		},
-		OpenSavings: {
-			open_account: 'Abrir uma Conta',
-			aave: 'Abrir uma conta na Aave',
-			mstable: 'Abrir uma conta na mStable',
-			this_transaction: 'Esta transação vai custar alguns centavos.'
+			balance: 'Saldo: ',
+			on: 'na'
 		},
 		NotAbleToSaveModal: {
 			not_able: 'Não foi possível salvar',
@@ -105,7 +100,8 @@ export default {
 		exchange_resume: 'Confirmação',
 		rate_fixed_for: 'Cotação fixa por:',
 		rate: 'Cotação',
-		swapping_via: 'Convertendo via'
+		swapping_via: 'Convertendo via',
+		network: 'Rede'
 	},
 	ExchangeScreen: {
 		fetching: 'Buscando...',
@@ -118,7 +114,8 @@ export default {
 				transaction_fee: 'Taxa da transação',
 				fast: 'Rápido',
 				normal: 'Normal',
-				slow: 'Devagar'
+				slow: 'Devagar',
+				fee_paid_in: 'Taxa em '
 			}
 		},
 		validations: {
@@ -247,6 +244,10 @@ export default {
 		refer_and_earn: 'Indique um amigo e ganhe criptos grátis',
 		stablecoins: 'Stablecoins'
 	},
+	NetworkModal: {
+		if_you_receiving: 'Se você está recebendo de uma corretora ou carteira confirme se existe suporte para na ',
+		network: 'Rede {{network}}'
+	},
 	NFTDetailScreen: {
 		by: 'por ',
 		Panel: {
@@ -355,7 +356,7 @@ export default {
 			MStable: 'Conta de investimentos na mStable'
 		}
 	},
-	SavingAccountsScreen: {
+	SearchDepositProtocols: {
 		title: 'Conta de investimentos'
 	},
 	SecurityScreen: {
@@ -378,7 +379,7 @@ export default {
 		backup: 'Backup',
 		country: 'País',
 		language: 'Idioma',
-		network: 'Rede',
+		network: 'Rede Padrão',
 		new_wallet: 'Nova Carteira',
 		usd_coin: 'Moeda Padrão USD',
 		contact_support: 'Contactar Suporte',
@@ -907,14 +908,21 @@ export default {
 			swap: 'Trocar',
 			buy_token_now: 'Compre {{token}} agora'
 		},
+		ByNetworks: {
+			by_networks: 'Redes'
+		},
 		CountrySelector: {
 			country: 'País',
 			to_offer:
 				'Para oferecer a você as melhores opções de compra de criptomoedas, selecione seu país de residência:'
 		},
+		DepositProtocolSelector: {
+			choose_protocol: 'Escolher conta de investmentos',
+			change_account: 'Escolher conta'
+		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'Nenhum token {{network}}'
+				no_tokens_here: 'Nenhum token'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Seus pontos aparecerão aqui',
@@ -1052,7 +1060,8 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Enviando na rede {{network}}'
+				sending_on: 'Enviando na rede {{network}}',
+				buying_on: 'Comprando na rede {{network}}'
 			}
 		},
 		PendingTransactions: {

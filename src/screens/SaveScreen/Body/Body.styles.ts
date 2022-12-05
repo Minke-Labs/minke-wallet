@@ -6,7 +6,6 @@ export const makeStyles = (colors: ColorType) =>
 		depositCardContainer: {
 			flex: 1,
 			backgroundColor: colors.background1,
-			paddingVertical: 32,
 			paddingHorizontal: 24,
 			borderTopLeftRadius: 24,
 			borderTopRightRadius: 24
@@ -15,6 +14,7 @@ export const makeStyles = (colors: ColorType) =>
 			borderRadius: 16,
 			backgroundColor: colors.detail4,
 			padding: 24,
+			marginTop: 32,
 			marginBottom: 32,
 			justifyContent: 'center'
 		}

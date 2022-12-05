@@ -201,7 +201,7 @@ export const gaslessSend = async ({
 export const isExchangeTargetApproved = async (allowanceTarget: string): Promise<boolean> => {
 	const abi = ['function approvedTargets(address) public view returns (bool)'];
 	try {
-		const contract = new Contract(exchangeContract, abi, await getProvider());
+		const contract = new Contract(exchangeContract, abi, getProvider('matic'));
 		const approved = await contract.approvedTargets(allowanceTarget);
 		return approved;
 	} catch {

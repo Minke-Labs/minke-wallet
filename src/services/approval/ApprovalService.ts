@@ -2,6 +2,7 @@ import { onChainApproval, onChainApprovalData } from '@models/contract';
 import { ApprovalState, approvalState } from '@models/deposit';
 import gasLimits from '@models/gas';
 import { gaslessApproval } from '@models/gaslessTransaction';
+import { Network } from '@models/network';
 import { estimateGas, getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
@@ -10,8 +11,13 @@ import { toBn } from 'evm-bn';
 import { DepositReturn } from '../deposit/deposit.types';
 
 class ApprovalService {
-	public static async approveState(address: string, contract: string, spender: string): Promise<ApprovalState> {
-		const approval = await approvalState(address, contract, spender);
+	public static async approveState(
+		address: string,
+		contract: string,
+		spender: string,
+		networkId: string
+	): Promise<ApprovalState> {
+		const approval = await approvalState(address, contract, spender, networkId);
 		return approval;
 	}
 
@@ -24,7 +30,8 @@ class ApprovalService {
 		spender,
 		biconomy,
 		walletConnect,
-		connector
+		connector,
+		network
 	}: {
 		gasless: boolean;
 		address: string;
@@ -34,6 +41,7 @@ class ApprovalService {
 		biconomy: any;
 		walletConnect: boolean;
 		connector: WalletConnect;
+		network: Network;
 	}): Promise<DepositReturn> {
 		if (gasless) {
 			const hash = await gaslessApproval({
@@ -54,7 +62,8 @@ class ApprovalService {
 			const tx = await onChainApprovalData({
 				address,
 				contractAddress: contract,
-				spender
+				spender,
+				networkId: network.id
 			});
 
 			const { data, to } = tx;
@@ -67,22 +76,24 @@ class ApprovalService {
 			});
 		} else {
 			const {
-				result: { FastGasPrice: fast, suggestBaseFee }
-			} = await estimateGas();
+				result: { FastGasPrice: fast, suggestBaseFee = '0' }
+			} = await estimateGas(network);
 			const maxPriorityFeePerGas = parseUnits(fast, 'gwei');
 			const maxFeePerGas = parseUnits(suggestBaseFee, 'gwei').add(maxPriorityFeePerGas);
+
 			const { transaction } = await onChainApproval({
 				contractAddress: contract,
 				spender,
 				privateKey: privateKey!,
 				maxFeePerGas,
-				maxPriorityFeePerGas
+				maxPriorityFeePerGas,
+				network
 			});
 			hash = transaction?.hash;
 		}
 
 		if (hash) {
-			const provider = await getProvider();
+			const provider = getProvider(network.id);
 			await provider.waitForTransaction(hash);
 			return hash;
 		}

@@ -7,6 +7,7 @@ import {
 	Header,
 	ModalBase,
 	ModalReusables,
+	NetworkWarning,
 	OnrampButton,
 	Text,
 	TokenCard,
@@ -56,7 +57,8 @@ const AddFundsScreen = ({ route }: Props) => {
 		useMoonpay,
 		disableMoonPay,
 		onMoonpayPurchase,
-		moonPaySpecialButton
+		moonPaySpecialButton,
+		network
 	} = useAddFundsScreen(topupToken);
 
 	return (
@@ -106,6 +108,10 @@ const AddFundsScreen = ({ route }: Props) => {
 						</View>
 
 						<DirectionButton loading={loadingPrices} disabled />
+					</View>
+
+					<View mh="xs" mb="xs">
+						<NetworkWarning.Tag network={network} buying />
 					</View>
 
 					<View mh="xs" mb="xs">
@@ -178,7 +184,7 @@ const AddFundsScreen = ({ route }: Props) => {
 					onTokenSelect={selectToken}
 					ownedTokens={topUpTokens}
 					showOnlyOwnedTokens
-					selected={[token?.symbol.toLowerCase()]}
+					selected={[`${token?.address.toLowerCase()}-${token?.chainId}`]}
 				/>
 			</ModalBase>
 			<ModalBase isVisible={!!error} onDismiss={() => setError('')}>

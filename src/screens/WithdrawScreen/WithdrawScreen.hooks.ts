@@ -10,9 +10,9 @@ import {
 	useNativeToken,
 	useBiconomy,
 	useTransactions,
-	useDepositProtocols,
 	useWalletManagement,
-	useGlobalWalletState
+	useGlobalWalletState,
+	useDepositProtocols
 } from '@hooks';
 import Logger from '@utils/logger';
 import { formatUnits } from 'ethers/lib/utils';
@@ -21,29 +21,33 @@ import WithdrawService from '@src/services/withdraw/WithdrawService';
 import { captureException } from '@sentry/react-native';
 import { constants } from 'ethers';
 import gasLimits, { Networks } from '@models/gas';
+import { networks } from '@models/network';
+import { availableDepositProtocols } from '@models/deposit';
 
 const useWithdrawScreen = () => {
-	const { biconomy, gaslessEnabled } = useBiconomy();
-	const { nativeToken, balance } = useNativeToken();
+	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 	const [searchVisible, setSearchVisible] = React.useState(false);
+	const [apy, setApy] = React.useState<string>();
 	const [token, setToken] = React.useState<MinkeToken>();
+	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
+	const { nativeToken, balance } = useNativeToken(network);
 	const [amount, setAmount] = React.useState('0');
 	const { gas } = useState(globalExchangeState()).value;
 	const { maxFeePerGas = constants.Zero, maxPriorityFeePerGas = constants.Zero } = gas || {};
-	const { withdrawableTokens: tokens } = useBalances();
+	const { interestTokens: tokens } = useBalances();
 	const [waitingTransaction, setWaitingTransaction] = React.useState(false);
 	const [blockchainError, setBlockchainError] = React.useState(false);
 	const [transactionHash, setTransactionHash] = React.useState('');
 	const navigation = useNavigation();
 	const { track } = useAmplitude();
 	const { addPendingTransaction } = useTransactions();
-	const {
-		address,
-		privateKey,
-		network: { id }
-	} = useGlobalWalletState();
-	const { defaultToken, selectedProtocol, apy } = useDepositProtocols(true);
-	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement();
+	const { address, privateKey } = useGlobalWalletState();
+	const selectedProtocol = token
+		? availableDepositProtocols[token.interestBearingToken?.source.toLowerCase() || '']
+		: undefined;
+	const { fetchApy } = useDepositProtocols();
+	const { canSendTransactions, needToChangeNetwork, walletConnect, connector } = useWalletManagement(network);
 
 	const showModal = () => {
 		Keyboard.dismiss();
@@ -67,7 +71,7 @@ const useWithdrawScreen = () => {
 		setToken(selectedToken);
 	};
 
-	const gasUnits = selectedProtocol ? gasLimits[id as Networks].deposit[selectedProtocol.id] : 1;
+	const gasUnits = selectedProtocol && network ? gasLimits[network.id as Networks].deposit[selectedProtocol.id] : 1;
 	const enoughForGas = gaslessEnabled || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasUnits)) : true);
 
 	const canWithdraw =
@@ -96,7 +100,8 @@ const useWithdrawScreen = () => {
 					maxPriorityFeePerGas,
 					biconomy,
 					connector,
-					walletConnect
+					walletConnect,
+					chainId: network.chainId
 				});
 
 				if (hash) {
@@ -121,7 +126,8 @@ const useWithdrawScreen = () => {
 						subTransactions: [
 							{ type: 'incoming', symbol: token.symbol, amount: +amount },
 							{ type: 'outgoing', symbol: token.interestBearingToken.symbol, amount: +amount }
-						]
+						],
+						chainId: network.chainId
 					});
 
 					navigation.navigate('DepositWithdrawalSuccessScreen', { type: 'withdrawal' });
@@ -139,10 +145,14 @@ const useWithdrawScreen = () => {
 	};
 
 	useEffect(() => {
-		if (!!defaultToken && !token) {
-			setToken(defaultToken);
-		}
-	}, [defaultToken]);
+		const getApy = async () => {
+			if (selectedProtocol && token) {
+				setApy(await fetchApy(selectedProtocol, token));
+			}
+		};
+
+		getApy();
+	}, [selectedProtocol]);
 
 	return {
 		searchVisible,
@@ -165,7 +175,8 @@ const useWithdrawScreen = () => {
 		setBlockchainError,
 		canSendTransactions,
 		needToChangeNetwork,
-		gasUnits
+		gasUnits,
+		network
 	};
 };
 

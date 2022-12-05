@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables, View } from '@components';
+import { Text, Header, HapticButton, Paper, ModalBase, ModalReusables, View, Token } from '@components';
 import { BasicLayout } from '@layouts';
 import { useLanguage, useTheme } from '@hooks';
 import { formatUnits } from 'ethers/lib/utils';
@@ -32,7 +32,8 @@ const ExchangeResumeScreen = () => {
 		toFiatPrice,
 		gasless,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		network
 	} = useExchangeResumeScreen();
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
@@ -63,21 +64,27 @@ const ExchangeResumeScreen = () => {
 								borderRightColor: colors.background1
 							}}
 						>
-							<TokenDetail
-								token={from}
-								amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
-								usdAmount={fromFiatPrice}
-								loading={!priceQuote}
-							/>
+							<View cross="center">
+								<TokenDetail
+									token={from}
+									amount={(priceQuote && formatUnits(priceQuote.sellAmount, from.decimals)) || '0'}
+									usdAmount={fromFiatPrice}
+									loading={!priceQuote}
+									showNetworkIcon={false}
+								/>
+							</View>
 						</View>
 
 						<View flex1 pt="s" pb="xs" cross="center">
-							<TokenDetail
-								token={to}
-								amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
-								usdAmount={toFiatPrice}
-								loading={!priceQuote}
-							/>
+							<View cross="center">
+								<TokenDetail
+									token={to}
+									amount={(priceQuote && formatUnits(priceQuote.buyAmount, to.decimals)) || '0'}
+									usdAmount={toFiatPrice}
+									loading={!priceQuote}
+									showNetworkIcon={false}
+								/>
+							</View>
 						</View>
 
 						<DirectionButton disabled right />
@@ -93,6 +100,19 @@ const ExchangeResumeScreen = () => {
 				</Paper>
 
 				<Paper mb="s" p="s" mh="xs">
+					<View row main="space-between" mb="xs">
+						<Text weight="semiBold" color="text3" type="lMedium">
+							{i18n.t('ExchangeResumeScreen.network')}
+						</Text>
+						<View row cross="center">
+							<View mr="xxs">
+								<Token token={network.nativeToken} size={24} />
+							</View>
+							<Text weight="bold" color="text2" type="tSmall">
+								{network.name}
+							</Text>
+						</View>
+					</View>
 					<View row main="space-between" mb="xs">
 						<Text weight="semiBold" color="text3" type="lMedium">
 							{i18n.t('ExchangeResumeScreen.rate')}
@@ -112,7 +132,7 @@ const ExchangeResumeScreen = () => {
 					</View>
 				</Paper>
 
-				{!gasless && <GasSelected gasLimit={gasLimits.exchange} />}
+				{!gasless && <GasSelected gasLimit={gasLimits.exchange} network={network} />}
 
 				<View mb="m" mh="xs" style={{ marginTop: os === 'android' ? undefined : 'auto' }}>
 					<HapticButton title={i18n.t('Components.Buttons.exchange')} onPress={onSuccess} />

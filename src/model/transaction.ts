@@ -18,7 +18,7 @@ export const convertTransactionResponse = ({
 	subTransactions?: ZapperSubtransaction[];
 	destination?: string;
 }): ZapperTransaction => {
-	const { from, to, timestamp, blockHash, hash } = transaction;
+	const { from, to, timestamp, blockHash, hash, chainId } = transaction;
 	return {
 		from,
 		destination: destination || to!,
@@ -29,7 +29,8 @@ export const convertTransactionResponse = ({
 		amount,
 		direction,
 		symbol,
-		subTransactions
+		subTransactions,
+		chainId
 	};
 };
 

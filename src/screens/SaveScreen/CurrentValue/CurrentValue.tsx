@@ -1,19 +1,18 @@
 import React from 'react';
 import { TouchableOpacity, View, useColorScheme } from 'react-native';
-import { useTheme, useNavigation, useLanguage, useDepositProtocols } from '@hooks';
+import { useTheme, useNavigation, useLanguage } from '@hooks';
 import { numberFormat } from '@src/helpers/utilities';
 import { Text, Icon, ActivityIndicator, Token, InterestBanner } from '@components';
 import { BlurView } from 'expo-blur';
 import { makeStyles } from './CurrentValue.styles';
 import { CurrentValueProps } from './CurrentValue.types';
 
-export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy }) => {
+export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy, protocol: selectedProtocol }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { colors } = useTheme();
 	const scheme = useColorScheme();
 	const styles = makeStyles(colors);
-	const { selectedProtocol } = useDepositProtocols();
 
 	return (
 		<View style={styles.container}>
@@ -27,7 +26,10 @@ export const CurrentValue: React.FC<CurrentValueProps> = ({ depositsBalance, apy
 				<View style={styles.interestContainer}>
 					{!!selectedProtocol && (
 						<View style={styles.infoRow}>
-							<Token token={{ symbol: selectedProtocol.id, address: '', decimals: 0 }} size={20} />
+							<Token
+								token={{ symbol: selectedProtocol.id, address: '', decimals: 0, chainId: 0 }}
+								size={20}
+							/>
 							<Text weight="semiBold" type="lSmall" style={{ marginLeft: 4 }}>
 								{selectedProtocol.name}
 							</Text>

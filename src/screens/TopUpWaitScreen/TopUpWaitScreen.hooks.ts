@@ -8,7 +8,10 @@ import SafariView from 'react-native-safari-view';
 export const useTopUpWaitScreen = () => {
 	const navigation = useNavigation();
 	const topUpState = useState(globalTopUpState());
-	const { address } = useGlobalWalletState();
+	const {
+		address,
+		network: { chainId }
+	} = useGlobalWalletState();
 	const { addPendingTransaction } = useTransactions();
 
 	const { status, transactionHash, orderId } = useWyreOrderStatus();
@@ -51,7 +54,8 @@ export const useTopUpWaitScreen = () => {
 				destination: address,
 				from: address,
 				direction: 'incoming',
-				symbol: 'USD'
+				symbol: 'USD',
+				chainId
 			});
 			onFinish();
 		};

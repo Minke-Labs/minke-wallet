@@ -17,7 +17,10 @@ const TransferWaitScreen = ({ route }: Props) => {
 	const { transactionHash, amount, currency } = useWyreTransferStatus(transferId);
 	const navigation = useNavigation();
 	const redeemState = useState(globalRedeemState());
-	const { address } = useGlobalWalletState();
+	const {
+		address,
+		network: { chainId }
+	} = useGlobalWalletState();
 	const { addPendingTransaction } = useTransactions();
 
 	const onFinish = () => {
@@ -36,7 +39,8 @@ const TransferWaitScreen = ({ route }: Props) => {
 				destination: address,
 				from: address,
 				direction: 'incoming',
-				symbol: currency!
+				symbol: currency!,
+				chainId
 			});
 			onFinish();
 		};

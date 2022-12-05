@@ -1,5 +1,5 @@
 import gasLimits, { Networks } from '@models/gas';
-import { network } from '@models/network';
+import { Network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
@@ -9,14 +9,16 @@ import { DepositReturn } from './deposit.types';
 const mStableDepositData = async ({
 	token,
 	amount,
-	minAmount
+	minAmount,
+	network
 }: {
 	token: string;
 	amount: string; // in WEI
-	minAmount: string; // in WEI, imUSD decimals
+	minAmount: string; // in WEI, imUSD decimals,
+	network: Network;
 }): Promise<PopulatedTransaction> => {
-	const { mStable } = await network();
-	const provider = await getProvider();
+	const { mStable } = network;
+	const provider = getProvider(network.id);
 
 	const abi = [
 		// eslint-disable-next-line max-len
@@ -44,7 +46,8 @@ const mStableDeposit = async ({
 	amount,
 	minAmount,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	privateKey: string;
 	token: string;
@@ -52,10 +55,11 @@ const mStableDeposit = async ({
 	minAmount: string; // in WEI, imUSD decimals
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }): Promise<DepositReturn> => {
-	const { mStable, id } = await network();
+	const { mStable, id } = network;
 
-	const provider = await getProvider();
+	const provider = getProvider(id);
 	// send signed transaction with ethers
 	const userSigner = new Wallet(privateKey, provider);
 	const nonce = await userSigner.provider.getTransactionCount(userSigner.address, 'latest');
@@ -97,7 +101,8 @@ const gaslessMStableDeposit = async ({
 	amount,
 	minAmount,
 	maxFeePerGas,
-	biconomy
+	biconomy,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -106,6 +111,7 @@ const gaslessMStableDeposit = async ({
 	minAmount: string; // in WEI, imUSD decimals
 	maxFeePerGas: BigNumber;
 	biconomy: any;
+	network: Network;
 }): Promise<DepositReturn> => {
 	// send signed transaction with ethers
 	const userSigner = new ethers.Wallet(privateKey);
@@ -117,7 +123,7 @@ const gaslessMStableDeposit = async ({
 
 	const contractInterface = new ethers.utils.Interface(abi);
 
-	const { mStable } = await network();
+	const { mStable } = network;
 	const { mAsset, saveAsset, vault, depositContract } = mStable!;
 	// Create your target method signature.. here we are calling setQuote() method of our contract
 	const functionSignature = contractInterface.encodeFunctionData('saveViaMint', [

@@ -2,13 +2,12 @@ import React from 'react';
 import { View, Share } from 'react-native';
 import { Text, WhiteButton } from '@components';
 import QRCode from 'react-native-qrcode-svg';
-import { useGlobalWalletState, useLanguage, useNetwork } from '@hooks';
+import { useGlobalWalletState, useLanguage } from '@hooks';
 import styles from './ExternalExchangeModal.styles';
 
 export const ExternalExchangeModal = () => {
-	const { network } = useNetwork();
 	const { i18n } = useLanguage();
-	const { address } = useGlobalWalletState();
+	const { address, network } = useGlobalWalletState();
 
 	const onShare = async () => {
 		await Share.share({ message: address });

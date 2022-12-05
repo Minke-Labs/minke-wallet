@@ -21,12 +21,19 @@ import crypto from 'crypto';
 import * as qs from 'qs';
 import * as Linking from 'expo-linking';
 import SafariView from 'react-native-safari-view';
+import { networks } from '@models/network';
 
 const useAddFundsScreen = (topupToken?: MinkeToken) => {
-	const { address, network } = useGlobalWalletState();
-	const { topUpTokens, nativeToken, wyreSRN } = network;
+	const { address } = useGlobalWalletState();
 	const [currency, setCurrency] = useState<Currency>();
 	const [token, setToken] = useState<TopupToken>(topupToken as MinkeToken);
+	const nws = Object.values(networks);
+	const topUpTokens = nws
+		.filter((n) => !n.testnet)
+		.map((n) => n.topUpTokens)
+		.flat();
+	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const { nativeToken, wyreSRN } = network || {};
 	const [currencySearchVisible, setCurrencySearchVisible] = useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = useState(false);
 	const [loadingPrices, setLoadingPrices] = useState(false);
@@ -393,7 +400,8 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 		useMoonpay,
 		disableMoonPay,
 		onMoonpayPurchase,
-		moonPaySpecialButton
+		moonPaySpecialButton,
+		network
 	};
 };
 

@@ -1,33 +1,34 @@
+import Logger from '@utils/logger';
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
 import { stables } from './depositTokens';
-import { network } from './network';
+import { networks } from './network';
 import { MinkeToken, InvestmentToken, MinkeTokenList } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 
-export const tokenList = async (): Promise<TokenResponse> => {
-	const { zapperNetwork, id, suggestedTokens } = await network();
+export const tokenList = async (chainId: number | undefined): Promise<MinkeToken[]> => {
+	const selectedNetwork = Object.values(networks).find((n) => n.chainId === chainId);
+	const { zapperNetwork, id, suggestedTokens } = selectedNetwork;
 	try {
 		const result = await fetch(
 			`https://raw.githubusercontent.com/Minke-Labs/token-lists/main/${zapperNetwork}.tokenlist.json`
 		);
-		const { tokens }: TokenResponse = await result.json();
-		return {
-			tokens: tokens.map((t) => {
-				const { tags = [] } = t;
-				let suggestedSlippage;
-				if (tags.includes('slippage')) {
-					suggestedSlippage = 0.3;
-				}
-				return { ...t, ...{ suggestedSlippage } };
-			})
-		};
-	} catch {
+		const { tokens } = await result.json();
+		return tokens.map((t: MinkeTokenList) => {
+			const { tags = [] } = t;
+			let suggestedSlippage;
+			if (tags.includes('slippage')) {
+				suggestedSlippage = 0.3;
+			}
+			return { ...t, ...{ suggestedSlippage, chainId: selectedNetwork.chainId } };
+		});
+	} catch (error) {
+		Logger.log('Error in the tokenList', error);
 		const suggestedStables = Object.values(stables[id]);
-		return { tokens: [...suggestedStables, ...suggestedTokens] };
+		return [...suggestedStables, ...suggestedTokens];
 	}
 };
 
@@ -40,6 +41,7 @@ export interface ExchangeParams {
 	side: 'SELL' | 'BUY';
 	amount: string;
 	quote?: boolean; // price or quote request
+	chainId: number | undefined;
 	slippage?: number;
 }
 
@@ -66,9 +68,11 @@ export const getExchangePrice = async ({
 	srcDecimals,
 	destDecimals,
 	quote = false,
+	chainId,
 	slippage = 0.05
 }: ExchangeParams): Promise<ExchangeRoute> => {
-	const { apiUrl0x, nativeToken } = await network();
+	const nw = Object.values(networks).find((n) => n.chainId === chainId);
+	const { apiUrl0x, nativeToken } = nw;
 	let sellToken = srcToken.toLowerCase();
 	let buyToken = destToken.toLowerCase();
 	const natives = ['0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000001010'];
@@ -86,7 +90,7 @@ export const getExchangePrice = async ({
 		affiliateAddress: '0xe0ee7fec8ec7eb5e88f1dbbfe3e0681cc49f6499'.toLowerCase(),
 		buyTokenPercentageFee: 0.0085,
 		slippagePercentage: slippage,
-		excludedSources: 'MeshSwap,Curve_V2,MDex',
+		excludedSources: 'MeshSwap,Curve_V2,MDex,Balancer_V2,Balancer,DODO',
 		skipValidation: true
 	};
 
@@ -202,19 +206,22 @@ export const fetchTokensPriceChange = async (tokens: MinkeToken[]): Promise<Inve
 export const ether: MinkeToken = {
 	symbol: 'ETH',
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-	decimals: 18
+	decimals: 18,
+	chainId: 1
 };
 
 export const matic: MinkeToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	symbol: 'MATIC'
+	symbol: 'MATIC',
+	chainId: 137
 };
 
 export const bnb: MinkeToken = {
 	address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 	decimals: 18,
-	symbol: 'BNB'
+	symbol: 'BNB',
+	chainId: 56
 };
 
 export const nativeTokens: NativeTokens = {
@@ -302,7 +309,6 @@ export interface AccountBalance {
 	tokens: MinkeToken[];
 	stablecoins: MinkeToken[];
 	interestTokens: MinkeToken[];
-	withdrawableTokens: MinkeToken[];
 	loading: boolean;
 }
 

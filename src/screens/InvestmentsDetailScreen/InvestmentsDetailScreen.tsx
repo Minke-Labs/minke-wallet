@@ -23,7 +23,7 @@ const InvestmentsDetailScreen = ({ route }: Props) => {
 					<Upper coin={coin} />
 
 					<View ph="xs" pt="xs" h="100%" bgc="background1" btlr="s" btrr="s">
-						{coin && <Balance coin={coin} />}
+						{!!coin && <Balance coin={coin} />}
 
 						{marketCap > 0 && !!tokenVolume && (
 							<MarketCap tokenVolume={tokenVolume.total_volumes} marketCap={marketCap} />

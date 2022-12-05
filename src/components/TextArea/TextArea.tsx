@@ -5,15 +5,11 @@ import Text from '@src/components/Text/Text';
 import styles from './TextArea.styles';
 import { TextAreaProps } from './TextArea.types';
 
-// @@@TODO: Ask Franz about the screen where this is used in order to refactor.
 const TextArea: React.FC<TextAreaProps> = ({ label, value, onChangeText, numberOfLines = 6, style }) => {
 	const { colors } = useTheme();
 	return (
 		<View>
-			<Text
-				color="text7"
-				style={styles.label}
-			>
+			<Text color="text7" style={styles.label}>
 				{label}
 			</Text>
 			<TextInput

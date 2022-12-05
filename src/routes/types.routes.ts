@@ -33,7 +33,6 @@ export type RootStackParamList = {
 	OpenAave: undefined;
 	TopUpWaitScreen: undefined;
 	WithdrawScreen: undefined;
-	SavingAccountsScreen: undefined;
 	ReferralScreen: undefined;
 	EnterReferralCodeScreen: undefined;
 	RedeemScreen: { code: string | undefined };

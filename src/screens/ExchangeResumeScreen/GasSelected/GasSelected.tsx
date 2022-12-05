@@ -3,8 +3,8 @@ import { Paper, GasOptionInner } from '@components';
 import { State, useState } from '@hookstate/core';
 import { estimateGas, getEthLastPrice, estimateConfirmationTime } from '@models/wallet';
 import { ExchangeState, globalExchangeState, Gas } from '@stores/ExchangeStore';
-import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
+import { Network } from '@models/network';
 
 interface Wait {
 	normal: number;
@@ -18,7 +18,7 @@ const defaultWait: Wait = {
 	fast: 5
 };
 
-export const GasSelected = ({ gasLimit }: { gasLimit: number }) => {
+export const GasSelected = ({ gasLimit, network }: { gasLimit: number; network: Network }) => {
 	const [gasPrice, setGasPrice] = React.useState<number>();
 	const [usdPrice, setUsdPrice] = React.useState<number>();
 	const [wait, setWait] = React.useState<number>(0);
@@ -26,7 +26,7 @@ export const GasSelected = ({ gasLimit }: { gasLimit: number }) => {
 	const { type: selectedType } = exchange.gas.value || {};
 
 	const fetchGas = async () => {
-		const gas = await estimateGas();
+		const gas = await estimateGas(network);
 		const {
 			result: { UsdPrice: usd, ProposeGasPrice: normal, FastGasPrice: fast, SafeGasPrice: slow, suggestBaseFee }
 		} = gas;
@@ -54,7 +54,7 @@ export const GasSelected = ({ gasLimit }: { gasLimit: number }) => {
 		} else {
 			const {
 				result: { ethusd }
-			} = await getEthLastPrice();
+			} = await getEthLastPrice(network);
 			setUsdPrice(+ethusd);
 		}
 	};
@@ -81,9 +81,9 @@ export const GasSelected = ({ gasLimit }: { gasLimit: number }) => {
 		// ethereum network has this endpoint to check the times
 		const fetchConfirmationTimes = async () => {
 			if (gasPrice) {
-				const { transactionTimesEndpoint } = await network();
+				const { transactionTimesEndpoint } = network;
 				if (transactionTimesEndpoint) {
-					const { result } = await estimateConfirmationTime(gasPrice * 1000000000);
+					const { result } = await estimateConfirmationTime(gasPrice * 1000000000, network);
 					if (Number.isNaN(+result)) {
 						setTimeout(() => {
 							fetchConfirmationTimes();
@@ -108,6 +108,7 @@ export const GasSelected = ({ gasLimit }: { gasLimit: number }) => {
 				usdPrice={usdPrice!}
 				waiting={waiting()}
 				gasLimit={gasLimit}
+				network={network}
 			/>
 		</Paper>
 	);

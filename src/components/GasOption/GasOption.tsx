@@ -15,7 +15,8 @@ const GasOption: React.FC<GasOptionProps> = ({
 	gasPrice,
 	usdPrice,
 	waiting,
-	gasLimit
+	gasLimit,
+	network
 }) => {
 	const { colors } = useTheme();
 	const styles = makeStyles(colors);
@@ -25,7 +26,7 @@ const GasOption: React.FC<GasOptionProps> = ({
 			<RNView style={[styles.container, selected ? styles.selectedCard : {}]}>
 				<RNView style={styles.content}>
 					<Radio selected={selected!} />
-					<GasOptionInner {...{ type, waiting, gasPrice, usdPrice, gasLimit }} />
+					<GasOptionInner {...{ type, waiting, gasPrice, usdPrice, gasLimit, network }} />
 				</RNView>
 			</RNView>
 		</Touchable>

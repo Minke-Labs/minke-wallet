@@ -1,5 +1,5 @@
 import { ApprovalState } from '@models/deposit';
-import { network } from '@models/network';
+import { Network, networks } from '@models/network';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
 import { toBn } from 'evm-bn';
@@ -28,7 +28,8 @@ class DepositService {
 		connector,
 		walletConnect = false
 	}: DepositParams): Promise<DepositReturn> {
-		const { isApproved } = await this.approveState(address, depositableToken.address);
+		const network = Object.values(networks).find((n) => n.chainId === depositableToken.chainId);
+		const { isApproved } = await this.approveState(address, depositableToken.address, network);
 		Logger.log('Deposit approved:', isApproved);
 		if (!isApproved) {
 			await this.approve({
@@ -38,7 +39,8 @@ class DepositService {
 				contract: depositableToken.address,
 				biconomy,
 				walletConnect,
-				connector
+				connector,
+				network
 			});
 		}
 
@@ -52,7 +54,8 @@ class DepositService {
 					biconomy,
 					maxFeePerGas,
 					interestBearingToken: depositableToken.interestBearingToken.address,
-					token: depositableToken.address
+					token: depositableToken.address,
+					network
 				});
 
 				return hash;
@@ -66,7 +69,8 @@ class DepositService {
 					maxFeePerGas,
 					maxPriorityFeePerGas,
 					interestBearingTokenAddress: depositableToken.interestBearingToken.address,
-					tokenAddress: depositableToken.address
+					tokenAddress: depositableToken.address,
+					network
 				});
 
 				const hash = await connector.sendTransaction({
@@ -86,7 +90,8 @@ class DepositService {
 				maxFeePerGas,
 				maxPriorityFeePerGas,
 				interestBearingTokenAddress: depositableToken.interestBearingToken.address,
-				tokenAddress: depositableToken.address
+				tokenAddress: depositableToken.address,
+				network
 			});
 
 			return hash;
@@ -100,7 +105,8 @@ class DepositService {
 					minAmount,
 					biconomy,
 					maxFeePerGas,
-					token: depositableToken.address
+					token: depositableToken.address,
+					network
 				});
 				return hash;
 			}
@@ -109,7 +115,8 @@ class DepositService {
 				const { to, data } = await mStableDepositData({
 					amount,
 					minAmount,
-					token: depositableToken.address
+					token: depositableToken.address,
+					network
 				});
 
 				const hash = await connector.sendTransaction({
@@ -127,20 +134,21 @@ class DepositService {
 				minAmount,
 				maxFeePerGas,
 				maxPriorityFeePerGas,
-				token: depositableToken.address
+				token: depositableToken.address,
+				network
 			});
 			return hash;
 		}
 		return null;
 	}
 
-	private async depositContract(): Promise<string> {
-		const { mStable, aave } = await network();
+	private depositContract(network: Network): string {
+		const { mStable, aave } = network;
 		return this.protocol === 'mstable' ? mStable?.depositContract! : aave.depositContract;
 	}
 
-	public async approveState(address: string, contract: string): Promise<ApprovalState> {
-		return ApprovalService.approveState(address, contract, await this.depositContract());
+	public async approveState(address: string, contract: string, network: Network): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, this.depositContract(network), network.id);
 	}
 
 	public async approve({
@@ -150,6 +158,7 @@ class DepositService {
 		contract,
 		biconomy,
 		connector,
+		network,
 		walletConnect = false
 	}: {
 		gasless: boolean;
@@ -159,6 +168,7 @@ class DepositService {
 		biconomy: any;
 		connector: WalletConnect;
 		walletConnect?: boolean;
+		network: Network;
 	}): Promise<DepositReturn> {
 		return new ApprovalService().approve({
 			gasless,
@@ -166,9 +176,10 @@ class DepositService {
 			privateKey,
 			contract,
 			biconomy,
-			spender: await this.depositContract(),
+			spender: this.depositContract(network),
 			connector,
-			walletConnect
+			walletConnect,
+			network
 		});
 	}
 }

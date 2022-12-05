@@ -5,6 +5,9 @@ import { Icon, Text, View, TokenItemCard, EmptyStates, ActivityIndicator, BlankS
 import { AssetsLayout } from '@layouts';
 import { useBalances, useDepositProtocols, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { stablecoins as coins } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
+import { Network, networks } from '@models/network';
+import { groupBy } from 'lodash';
 import { stables } from '@models/depositTokens';
 
 const StablecoinsScreen = () => {
@@ -13,32 +16,48 @@ const StablecoinsScreen = () => {
 	const navigation = useNavigation();
 	const { stablecoins: walletStablecoins, stablecoinsBalance } = useBalances();
 	const { apy } = useDepositProtocols();
-	const {
-		network: { id, topUpTokens }
-	} = useGlobalWalletState();
-	const stablecoins = coins.map((symbol) => {
-		const found = walletStablecoins.find((s) => s.symbol === symbol);
-		if (found) {
-			return found;
-		}
+	const productionChainIds = Object.values(networks)
+		.filter((n) => !n.testnet)
+		.map((n: Network) => n.chainId);
 
-		const { address = '', decimals = 0 } = stables[id][symbol] || {};
-		return {
-			symbol,
-			name: symbol,
-			balance: '0',
-			balanceUSD: 0,
-			address,
-			decimals
-		};
-	});
+	const allNetworkStables = Object.values(stables)
+		.map((s) => Object.values(s))
+		.flat()
+		.filter((s) => coins.includes(s.symbol));
+	const stablecoins: MinkeToken[] = allNetworkStables
+		.map((stable) => {
+			const { address, symbol } = stable;
+			const found = walletStablecoins.find((s) => s.address === address);
+			if (found) {
+				return found;
+			}
+
+			return {
+				...stable,
+				...{
+					name: symbol,
+					balance: '0',
+					balanceUSD: 0
+				}
+			};
+		})
+		.filter((s) => productionChainIds.includes(s.chainId));
+
+	const {
+		network: { topUpTokens }
+	} = useGlobalWalletState();
+
+	const groupedStablecoins = Object.values(groupBy(stablecoins, 'symbol'));
 
 	const priorities = topUpTokens.map(({ symbol }) => symbol);
-	stablecoins.sort(
-		(a, b) =>
-			(b.balanceUSD || 0) - (a.balanceUSD || 0) ||
-			priorities.indexOf(b.symbol.toUpperCase()) - priorities.indexOf(a.symbol.toUpperCase())
-	);
+	groupedStablecoins.sort((first, second) => {
+		const firstBalanceUSD = first.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		const secondBalanceUSD = second.reduce((partialSum, token) => partialSum + (token.balanceUSD || 0), 0);
+		return (
+			secondBalanceUSD - firstBalanceUSD ||
+			priorities.indexOf(second[0].symbol.toUpperCase()) - priorities.indexOf(first[0].symbol.toUpperCase())
+		);
+	});
 
 	if (!walletStablecoins) {
 		return <BlankStates.Type2 title={i18n.t('StablecoinsScreen.stablecoins')} />;
@@ -80,14 +99,32 @@ const StablecoinsScreen = () => {
 						{stablecoins === undefined ? (
 							<ActivityIndicator />
 						) : stablecoins.length > 0 ? (
-							stablecoins.map((coin) => (
-								<TokenItemCard
-									key={coin.symbol}
-									token={coin}
-									onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin })}
-									paper
-								/>
-							))
+							groupedStablecoins.map((groupItems: MinkeToken[]) => {
+								const [coin] = groupItems;
+								const token = {
+									...coin,
+									...{
+										balanceUSD: groupItems.reduce(
+											(partialSum, t) => partialSum + (t.balanceUSD || 0),
+											0
+										),
+										balance: groupItems
+											.reduce((partialSum, t) => partialSum + (Number(t.balance) || 0), 0)
+											.toString()
+									}
+								};
+
+								return (
+									<TokenItemCard
+										key={coin.symbol}
+										token={token}
+										onPress={() => navigation.navigate('StablecoinsDetailScreen', { coin: token })}
+										chainIds={groupItems.map((i) => i.chainId)}
+										showNetworkIcon={false}
+										paper
+									/>
+								);
+							})
 						) : (
 							<EmptyStates.NoTokens />
 						)}

@@ -11,7 +11,7 @@ import Logger from '@utils/logger';
 import { UNSTOPPABLE_DOMAINS_API_KEY, ZAPPER_API_KEY } from '@env';
 import * as qs from 'qs';
 import * as keychain from './keychain';
-import { network as selectedNetwork, Networks, networks } from './network';
+import { Network, Networks, networks, selectedNetwork } from './network';
 import { loadObject, saveObject } from './keychain';
 import gasLimits from './gas';
 
@@ -30,17 +30,16 @@ export const saveSeedPhrase = async (seedPhrase: string, keychain_id: MinkeWalle
 	return save;
 };
 
-export const getProvider = async (network?: string) => {
-	const blockchain = network || (await selectedNetwork()).id;
-	const { alchemyAPIKey, jsonRpcProvider } = networks[blockchain as keyof Networks];
+export const getProvider = (network: string) => {
+	const { alchemyAPIKey, jsonRpcProvider } = networks[network as keyof Networks];
 	if (alchemyAPIKey) {
-		return new providers.AlchemyProvider(blockchain, alchemyAPIKey);
+		return new providers.AlchemyProvider(network, alchemyAPIKey);
 	}
 	return new providers.JsonRpcProvider(jsonRpcProvider);
 };
 
 const getENSAddress = async (address: string) => {
-	const name = (await getProvider(networks.mainnet.id)).lookupAddress(address);
+	const name = getProvider(networks.mainnet.id).lookupAddress(address);
 	return name;
 };
 
@@ -67,7 +66,7 @@ export const getCustomDomain = async (address: string) => {
 };
 
 const resolveENSAddress = async (ensAddress: string) => {
-	const name = (await getProvider(networks.mainnet.id)).resolveName(ensAddress);
+	const name = getProvider(networks.mainnet.id).resolveName(ensAddress);
 	return name;
 };
 
@@ -147,15 +146,15 @@ export const getAllWallets = async (): Promise<null | AllMinkeWallets> => {
 	}
 };
 
-export const getEthLastPrice = async (): Promise<EtherLastPriceResponse> => {
-	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
+export const getEthLastPrice = async (network: Network): Promise<EtherLastPriceResponse> => {
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = network;
 	const result = await fetch(`${etherscanAPIURL}api?module=stats&action=ethprice&apikey=${apiKey}`);
 	return result.json();
 };
 
 const getWalletFromMnemonicOrPrivateKey = async (mnemonicOrPrivateKey = ''): Promise<WalletAndMnemonic> => {
 	const blockchain = await selectedNetwork();
-	const provider = await getProvider(blockchain.id);
+	const provider = getProvider(blockchain.id);
 	if (!mnemonicOrPrivateKey) {
 		// mnemonic / PK is empty: generating a random wallet with the default path m/44'/60'/0'/0/0
 		const wallet = Wallet.createRandom().connect(provider);
@@ -282,7 +281,7 @@ export const sendTransactionData = async (
 
 	let tx;
 	if (contractAddress) {
-		const erc20 = new Contract(contractAddress, erc20abi, await getProvider(network));
+		const erc20 = new Contract(contractAddress, erc20abi, getProvider(network));
 		tx = await erc20.populateTransaction.transfer(to, parseUnits(formattedAmount, decimals));
 	} else {
 		tx = {
@@ -302,7 +301,7 @@ export const sendTransaction = async (
 	contractAddress: string = '',
 	decimals: number = 18
 ) => {
-	const wallet = new Wallet(privateKey, await getProvider(network));
+	const wallet = new Wallet(privateKey, getProvider(network));
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 	const chainId = await wallet.getChainId();
 
@@ -311,14 +310,17 @@ export const sendTransaction = async (
 	return wallet.provider.sendTransaction(signedTx as string);
 };
 
-export const estimateGas = async (): Promise<EstimateGasResponse> => {
-	const { gasURL, etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
+export const estimateGas = async (network: Network): Promise<EstimateGasResponse> => {
+	const { gasURL, etherscanAPIURL, etherscanAPIKey: apiKey } = network;
 	const result = await fetch(`${gasURL || etherscanAPIURL}api?module=gastracker&action=gasoracle&apikey=${apiKey}`);
 	return result.json();
 };
 
-export const estimateConfirmationTime = async (gasPrice: number): Promise<EstimateConfirmationTime> => {
-	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
+export const estimateConfirmationTime = async (
+	gasPrice: number,
+	network: Network
+): Promise<EstimateConfirmationTime> => {
+	const { etherscanAPIURL, etherscanAPIKey: apiKey } = network;
 	const result = await fetch(
 		`${etherscanAPIURL}api?module=gastracker&action=gasestimate&gasprice=${gasPrice}&apikey=${apiKey}`
 	);
@@ -331,29 +333,12 @@ export const getPriceHistory = async (date: string, tokenId = 'ethereum'): Promi
 	return result.json();
 };
 
-export const getTransactions = async (address: string, page = 1, offset = 5): Promise<Array<Transaction>> => {
-	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await selectedNetwork();
-	const baseUrl = `${etherscanAPIURL}api?module=account&action=txlist&address=`;
-	const suffix = `${address}&page=${page}&offset=${offset}&sort=desc&apikey=${apiKey}`;
-	const result = await fetch(`${baseUrl}${suffix}`);
-	const { result: normal }: TransactionResponse = await result.json();
-
-	const erc20BaseUrl = `${etherscanAPIURL}api?module=account&action=tokentx&address=`;
-	const erc20result = await fetch(`${erc20BaseUrl}${suffix}`);
-	const { result: erc20 }: TransactionResponse = await erc20result.json();
-
-	const all = [...erc20, ...normal];
-	return all.sort((a, b) => +b.timeStamp - +a.timeStamp);
-};
-
 export const getZapperTransactions = async (address: string): Promise<ZapperTransactionResponse> => {
 	const apiKey = ZAPPER_API_KEY || process.env.ZAPPER_API_KEY;
-	const { zapperNetwork } = await selectedNetwork();
 	const baseURL = 'https://api.zapper.fi/v1/transactions';
 	const params = {
 		address: address.toLowerCase(),
 		addresses: [address.toLowerCase()],
-		network: zapperNetwork,
 		api_key: apiKey
 	};
 	const response = await fetch(`${baseURL}?${qs.stringify(params)}`);
@@ -572,4 +557,5 @@ export interface ZapperTransaction {
 	name?: string;
 	pending?: boolean;
 	topUp?: boolean;
+	chainId: number;
 }

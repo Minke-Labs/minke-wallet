@@ -11,6 +11,7 @@ import TokenInputInner from '../TokenInputInner/TokenInputInner';
 const TokenCard: React.FC<TokenCardProps> = ({
 	token,
 	onPress,
+	depositProtocol,
 	disableMax = false,
 	updateQuotes,
 	conversionAmount = '',
@@ -31,12 +32,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
 	return (
 		<View>
 			<Touchable onPress={onPress} w="100%">
-				<CoinSelector
-					token={token}
-					onPress={onPress!}
-					notTouchable={notTouchable}
-					inline={exchange}
-				/>
+				<CoinSelector token={token} onPress={onPress!} notTouchable={notTouchable} inline={exchange} />
 			</Touchable>
 
 			<View row={exchange}>
@@ -53,14 +49,8 @@ const TokenCard: React.FC<TokenCardProps> = ({
 					editable={!disableInput}
 				/>
 
-				<View
-					row
-					main="space-between"
-					cross="center"
-					mt="xxxs"
-					mb={exchange ? 'xxxs' : 'zero'}
-				>
-					{!!apy && <InterestBanner token apy={apy} />}
+				<View row main="space-between" cross="center" mt="xxxs" mb={exchange ? 'xxxs' : 'zero'}>
+					{!!apy && <InterestBanner token apy={apy} depositProtocol={depositProtocol} />}
 					{isMaxEnabled && <MaxButton onPress={onMaxPress} />}
 				</View>
 			</View>

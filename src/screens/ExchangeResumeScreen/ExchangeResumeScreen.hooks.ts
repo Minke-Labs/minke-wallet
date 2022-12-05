@@ -1,3 +1,5 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/indent */
 import React, { useCallback, useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { Gas, globalExchangeState } from '@stores/ExchangeStore';
@@ -16,6 +18,7 @@ import { isExchangeGasless } from '@models/exchange';
 import gasLimits from '@models/gas';
 import ApprovalService from '@src/services/approval/ApprovalService';
 import { toBn } from 'evm-bn';
+import { networks } from '@models/network';
 
 const useExchangeResumeScreen = () => {
 	const exchange = useState(globalExchangeState());
@@ -38,8 +41,10 @@ const useExchangeResumeScreen = () => {
 	const [toFiatPrice, setToFiatPrice] = React.useState<number>();
 	const { addPendingTransaction } = useTransactions();
 	const { track } = useAmplitude();
-	const { gaslessEnabled, biconomy } = useBiconomy();
-	const { canSendTransactions, walletConnect, connector } = useWalletManagement();
+	const network = Object.values(networks).find((n) => n.chainId === from.chainId);
+	const { gaslessEnabledMatic, biconomy } = useBiconomy();
+	const { canSendTransactions, walletConnect, connector } = useWalletManagement(network);
+	const gaslessEnabled = gaslessEnabledMatic && network.chainId === networks.matic.chainId;
 
 	const showModal = () => setVisible(true);
 	const hideModal = () => {
@@ -75,6 +80,7 @@ const useExchangeResumeScreen = () => {
 				amount: (direction === 'to' ? toAmount : fromAmount) || '',
 				side: direction === 'to' ? 'BUY' : 'SELL',
 				quote: true,
+				chainId: from.chainId,
 				slippage: exchange.slippage.value
 			});
 
@@ -136,7 +142,12 @@ const useExchangeResumeScreen = () => {
 			setGasless(
 				gaslessEnabled &&
 					(priceQuote
-						? await isExchangeGasless(priceQuote.value, priceQuote.sellTokenAddress, priceQuote.to!)
+						? await isExchangeGasless(
+								priceQuote.value,
+								priceQuote.sellTokenAddress,
+								priceQuote.to!,
+								network
+						  )
 						: true)
 			);
 		};
@@ -176,9 +187,10 @@ const useExchangeResumeScreen = () => {
 				} = priceQuote;
 
 				const { address, privateKey } = wallet.value;
+				const { id: networkId } = network;
 
 				if (gasless) {
-					const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract);
+					const { isApproved } = await approvalState(address, sellTokenAddress, exchangeContract, networkId);
 					const provider = biconomy.getEthersProvider();
 
 					if (!isApproved) {
@@ -222,13 +234,13 @@ const useExchangeResumeScreen = () => {
 						subTransactions: [
 							{ type: 'outgoing', symbol: from.symbol, amount: +fromAmount! },
 							{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
-						]
+						],
+						chainId: network.chainId
 					});
 
 					navigation.navigate('HomeScreen');
 				} else {
-					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget);
-
+					const { isApproved } = await approvalState(address, sellTokenAddress, allowanceTarget, networkId);
 					if (!isApproved) {
 						await new ApprovalService().approve({
 							address,
@@ -238,11 +250,12 @@ const useExchangeResumeScreen = () => {
 							gasless,
 							privateKey,
 							spender: allowanceTarget,
-							walletConnect
+							walletConnect,
+							network
 						});
 					}
 
-					const provider = await getProvider();
+					const provider = getProvider(network.id);
 					const nonce = await provider.getTransactionCount(address, 'latest');
 					const txDefaults = {
 						chainId,
@@ -281,7 +294,8 @@ const useExchangeResumeScreen = () => {
 								{ type: 'incoming', symbol: to.symbol, amount: +toAmount! }
 							],
 							destination: addressTo!,
-							from: address
+							from: address,
+							chainId: network.chainId
 						});
 					} else {
 						const walletObject = new Wallet(wallet.privateKey.value!, provider);
@@ -330,7 +344,8 @@ const useExchangeResumeScreen = () => {
 		toFiatPrice,
 		gasless,
 		blockchainError,
-		setBlockchainError
+		setBlockchainError,
+		network
 	};
 };
 

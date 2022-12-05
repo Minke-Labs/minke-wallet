@@ -58,7 +58,7 @@ export default {
 		header_title: 'Cambiar Idioma'
 	},
 	ChangeNetworkScreen: {
-		header_title: 'Red',
+		header_title: 'Red Predeterminada',
 		ListItem: {
 			test_network: 'red de prueba'
 		}
@@ -71,24 +71,9 @@ export default {
 		},
 		Deposit: {
 			deposit: 'Deposita',
-			balance: 'Balance: '
+			balance: 'Balance: ',
+			on: 'en'
 		},
-		OpenSavings: {
-			open_account: 'Abrir Cuenta',
-			aave: 'Abrir Aave\nCuenta de Ahorro',
-			mstable: 'Abrir mStable\nSCuenta de Ahorro',
-			this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
-		},
-		// OpenMStable: {
-		// open_account: 'Abrir Cuenta',
-		// open_mstable: 'Abrir mStable\nCuenta de Ahorro',
-		// what_is: 'Que es mStable?',
-		// mstable_des:
-		// 'mStable ofrece una infraestructura autónoma y sin custodia para activos de valor fijo. El protocolo fue creado para solucionar tres problemas mayores: \n\n- La significante fragmentación que hay en cripto-activos del mismo valor (por ejemplo, actualmente hay por lo menos 5 grandes cripto-activos en Ethereum cuyo valor se encuentra pegado al dólar estadounidense). \n\n - La falta de rendimiento en el dinero fiat y cripto-activos de valor fijo \n\n - Falta de protección contra la permanente perdida de capital en cripto-activos de valor fijo.',
-		// view_site: 'Ver Sitio',
-		// learn_more: 'Aprende Más',
-		// this_transaction: 'Esta transacción va a costar unos cuantos centavos.'
-		// },
 		NotAbleToSaveModal: {
 			not_able: 'No fue posible depositar',
 			need_funds_in: 'Primero necesitas tener fondos ',
@@ -115,7 +100,8 @@ export default {
 		exchange_resume: 'Confirmación',
 		rate_fixed_for: 'Tasa fija por:',
 		rate: 'Tasa',
-		swapping_via: 'Intercambiando via'
+		swapping_via: 'Intercambiando via',
+		network: 'Red'
 	},
 	ExchangeScreen: {
 		fetching: 'Buscando...',
@@ -128,7 +114,8 @@ export default {
 				transaction_fee: 'Comision de transacción',
 				fast: 'Rápido',
 				normal: 'Normal',
-				slow: 'Lento'
+				slow: 'Lento',
+				fee_paid_in: 'Tarifa en '
 			}
 		},
 		validations: {
@@ -257,6 +244,10 @@ export default {
 		refer_and_earn: 'Refiere a un amigo y gana cripto gratis',
 		stablecoins: 'Stablecoins'
 	},
+	NetworkModal: {
+		if_you_receiving: 'Si está recibiendo de una exchange o wallet, confirme que hay soporte para na ',
+		network: 'Red {{network}}'
+	},
 	NFTDetailScreen: {
 		by: 'Por ',
 		Panel: {
@@ -367,7 +358,7 @@ export default {
 			MStable: 'cuenta de ahorros en mStable'
 		}
 	},
-	SavingAccountsScreen: {
+	SearchDepositProtocols: {
 		title: 'Cuenta de ahorros'
 	},
 	SecurityScreen: {
@@ -389,7 +380,7 @@ export default {
 		backup: 'Copia de seguridad',
 		country: 'País',
 		language: 'Idioma',
-		network: 'Red',
+		network: 'Red Predeterminada',
 		new_wallet: 'Nueva Wallet',
 		usd_coin: 'Activo USD',
 		contact_support: 'Soporte Técnico',
@@ -917,14 +908,21 @@ export default {
 			swap: 'Intercambiar',
 			buy_token_now: 'Compre {{token}} ahora'
 		},
+		ByNetworks: {
+			by_networks: 'Redes'
+		},
 		CountrySelector: {
 			country: 'País',
 			to_offer:
 				'Para ofrecerte las mejores opciones para comprar cripto por favor selecciona tu país de residencia:'
 		},
+		DepositProtocolSelector: {
+			choose_protocol: 'Elegir cuenta de ahorros',
+			change_account: 'Eligir cuenta'
+		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'No hay tokens acá ({{network}})'
+				no_tokens_here: 'No hay tokens acá'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Tus puntos van a aparecer acá',
@@ -1062,7 +1060,8 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Red {{network}}'
+				sending_on: 'Envío en la red {{network}}',
+				buying_on: 'Comprando en la red {{network}}'
 			}
 		},
 		PendingTransactions: {

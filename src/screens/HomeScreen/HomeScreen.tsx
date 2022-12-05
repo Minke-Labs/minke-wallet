@@ -5,6 +5,7 @@ import { BasicLayout } from '@layouts';
 import { View, FloatingSelector, PendingTransaction, AppTour } from '@components';
 import { useAmplitude, useTransactions, useGlobalWalletState, useBalances } from '@hooks';
 import { getProvider, ZapperTransaction } from '@src/model/wallet';
+import { networks } from '@models/network';
 import { Stories } from './Stories/Stories';
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
@@ -22,10 +23,11 @@ const HomeScreen = () => {
 
 	useEffect(() => {
 		const fetchStatus = async () => {
-			const provider = await getProvider();
 			const pending = pendingTransactions.filter((t) => t.pending)[0];
 			if (pending) {
 				setTx(pending);
+				const nw = Object.values(networks).find((n) => n.chainId === pending.chainId);
+				const provider = getProvider(nw.id);
 				const { status } = await provider.waitForTransaction(pending.hash);
 				const newTransaction = { ...pending, pending: false, txSuccessful: status === 1 };
 				setTx(newTransaction);

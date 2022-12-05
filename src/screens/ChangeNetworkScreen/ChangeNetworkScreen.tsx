@@ -2,7 +2,7 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { networks } from '@models/network';
 import { BasicLayout } from '@layouts';
-import { useNetwork, useLanguage } from '@hooks';
+import { useLanguage, useNetwork } from '@hooks';
 import { Header } from '@components';
 import RNTestFlight from 'react-native-test-flight';
 import RNUxcam from 'react-native-ux-cam';

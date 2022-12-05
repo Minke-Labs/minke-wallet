@@ -57,7 +57,7 @@ export default {
 		header_title: 'Change Language'
 	},
 	ChangeNetworkScreen: {
-		header_title: 'Network',
+		header_title: 'Default Network',
 		ListItem: {
 			test_network: 'test network'
 		}
@@ -70,13 +70,8 @@ export default {
 		},
 		Deposit: {
 			deposit: 'Deposit',
-			balance: 'Balance: '
-		},
-		OpenSavings: {
-			open_account: 'Open Account',
-			aave: 'Open Aave\nSavings Account',
-			mstable: 'Open mStable\nSavings Account',
-			this_transaction: 'This transaction will cost a few cents.'
+			balance: 'Balance: ',
+			on: 'on'
 		},
 		NotAbleToSaveModal: {
 			not_able: 'Not able to save',
@@ -104,7 +99,8 @@ export default {
 		exchange_resume: 'Confirmation',
 		rate_fixed_for: 'Rate fixed for:',
 		rate: 'Rate',
-		swapping_via: 'Swapping via'
+		swapping_via: 'Swapping via',
+		network: 'Network'
 	},
 	ExchangeScreen: {
 		fetching: 'Fetching...',
@@ -117,7 +113,8 @@ export default {
 				transaction_fee: 'Transaction Fee',
 				fast: 'Fast',
 				normal: 'Normal',
-				slow: 'Slow'
+				slow: 'Slow',
+				fee_paid_in: 'Fee Paid in '
 			}
 		},
 		validations: {
@@ -246,6 +243,10 @@ export default {
 		refer_and_earn: 'Refer a friend and earn free crypto',
 		stablecoins: 'Stablecoins'
 	},
+	NetworkModal: {
+		if_you_receiving: 'If you are receiving from an exchange or wallet make sure they support withdrawals on the ',
+		network: '{{network}} network'
+	},
 	NFTDetailScreen: {
 		by: 'by ',
 		Panel: {
@@ -353,7 +354,7 @@ export default {
 			MStable: 'mStable savings account'
 		}
 	},
-	SavingAccountsScreen: {
+	SearchDepositProtocols: {
 		title: 'Savings account'
 	},
 	SecurityScreen: {
@@ -376,7 +377,7 @@ export default {
 		backup: 'Backup',
 		country: 'Country',
 		language: 'Language',
-		network: 'Network',
+		network: 'Default Network',
 		new_wallet: 'New Wallet',
 		usd_coin: 'US Dollar Coin',
 		contact_support: 'Contact Support',
@@ -903,13 +904,20 @@ export default {
 			swap: 'Swap',
 			buy_token_now: 'Buy {{token}} now'
 		},
+		ByNetworks: {
+			by_networks: 'By networks'
+		},
 		CountrySelector: {
 			country: 'Country',
 			to_offer: 'To offer you the best options to buy crypto please select your country of residence:'
 		},
+		DepositProtocolSelector: {
+			choose_protocol: 'Choose savings account',
+			change_account: 'Change account'
+		},
 		EmptyStates: {
 			NoTokens: {
-				no_tokens_here: 'No tokens here ({{network}})'
+				no_tokens_here: 'No tokens here'
 			},
 			NoReferralPoints: {
 				your_points_will_appear_here: 'Your points will appear here',
@@ -1047,7 +1055,8 @@ export default {
 		},
 		NetworkWarning: {
 			NetworkTag: {
-				sending_on: 'Sending on the {{network}} network'
+				sending_on: 'Sending on the {{network}} network',
+				buying_on: 'Buying on the {{network}} network'
 			}
 		},
 		PendingTransactions: {

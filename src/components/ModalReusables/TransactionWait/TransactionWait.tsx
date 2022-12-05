@@ -3,8 +3,8 @@ import React from 'react';
 import { View, Linking, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTheme, useLanguage } from '@hooks';
-import { network } from '@models/network';
 import { smallWalletAddress } from '@src/model/wallet';
+import { networks } from '@models/network';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import { makeStyles } from './TransactionWait.styles';
 import Token from '../../Token/Token';
@@ -27,7 +27,8 @@ const TransactionWaitModal = ({
 	const styles = makeStyles(colors);
 
 	const openTransaction = async () => {
-		const { etherscanURL } = await network();
+		const network = Object.values(networks).find((n) => n.chainId === fromToken.chainId);
+		const { etherscanURL } = network;
 		Linking.openURL(`${etherscanURL}/tx/${transactionHash}`);
 	};
 
@@ -36,14 +37,18 @@ const TransactionWaitModal = ({
 			<ModalHeader {...{ onDismiss }} />
 			<View style={styles.modalRow}>
 				<View style={toToken ? { marginRight: 56 } : {}}>
-					<Token token={fromToken} size={50} />
+					<View>
+						<Token token={fromToken} size={50} />
+					</View>
 				</View>
 				{!!toToken && (
 					<>
 						<View style={styles.exchangeResumeBackground}>
 							<Icon name="arrowRight" color="cta1" size={24} />
 						</View>
-						<Token token={toToken} size={50} />
+						<View>
+							<Token token={toToken} size={50} />
+						</View>
 					</>
 				)}
 			</View>

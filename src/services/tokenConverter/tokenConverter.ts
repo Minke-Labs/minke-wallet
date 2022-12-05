@@ -18,7 +18,8 @@ const convertToken = async ({ source, token, chainId }: TokenConverterParams): P
 				balanceUSD: token.quote,
 				decimals: token.contract_decimals,
 				image: token.logo_url,
-				symbol
+				symbol,
+				chainId
 			};
 	}
 };

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { NativeTokens, nativeTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
-import { network } from '@models/network';
 import { parseUnits } from 'ethers/lib/utils';
+import { Network } from '@models/network';
 import { BigNumber } from 'ethers';
 import useBalances from './useBalances';
 
-const useNativeToken = () => {
+const useNativeToken = (network: Network | undefined) => {
 	const [nativeToken, setNativeToken] = useState<MinkeToken>();
 	const [name, setName] = useState<string>();
 	const [balance, setBalance] = useState<BigNumber>();
@@ -14,16 +14,18 @@ const useNativeToken = () => {
 
 	useEffect(() => {
 		const loadNativeToken = async () => {
+			if (!network) return;
+
 			const {
 				nativeToken: { symbol: nativeTokenSymbol, name: nativeName }
-			} = await network();
+			} = network;
 			const native = nativeTokens[nativeTokenSymbol as keyof NativeTokens];
 			setNativeToken(native);
 			setName(nativeName);
 		};
 
 		loadNativeToken();
-	}, []);
+	}, [network?.id]);
 
 	useEffect(() => {
 		if (nativeToken) {

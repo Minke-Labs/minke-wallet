@@ -5,7 +5,6 @@ import * as Linking from 'expo-linking';
 import { BasicLayout } from '@layouts';
 import { View, LoadingScreen, Header, Text, ModalBase, IconItem } from '@components';
 import { useNavigation, useLanguage } from '@hooks';
-import { networks } from '@models/network';
 import Intercom from '@intercom/intercom-react-native';
 import RNTestFlight from 'react-native-test-flight';
 import { globalWalletState, walletState } from '@stores/WalletStore';
@@ -18,9 +17,6 @@ const SettingsScreen = () => {
 	RNUxcam.tagScreenName('SettingsScreen');
 	const { i18n } = useLanguage();
 	const state = useState(globalWalletState());
-	const {
-		network: { chainId }
-	} = state.value;
 	const navigation = useNavigation();
 	const [creatingWallet, setCreatingWallet] = React.useState(false);
 	const [deleteModal, setDeleteModal] = React.useState(false);
@@ -33,7 +29,6 @@ const SettingsScreen = () => {
 	const onAccounts = () => navigation.navigate('AccountsScreen');
 	const onContactSupport = () => Linking.openURL('mailto:support@minke.app');
 	const onDollarSettings = () => navigation.navigate('USDCoinScreen');
-	const onSavingAccount = () => navigation.navigate('SavingAccountsScreen');
 	const onEnterReferralCode = () => navigation.navigate('EnterReferralCodeScreen');
 	const onHelpCentre = () => Intercom.displayHelpCenter();
 	const onEnterSecurity = () => navigation.navigate('SecurityScreen');
@@ -112,15 +107,6 @@ const SettingsScreen = () => {
 							rightButton
 							mb="m"
 						/>
-						{chainId === networks.matic.chainId && (
-							<IconItem
-								title={i18n.t('SettingsScreen.savings_account')}
-								icon="vault"
-								onPress={onSavingAccount}
-								rightButton
-								mb="m"
-							/>
-						)}
 
 						<Text weight="semiBold" type="a" color="text3" marginBottom={16}>
 							{i18n.t('SettingsScreen.help')}

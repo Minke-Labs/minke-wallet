@@ -6,7 +6,7 @@ import {
 	useNavigation,
 	useNativeToken,
 	useBiconomy,
-	useDepositProtocols,
+	useDefaultStablecoin,
 	useLanguage,
 	useWalletManagement
 } from '@hooks';
@@ -19,6 +19,7 @@ import { globalWalletState, WalletState } from '@stores/WalletStore';
 import { isExchangeGasless, validatedExceptions } from '@models/exchange';
 import { formatUnits } from 'ethers/lib/utils';
 import gasLimits from '@models/gas';
+import { networks } from '@models/network';
 
 interface PriceParams {
 	amount?: string;
@@ -31,13 +32,14 @@ interface UseExchangeScreenParams {
 }
 
 export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenParams) => {
-	const { nativeToken, balance } = useNativeToken();
 	const navigation = useNavigation();
 	const exchange: State<ExchangeState> = useState(globalExchangeState());
 	const wallet: State<WalletState> = useState(globalWalletState());
 	const [searchVisible, setSearchVisible] = React.useState(false);
 	const [fromToken, setFromToken] = React.useState<MinkeGasToken>(sourceToken as MinkeToken);
-	const [toToken, setToToken] = React.useState<MinkeToken>(destToken as MinkeToken);
+	const [toToken, setToToken] = React.useState<MinkeToken | undefined>(destToken as MinkeToken);
+	const network = Object.values(networks).find((n) => n.chainId === fromToken?.chainId);
+	const { nativeToken, balance } = useNativeToken(network);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
@@ -49,14 +51,15 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [lastConversion, setLastConversion] = React.useState<Conversion>();
 	const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
 	const [slippage, setSlippage] = React.useState<number>();
-	const { gaslessEnabled } = useBiconomy();
+	const { gaslessEnabledMatic } = useBiconomy();
+	const gaslessEnabled = gaslessEnabledMatic && network?.chainId === networks.matic.chainId;
 	const { tokens, stablecoins } = useBalances();
 	const walletTokens = [...stablecoins, ...tokens.filter((t) => (t.balanceUSD || 0) > 0)];
-	const { defaultToken } = useDepositProtocols();
+	const { defaultStablecoin } = useDefaultStablecoin();
 	const { i18n } = useLanguage();
 	const { maxFeePerGas = constants.Zero } = exchange.gas.value || {};
 	const gasValueInEth = formatUnits(maxFeePerGas);
-	const { canSendTransactions, needToChangeNetwork } = useWalletManagement();
+	const { canSendTransactions, needToChangeNetwork } = useWalletManagement(network);
 
 	const updateFromToken = (token: MinkeToken) => {
 		setFromToken(token);
@@ -73,7 +76,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	};
 
 	const loadPrices = async ({ amount = '1', side = 'SELL' }: PriceParams): Promise<Quote | undefined> => {
-		if (fromToken && toToken) {
+		if (fromToken && toToken && fromToken.chainId === toToken.chainId) {
 			setLoadingPrices(true);
 			const { address: srcToken, decimals: srcDecimals } = fromToken;
 			const { address: destinationToken, decimals: destDecimals } = toToken;
@@ -95,6 +98,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 				destDecimals,
 				amount,
 				side,
+				chainId: fromToken.chainId,
 				slippage
 			});
 
@@ -116,7 +120,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 			const newQuote = {
 				from: { [fromToken.symbol]: BigNumber.from(sellAmount) },
 				to: { [toToken?.symbol || '']: BigNumber.from(buyAmount) },
-				gasless: await isExchangeGasless(value, sellTokenAddress, to || allowanceTarget)
+				gasless: await isExchangeGasless(value, sellTokenAddress, to || allowanceTarget, network)
 			};
 			setQuote(newQuote);
 			setLoadingPrices(false);
@@ -206,8 +210,10 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		let walletToken = token;
 		if (!token.balance) {
 			walletToken =
-				(walletTokens || []).find(({ address }) => address.toLowerCase() === token.address.toLowerCase()) ||
-				token;
+				(walletTokens || []).find(
+					({ address, chainId }) =>
+						address.toLowerCase() === token.address.toLowerCase() && token.chainId === chainId
+				) || token;
 		}
 		if (searchSource === 'from') {
 			updateFromToken(walletToken);
@@ -248,16 +254,16 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	useEffect(() => {
 		if (fromToken) return;
 
-		if (destToken && defaultToken && defaultToken.symbol !== destToken.symbol) {
-			setFromToken(defaultToken);
+		if (destToken && defaultStablecoin && defaultStablecoin.symbol !== destToken.symbol) {
+			setFromToken(defaultStablecoin);
 		} else if (destToken && nativeToken) {
 			setFromToken(nativeToken);
-		} else if (!!defaultToken && !fromToken) {
-			setFromToken(defaultToken);
-		} else if (defaultToken === null) {
+		} else if (!!defaultStablecoin && !fromToken) {
+			setFromToken(defaultStablecoin);
+		} else if (defaultStablecoin === null) {
 			setFromToken(nativeToken as MinkeToken);
 		}
-	}, [defaultToken]);
+	}, [defaultStablecoin]);
 
 	useEffect(() => {
 		if (fromToken && toToken) {
@@ -295,6 +301,12 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	useEffect(() => {
 		setSlippage(toToken?.suggestedSlippage);
 	}, [toToken?.address]);
+
+	useEffect(() => {
+		if (fromToken && toToken && fromToken.chainId !== toToken.chainId) {
+			setToToken(undefined);
+		}
+	}, [fromToken]);
 
 	const enoughForGas =
 		gasless || (balance && maxFeePerGas ? balance.gte(maxFeePerGas.mul(gasLimits.exchange)) : true);
@@ -356,6 +368,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 		showSettingsModal,
 		dismissSettingsModal,
 		onSlippageChanges,
-		slippage
+		slippage,
+		network
 	};
 };

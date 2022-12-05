@@ -1,7 +1,7 @@
 import { ZERION_API_TOKEN } from '@env';
 import io from 'socket.io-client';
 import { MinkeToken } from '@models/types/token.types';
-import { network } from '@models/network';
+import { networks } from '@models/network';
 import { formatUnits } from 'ethers/lib/utils';
 import { getProvider } from '@models/wallet';
 import { AddressSocket, RequestBody, UseZerionBalancesParams, ZerionTokenData } from './useZerionBalances.types';
@@ -43,7 +43,7 @@ const get = (socketNamespace: AddressSocket, requestBody: RequestBody): Promise<
 	});
 
 const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<MinkeToken[]> => {
-	const { zapperNetwork, nativeToken, id } = await network();
+	const chains = Object.values(networks).map((n) => n.zapperNetwork);
 	const { payload }: ZerionTokenData = await get(addressSocket, {
 		scope: ['positions'],
 		payload: {
@@ -53,23 +53,27 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 		}
 	});
 	let { positions = [] } = payload?.positions || {};
-	positions = positions.filter(({ chain, type }) => type === 'asset' && chain === zapperNetwork);
-	const promises = positions.map(async ({ asset, quantity, value }) => {
+	positions = positions.filter(({ chain, type }) => type === 'asset' && chains.includes(chain));
+	const promises = positions.map(async ({ asset, quantity, value, chain }) => {
 		const { symbol, asset_code: assetCode, name, implementations = {}, price } = asset;
-		const { address: tokenAddress = assetCode, decimals = asset.decimals } = implementations[zapperNetwork];
+		const { address: tokenAddress = assetCode, decimals = asset.decimals } = implementations[chain];
+		const tokenNetwork = Object.values(networks).find(({ zapperNetwork }) => chain === zapperNetwork);
 		let balance = formatUnits(quantity, decimals);
+
+		const { nativeToken, id, chainId } = tokenNetwork;
 
 		const token = {
 			address: tokenAddress || '0x0000000000000000000000000000000000000000',
 			symbol,
 			decimals,
+			chainId,
 			balance,
 			balanceUSD: value || 0,
 			name: name.replace('Binance-Peg ', '')
 		};
 
 		if (symbol === nativeToken.symbol) {
-			const provider = await getProvider(id);
+			const provider = getProvider(id);
 			const blockchainBalance = await provider.getBalance(address);
 			balance = formatUnits(blockchainBalance, decimals);
 			const balanceUSD = Number(balance) * price.value;

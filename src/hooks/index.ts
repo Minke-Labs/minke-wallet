@@ -20,7 +20,7 @@ import useWallets from './useWallets';
 import useAuthentication from './useAuthentication';
 import useBiconomy from './useBiconomy';
 import useNativeToken from './useNativeToken';
-import useDepositProtocols from './useDepositProtocols';
+import useDefaultStablecoin from './useDefaultStablecoin';
 import useReferralCode from './useReferralCode';
 import useFirstTime from './useFirstTime';
 import usePrevious from './usePrevious';
@@ -30,6 +30,7 @@ import useWalletManagement from './useWalletManagement';
 import useCurrencies from './useCurrencies';
 import useNFT from './useNFT';
 import useBalances from './useBalances';
+import useDepositProtocols from './useDepositProtocols';
 
 export {
 	useCountry,
@@ -54,7 +55,7 @@ export {
 	useAuthentication,
 	useBiconomy,
 	useNativeToken,
-	useDepositProtocols,
+	useDefaultStablecoin,
 	useReferralCode,
 	useWalletState,
 	useFirstTime,
@@ -63,5 +64,6 @@ export {
 	useWalletManagement,
 	useCurrencies,
 	useNFT,
-	useBalances
+	useBalances,
+	useDepositProtocols
 };

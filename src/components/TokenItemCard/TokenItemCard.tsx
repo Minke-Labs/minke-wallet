@@ -11,9 +11,17 @@ interface TokenItemCardProps {
 	onPress?: () => void;
 	perc?: number;
 	paper?: boolean;
+	showNetworkIcon?: boolean;
+	chainIds?: number[];
 }
 
-const TokenItemCard: React.FC<TokenItemCardProps> = ({ token, paper, onPress }) => {
+const TokenItemCard: React.FC<TokenItemCardProps> = ({
+	token,
+	paper,
+	onPress,
+	chainIds = [],
+	showNetworkIcon = true
+}) => {
 	const navigation = useNavigation();
 	const { i18n } = useLanguage();
 	const {
@@ -35,7 +43,12 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({ token, paper, onPress }) 
 			<View {...(paper && { bgc: 'background5', br: 'xs' })} flex1 row main="space-between">
 				<View flex1>
 					<Touchable onPress={onPress} opacity={onPress ? 0.6 : 1} row {...(paper && { p: 'xs' })}>
-						<TokenItem token={token} hideValues={showBuyButton} />
+						<TokenItem
+							token={token}
+							hideValues={showBuyButton}
+							showNetworkIcon={showNetworkIcon}
+							chainIds={chainIds}
+						/>
 					</Touchable>
 				</View>
 				{showBuyButton && (

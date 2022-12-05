@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { MOONPAY_API_KEY } from '@env';
-import { useNavigation, useTransactions } from '@hooks';
+import { useGlobalWalletState, useNavigation, useTransactions } from '@hooks';
 
 interface MoonpayTransaction {
 	status: string;
@@ -15,6 +15,9 @@ const useMoonpayWaitScreen = (transactionId: string) => {
 	const apiKey = MOONPAY_API_KEY || process.env.MOONPAY_API_KEY;
 	const navigation = useNavigation();
 	const { addPendingTransaction } = useTransactions();
+	const {
+		network: { chainId }
+	} = useGlobalWalletState();
 
 	const fetchTransaction = useCallback(async () => {
 		const response = await fetch(`https://api.moonpay.com/v1/transactions/${transactionId}?apiKey=${apiKey}`);
@@ -60,7 +63,8 @@ const useMoonpayWaitScreen = (transactionId: string) => {
 				destination: transaction.address,
 				from: transaction.address,
 				direction: 'incoming',
-				symbol: transaction.baseCurrency
+				symbol: transaction.baseCurrency,
+				chainId
 			});
 			onFinish();
 		};

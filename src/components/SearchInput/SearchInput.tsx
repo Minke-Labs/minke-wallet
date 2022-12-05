@@ -6,24 +6,17 @@ import View from '@src/components/View/View';
 import { spacing } from '@styles';
 import { SearchInputProps } from './SearchInput.types';
 
-const SearchInput: React.FC<SearchInputProps> = ({ search, onSearch, placeholder = '', marginBottom = 0 }) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+	search,
+	onSearch,
+	placeholder = '',
+	marginBottom = 0,
+	textInputRef
+}) => {
 	const { colors } = useTheme();
 	return (
-		<View
-			flex1
-			row
-			main="center"
-			cross="center"
-			bgc="background2"
-			br="l"
-			style={{ maxHeight: 40, marginBottom }}
-		>
-			<Icon
-				name="searchStroke"
-				style={{ margin: spacing.xs }}
-				color="cta1"
-				size={20}
-			/>
+		<View flex1 row main="center" cross="center" bgc="background2" br="l" style={{ maxHeight: 40, marginBottom }}>
+			<Icon name="searchStroke" style={{ margin: spacing.xs }} color="cta1" size={20} />
 			<TextInput
 				style={{
 					flex: 1,
@@ -40,6 +33,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ search, onSearch, placeholder
 				value={search}
 				onChangeText={(text) => onSearch(text)}
 				autoCapitalize="none"
+				ref={textInputRef}
 				{...{ placeholder }}
 			/>
 		</View>

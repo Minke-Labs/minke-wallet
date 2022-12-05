@@ -2,40 +2,28 @@ import { Wallet, Contract, providers, BigNumber, PopulatedTransaction } from 'et
 import Logger from '@utils/logger';
 import gasLimits from '@models/gas';
 import { getProvider } from './wallet';
-import { network } from './network';
 import { approvalState } from './deposit';
-
-interface ContractAbiResponse {
-	message: string;
-	result: string;
-	status: string;
-}
+import { Network } from './network';
 
 interface ContractApproval {
 	isApproved?: boolean;
 	transaction?: providers.TransactionResponse;
 }
 
-export const getAbi = async (address: string): Promise<ContractAbiResponse> => {
-	const { etherscanAPIURL, etherscanAPIKey: apiKey } = await network();
-	const result = await fetch(
-		`${etherscanAPIURL}api?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
-	);
-	return result.json();
-};
-
 export const onChainApprovalData = async ({
 	address,
 	amount,
 	contractAddress,
-	spender
+	spender,
+	networkId
 }: {
 	address: string;
 	amount?: string;
 	contractAddress: string;
 	spender: string;
+	networkId: string;
 }): Promise<PopulatedTransaction> => {
-	const provider = await getProvider();
+	const provider = getProvider(networkId);
 
 	const erc20 = new Contract(
 		contractAddress,
@@ -62,7 +50,8 @@ export const onChainApproval = async ({
 	contractAddress,
 	spender,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	privateKey: string;
 	amount?: string;
@@ -70,27 +59,38 @@ export const onChainApproval = async ({
 	spender: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }): Promise<ContractApproval> => {
-	const provider = await getProvider();
+	const provider = getProvider(network.id);
 	const wallet = new Wallet(privateKey, provider);
 	const nonce = await wallet.provider.getTransactionCount(wallet.address, 'latest');
 
-	const txDefaults = {
-		type: 2,
+	let txDefaults = {
 		chainId: await wallet.getChainId(),
-		gasLimit: gasLimits.approval.toString(),
-		maxFeePerGas,
-		maxPriorityFeePerGas,
 		nonce
 	};
 
-	const tx = await onChainApprovalData({ address: wallet.address, contractAddress, amount, spender });
+	if (network.eip1559) {
+		txDefaults = {
+			...txDefaults,
+			...{ type: 2, maxFeePerGas, maxPriorityFeePerGas, gasLimit: gasLimits.approval.toString() }
+		};
+	} else {
+		txDefaults = { ...txDefaults, ...{ gasPrice: maxFeePerGas, gasLimit: BigNumber.from(gasLimits.approval) } };
+	}
+
+	const tx = await onChainApprovalData({
+		address: wallet.address,
+		contractAddress,
+		amount,
+		spender,
+		networkId: network.id
+	});
 	Logger.log('onChainApproval', { ...tx, ...txDefaults });
 	const signedTx = await wallet.signTransaction({ ...tx, ...txDefaults });
 	const transaction = await wallet.provider.sendTransaction(signedTx as string);
 	return { transaction };
 };
-
 export const approveSpending = async ({
 	userAddress,
 	privateKey,
@@ -98,7 +98,8 @@ export const approveSpending = async ({
 	contractAddress,
 	spender,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	userAddress: string;
 	privateKey: string;
@@ -107,10 +108,19 @@ export const approveSpending = async ({
 	spender: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }): Promise<ContractApproval> => {
-	const { isApproved } = await approvalState(userAddress, contractAddress, spender);
+	const { isApproved } = await approvalState(userAddress, contractAddress, spender, network.id);
 	if (isApproved) {
 		return { isApproved };
 	}
-	return onChainApproval({ privateKey, amount, spender, contractAddress, maxFeePerGas, maxPriorityFeePerGas });
+	return onChainApproval({
+		privateKey,
+		amount,
+		spender,
+		contractAddress,
+		maxFeePerGas,
+		maxPriorityFeePerGas,
+		network
+	});
 };

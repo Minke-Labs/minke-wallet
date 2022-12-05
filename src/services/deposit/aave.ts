@@ -1,5 +1,5 @@
 import gasLimits, { Networks } from '@models/gas';
-import { network } from '@models/network';
+import { Network } from '@models/network';
 import { getProvider } from '@models/wallet';
 import Logger from '@utils/logger';
 import { signTypedDataV3 } from '@utils/signing/signing';
@@ -14,7 +14,8 @@ export const gaslessDeposit = async ({
 	interestBearingToken,
 	minAmount,
 	maxFeePerGas,
-	biconomy
+	biconomy,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -24,6 +25,7 @@ export const gaslessDeposit = async ({
 	minAmount: string;
 	maxFeePerGas: BigNumber;
 	biconomy: any;
+	network: Network;
 }): Promise<DepositReturn> => {
 	const abi = [
 		// eslint-disable-next-line max-len
@@ -47,7 +49,7 @@ export const gaslessDeposit = async ({
 
 	const {
 		aave: { depositContract: aaveDepositContract }
-	} = await network();
+	} = network;
 
 	const rawTx = {
 		to: aaveDepositContract,
@@ -84,7 +86,8 @@ export const depositData = async ({
 	tokenAddress,
 	interestBearingTokenAddress,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	address: string;
 	amount: string;
@@ -93,8 +96,9 @@ export const depositData = async ({
 	interestBearingTokenAddress: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }): Promise<PopulatedTransaction> => {
-	const { aave } = await network();
+	const { aave } = network;
 
 	const txDefaults = {
 		from: address,
@@ -107,7 +111,7 @@ export const depositData = async ({
 		'function ZapIn(address fromToken, uint256 amountIn, address aToken, uint256 minATokens, address swapTarget, bytes calldata swapData, address affiliate) external payable returns (uint256 aTokensRec)'
 	];
 
-	const erc20 = new Contract(aave.depositContract, abi, await getProvider());
+	const erc20 = new Contract(aave.depositContract, abi, getProvider(network.id));
 	const tx = await erc20.populateTransaction.ZapIn(
 		tokenAddress,
 		amount,
@@ -129,7 +133,8 @@ export const deposit = async ({
 	tokenAddress,
 	interestBearingTokenAddress,
 	maxFeePerGas,
-	maxPriorityFeePerGas
+	maxPriorityFeePerGas,
+	network
 }: {
 	address: string;
 	privateKey: string;
@@ -139,6 +144,7 @@ export const deposit = async ({
 	interestBearingTokenAddress: string;
 	maxFeePerGas: BigNumber;
 	maxPriorityFeePerGas: BigNumber;
+	network: Network;
 }): Promise<DepositReturn> => {
 	const transaction = await depositData({
 		address,
@@ -147,14 +153,15 @@ export const deposit = async ({
 		tokenAddress,
 		interestBearingTokenAddress,
 		maxFeePerGas,
-		maxPriorityFeePerGas
+		maxPriorityFeePerGas,
+		network
 	});
 	Logger.log(`Deposit API ${JSON.stringify(transaction)}`);
-	const { id } = await network();
+	const { id } = network;
 
 	const { from, to, data, maxFeePerGas: baseFee, maxPriorityFeePerGas: priorityFee } = transaction;
 
-	const provider = await getProvider();
+	const provider = getProvider(id);
 	const wallet = new Wallet(privateKey, provider);
 	const chainId = await wallet.getChainId();
 	const nonce = await provider.getTransactionCount(address, 'latest');

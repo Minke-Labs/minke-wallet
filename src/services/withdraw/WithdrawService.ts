@@ -1,6 +1,6 @@
 import { ApprovalState } from '@models/deposit';
 import gasLimits, { Networks } from '@models/gas';
-import { network } from '@models/network';
+import { Network, networks } from '@models/network';
 import { withdrawTransaction } from '@models/withdraw';
 import Logger from '@utils/logger';
 import WalletConnect from '@walletconnect/client';
@@ -30,9 +30,11 @@ class WithdrawService {
 		interestBearingToken,
 		biconomy,
 		walletConnect,
-		connector
+		connector,
+		chainId
 	}: WithdrawParams): Promise<WithdrawReturn> {
-		const { isApproved } = await this.approveState(address, interestBearingToken);
+		const network = Object.values(networks).find((n) => n.chainId === chainId);
+		const { isApproved } = await this.approveState(address, interestBearingToken, network);
 		if (!isApproved && this.protocol !== 'aave') {
 			// Gasless AAVE withdraw uses a permit signature
 			const hash = await this.approve({
@@ -42,7 +44,8 @@ class WithdrawService {
 				contract: interestBearingToken,
 				biconomy,
 				walletConnect,
-				connector
+				connector,
+				network
 			});
 
 			if (!hash) {
@@ -63,7 +66,8 @@ class WithdrawService {
 					maxFeePerGas,
 					interestBearingToken,
 					token,
-					biconomy
+					biconomy,
+					network
 				});
 				return hash;
 			}
@@ -77,7 +81,8 @@ class WithdrawService {
 					toTokenAddress: token,
 					interestBearingToken,
 					maxFeePerGas,
-					maxPriorityFeePerGas
+					maxPriorityFeePerGas,
+					network
 				});
 
 				const { from, to, data } = transaction;
@@ -98,7 +103,8 @@ class WithdrawService {
 				toTokenAddress: token,
 				interestBearingToken,
 				maxFeePerGas,
-				maxPriorityFeePerGas
+				maxPriorityFeePerGas,
+				network
 			});
 			return hash;
 		}
@@ -107,11 +113,12 @@ class WithdrawService {
 				const hash = await mStableGaslessWithdraw({
 					address,
 					privateKey: privateKey!,
-					amount: await withdrawAmount(amount, address, interestBearingToken),
+					amount: await withdrawAmount(amount, address, interestBearingToken, network),
 					minAmount,
 					maxFeePerGas,
 					token,
-					biconomy
+					biconomy,
+					network
 				});
 				return hash;
 			}
@@ -119,12 +126,13 @@ class WithdrawService {
 			if (walletConnect) {
 				const tx = await mStableWithdrawData({
 					address,
-					amount: await withdrawAmount(amount, address, interestBearingToken),
+					amount: await withdrawAmount(amount, address, interestBearingToken, network),
 					minAmount,
-					token
+					token,
+					network
 				});
 				const { to, data } = tx;
-				const { id } = await network();
+				const { id } = network;
 				const hash = await connector.sendTransaction({
 					from: address,
 					to,
@@ -138,11 +146,12 @@ class WithdrawService {
 			const hash = await mStableWithdraw({
 				address,
 				privateKey: privateKey!,
-				amount: await withdrawAmount(amount, address, interestBearingToken),
+				amount: await withdrawAmount(amount, address, interestBearingToken, network),
 				minAmount,
 				maxFeePerGas,
 				maxPriorityFeePerGas,
-				token
+				token,
+				network
 			});
 
 			return hash;
@@ -150,8 +159,8 @@ class WithdrawService {
 		return null;
 	}
 
-	public async approveState(address: string, contract: string): Promise<ApprovalState> {
-		return ApprovalService.approveState(address, contract, await this.withdrawContract());
+	public async approveState(address: string, contract: string, network: Network): Promise<ApprovalState> {
+		return ApprovalService.approveState(address, contract, await this.withdrawContract(network), network.id);
 	}
 
 	public async approve({
@@ -161,7 +170,8 @@ class WithdrawService {
 		contract,
 		biconomy,
 		walletConnect,
-		connector
+		connector,
+		network
 	}: {
 		gasless: boolean;
 		address: string;
@@ -170,6 +180,7 @@ class WithdrawService {
 		biconomy: any;
 		walletConnect: boolean;
 		connector: WalletConnect;
+		network: Network;
 	}): Promise<DepositReturn> {
 		const approval = await new ApprovalService().approve({
 			gasless,
@@ -177,15 +188,16 @@ class WithdrawService {
 			privateKey,
 			contract,
 			biconomy,
-			spender: await this.withdrawContract(),
+			spender: await this.withdrawContract(network),
 			walletConnect,
-			connector
+			connector,
+			network
 		});
 		return approval;
 	}
 
-	private async withdrawContract(): Promise<string> {
-		const { mStable, aave } = await network();
+	private async withdrawContract(network: Network): Promise<string> {
+		const { mStable, aave } = network;
 		return this.protocol === 'mstable' ? mStable?.withdrawContract! : aave.depositContract;
 	}
 }
