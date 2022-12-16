@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { OPENSEA_API_KEY, ALCHEMY_API_KEY_MATIC } from '@env';
 import { Alchemy, Network } from 'alchemy-sdk';
+import axios from 'axios';
 import * as qs from 'qs';
+
+import { ALCHEMY_API_KEY_MATIC, OPENSEA_API_KEY } from '@env';
 import { NFT, Stats } from '@models/types/nft.types';
 import Logger from '@utils/logger';
 
@@ -26,6 +27,10 @@ const customCollections: { [key: string]: { slug: string; name: string } } = {
 	'0x2953399124f0cbb46d2cbacd8a89cf0599974963': {
 		slug: 'opensea-collections',
 		name: 'OpenSea Collections'
+	},
+	'0x9f202e685461b656b5b0e18ebddcc626837d8afd': {
+		slug: 'polygon-football-collection',
+		name: 'Polygon Football Collection'
 	}
 };
 
@@ -42,7 +47,7 @@ export const getAssets = async (owner: string): Promise<NFT[]> => {
 
 	const assets: NFT[] = ownedNfts.map(({ tokenId, media, title, description, contract }) => {
 		const [data] = media;
-		const { name, slug } = customCollections[contract.address];
+		const { name, slug } = customCollections[contract.address.toLowerCase()];
 		const { gateway } = data || {};
 
 		return {

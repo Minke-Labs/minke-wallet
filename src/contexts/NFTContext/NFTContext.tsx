@@ -1,7 +1,9 @@
-import React, { createContext, useMemo, useEffect, useState } from 'react';
-import { NFT } from '@models/types/nft.types';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
+
 import { numberFormat } from '@helpers/utilities';
+import { NFT } from '@models/types/nft.types';
 import { fetchNFTNetWorth, getAssets } from '@src/services/apis';
+
 import useGlobalWalletState from '../../hooks/useGlobalWalletState';
 
 interface NFTContextProps {
