@@ -1,9 +1,11 @@
+import { BigNumber } from 'ethers';
+import { parseUnits } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
+
+import { Network } from '@models/network';
 import { NativeTokens, nativeTokens } from '@models/token';
 import { MinkeToken } from '@models/types/token.types';
-import { parseUnits } from 'ethers/lib/utils';
-import { Network } from '@models/network';
-import { BigNumber } from 'ethers';
+
 import useBalances from './useBalances';
 
 const useNativeToken = (network: Network | undefined) => {
