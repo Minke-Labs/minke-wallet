@@ -18,8 +18,7 @@
 		},
 		"production": {
 			"ios": {
-				"autoIncrement": "buildNumber",
-				"image": "macos-monterey-12.4-xcode-13.4"
+				"autoIncrement": "buildNumber"
 			},
 			"android": {
 				"image": "latest",
