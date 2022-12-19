@@ -1,66 +1,68 @@
 {
-	"expo": {
-		"plugins": [
-			[
-				"expo-image-picker",
-				{
-					"photosPermission": "The app accesses your photos to let you share them with your friends.",
-					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
-				}
-			]
-		],
-		"name": "Minke",
-		"slug": "minke-wallet",
-		"owner": "minkelabs",
-		"version": "0.0.29",
-		"scheme": "com.minkeapp.minkewallet",
-		"orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#0A2138"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true,
-			"buildNumber": "135",
-			"config": {
-				"usesNonExemptEncryption": false
-			},
-			"bundleIdentifier": "com.minkeapp.minkewallet",
-			"infoPlist": {
-				"NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
-				"NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
-				"NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
-			}
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF"
-			},
-			"versionCode": 94,
-			"permissions": [
-				"android.permission.CAMERA",
-				"android.permission.READ_EXTERNAL_STORAGE",
-				"android.permission.WRITE_EXTERNAL_STORAGE",
-				"android.permission.RECORD_AUDIO"
-			],
-			"package": "com.minkeapp.minkewallet"
-		},
-		"web": {
-			"favicon": "./assets/favicon.png"
-		},
-		"description": "",
-		"userInterfaceStyle": "automatic",
-		"extra": {
-			"eas": {
-				"projectId": "653ea46f-9f69-4240-8fc2-a3ef10e74cfb"
-			}
-		}
-	}
+  "expo": {
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ]
+    ],
+    "name": "Minke",
+    "slug": "minke-wallet",
+    "owner": "minkelabs",
+    "version": "0.0.29",
+    "scheme": "com.minkeapp.minkewallet",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A2138"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "buildNumber": "139",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.minkeapp.minkewallet",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "versionCode": 95,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.minkeapp.minkewallet"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "",
+    "userInterfaceStyle": "automatic",
+    "extra": {
+      "eas": {
+        "projectId": "653ea46f-9f69-4240-8fc2-a3ef10e74cfb"
+      }
+    }
+  }
 }
