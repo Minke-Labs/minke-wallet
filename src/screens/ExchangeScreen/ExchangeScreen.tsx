@@ -1,31 +1,22 @@
+import { debounce } from 'lodash';
 import React from 'react';
 import { Keyboard, TouchableOpacity } from 'react-native';
-import { useTheme, useLanguage, useKeyboard } from '@hooks';
-import { os } from '@styles';
-import { debounce } from 'lodash';
-import { BasicLayout } from '@layouts';
-import {
-	Button,
-	ModalBase,
-	ModalReusables,
-	Header,
-	GasSelector,
-	TokenCard,
-	BlankStates,
-	Warning,
-	View,
-	WatchModeTag,
-	Touchable,
-	Text,
-	Icon
-} from '@components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import RNUxcam from 'react-native-ux-cam';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+import {
+	BlankStates, Button, GasSelector, Header, Icon, ModalBase, ModalReusables, Text, TokenCard,
+	Touchable, View, Warning, WatchModeTag
+} from '@components';
+import { useKeyboard, useLanguage, useTheme } from '@hooks';
+import { BasicLayout } from '@layouts';
 import gasLimits from '@models/gas';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
-import { useExchangeScreen } from './ExchangeScreen.hooks';
+import { os } from '@styles';
+
 import DirectionButton from './DirectionButton/DirectionButton';
+import { useExchangeScreen } from './ExchangeScreen.hooks';
 import SettingsModal from './SettingsModal/SettingsModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ExchangeScreen'>;

@@ -1,25 +1,21 @@
+import { BigNumber, constants, utils } from 'ethers';
+import { formatUnits } from 'ethers/lib/utils';
 import React, { useEffect } from 'react';
-import Logger from '@utils/logger';
 import { Keyboard } from 'react-native';
+
 import {
-	useBalances,
-	useNavigation,
-	useNativeToken,
-	useBiconomy,
-	useDefaultStablecoin,
-	useLanguage,
+	useBalances, useBiconomy, useDefaultStablecoin, useLanguage, useNativeToken, useNavigation,
 	useWalletManagement
 } from '@hooks';
-import { useState, State } from '@hookstate/core';
-import { BigNumber, constants, utils } from 'ethers';
-import { Quote, getExchangePrice, ExchangeParams } from '@models/token';
-import { MinkeGasToken, MinkeToken } from '@models/types/token.types';
-import { ExchangeState, Conversion, globalExchangeState } from '@stores/ExchangeStore';
-import { globalWalletState, WalletState } from '@stores/WalletStore';
+import { State, useState } from '@hookstate/core';
 import { isExchangeGasless, validatedExceptions } from '@models/exchange';
-import { formatUnits } from 'ethers/lib/utils';
 import gasLimits from '@models/gas';
 import { networks } from '@models/network';
+import { ExchangeParams, getExchangePrice, Quote } from '@models/token';
+import { MinkeGasToken, MinkeToken } from '@models/types/token.types';
+import { Conversion, ExchangeState, globalExchangeState } from '@stores/ExchangeStore';
+import { globalWalletState, WalletState } from '@stores/WalletStore';
+import Logger from '@utils/logger';
 
 interface PriceParams {
 	amount?: string;
@@ -39,7 +35,7 @@ export const useExchangeScreen = ({ sourceToken, destToken }: UseExchangeScreenP
 	const [fromToken, setFromToken] = React.useState<MinkeGasToken>(sourceToken as MinkeToken);
 	const [toToken, setToToken] = React.useState<MinkeToken | undefined>(destToken as MinkeToken);
 	const network = Object.values(networks).find((n) => n.chainId === fromToken?.chainId);
-	const { nativeToken, balance } = useNativeToken(network);
+	const { nativeToken, balance } = useNativeToken(network || wallet.network.value);
 	const [loadingPrices, setLoadingPrices] = React.useState(false);
 	const [gasless, setGasless] = React.useState(true);
 	const [searchSource, setSearchSource] = React.useState<'from' | 'to'>('from');
