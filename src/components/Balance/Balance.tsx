@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import Text from '@src/components/Text/Text';
-import Paper from '@src/components/Paper/Paper';
-import View from '@src/components/View/View';
-import { useLanguage, useNavigation, useTheme, useGlobalWalletState } from '@hooks';
+
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
+import { useGlobalWalletState, useLanguage, useNavigation, useTheme } from '@hooks';
 import { MinkeToken } from '@models/types/token.types';
+import Paper from '@src/components/Paper/Paper';
 import SendModalComponent from '@src/components/SendModalComponent/SendModalComponent';
+import Text from '@src/components/Text/Text';
+import View from '@src/components/View/View';
+
 import Selector from './Selector/Selector';
 
-interface BlanceProps {
+interface BalanceProps {
 	coin: MinkeToken;
+	buySellToken?: MinkeToken | undefined; // used for buy and sell. holds the correct balance, not the aggregation
 	stablecoin?: boolean;
 }
 
-const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
+const Balance: React.FC<BalanceProps> = ({ coin, stablecoin, buySellToken }) => {
 	const [sendModal, setSendModal] = useState(false);
 	const [active, setActive] = useState(false);
 	const { i18n } = useLanguage();
@@ -26,9 +29,9 @@ const Balance: React.FC<BlanceProps> = ({ coin, stablecoin }) => {
 
 	const handleBuy = () => {
 		if (topUpTokens.map(({ symbol }) => symbol).includes(coin.symbol)) {
-			navigation.navigate('AddFundsScreen', { topupToken: coin });
+			navigation.navigate('AddFundsScreen', { topupToken: buySellToken || coin });
 		} else {
-			navigation.navigate('ExchangeScreen', { destToken: coin });
+			navigation.navigate('ExchangeScreen', { destToken: buySellToken || coin });
 		}
 	};
 
