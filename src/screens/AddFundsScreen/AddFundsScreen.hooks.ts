@@ -1,27 +1,23 @@
-import { useState, useEffect } from 'react';
+import crypto from 'crypto';
+import * as Linking from 'expo-linking';
+import * as qs from 'qs';
+import { useEffect, useState } from 'react';
 import { Keyboard, Platform } from 'react-native';
-import { Currency } from '@models/types/currency.types';
+import SafariView from 'react-native-safari-view';
+
+import { MOONPAY_API_KEY, MOONPAY_BUY_URL, MOONPAY_SECRET_KEY } from '@env';
 import {
-	useAmplitude,
-	useCountry,
-	useCurrencies,
-	useGlobalWalletState,
-	useLanguage,
-	useNavigation,
+	useAmplitude, useCountry, useCurrencies, useGlobalWalletState, useLanguage, useNavigation,
 	useWyreApplePay
 } from '@hooks';
-import { countries } from '@styles';
-import { getWalletOrderQuotation } from '@models/wyre';
-import { MinkeToken, TopupToken } from '@models/types/token.types';
-import { euroCountries } from '@src/styles/countries';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
+import { Network, networks } from '@models/network';
+import { Currency } from '@models/types/currency.types';
+import { MinkeToken, TopupToken } from '@models/types/token.types';
+import { getWalletOrderQuotation } from '@models/wyre';
 import { buyQuote } from '@src/services/apis/moonpay/moonpay';
-import { MOONPAY_API_KEY, MOONPAY_BUY_URL, MOONPAY_SECRET_KEY } from '@env';
-import crypto from 'crypto';
-import * as qs from 'qs';
-import * as Linking from 'expo-linking';
-import SafariView from 'react-native-safari-view';
-import { networks } from '@models/network';
+import { euroCountries } from '@src/styles/countries';
+import { countries } from '@styles';
 
 const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { address } = useGlobalWalletState();
@@ -32,7 +28,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 		.filter((n) => !n.testnet)
 		.map((n) => n.topUpTokens)
 		.flat();
-	const network = Object.values(networks).find((n) => n.chainId === token?.chainId);
+	const network: Network = Object.values(networks).find((n) => n.chainId === token?.chainId);
 	const { nativeToken, wyreSRN } = network || {};
 	const [currencySearchVisible, setCurrencySearchVisible] = useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = useState(false);
@@ -77,7 +73,8 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 			destCurrency: wyreSymbol || symbol,
 			value,
 			fiat,
-			country: countryIso
+			country: countryIso,
+			network
 		});
 	};
 

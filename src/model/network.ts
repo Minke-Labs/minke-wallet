@@ -1,12 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-	ALCHEMY_API_URL_POLYGON_MAINNET,
-	BICONOMY_API_KEY_POLYGON_MAINNET,
-	ALCHEMY_API_KEY_ETHEREUM,
-	ALCHEMY_API_KEY_MATIC,
-	ALCHEMY_API_KEY_GOERLI,
+	ALCHEMY_API_KEY_ETHEREUM, ALCHEMY_API_KEY_GOERLI, ALCHEMY_API_KEY_MATIC,
+	ALCHEMY_API_URL_POLYGON_MAINNET, BICONOMY_API_KEY_POLYGON_MAINNET,
 	QUICK_NODE_API_URL_BSC_MAINNET
 } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { MinkeToken, TopupToken } from './types/token.types';
 
 export interface Network {
@@ -132,15 +130,6 @@ export const networks: Networks = {
 				address: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
 				decimals: 18,
 				name: 'Basic Attention',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 1
-			},
-			{
-				address: '0xb8c77482e45f1f44de1745f52c74426c631bdd52',
-				decimals: 18,
-				name: 'BNB',
-				symbol: 'BNB',
 				balance: '0',
 				balanceUSD: 0,
 				chainId: 1

@@ -1,14 +1,18 @@
 import React, { useCallback } from 'react';
+
 import { useState } from '@hookstate/core';
-import { getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest } from '@models/wyre';
-import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
+import {
+	getOrderId, getWalletOrderQuotation, reserveWyreOrder, showApplePayRequest
+} from '@models/wyre';
 import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
+import { globalTopUpState, WyreReferenceInfo } from '@stores/TopUpStore';
+
+import useAmplitude from '../useAmplitude';
 import useTimeout from '../useTimeout';
 import { OnPurchaseParams, UseWyreApplePay, UseWyreApplePayError } from './types';
-import useAmplitude from '../useAmplitude';
 
 export default function useWyreApplePay(): UseWyreApplePay {
-	const { address: accountAddress, network } = useGlobalWalletState();
+	const { address: accountAddress } = useGlobalWalletState();
 	const topUpState = useState(globalTopUpState());
 	const [isPaymentComplete, setPaymentComplete] = React.useState(false);
 	const [orderCurrency, setOrderCurrency] = React.useState<string | null>(null);
@@ -26,7 +30,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 	}, [startPaymentCompleteTimeout]);
 
 	const onPurchase = useCallback(
-		async ({ sourceCurrency, destCurrency, value, country, fiat = true }: OnPurchaseParams) => {
+		async ({ sourceCurrency, destCurrency, value, country, network, fiat = true }: OnPurchaseParams) => {
 			const referenceInfo: WyreReferenceInfo = {
 				referenceId: accountAddress.toLowerCase().substr(-12)
 			};
@@ -123,7 +127,7 @@ export default function useWyreApplePay(): UseWyreApplePay {
 				setError(appleRequestError);
 			}
 		},
-		[accountAddress, network]
+		[accountAddress]
 	);
 
 	return {

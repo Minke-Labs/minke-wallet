@@ -1,14 +1,16 @@
-import React, { createContext, useCallback, useEffect, useMemo } from 'react';
-import { useState } from '@hookstate/core';
-import { stablecoins as stbCoins, AccountBalance } from '@models/token';
-import { globalWalletState } from '@stores/WalletStore';
-import { MinkeToken } from '@models/types/token.types';
-import Logger from '@utils/logger';
-import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTokens';
-import { interestBearingTokens } from '@models/deposit';
 import isValidDomain from 'is-valid-domain';
+import React, { createContext, useCallback, useEffect, useMemo } from 'react';
+
 import { searchCoinData } from '@helpers/utilities';
+import { useState } from '@hookstate/core';
+import { interestBearingTokens } from '@models/deposit';
+import { fetchInterestBearingTokens, fetchStablecoins } from '@models/depositTokens';
 import { networks } from '@models/network';
+import { AccountBalance, stablecoins as stbCoins } from '@models/token';
+import { MinkeToken } from '@models/types/token.types';
+import { globalWalletState } from '@stores/WalletStore';
+import Logger from '@utils/logger';
+
 import useCovalentBalances from './useCovalentBalances';
 import useZerionBalances from './useZerionBalances/useZerionBalances';
 
