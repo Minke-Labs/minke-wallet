@@ -1,11 +1,13 @@
-import Logger from '@utils/logger';
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
 import * as qs from 'qs';
+
+import Logger from '@utils/logger';
+
 import { stables } from './depositTokens';
 import { networks } from './network';
-import { MinkeToken, InvestmentToken, MinkeTokenList } from './types/token.types';
+import { InvestmentToken, MinkeToken, MinkeTokenList } from './types/token.types';
 
 export const stablecoins = ['USDC', 'DAI', 'USDT', 'BUSD'];
 

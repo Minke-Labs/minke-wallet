@@ -1,20 +1,18 @@
+import { get, pick, split } from 'lodash';
+
+import {
+	WYRE_ACCOUNT_ID, WYRE_ACCOUNT_ID_TEST, WYRE_MERCHANT_ID, WYRE_MERCHANT_ID_TEST, WYRE_TOKEN,
+	WYRE_TOKEN_TEST
+} from '@env';
 // @ts-expect-error
 import { PaymentRequest } from '@rainbow-me/react-native-payments';
 import { captureException } from '@sentry/react-native';
-import { get, pick, split } from 'lodash';
-import {
-	WYRE_MERCHANT_ID_TEST,
-	WYRE_MERCHANT_ID,
-	WYRE_ACCOUNT_ID_TEST,
-	WYRE_ACCOUNT_ID,
-	WYRE_TOKEN,
-	WYRE_TOKEN_TEST
-} from '@env';
 import { WyreReferenceInfo } from '@stores/TopUpStore';
-import { Network } from './network';
-import { ApplePayResponse } from './types/wyre.types';
-import { Currency } from './types/currency.types';
+
 import { fiatCurrencies } from './currency';
+import { Network } from './network';
+import { Currency } from './types/currency.types';
+import { ApplePayResponse } from './types/wyre.types';
 
 const WYRE_ENDPOINT_TEST = 'https://api.testwyre.com';
 const WYRE_ENDPOINT = 'https://api.sendwyre.com';

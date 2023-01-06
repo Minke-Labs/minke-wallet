@@ -1,8 +1,11 @@
+import { Network } from '@models/network';
+
 export interface OnPurchaseParams {
 	sourceCurrency: string;
 	destCurrency: string;
 	value: number;
 	country: string;
+	network: Network;
 	fiat?: boolean;
 }
 
