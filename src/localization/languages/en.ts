@@ -167,6 +167,11 @@ export default {
 		},
 		Stories: {
 			learn_about_minke: 'Learn about Minke'
+		},
+		MintNFT: {
+			mint_a_minke_whale_nft: 'Mint a Minke Whale NFT!',
+			complete_two_tasks: 'Complete two tasks in order to mint a free NFT',
+			mint_nft: 'Mint NFT'
 		}
 	},
 	ImportWalletScreen: {
@@ -242,6 +247,32 @@ export default {
 		referral: 'Referral',
 		refer_and_earn: 'Refer a friend and earn free crypto',
 		stablecoins: 'Stablecoins'
+	},
+	MintNFTScreen: {
+		title: 'Claim NFT',
+		claim_a_minke_whale_nft: 'Claim a Minke Whale NFT!',
+		complete_two_tasks:
+			'Complete 2 tasks to claim your free Minke Whale NFT as a reward for being Minke Wallet user.',
+		join_telegram:
+			'Join the Minke Community on Telegram to learn about crypto and be up to date on the latest news.',
+		join_telegram_group: 'Join Telegram Group',
+		follow_our_new_onramp:
+			'Follow our new onramp partner on Twitter to learn more about buying crypto P2P directly from your wallet.',
+		follow_on_twitter: 'Follow OpenPeer on Twitter',
+		you_can_mint:
+			"Congratulations! You can now mint the NFT with zero gas fees and you'll see it in your wallet and on OpenSea.",
+		mint_nft: 'Mint NFT!',
+		nft_claimed: 'NFT Claimed',
+		VerifyTelegramModal: {
+			verify_telegram: 'Verify Telegram',
+			verify_telegram_membership: 'Verify Telegram Membership',
+			verification_failed: 'This user did not join on Telegram'
+		},
+		VerifyTwitterModal: {
+			verify_twitter: 'Verify Twitter',
+			verify_twitter_follower: 'Verify Twitter Follower',
+			verification_failed: 'This user did not follow on Twitter'
+		}
 	},
 	NetworkModal: {
 		if_you_receiving: 'If you are receiving from an exchange or wallet make sure they support withdrawals on the ',
@@ -968,7 +999,8 @@ export default {
 			ens_or_wallet: 'ENS, Unstoppable Domain or Wallet Address',
 			enter_code: 'Enter code',
 			others: 'Others',
-			slippage_tolerance: 'Slippage tolerance'
+			slippage_tolerance: 'Slippage tolerance',
+			enter_username: 'Enter username'
 		},
 		InterestBanner: {
 			interest: '% annualized interest'

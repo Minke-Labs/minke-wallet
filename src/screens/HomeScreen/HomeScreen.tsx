@@ -1,15 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
+
+import { AppTour, FloatingSelector, PendingTransaction, View } from '@components';
+import { useAmplitude, useBalances, useGlobalWalletState, useTransactions } from '@hooks';
 import { BasicLayout } from '@layouts';
-import { View, FloatingSelector, PendingTransaction, AppTour } from '@components';
-import { useAmplitude, useTransactions, useGlobalWalletState, useBalances } from '@hooks';
-import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { networks } from '@models/network';
-import { Stories } from './Stories/Stories';
+import { getProvider, ZapperTransaction } from '@src/model/wallet';
+
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
+import { MintNFT } from './MintNFT/MintNFT';
+import { Stories } from './Stories/Stories';
 
 const HomeScreen = () => {
 	RNUxcam.tagScreenName('HomeScreen');
@@ -65,6 +68,7 @@ const HomeScreen = () => {
 						<Header />
 						{!!tx && <PendingTransaction transaction={tx} />}
 						<Assets />
+						<MintNFT />
 						<Accounts />
 						<Stories />
 						<View mb="xxxl" />
