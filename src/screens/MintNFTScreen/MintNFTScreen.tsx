@@ -32,7 +32,7 @@ const MintNFTScreen = () => {
 			<BasicLayout>
 				<Header
 					title={i18n.t('MintNFTScreen.title')}
-					onRightActionClick={() => navigation.goBack()}
+					onRightActionClick={() => (currentStep === steps.INITIAL ? navigation.goBack() : goBack())}
 					rightAction={<Icon name="close" size={24} color="text7" />}
 				/>
 
