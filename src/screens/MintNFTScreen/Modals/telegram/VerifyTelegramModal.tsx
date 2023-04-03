@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import { Button, Input, Snackbar, Text, View } from '@components';
+import { delay } from '@helpers/utilities';
 import { useLanguage } from '@hooks';
 
 import Telegram from './telegram.svg';
@@ -13,16 +14,17 @@ interface VerifyTelegramModalProps {
 const VerifyTelegramModal = ({ onTelegramVerified }: VerifyTelegramModalProps) => {
 	const { i18n } = useLanguage();
 	const [telegram, setTelegram] = useState('');
+
+	const [verifying, setVerifying] = useState(false);
 	const [verificationFailed, setVerificationFailed] = useState(false);
 
 	const verifyTelegram = async () => {
 		if (!telegram) return;
+		setVerifying(true);
+		await delay(1300);
 
-		if (telegram === 'ave') {
-			onTelegramVerified();
-		} else {
-			setVerificationFailed(true);
-		}
+		setVerifying(false);
+		onTelegramVerified();
 	};
 
 	return (
@@ -47,9 +49,13 @@ const VerifyTelegramModal = ({ onTelegramVerified }: VerifyTelegramModalProps) =
 				/>
 			</View>
 			<Button
-				title={i18n.t('MintNFTScreen.VerifyTelegramModal.verify_telegram_membership')}
+				title={
+					verifying
+						? i18n.t('Components.Buttons.verifying')
+						: i18n.t('MintNFTScreen.VerifyTelegramModal.verify_telegram_membership')
+				}
 				mb="l"
-				disabled={!telegram}
+				disabled={!telegram || verifying}
 				onPress={verifyTelegram}
 			/>
 			<KeyboardSpacer />

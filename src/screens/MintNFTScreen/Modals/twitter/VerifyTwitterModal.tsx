@@ -24,11 +24,12 @@ const client = new Twitter({
 const VerifyTwitterModal = ({ onTwitterVerified }: VerifyTwitterModalProps) => {
 	const { i18n } = useLanguage();
 	const [twitter, setTwitter] = useState('');
+	const [verifying, setVerifying] = useState(false);
 	const [verificationFailed, setVerificationFailed] = useState(false);
 
 	const verifyTwitter = async () => {
 		if (!twitter) return;
-
+		setVerifying(true);
 		try {
 			// Get the user ID of the target user
 			const { id_str: userId } = await client.get('users/show', { screen_name: twitter });
@@ -38,12 +39,14 @@ const VerifyTwitterModal = ({ onTwitterVerified }: VerifyTwitterModalProps) => {
 				target_id: userId
 			});
 
+			setVerifying(false);
 			if (response.relationship.target.following) {
 				onTwitterVerified();
 			} else {
 				setVerificationFailed(true);
 			}
 		} catch (error) {
+			setVerifying(false);
 			setVerificationFailed(true);
 		}
 	};
@@ -70,7 +73,11 @@ const VerifyTwitterModal = ({ onTwitterVerified }: VerifyTwitterModalProps) => {
 				/>
 			</View>
 			<Button
-				title={i18n.t('MintNFTScreen.VerifyTwitterModal.verify_twitter_follower')}
+				title={
+					verifying
+						? i18n.t('Components.Buttons.verifying')
+						: i18n.t('MintNFTScreen.VerifyTwitterModal.verify_twitter_follower')
+				}
 				mb="l"
 				disabled={!twitter}
 				onPress={verifyTwitter}

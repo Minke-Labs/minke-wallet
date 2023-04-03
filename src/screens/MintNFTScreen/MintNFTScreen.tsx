@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Linking } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 
 import { Button, Header, Icon, Modal, Text, View } from '@components';
@@ -26,6 +26,11 @@ const MintNFTScreen = () => {
 	const navigation = useNavigation();
 
 	const { currentStep, goBack, goForward } = useFormProgress();
+
+	const nextStep = async () => {
+		if (currentStep === steps.INITIAL) await Linking.openURL('https://t.me/minkeapp');
+		goForward();
+	};
 
 	return (
 		<>
@@ -71,7 +76,7 @@ const MintNFTScreen = () => {
 								: 'twitterStroke'
 						}
 						disabled={currentStep === steps.DONE}
-						onPress={goForward}
+						onPress={nextStep}
 					/>
 				</View>
 			</BasicLayout>

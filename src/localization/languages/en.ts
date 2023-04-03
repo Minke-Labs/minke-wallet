@@ -933,7 +933,8 @@ export default {
 			use_code: 'Use code',
 			loading: 'Loading',
 			swap: 'Swap',
-			buy_token_now: 'Buy {{token}} now'
+			buy_token_now: 'Buy {{token}} now',
+			verifying: 'Verifying...'
 		},
 		ByNetworks: {
 			by_networks: 'By networks'
