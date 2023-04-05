@@ -26,7 +26,7 @@ const MintNFTScreen = () => {
 	const navigation = useNavigation();
 
 	const { currentStep, goBack, goForward } = useFormProgress();
-	const { minted, mint, token } = useMinkeNFT();
+	const { minted, mint, token, totalSupply } = useMinkeNFT();
 	const [loading, setLoading] = useState(false);
 
 	const nextStep = async () => {
@@ -43,7 +43,7 @@ const MintNFTScreen = () => {
 		}
 	};
 
-	if (minted === undefined) {
+	if (totalSupply === undefined || minted === undefined) {
 		return <ScreenLoadingIndicator />;
 	}
 	const hasNFT = minted && token;
@@ -101,7 +101,7 @@ const MintNFTScreen = () => {
 						disabled={loading || minted || !!token}
 						onPress={nextStep}
 					/>
-					{hasNFT && (
+					{hasNFT ? (
 						<Touchable
 							mt="xs"
 							onPress={() =>
@@ -111,9 +111,15 @@ const MintNFTScreen = () => {
 							}
 						>
 							<Text type="lSmall" weight="semiBold" color="text7">
-								View on OpenSea
+								{i18n.t('MintNFTScreen.view_on_opensea')}
 							</Text>
 						</Touchable>
+					) : (
+						<View mt="xs">
+							<Text type="lSmall" weight="semiBold" color="text3">
+								{totalSupply} / 10,000 {i18n.t('MintNFTScreen.already_minted')}
+							</Text>
+						</View>
 					)}
 				</View>
 			</BasicLayout>

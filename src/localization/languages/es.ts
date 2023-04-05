@@ -264,6 +264,8 @@ export default {
 		mint_nft: '¡Generar NFT!',
 		nft_claimed: 'NFT Generada',
 		your_minke_whale_nft: 'Tu Minke NFT',
+		view_on_opensea: 'Ver en OpenSea',
+		already_minted: 'ya generadas',
 		VerifyTelegramModal: {
 			verify_telegram: 'Verificar Telegram',
 			verify_telegram_membership: 'Verificar Telegram',

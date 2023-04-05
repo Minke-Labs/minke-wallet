@@ -39,12 +39,26 @@ const ABI = [
 		],
 		stateMutability: 'view',
 		type: 'function'
+	},
+	{
+		inputs: [],
+		name: 'totalSupply',
+		outputs: [
+			{
+				internalType: 'uint256',
+				name: '',
+				type: 'uint256'
+			}
+		],
+		stateMutability: 'view',
+		type: 'function'
 	}
 ];
 
 const useMinkeNFT = () => {
 	const { address, privateKey } = useGlobalWalletState();
 	const [minted, setMinted] = useState<boolean>();
+	const [totalSupply, setTotalSuply] = useState<string>();
 	const [tokens, setTokens] = useState<OwnedNft[]>([]);
 	const { biconomy, gaslessEnabledMatic } = useBiconomy();
 
@@ -54,7 +68,9 @@ const useMinkeNFT = () => {
 			const contract = new Contract(NFT_ADDRESS, ABI, provider);
 
 			const mintedCount: BigNumber = await contract.balanceOf(address);
+			const mintedTotal: BigNumber = await contract.totalSupply();
 			setMinted(!mintedCount.eq(constants.Zero));
+			setTotalSuply(mintedTotal.toString());
 		};
 
 		checkMinted();
@@ -143,6 +159,6 @@ const useMinkeNFT = () => {
 		return transaction.hash;
 	};
 
-	return { minted, mint, token: tokens[0] };
+	return { minted, mint, token: tokens[0], totalSupply };
 };
 export default useMinkeNFT;
