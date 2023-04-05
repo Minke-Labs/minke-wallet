@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-curly-newline */
 /* eslint-disable @typescript-eslint/indent */
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Linking } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 
-import { Button, Header, Icon, Modal, Text, View } from '@components';
-import { useFormProgress, useLanguage, useNavigation } from '@hooks';
+import { Button, Header, Icon, Modal, ScreenLoadingIndicator, Text, Touchable, View } from '@components';
+import { useFormProgress, useLanguage, useMinkeNFT, useNavigation } from '@hooks';
 import { BasicLayout } from '@layouts';
 
 import VerifyTelegramModal from './Modals/telegram/VerifyTelegramModal';
@@ -16,8 +17,7 @@ const steps = {
 	TYPE_TELEGRAM: 1,
 	TWITTER: 2,
 	TYPE_TWITTER: 3,
-	MINT: 4,
-	DONE: 5
+	MINT: 4
 };
 
 const MintNFTScreen = () => {
@@ -26,27 +26,48 @@ const MintNFTScreen = () => {
 	const navigation = useNavigation();
 
 	const { currentStep, goBack, goForward } = useFormProgress();
+	const { minted, mint, token } = useMinkeNFT();
+	const [loading, setLoading] = useState(false);
 
 	const nextStep = async () => {
 		if (currentStep === steps.INITIAL) await Linking.openURL('https://t.me/minkeapp');
-		goForward();
+		if (currentStep === steps.TWITTER) await Linking.openURL('https://twitter.com/openpeer_xyz');
+
+		if (currentStep === steps.MINT) {
+			if (minted) return;
+			setLoading(true);
+			await mint();
+			setLoading(false);
+		} else {
+			goForward();
+		}
 	};
 
+	if (minted === undefined) {
+		return <ScreenLoadingIndicator />;
+	}
+	const hasNFT = minted && token;
+	const mintedImage = hasNFT && token.media[0];
 	return (
 		<>
 			<BasicLayout>
 				<Header
 					title={i18n.t('MintNFTScreen.title')}
-					onRightActionClick={() => (currentStep === steps.INITIAL ? navigation.goBack() : goBack())}
+					onRightActionClick={() => navigation.goBack()}
 					rightAction={<Icon name="close" size={24} color="text7" />}
 				/>
 
 				<View ph="xs" mt="s" cross="center">
 					<View mb="s">
-						<Image source={nfts} />
+						<Image
+							style={{ width: 216, height: 216, borderRadius: mintedImage ? 8 : 0 }}
+							source={mintedImage ? { uri: token.media[0].gateway } : nfts}
+						/>
 					</View>
 					<Text type="hLarge" weight="bold" color="text1" width={286} center mb="xxs">
-						{i18n.t('MintNFTScreen.claim_a_minke_whale_nft')}
+						{hasNFT
+							? i18n.t('MintNFTScreen.your_minke_whale_nft')
+							: i18n.t('MintNFTScreen.claim_a_minke_whale_nft')}
 					</Text>
 					<Text type="lMedium" weight="semiBold" color="text3" width={286} center mb="xxs">
 						{i18n.t('MintNFTScreen.complete_two_tasks')}
@@ -60,24 +81,40 @@ const MintNFTScreen = () => {
 					</Text>
 					<Button
 						title={
-							currentStep < steps.TWITTER
+							loading
+								? `${i18n.t('Components.Buttons.loading')}...`
+								: hasNFT
+								? i18n.t('MintNFTScreen.nft_claimed')
+								: currentStep < steps.TWITTER
 								? i18n.t('MintNFTScreen.join_telegram_group')
 								: currentStep === steps.MINT
 								? i18n.t('MintNFTScreen.mint_nft')
-								: currentStep === steps.DONE
-								? i18n.t('MintNFTScreen.nft_claimed')
 								: i18n.t('MintNFTScreen.follow_on_twitter')
 						}
 						iconRight={
-							currentStep < steps.TWITTER
-								? 'telegram'
-								: currentStep >= steps.MINT
+							hasNFT || currentStep === steps.MINT
 								? 'tada'
+								: currentStep < steps.TWITTER
+								? 'telegram'
 								: 'twitterStroke'
 						}
-						disabled={currentStep === steps.DONE}
+						disabled={loading || minted || !!token}
 						onPress={nextStep}
 					/>
+					{hasNFT && (
+						<Touchable
+							mt="xs"
+							onPress={() =>
+								Linking.openURL(
+									`https://opensea.io/assets/matic/${token.contract.address}/${token.tokenId}`
+								)
+							}
+						>
+							<Text type="lSmall" weight="semiBold" color="text7">
+								View on OpenSea
+							</Text>
+						</Touchable>
+					)}
 				</View>
 			</BasicLayout>
 

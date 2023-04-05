@@ -1,36 +1,37 @@
+import iCloudBackup from './iCloudBackup';
 import useAmplitude from './useAmplitude';
+import useAuthentication from './useAuthentication';
 import useAvatar from './useAvatar';
+import useBalances from './useBalances';
+import useBiconomy from './useBiconomy';
+import useCountry from './useCountry';
+import useCurrencies from './useCurrencies';
+import useDefaultStablecoin from './useDefaultStablecoin';
+import useDepositProtocols from './useDepositProtocols';
+import useFirstTime from './useFirstTime';
+import useFormProgress from './useFormProgress';
 import useGlobalContactState from './useGlobalContactState';
 import useGlobalWalletState from './useGlobalWalletState';
-import useTheme from './useTheme';
-import useNavigation from './useNavigation';
-import useFormProgress from './useFormProgress';
-import useNetwork from './useNetwork';
 import useKeyboard from './useKeyboard';
-import useCountry from './useCountry';
 import useLanguage from './useLanguage';
-import useTimeout from './useTimeout';
-import useTransactions from './useTransactions';
-import useWyreApplePay from './useWyreApplePay';
-import useTransaction from './useTransaction';
-import useWyreOrderStatus from './useWyreOrderStatus';
-import useWalletCloudBackup from './useWalletCloudBackup';
-import iCloudBackup from './iCloudBackup';
-import useWallets from './useWallets';
-import useAuthentication from './useAuthentication';
-import useBiconomy from './useBiconomy';
-import useNativeToken from './useNativeToken';
-import useDefaultStablecoin from './useDefaultStablecoin';
-import useReferralCode from './useReferralCode';
-import useFirstTime from './useFirstTime';
-import usePrevious from './usePrevious';
-import useWalletState from './useWalletState';
+import useMinkeNFT from './useMinkeNFT';
 import useMinkeRewards from './useMinkeRewards';
-import useWalletManagement from './useWalletManagement';
-import useCurrencies from './useCurrencies';
+import useNativeToken from './useNativeToken';
+import useNavigation from './useNavigation';
+import useNetwork from './useNetwork';
 import useNFT from './useNFT';
-import useBalances from './useBalances';
-import useDepositProtocols from './useDepositProtocols';
+import usePrevious from './usePrevious';
+import useReferralCode from './useReferralCode';
+import useTheme from './useTheme';
+import useTimeout from './useTimeout';
+import useTransaction from './useTransaction';
+import useTransactions from './useTransactions';
+import useWalletCloudBackup from './useWalletCloudBackup';
+import useWalletManagement from './useWalletManagement';
+import useWallets from './useWallets';
+import useWalletState from './useWalletState';
+import useWyreApplePay from './useWyreApplePay';
+import useWyreOrderStatus from './useWyreOrderStatus';
 
 export {
 	useCountry,
@@ -65,5 +66,6 @@ export {
 	useCurrencies,
 	useNFT,
 	useBalances,
-	useDepositProtocols
+	useDepositProtocols,
+	useMinkeNFT
 };

@@ -1,9 +1,10 @@
-import React, { useState, createContext, useEffect, useMemo } from 'react';
 import { providers } from 'ethers';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
+
 // @ts-ignore
 import { Biconomy } from '@biconomy/mexa';
-import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 import { networks } from '@models/network';
+import useGlobalWalletState from '@src/hooks/useGlobalWalletState';
 
 interface BiconomyContextProps {
 	gaslessEnabledMatic: boolean;

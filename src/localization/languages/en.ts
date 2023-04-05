@@ -263,6 +263,7 @@ export default {
 			"Congratulations! You can now mint the NFT with zero gas fees and you'll see it in your wallet and on OpenSea.",
 		mint_nft: 'Mint NFT!',
 		nft_claimed: 'NFT Claimed',
+		your_minke_whale_nft: 'Your Minke Whale NFT',
 		VerifyTelegramModal: {
 			verify_telegram: 'Verify Telegram',
 			verify_telegram_membership: 'Verify Telegram Membership',

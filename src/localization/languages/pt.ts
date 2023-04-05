@@ -168,6 +168,11 @@ export default {
 		},
 		Stories: {
 			learn_about_minke: 'Saiba mais sobre a Minke'
+		},
+		MintNFT: {
+			mint_a_minke_whale_nft: 'Gere a NFT da Minke!',
+			complete_two_tasks: 'Complete duas tarefas para gerar sua NFT gratuita da Minke',
+			mint_nft: 'Gerar NFT'
 		}
 	},
 	ImportWalletScreen: {
@@ -243,6 +248,33 @@ export default {
 		referral: 'Indicação',
 		refer_and_earn: 'Indique um amigo e ganhe criptos grátis',
 		stablecoins: 'Stablecoins'
+	},
+	MintNFTScreen: {
+		title: 'Gerar NFT',
+		claim_a_minke_whale_nft: 'Receba a NFT da Minke!',
+		complete_two_tasks:
+			'Complete 2 tarefas to receber a sua NFT gratuita da Minke como recompensa por usar a Minke Wallet.',
+		join_telegram:
+			'Entre na comunidade da Minke no Telegram para aprender sobre crypto e ficar atualizado com as últimas notícias.',
+		join_telegram_group: 'Entrar no Grupo do Telegram',
+		follow_our_new_onramp:
+			'Siga o nosso novo parceiro para compra e venda de crypto no Twitter para aprender mais sobre comprar crypto P2P diretamente na sua carteira.',
+		follow_on_twitter: 'Seguir OpenPeer no Twitter',
+		you_can_mint:
+			'Parabéns! Agora você pode gerar sua NFT sem pagar gás. Ela vai ficar disponível na sua carteira e na OpenSea.',
+		mint_nft: 'Gerar NFT!',
+		nft_claimed: 'NFT Gerada',
+		your_minke_whale_nft: 'Sua NFT da Minke',
+		VerifyTelegramModal: {
+			verify_telegram: 'Verificar Telegram',
+			verify_telegram_membership: 'Verificar Telegram',
+			verification_failed: 'Esse usuário não entrou no Telegram'
+		},
+		VerifyTwitterModal: {
+			verify_twitter: 'Verificar Twitter',
+			verify_twitter_follower: 'Verify Seguidor no Twitter',
+			verification_failed: 'Esse usuário não segue no Twitter'
+		}
 	},
 	NetworkModal: {
 		if_you_receiving: 'Se você está recebendo de uma corretora ou carteira confirme se existe suporte para na ',
@@ -906,7 +938,8 @@ export default {
 			use_code: 'Usar código',
 			loading: 'Carregando',
 			swap: 'Trocar',
-			buy_token_now: 'Compre {{token}} agora'
+			buy_token_now: 'Compre {{token}} agora',
+			verifying: 'Verificando...'
 		},
 		ByNetworks: {
 			by_networks: 'Redes'
@@ -973,7 +1006,8 @@ export default {
 			ens_or_wallet: 'ENS, Unstoppable Domain ou Endereço da Carteira',
 			enter_code: 'Digitar código',
 			others: 'Outros',
-			slippage_tolerance: 'Tolerancia a slippage'
+			slippage_tolerance: 'Tolerancia a slippage',
+			enter_username: 'Digite o username'
 		},
 		InterestBanner: {
 			interest: '% de juros anuais'

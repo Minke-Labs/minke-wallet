@@ -37,12 +37,8 @@ declare module '@env' {
 	export const QUICK_NODE_API_URL_BSC_MAINNET: string;
 	export const UNSTOPPABLE_DOMAINS_API_KEY: string;
 	export const ZERION_API_TOKEN: string;
-	export const TELEGRAM_BOT_TOKEN: string;
-	export const TELEGRAM_GROUP_CHAT_ID: string;
 	export const TWITTER_API_KEY: string;
 	export const TWITTER_API_SECRET: string;
 	export const TWITTER_ACCESS_TOKEN: string;
 	export const TWITTER_ACCESS_TOKEN_SECRET: string;
-	export const TELEGRAM_API_ID: string;
-	export const TELEGRAM_API_HASH: string;
 }

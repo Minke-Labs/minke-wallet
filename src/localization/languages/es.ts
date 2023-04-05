@@ -168,6 +168,11 @@ export default {
 		},
 		Stories: {
 			learn_about_minke: 'Aprende sobre Minke'
+		},
+		MintNFT: {
+			mint_a_minke_whale_nft: '¡Generar NFT de Minke!',
+			complete_two_tasks: 'Complete dos tareas para generar su Minke NFT gratis',
+			mint_nft: 'Generar NFT'
 		}
 	},
 	ImportWalletScreen: {
@@ -243,6 +248,32 @@ export default {
 		referral: 'Referidos',
 		refer_and_earn: 'Refiere a un amigo y gana cripto gratis',
 		stablecoins: 'Stablecoins'
+	},
+	MintNFTScreen: {
+		title: 'Generar NFT',
+		claim_a_minke_whale_nft: '¡Obtén NFT de Minke!',
+		complete_two_tasks: 'Completa 2 tareas para recibir tu Minke NFT gratis como recompensa por usar Minke Wallet.',
+		join_telegram:
+			'Únase a la comunidad de Telegram de Minke para aprender sobre criptografía y mantenerse al día con las últimas noticias.',
+		join_telegram_group: 'Únete al grupo de Telegram',
+		follow_our_new_onramp:
+			'Siga a nuestro nuevo socio para comprar y vender criptomonedas en Twitter para obtener más información sobre cómo comprar criptomonedas P2P directamente en su wallet',
+		follow_on_twitter: 'Seguir a OpenPeer en Twitter',
+		you_can_mint:
+			'¡Felicidades! Ahora puedes generar tu NFT sin pagar gasolina. Estará disponible en su billetera y en OpenSea.',
+		mint_nft: '¡Generar NFT!',
+		nft_claimed: 'NFT Generada',
+		your_minke_whale_nft: 'Tu Minke NFT',
+		VerifyTelegramModal: {
+			verify_telegram: 'Verificar Telegram',
+			verify_telegram_membership: 'Verificar Telegram',
+			verification_failed: 'Este usuario no se ha unido al grupo de Telegram'
+		},
+		VerifyTwitterModal: {
+			verify_twitter: 'Verificar Twitter',
+			verify_twitter_follower: 'Verify Seguidor de Twitter',
+			verification_failed: 'Esse usuario no sigue no Twitter'
+		}
 	},
 	NetworkModal: {
 		if_you_receiving: 'Si está recibiendo de una exchange o wallet, confirme que hay soporte para na ',
@@ -850,7 +881,7 @@ export default {
 						send_tokens_to: 'Manda tokens a otra wallet o a un exchange como Binance o Coinbase.',
 						receive: 'Recibir',
 						receive_funds:
-							'Reciba fondos de un amigo o envíe fondos a su billetera desde un intercambio como Coinbase.'
+							'Reciba fondos de un amigo o envíe fondos a su wallet desde un intercambio como Coinbase.'
 					},
 					Step4: {
 						earn_minke_points: 'Gane puntos Minke',
@@ -906,7 +937,8 @@ export default {
 			use_code: 'Usa código',
 			loading: 'Cargando',
 			swap: 'Intercambiar',
-			buy_token_now: 'Compre {{token}} ahora'
+			buy_token_now: 'Compre {{token}} ahora',
+			verifying: 'Verificando...'
 		},
 		ByNetworks: {
 			by_networks: 'Redes'
@@ -973,7 +1005,8 @@ export default {
 			ens_or_wallet: 'ENS, Unstoppable Domain o Wallet Address',
 			enter_code: 'Ingresa código',
 			others: 'Otros',
-			slippage_tolerance: 'Tolerancia a la slippage'
+			slippage_tolerance: 'Tolerancia a la slippage',
+			enter_username: 'Introduzca su nombre de usuario'
 		},
 		InterestBanner: {
 			interest: '% interesa anual'
