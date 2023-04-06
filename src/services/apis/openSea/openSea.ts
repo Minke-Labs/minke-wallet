@@ -31,6 +31,11 @@ const customCollections: { [key: string]: { slug: string; name: string } } = {
 	'0x9f202e685461b656b5b0e18ebddcc626837d8afd': {
 		slug: 'polygon-football-collection',
 		name: 'Polygon Football Collection'
+	},
+
+	'0x8629026081ba6bd0eb195ee2aa1d6629dd9d2d91': {
+		slug: 'the-minke-whales',
+		name: 'The Minke Whales'
 	}
 };
 

@@ -1,44 +1,45 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen';
-import InvestmentsDetailScreen from './InvestmentsDetailScreen/InvestmentsDetailScreen';
-import StablecoinsDetailScreen from './StablecoinsDetailScreen/StablecoinsDetailScreen';
-import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
-import NFTScreen from './NFTScreen/NFTScreen';
-import NFTDetailScreen from './NFTDetailScreen/NFTDetailScreen';
+import AddFundsScreen from './AddFundsScreen/AddFundsScreen';
 import BackupSettingsScreen from './BackupSettingsScreen/BackupSettingsScreen';
-import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
 import BackupStatusScreen from './BackupStatusScreen/BackupStatusScreen';
-import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
+import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
 import ChangeCountryScreen from './ChangeCountryScreen/ChangeCountryScreen';
+import ChangeLanguageScreen from './ChangeLanguageScreen/ChangeLanguageScreen';
+import ChangeNetworkScreen from './ChangeNetworkScreen/ChangeNetworkScreen';
 import DepositScreen from './DepositScreen/DepositScreen';
-import HomeScreen from './HomeScreen/HomeScreen';
 import DepositWithdrawalSuccessScreen from './DepositWithdrawalSuccessScreen/DepositWithdrawalSuccessScreen';
+import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
+import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCodeScreen';
 import ExchangeResumeScreen from './ExchangeResumeScreen/ExchangeResumeScreen';
 import ExchangeScreen from './ExchangeScreen/ExchangeScreen';
-import StablecoinsScreen from './StablecoinsScreen/StablecoinsScreen';
-import MinkeHubScreen from './MinkeHubScreen/MinkeHubScreen';
-import SaveScreen from './SaveScreen/SaveScreen';
+import HomeScreen from './HomeScreen/HomeScreen';
+import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
+import InvestmentsDetailScreen from './InvestmentsDetailScreen/InvestmentsDetailScreen';
 import InvestmentsScreen from './InvestmentsScreen/InvestmentsScreen';
+import ManualBackupScreen from './ManualBackupScreen/ManualBackupScreen';
+import MinkeHubScreen from './MinkeHubScreen/MinkeHubScreen';
+import MintNFTScreen from './MintNFTScreen/MintNFTScreen';
+import NFTDetailScreen from './NFTDetailScreen/NFTDetailScreen';
+import NFTScreen from './NFTScreen/NFTScreen';
+import RedeemConfirmScreen from './ReferralScreen/RedeemConfirmScreen/RedeemConfirmScreen';
+import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
+import ReferralScreen from './ReferralScreen/ReferralScreen';
+import SaveScreen from './SaveScreen/SaveScreen';
+import SecurityScreen from './SecurityScreen/SecurityScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
+import StablecoinsDetailScreen from './StablecoinsDetailScreen/StablecoinsDetailScreen';
+import StablecoinsScreen from './StablecoinsScreen/StablecoinsScreen';
+import Test from './Test/Test';
+import MoonpayWaitScreen from './TopUpWaitScreen/Moonpay/MoonpayWaitScreen';
+import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
+import TransactionsDetailScreen from './TransactionsDetailScreen/TransactionsDetailScreen';
 import TransactionsScreen from './TransactionsScreen/TransactionsScreen';
+import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
 import USDCoinScreen from './USDCoinScreen/USDCoinScreen';
 import WalletCreatedScreen from './WalletCreatedScreen/WalletCreatedScreen';
-import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
-import BackupToICloudScreen from './BackupToICloudScreen/BackupToICloudScreen';
-import TopUpWaitScreen from './TopUpWaitScreen/TopUpWaitScreen';
-import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
-import ReferralScreen from './ReferralScreen/ReferralScreen';
-import RedeemScreen from './ReferralScreen/RedeemScreen/RedeemScreen';
-import RedeemConfirmScreen from './ReferralScreen/RedeemConfirmScreen/RedeemConfirmScreen';
-import EnterReferralCodeScreen from './EnterReferralCodeScreen/EnterReferralCodeScreen';
-import TransferWaitScreen from './TransferWaitScreen/TransferWaitScreen';
-import DevSettingsScreen from './DevSettingsScreen/DevSettingsScreen';
-import ImportWalletScreen from './ImportWalletScreen/ImportWalletScreen';
-import AddFundsScreen from './AddFundsScreen/AddFundsScreen';
-import TransactionsDetailScreen from './TransactionsDetailScreen/TransactionsDetailScreen';
-import MoonpayWaitScreen from './TopUpWaitScreen/Moonpay/MoonpayWaitScreen';
 import WebViewScreen from './WebViewScreen/WebViewScreen';
-import SecurityScreen from './SecurityScreen/SecurityScreen';
-import Test from './Test/Test';
+import WelcomeScreen from './WelcomeScreen/WelcomeScreen';
+import WithdrawScreen from './WithdrawScreen/WithdrawScreen';
 
 const screensObj = {
 	AccountsScreen,
@@ -81,6 +82,7 @@ const screensObj = {
 	MoonpayWaitScreen,
 	WebViewScreen,
 	SecurityScreen,
+	MintNFTScreen,
 	Test
 };
 

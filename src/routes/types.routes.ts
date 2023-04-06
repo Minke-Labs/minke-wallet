@@ -1,7 +1,8 @@
+import { WebViewNavigation } from 'react-native-webview';
+
 import { NFT } from '@models/types/nft.types';
 import { MinkeToken } from '@models/types/token.types';
 import { ZapperTransaction } from '@models/wallet';
-import { WebViewNavigation } from 'react-native-webview';
 
 export type RootStackParamList = {
 	AccountsScreen: undefined;
@@ -45,5 +46,6 @@ export type RootStackParamList = {
 	MoonpayWaitScreen: { transactionId: string };
 	WebViewScreen: { title: string; uri: string; onNavigationStateChange?: (event: WebViewNavigation) => void };
 	SecurityScreen: undefined;
+	MintNFTScreen: undefined;
 	Test: undefined;
 };

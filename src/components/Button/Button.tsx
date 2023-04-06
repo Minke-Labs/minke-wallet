@@ -1,10 +1,12 @@
 import React from 'react';
 import { Keyboard } from 'react-native';
-import { spacing, ColorType } from '@styles';
-import View from '../View/View';
-import Text from '../Text/Text';
+
+import { ColorType, spacing } from '@styles';
+
 import Icon from '../Icon/Icon';
+import Text from '../Text/Text';
 import Touchable from '../Touchable/Touchable';
+import View from '../View/View';
 import { ButtonProps } from './Button.types';
 
 const Button: React.FC<ButtonProps> = ({
@@ -55,7 +57,7 @@ const Button: React.FC<ButtonProps> = ({
 				<Text type="lMedium" weight="semiBold" color={color}>
 					{title}
 				</Text>
-				{iconRight && <Icon name={iconRight} size={18} style={{ marginRight: spacing.xxs }} color={color} />}
+				{iconRight && <Icon name={iconRight} size={18} style={{ marginLeft: spacing.xxs }} color={color} />}
 			</View>
 		</Touchable>
 	);

@@ -37,4 +37,8 @@ declare module '@env' {
 	export const QUICK_NODE_API_URL_BSC_MAINNET: string;
 	export const UNSTOPPABLE_DOMAINS_API_KEY: string;
 	export const ZERION_API_TOKEN: string;
+	export const TWITTER_API_KEY: string;
+	export const TWITTER_API_SECRET: string;
+	export const TWITTER_ACCESS_TOKEN: string;
+	export const TWITTER_ACCESS_TOKEN_SECRET: string;
 }
