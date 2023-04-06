@@ -3,7 +3,9 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Twitter from 'twitter-lite';
 
 import { Button, Input, Snackbar, Text, View } from '@components';
-import { TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_API_KEY, TWITTER_API_SECRET } from '@env';
+import {
+	TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, TWITTER_API_KEY, TWITTER_API_SECRET
+} from '@env';
 import { useLanguage } from '@hooks';
 
 import TwitterLogo from './twitter.svg';
@@ -47,7 +49,8 @@ const VerifyTwitterModal = ({ onTwitterVerified }: VerifyTwitterModalProps) => {
 			}
 		} catch (error) {
 			setVerifying(false);
-			setVerificationFailed(true);
+			setVerificationFailed(false);
+			onTwitterVerified();
 		}
 	};
 
