@@ -1,12 +1,12 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { walletState, emptyWallet, globalWalletState } from '@stores/WalletStore';
-import { walletDelete, getAllWallets, deletePrivateKey } from '@models/wallet';
+
+import { Button, ModalHeader, Text, View } from '@components';
 import { useAuthentication, useLanguage, useNavigation, useWalletState } from '@hooks';
-import { Text, ModalHeader, Button, View } from '@components';
-import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
 import { useState } from '@hookstate/core';
+import { deletePrivateKey, getAllWallets, walletDelete } from '@models/wallet';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
+import { emptyWallet, globalWalletState, walletState } from '@stores/WalletStore';
 
 interface DeleteModalProps {
 	onDismiss: () => void;
@@ -17,9 +17,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 	const { accountName } = useWalletState();
 	const navigation = useNavigation();
 	const { showAuthenticationPrompt } = useAuthentication();
-	const connector = useWalletConnect();
 	const state = useState(globalWalletState());
-	const { connected, accounts } = connector;
 
 	const onDeleteWallet = () => {
 		onDismiss();
@@ -39,9 +37,6 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onDismiss }) => {
 
 							const { address } = state.value;
 
-							if (connected && accounts[0].toLowerCase() === address.toLowerCase()) {
-								connector.killSession();
-							}
 							await deletePrivateKey(address);
 
 							if (wallets.length > 0) {

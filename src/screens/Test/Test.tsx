@@ -1,57 +1,96 @@
-import React from 'react';
-import { Button, Text, View } from '@components';
-import { BasicLayout } from '@layouts';
-import { useBiconomy, useGlobalWalletState } from '@hooks';
-import { gaslessTransactionData } from '@utils/signing/signing';
 import { Wallet } from 'ethers';
-import Logger from '@utils/logger';
+import React, { useEffect } from 'react';
+import SafariView from 'react-native-safari-view';
+
+import { Button, Text, View } from '@components';
+import { WALLET_CONNECT_PROJECT_ID } from '@env';
+import { useGlobalWalletState, useNavigation } from '@hooks';
+import { BasicLayout } from '@layouts';
+import { hexToUtf8 } from '@utils/signing/signing';
+import { Core } from '@walletconnect/core';
+import { buildApprovedNamespaces } from '@walletconnect/utils';
+import { Web3Wallet } from '@walletconnect/web3wallet';
 
 const Test = () => {
-	const { address, privateKey, network } = useGlobalWalletState();
-	const { biconomy } = useBiconomy();
+	const { address, network, privateKey } = useGlobalWalletState();
+	const navigation = useNavigation();
+	const core = new Core({
+		projectId: WALLET_CONNECT_PROJECT_ID || process.env.PROJECT_ID,
+		relayUrl: 'wss://relay.walletconnect.org'
+	});
+
+	useEffect(() => {
+		const initializeWalletConnect = async () => {
+			console.log('INitialize...');
+			const web3wallet = await Web3Wallet.init({
+				core, // <- pass the shared `core` instance
+				metadata: {
+					name: 'Demo app',
+					description: 'Demo Client as Wallet/Peer',
+					url: 'www.walletconnect.com',
+					icons: []
+				}
+			});
+
+			web3wallet.on('session_proposal', async (sessionProposal) => {
+				console.log({ sessionProposal });
+				const { id, params } = sessionProposal;
+
+				// ------- namespaces builder util ------------ //
+				const approvedNamespaces = buildApprovedNamespaces({
+					proposal: params,
+					supportedNamespaces: {
+						eip155: {
+							chains: ['eip155:1', 'eip155:137'],
+							methods: ['eth_sendTransaction', 'personal_sign'],
+							events: ['accountsChanged', 'chainChanged'],
+							accounts: [`eip155:137:${address}`]
+						}
+					}
+				});
+				// ------- end namespaces builder util ------------ //
+
+				await web3wallet.approveSession({
+					id,
+					namespaces: approvedNamespaces
+				});
+			});
+
+			web3wallet.on('session_request', async (event) => {
+				console.log({ sessionRequest: event });
+				const { topic, params, id } = event;
+				const { request } = params;
+				const requestParamsMessage = request.params[0];
+
+				// convert `requestParamsMessage` by using a method like hexToUtf8
+				const message = hexToUtf8(requestParamsMessage);
+				const wallet = new Wallet(privateKey!);
+				// sign the message
+				const signedMessage = await wallet.signMessage(message);
+
+				const response = { id, result: signedMessage, jsonrpc: '2.0' };
+
+				await web3wallet.respondSessionRequest({ topic, response });
+			});
+		};
+		initializeWalletConnect();
+	}, []);
 
 	const test = async () => {
-		const provider = biconomy.getEthersProvider();
-		const contract = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
-		const amount = '100000000';
-		const data = await gaslessTransactionData({
-			userAddress: address,
-			contract,
-			privateKey: privateKey!,
-			amount,
-			provider,
-			spender: '0xe0eE7Fec8eC7eB5e88f1DbBFE3E0681cC49F6499'
-		});
-
-		const rawTx = {
-			to: contract,
-			data,
-			from: address,
-			gasLimit: 500000
-		};
-		const wallet = new Wallet(privateKey!, provider);
-		const tx = await wallet.signTransaction(rawTx);
-		let transactionHash;
+		const url = 'https://app.openpeer.xyz';
 		try {
-			Logger.log('Transaction', tx);
-			Logger.log('Is provider ready?', !!provider);
-			await provider.sendTransaction(tx);
-		} catch (error: any) {
-			// Ethers check the hash from user's signed tx and hash returned from Biconomy
-			// Both hash are expected to be different as biconomy send the transaction from its relayers
-			if (error.returnedHash && error.expectedHash) {
-				transactionHash = error.returnedHash;
-				Logger.log('Transaction done', transactionHash);
-			} else {
-				Logger.error('Error on gasless approval transaction', error);
-			}
+			SafariView.show({
+				url
+			});
+		} catch {
+			navigation.navigate('WebViewScreen', { uri: url, title: 'OpenPeer' });
 		}
 	};
 
 	return (
 		<BasicLayout>
 			<View p="s">
-				<Button title="Execute transaction" onPress={test} mb="s" />
+				<Button title="OpenPeer" onPress={test} mb="s" />
 				<Text>{address}</Text>
 				<Text>{network.name}</Text>
 			</View>

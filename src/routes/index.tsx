@@ -1,15 +1,17 @@
+import crypto from 'crypto';
+import * as Linking from 'expo-linking';
 import React, { useEffect } from 'react';
 import RNUxcam from 'react-native-ux-cam';
-import crypto from 'crypto';
-import { INTERCOM_KEY } from '@env';
-import Intercom from '@intercom/intercom-react-native';
+
 import { TransactionsProvider } from '@contexts';
+import { INTERCOM_KEY } from '@env';
+import { useGlobalWalletState } from '@hooks';
+import Intercom from '@intercom/intercom-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as Linking from 'expo-linking';
 import screensObj from '@screens';
 import Logger from '@utils/logger';
-import { useGlobalWalletState } from '@hooks';
+
 import { RootStackParamList } from './types.routes';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -24,8 +26,8 @@ const Routes: React.FC = () => {
 	const { address, walletId } = state;
 	RNUxcam.setUserIdentity(address);
 
-	const initialScreen = walletId ? 'HomeScreen' : 'WelcomeScreen';
-	// const initialScreen = 'Test';
+	// const initialScreen = walletId ? 'HomeScreen' : 'WelcomeScreen';
+	const initialScreen = 'Test';
 
 	const urlRedirect = (event: any) => {
 		const { url } = event;
