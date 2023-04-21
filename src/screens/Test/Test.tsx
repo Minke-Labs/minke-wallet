@@ -1,6 +1,7 @@
 import { Wallet } from 'ethers';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SafariView from 'react-native-safari-view';
+import WebView from 'react-native-webview';
 
 import { Button, Text, View } from '@components';
 import { WALLET_CONNECT_PROJECT_ID } from '@env';
@@ -15,9 +16,9 @@ const Test = () => {
 	const { address, network, privateKey } = useGlobalWalletState();
 	const navigation = useNavigation();
 	const core = new Core({
-		projectId: WALLET_CONNECT_PROJECT_ID || process.env.PROJECT_ID,
-		relayUrl: 'wss://relay.walletconnect.org'
+		projectId: WALLET_CONNECT_PROJECT_ID || process.env.PROJECT_ID
 	});
+	const [webview, setWebview] = useState(false);
 
 	useEffect(() => {
 		const initializeWalletConnect = async () => {
@@ -31,6 +32,9 @@ const Test = () => {
 					icons: []
 				}
 			});
+
+			const { uri } = await web3wallet.core.pairing.create();
+			console.log(uri);
 
 			web3wallet.on('session_proposal', async (sessionProposal) => {
 				console.log({ sessionProposal });
@@ -72,12 +76,16 @@ const Test = () => {
 
 				await web3wallet.respondSessionRequest({ topic, response });
 			});
+
+			// Call this after WCURI is received
+			await web3wallet.core.pairing.pair({ uri });
+			setWebview(true);
 		};
 		initializeWalletConnect();
 	}, []);
 
+	const url = 'https://2def-2001-8a0-72b6-1d00-e184-b2cb-95a7-d7c7.ngrok-free.app';
 	const test = async () => {
-		const url = 'https://app.openpeer.xyz';
 		try {
 			SafariView.show({
 				url
@@ -90,9 +98,15 @@ const Test = () => {
 	return (
 		<BasicLayout>
 			<View p="s">
-				<Button title="OpenPeer" onPress={test} mb="s" />
-				<Text>{address}</Text>
-				<Text>{network.name}</Text>
+				{webview ? (
+					<WebView source={{ uri: url }} />
+				) : (
+					<>
+						<Button title="OpenPeer" onPress={test} mb="s" />
+						<Text>{address}</Text>
+						<Text>{network.name}</Text>
+					</>
+				)}
 			</View>
 		</BasicLayout>
 	);
