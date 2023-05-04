@@ -1,64 +1,43 @@
-import { ZERION_API_TOKEN } from '@env';
-import io from 'socket.io-client';
-import { MinkeToken } from '@models/types/token.types';
-import { networks } from '@models/network';
 import { formatUnits } from 'ethers/lib/utils';
+
+import { ZERION_API_TOKEN } from '@env';
+import { networks } from '@models/network';
+import { MinkeToken } from '@models/types/token.types';
 import { getProvider } from '@models/wallet';
-import { AddressSocket, RequestBody, UseZerionBalancesParams, ZerionTokenData } from './useZerionBalances.types';
 
-const BASE_URL = 'wss://api-v4.zerion.io/';
-
-const addressSocket = {
-	namespace: 'address',
-	socket: io(`${BASE_URL}address`, {
-		transports: ['websocket'],
-		timeout: 60000,
-		query: {
-			api_token: ZERION_API_TOKEN || process.env.ZERION_API_TOKEN
-		}
-	})
-};
-
-const get = (socketNamespace: AddressSocket, requestBody: RequestBody): Promise<ZerionTokenData> =>
-	new Promise((resolve, reject) => {
-		const { socket, namespace } = socketNamespace;
-		function handleReceive(data: ZerionTokenData) {
-			// eslint-disable-next-line @typescript-eslint/no-use-before-define
-			unsubscribe();
-			resolve(data);
-		}
-		const model = requestBody.scope[0];
-		function unsubscribe() {
-			socket.off(`received ${namespace} ${model}`, handleReceive);
-			socket.emit('unsubscribe', requestBody);
-		}
-		socket.emit('get', requestBody);
-		socket.on('connect_error', (error: any) => {
-			reject(error);
-		});
-		socket.on('disconnect', (reason: string) => {
-			reject(new Error(reason));
-		});
-		socket.on(`received ${namespace} ${model}`, handleReceive);
-	});
+import {
+	Implementation, UseZerionBalancesParams, ZerionTokenData
+} from './useZerionBalances.types';
 
 const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<MinkeToken[]> => {
 	const chains = Object.values(networks).map((n) => n.zapperNetwork);
-	const { payload }: ZerionTokenData = await get(addressSocket, {
-		scope: ['positions'],
-		payload: {
-			address: address.toLowerCase(),
-			currency: 'usd',
-			portfolio_fields: 'all'
+	const options = {
+		method: 'GET',
+		headers: {
+			accept: 'application/json',
+			authorization: `Basic ${Buffer.from(
+				`${ZERION_API_TOKEN || process.env.ZERION_API_TOKEN}:`,
+				'binary'
+			).toString('base64')}`
 		}
-	});
-	let { positions = [] } = payload?.positions || {};
-	positions = positions.filter(({ chain, type }) => type === 'asset' && chains.includes(chain));
-	const promises = positions.map(async ({ asset, quantity, value, chain }) => {
-		const { symbol, asset_code: assetCode, name, implementations = {}, price } = asset;
-		const { address: tokenAddress = assetCode, decimals = asset.decimals } = implementations[chain];
+	};
+
+	const response = await fetch(
+		`https://api.zerion.io/v1/wallets/${address}/positions/?currency=usd&sort=value`,
+		options
+	);
+	const { data = [] }: ZerionTokenData = await response.json();
+	const positions = data.filter(({ relationships }) => chains.includes(relationships.chain.data.id));
+
+	const promises = positions.map(async (asset) => {
+		const { relationships, attributes } = asset;
+		const { quantity, fungible_info: fungibleInfo, value, price } = attributes;
+		const { implementations = [], name, symbol } = fungibleInfo;
+		const chain = relationships.chain.data.id;
+		const implementation = implementations.find(({ chain_id }) => chain_id === chain) || ({} as Implementation);
+		const { address: tokenAddress, decimals = quantity.decimals } = implementation;
 		const tokenNetwork = Object.values(networks).find(({ zapperNetwork }) => chain === zapperNetwork);
-		let balance = formatUnits(quantity, decimals);
+		let balance = quantity.numeric;
 
 		const { nativeToken, id, chainId } = tokenNetwork;
 
@@ -76,9 +55,11 @@ const useZerionBalances = async ({ address }: UseZerionBalancesParams): Promise<
 			const provider = getProvider(id);
 			const blockchainBalance = await provider.getBalance(address);
 			balance = formatUnits(blockchainBalance, decimals);
-			const balanceUSD = Number(balance) * price.value;
-			return { ...token, ...{ balance, balanceUSD } };
+			const balanceUSD = Number(balance) * price;
+			const newName = symbol === 'MATIC' ? 'Polygon' : name;
+			return { ...token, ...{ balance, balanceUSD, name: newName } };
 		}
+
 		return token;
 	});
 
