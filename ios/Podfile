@@ -34,6 +34,8 @@ target 'MinkeDeFiWallet' do
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   post_install do |installer|
     react_native_post_install(installer)
     # Workaround `Cycle inside FBReactNativeSpec` error for react-native 0.64

@@ -1100,6 +1100,14 @@ export default {
 			success: 'Success',
 			failed: 'Failed'
 		},
+		SignatureRequestModal: {
+			message_signing_request_from: 'Message signing request from:',
+			wallet: 'Wallet',
+			network: 'Network',
+			cancel: 'Cancel',
+			confirm: 'Confirm',
+			message: 'Message'
+		},
 		Snackbar: {
 			address_copied: 'Address copied',
 			select: 'Select a Country'

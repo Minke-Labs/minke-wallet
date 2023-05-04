@@ -22,7 +22,8 @@
 			"@hooks": ["src/hooks/index"],
 			"@utils/*": ["src/utils/*"],
 			"@src/*": ["src/*"]
-		}
+		},
+		"esModuleInterop": true
 	},
 	"typeRoots": ["./src/types"]
 }
