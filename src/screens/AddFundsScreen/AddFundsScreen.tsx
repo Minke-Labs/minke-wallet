@@ -1,7 +1,10 @@
+import { debounce } from 'lodash';
 import React from 'react';
 import { Keyboard, TouchableOpacity } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import RNUxcam from 'react-native-ux-cam';
+
 import {
-	ApplePayButton,
 	FiatCard,
 	GenericPayButton,
 	Header,
@@ -15,11 +18,9 @@ import {
 } from '@components';
 import { useLanguage, useTheme } from '@hooks';
 import { BasicLayout } from '@layouts';
-import RNUxcam from 'react-native-ux-cam';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-import { debounce } from 'lodash';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@src/routes/types.routes';
+
 import DirectionButton from '../ExchangeScreen/DirectionButton/DirectionButton';
 import useAddFundsScreen from './AddFundsScreen.hooks';
 
@@ -48,11 +49,8 @@ const AddFundsScreen = ({ route }: Props) => {
 		fiatAmount,
 		error,
 		setError,
-		disableApplePay,
-		onApplePayPurchase,
 		disableBanxa,
 		onOnrampBanxaPurchase,
-		useApplePay,
 		useBanxa,
 		useMoonpay,
 		disableMoonPay,
@@ -115,20 +113,15 @@ const AddFundsScreen = ({ route }: Props) => {
 					</View>
 
 					<View mh="xs" mb="xs">
-						{!!useApplePay && (
-							<ApplePayButton marginBottom={16} onPress={onApplePayPurchase} disabled={disableApplePay} />
-						)}
 						{!!useMoonpay && (
 							<>
 								{moonPaySpecialButton ? (
 									<>
-										{!useApplePay && (
-											<GenericPayButton
-												disabled={disableMoonPay}
-												marginBottom={16}
-												onPress={onMoonpayPurchase}
-											/>
-										)}
+										<GenericPayButton
+											disabled={disableMoonPay}
+											marginBottom={16}
+											onPress={onMoonpayPurchase}
+										/>
 										<OnrampButton
 											marginBottom={16}
 											currency={currency}
@@ -141,15 +134,14 @@ const AddFundsScreen = ({ route }: Props) => {
 										disabled={disableMoonPay}
 										marginBottom={16}
 										onPress={onMoonpayPurchase}
-										showAppleGooglePay={!useApplePay}
+										showAppleGooglePay
 									/>
 								)}
 							</>
 						)}
-
 						{!!useBanxa && (
 							<>
-								{!useApplePay && !useMoonpay && (
+								{!useMoonpay && (
 									<GenericPayButton
 										disabled={disableMoonPay}
 										marginBottom={16}
