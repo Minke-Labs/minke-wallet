@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
 
 import { useGlobalWalletState } from '@hooks';
+import { getProvider } from '@models/wallet';
 import { hexToUtf8 } from '@utils/signing/signing';
 
 import ModalBase from '../ModalBase/ModalBase';
@@ -16,7 +17,7 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 	const webViewRef = useRef<WebView>(null);
 	const {
 		address,
-		network: { chainId },
+		network: { chainId, id },
 		privateKey
 	} = useGlobalWalletState();
 
@@ -434,6 +435,8 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 			}
 
 			if (type === 'web3-send-async-read-only') {
+				const provider = getProvider(id);
+				const wallet = new Wallet(privateKey!, getProvider(id));
 				if (payload.method === 'eth_accounts') {
 					// {"type":"web3-send-async-read-only","messageId":0,"payload":{"id":0,"jsonrpc":"2.0","method":"eth_accounts"}}
 					sendToBridge({
@@ -451,7 +454,6 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 								setSignModalVisible(false);
 								setSignMessage('');
 
-								const wallet = new Wallet(privateKey!);
 								resolve({
 									type: 'web3-send-async-callback',
 									messageId: data.messageId,
@@ -470,17 +472,78 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 						};
 					});
 
-					console.log('Waiting for the user response');
-					const result: any = await userResponse;
+					const result = await userResponse;
 					sendToBridge(result);
-					console.log('Done', {
-						...data,
-						...result
+				} else if (payload.method === 'eth_estimateGas') {
+					const result = {
+						type: 'web3-send-async-callback',
+						messageId: data.messageId,
+						result: {
+							jsonrpc: payload.jsonrpc,
+							id: data.messageId,
+							result: (await wallet.estimateGas(payload.params[0])).toHexString()
+						}
+					};
+					sendToBridge(result);
+				} else if (payload.method === 'eth_call') {
+					// Make a sample eth_call
+					const lala = await provider.call(payload.params);
+					const result = {
+						type: 'web3-send-async-callback',
+						messageId: data.messageId,
+						result: {
+							jsonrpc: payload.jsonrpc,
+							id: data.messageId,
+							result: [7, 8].includes(data.messageId)
+								? '0x0000000000000000000000000000000000000000000000000000000000000001'
+								: lala
+						}
+					};
+
+					console.log('result', result);
+					sendToBridge(result);
+				} else if (payload.method === 'eth_signTypedData_v4') {
+					const [, message] = payload.params;
+					const parsedMessage = JSON.parse(message);
+					setSignMessage(message);
+					setSignModalVisible(true);
+					const userResponse = new Promise((resolve) => {
+						awaitingPromiseRef.current = {
+							resolve: async () => {
+								setSignModalVisible(false);
+								setSignMessage('');
+								const { EIP712Domain: unused, ...types } = parsedMessage.types;
+
+								resolve({
+									type: 'web3-send-async-callback',
+									messageId: data.messageId,
+									result: {
+										jsonrpc: payload.jsonrpc,
+										id: data.messageId,
+										// eslint-disable-next-line no-underscore-dangle
+										result: await wallet._signTypedData(
+											parsedMessage.domain,
+											types,
+											parsedMessage.message
+										)
+									}
+								});
+							},
+							reject: () => {
+								setSignModalVisible(false);
+								setSignMessage('');
+								resolve(null);
+							}
+						};
 					});
+
+					const result = await userResponse;
+					sendToBridge(result);
 				}
 			}
-		} catch {
-			console.log(data);
+		} catch (error) {
+			console.log('error on request', data);
+			console.log('error on request', error);
 		}
 	};
 
@@ -512,6 +575,8 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 				startInLoadingState
 				scalesPageToFit
 				onMessage={onMessage}
+				originWhitelist={['*']}
+				domStorageEnabled
 				ref={webViewRef}
 			/>
 			<ModalBase isVisible={signModalVisible} onDismiss={onDismiss}>

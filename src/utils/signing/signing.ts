@@ -1,14 +1,16 @@
-import { signTypedData, SignTypedDataVersion } from '@metamask/eth-sig-util';
 import { Contract, ethers } from 'ethers';
 import { Interface } from 'ethers/lib/utils';
 import utf8 from 'utf8';
+
+import { signTypedData, SignTypedDataVersion } from '@metamask/eth-sig-util';
+
 import {
+	ApprovalFunctionSignatureProps,
+	ApprovalMessage,
 	ChainDomain,
 	ERC2612PermitMessage,
-	PermitSignatureProps,
 	GetContractNonceProps,
-	ApprovalMessage,
-	ApprovalFunctionSignatureProps,
+	PermitSignatureProps,
 	SignTypedDataV3Props
 } from './signing.types';
 
@@ -181,7 +183,6 @@ export const permitSignature = async ({ wallet, owner, spender, token }: PermitS
 	const domain = await getChainDomain(wallet.provider, token);
 	const typeData = createTypedERC2612Data(message, domain);
 	const { EIP712Domain: unused, ...types } = typeData.types;
-	// @ts-ignore
 	// eslint-disable-next-line no-underscore-dangle
 	return wallet._signTypedData(typeData.domain, types, typeData.message);
 };
