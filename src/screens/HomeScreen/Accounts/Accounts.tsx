@@ -1,8 +1,9 @@
 import React from 'react';
-import { useBalances } from '@hooks';
+
 import { BlankStates, View } from '@components';
+import { useBalances } from '@hooks';
+
 import { AccountsOverview } from './AccountsOverview/AccountsOverview';
-import { AccountsEmpty } from './AccountsEmpty/AccountsEmpty';
 
 export const Accounts = () => {
 	const { balance, loading } = useBalances();
@@ -15,5 +16,5 @@ export const Accounts = () => {
 		);
 	}
 
-	return balance > 0 ? <AccountsOverview /> : <AccountsEmpty />;
+	return balance > 0 ? <AccountsOverview /> : <></>;
 };
