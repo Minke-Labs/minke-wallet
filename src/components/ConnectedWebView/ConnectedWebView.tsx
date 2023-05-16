@@ -4,9 +4,11 @@ import React, { useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
 
 import { useGlobalWalletState } from '@hooks';
+import { BasicLayout } from '@layouts';
 import { getProvider } from '@models/wallet';
 import { hexToUtf8 } from '@utils/signing/signing';
 
+import Header from '../Header/Header';
 import ModalBase from '../ModalBase/ModalBase';
 import SignatureRequestModal from '../SignatureRequestModal/SignatureRequestModal';
 
@@ -566,10 +568,10 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 	};
 
 	return (
-		<>
+		<BasicLayout>
+			<Header title={requestSource?.name} marginBottom="xxs" done />
 			<WebView
 				source={{ uri }}
-				style={{ marginTop: 20 }}
 				javaScriptEnabled
 				injectedJavaScriptBeforeContentLoaded={injectedJavaScript}
 				startInLoadingState
@@ -587,7 +589,7 @@ const ConnectedWebView = ({ uri }: { uri: string }) => {
 					message={signMessage}
 				/>
 			</ModalBase>
-		</>
+		</BasicLayout>
 	);
 };
 

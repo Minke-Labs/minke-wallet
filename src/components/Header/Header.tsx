@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { useLanguage, useNavigation } from '@hooks';
 import Icon from '@src/components/Icon/Icon';
 import Text from '@src/components/Text/Text';
-import View from '@src/components/View/View';
 import Touchable from '@src/components/Touchable/Touchable';
+import View from '@src/components/View/View';
 import { SpacingType } from '@styles';
 
 interface HeaderProps {
