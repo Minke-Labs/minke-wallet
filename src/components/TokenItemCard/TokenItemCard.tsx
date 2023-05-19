@@ -1,10 +1,11 @@
 import React from 'react';
+
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
+import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import Text from '@src/components/Text/Text';
-import View from '@src/components/View/View';
 import TokenItem from '@src/components/TokenItem/TokenItem';
 import Touchable from '@src/components/Touchable/Touchable';
-import { InvestmentToken, MinkeToken } from '@models/types/token.types';
+import View from '@src/components/View/View';
 
 interface TokenItemCardProps {
 	token: InvestmentToken;
@@ -51,7 +52,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 						/>
 					</Touchable>
 				</View>
-				{showBuyButton && (
+				{showBuyButton && false && (
 					<View h="100%" main="center" cross="flex-end" pr="xs">
 						<Touchable onPress={() => handleBuy(token)}>
 							<Text type="lLarge" weight="semiBold" color="cta1">

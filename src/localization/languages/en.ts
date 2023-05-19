@@ -6,7 +6,7 @@ export default {
 		accounts: 'Accounts'
 	},
 	AddFundsScreen: {
-		header: 'Deposit Funds',
+		header: 'Add Funds',
 		you_pay: 'You pay',
 		you_receive: 'You receive',
 		Errors: {
