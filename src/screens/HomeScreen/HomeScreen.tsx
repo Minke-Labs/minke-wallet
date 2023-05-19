@@ -11,7 +11,6 @@ import { getProvider, ZapperTransaction } from '@src/model/wallet';
 import { Accounts } from './Accounts/Accounts';
 import { Assets } from './Assets/Assets';
 import Header from './Header/Header';
-import { MintNFT } from './MintNFT/MintNFT';
 import { Stories } from './Stories/Stories';
 
 const HomeScreen = () => {
@@ -68,7 +67,6 @@ const HomeScreen = () => {
 						<Header />
 						{!!tx && <PendingTransaction transaction={tx} />}
 						<Assets />
-						<MintNFT />
 						<Accounts />
 						<Stories />
 						<View mb="xxxl" />

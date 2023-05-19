@@ -2,19 +2,15 @@ import crypto from 'crypto';
 import * as Linking from 'expo-linking';
 import * as qs from 'qs';
 import { useEffect, useState } from 'react';
-import { Keyboard, Platform } from 'react-native';
+import { Keyboard } from 'react-native';
 import SafariView from 'react-native-safari-view';
 
 import { MOONPAY_API_KEY, MOONPAY_BUY_URL, MOONPAY_SECRET_KEY } from '@env';
-import {
-	useAmplitude, useCountry, useCurrencies, useGlobalWalletState, useLanguage, useNavigation,
-	useWyreApplePay
-} from '@hooks';
+import { useCountry, useCurrencies, useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { Network, networks } from '@models/network';
 import { Currency } from '@models/types/currency.types';
 import { MinkeToken, TopupToken } from '@models/types/token.types';
-import { getWalletOrderQuotation } from '@models/wyre';
 import { buyQuote } from '@src/services/apis/moonpay/moonpay';
 import { euroCountries } from '@src/styles/countries';
 import { countries } from '@styles';
@@ -29,7 +25,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 		.map((n) => n.topUpTokens)
 		.flat();
 	const network: Network = Object.values(networks).find((n) => n.chainId === token?.chainId);
-	const { nativeToken, wyreSRN } = network || {};
+	const { nativeToken } = network || {};
 	const [currencySearchVisible, setCurrencySearchVisible] = useState(false);
 	const [tokenSearchVisible, setTokenSearchVisible] = useState(false);
 	const [loadingPrices, setLoadingPrices] = useState(false);
@@ -40,13 +36,10 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();
-	const useApplePay = Platform.OS === 'ios' && !!wyreSRN && currency && providers.wyre.includes(currency);
 	const useBanxa = currency && providers.banxa.includes(currency);
-	const useMoonpay = currency && (!useBanxa || !useApplePay) && providers.moonpay.includes(currency);
+	const useMoonpay = currency && providers.moonpay.includes(currency);
 	const moonPaySpecialButton = useMoonpay && ['BRL', 'EUR', 'GBP'].includes(currency.code);
 	const navigation = useNavigation();
-	const { onPurchase, orderId, error: applePayError } = useWyreApplePay();
-	const { track } = useAmplitude();
 	const countryCode = Object.keys(countries).find((key) => countries[key] === country) || 'US';
 	// @ts-ignore
 	const euCountry = countryCode && euroCountries[countryCode];
@@ -60,22 +53,6 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const addError = (err: string) => {
 		Keyboard.dismiss();
 		setError(err);
-	};
-
-	const onApplePayPurchase = () => {
-		Keyboard.dismiss();
-		const value = fiat ? +fiatAmount! : +tokenAmount!;
-		const { code } = currency!;
-		const { symbol, wyreSymbol } = token!;
-		track('Started Apple Pay Payment', { currency: code, value });
-		onPurchase({
-			sourceCurrency: code,
-			destCurrency: wyreSymbol || symbol,
-			value,
-			fiat,
-			country: countryIso,
-			network
-		});
 	};
 
 	const openWebView = (url: string, title: string) => {
@@ -181,29 +158,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 		) {
 			setFiat(true);
 
-			if (useApplePay) {
-				setLoadingPrices(true);
-				const quotation = await getWalletOrderQuotation({
-					sourceAmount: +formatedValue,
-					destAmount: undefined,
-					destCurrency: token.wyreSymbol || token.symbol,
-					accountAddress: address,
-					network,
-					country: countryIso,
-					sourceCurrency: currency.code
-				});
-
-				const { errorCode = '', message, destAmount } = quotation;
-
-				if (errorCode || message) {
-					addError(i18n.t(`AddFundsScreen.Errors.${errorCode.replace('.', '_')}`, { defaultValue: message }));
-					setTokenAmount('');
-				} else {
-					setTokenAmount(destAmount.toString());
-					setFiatAmount(formatedValue);
-				}
-				setLoadingPrices(false);
-			} else if (useMoonpay) {
+			if (useMoonpay) {
 				setLoadingPrices(true);
 				const params = {
 					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
@@ -256,27 +211,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 			Number(formatedValue) > 0
 		) {
 			setFiat(false);
-			if (useApplePay) {
-				setLoadingPrices(true);
-				const quotation = await getWalletOrderQuotation({
-					sourceAmount: undefined,
-					destCurrency: token.wyreSymbol || token.symbol,
-					accountAddress: address,
-					network,
-					destAmount: +formatedValue,
-					country: countryIso,
-					sourceCurrency: currency.code
-				});
-				const { errorCode = '', message, sourceAmountWithFees } = quotation;
-				if (errorCode || message) {
-					addError(i18n.t(`AddFundsScreen.Errors.${errorCode.replace('.', '_')}`, { defaultValue: message }));
-					setFiatAmount('');
-				} else {
-					setFiatAmount(sourceAmountWithFees.toString());
-					setTokenAmount(formatedValue);
-				}
-				setLoadingPrices(false);
-			} else if (useMoonpay) {
+			if (useMoonpay) {
 				setLoadingPrices(true);
 				const params = {
 					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
@@ -323,7 +258,6 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const paymentEnabled =
 		!loadingPrices && token && currency && fiatAmount && tokenAmount && +fiatAmount > 0 && +tokenAmount > 0;
 
-	const disableApplePay = !(useApplePay && paymentEnabled);
 	const disableBanxa = !paymentEnabled;
 	const disableMoonPay = !disableBanxa && !paymentEnabled;
 
@@ -357,18 +291,6 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 		}
 	}, [currency]);
 
-	useEffect(() => {
-		if (applePayError) {
-			addError(applePayError.description);
-		}
-	}, [applePayError]);
-
-	useEffect(() => {
-		if (orderId) {
-			navigation.navigate('TopUpWaitScreen');
-		}
-	}, [orderId]);
-
 	return {
 		currency,
 		selectCurrency,
@@ -388,11 +310,8 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 		fiatAmount,
 		error,
 		setError,
-		disableApplePay,
-		onApplePayPurchase,
 		disableBanxa,
 		onOnrampBanxaPurchase,
-		useApplePay,
 		useBanxa,
 		useMoonpay,
 		disableMoonPay,

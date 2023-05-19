@@ -1,6 +1,8 @@
 import React from 'react';
-import { useNavigation, useLanguage } from '@hooks';
+
+import { useBalances, useLanguage, useNavigation } from '@hooks';
 import { RootStackParamList } from '@src/routes/types.routes';
+
 import IconItem from '../../IconItem/IconItem';
 import View from '../../View/View';
 
@@ -13,6 +15,7 @@ interface ActionsModalProps {
 const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onReceivePress }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
+	const { balance } = useBalances();
 
 	const handleNavigate = (path: keyof RootStackParamList) => {
 		onDismiss();
@@ -21,13 +24,15 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onR
 
 	return (
 		<View>
-			<IconItem
-				onPress={() => handleNavigate('ExchangeScreen')}
-				mb="s"
-				title={i18n.t('Components.FloatingSelector.Actions.exchange')}
-				desc={i18n.t('Components.FloatingSelector.Actions.swap')}
-				icon="exchange"
-			/>
+			{balance > 0 && (
+				<IconItem
+					onPress={() => handleNavigate('ExchangeScreen')}
+					mb="s"
+					title={i18n.t('Components.FloatingSelector.Actions.exchange')}
+					desc={i18n.t('Components.FloatingSelector.Actions.swap')}
+					icon="exchange"
+				/>
+			)}
 			<IconItem
 				onPress={onSendPress}
 				mb="s"

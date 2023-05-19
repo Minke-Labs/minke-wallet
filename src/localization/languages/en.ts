@@ -6,7 +6,7 @@ export default {
 		accounts: 'Accounts'
 	},
 	AddFundsScreen: {
-		header: 'Add funds',
+		header: 'Add Funds',
 		you_pay: 'You pay',
 		you_receive: 'You receive',
 		Errors: {
@@ -76,7 +76,7 @@ export default {
 		NotAbleToSaveModal: {
 			not_able: 'Not able to save',
 			need_funds_in: 'First you need to have funds in ',
-			add_funds: 'Add funds',
+			add_funds: 'Deposit Funds',
 			exchange: 'Exchange'
 		}
 	},
@@ -140,7 +140,7 @@ export default {
 		},
 		Assets: {
 			your_total_assets: 'Your total assets',
-			add_funds: 'Add Funds',
+			add_funds: 'Deposit Funds',
 			Modals: {
 				connect_wallet: 'Connect Wallet',
 				disconnect_wallet: 'Disconnect Wallet',
@@ -481,7 +481,7 @@ export default {
 	WelcomeScreen: {
 		referral_code_applied: 'Referral code applied',
 		wave_goodbye: 'Wave hello to\nstable money!',
-		easily: 'Easily send, save and invest with Minke',
+		easily: 'Use DeFi, NFTs and Stablecoins with Minke',
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import Existing Wallet',
@@ -834,7 +834,7 @@ export default {
 				address_copied: 'Address copied!'
 			},
 			SelectorModal: {
-				add_funds: 'Add funds',
+				add_funds: 'Deposit Funds',
 				buy_crypto: 'Buy crypto',
 				apple_card_transfer: '{{pay}}, card or bank transfer',
 				send_from_exchange: 'Send from Binance, Coinbase, others',
@@ -867,8 +867,8 @@ export default {
 							'Your new favourite way to use stablecoins like USDC and USDT. Buy, send, save and invest with zero gas-fees.'
 					},
 					Step1: {
-						add_funds: 'Add funds',
-						you_can_buy: 'You can buy USDC in 3 clicks with Apple Pay or your local payment solution.'
+						add_funds: 'Deposit Funds',
+						you_can_buy: 'You can transfer funds from your favorite exchange.'
 					},
 					Step2: {
 						save: 'Save & Invest',
@@ -930,7 +930,7 @@ export default {
 			ok_got_it: 'OK, got it',
 			send: 'Send',
 			add_contact: 'Add Contact',
-			add_funds_to_start: 'Add funds to start',
+			add_funds_to_start: 'Deposit funds to start',
 			share: 'Share',
 			pay_with: 'Pay with ',
 			use_code: 'Use code',
@@ -962,7 +962,7 @@ export default {
 			NoTransactions: {
 				your_transactions: 'Your transactions will appear here',
 				lets_get_started: "Let's get started?",
-				add_funds: 'Add funds to start'
+				add_funds: 'Deposit funds to start'
 			}
 		},
 		Expander: {
