@@ -19,7 +19,7 @@ export const SelectorModal: React.FC<SelectorModalProps> = ({ onBuy, onExchange 
 			<Text mb="s" weight="bold" type="hMedium">
 				{i18n.t('Containers.AddFunds.SelectorModal.add_funds')}
 			</Text>
-			<View style={{ display: 'none' }}>
+			<View>
 				{os === 'android' ? (
 					<ListItem
 						tagType="svg"

@@ -11,6 +11,7 @@ import { getPrices, makeOrder, pickPaymentMethodFromName } from '@models/banxa';
 import { Network, networks } from '@models/network';
 import { Currency } from '@models/types/currency.types';
 import { MinkeToken, TopupToken } from '@models/types/token.types';
+import { openPeerBuyQuote } from '@src/services/apis';
 import { buyQuote } from '@src/services/apis/moonpay/moonpay';
 import { euroCountries } from '@src/styles/countries';
 import { countries } from '@styles';
@@ -36,6 +37,7 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 	const { currencies, providers } = useCurrencies();
 	const { country } = useCountry();
 	const { i18n, countries: banxaCountries } = useLanguage();
+	const useOpenPeer = currency && providers.openpeer.includes(currency);
 	const useBanxa = currency && providers.banxa.includes(currency);
 	const useMoonpay = currency && providers.moonpay.includes(currency);
 	const moonPaySpecialButton = useMoonpay && ['BRL', 'EUR', 'GBP'].includes(currency.code);
@@ -211,8 +213,30 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 			Number(formatedValue) > 0
 		) {
 			setFiat(false);
-			if (useMoonpay) {
-				setLoadingPrices(true);
+			setLoadingPrices(true);
+
+			if (useOpenPeer) {
+				const params = {
+					chain_id: token.chainId,
+					token_address: token.address,
+					fiat_currency_code: currency.code,
+					token_amount: Number(formatedValue)
+				};
+
+				console.log({ params });
+				const data = await openPeerBuyQuote(params);
+				const { error: apiError, price } = data;
+
+				if (apiError) {
+					addError(apiError);
+					setFiatAmount('');
+				} else if (data) {
+					console.log(data);
+					setFiatAmount(price);
+					setTokenAmount(formatedValue);
+				}
+				setLoadingPrices(false);
+			} else if (useMoonpay) {
 				const params = {
 					currencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
 					quoteCurrencyCode: (token.moonpaySymbol || token.symbol).toLowerCase(),
@@ -233,7 +257,6 @@ const useAddFundsScreen = (topupToken?: MinkeToken) => {
 				}
 				setLoadingPrices(false);
 			} else if (useBanxa) {
-				setLoadingPrices(true);
 				const locationCountry = banxaCountries.find(({ iso }) => iso === currency.country);
 				const paymentMethod = await pickPaymentMethodFromName(locationCountry!.paymentName!);
 				const params = {

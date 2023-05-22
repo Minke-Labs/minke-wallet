@@ -41,4 +41,6 @@ declare module '@env' {
 	export const TWITTER_API_SECRET: string;
 	export const TWITTER_ACCESS_TOKEN: string;
 	export const TWITTER_ACCESS_TOKEN_SECRET: string;
+	export const OPENPEER_API_URL: string;
+	export const OPENPEER_API_KEY: string;
 }

@@ -26,8 +26,7 @@ const Routes: React.FC = () => {
 	const { address, walletId } = state;
 	RNUxcam.setUserIdentity(address);
 
-	// const initialScreen = walletId ? 'HomeScreen' : 'WelcomeScreen';
-	const initialScreen = 'Test';
+	const initialScreen = walletId ? 'HomeScreen' : 'WelcomeScreen';
 
 	const urlRedirect = (event: any) => {
 		const { url } = event;

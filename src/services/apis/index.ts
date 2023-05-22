@@ -1,5 +1,6 @@
-import { createReferralCode, createReferral, getUsedReferralCode } from './minke/minke';
-import { getCurrencies, getCountries } from './moonpay/moonpay';
+import { createReferral, createReferralCode, getUsedReferralCode } from './minke/minke';
+import { getCountries, getCurrencies } from './moonpay/moonpay';
+import { buyQuote as openPeerBuyQuote, getCurrencies as getOpenPeerCurrencies } from './openpeer/openpeer';
 import { getAssets, getCollectionStats } from './openSea/openSea';
 import { fetchNFTNetWorth } from './zapper/zapper';
 
@@ -11,5 +12,7 @@ export {
 	getCountries,
 	getAssets,
 	fetchNFTNetWorth,
-	getCollectionStats
+	getCollectionStats,
+	getOpenPeerCurrencies,
+	openPeerBuyQuote
 };
