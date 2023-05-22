@@ -1,23 +1,17 @@
-import React from 'react';
-import RNUxcam from 'react-native-ux-cam';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {
-	ModalBase,
-	TokenCard,
-	HapticButton,
-	ModalReusables,
-	Header,
-	GasSelector,
-	Paper,
-	WatchModeTag,
-	Warning,
-	View
-} from '@components';
-import { BasicLayout } from '@layouts';
-import { useNavigation, useLanguage } from '@hooks';
 import { debounce } from 'lodash';
+import React from 'react';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import RNUxcam from 'react-native-ux-cam';
+
+import {
+	GasSelector, HapticButton, Header, ModalBase, ModalReusables, Paper, TokenCard, View, Warning,
+	WatchModeTag
+} from '@components';
+import { useLanguage, useNavigation } from '@hooks';
+import { BasicLayout } from '@layouts';
 import { MinkeToken } from '@models/types/token.types';
 import { os } from '@styles';
+
 import useWithdrawScreen from './WithdrawScreen.hooks';
 
 const WithdrawScreen = () => {

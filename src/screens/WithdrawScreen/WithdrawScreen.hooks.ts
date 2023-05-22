@@ -1,28 +1,22 @@
-import React, { useEffect } from 'react';
-import { Keyboard } from 'react-native';
-import { useState } from '@hookstate/core';
-import { MinkeToken } from '@models/types/token.types';
-import { globalExchangeState } from '@stores/ExchangeStore';
-import {
-	useAmplitude,
-	useNavigation,
-	useBalances,
-	useNativeToken,
-	useBiconomy,
-	useTransactions,
-	useWalletManagement,
-	useGlobalWalletState,
-	useDepositProtocols
-} from '@hooks';
-import Logger from '@utils/logger';
+import { constants } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import { toBn } from 'evm-bn';
-import WithdrawService from '@src/services/withdraw/WithdrawService';
-import { captureException } from '@sentry/react-native';
-import { constants } from 'ethers';
+import React, { useEffect } from 'react';
+import { Keyboard } from 'react-native';
+
+import {
+	useAmplitude, useBalances, useBiconomy, useDepositProtocols, useGlobalWalletState,
+	useNativeToken, useNavigation, useTransactions, useWalletManagement
+} from '@hooks';
+import { useState } from '@hookstate/core';
+import { availableDepositProtocols } from '@models/deposit';
 import gasLimits, { Networks } from '@models/gas';
 import { networks } from '@models/network';
-import { availableDepositProtocols } from '@models/deposit';
+import { MinkeToken } from '@models/types/token.types';
+import { captureException } from '@sentry/react-native';
+import WithdrawService from '@src/services/withdraw/WithdrawService';
+import { globalExchangeState } from '@stores/ExchangeStore';
+import Logger from '@utils/logger';
 
 const useWithdrawScreen = () => {
 	const { biconomy, gaslessEnabledMatic } = useBiconomy();

@@ -1,13 +1,17 @@
-import React, { useEffect, useMemo } from 'react';
-import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
-import { filterPendingTransactions } from '@models/transaction';
-import { useFocusEffect } from '@react-navigation/native';
 import { format } from 'date-fns';
-import { thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp } from '@models/timestamps';
 import { groupBy } from 'lodash';
+import React, { useEffect, useMemo } from 'react';
+
 import { useState } from '@hookstate/core';
+import {
+	thisMonthTimestamp, thisYearTimestamp, todayTimestamp, yesterdayTimestamp
+} from '@models/timestamps';
+import { filterPendingTransactions } from '@models/transaction';
+import { getZapperTransactions, ZapperTransaction } from '@models/wallet';
+import { useFocusEffect } from '@react-navigation/native';
 import { globalWalletState } from '@stores/WalletStore';
 import Logger from '@utils/logger';
+
 import useLanguage from '../../hooks/useLanguage';
 
 export interface TransactionPeriod {
@@ -43,10 +47,10 @@ const TransactionsProvider: React.FC = ({ children }) => {
 	const fetchTransactions = async () => {
 		setLoading(true);
 		try {
+			setLastTransationsFetch(new Date().getTime());
 			const { data = [] } = await getZapperTransactions(address!);
 			state.merge({ transactions: data });
 			setPendingTransactions(filterPendingTransactions(pendingTransactions, data));
-			setLastTransationsFetch(new Date().getTime());
 		} catch (error) {
 			Logger.log('Zapper transactions error', error);
 		}

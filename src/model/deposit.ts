@@ -1,8 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BigNumber, Contract } from 'ethers';
-import { networks, selectedNetwork } from './network';
-import { MinkeToken } from './types/token.types';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { networks } from './network';
 import { DepositableToken } from './types/depositTokens.types';
+import { MinkeToken } from './types/token.types';
 import { erc20abi, getProvider } from './wallet';
 
 export const usdCoinSettingsKey = '@minke:usdcoin';
@@ -61,12 +63,6 @@ export const usdCoin = async (): Promise<string> => {
 };
 
 export const availableDepositProtocols: DepositProtocols = {
-	mstable: {
-		id: 'mstable',
-		name: 'mStable',
-		icon: 'MTA',
-		chainIds: [networks.matic.chainId]
-	},
 	aave: {
 		id: 'aave',
 		name: 'Aave',
@@ -75,14 +71,7 @@ export const availableDepositProtocols: DepositProtocols = {
 	}
 };
 
-export const fetchDepositProtocol = async (): Promise<DepositProtocol> => {
-	const { chainId } = await selectedNetwork();
-	if (chainId === networks.mainnet.chainId) {
-		return availableDepositProtocols.aave;
-	}
-
-	return availableDepositProtocols.mstable;
-};
+export const fetchDepositProtocol = async (): Promise<DepositProtocol> => availableDepositProtocols.aave;
 
 interface DepositProtocols {
 	[key: string]: DepositProtocol;
