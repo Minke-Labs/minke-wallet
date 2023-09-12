@@ -1,95 +1,43 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useEffect } from 'react';
 import {
 	View,
 	TouchableWithoutFeedback,
 	Keyboard,
-	Modal as RNModal,
-	Animated as ReactAnimated
+	Modal
 } from 'react-native';
 import Animated, {
-	EasingNode,
-	interpolate,
 	useAnimatedStyle,
-	useDerivedValue,
 	useSharedValue,
-	withTiming,
-	timing
+	withTiming
 } from 'react-native-reanimated';
-import { useTheme } from '@hooks';
-import {
-	screenHeight,
-	navigationBarHeight,
-	statusBar
-} from '@styles';
+import React = require('react');
 import styles from './ModalBase.styles';
-
-interface ModalBaseProps {
-	isVisible: boolean;
-	onDismiss: () => void;
-}
+import { ModalBaseProps } from './ModalBase.types';
 
 const ModalBase: React.FC<ModalBaseProps> = ({ children, onDismiss, isVisible }) => {
-	const [topAnimated] = useState(new Animated.Value(screenHeight));
-
-	const { colors } = useTheme();
-	const top = useSharedValue(screenHeight);
-
-	const isActive = useDerivedValue<boolean>(() => {
-		if (top.value > screenHeight - 10) return false;
-		return true;
-	}, [top]);
+	const opacity = useSharedValue(0);
 
 	const backdropAnimatedStyle = useAnimatedStyle(() => ({
-		display: isActive.value ? 'flex' : 'none',
-		opacity: interpolate(top.value, [0, screenHeight], [1, 0])
+		opacity: opacity.value * 0.6
 	}));
 
-	const animatedStyles = ({
-		transform: [{ translateY: topAnimated }]
-	});
-
-	const animateFocus = () => {
-		ReactAnimated.parallel([
-			// @ts-ignore
-			timing(topAnimated, {
-				toValue: 0 - navigationBarHeight - statusBar,
-				duration: 200,
-				easing: EasingNode.linear
-			})
-		]).start();
-	};
-
 	useEffect(() => {
-		top.value = withTiming(isVisible ? 0 : screenHeight);
-		if (!isVisible) {
-			Keyboard.dismiss();
-		}
-		animateFocus();
-	}, [isVisible, isActive]);
+		opacity.value = withTiming(isVisible ? 1 : 0);
+		if (!isVisible) Keyboard.dismiss();
+	}, [isVisible]);
 
-	if (!isVisible) return <View />;
+	if (!isVisible) return null;
 
 	return (
-		<RNModal transparent visible={isVisible}>
+		<Modal transparent visible={isVisible}>
 			<View style={styles.fullScreen}>
 				<TouchableWithoutFeedback onPress={onDismiss}>
-					<Animated.View style={[
-						styles.backdrop,
-						backdropAnimatedStyle
-					]}
-					/>
+					<Animated.View style={[styles.backdrop, backdropAnimatedStyle]} />
 				</TouchableWithoutFeedback>
-				<Animated.View
-					style={[
-						styles.container,
-						animatedStyles,
-						{ backgroundColor: colors.background1 }
-					]}
-				>
-					{children}
-				</Animated.View>
+				{children}
 			</View>
-		</RNModal>
+		</Modal>
 	);
 };
 
