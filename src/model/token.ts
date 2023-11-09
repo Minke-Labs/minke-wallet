@@ -5,6 +5,7 @@ import * as qs from 'qs';
 
 import Logger from '@utils/logger';
 
+import { ZERO_X_API_KEY } from '@env';
 import { stables } from './depositTokens';
 import { networks } from './network';
 import { InvestmentToken, MinkeToken, MinkeTokenList } from './types/token.types';
@@ -102,7 +103,10 @@ export const getExchangePrice = async ({
 		quoteParams.buyAmount = formatUnits(toBn(amount, destDecimals), 'wei');
 	}
 	const url = `${apiUrl0x}swap/v1/${quote ? 'quote' : 'price'}?${qs.stringify(quoteParams)}`;
-	const result = await fetch(url);
+	const headers = {
+		'0x-api-key': (ZERO_X_API_KEY || process.env.ZERO_X_API_KEY)!
+	};
+	const result = await fetch(url, { headers });
 	return result.json();
 };
 

@@ -1,6 +1,9 @@
 import {
-	ALCHEMY_API_KEY_ETHEREUM, ALCHEMY_API_KEY_GOERLI, ALCHEMY_API_KEY_MATIC,
-	ALCHEMY_API_URL_POLYGON_MAINNET, BICONOMY_API_KEY_POLYGON_MAINNET,
+	ALCHEMY_API_KEY_ETHEREUM,
+	ALCHEMY_API_KEY_GOERLI,
+	ALCHEMY_API_KEY_MATIC,
+	ALCHEMY_API_URL_POLYGON_MAINNET,
+	BICONOMY_API_KEY_POLYGON_MAINNET,
 	QUICK_NODE_API_URL_BSC_MAINNET
 } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -288,15 +291,6 @@ export const networks: Networks = {
 				chainId: 1
 			},
 			{
-				symbol: 'SLP',
-				address: '0xcc8fa225d80b9c7d42f96e9570156c65d6caaa25',
-				decimals: 0,
-				name: 'Smooth Love Potion',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 1
-			},
-			{
 				symbol: 'BAL',
 				address: '0xba100000625a3754423978a60c9317c58a424e3d',
 				decimals: 18,
@@ -381,26 +375,10 @@ export const networks: Networks = {
 		coingeckoPlatform: 'polygon-pos',
 		suggestedTokens: [
 			{
-				symbol: 'MTA',
-				address: '0xF501dd45a1198C2E1b5aEF5314A68B9006D842E0',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 137
-			},
-			{
 				symbol: 'QUICK',
 				address: '0xB5C064F955D8e7F38fE0460C556a72987494eE17',
 				decimals: 18,
 				id: 'quickswap',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 137
-			},
-			{
-				symbol: 'PolyDoge',
-				address: '0x8A953CfE442c5E8855cc6c61b1293FA648BAE472',
-				decimals: 18,
 				balance: '0',
 				balanceUSD: 0,
 				chainId: 137
@@ -450,26 +428,6 @@ export const networks: Networks = {
 				symbol: 'LDO',
 				name: 'Lido DAO',
 				address: '0xc3c7d422809852031b44ab29eec9f1eff2a58756',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 137
-			},
-			{
-				id: 'ix-token',
-				symbol: 'IXT',
-				name: 'IX',
-				address: '0xe06bd4f5aac8d0aa337d13ec88db6defc6eaeefe',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 137
-			},
-			{
-				id: 'polyroll',
-				symbol: 'ROLL',
-				name: 'Polyroll',
-				address: '0xc68e83a305b0fad69e264a1769a0a070f190d2d6',
 				decimals: 18,
 				balance: '0',
 				balanceUSD: 0,
@@ -644,81 +602,6 @@ export const networks: Networks = {
 		coingeckoPlatform: 'binance-smart-chain',
 		suggestedTokens: [
 			{
-				id: 'nelore-coin',
-				symbol: 'NLC',
-				name: 'Nelore Coin',
-				address: '0x5f320c3b8f82acfe8f2bb1c85d63aa66a7ff524f',
-				decimals: 9,
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				id: 'xmine',
-				symbol: 'XMN',
-				name: 'Xmine',
-				address: '0x0fa9651a0ecc19906843c13c60443300b9d37355',
-				decimals: 9,
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				address: '0x0f4C0d01F4057dCA10C17120076Bb45A15d4E7Cb',
-				decimals: 18,
-				symbol: 'VLZ',
-				name: 'ValozCrypto',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				address: '0xfa0c91BE7FfFd2e0Ae7589f72722933f6B9592Db',
-				decimals: 18,
-				symbol: 'SILOS',
-				name: 'SILOS Coin',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				id: 'imov',
-				address: '0x7B8779e01d117ec7e220f8299a6f93672E8eae23',
-				decimals: 18,
-				symbol: 'IMT',
-				name: 'IMOV',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				address: '0x21f59c8d31ef2e3e472793b28cac4553aac7a72a',
-				decimals: 18,
-				symbol: 'VINO',
-				name: 'Vinocoin',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				address: '0x9E95A285eB16a4Dc6254F5354E8C2214B3E4a9D4',
-				decimals: 18,
-				symbol: 'Bulls',
-				name: 'Bulls Coin',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				address: '0x82ac10793401d79ee38ad0b7d7797ada14c6d029',
-				decimals: 18,
-				symbol: 'ABACATE',
-				name: 'Abacate Token',
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
 				id: 'axie-infinity',
 				symbol: 'AXS',
 				name: 'Axie Infinity',
@@ -743,16 +626,6 @@ export const networks: Networks = {
 				symbol: 'WIN',
 				name: 'WINkLink BSC',
 				address: '0xaef0d72a118ce24fee3cd1d43d383897d05b4e99',
-				decimals: 18,
-				balance: '0',
-				balanceUSD: 0,
-				chainId: 56
-			},
-			{
-				id: 'titano',
-				symbol: 'TITANO',
-				name: 'Titano',
-				address: '0x4e3cabd3ad77420ff9031d19899594041c420aee',
 				decimals: 18,
 				balance: '0',
 				balanceUSD: 0,
