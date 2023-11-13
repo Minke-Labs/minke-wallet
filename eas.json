@@ -23,7 +23,8 @@
 			"android": {
 				"image": "latest",
 				"autoIncrement": "versionCode"
-			}
+			},
+			"node": "16.18.1"
 		}
 	},
 	"submit": {

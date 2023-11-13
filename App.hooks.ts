@@ -16,8 +16,6 @@ import appsFlyer from 'react-native-appsflyer';
 import { globalWalletState } from './src/stores/WalletStore';
 
 export const useApp = () => {
-	Logger.initialize();
-
 	const walletState = useState(globalWalletState());
 	const [fontsLoaded] = useFonts({
 		Inter_400Regular,
@@ -27,7 +25,9 @@ export const useApp = () => {
 		Inter_800ExtraBold
 	});
 
-	const initializeServices = () => {
+	const initializeServices = async () => {
+		Logger.initialize();
+
 		if (!__DEV__) {
 			// APPSFLYER
 			appsFlyer.initSdk(

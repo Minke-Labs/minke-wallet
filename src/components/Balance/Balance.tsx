@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { numberFormat, tokenBalanceFormat } from '@helpers/utilities';
-import { useGlobalWalletState, useLanguage, useNavigation, useTheme } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation, useTheme, useWalletEnabled } from '@hooks';
 import { MinkeToken } from '@models/types/token.types';
 import Paper from '@src/components/Paper/Paper';
 import SendModalComponent from '@src/components/SendModalComponent/SendModalComponent';
@@ -23,6 +23,7 @@ const Balance: React.FC<BalanceProps> = ({ coin, stablecoin, buySellToken }) => 
 	const { i18n } = useLanguage();
 	const { colors } = useTheme();
 	const navigation = useNavigation();
+	const { walletEnabled } = useWalletEnabled();
 	const {
 		network: { topUpTokens }
 	} = useGlobalWalletState();
@@ -63,40 +64,44 @@ const Balance: React.FC<BalanceProps> = ({ coin, stablecoin, buySellToken }) => 
 				</View>
 
 				<View h={56} row>
-					<TouchableOpacity activeOpacity={0.6} onPress={handleBuy} style={{ flex: 1 }}>
-						<View
-							main="center"
-							cross="center"
-							style={{
-								flex: 1,
-								borderRightWidth: 1,
-								borderRightColor: colors.background1
-							}}
-						>
-							<Text type="lLarge" color="cta1" weight="semiBold">
-								{i18n.t('Components.Balance.Buttons.buy')}
-							</Text>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						activeOpacity={0.6}
-						onPress={() => navigation.navigate('ExchangeScreen', { sourceToken: coin })}
-						style={{ flex: 1 }}
-					>
-						<View
-							main="center"
-							cross="center"
-							style={{
-								flex: 1,
-								borderRightWidth: 1,
-								borderRightColor: colors.background1
-							}}
-						>
-							<Text type="lLarge" color="cta1" weight="semiBold">
-								{i18n.t('Components.Balance.Buttons.sell')}
-							</Text>
-						</View>
-					</TouchableOpacity>
+					{walletEnabled && (
+						<>
+							<TouchableOpacity activeOpacity={0.6} onPress={handleBuy} style={{ flex: 1 }}>
+								<View
+									main="center"
+									cross="center"
+									style={{
+										flex: 1,
+										borderRightWidth: 1,
+										borderRightColor: colors.background1
+									}}
+								>
+									<Text type="lLarge" color="cta1" weight="semiBold">
+										{i18n.t('Components.Balance.Buttons.buy')}
+									</Text>
+								</View>
+							</TouchableOpacity>
+							<TouchableOpacity
+								activeOpacity={0.6}
+								onPress={() => navigation.navigate('ExchangeScreen', { sourceToken: coin })}
+								style={{ flex: 1 }}
+							>
+								<View
+									main="center"
+									cross="center"
+									style={{
+										flex: 1,
+										borderRightWidth: 1,
+										borderRightColor: colors.background1
+									}}
+								>
+									<Text type="lLarge" color="cta1" weight="semiBold">
+										{i18n.t('Components.Balance.Buttons.sell')}
+									</Text>
+								</View>
+							</TouchableOpacity>
+						</>
+					)}
 					<TouchableOpacity activeOpacity={0.6} onPress={() => setSendModal(true)} style={{ flex: 1 }}>
 						<View main="center" cross="center" style={{ flex: 1 }}>
 							<Text type="lLarge" color="cta1" weight="semiBold">

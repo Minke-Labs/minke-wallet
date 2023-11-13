@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useBalances, useLanguage, useNavigation } from '@hooks';
+import { useLanguage, useNavigation, useWalletEnabled } from '@hooks';
 import { RootStackParamList } from '@src/routes/types.routes';
 
 import IconItem from '../../IconItem/IconItem';
@@ -15,7 +15,7 @@ interface ActionsModalProps {
 const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onReceivePress }) => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
-	const { balance } = useBalances();
+	const { walletEnabled } = useWalletEnabled();
 
 	const handleNavigate = (path: keyof RootStackParamList) => {
 		onDismiss();
@@ -24,7 +24,7 @@ const ActionsModal: React.FC<ActionsModalProps> = ({ onDismiss, onSendPress, onR
 
 	return (
 		<View>
-			{balance > 0 && (
+			{walletEnabled && (
 				<IconItem
 					onPress={() => handleNavigate('ExchangeScreen')}
 					mb="s"

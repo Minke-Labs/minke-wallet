@@ -32,6 +32,7 @@ import useWallets from './useWallets';
 import useWalletState from './useWalletState';
 import useWyreApplePay from './useWyreApplePay';
 import useWyreOrderStatus from './useWyreOrderStatus';
+import useWalletEnabled from './useWalletEnabled';
 
 export {
 	useCountry,
@@ -67,5 +68,6 @@ export {
 	useNFT,
 	useBalances,
 	useDepositProtocols,
-	useMinkeNFT
+	useMinkeNFT,
+	useWalletEnabled
 };

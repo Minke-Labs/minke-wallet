@@ -43,4 +43,14 @@ const claimRewards = async (params: RewardClaimParams): Promise<RewardClaim> => 
 	return data;
 };
 
-export { createReferralCode, createReferral, getUsedReferralCode, claimRewards, getRewards };
+const disabledWallet = async (params: { wallet: string }): Promise<{ enabled: boolean }> => {
+	try {
+		const { status, data } = await instance.get('/disabled_wallet', { params });
+		if (status !== 200) Logger.sentry('Minke disabledWallet API failed', params);
+		return data;
+	} catch (_) {
+		return { enabled: false };
+	}
+};
+
+export { createReferralCode, createReferral, getUsedReferralCode, claimRewards, getRewards, disabledWallet };

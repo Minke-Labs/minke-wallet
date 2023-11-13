@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
+import { useGlobalWalletState, useLanguage, useNavigation, useWalletEnabled } from '@hooks';
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import Text from '@src/components/Text/Text';
 import TokenItem from '@src/components/TokenItem/TokenItem';
@@ -29,7 +29,8 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 		network: { topUpTokens }
 	} = useGlobalWalletState();
 	const { balanceUSD, balance } = token;
-	const showBuyButton = (balanceUSD || 0) === 0 && (balance || '0') === '0';
+	const { walletEnabled } = useWalletEnabled();
+	const showBuyButton = walletEnabled && (balanceUSD || 0) === 0 && (balance || '0') === '0';
 
 	const handleBuy = (coin: MinkeToken) => {
 		if (topUpTokens.map((t) => t.symbol).includes(coin.symbol)) {
@@ -52,7 +53,7 @@ const TokenItemCard: React.FC<TokenItemCardProps> = ({
 						/>
 					</Touchable>
 				</View>
-				{showBuyButton && false && (
+				{showBuyButton && (
 					<View h="100%" main="center" cross="flex-end" pr="xs">
 						<Touchable onPress={() => handleBuy(token)}>
 							<Text type="lLarge" weight="semiBold" color="cta1">
