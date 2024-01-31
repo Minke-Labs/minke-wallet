@@ -346,7 +346,7 @@ export const networks: Networks = {
 				symbol: 'USDC',
 				moonpaySymbol: 'USDC_POLYGON',
 				wyreSymbol: 'MUSDC',
-				address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+				address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
 				decimals: 6,
 				suggestedBuyAmount: 100,
 				chainId: 137

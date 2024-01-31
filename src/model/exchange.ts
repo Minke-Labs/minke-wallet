@@ -11,6 +11,7 @@ export const POLYGON_GASLESS_TOKENS = [
 	'0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6', // WBTC
 	'0x25788a1a171ec66da6502f9975a15b609ff54cf6', // PoolTogether
 	'0x2791bca1f2de4661ed88a30c99a7a9449aa84174', // USDC
+	'0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', // USDC.e
 	'0x50b728d8d964fd00c2d0aad81718b71311fef68a', // Synthetix Network Token (PoS)
 	'0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39', // LINK
 	'0x6265b466d9e6368057ed631caee9c9f84c1a2ad3', // Minke imUSD Vault
