@@ -21,7 +21,7 @@
 				"autoIncrement": "buildNumber"
 			},
 			"android": {
-				"image": "ubuntu-18.04-jdk-11-ndk-r19c",
+				"image": "ubuntu-20.04-jdk-11-ndk-r19c",
 				"autoIncrement": "versionCode"
 			},
 			"node": "16.18.1"
