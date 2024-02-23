@@ -480,12 +480,14 @@ export default {
 	},
 	WelcomeScreen: {
 		referral_code_applied: 'Referral code applied',
-		wave_goodbye: 'Wave hello to\nstable money!',
-		easily: 'Use DeFi, NFTs and Stablecoins with Minke',
+		wave_goodbye: 'Minke is\n shutting down',
+		easily: "We'll be shutting down Minke over the next couple months. Please recover your seed phrase and import it into another wallet like Coinbase Wallet or Metamask. Minke will no longer be available on June 1 2024.",
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import Existing Wallet',
 		i_have_a_referral_code: 'I have a referral code',
+		view_backups: 'View Backups',
+		go_to_wallet: 'Go to Wallet',
 		ImportWalletModal: {
 			add_wallet: 'Add Wallet',
 			seed_or_key: 'Seed phrase or private key',

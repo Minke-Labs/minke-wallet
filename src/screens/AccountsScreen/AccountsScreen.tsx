@@ -15,11 +15,7 @@ const AccountsScreen = () => {
 
 	return (
 		<BasicLayout>
-			<Header
-				title={i18n.t('AccountsScreen.accounts')}
-				rightAction={i18n.t('AccountsScreen.import_or_restore')}
-				onRightActionClick={onImportWallet}
-			/>
+			<Header title={i18n.t('AccountsScreen.accounts')} />
 
 			<View style={styles.container}>
 				<SafeAreaView>

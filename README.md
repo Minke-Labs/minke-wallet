@@ -3,7 +3,7 @@
 [Minke Ethereum and Polygon Wallet](https://www.minke.app/)
 
 Minke iOS Wallet
-@@ -8,11 +9,27 @@ How to lauch app localy:
+How to lauch app localy:
 
 -   clone project from github
 -   run `npm install -g expo-cli`

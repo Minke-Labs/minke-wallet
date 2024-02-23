@@ -12,39 +12,15 @@ interface ImportModalProps {
 
 const ImportModal: React.FC<ImportModalProps> = ({ onImportSeed, onDismiss }) => {
 	const { i18n } = useLanguage();
-	const { toggleWalletConnect, connected, walletsBackedUp, onICloudBackup, address } = useImportWalletScreen();
+	const { walletsBackedUp, onICloudBackup } = useImportWalletScreen();
 
 	const backupICloud = async () => {
 		onDismiss();
 		await onICloudBackup();
 	};
 
-	const walletConnect = () => {
-		toggleWalletConnect();
-		onDismiss();
-	};
-
 	return (
 		<>
-			<IconItem
-				title={
-					connected
-						? `${i18n.t('HomeScreen.Assets.Modals.disconnect_wallet')} - ${smallWalletAddress(address)}`
-						: i18n.t('HomeScreen.Assets.Modals.connect_wallet')
-				}
-				icon="help"
-				onPress={walletConnect}
-				mb="m"
-				images
-			/>
-
-			<IconItem
-				title={i18n.t('HomeScreen.Assets.Modals.import_with_secret_phrase')}
-				icon="key"
-				onPress={onImportSeed}
-				mb="m"
-			/>
-
 			<IconItem
 				title={i18n.t('HomeScreen.Assets.Modals.restore_from_cloud', { cloudPlatform })}
 				{...(walletsBackedUp > 0 && {

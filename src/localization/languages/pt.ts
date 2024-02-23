@@ -482,12 +482,14 @@ export default {
 	},
 	WelcomeScreen: {
 		referral_code_applied: 'Código de indicação aplicado',
-		wave_goodbye: 'Diga olá para\ndinheiro estável!',
-		easily: 'Envie, economize e invista facilmente com a Minke',
+		wave_goodbye: 'A Minke\n está encerrando',
+		easily: 'Encerraremos a Minke nos próximos meses. Por favor, recupere sua seed phrase e importe-a para outra carteira, como Coinbase Wallet ou Metamask. A Minke não estará mais disponível a partir de 1º de junho de 2024.',
 		creating: 'Criando carteira',
 		create: 'Criar Carteira',
 		import_or_restore: 'Importar Carteira Existente',
 		i_have_a_referral_code: 'Eu tenho um código de indicação',
+		view_backups: 'Ver Backups',
+		go_to_wallet: 'Ir para a Wallet',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
 			seed_or_key: 'Frase de recuperação ou chave privada',

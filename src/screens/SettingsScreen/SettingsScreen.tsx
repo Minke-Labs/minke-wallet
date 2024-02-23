@@ -70,13 +70,6 @@ const SettingsScreen = () => {
 							mb="m"
 						/>
 						<IconItem
-							title={i18n.t('SettingsScreen.new_wallet')}
-							icon="walletStroke"
-							onPress={onCreateWallet}
-							rightButton
-							mb="m"
-						/>
-						<IconItem
 							title={i18n.t('SettingsScreen.enter_referral_code')}
 							icon="borrowStroke"
 							onPress={onEnterReferralCode}

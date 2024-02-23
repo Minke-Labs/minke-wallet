@@ -6,16 +6,23 @@ import RNUxcam from 'react-native-ux-cam';
 import { Header } from '@components';
 import ListItem from './ListItem/ListItem';
 import styles from './BackupSettingsScreen.styles';
+import { cloudPlatform } from '@src/hooks/useWalletCloudBackup';
 import { useBackupSettingsScreen } from './BackupSettingsScreen.hooks';
+import useImportWalletScreen from '../ImportWalletScreen/ImportWalletScreen.hooks';
 
 const BackupSettingsScreen = () => {
 	RNUxcam.tagScreenName('BackupSettingsScreen');
 	const { i18n } = useLanguage();
 	const { wallets, onSelectWallet } = useBackupSettingsScreen();
+	const { onICloudBackup } = useImportWalletScreen();
 
 	return (
 		<BasicLayout>
-			<Header title={i18n.t('BackupSettingsScreen.title')} />
+			<Header
+				title={i18n.t('BackupSettingsScreen.title')}
+				rightAction={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
+				onRightActionClick={onICloudBackup}
+			/>
 
 			<View style={styles.container}>
 				<SafeAreaView>

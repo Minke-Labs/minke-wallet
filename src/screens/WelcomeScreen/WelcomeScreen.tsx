@@ -9,14 +9,13 @@ import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
 import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';
 import styles from './WelcomeScreen.styles';
+import { useBackupSettingsScreen } from '../BackupSettingsScreen/BackupSettingsScreen.hooks';
 
 const WelcomeScreen = () => {
 	RNUxcam.tagScreenName('WelcomeScreen');
 	const { i18n } = useLanguage();
-	const { onCreateWallet, onImportWallet, loading } = useWelcomeScreen();
 	const navigation = useNavigation();
-	const { disableCode } = useEnterReferralCodeScreen();
-	const { address } = useGlobalWalletState();
+	const { walletId } = useGlobalWalletState();
 
 	return (
 		<BasicLayout>
@@ -28,44 +27,24 @@ const WelcomeScreen = () => {
 						<Text center weight="extraBold" type="hLarge" marginBottom={16}>
 							{i18n.t('WelcomeScreen.wave_goodbye')}
 						</Text>
-						<Text center color="text2" type="bMedium" width={198}>
+						<Text center color="text2" type="bMedium" width={250}>
 							{i18n.t('WelcomeScreen.easily')}
 						</Text>
 					</View>
 
 					<View style={styles.buttonContainer}>
-						{loading ? (
-							<LoadingScreen title={i18n.t('WelcomeScreen.creating')} />
-						) : (
-							<Button title={i18n.t('WelcomeScreen.create')} onPress={onCreateWallet} mb="xs" />
-						)}
-						{!loading && (
-							<>
-								<Button
-									title={i18n.t('WelcomeScreen.import_or_restore')}
-									mode="outlined"
-									onPress={onImportWallet}
-									mb="xs"
-								/>
-								{disableCode ? (
-									<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-										<Text type="a" weight="medium" center color="alert3">
-											{i18n.t('WelcomeScreen.referral_code_applied')}
-										</Text>
-										<Icon name="checkmark" color="cta1" size={20} style={{ marginLeft: 8 }} />
-									</View>
-								) : (
-									!!address && (
-										<Touchable
-											onPress={() => navigation.navigate('EnterReferralCodeScreen')}
-										>
-											<Text type="a" weight="semiBold" color="cta1">
-												{i18n.t('WelcomeScreen.i_have_a_referral_code')}
-											</Text>
-										</Touchable>
-									)
-								)}
-							</>
+						<Button
+							title={i18n.t('WelcomeScreen.view_backups')}
+							mb="xs"
+							onPress={() => navigation.navigate('BackupSettingsScreen')}
+						/>
+
+						{!!walletId && (
+							<Touchable onPress={() => navigation.navigate('HomeScreen')}>
+								<Text type="a" weight="semiBold" color="cta1">
+									{i18n.t('WelcomeScreen.go_to_wallet')}
+								</Text>
+							</Touchable>
 						)}
 					</View>
 				</View>

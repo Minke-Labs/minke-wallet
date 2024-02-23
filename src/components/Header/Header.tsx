@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
 				</Touchable>
 			</View>
 			{rightButton && (
-				<Touchable onPress={onRightActionClick || (() => navigation.navigate('HomeScreen'))}>
+				<Touchable onPress={onRightActionClick || (() => navigation.navigate('WelcomeScreen'))}>
 					<Text weight="semiBold" color="cta1" type="lMedium">
 						{done ? i18n.t('Components.Header.done') : rightAction}
 					</Text>

@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp b/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
-index 97e6407..4996e2a 100644
+index 97e6407..9411112 100644
 --- a/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
 +++ b/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
 @@ -2286,7 +2286,7 @@ static float YGDistributeFreeSpaceSecondPass(
@@ -20,24 +20,6 @@ index 97e6407..4996e2a 100644
          (collectedFlexItemsValues.remainingFreeSpace < 0));
  
      // STEP 6: MAIN-AXIS JUSTIFICATION & CROSS-AXIS SIZE DETERMINATION
-@@ -4236,7 +4236,7 @@ YOGA_EXPORT void YGNodeCalculateLayoutWithContext(
-       YGNodePrint(
-           node,
-           (YGPrintOptions)(
--              YGPrintOptionsLayout | YGPrintOptionsChildren |
-+              YGPrintOptionsLayout | YGPrintOptionsChildren ||
-               YGPrintOptionsStyle));
-     }
- #endif
-@@ -4298,7 +4298,7 @@ YOGA_EXPORT void YGNodeCalculateLayoutWithContext(
-         YGNodePrint(
-             nodeWithoutLegacyFlag,
-             (YGPrintOptions)(
--                YGPrintOptionsLayout | YGPrintOptionsChildren |
-+                YGPrintOptionsLayout | YGPrintOptionsChildren ||
-                 YGPrintOptionsStyle));
-       }
- #endif
 diff --git a/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp-e b/node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp-e
 new file mode 100644
 index 0000000..97e6407

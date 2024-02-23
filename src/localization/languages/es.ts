@@ -483,8 +483,8 @@ export default {
 	},
 	WelcomeScreen: {
 		referral_code_applied: 'Código de referencia aplicado',
-		wave_goodbye: 'Dile adiós\nto a la inflación!',
-		easily: 'Manda, ahorra, gasta e invierte con Minke',
+		wave_goodbye: 'Minke esta\n cerrando',
+		easily: 'Cerraremos Minke en los próximos meses. Recupere su frase secreta e impórtela a otra billetera como Coinbase Wallet o Metamask. Minke ya no estará disponible a partir del 1 de junio de 2024.',
 		creating: 'Creando wallet',
 		create: 'Crear Wallet',
 		import_or_restore: 'Importar Wallet',
