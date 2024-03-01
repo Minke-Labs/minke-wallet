@@ -3,19 +3,18 @@ import { Image } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
-import { Text, Button, LoadingScreen, Icon, Touchable, View } from '@components';
+import { Text, Button, LoadingScreen, Touchable, View } from '@components';
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { Background } from './Background/Background';
 import { useWelcomeScreen } from './WelcomeScreen.hooks';
-import useEnterReferralCodeScreen from '../EnterReferralCodeScreen/EnterReferralCodeScreen.hooks';
 import styles from './WelcomeScreen.styles';
-import { useBackupSettingsScreen } from '../BackupSettingsScreen/BackupSettingsScreen.hooks';
 
 const WelcomeScreen = () => {
 	RNUxcam.tagScreenName('WelcomeScreen');
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { walletId } = useGlobalWalletState();
+	const { onCreateWallet, loading } = useWelcomeScreen();
 
 	return (
 		<BasicLayout>
@@ -33,18 +32,30 @@ const WelcomeScreen = () => {
 					</View>
 
 					<View style={styles.buttonContainer}>
-						<Button
-							title={i18n.t('WelcomeScreen.view_backups')}
-							mb="xs"
-							onPress={() => navigation.navigate('BackupSettingsScreen')}
-						/>
+						{loading ? (
+							<LoadingScreen title={i18n.t('WelcomeScreen.creating')} />
+						) : (
+							<>
+								<Button
+									title={i18n.t('WelcomeScreen.view_backups')}
+									mb="xs"
+									onPress={() => navigation.navigate('BackupSettingsScreen')}
+								/>
 
-						{!!walletId && (
-							<Touchable onPress={() => navigation.navigate('HomeScreen')}>
-								<Text type="a" weight="semiBold" color="cta1">
-									{i18n.t('WelcomeScreen.go_to_wallet')}
-								</Text>
-							</Touchable>
+								{!!walletId ? (
+									<Touchable onPress={() => navigation.navigate('HomeScreen')}>
+										<Text type="a" weight="semiBold" color="cta1">
+											{i18n.t('WelcomeScreen.go_to_wallet')}
+										</Text>
+									</Touchable>
+								) : (
+									<Touchable onPress={onCreateWallet}>
+										<Text type="a" weight="semiBold" color="cta1">
+											{i18n.t('WelcomeScreen.create')}
+										</Text>
+									</Touchable>
+								)}
+							</>
 						)}
 					</View>
 				</View>
