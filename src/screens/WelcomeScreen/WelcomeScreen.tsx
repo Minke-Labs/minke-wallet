@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Linking } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { welcomeImg } from '@images';
@@ -29,6 +29,12 @@ const WelcomeScreen = () => {
 						<Text center color="text2" type="bMedium" width={250}>
 							{i18n.t('WelcomeScreen.easily')}
 						</Text>
+
+						<Button
+							title={i18n.t('WelcomeScreen.view_backups')}
+							mb="xs"
+							onPress={() => Linking.openURL('https://go.zengo.com/uCxL/dgur0o9n')}
+						/>
 					</View>
 
 					<View style={styles.buttonContainer}>
@@ -37,7 +43,7 @@ const WelcomeScreen = () => {
 						) : (
 							<>
 								<Button
-									title={i18n.t('WelcomeScreen.view_backups')}
+									title="Download Zengo"
 									mb="xs"
 									onPress={() => navigation.navigate('BackupSettingsScreen')}
 								/>
