@@ -481,7 +481,7 @@ export default {
 	WelcomeScreen: {
 		referral_code_applied: 'Referral code applied',
 		wave_goodbye: 'Minke is\n shutting down',
-		easily: "We'll be shutting down Minke over the next couple months. Please recover your seed phrase and import it into another wallet like Coinbase Wallet or Metamask. Minke will no longer be available on June 1 2024.",
+		easily: 'We’ll be shutting down Minke over the next couple months. Please send your assets to Zengo. Guides are available on our website www.minke.app\n\n Minke will no longer be available on July 1st 2024.',
 		creating: 'Creating wallet',
 		create: 'Create Wallet',
 		import_or_restore: 'Import Existing Wallet',
