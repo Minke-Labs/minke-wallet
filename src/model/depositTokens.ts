@@ -94,15 +94,15 @@ export const stables: Stables = {
 			address: '0x55d398326f99059ff775485246999027b3197955',
 			chainId: bsc.chainId
 		}
-	},
-	goerli: {
-		USDC: {
-			address: '0x179c54e1fEa2Cd75de3Dc5fa61869B93d8C5b317',
-			decimals: 6,
-			symbol: 'USDC',
-			chainId: goerli.chainId
-		}
 	}
+	// goerli: {
+	// 	USDC: {
+	// 		address: '0x179c54e1fEa2Cd75de3Dc5fa61869B93d8C5b317',
+	// 		decimals: 6,
+	// 		symbol: 'USDC',
+	// 		chainId: goerli.chainId
+	// 	}
+	// }
 };
 
 const depositTokens: DepositTokens = {

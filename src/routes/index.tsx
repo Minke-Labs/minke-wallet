@@ -21,7 +21,7 @@ const screenNamesArr = Object.keys(screensObj);
 
 const Routes: React.FC = () => {
 	const state = useGlobalWalletState();
-	const { address, walletId } = state;
+	const { address } = state;
 	RNUxcam.setUserIdentity(address);
 
 	// const initialScreen = walletId ? 'HomeScreen' : 'WelcomeScreen';

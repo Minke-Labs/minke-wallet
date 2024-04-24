@@ -48,11 +48,11 @@ export const Main: React.FC<MainProps> = ({ onSelectAvatar }) => {
 				mb="xs"
 				onPress={onSelectAvatar}
 			/>
-			<Button
+			{/* <Button
 				title={i18n.t('HomeScreen.Assets.Modals.AvatarModal.Main.choose')}
 				mb="xs"
 				onPress={pickImage}
-			/>
+			/> */}
 		</View>
 	);
 };

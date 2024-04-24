@@ -490,6 +490,7 @@ export default {
 		i_have_a_referral_code: 'Eu tenho um código de indicação',
 		view_backups: 'Ver Backups',
 		go_to_wallet: 'Ir para a Wallet',
+		download_zengo: 'Download Zengo',
 		ImportWalletModal: {
 			add_wallet: 'Adicionar Carteira',
 			seed_or_key: 'Frase de recuperação ou chave privada',

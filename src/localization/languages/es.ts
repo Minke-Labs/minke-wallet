@@ -489,6 +489,7 @@ export default {
 		create: 'Crear Wallet',
 		import_or_restore: 'Importar Wallet',
 		i_have_a_referral_code: 'Tengo un código de referencia',
+		download_zengo: 'Download Zengo',
 		ImportWalletModal: {
 			add_wallet: 'Agregar Wallet',
 			seed_or_key: 'Frase semilla (seed phrase) o llave privada',

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Linking, useColorScheme} from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
-import { welcomeImg } from '@images';
+import { welcomeImg, welcomeImgDark } from '@images';
 import { Text, Button, LoadingScreen, Touchable, View } from '@components';
 import { useGlobalWalletState, useLanguage, useNavigation } from '@hooks';
 import { Background } from './Background/Background';
@@ -15,12 +15,12 @@ const WelcomeScreen = () => {
 	const navigation = useNavigation();
 	const { walletId } = useGlobalWalletState();
 	const { onCreateWallet, loading } = useWelcomeScreen();
-
+	const scheme = useColorScheme();
 	return (
 		<BasicLayout>
 			<Background>
 				<View style={styles.container}>
-					<Image source={welcomeImg} style={styles.headerImage} />
+					<Image source={scheme === 'dark' ? welcomeImgDark : welcomeImg} style={styles.headerImage} />
 
 					<View style={styles.textContainer}>
 						<Text center weight="extraBold" type="hLarge" marginBottom={16}>
@@ -37,10 +37,11 @@ const WelcomeScreen = () => {
 						) : (
 							<>
 								<Button
-									title={i18n.t('WelcomeScreen.view_backups')}
+									title={i18n.t('WelcomeScreen.download_zengo')}
 									mb="xs"
-									onPress={() => navigation.navigate('BackupSettingsScreen')}
+									onPress={() => Linking.openURL('https://go.zengo.com/uCxL/dgur0o9n')}
 								/>
+
 
 								{!!walletId ? (
 									<Touchable onPress={() => navigation.navigate('HomeScreen')}>

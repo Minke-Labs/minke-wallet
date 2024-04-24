@@ -23,6 +23,7 @@ import waveDark from './wave_dark.png';
 import waveLight from './wave_light.png';
 import wavesBackground from './wavesBackground.png';
 import welcomeImg from './welcome.png';
+import welcomeImgDark from './welcomeDark.png';
 import whale2Img from './whale2.png';
 import whale3Img from './whale3.png';
 import whale4Img from './whale4.png';
@@ -32,6 +33,7 @@ export {
 	waveLight,
 	waveDark,
 	welcomeImg,
+	welcomeImgDark,
 	waveWelcomeFooterDarkImg,
 	waveWelcomeFooterImg,
 	waveWelcomeHeaderDarkImg,

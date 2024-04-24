@@ -1,13 +1,7 @@
 {
   "expo": {
     "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends.",
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
-        }
-      ]
+
     ],
     "name": "Minke",
     "slug": "minke-wallet",
@@ -35,7 +29,7 @@
       },
       "bundleIdentifier": "com.minkeapp.minkewallet",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
+      "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
       }

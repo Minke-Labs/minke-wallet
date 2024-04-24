@@ -1,6 +1,6 @@
 import {
 	ALCHEMY_API_KEY_ETHEREUM,
-	ALCHEMY_API_KEY_GOERLI,
+	//ALCHEMY_API_KEY_GOERLI,
 	ALCHEMY_API_KEY_MATIC,
 	ALCHEMY_API_URL_POLYGON_MAINNET,
 	BICONOMY_API_KEY_POLYGON_MAINNET,
@@ -834,43 +834,43 @@ export const networks: Networks = {
 			}
 		],
 		eip1559: false
-	},
-	goerli: {
-		chainId: 5,
-		name: 'Goerli',
-		id: 'goerli',
-		wyreSRN: 'ethereum',
-		testnet: true,
-		etherscanURL: 'https://goerli.etherscan.io/',
-		etherscanAPIURL: 'https://api-goerli.etherscan.io/',
-		etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
-		zapperNetwork: 'ethereum',
-		nativeToken: { symbol: 'ETH', name: 'Ethereum' },
-		topUpTokens: [
-			{
-				symbol: 'USDC',
-				address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-				decimals: 6,
-				suggestedBuyAmount: 100,
-				chainId: 5
-			},
-			{
-				symbol: 'ETH',
-				address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
-				decimals: 18,
-				suggestedBuyAmount: 0.1,
-				chainId: 5
-			}
-		],
-		transactionTimesEndpoint: true,
-		alchemyAPIKey: (ALCHEMY_API_KEY_GOERLI || process.env.ALCHEMY_API_KEY_GOERLI)!,
-		coingeckoPlatform: 'ethereum',
-		aave: {
-			depositContract: ''
-		},
-		suggestedTokens: [],
-		eip1559: true
 	}
+	// goerli: {
+	// 	chainId: 5,
+	// 	name: 'Goerli',
+	// 	id: 'goerli',
+	// 	wyreSRN: 'ethereum',
+	// 	testnet: true,
+	// 	etherscanURL: 'https://goerli.etherscan.io/',
+	// 	etherscanAPIURL: 'https://api-goerli.etherscan.io/', //etherscanAPIKey: 'R3NFBKJNVY4H26JJFJ716AK8QKQKNWRM1N',
+	// 	etherscanAPIKey: '2QWAKS2GK934H8JBS6CGMKC4U89K9KZ4SP',
+	// 	zapperNetwork: 'ethereum',
+	// 	nativeToken: { symbol: 'ETH', name: 'Ethereum' },
+	// 	topUpTokens: [
+	// 		{
+	// 			symbol: 'USDC',
+	// 			address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+	// 			decimals: 6,
+	// 			suggestedBuyAmount: 100,
+	// 			chainId: 5
+	// 		},
+	// 		{
+	// 			symbol: 'ETH',
+	// 			address: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+	// 			decimals: 18,
+	// 			suggestedBuyAmount: 0.1,
+	// 			chainId: 5
+	// 		}
+	// 	],
+	// 	transactionTimesEndpoint: true,
+	// 	alchemyAPIKey: (ALCHEMY_API_KEY_GOERLI || process.env.ALCHEMY_API_KEY)!,
+	// 	coingeckoPlatform: 'ethereum',
+	// 	aave: {
+	// 		depositContract: ''
+	// 	},
+	// 	suggestedTokens: [],
+	// 	eip1559: true
+	// }
 };
 
 export const networkSettingsKey = '@minke:network';

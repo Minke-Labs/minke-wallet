@@ -1,7 +1,7 @@
+/* eslint-disable no-tabs */
 import React, { createContext, useMemo, useState, useEffect } from 'react';
 import { KrakenJr, DeShark, Mateus, Fugu, WowFish } from '@avatars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
 import useWalletState from '../../hooks/useWalletState';
 import useLanguage from '../../hooks/useLanguage';
 import { AvatarSaved, Avatar, AvatarId } from './AvatarContext.types';
@@ -90,34 +90,35 @@ const AvatarProvider: React.FC = ({ children }) => {
 		setSavedAvatar(avatarObj);
 	};
 
-	const pickImage = async () => {
-		const result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images,
-			allowsEditing: true,
-			aspect: [4, 4],
-			exif: false,
-			quality: 0.5
-		});
+	// const pickImage = async () => {
+	// 	const result = await ImagePicker.launchImageLibraryAsync({
+	// 		mediaTypes: ImagePicker.MediaTypeOptions.Images,
+	// 		allowsEditing: true,
+	// 		aspect: [4, 4],
+	// 		exif: false,
+	// 		quality: 0.5
+	// 	});
 
-		if (!result.cancelled) return { uri: result.uri };
-		return null;
-	};
+	// 	if (!result.cancelled) return { uri: result.uri };
+	// 	return null;
+	// };
 
-	const handleImagePick = async () => {
-		const path = await pickImage();
-		if (path) {
-			const avatarObj = { id: null, customImage: path };
-			await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
-			setSavedAvatar(avatarObj);
-		}
-	};
+	// const handleImagePick = async () => {
+	// 	const path = await pickImage();
+	// 	if (path) {
+	// 		const avatarObj = { id: null, customImage: path };
+	// eslint-disable-next-line no-tabs
+	// 		await AsyncStorage.setItem('@savedAvatar', JSON.stringify(avatarObj));
+	// 		setSavedAvatar(avatarObj);
+	// 	}
+	// };
 
 	const obj = useMemo(
 		() => ({
 			avatars,
 			setMinkeAvatarId: handleMinkeAvatarSelect,
-			currentAvatar,
-			pickImage: handleImagePick
+			currentAvatar
+			//pickImage: handleImagePick
 		}),
 		[currentAvatar]
 	);

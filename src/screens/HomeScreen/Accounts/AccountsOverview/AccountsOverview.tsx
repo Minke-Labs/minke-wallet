@@ -4,6 +4,8 @@ import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
 import { groupBy } from 'lodash';
+import { log } from 'react-native-reanimated';
+import { debug } from 'util';
 
 export const AccountsOverview: React.FC = () => {
 	const { i18n } = useLanguage();
@@ -35,7 +37,9 @@ export const AccountsOverview: React.FC = () => {
 
 	useEffect(() => {
 		const fetchPriceChanges = async () => {
+			debug(`Tokens are${tokens}`);
 			if (tokens.length > 0) {
+				debug(`Tokens are${tokens}`);
 				const investedTokens = await fetchTokensPriceChange(tokens);
 				const sorted = investedTokens.sort((a: any, b: any) => (b.perc || 0) - (a.perc || 0));
 
@@ -52,13 +56,13 @@ export const AccountsOverview: React.FC = () => {
 		fetchPriceChanges();
 	}, [tokens]);
 
-	if (investmentHighlights.length === 0 && !showingStable.symbol) {
-		return (
-			<View mb="xs">
-				<BlankStates.Type5 />
-			</View>
-		);
-	}
+	// if (investmentHighlights.length === 0 && !showingStable.symbol) {
+	// 	return (
+	// 		<View mb="xs">
+	// 			<BlankStates.Type5 />
+	// 		</View>
+	// 	);
+	// }
 
 	return (
 		<Paper pt="xs" ph="xs" mb="xs">
