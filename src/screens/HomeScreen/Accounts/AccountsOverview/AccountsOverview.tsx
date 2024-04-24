@@ -56,13 +56,13 @@ export const AccountsOverview: React.FC = () => {
 		fetchPriceChanges();
 	}, [tokens]);
 
-	// if (investmentHighlights.length === 0 && !showingStable.symbol) {
-	// 	return (
-	// 		<View mb="xs">
-	// 			<BlankStates.Type5 />
-	// 		</View>
-	// 	);
-	// }
+	if (investmentHighlights.length === 0 && !showingStable.symbol) {
+		return (
+			<View mb="xs">
+				<BlankStates.Type5 />
+			</View>
+		);
+	}
 
 	return (
 		<Paper pt="xs" ph="xs" mb="xs">
