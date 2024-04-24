@@ -4,7 +4,6 @@ import { useBalances, useGlobalWalletState, useLanguage, useNavigation } from '@
 import { InvestmentToken, MinkeToken } from '@models/types/token.types';
 import { fetchTokensPriceChange } from '@models/token';
 import { groupBy } from 'lodash';
-import { log } from 'react-native-reanimated';
 import { debug } from 'util';
 
 export const AccountsOverview: React.FC = () => {
