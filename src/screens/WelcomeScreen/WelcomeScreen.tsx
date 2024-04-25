@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Linking, useColorScheme} from 'react-native';
+import { Image, Linking, useColorScheme } from 'react-native';
 import RNUxcam from 'react-native-ux-cam';
 import { BasicLayout } from '@layouts';
 import { welcomeImg, welcomeImgDark } from '@images';
@@ -14,7 +14,7 @@ const WelcomeScreen = () => {
 	const { i18n } = useLanguage();
 	const navigation = useNavigation();
 	const { walletId } = useGlobalWalletState();
-	const { onCreateWallet, loading } = useWelcomeScreen();
+	const { onCreateWallet, onImportWallet, loading } = useWelcomeScreen();
 	const scheme = useColorScheme();
 	return (
 		<BasicLayout>
@@ -42,20 +42,30 @@ const WelcomeScreen = () => {
 									onPress={() => Linking.openURL('https://go.zengo.com/uCxL/dgur0o9n')}
 								/>
 
-
-								{!!walletId ? (
-									<Touchable onPress={() => navigation.navigate('HomeScreen')}>
-										<Text type="a" weight="semiBold" color="cta1">
-											{i18n.t('WelcomeScreen.go_to_wallet')}
-										</Text>
-									</Touchable>
+								{walletId ? (
+									<Button
+										title={i18n.t('WelcomeScreen.go_to_wallet')}
+										mb="xs"
+										mode="outlined"
+										onPress={() => navigation.navigate('HomeScreen')}
+									/>
 								) : (
-									<Touchable onPress={onCreateWallet}>
-										<Text type="a" weight="semiBold" color="cta1">
-											{i18n.t('WelcomeScreen.create')}
-										</Text>
-									</Touchable>
+									<Button
+										title={i18n.t('WelcomeScreen.create')}
+										mb="xs"
+										mode="outlined"
+										onPress={onCreateWallet}
+									/>
+
 								)}
+
+								<Button
+									title={i18n.t('ImportWalletScreen.import_wallet')}
+									mb="xs"
+									mode="outlined"
+									onPress={onImportWallet}
+								/>
+
 							</>
 						)}
 					</View>

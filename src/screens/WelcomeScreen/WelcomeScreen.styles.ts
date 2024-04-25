@@ -9,8 +9,8 @@ export default StyleSheet.create({
 	},
 	headerImage: {
 		resizeMode: 'contain',
-		width: 241,
-		height: 184
+		width: 147.42,
+		height: 126.51
 	},
 	textContainer: {
 		width: '100%',

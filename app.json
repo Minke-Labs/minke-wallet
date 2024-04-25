@@ -1,12 +1,10 @@
 {
   "expo": {
-    "plugins": [
-
-    ],
+    "plugins": [],
     "name": "Minke",
     "slug": "minke-wallet",
     "owner": "minkelabs",
-    "version": "0.0.39",
+    "version": "0.0.40",
     "scheme": "com.minkeapp.minkewallet",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,13 +21,13 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "162",
+      "buildNumber": "3",
       "config": {
         "usesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.minkeapp.minkewallet",
       "infoPlist": {
-      "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
+        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
       }
@@ -39,7 +37,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 140,
+      "versionCode": 141,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",

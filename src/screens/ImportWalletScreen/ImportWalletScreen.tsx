@@ -40,18 +40,6 @@ const ImportWalletScreen = () => {
 					/>
 
 					<IconItem
-						title={
-							connected
-								? `${i18n.t('ImportWalletScreen.disconnect_wallet')} - ${smallWalletAddress(address)}`
-								: i18n.t('ImportWalletScreen.connect_wallet')
-						}
-						icon="help"
-						onPress={toggleWalletConnect}
-						mb="m"
-						images
-					/>
-
-					<IconItem
 						title={i18n.t('ImportWalletScreen.restore_from_icloud', { cloudPlatform })}
 						{...(walletsBackedUp > 0 && {
 							desc: `${i18n.t('ImportWalletScreen.backup_wallets_count', {
