@@ -1,25 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { deviceHeight, deviceWidth } from '@styles';
 
 export default StyleSheet.create({
 	fullScreen: {
-		height: deviceHeight,
-		position: 'absolute',
-		top: 0,
-		justifyContent: 'center'
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	backdrop: {
 		position: 'absolute',
-		height: deviceHeight,
-		width: deviceWidth,
-		backgroundColor: 'rgba(6, 19, 33, 0.9)'
-	},
-	container: {
-		width: deviceWidth,
+		top: 0,
+		left: 0,
 		bottom: 0,
-		position: 'absolute',
-		borderTopLeftRadius: 20,
-		borderTopRightRadius: 20,
-		overflow: 'hidden'
+		right: 0,
+		backgroundColor: '#000'
 	}
 });
